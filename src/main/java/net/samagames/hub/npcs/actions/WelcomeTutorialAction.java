@@ -6,16 +6,18 @@ import net.samagames.api.player.PlayerData;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
-public class WelcomeAction extends HistoryAction
+public class WelcomeTutorialAction extends HistoryAction
 {
-    public WelcomeAction()
+    public WelcomeTutorialAction()
     {
         this.history = new Object[][] {
                 { ChatColor.GREEN + "Bienvenue sur " + ChatColor.GOLD + "SamaGames" + ChatColor.GREEN + " !", 3 },
+
                 { ChatColor.GREEN + "Je laisse soin à BestDrako de s'occuper du texte qui sera ici !", 3 },
                 { ChatColor.GREEN + "Car oui, pour l'instant il est totalement inutile !", 4 },
                 { ChatColor.GREEN + "Bon vu que je suis gentil et que je ne sais plus trop quoi mettre...", 4 },
                 { ChatColor.GREEN + "Je vais t'offrir un petit cadeau de bienvenue :)", 3 },
+
                 { ChatColor.GREEN + "Bon jeu sur " + ChatColor.GOLD + "SamaGames" + ChatColor.GREEN + " !", 1 }
         };
     }

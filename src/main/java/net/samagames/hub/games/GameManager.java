@@ -18,40 +18,42 @@ public class GameManager extends AbstractManager
 
         this.games = new HashMap<>();
 
-        this.registerGame("beta_vip", new Game("beta_vip", Material.DIAMOND, new String[] {}, -1, new Location(this.hub.getHubWorld(), 2003.5, 55, 70.5, -180, 0)));
-        this.registerGame("beta_staff", new Game("beta_staff", Material.COOKIE, new String[] {}, -1, new Location(this.hub.getHubWorld(), -2016.5, 51, 92.5, -180, 0)));
+        this.registerGame("beta_vip", new Game("beta_vip", Material.DIAMOND, new String[] {}, -1, new Location(this.hub.getHubWorld(), 2003.5, 55, 70.5, -180, 0), true));
+        this.registerGame("beta_staff", new Game("beta_staff", Material.COOKIE, new String[] {}, -1, new Location(this.hub.getHubWorld(), -2016.5, 51, 92.5, -180, 0), true));
 
         this.registerGame("uppervoid", new Game("Uppervoid", Material.STICK, new String[] {
-                "Faites tomber les autres grâce",
-                "à votre impitoyable TNT !"
-        }, 20, new Location(this.hub.getHubWorld(), -19, 51, 89)));
+                "Affrontez les autres joueurs dans une arrène.",
+                "Faites-les tomber dans le vide à l'aide de vos",
+                "impitoyables TNT's, mais gare à ne pas tomber à",
+                "votre tour !"
+        }, 20, this.hub.getPlayerManager().getLobbySpawn(), false));
 
         this.registerGame("uhc", new Game("UHC", Material.GOLDEN_APPLE, new String[] {
-                "Un stuff à créer et des joueurs à",
-                "tuer. Mais attention : aucun retour",
-                "de vie !"
-        }, 21, new Location(this.hub.getHubWorld(), -19, 51, 89)));
-
-        this.registerGame("dimensions", new Game("Dimensions", Material.EYE_OF_ENDER, new String[] {
-                "Deux mondes parallèles, des coffres",
-                "et des joueurs à combattre !"
-        }, 22, new Location(this.hub.getHubWorld(), -19, 51, 89)));
+                "Créez-vous votre stuff, tuez vos ennemis et",
+                "soyez le dernier survivant ! Attention, il n'y",
+                "a pas de régénération naturelle des coeurs."
+        }, 21, this.hub.getPlayerManager().getLobbySpawn(), false));
 
         this.registerGame("uhcrun", new Game("UHCRun", Material.WATCH, new String[] {
                 "Vous aimes les UHC mais vous n'avez",
                 "pas le temps ? Ce jeu est fait pour vous !"
-        }, 23, new Location(this.hub.getHubWorld(), -19, 51, 89)));
+        }, 23, this.hub.getPlayerManager().getLobbySpawn(), false));
 
         this.registerGame("quake", new Game("Quake Reborn", Material.DIAMOND_HOE, new String[] {
-                "Tirez sur tout ce qui bouge ou",
-                "c'est ce qui bouge qui vous tuera !"
-        }, 24, new Location(this.hub.getHubWorld(), -19, 51, 89)));
+                ""
+        }, 24, this.hub.getPlayerManager().getLobbySpawn(), true));
+
+        this.registerGame("dimensions", new Game("Dimensions", Material.EYE_OF_ENDER, new String[] {
+                "Téléportez-vous d'un monde parallèle",
+                "à un autre et récupérez le maximum de coffres.",
+                "Ensuite, le combat pourra débuter !"
+        }, 31, this.hub.getPlayerManager().getLobbySpawn(), false));
 
         this.registerGame("coquelicot", new Game("Coquelicot", Material.SKULL_ITEM, new String[] {
                 "Il est prévu qu'une invasion de zombie",
                 "survienne, serez-vous le premier à",
                 "vous échappez de cet enfer ?"
-        }, 13, new Location(this.hub.getHubWorld(), -19, 51, 89)));
+        }, 13, this.hub.getPlayerManager().getLobbySpawn(), true));
     }
 
     public void registerGame(String identifier, Game game)

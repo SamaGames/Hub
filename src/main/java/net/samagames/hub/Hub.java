@@ -1,13 +1,22 @@
 package net.samagames.hub;
 
+import net.samagames.hub.commands.CommandNPC;
+import net.samagames.hub.common.ErrorHandle;
 import net.samagames.hub.common.managers.*;
-import net.samagames.hub.events.player.*;
-import net.samagames.hub.events.protection.*;
+import net.samagames.hub.events.player.GuiListener;
+import net.samagames.hub.events.player.JumpListener;
+import net.samagames.hub.events.player.PlayerListener;
+import net.samagames.hub.events.protection.EntityEditionListener;
+import net.samagames.hub.events.protection.InventoryEditionListener;
+import net.samagames.hub.events.protection.PlayerEditionListener;
+import net.samagames.hub.events.protection.WorldEditionListener;
 import net.samagames.hub.games.GameManager;
 import net.samagames.hub.gui.GuiManager;
+import net.samagames.hub.jump.JumpManager;
 import net.samagames.hub.npcs.NPCManager;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
+import org.bukkit.command.CommandExecutor;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.logging.Level;
@@ -21,15 +30,19 @@ public class Hub extends JavaPlugin
     private PlayerManager playerManager;
     private ChatManager chatManager;
     private GuiManager guiManager;
+    private HologramManager hologramManager;
     private EntityManager entityManager;
     private NPCManager npcManager;
     private ScoreboardManager scoreboardManager;
     private GameManager gameManager;
+    private JumpManager jumpManager;
 
     @Override
     public void onEnable()
     {
         instance = this;
+
+        Thread.setDefaultUncaughtExceptionHandler(new ErrorHandle());
 
         this.hubWorld = Bukkit.getWorlds().get(0);
 
@@ -37,10 +50,12 @@ public class Hub extends JavaPlugin
         this.playerManager = new PlayerManager(this);
         this.chatManager = new ChatManager(this);
         this.guiManager = new GuiManager(this);
+        this.hologramManager = new HologramManager(this);
         this.entityManager = new EntityManager(this);
         this.npcManager = new NPCManager(this);
         this.scoreboardManager = new ScoreboardManager(this);
         this.gameManager = new GameManager(this);
+        this.jumpManager = new JumpManager(this);
         this.log(Level.INFO, "Managers loaded with success.");
 
         this.log(Level.INFO, "Subscribing channels...");
@@ -51,13 +66,19 @@ public class Hub extends JavaPlugin
         this.registerEvents();
         this.log(Level.INFO, "Events registered with success.");
 
+        this.log(Level.INFO, "Registering commands...");
+        this.registerCommands();
+        this.log(Level.INFO, "Commands registered with success.");
+
         this.log(Level.INFO, "Hub ready!");
     }
 
     @Override
     public void onDisable()
     {
-
+        this.hologramManager.onServerClose();
+        this.scoreboardManager.onServerClose();
+        this.npcManager.onServerClose();
     }
 
     public void registerEvents()
@@ -72,16 +93,36 @@ public class Hub extends JavaPlugin
         Bukkit.getPluginManager().registerEvents(new WorldEditionListener(), this);
     }
 
+    public void registerCommands()
+    {
+        this.registerCommand("npc", CommandNPC.class);
+    }
+
+    public void registerCommand(String executionTag, Class<? extends CommandExecutor> command)
+    {
+        try
+        {
+            this.getCommand(executionTag).setExecutor(command.newInstance());
+            this.log(Level.INFO, "Registered command '" + executionTag + "'");
+        }
+        catch (InstantiationException | IllegalAccessException e)
+        {
+            this.log(Level.SEVERE, "Failed to register command '" + executionTag + "'!");
+        }
+    }
+
     public void log(AbstractManager manager, Level level, String message)  { this.getLogger().log(level, "[" + manager.getName() + "] " + message); }
     public void log(Level level, String message) { this.getLogger().log(level, "[Core] " + message); }
 
     public PlayerManager getPlayerManager() { return this.playerManager; }
     public ChatManager getChatManager() { return this.chatManager; }
     public GuiManager getGuiManager() { return this.guiManager; }
+    public HologramManager getHologramManager() { return this.hologramManager; }
     public EntityManager getEntityManager() { return this.entityManager; }
     public NPCManager getNPCManager() { return this.npcManager; }
     public ScoreboardManager getScoreboardManager() { return this.scoreboardManager; }
     public GameManager getGameManager() { return this.gameManager; }
+    public JumpManager getJumpManager() { return this.jumpManager; }
 
     public World getHubWorld()
     {

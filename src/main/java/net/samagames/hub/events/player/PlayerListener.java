@@ -2,11 +2,9 @@ package net.samagames.hub.events.player;
 
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.api.player.PlayerData;
-import net.samagames.core.api.player.Promo;
 import net.samagames.hub.Hub;
-import net.samagames.hub.utils.InventoryUtils;
-import net.samagames.hub.utils.PromoUtils;
 import net.samagames.permissionsbukkit.PermissionsBukkit;
+import net.samagames.tools.InventoryUtils;
 import net.samagames.tools.Titles;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.*;
@@ -244,12 +242,12 @@ public class PlayerListener implements Listener
             **/
 
             Titles.sendTabTitle(p, ChatColor.GREEN + "Bienvenue sur mc.samagames.net !", ChatColor.AQUA + "Teamspeak : ts.samagames.net");
+
             Hub.getInstance().getScoreboardManager().addScoreboardReceiver(player);
+            Hub.getInstance().getHologramManager().addReceiver(player);
 
-            Promo currentPromo = PromoUtils.getCurrentPromo();
-
-            if(currentPromo != null)
-                Titles.sendTitle(player, 0, 20 * 5, 20, ChatColor.GOLD + currentPromo.message, ChatColor.GRAY + "Les coins gagnés sont multipliés par " + ChatColor.GOLD + currentPromo.multiply + ChatColor.GRAY + " !");
+            if(PermissionsBukkit.hasPermission(player, "lobby.announce"))
+                Bukkit.broadcastMessage(player.getDisplayName() + ChatColor.YELLOW + " à rejoint le hub !");
 
             player.teleport(new Location(Bukkit.getWorlds().get(0), -19, 51, 89));
         });
@@ -367,30 +365,30 @@ public class PlayerListener implements Listener
             /**
              * TODO: Put in database the previous player game lobby
              *
-            Region reg = Hub.getInstance().getRegionManager().getLobbyByLocation(p.getLocation());
+             Region reg = Hub.getInstance().getRegionManager().getLobbyByLocation(p.getLocation());
 
-            if (reg != null)
-            {
-                FastJedis.set("signsarea:" + player.getUniqueId() + ":hub", reg.getName());
-                FastJedis.expire("signsarea:" + player.getUniqueId() + ":hub", 3 * 60 * 60);
-            }
-            **/
+             if (reg != null)
+             {
+             FastJedis.set("signsarea:" + player.getUniqueId() + ":hub", reg.getName());
+             FastJedis.expire("signsarea:" + player.getUniqueId() + ":hub", 3 * 60 * 60);
+             }
+             **/
 
             PlayerData data = SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId());
 
             /**
              * TODO: Remove player's particles
              *
-            if (data.get("currentparticle") != null)
-                Hub.getInstance().getCosmeticsManager().getCosmeticHandler().removeFXLocaly(p.getUniqueId());
-            **/
+             if (data.get("currentparticle") != null)
+             Hub.getInstance().getCosmeticsManager().getCosmeticHandler().removeFXLocaly(p.getUniqueId());
+             **/
 
             /**
              * TODO: Remove player's pet
              *
-            if (data.get("selectedpet") != null)
-                Hub.getInstance().getCosmeticsManager().getPetsHandler().removePet(p);
-            **/
+             if (data.get("selectedpet") != null)
+             Hub.getInstance().getCosmeticsManager().getPetsHandler().removePet(p);
+             **/
 
             if (Hub.getInstance().getPlayerManager().getSelection(player) != null)
                 Hub.getInstance().getPlayerManager().removeSelection(player);
@@ -411,6 +409,8 @@ public class PlayerListener implements Listener
         **/
 
         Hub.getInstance().getChatManager().unmutePlayer(player);
+        Hub.getInstance().getNPCManager().talkFinished(player);
         Hub.getInstance().getScoreboardManager().removeScoreboardReceiver(player);
+        Hub.getInstance().getHologramManager().removeReceiver(player);
     }
 }

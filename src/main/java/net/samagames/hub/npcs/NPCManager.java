@@ -4,24 +4,20 @@ import net.minecraft.server.v1_8_R1.World;
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import net.samagames.hub.common.managers.AbstractManager;
-import net.samagames.tools.Hologram;
+import net.samagames.tools.holograms.Hologram;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.libs.com.google.gson.Gson;
 import org.bukkit.craftbukkit.libs.com.google.gson.GsonBuilder;
 import org.bukkit.craftbukkit.v1_8_R1.CraftWorld;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.metadata.FixedMetadataValue;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.logging.Level;
 
 public class NPCManager extends AbstractManager
@@ -38,6 +34,12 @@ public class NPCManager extends AbstractManager
         this.npcs = new HashMap<>();
         this.talking = new ArrayList<>();
         this.reloadNPCS();
+    }
+
+    @Override
+    public void onServerClose()
+    {
+        this.removeNPCS();
     }
 
     public void reloadNPCS()
@@ -86,43 +88,39 @@ public class NPCManager extends AbstractManager
         {
             World craftbukkitWorld = ((CraftWorld) npc.getLocation().getWorld()).getHandle();
 
-            CustomEntityVillager villager = new CustomEntityVillager(craftbukkitWorld);
+            CustomEntityVillager villager = new CustomEntityVillager(craftbukkitWorld, npc.getLocation());
             craftbukkitWorld.addEntity(villager, CreatureSpawnEvent.SpawnReason.CUSTOM);
             villager.getBukkitEntity().teleport(npc.getLocation());
 
-            Hologram hologram;
+            ArrayList<String> lines = new ArrayList<>();
+            lines.addAll(Arrays.asList(npc.getName().split("@")));
 
             if(this.debug)
-                hologram = new Hologram(ChatColor.GOLD + "" + ChatColor.BOLD + npc.getName() + " [" + npc.getID().toString() + "]");
-            else
-                hologram = new Hologram(ChatColor.GOLD + "" + ChatColor.BOLD + npc.getName());
+                lines.add(ChatColor.RED + "[" + npc.getID().toString() + "]");
 
-            // TODO
-            //hologram.setLocation(npc.getLocation().clone().add(0.0D, 1.75D, 0.0D));
-            //hologram.generateLines();
+            String[] linesArray = new String[] {};
+            Hologram hologram = new Hologram(lines.toArray(linesArray));
 
-            npc.setHologram(hologram);
+            hologram.setLocation(npc.getLocation().clone().add(0.0D, 2.0D, 0.0D));
+            npc.setHologramID(Hub.getInstance().getHologramManager().registerHologram(hologram));
 
             ((Villager) villager.getBukkitEntity()).setProfession(npc.getProfession());
             villager.getBukkitEntity().setMetadata("npc-id", new FixedMetadataValue(Hub.getInstance(), npc.getID()));
 
-            Hub.getInstance().log(this, Level.INFO, "Placed NPC & NPC Title Skull at [" + npc.getLocation().getBlockX() + "] [" + npc.getLocation().getBlockY() + "] [" + npc.getLocation().getBlockZ() + "]");
+            Hub.getInstance().log(this, Level.INFO, "Placed NPC at [" + npc.getLocation().getBlockX() + "] [" + npc.getLocation().getBlockY() + "] [" + npc.getLocation().getBlockZ() + "]");
         }
     }
 
     public void removeNPCS()
     {
-        for(Entity entity : Bukkit.getWorlds().get(0).getEntities())
+        Bukkit.getWorlds().get(0).getEntities().stream().filter(entity -> entity.getType() == EntityType.VILLAGER).filter(entity -> entity.hasMetadata("npc-id")).forEach(entity ->
         {
-            if(entity.getType() == EntityType.VILLAGER)
-            {
-                if(entity.hasMetadata("npc-id"))
-                {
-                    Hub.getInstance().log(this, Level.INFO, "Removed NPC at [" + entity.getLocation().getBlockX() + "] [" + entity.getLocation().getBlockY() + "] [" + entity.getLocation().getBlockZ() + "]");
-                    entity.remove();
-                }
-            }
-        }
+            if (this.getNPCByID(UUID.fromString(entity.getMetadata("npc-id").get(0).asString())) != null)
+                Hub.getInstance().getHologramManager().removeHologram(this.getNPCByID(UUID.fromString(entity.getMetadata("npc-id").get(0).asString())).getHologramID());
+
+            Hub.getInstance().log(this, Level.INFO, "Removed NPC at [" + entity.getLocation().getBlockX() + "] [" + entity.getLocation().getBlockY() + "] [" + entity.getLocation().getBlockZ() + "]");
+            entity.remove();
+        });
     }
 
     public void listNPCS(Player player)

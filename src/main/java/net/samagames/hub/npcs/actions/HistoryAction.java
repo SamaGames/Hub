@@ -25,6 +25,12 @@ public class HistoryAction extends AbstractNPCAction
     {
         final Object[][] text = this.history;
 
+        if(text.length == 0)
+        {
+            this.historyCallback(player);
+            return;
+        }
+
         Bukkit.getScheduler().runTaskAsynchronously(Hub.getInstance(), new Runnable()
         {
             int j = 0;
@@ -39,6 +45,9 @@ public class HistoryAction extends AbstractNPCAction
                     String message = (String) text[i][0];
                     int time = (int) text[i][1];
                     final String finalMessage = ChatColor.DARK_AQUA + "[" + ChatColor.AQUA + (i + 1) + "/" + text.length + ChatColor.DARK_AQUA + "] " + ChatColor.RESET + message;
+
+                    if(!player.isOnline())
+                        return;
 
                     player.sendMessage(finalMessage);
                     historyMessage(player, i);

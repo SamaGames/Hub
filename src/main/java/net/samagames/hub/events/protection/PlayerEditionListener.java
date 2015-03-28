@@ -1,8 +1,8 @@
 package net.samagames.hub.events.protection;
 
 import net.samagames.hub.Hub;
-import net.samagames.hub.utils.Selection;
 import net.samagames.permissionsbukkit.PermissionsBukkit;
+import net.samagames.tools.Selection;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

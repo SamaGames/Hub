@@ -2,7 +2,7 @@ package net.samagames.hub.common.managers;
 
 import net.samagames.hub.Hub;
 import net.samagames.hub.common.StaticInventory;
-import net.samagames.hub.utils.Selection;
+import net.samagames.tools.Selection;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -24,6 +24,7 @@ public class PlayerManager extends AbstractManager
         this.selections = new HashMap<>();
         this.staticInventory = new StaticInventory();
 
+        this.lobbySpawn = new Location(this.hub.getHubWorld(), -19, 51, 89);
         this.canBuild = false;
     }
 

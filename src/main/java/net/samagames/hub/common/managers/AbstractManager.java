@@ -11,5 +11,7 @@ public abstract class AbstractManager
         this.hub = hub;
     }
 
+    public void onServerClose() {}
+
     public abstract String getName();
 }

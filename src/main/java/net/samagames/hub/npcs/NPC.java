@@ -1,7 +1,6 @@
 package net.samagames.hub.npcs;
 
 import net.samagames.hub.npcs.actions.AbstractNPCAction;
-import net.samagames.tools.Hologram;
 import org.bukkit.Location;
 import org.bukkit.entity.Villager;
 
@@ -13,7 +12,7 @@ public class NPC
     private String name;
     private Villager.Profession profession;
     private Location location;
-    private Hologram hologram;
+    private UUID hologramID;
     private AbstractNPCAction action;
 
     public NPC(UUID id, String name, Villager.Profession profession, Location location, AbstractNPCAction action)
@@ -47,9 +46,9 @@ public class NPC
         this.action = action;
     }
 
-    public void setHologram(Hologram hologram)
+    public void setHologramID(UUID hologramID)
     {
-        this.hologram = hologram;
+        this.hologramID = hologramID;
     }
 
     public UUID getID()
@@ -72,9 +71,9 @@ public class NPC
         return this.location;
     }
 
-    public Hologram getHologram()
+    public UUID getHologramID()
     {
-        return this.hologram;
+        return this.hologramID;
     }
 
     public AbstractNPCAction getAction()

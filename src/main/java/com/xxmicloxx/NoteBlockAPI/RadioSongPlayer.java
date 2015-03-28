@@ -17,7 +17,7 @@ public class RadioSongPlayer extends SongPlayer {
             if (note == null) {
                 continue;
             }
-            p.playSound(p.getEyeLocation(),
+            p.playSound(p.getLocation(),
                     Instrument.getInstrument(note.getInstrument()),
                     (l.getVolume() * (int) volume * (int) playerVolume) / 1000000f,
                     NotePitch.getPitch(note.getKey() - 33));

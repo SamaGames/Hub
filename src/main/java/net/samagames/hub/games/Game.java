@@ -10,16 +10,22 @@ public class Game
     private final String[] description;
     private final int slotInMainMenu;
     private final Location lobbySpawn;
+    private final boolean locked;
 
     //TODO: Sign array
 
-    public Game(String name, Material icon, String[] description, int slotInMainMenu, Location lobbySpawn)
+    public Game(String name, Material icon, String[] description, int slotInMainMenu, Location lobbySpawn, boolean locked)
     {
         this.name = name;
         this.icon = icon;
-        this.description = description;
         this.slotInMainMenu = slotInMainMenu;
         this.lobbySpawn = lobbySpawn;
+        this.locked = locked;
+
+        if(locked)
+            this.description = new String[] { "Prochainement..." };
+        else
+            this.description = description;
     }
 
     public String getName()
@@ -45,5 +51,10 @@ public class Game
     public Location getLobbySpawn()
     {
         return this.lobbySpawn;
+    }
+
+    public boolean isLocked()
+    {
+        return this.locked;
     }
 }

@@ -1,9 +1,11 @@
 name: Hub
 main: net.samagames.hub.Hub
 version: 1.0
-authors: [Geekpower14, zyuiop, BlueSlime, Thog]
+authors: [BlueSlime]
 website: http://samagames.net/
 depend: [SamaGamesAPI]
 
 commands:
-permissions:
+  npc:
+    description: Commandes relatives aux NPC's
+    usage: /npc

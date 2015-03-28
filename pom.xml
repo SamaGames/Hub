@@ -8,6 +8,10 @@
     <artifactId>Hub</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
     <repositories>
         <repository>
             <id>bukkit-repo</id>
@@ -16,6 +20,10 @@
         <repository>
             <id>zyuiop-repo</id>
             <url>http://maven.samagames.net/public/</url>
+        </repository>
+        <repository>
+            <id>shadowvolt-repo</id>
+            <url>http://ci.shadowvolt.com/plugin/repository/everything/</url>
         </repository>
     </repositories>
 
@@ -37,7 +45,6 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot</artifactId>
-            <!-- Bukkit API Version, change if out dated -->
             <version>1.8-R0.1-SNAPSHOT</version>
             <type>jar</type>
             <scope>provided</scope>
@@ -51,7 +58,14 @@
         <dependency>
             <groupId>net.samagames</groupId>
             <artifactId>samapi</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>1.0.0-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.comphenix.protocol</groupId>
+            <artifactId>ProtocolLib</artifactId>
+            <version>3.6.3-SNAPSHOT</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>

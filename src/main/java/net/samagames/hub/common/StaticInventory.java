@@ -3,6 +3,7 @@ package net.samagames.hub.common;
 import net.md_5.bungee.api.ChatColor;
 import net.samagames.hub.Hub;
 import net.samagames.hub.gui.GuiMain;
+import net.samagames.hub.gui.profile.GuiProfile;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -39,7 +40,7 @@ public class StaticInventory
         }
         else if(stack.getType() == Material.SKULL_ITEM)
         {
-
+            Hub.getInstance().getGuiManager().openGui(player, new GuiProfile());
         }
         else if(stack.getType() == Material.NETHER_STAR)
         {
