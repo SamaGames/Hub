@@ -1,6 +1,5 @@
 package net.samagames.hub.common;
 
-import net.samagames.api.SamaGamesAPI;
 import net.samagames.permissionsapi.permissions.PermissionUser;
 import net.samagames.permissionsbukkit.PermissionsBukkit;
 import org.bukkit.entity.Player;
@@ -9,14 +8,19 @@ import java.util.HashMap;
 
 public class JsonHub
 {
-    private final int lobbyNumber;
+    private int hubNumber;
     private int connectedPlayers;
     private HashMap<String, Integer> playersDetails;
 
-    public JsonHub(int lobbyNumber, int connectedPlayers)
+    public JsonHub(int hubNumber, int connectedPlayers)
     {
-        this.lobbyNumber = lobbyNumber;
+        this.hubNumber = hubNumber;
         this.connectedPlayers = connectedPlayers;
+        this.playersDetails = new HashMap<>();
+    }
+
+    public JsonHub()
+    {
         this.playersDetails = new HashMap<>();
     }
 
@@ -34,9 +38,19 @@ public class JsonHub
             this.playersDetails.put(display, 1);
     }
 
-    public int getLobbyNumber()
+    public void setHubNumber(int hubNumber)
     {
-        return this.lobbyNumber;
+        this.hubNumber = hubNumber;
+    }
+
+    public void setConnectedPlayers(int connectedPlayers)
+    {
+        this.connectedPlayers = connectedPlayers;
+    }
+
+    public int getHubNumber()
+    {
+        return this.hubNumber;
     }
 
     public int getConnectedPlayers()

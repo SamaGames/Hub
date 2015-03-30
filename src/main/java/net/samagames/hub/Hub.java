@@ -1,7 +1,8 @@
 package net.samagames.hub;
 
+import net.samagames.hub.commands.CommandClickMe;
 import net.samagames.hub.commands.CommandNPC;
-import net.samagames.hub.common.ErrorHandle;
+import net.samagames.hub.common.HubRefresher;
 import net.samagames.hub.common.managers.*;
 import net.samagames.hub.events.player.GuiListener;
 import net.samagames.hub.events.player.JumpListener;
@@ -37,12 +38,12 @@ public class Hub extends JavaPlugin
     private GameManager gameManager;
     private JumpManager jumpManager;
 
+    private HubRefresher hubRefresher;
+
     @Override
     public void onEnable()
     {
         instance = this;
-
-        Thread.setDefaultUncaughtExceptionHandler(new ErrorHandle());
 
         this.hubWorld = Bukkit.getWorlds().get(0);
 
@@ -58,10 +59,6 @@ public class Hub extends JavaPlugin
         this.jumpManager = new JumpManager(this);
         this.log(Level.INFO, "Managers loaded with success.");
 
-        this.log(Level.INFO, "Subscribing channels...");
-        //SamaGamesAPI.get().getPubSub().subscribe("lobbysChannel", new ArenaSubscriber());
-        this.log(Level.INFO, "Channels subscribed with success.");
-
         this.log(Level.INFO, "Registering events...");
         this.registerEvents();
         this.log(Level.INFO, "Events registered with success.");
@@ -69,6 +66,11 @@ public class Hub extends JavaPlugin
         this.log(Level.INFO, "Registering commands...");
         this.registerCommands();
         this.log(Level.INFO, "Commands registered with success.");
+
+        this.log(Level.INFO, "Starting HubRefresher...");
+        this.hubRefresher = new HubRefresher(this);
+        Bukkit.getScheduler().runTaskTimerAsynchronously(this, this.hubRefresher, 20, 20);
+        this.log(Level.INFO, "Hubs list will be refreshed every seconds.");
 
         this.log(Level.INFO, "Hub ready!");
     }
@@ -96,6 +98,7 @@ public class Hub extends JavaPlugin
     public void registerCommands()
     {
         this.registerCommand("npc", CommandNPC.class);
+        this.registerCommand("click", CommandClickMe.class);
     }
 
     public void registerCommand(String executionTag, Class<? extends CommandExecutor> command)
@@ -127,6 +130,11 @@ public class Hub extends JavaPlugin
     public World getHubWorld()
     {
         return this.hubWorld;
+    }
+
+    public HubRefresher getHubRefresher()
+    {
+        return this.hubRefresher;
     }
 
     public static Hub getInstance()

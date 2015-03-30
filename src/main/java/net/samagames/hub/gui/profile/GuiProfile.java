@@ -19,7 +19,7 @@ public class GuiProfile extends Gui
 
         this.setSlotData(ChatColor.GOLD + "Statistiques", Material.ENCHANTED_BOOK, 0, new String[] { ChatColor.GRAY + "Retrouvez vos scores et classements !" }, "stats");
         this.setSlotData(ChatColor.GOLD + "Objectifs", Material.DIAMOND, 1, new String[] { ChatColor.GRAY + "Allez-vous réussir à tous les", ChatColor.GRAY + "compléter ?" }, "achievements");
-        this.setSlotData(ChatColor.GOLD + "Paramêtres", Material.DIODE, 7, new String[] { ChatColor.GRAY + "Vos préférences sur le serveur" }, "settings");
+        this.setSlotData(ChatColor.GOLD + "Paramètres", Material.DIODE, 7, new String[] { ChatColor.GRAY + "Vos préférences sur le serveur" }, "settings");
 
         this.setSlotData(GuiUtils.getBackItem(), 8, "back");
 
@@ -31,7 +31,7 @@ public class GuiProfile extends Gui
     {
         if(action.equals("stats"))
         {
-            Hub.getInstance().getGuiManager().openGui(player, new GuiStats());
+            Hub.getInstance().getGuiManager().openGui(player, new GuiStats(player));
         }
         else if(action.equals("achievements"))
         {

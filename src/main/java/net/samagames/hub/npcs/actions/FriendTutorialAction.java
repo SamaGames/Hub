@@ -21,7 +21,7 @@ public class FriendTutorialAction extends HistoryAction
                 { ChatColor.GREEN + "Quant à elle, " + ChatColor.GOLD + "/friends requests" + ChatColor.GREEN + " vous permet de voir vos demandes d'amis ;", 6 },
                 { ChatColor.GREEN + "Tandis que la commande " + ChatColor.GOLD + "/friends list" + ChatColor.GREEN + " vous permet de voir votre liste d'amis.", 6 },
                 { ChatColor.GREEN + "Une dernière chose, " + ChatColor.GOLD + "/friends tp <Joueur>" + ChatColor.GREEN + " vous permet de vous téléporter.", 6 },
-                { ChatColor.GREEN + "A un de vos " + ChatColor.GOLD + "amis" + ChatColor.GREEN + " bien sur ! En jeu si la partie n'est pas commencée, ou sur le même hub !", 5 },
+                { ChatColor.GREEN + "A un de vos " + ChatColor.GOLD + "amis" + ChatColor.GREEN + " bien sûr ! En jeu si la partie n'est pas commencée, ou sur le même hub !", 5 },
                 { ChatColor.GREEN + "Vous êtes fin prêt pour ajouter tous vos amis !", 4 },
 
                 { ChatColor.GREEN + "Bon jeu sur " + ChatColor.GOLD + "SamaGames" + ChatColor.GREEN + " !", 1 }

@@ -2,7 +2,7 @@ package net.samagames.hub.common;
 
 import net.md_5.bungee.api.ChatColor;
 import net.samagames.hub.Hub;
-import net.samagames.hub.gui.GuiMain;
+import net.samagames.hub.gui.main.GuiMain;
 import net.samagames.hub.gui.profile.GuiProfile;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

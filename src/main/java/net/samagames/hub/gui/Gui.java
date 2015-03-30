@@ -16,6 +16,7 @@ public abstract class Gui
     protected Inventory inventory;
 
     public abstract void display(Player player);
+    public void update(Player player) {}
 
     public void onClick(Player player, ItemStack stack, String action, ClickType clickType)
     {
@@ -70,6 +71,15 @@ public abstract class Gui
             return null;
 
         return this.actions.get(slot);
+    }
+
+    public int getSlot(String action)
+    {
+        for(int slot : this.actions.keySet())
+            if(this.actions.get(slot).equals(action))
+                return slot;
+
+        return 0;
     }
 
     public Inventory getInventory()

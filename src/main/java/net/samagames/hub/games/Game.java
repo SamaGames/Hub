@@ -5,6 +5,7 @@ import org.bukkit.Material;
 
 public class Game
 {
+    private final String codeName;
     private final String name;
     private final Material icon;
     private final String[] description;
@@ -14,8 +15,9 @@ public class Game
 
     //TODO: Sign array
 
-    public Game(String name, Material icon, String[] description, int slotInMainMenu, Location lobbySpawn, boolean locked)
+    public Game(String codeName, String name, Material icon, String[] description, int slotInMainMenu, Location lobbySpawn, boolean locked)
     {
+        this.codeName = codeName;
         this.name = name;
         this.icon = icon;
         this.slotInMainMenu = slotInMainMenu;
@@ -26,6 +28,11 @@ public class Game
             this.description = new String[] { "Prochainement..." };
         else
             this.description = description;
+    }
+
+    public String getCodeName()
+    {
+        return this.codeName;
     }
 
     public String getName()

@@ -3,8 +3,10 @@ package net.samagames.hub.events.player;
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.api.player.PlayerData;
 import net.samagames.hub.Hub;
+import net.samagames.hub.gui.profile.GuiClickMe;
 import net.samagames.permissionsbukkit.PermissionsBukkit;
 import net.samagames.tools.InventoryUtils;
+import net.samagames.tools.PlayerUtils;
 import net.samagames.tools.Titles;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.*;
@@ -151,22 +153,22 @@ public class PlayerListener implements Listener
             /**
              * TODO: Teleport player to his previous game lobby
              *
-            final Region l = Plugin.regionsManager.getLobbyByName(lobby);
+             final Region l = Plugin.regionsManager.getLobbyByName(lobby);
 
-            if (l == null || l.getName().equalsIgnoreCase("main") || l.getSpawn() == null)
-            {
-                teleportPlayer(p, Plugin.spawn);
-                return;
-            }
+             if (l == null || l.getName().equalsIgnoreCase("main") || l.getSpawn() == null)
+             {
+             teleportPlayer(p, Plugin.spawn);
+             return;
+             }
 
-            teleportPlayer(p, l.getSpawn());
-            **/
+             teleportPlayer(p, l.getSpawn());
+             **/
 
             /**
              * TODO: Hider
              *
-            Hub.getInstance().hider.onLogin(p);
-            **/
+             Hub.getInstance().hider.onLogin(p);
+             **/
 
             final Player p = event.getPlayer();
             Map<String, String> data = SamaGamesAPI.get().getPlayerManager().getPlayerData(p.getUniqueId()).getValues();
@@ -174,50 +176,49 @@ public class PlayerListener implements Listener
             /**
              * TODO: Put back player's particle on connection [Recreate code needed]
              *
-            if (data.get("currentparticle") != null)
-                Hub.getInstance().cosmeticsManager.getCosmeticHandler().addFXToPlayer(p, Plugin.cosmeticsManager.getParticle(data.get("currentparticle")));
-            **/
+             if (data.get("currentparticle") != null)
+             Hub.getInstance().cosmeticsManager.getCosmeticHandler().addFXToPlayer(p, Plugin.cosmeticsManager.getParticle(data.get("currentparticle")));
+             **/
 
             /**
              * TODO: Create back player's pet on connection [Recreate code needed]
              *
-            if (data.get("selectedpet") != null)
-            {
-                Bukkit.getScheduler().runTaskLater(Hub.getInstance(), () ->
-                {
-                    AbstractPet pet = Plugin.cosmeticsManager.getPet(data.get("selectedpet"));
+             if (data.get("selectedpet") != null)
+             {
+             Bukkit.getScheduler().runTaskLater(Hub.getInstance(), () ->
+             {
+             AbstractPet pet = Plugin.cosmeticsManager.getPet(data.get("selectedpet"));
 
-                    if (pet != null)
-                        Plugin.cosmeticsManager.spawnPet(p, pet, data.get("petssettings"));
-                }, 40L);
-            }
-            **/
+             if (pet != null)
+             Plugin.cosmeticsManager.spawnPet(p, pet, data.get("petssettings"));
+             }, 40L);
+             }
+             **/
 
             /**
              * TODO: Put back player's disguise on connection [Recreate code needed]
              *
-            if (data.get("currentdisguise") != null)
-            {
-                Bukkit.getScheduler().runTaskLaterAsynchronously(Plugin.instance, () -> {
-                    AbstractDisguise disguise = Plugin.cosmeticsManager.getDisguise(data.get("currentdisguise"));
-                    if (disguise != null) {
-                        Disguise d = disguise.getDisguise();
-                        if (d instanceof MobDisguise) {
-                            d.getWatcher().setCustomNameVisible(true);
-                            d.getWatcher().setCustomName(p.getDisplayName());
-                        }
+             if (data.get("currentdisguise") != null)
+             {
+             Bukkit.getScheduler().runTaskLaterAsynchronously(Plugin.instance, () -> {
+             AbstractDisguise disguise = Plugin.cosmeticsManager.getDisguise(data.get("currentdisguise"));
+             if (disguise != null) {
+             Disguise d = disguise.getDisguise();
+             if (d instanceof MobDisguise) {
+             d.getWatcher().setCustomNameVisible(true);
+             d.getWatcher().setCustomName(p.getDisplayName());
+             }
 
-                        d.setViewSelfDisguise(Plugin.cosmeticsManager.getStorageHandler().getViewSelfDisguise(p));
+             d.setViewSelfDisguise(Plugin.cosmeticsManager.getStorageHandler().getViewSelfDisguise(p));
 
-                        DisguiseAPI.disguiseToAll(p, d);
-                    }
-                }, 5L);
-            }
-            **/
+             DisguiseAPI.disguiseToAll(p, d);
+             }
+             }, 5L);
+             }
+             **/
 
             String chatOnSetting = SamaGamesAPI.get().getSettingsManager().getSetting(event.getPlayer().getUniqueId(), "chaton");
-            if (chatOnSetting != null && chatOnSetting.equals("false"))
-            {
+            if (chatOnSetting != null && chatOnSetting.equals("false")) {
                 Hub.getInstance().getChatManager().disableChat(event.getPlayer());
                 event.getPlayer().sendMessage(ChatColor.GOLD + "Vous avez désactivé le chat. Vous ne verrez donc pas les messages des joueurs.");
             }
@@ -225,32 +226,32 @@ public class PlayerListener implements Listener
             /**
              * TODO: Jukebox cosmetics system (Connection event) [Recreate code needed]
              *
-            String jukeboxSetting = SettingsManager.getSetting(event.getPlayer().getUniqueId(), "jukeboxenabled");
-            if (jukeboxSetting == null || jukeboxSetting.equals("true"))
-            {
-                Hub.getInstance().getCosmeticsManager().getNoteBlockMachine().addPlayer(p);
+             String jukeboxSetting = SettingsManager.getSetting(event.getPlayer().getUniqueId(), "jukeboxenabled");
+             if (jukeboxSetting == null || jukeboxSetting.equals("true"))
+             {
+             Hub.getInstance().getCosmeticsManager().getNoteBlockMachine().addPlayer(p);
 
-                PlaylistSong song = Hub.getInstance().getCosmeticsManager().getNoteBlockMachine().getCurrentSong();
+             PlaylistSong song = Hub.getInstance().getCosmeticsManager().getNoteBlockMachine().getCurrentSong();
 
-                if (song != null)
-                    event.getPlayer().sendMessage(NoteBlockMachine.TAG + ChatColor.YELLOW + "La musique jouée actuellement est "+ChatColor.GOLD + ChatColor.ITALIC + song.getSong().getTitle() + ChatColor.YELLOW +" de "+ChatColor.GOLD + song.getSong().getAuthor() + ChatColor.YELLOW + ", proposée par " + ChatColor.GOLD + song.getPlayedBy());
-            }
-            else
-            {
-                Hub.getInstance().getCosmeticsManager().getNoteBlockMachine().disableFor(p.getUniqueId());
-            }
-            **/
+             if (song != null)
+             event.getPlayer().sendMessage(NoteBlockMachine.TAG + ChatColor.YELLOW + "La musique jouée actuellement est "+ChatColor.GOLD + ChatColor.ITALIC + song.getSong().getTitle() + ChatColor.YELLOW +" de "+ChatColor.GOLD + song.getSong().getAuthor() + ChatColor.YELLOW + ", proposée par " + ChatColor.GOLD + song.getPlayedBy());
+             }
+             else
+             {
+             Hub.getInstance().getCosmeticsManager().getNoteBlockMachine().disableFor(p.getUniqueId());
+             }
+             **/
 
             Titles.sendTabTitle(p, ChatColor.GREEN + "Bienvenue sur mc.samagames.net !", ChatColor.AQUA + "Teamspeak : ts.samagames.net");
 
             Hub.getInstance().getScoreboardManager().addScoreboardReceiver(player);
             Hub.getInstance().getHologramManager().addReceiver(player);
 
-            if(PermissionsBukkit.hasPermission(player, "lobby.announce"))
-                Bukkit.broadcastMessage(player.getDisplayName() + ChatColor.YELLOW + " à rejoint le hub !");
-
             player.teleport(new Location(Bukkit.getWorlds().get(0), -19, 51, 89));
         });
+
+        if(PermissionsBukkit.hasPermission(player, "lobby.announce"))
+            Bukkit.broadcastMessage(PlayerUtils.getFullyFormattedPlayerName(player) + ChatColor.YELLOW + " a rejoint le hub !");
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
@@ -322,15 +323,15 @@ public class PlayerListener implements Listener
 
             Bukkit.getScheduler().runTaskAsynchronously(Hub.getInstance(), () ->
             {
-                /**
-                 * TODO: Include ClickMe
-                 *
-                if (!ClickMeSettings.ClickMeCanclick.getValue(player.getUniqueId()).equals("true"))
-                    return;
+                if(SamaGamesAPI.get().getSettingsManager().isEnabled(player.getUniqueId(), "clickme-punch", true))
+                {
+                    Player target = (Player) event.getEntity();
 
-                Player target = (Player) event.getEntity();
-                ClickMe.generateMenu(target.getName(), player);
-                **/
+                    if (!SamaGamesAPI.get().getSettingsManager().isEnabled(target.getUniqueId(), "clickme", false))
+                        return;
+
+                    Hub.getInstance().getGuiManager().openGui(player, new GuiClickMe(target));
+                }
             });
 
         }

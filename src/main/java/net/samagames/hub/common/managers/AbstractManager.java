@@ -14,4 +14,9 @@ public abstract class AbstractManager
     public void onServerClose() {}
 
     public abstract String getName();
+
+    public Hub getHub()
+    {
+        return this.hub;
+    }
 }

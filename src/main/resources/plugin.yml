@@ -6,6 +6,18 @@ website: http://samagames.net/
 depend: [SamaGamesAPI]
 
 commands:
+  # Player commands ----------------------------
+  click:
+    description: Commande relative au ClickMe
+    usage: /click <Joueur>
+    alias: /clickme
+
+  # Admin commands -----------------------------
   npc:
     description: Commandes relatives aux NPC's
     usage: /npc
+
+  # Easter Eggs --------------------------------
+  lamernoar:
+    description: Easter Egg
+    usage: /lamernoar

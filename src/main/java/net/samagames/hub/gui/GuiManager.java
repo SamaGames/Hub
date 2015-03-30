@@ -15,7 +15,6 @@ public class GuiManager extends AbstractManager
     public GuiManager(Hub hub)
     {
         super(hub);
-
         this.currentGUIs = new ConcurrentHashMap<>();
     }
 
@@ -50,6 +49,11 @@ public class GuiManager extends AbstractManager
             return this.currentGUIs.get(player.getUniqueId());
 
         return null;
+    }
+
+    public ConcurrentHashMap<UUID, Gui> getPlayersGui()
+    {
+        return this.currentGUIs;
     }
 
     @Override

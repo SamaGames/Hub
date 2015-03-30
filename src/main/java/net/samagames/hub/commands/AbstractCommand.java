@@ -17,7 +17,7 @@ public abstract class AbstractCommand implements CommandExecutor
     }
 
     @Override
-    public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings)
+    public boolean onCommand(CommandSender commandSender, Command command, String s, String[] args)
     {
         if(!(commandSender instanceof Player))
         {
@@ -34,10 +34,10 @@ public abstract class AbstractCommand implements CommandExecutor
             }
         }
 
-        return this.doAction((Player) commandSender, command, s, strings);
+        return this.doAction((Player) commandSender, command, s, args);
     }
 
-    public abstract boolean doAction(Player player, Command command, String s, String[] arguments);
+    public abstract boolean doAction(Player player, Command command, String s, String[] args);
 
     public boolean hasPermission(Player player)
     {
