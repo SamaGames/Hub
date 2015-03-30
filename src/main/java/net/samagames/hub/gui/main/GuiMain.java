@@ -1,7 +1,8 @@
-package net.samagames.hub.gui;
+package net.samagames.hub.gui.main;
 
 import net.samagames.hub.Hub;
 import net.samagames.hub.games.Game;
+import net.samagames.hub.gui.Gui;
 import net.samagames.hub.gui.main.GuiSwitchHub;
 import net.samagames.permissionsbukkit.PermissionsBukkit;
 import net.samagames.tools.BungeeUtils;
@@ -85,7 +86,7 @@ public class GuiMain extends Gui
             if(!game.isLocked())
                 player.teleport(game.getLobbySpawn());
             else
-                player.sendMessage(ChatColor.RED + "Ce jeu n'est pas disponnible !");
+                player.sendMessage(ChatColor.RED + "Ce jeu n'est pas disponible !");
         }
     }
 
