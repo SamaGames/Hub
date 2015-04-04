@@ -1,26 +1,62 @@
 package net.samagames.hub.games.type;
 
 import net.samagames.hub.Hub;
-import net.samagames.hub.games.AbstractGame;
+import net.samagames.hub.games.IGame;
+import net.samagames.hub.games.shop.ShopConfiguration;
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 
-public class UHCRunGame extends AbstractGame
+public class UHCRunGame implements IGame
 {
-
-    public UHCRunGame(boolean locked)
+    @Override
+    public String getCodeName()
     {
-        super(
-                "uhcrun",
-                "UHCRun",
-                Material.WATCH,
-                new String[] {
-                        "Vous aimes les UHC mais vous n'avez",
-                        "pas le temps ? Ce jeu est fait pour vous !"
-                },
-                23,
-                Hub.getInstance().getPlayerManager().getLobbySpawn(),
-                null,
-                locked
-        );
+        return "uhcrun";
+    }
+
+    @Override
+    public String getName()
+    {
+        return "UHCRun";
+    }
+
+    @Override
+    public ItemStack getIcon()
+    {
+        return new ItemStack(Material.WATCH, 1);
+    }
+
+    @Override
+    public String[] getDescription()
+    {
+        return new String[] {
+                "Vous aimes les UHC mais vous n'avez",
+                "pas le temps ? Ce jeu est fait pour vous !"
+        };
+    }
+
+    @Override
+    public int getSlotInMainMenu()
+    {
+        return 14;
+    }
+
+    @Override
+    public ShopConfiguration getShopConfiguration()
+    {
+        return null;
+    }
+
+    @Override
+    public Location getLobbySpawn()
+    {
+        return Hub.getInstance().getPlayerManager().getLobbySpawn();
+    }
+
+    @Override
+    public boolean isLocked()
+    {
+        return false;
     }
 }
