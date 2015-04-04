@@ -2,6 +2,7 @@ package net.samagames.hub.gui.shop;
 
 import net.samagames.hub.Hub;
 import net.samagames.hub.games.IGame;
+import net.samagames.hub.games.shop.ShopCategory;
 import net.samagames.hub.games.shop.ShopIcon;
 import net.samagames.hub.gui.AbstractGui;
 import net.samagames.hub.utils.GuiUtils;
@@ -10,13 +11,17 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 
-public class GuiGameShop extends AbstractGui
+public class GuiShopCategory extends AbstractGui
 {
     private final IGame game;
+    private final ShopCategory category;
+    private final AbstractGui before;
 
-    public GuiGameShop(IGame game)
+    public GuiShopCategory(IGame game, ShopCategory category, AbstractGui before)
     {
         this.game = game;
+        this.category = category;
+        this.before = before;
     }
 
     @Override
@@ -34,7 +39,7 @@ public class GuiGameShop extends AbstractGui
     {
         int slot = 0;
 
-        for(ShopIcon item : this.game.getShopConfiguration().getShopItems())
+        for(ShopIcon item : this.category.getContents())
         {
             this.setSlotData(item.getFormattedIcon(player), slot, "item_" + item.getActionName());
             slot++;
@@ -48,7 +53,7 @@ public class GuiGameShop extends AbstractGui
     {
         if(action.equals("back"))
         {
-            Hub.getInstance().getGuiManager().openGui(player, new GuiShop());
+            Hub.getInstance().getGuiManager().openGui(player, this.before);
         }
         else
         {

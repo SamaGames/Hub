@@ -4,27 +4,29 @@ import java.util.ArrayList;
 
 public class ShopConfiguration
 {
-    private final int guiShopSlot;
-    private final ArrayList<ShopItem> shopItems;
+    private final ArrayList<ShopIcon> shopItems;
 
-    public ShopConfiguration(int guiShopSlot)
+    public ShopConfiguration()
     {
-        this.guiShopSlot = guiShopSlot;
         this.shopItems = new ArrayList<>();
     }
 
-    public void addShopItem(ShopItem item)
+    public void addShopItem(ShopIcon item)
     {
         if(!this.shopItems.contains(item))
             this.shopItems.add(item);
     }
 
-    public int getGuiShopSlot()
+    public ShopIcon getShopItemByName(String databaseName)
     {
-        return this.guiShopSlot;
+        for(ShopIcon item : this.shopItems)
+            if(item.getActionName().equals(databaseName))
+                return item;
+
+        return null;
     }
 
-    public ArrayList<ShopItem> getShopItems()
+    public ArrayList<ShopIcon> getShopItems()
     {
         return this.shopItems;
     }

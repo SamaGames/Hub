@@ -25,21 +25,21 @@ public class HeroBattleGame implements IGame
     @Override
     public ItemStack getIcon()
     {
-        return new ItemStack(Material.INK_SACK, 1, (short) DyeColor.RED.ordinal());
+        return new ItemStack(Material.INK_SACK, 1, DyeColor.RED.getDyeData());
     }
 
     @Override
     public String[] getDescription()
     {
         return new String[] {
-                ""
+                "Prochainement..."
         };
     }
 
     @Override
     public int getSlotInMainMenu()
     {
-        return 22;
+        return 31;
     }
 
     @Override

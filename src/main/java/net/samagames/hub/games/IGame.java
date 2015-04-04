@@ -17,6 +17,6 @@ public interface IGame
 
     public default boolean hasShop()
     {
-        return this.getShopConfiguration() != null && this.getShopConfiguration().getGuiShopSlot() != -1;
+        return this.getShopConfiguration() != null;
     }
 }

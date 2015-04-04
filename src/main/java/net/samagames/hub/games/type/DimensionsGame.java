@@ -3,10 +3,12 @@ package net.samagames.hub.games.type;
 import net.samagames.hub.Hub;
 import net.samagames.hub.games.IGame;
 import net.samagames.hub.games.shop.ShopConfiguration;
-import net.samagames.hub.games.shop.ShopItem;
+import net.samagames.hub.games.shop.ShopImprovableItem;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.Potion;
+import org.bukkit.potion.PotionType;
 
 public class DimensionsGame implements IGame
 {
@@ -41,27 +43,74 @@ public class DimensionsGame implements IGame
     @Override
     public int getSlotInMainMenu()
     {
-        return 13;
+        return 22;
     }
 
     @Override
     public ShopConfiguration getShopConfiguration()
     {
-        ShopConfiguration shopConfiguration = new ShopConfiguration(13);
+        ShopConfiguration shopConfiguration = new ShopConfiguration();
 
-        ShopItem healOfKillItem = new ShopItem(this, "dimensions.healofkill", "Soin au meurtre", new String[] {
+        ShopImprovableItem healOnKillItem = new ShopImprovableItem(this, "healAtKill", "Soin au meurtre", new ItemStack(Material.SPECKLED_MELON, 1), new String[] {
                 "Quand vous causerez un meurtre,",
                 "vous serez plus ou moins soigné",
                 "suivant le niveau de cette amélioration."
-        }, new ItemStack(Material.SPECKLED_MELON, 1));
+        });
 
-        healOfKillItem.addLevel(400, new String[] { "1 Coeur" }, "2");
-        healOfKillItem.addLevel(3200, new String[] { "2 Coeur" }, "4");
-        healOfKillItem.addLevel(9100, new String[] { "3 Coeur" }, "6");
-        healOfKillItem.addLevel(24700, new String[] { "4 Coeur" }, "8");
-        healOfKillItem.addLevel(60000, new String[] { "5 Coeur" }, "10");
+        healOnKillItem.addLevel(400, "1 coeur", "2");
+        healOnKillItem.addLevel(3200, "2 coeurs", "4");
+        healOnKillItem.addLevel(9100, "3 coeurs", "6");
+        healOnKillItem.addLevel(24700, "4 coeurs", "8");
+        healOnKillItem.addLevel(60000, "5 coeurs", "10");
 
-        shopConfiguration.addShopItem(healOfKillItem);
+        shopConfiguration.addShopItem(healOnKillItem);
+
+        ShopImprovableItem strenghtOnKill = new ShopImprovableItem(this, "strengthAtKill", "Force au meurtre", new Potion(PotionType.STRENGTH).toItemStack(1), new String[] {
+                "Quand vous causerez un meurtre,",
+                "vous aurez un bonus de force pendant un",
+                "certain temps suivant niveau de cette",
+                "amélioration."
+        });
+
+        strenghtOnKill.addLevel(900, "3 secondes", "3");
+        strenghtOnKill.addLevel(2800, "5 secondes", "5");
+        strenghtOnKill.addLevel(6500, "7 secondes", "7");
+        strenghtOnKill.addLevel(14700, "9 secondes", "9");
+        strenghtOnKill.addLevel(26100, "10 secondes", "10");
+        strenghtOnKill.addLevel(40000, "11 secondes", "11");
+
+        shopConfiguration.addShopItem(strenghtOnKill);
+
+        ShopImprovableItem healOnStrikeItem = new ShopImprovableItem(this, "healAtStrike", "Soin au combat", new Potion(PotionType.INSTANT_HEAL).toItemStack(1), new String[] {
+                "Pendant un combat, vous avez un certain",
+                "pourcentage de chance de regagner de la vie",
+                "suivant niveau de cette amélioration."
+        });
+
+        healOnStrikeItem.addLevel(200, "2% de chance", "2");
+        healOnStrikeItem.addLevel(800, "4% de chance", "4");
+        healOnStrikeItem.addLevel(2300, "6% de chance", "6");
+        healOnStrikeItem.addLevel(5500, "7% de chance", "7");
+        healOnStrikeItem.addLevel(11200, "8% de chance", "8");
+        healOnStrikeItem.addLevel(26600, "9% de chance", "9");
+        healOnStrikeItem.addLevel(40000, "10% de chance", "10");
+
+        shopConfiguration.addShopItem(healOnStrikeItem);
+
+        ShopImprovableItem swapCooldownItem = new ShopImprovableItem(this, "tpTime", "Espacement de Swap", new ItemStack(Material.EYE_OF_ENDER, 1), new String[] {
+                "Pendant un combat, vous avez un certain",
+                "pourcentage de chance de regagner de la vie",
+                "suivant niveau de cette amélioration."
+        });
+
+        swapCooldownItem.addDefault("17 secondes");
+        swapCooldownItem.addLevel(1200, "14 secondes", "14");
+        swapCooldownItem.addLevel(4600, "12 secondes", "12");
+        swapCooldownItem.addLevel(9800, "10 secondes", "10");
+        swapCooldownItem.addLevel(17400, "8 secondes", "8");
+        swapCooldownItem.addLevel(35000, "7 secondes", "7");
+
+        shopConfiguration.addShopItem(swapCooldownItem);
 
         return shopConfiguration;
     }

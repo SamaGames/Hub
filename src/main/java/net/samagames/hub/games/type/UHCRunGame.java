@@ -39,7 +39,7 @@ public class UHCRunGame implements IGame
     @Override
     public int getSlotInMainMenu()
     {
-        return 14;
+        return 23;
     }
 
     @Override

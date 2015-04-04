@@ -28,7 +28,8 @@ public class UpperVoidGame implements IGame
     }
 
     @Override
-    public String[] getDescription() {
+    public String[] getDescription()
+    {
         return new String[] {
                 "Affrontez les autres joueurs dans une arène.",
                 "Faites-les tomber dans le vide à l'aide de vos",
@@ -38,8 +39,9 @@ public class UpperVoidGame implements IGame
     }
 
     @Override
-    public int getSlotInMainMenu() {
-        return 11;
+    public int getSlotInMainMenu()
+    {
+        return 20;
     }
 
     @Override

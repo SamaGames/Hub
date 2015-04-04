@@ -30,13 +30,15 @@ public class QuakeGame implements IGame
     @Override
     public String[] getDescription()
     {
-        return new String[0];
+        return new String[] {
+                "Prochainement..."
+        };
     }
 
     @Override
     public int getSlotInMainMenu()
     {
-        return 15;
+        return 24;
     }
 
     @Override

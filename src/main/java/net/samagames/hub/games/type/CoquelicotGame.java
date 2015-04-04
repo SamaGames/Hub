@@ -40,7 +40,7 @@ public class CoquelicotGame implements IGame
     @Override
     public int getSlotInMainMenu()
     {
-        return 4;
+        return 13;
     }
 
     @Override
