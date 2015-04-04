@@ -24,7 +24,6 @@ import org.bukkit.potion.PotionEffectType;
 import org.spigotmc.event.entity.EntityDismountEvent;
 
 import java.util.Date;
-import java.util.Map;
 import java.util.UUID;
 
 public class PlayerListener implements Listener
@@ -142,98 +141,15 @@ public class PlayerListener implements Listener
 
         Bukkit.getScheduler().runTaskAsynchronously(Hub.getInstance(), () ->
         {
+            Hub.getInstance().getCosmeticManager().getParticleManager().restoreCosmetic(player);
 
-            /**
-             * TODO: Teleport player to his previous game lobby
-             *
-             final Region l = Plugin.regionsManager.getLobbyByName(lobby);
+            String chatOnSetting = SamaGamesAPI.get().getSettingsManager().getSetting(event.getPlayer().getUniqueId(), "chat");
 
-             if (l == null || l.getName().equalsIgnoreCase("main") || l.getSpawn() == null)
-             {
-             teleportPlayer(p, Plugin.spawn);
-             return;
-             }
-
-             teleportPlayer(p, l.getSpawn());
-             **/
-
-            /**
-             * TODO: Hider
-             *
-             Hub.getInstance().hider.onLogin(p);
-             **/
-
-            final Player p = event.getPlayer();
-            Map<String, String> data = SamaGamesAPI.get().getPlayerManager().getPlayerData(p.getUniqueId()).getValues();
-
-            /**
-             * TODO: Put back player's particle on connection [Recreate code needed]
-             *
-             if (data.get("currentparticle") != null)
-             Hub.getInstance().cosmeticsManager.getCosmeticHandler().addFXToPlayer(p, Plugin.cosmeticsManager.getParticle(data.get("currentparticle")));
-             **/
-
-            /**
-             * TODO: Create back player's pet on connection [Recreate code needed]
-             *
-             if (data.get("selectedpet") != null)
-             {
-             Bukkit.getScheduler().runTaskLater(Hub.getInstance(), () ->
-             {
-             AbstractPet pet = Plugin.cosmeticsManager.getPet(data.get("selectedpet"));
-
-             if (pet != null)
-             Plugin.cosmeticsManager.spawnPet(p, pet, data.get("petssettings"));
-             }, 40L);
-             }
-             **/
-
-            /**
-             * TODO: Put back player's disguise on connection [Recreate code needed]
-             *
-             if (data.get("currentdisguise") != null)
-             {
-             Bukkit.getScheduler().runTaskLaterAsynchronously(Plugin.instance, () -> {
-             AbstractDisguise disguise = Plugin.cosmeticsManager.getDisguise(data.get("currentdisguise"));
-             if (disguise != null) {
-             Disguise d = disguise.getDisguise();
-             if (d instanceof MobDisguise) {
-             d.getWatcher().setCustomNameVisible(true);
-             d.getWatcher().setCustomName(p.getDisplayName());
-             }
-
-             d.setViewSelfDisguise(Plugin.cosmeticsManager.getStorageHandler().getViewSelfDisguise(p));
-
-             DisguiseAPI.disguiseToAll(p, d);
-             }
-             }, 5L);
-             }
-             **/
-
-            String chatOnSetting = SamaGamesAPI.get().getSettingsManager().getSetting(event.getPlayer().getUniqueId(), "chaton");
-            if (chatOnSetting != null && chatOnSetting.equals("false")) {
+            if (chatOnSetting != null && chatOnSetting.equals("false"))
+            {
                 Hub.getInstance().getChatManager().disableChat(event.getPlayer());
                 event.getPlayer().sendMessage(ChatColor.GOLD + "Vous avez désactivé le chat. Vous ne verrez donc pas les messages des joueurs.");
             }
-
-            /**
-             * TODO: Jukebox cosmetics system (Connection event) [Recreate code needed]
-             *
-             String jukeboxSetting = SettingsManager.getSetting(event.getPlayer().getUniqueId(), "jukeboxenabled");
-             if (jukeboxSetting == null || jukeboxSetting.equals("true"))
-             {
-             Hub.getInstance().getCosmeticsManager().getNoteBlockMachine().addPlayer(p);
-
-             PlaylistSong song = Hub.getInstance().getCosmeticsManager().getNoteBlockMachine().getCurrentSong();
-
-             if (song != null)
-             event.getPlayer().sendMessage(NoteBlockMachine.TAG + ChatColor.YELLOW + "La musique jouée actuellement est "+ChatColor.GOLD + ChatColor.ITALIC + song.getSong().getTitle() + ChatColor.YELLOW +" de "+ChatColor.GOLD + song.getSong().getAuthor() + ChatColor.YELLOW + ", proposée par " + ChatColor.GOLD + song.getPlayedBy());
-             }
-             else
-             {
-             Hub.getInstance().getCosmeticsManager().getNoteBlockMachine().disableFor(p.getUniqueId());
-             }
-             **/
 
             Hub.getInstance().getScoreboardManager().addScoreboardReceiver(player);
             Hub.getInstance().getHologramManager().addReceiver(player);

@@ -1,4 +1,4 @@
-package net.samagames.hub.cosmetics;
+package net.samagames.hub.cosmetics.common;
 
 import net.samagames.api.SamaGamesAPI;
 import org.bukkit.entity.Player;
@@ -21,6 +21,11 @@ public abstract class AbstractCosmetic
             this.handleUse(player);
         else
             this.handleBuy(player);
+    }
+
+    public String getDatabaseName()
+    {
+        return this.databaseName;
     }
 
     public boolean isOwned(Player player)
