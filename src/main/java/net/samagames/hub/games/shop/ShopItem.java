@@ -64,17 +64,4 @@ public class ShopItem
     {
         return this.levels;
     }
-
-    public int getLevelCaseByValue(String value)
-    {
-        for(int i = 0; i < this.levels.length; i++)
-        {
-            Object[] level = this.levels[i];
-
-            if(String.valueOf(level[2]).equals(value))
-                return i;
-        }
-
-        return -1;
-    }
 }
