@@ -4,6 +4,7 @@ import net.samagames.hub.commands.CommandClickMe;
 import net.samagames.hub.commands.CommandNPC;
 import net.samagames.hub.common.HubRefresher;
 import net.samagames.hub.common.managers.*;
+import net.samagames.hub.cosmetics.CosmeticManager;
 import net.samagames.hub.events.player.GuiListener;
 import net.samagames.hub.events.player.JumpListener;
 import net.samagames.hub.events.player.PlayerListener;
@@ -37,6 +38,7 @@ public class Hub extends JavaPlugin
     private ScoreboardManager scoreboardManager;
     private GameManager gameManager;
     private JumpManager jumpManager;
+    private CosmeticManager cosmeticManager;
 
     private HubRefresher hubRefresher;
 
@@ -57,6 +59,7 @@ public class Hub extends JavaPlugin
         this.scoreboardManager = new ScoreboardManager(this);
         this.gameManager = new GameManager(this);
         this.jumpManager = new JumpManager(this);
+        this.cosmeticManager = new CosmeticManager(this);
         this.log(Level.INFO, "Managers loaded with success.");
 
         this.log(Level.INFO, "Registering events...");
@@ -126,6 +129,7 @@ public class Hub extends JavaPlugin
     public ScoreboardManager getScoreboardManager() { return this.scoreboardManager; }
     public GameManager getGameManager() { return this.gameManager; }
     public JumpManager getJumpManager() { return this.jumpManager; }
+    public CosmeticManager getCosmeticManager() { return this.cosmeticManager; }
 
     public World getHubWorld()
     {

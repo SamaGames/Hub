@@ -2,7 +2,7 @@ package net.samagames.hub.games.type;
 
 import net.samagames.hub.Hub;
 import net.samagames.hub.games.IGame;
-import net.samagames.hub.games.shop.ShopConfiguration;
+import net.samagames.hub.games.shop.ShopCategory;
 import net.samagames.hub.games.shop.ShopImprovableItem;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -47,9 +47,9 @@ public class DimensionsGame implements IGame
     }
 
     @Override
-    public ShopConfiguration getShopConfiguration()
+    public ShopCategory getShopConfiguration()
     {
-        ShopConfiguration shopConfiguration = new ShopConfiguration();
+        ShopCategory parentCategory = new ShopCategory(this, null, null, null, null);
 
         ShopImprovableItem healOnKillItem = new ShopImprovableItem(this, "healAtKill", "Soin au meurtre", new ItemStack(Material.SPECKLED_MELON, 1), new String[] {
                 "Quand vous causerez un meurtre,",
@@ -63,7 +63,7 @@ public class DimensionsGame implements IGame
         healOnKillItem.addLevel(24700, "4 coeurs", "8");
         healOnKillItem.addLevel(60000, "5 coeurs", "10");
 
-        shopConfiguration.addShopItem(healOnKillItem);
+        parentCategory.addContent(healOnKillItem);
 
         ShopImprovableItem strenghtOnKill = new ShopImprovableItem(this, "strengthAtKill", "Force au meurtre", new Potion(PotionType.STRENGTH).toItemStack(1), new String[] {
                 "Quand vous causerez un meurtre,",
@@ -79,7 +79,7 @@ public class DimensionsGame implements IGame
         strenghtOnKill.addLevel(26100, "10 secondes", "10");
         strenghtOnKill.addLevel(40000, "11 secondes", "11");
 
-        shopConfiguration.addShopItem(strenghtOnKill);
+        parentCategory.addContent(strenghtOnKill);
 
         ShopImprovableItem healOnStrikeItem = new ShopImprovableItem(this, "healAtStrike", "Soin au combat", new Potion(PotionType.INSTANT_HEAL).toItemStack(1), new String[] {
                 "Pendant un combat, vous avez un certain",
@@ -95,7 +95,7 @@ public class DimensionsGame implements IGame
         healOnStrikeItem.addLevel(26600, "9% de chance", "9");
         healOnStrikeItem.addLevel(40000, "10% de chance", "10");
 
-        shopConfiguration.addShopItem(healOnStrikeItem);
+        parentCategory.addContent(healOnStrikeItem);
 
         ShopImprovableItem swapCooldownItem = new ShopImprovableItem(this, "tpTime", "Espacement de Swap", new ItemStack(Material.EYE_OF_ENDER, 1), new String[] {
                 "Pendant un combat, vous avez un certain",
@@ -110,9 +110,9 @@ public class DimensionsGame implements IGame
         swapCooldownItem.addLevel(17400, "8 secondes", "8");
         swapCooldownItem.addLevel(35000, "7 secondes", "7");
 
-        shopConfiguration.addShopItem(swapCooldownItem);
+        parentCategory.addContent(swapCooldownItem);
 
-        return shopConfiguration;
+        return parentCategory;
     }
 
     @Override

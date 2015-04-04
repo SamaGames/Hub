@@ -43,7 +43,8 @@ public class GuiShop extends AbstractGui
         }
         else if(action.startsWith("game_"))
         {
-            Hub.getInstance().getGuiManager().openGui(player, new GuiGameShop(Hub.getInstance().getGameManager().getGameByIdentifier(action.split("_")[1])));
+            IGame game = Hub.getInstance().getGameManager().getGameByIdentifier(action.split("_")[1]);
+            Hub.getInstance().getGuiManager().openGui(player, new GuiShopCategory(game, game.getShopConfiguration(), this));
         }
     }
 }

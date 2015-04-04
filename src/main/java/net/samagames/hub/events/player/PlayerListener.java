@@ -7,7 +7,6 @@ import net.samagames.hub.gui.profile.GuiClickMe;
 import net.samagames.permissionsbukkit.PermissionsBukkit;
 import net.samagames.tools.InventoryUtils;
 import net.samagames.tools.PlayerUtils;
-import net.samagames.tools.Titles;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.*;
 import org.bukkit.entity.EntityType;
@@ -137,6 +136,7 @@ public class PlayerListener implements Listener
         final Player player = event.getPlayer();
 
         player.setGameMode(GameMode.ADVENTURE);
+        player.setWalkSpeed(player.getWalkSpeed() * 2);
         InventoryUtils.cleanPlayer(player);
         Hub.getInstance().getPlayerManager().getStaticInventory().setInventoryToPlayer(player);
 
@@ -234,8 +234,6 @@ public class PlayerListener implements Listener
              Hub.getInstance().getCosmeticsManager().getNoteBlockMachine().disableFor(p.getUniqueId());
              }
              **/
-
-            Titles.sendTabTitle(p, ChatColor.GREEN + "Bienvenue sur mc.samagames.net !", ChatColor.AQUA + "Teamspeak : ts.samagames.net");
 
             Hub.getInstance().getScoreboardManager().addScoreboardReceiver(player);
             Hub.getInstance().getHologramManager().addReceiver(player);

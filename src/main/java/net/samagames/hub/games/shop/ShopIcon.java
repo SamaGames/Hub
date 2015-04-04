@@ -16,9 +16,12 @@ public abstract class ShopIcon
         this.actionName = actionName;
         this.icon = icon;
 
-        ItemMeta meta = this.icon.getItemMeta();
-        meta.setDisplayName(ChatColor.RESET + "" + ChatColor.GOLD + displayName);
-        this.icon.setItemMeta(meta);
+        if(icon != null)
+        {
+            ItemMeta meta = this.icon.getItemMeta();
+            meta.setDisplayName(ChatColor.RESET + "" + ChatColor.GOLD + displayName);
+            this.icon.setItemMeta(meta);
+        }
     }
 
     public abstract void execute(Player player, ClickType clickType);

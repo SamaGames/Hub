@@ -53,12 +53,15 @@ public class GuiShopCategory extends AbstractGui
     {
         if(action.equals("back"))
         {
-            Hub.getInstance().getGuiManager().openGui(player, this.before);
+            if(this.before != null)
+                Hub.getInstance().getGuiManager().openGui(player, this.before);
+            else
+                Hub.getInstance().getGuiManager().closeGui(player);
         }
         else
         {
-            String item = action.split("_")[1];
-            this.game.getShopConfiguration().getShopItemByName(item).execute(player, clickType);
+            String iconAction = action.split("_")[1];
+            this.category.getIconByAction(iconAction).execute(player, clickType);
         }
     }
 }

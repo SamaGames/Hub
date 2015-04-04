@@ -2,7 +2,7 @@ package net.samagames.hub.games.type;
 
 import net.samagames.hub.Hub;
 import net.samagames.hub.games.IGame;
-import net.samagames.hub.games.shop.ShopConfiguration;
+import net.samagames.hub.games.shop.ShopCategory;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -42,7 +42,7 @@ public class QuakeGame implements IGame
     }
 
     @Override
-    public ShopConfiguration getShopConfiguration()
+    public ShopCategory getShopConfiguration()
     {
         return null;
     }

@@ -15,15 +15,20 @@ public class ShopCategory extends ShopIcon
 {
     private final IGame game;
     private final String[] description;
-    private final ShopIcon[] contents;
+    private final ArrayList<ShopIcon> contents;
 
-    public ShopCategory(IGame game, String actionName, String displayName, ItemStack icon, String[] description, ShopIcon[] contents)
+    public ShopCategory(IGame game, String actionName, String displayName, ItemStack icon, String[] description)
     {
         super(actionName, displayName, icon);
 
         this.game = game;
         this.description = description;
-        this.contents = contents;
+        this.contents = new ArrayList<>();
+    }
+
+    public void addContent(ShopIcon icon)
+    {
+        this.contents.add(icon);
     }
 
     @Override
@@ -48,7 +53,16 @@ public class ShopCategory extends ShopIcon
         return icon;
     }
 
-    public ShopIcon[] getContents()
+    public ShopIcon getIconByAction(String action)
+    {
+        for(ShopIcon icon : this.contents)
+            if(icon.getActionName().equals(action))
+                return icon;
+
+        return null;
+    }
+
+    public ArrayList<ShopIcon> getContents()
     {
         return this.contents;
     }

@@ -1,21 +1,21 @@
 package net.samagames.hub.games;
 
-import net.samagames.hub.games.shop.ShopConfiguration;
+import net.samagames.hub.games.shop.ShopCategory;
 import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
 
 public interface IGame
 {
-    public String getCodeName();
-    public String getName();
-    public ItemStack getIcon();
-    public String[] getDescription();
-    public int getSlotInMainMenu();
-    public ShopConfiguration getShopConfiguration();
-    public Location getLobbySpawn();
-    public boolean isLocked();
+    String getCodeName();
+    String getName();
+    ItemStack getIcon();
+    String[] getDescription();
+    int getSlotInMainMenu();
+    ShopCategory getShopConfiguration();
+    Location getLobbySpawn();
+    boolean isLocked();
 
-    public default boolean hasShop()
+    default boolean hasShop()
     {
         return this.getShopConfiguration() != null;
     }

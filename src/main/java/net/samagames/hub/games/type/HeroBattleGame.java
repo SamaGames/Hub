@@ -2,7 +2,7 @@ package net.samagames.hub.games.type;
 
 import net.samagames.hub.Hub;
 import net.samagames.hub.games.IGame;
-import net.samagames.hub.games.shop.ShopConfiguration;
+import net.samagames.hub.games.shop.ShopCategory;
 import org.bukkit.DyeColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -43,7 +43,7 @@ public class HeroBattleGame implements IGame
     }
 
     @Override
-    public ShopConfiguration getShopConfiguration()
+    public ShopCategory getShopConfiguration()
     {
         return null;
     }
