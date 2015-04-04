@@ -3,7 +3,7 @@ package net.samagames.hub.gui.main;
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import net.samagames.hub.common.JsonHub;
-import net.samagames.hub.gui.Gui;
+import net.samagames.hub.gui.AbstractGui;
 import net.samagames.hub.utils.GuiUtils;
 import net.samagames.tools.BungeeUtils;
 import org.bukkit.Bukkit;
@@ -17,7 +17,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 
-public class GuiSwitchHub extends Gui
+public class GuiSwitchHub extends AbstractGui
 {
     @Override
     public void display(Player player)
@@ -80,6 +80,12 @@ public class GuiSwitchHub extends Gui
                 player.sendMessage(ChatColor.RED + "Vous ne pouvez pas aller sur votre hub actuel !");
                 return;
             }
+            else if(Hub.getInstance().getHubRefresher().getHubByID(Integer.valueOf(action.split("_")[1])).getConnectedPlayers() >= 120)
+            {
+                player.sendMessage(ChatColor.RED + "Le hub sélectionné est plein !");
+                return;
+            }
+
             BungeeUtils.sendPlayerToServer(player, action);
         }
         else if(action.equals("back"))
@@ -106,8 +112,13 @@ public class GuiSwitchHub extends Gui
         }
         else if(hub.getConnectedPlayers() <= 80)
         {
-            glass.setDurability(DyeColor.ORANGE.getData());
-            meta.setDisplayName(ChatColor.GOLD + baseName);
+            glass.setDurability(DyeColor.YELLOW.getData());
+            meta.setDisplayName(ChatColor.YELLOW + baseName);
+        }
+        else if(hub.getConnectedPlayers() < 100)
+        {
+            glass.setDurability(DyeColor.RED.getData());
+            meta.setDisplayName(ChatColor.RED + baseName);
         }
         else
         {
@@ -123,7 +134,7 @@ public class GuiSwitchHub extends Gui
         }
 
         lores.add("");
-        lores.add(ChatColor.DARK_GRAY + "▶ Clic pour être téléporté");
+        lores.add(ChatColor.DARK_GRAY + "▶ Clique pour être téléporté");
 
         meta.setLore(lores);
         glass.setItemMeta(meta);

@@ -10,7 +10,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class GuiManager extends AbstractManager
 {
-    protected ConcurrentHashMap<UUID, Gui> currentGUIs;
+    protected ConcurrentHashMap<UUID, AbstractGui> currentGUIs;
 
     public GuiManager(Hub hub)
     {
@@ -22,7 +22,7 @@ public class GuiManager extends AbstractManager
         this.currentGUIs.clear();
     }
 
-    public void openGui(Player player, Gui gui)
+    public void openGui(Player player, AbstractGui gui)
     {
         if (this.currentGUIs.containsKey(player.getUniqueId()))
             player.closeInventory();
@@ -43,7 +43,7 @@ public class GuiManager extends AbstractManager
             this.currentGUIs.remove(player.getUniqueId());
     }
 
-    public Gui getPlayerGui(HumanEntity player)
+    public AbstractGui getPlayerGui(HumanEntity player)
     {
         if (this.currentGUIs.containsKey(player.getUniqueId()))
             return this.currentGUIs.get(player.getUniqueId());
@@ -51,7 +51,7 @@ public class GuiManager extends AbstractManager
         return null;
     }
 
-    public ConcurrentHashMap<UUID, Gui> getPlayersGui()
+    public ConcurrentHashMap<UUID, AbstractGui> getPlayersGui()
     {
         return this.currentGUIs;
     }

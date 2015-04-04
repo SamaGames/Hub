@@ -9,7 +9,6 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.libs.com.google.gson.JsonArray;
 import org.bukkit.craftbukkit.libs.com.google.gson.JsonObject;
-import org.bukkit.entity.Player;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -85,53 +84,6 @@ public class JumpManager extends AbstractManager
         this.hub.log(this, Level.INFO, "Registered jump '" + name + "'");
     }
 
-    public void onPressurePlatePressed(Player player, Location plate)
-    {
-        Jump jump = this.getOfPlayer(player.getUniqueId());
-
-        if (jump != null)
-        {
-            if (jump.getEnd().equals(plate))
-            {
-                jump.winPlayer(player);
-                return;
-            }
-            else if (jump.getBegin().equals(plate))
-            {
-                return;
-            }
-            else
-            {
-                jump.removePlayer(player.getUniqueId());
-            }
-        }
-
-        for (Jump jumpp : this.jumps)
-        {
-            if (jumpp.getBegin().equals(plate))
-            {
-                jumpp.addPlayer(player);
-                return;
-            }
-        }
-    }
-
-    public void onFall(Player player)
-    {
-        Jump jump = this.getOfPlayer(player.getUniqueId());
-
-        if (jump != null)
-            jump.losePlayer(player);
-    }
-
-    public void logout(UUID player)
-    {
-        Jump jump = this.getOfPlayer(player);
-
-        if (jump != null)
-            jump.removePlayer(player);
-    }
-
     public Jump getOfPlayer(UUID player)
     {
         for (Jump jump : this.jumps)
@@ -149,15 +101,6 @@ public class JumpManager extends AbstractManager
     public ArrayList<Jump> getJumps()
     {
         return this.jumps;
-    }
-
-    public boolean isInJump(UUID player)
-    {
-        for (Jump jump : this.jumps)
-            if (jump.isJumping(player))
-                return true;
-
-        return false;
     }
 
     @Override

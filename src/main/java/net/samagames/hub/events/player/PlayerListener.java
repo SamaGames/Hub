@@ -136,19 +136,12 @@ public class PlayerListener implements Listener
     {
         final Player player = event.getPlayer();
 
-        Bukkit.getScheduler().runTaskLaterAsynchronously(Hub.getInstance(), () ->
-        {
-            if (PermissionsBukkit.hasPermission(player, "lobby.fly"))
-                Bukkit.getScheduler().runTask(Hub.getInstance(), () -> player.setAllowFlight(true));
-        }, 10L);
-
         player.setGameMode(GameMode.ADVENTURE);
         InventoryUtils.cleanPlayer(player);
         Hub.getInstance().getPlayerManager().getStaticInventory().setInventoryToPlayer(player);
 
         Bukkit.getScheduler().runTaskAsynchronously(Hub.getInstance(), () ->
         {
-            String lobby = SamaGamesAPI.get().getResource().get("signsarea:" + player.getUniqueId() + ":hub");
 
             /**
              * TODO: Teleport player to his previous game lobby
@@ -248,10 +241,13 @@ public class PlayerListener implements Listener
             Hub.getInstance().getHologramManager().addReceiver(player);
 
             player.teleport(new Location(Bukkit.getWorlds().get(0), -19, 51, 89));
-        });
 
-        if(PermissionsBukkit.hasPermission(player, "lobby.announce"))
-            Bukkit.broadcastMessage(PlayerUtils.getFullyFormattedPlayerName(player) + ChatColor.YELLOW + " a rejoint le hub !");
+            if (PermissionsBukkit.hasPermission(player, "lobby.fly"))
+                Bukkit.getScheduler().runTask(Hub.getInstance(), () -> player.setAllowFlight(true));
+
+            if(PermissionsBukkit.hasPermission(player, "lobby.announce"))
+                Bukkit.broadcastMessage(PlayerUtils.getFullyFormattedPlayerName(player) + ChatColor.YELLOW + " a rejoint le hub !");
+        });
     }
 
     @EventHandler(priority = EventPriority.LOWEST)

@@ -1,7 +1,7 @@
 package net.samagames.hub.events.player;
 
 import net.samagames.hub.Hub;
-import net.samagames.hub.gui.Gui;
+import net.samagames.hub.gui.AbstractGui;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -16,7 +16,7 @@ public class GuiListener implements Listener
         if (event.getWhoClicked() instanceof Player)
         {
             Player player = (Player) event.getWhoClicked();
-            Gui gui = Hub.getInstance().getGuiManager().getPlayerGui(player);
+            AbstractGui gui = Hub.getInstance().getGuiManager().getPlayerGui(player);
 
             if (gui != null)
             {

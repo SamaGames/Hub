@@ -2,7 +2,7 @@ package net.samagames.hub.gui.profile;
 
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
-import net.samagames.hub.gui.Gui;
+import net.samagames.hub.gui.AbstractGui;
 import net.samagames.hub.utils.GuiUtils;
 import net.samagames.hub.utils.RankUtils;
 import net.samagames.tools.chat.FancyMessage;
@@ -17,7 +17,7 @@ import org.bukkit.inventory.meta.SkullMeta;
 
 import java.util.UUID;
 
-public class GuiClickMe extends Gui
+public class GuiClickMe extends AbstractGui
 {
     private final String name;
     private final UUID uuid;

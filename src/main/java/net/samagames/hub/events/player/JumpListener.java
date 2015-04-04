@@ -20,14 +20,50 @@ public class JumpListener implements Listener
     public void onInteract(PlayerInteractEvent event)
     {
         if (event.getAction().equals(Action.PHYSICAL))
+        {
             if (event.getClickedBlock().getType().equals(Material.IRON_PLATE))
-                Hub.getInstance().getJumpManager().onPressurePlatePressed(event.getPlayer(), event.getClickedBlock().getLocation());
+            {
+                Jump jump = Hub.getInstance().getJumpManager().getOfPlayer(event.getPlayer().getUniqueId());
+
+                if (jump != null)
+                {
+                    if (jump.getEnd().equals(event.getClickedBlock()))
+                    {
+                        jump.winPlayer(event.getPlayer());
+                        return;
+                    }
+                    else if (jump.getBegin().equals(event.getClickedBlock()))
+                    {
+                        return;
+                    }
+                    else
+                    {
+                        jump.removePlayer(event.getPlayer().getUniqueId());
+                    }
+                }
+
+                for (Jump jumpp : Hub.getInstance().getJumpManager().getJumps())
+                {
+                    if (jumpp.getBegin().equals(event.getClickedBlock()))
+                    {
+                        jumpp.addPlayer(event.getPlayer());
+                        return;
+                    }
+                }
+            }
+        }
     }
 
     @EventHandler
     public void onLogout(final PlayerQuitEvent event)
     {
-        Bukkit.getScheduler().runTaskAsynchronously(Hub.getInstance(), () -> Hub.getInstance().getJumpManager().logout(event.getPlayer().getUniqueId()));
+        Bukkit.getScheduler().runTaskAsynchronously(Hub.getInstance(), () ->
+        {
+            Jump jump = Hub.getInstance().getJumpManager().getOfPlayer(event.getPlayer().getUniqueId());
+
+            if (jump != null)
+                jump.removePlayer(event.getPlayer().getUniqueId());
+        });
     }
 
     @EventHandler
@@ -49,7 +85,9 @@ public class JumpListener implements Listener
                     return;
 
                 if (block == null || !jump.inWhitelist(block.getType()))
-                    Hub.getInstance().getJumpManager().onFall(player);
+                {
+                    jump.losePlayer(player);
+                }
             }
         }
     }

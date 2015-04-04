@@ -1,7 +1,7 @@
 package net.samagames.hub.gui.profile;
 
 import net.samagames.hub.Hub;
-import net.samagames.hub.gui.Gui;
+import net.samagames.hub.gui.AbstractGui;
 import net.samagames.hub.utils.GuiUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -10,7 +10,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.UUID;
 
-public class GuiStats extends Gui
+public class GuiStats extends AbstractGui
 {
     private final String name;
     private final UUID uuid;

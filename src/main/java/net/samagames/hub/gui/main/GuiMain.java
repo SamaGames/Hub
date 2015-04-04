@@ -1,9 +1,9 @@
 package net.samagames.hub.gui.main;
 
 import net.samagames.hub.Hub;
-import net.samagames.hub.games.Game;
-import net.samagames.hub.gui.Gui;
-import net.samagames.hub.gui.main.GuiSwitchHub;
+import net.samagames.hub.games.AbstractGame;
+import net.samagames.hub.gui.AbstractGui;
+import net.samagames.hub.gui.staff.GuiSelectZone;
 import net.samagames.permissionsbukkit.PermissionsBukkit;
 import net.samagames.tools.BungeeUtils;
 import net.samagames.tools.events.EventUtils;
@@ -16,36 +16,33 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 
-public class GuiMain extends Gui
+public class GuiMain extends AbstractGui
 {
     @Override
     public void display(Player player)
     {
         boolean staffFlag = PermissionsBukkit.hasPermission(player, "beta.staff");
 
-        this.inventory = Bukkit.createInventory(null, 45, "Menu Principal");
+        this.inventory = Bukkit.createInventory(null, 27, "Menu Principal");
 
-        this.setSlotData(ChatColor.GOLD + "Zone BETA - " + ChatColor.GREEN + "VIP", Material.DIAMOND, 9, this.getLores(new String[] { "Testez les jeux avant tout le monde !" }, false, true), "beta_vip");
-        this.setSlotData(ChatColor.GOLD + "Spawn", Material.BED, 18, this.getLores(null, false, true), "spawn");
-        this.setSlotData(ChatColor.GOLD + "Jump du Ciel", Material.PACKED_ICE, 26, this.getLores(null, false, true), "jump");
-        this.setSlotData(ChatColor.GOLD + "Informations", Material.EMPTY_MAP, 27, this.getInformationLores(), "none");
-        this.setSlotData(ChatColor.GOLD + "Changer de hub", Material.ENDER_CHEST, 35, this.getLores(null, true, false), "switch_hub");
+        this.setSlotData(ChatColor.GOLD + "Zone BETA - " + ChatColor.GREEN + "VIP", Material.DIAMOND, 0, this.getLores(new String[] { "Testez les jeux avant tout le monde !" }, false, true), "beta_vip");
+        this.setSlotData(ChatColor.GOLD + "Spawn", Material.BED, 9, this.getLores(null, false, true), "spawn");
+        this.setSlotData(ChatColor.GOLD + "Jump du Ciel", Material.PACKED_ICE, 17, this.getLores(null, false, true), "jump");
+        this.setSlotData(ChatColor.GOLD + "Informations", Material.EMPTY_MAP, 18, this.getInformationLores(), "none");
+        this.setSlotData(ChatColor.GOLD + "Changer de hub", Material.ENDER_CHEST, 26, this.getLores(null, true, false), "switch_hub");
 
         if(!EventUtils.isCurrentlyEvent())
-            this.setSlotData(ChatColor.GOLD + "Évenement", Material.IRON_FENCE, 17, this.getLores(new String[] { "Aucun évenement en cours !" }, false, false), "event");
+            this.setSlotData(ChatColor.GOLD + "Évenement", Material.IRON_FENCE, 8, this.getLores(new String[] { "Aucun évenement en cours !" }, false, false), "event");
         else
-            this.setSlotData(ChatColor.GOLD + "Évenement - " + EventUtils.getCurrentEvent().getName(), Material.CAKE, 17, this.getLores(new String[] { EventUtils.getCurrentEvent().getDescription() }, true, false), "event");
+            this.setSlotData(ChatColor.GOLD + "Évenement - " + EventUtils.getCurrentEvent().getName(), Material.CAKE, 8, this.getLores(new String[] { EventUtils.getCurrentEvent().getDescription() }, true, false), "event");
 
         for(String gameIdentifier : Hub.getInstance().getGameManager().getGames().keySet())
         {
-            Game game = Hub.getInstance().getGameManager().getGameByIdentifier(gameIdentifier);
+            AbstractGame game = Hub.getInstance().getGameManager().getGameByIdentifier(gameIdentifier);
 
             if(game.getSlotInMainMenu() != -1)
                 this.setSlotData(ChatColor.GOLD + game.getName(), game.getIcon(), game.getSlotInMainMenu(), this.getLores(game.getDescription(), false, true), "game_" + gameIdentifier);
         }
-
-        if(staffFlag)
-            this.setSlotData(ChatColor.GOLD + "Zone BETA - " + ChatColor.BLUE + "Staff", Material.COOKIE, 22, this.getLores(new String[]{"Testez les jeux avant tout le monde !", "Même les VIPs !"}, false, true), "beta_staff");
 
         player.openInventory(this.inventory);
     }
@@ -55,11 +52,13 @@ public class GuiMain extends Gui
     {
         if(action.equals("beta_vip"))
         {
+            if(PermissionsBukkit.hasPermission(player, "beta.staff"))
+            {
+                Hub.getInstance().getGuiManager().openGui(player, new GuiSelectZone());
+                return;
+            }
+
             player.teleport(Hub.getInstance().getGameManager().getGameByIdentifier("beta_vip").getLobbySpawn());
-        }
-        else if(action.equals("beta_staff"))
-        {
-            player.teleport(Hub.getInstance().getGameManager().getGameByIdentifier("beta_staff").getLobbySpawn());
         }
         else if(action.equals("switch_hub"))
         {
@@ -81,7 +80,7 @@ public class GuiMain extends Gui
         else if(action.startsWith("game"))
         {
             String[] actions = action.split("_");
-            Game game = Hub.getInstance().getGameManager().getGameByIdentifier(actions[1]);
+            AbstractGame game = Hub.getInstance().getGameManager().getGameByIdentifier(actions[1]);
 
             if(!game.isLocked())
                 player.teleport(game.getLobbySpawn());
@@ -105,10 +104,10 @@ public class GuiMain extends Gui
         }
 
         if(clickOpen)
-            lores.add(ChatColor.DARK_GRAY + "▶ Clic pour ouvrir le menu");
+            lores.add(ChatColor.DARK_GRAY + "▶ Clique pour ouvrir le menu");
 
         if(clickTeleport)
-            lores.add(ChatColor.DARK_GRAY + "▶ Clic pour être téléporté");
+            lores.add(ChatColor.DARK_GRAY + "▶ Clique pour être téléporté");
 
         return lores.toArray(loresArray);
     }

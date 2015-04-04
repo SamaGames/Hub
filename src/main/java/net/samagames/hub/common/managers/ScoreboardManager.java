@@ -67,12 +67,11 @@ public class ScoreboardManager extends AbstractManager
     public void update(UUID uuid)
     {
         ObjectiveSign objective = this.playerObjectives.get(uuid);
-        Player player = Bukkit.getPlayer(uuid);
 
         objective.setDisplayName(this.rainbowContent.get(this.rainbowIndex) + "" + ChatColor.BOLD + "✦ SamaGames ✦");
         objective.setLine(0, ChatColor.BLUE + "");
-        objective.setLine(1, ChatColor.GREEN + "" + ChatColor.BOLD + "Joueur");
-        objective.setLine(2, ChatColor.GRAY + player.getName());
+        objective.setLine(1, ChatColor.GREEN + "" + ChatColor.BOLD + "Serveur");
+        objective.setLine(2, ChatColor.GRAY + "Hub " + SamaGamesAPI.get().getServerName().split("_")[1]);
         objective.setLine(3, ChatColor.AQUA + "");
         objective.setLine(4, ChatColor.RED + "" + ChatColor.BOLD + "Rang");
         objective.setLine(5, RankUtils.getFormattedRank(uuid));

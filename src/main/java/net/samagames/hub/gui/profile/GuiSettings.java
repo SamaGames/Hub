@@ -2,14 +2,14 @@ package net.samagames.hub.gui.profile;
 
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
-import net.samagames.hub.gui.Gui;
+import net.samagames.hub.gui.AbstractGui;
 import net.samagames.hub.utils.GuiUtils;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 
-public class GuiSettings extends Gui
+public class GuiSettings extends AbstractGui
 {
     @Override
     public void display(Player player)

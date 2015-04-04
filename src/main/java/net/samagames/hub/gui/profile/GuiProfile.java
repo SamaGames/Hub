@@ -1,7 +1,7 @@
 package net.samagames.hub.gui.profile;
 
 import net.samagames.hub.Hub;
-import net.samagames.hub.gui.Gui;
+import net.samagames.hub.gui.AbstractGui;
 import net.samagames.hub.utils.GuiUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -10,7 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 
-public class GuiProfile extends Gui
+public class GuiProfile extends AbstractGui
 {
     @Override
     public void display(Player player)

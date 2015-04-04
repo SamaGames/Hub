@@ -10,7 +10,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.Arrays;
 import java.util.TreeMap;
 
-public abstract class Gui
+public abstract class AbstractGui
 {
     protected TreeMap<Integer, String> actions = new TreeMap<>();
     protected Inventory inventory;

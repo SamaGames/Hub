@@ -28,6 +28,21 @@ public class CustomEntityVillager extends EntityVillager
         this.aJ = this.location.getYaw();
         super.g(sideMot, forMot);
     }
+
+    @Override
+    protected String z() {
+        return "";
+    }
+
+    @Override
+    protected String bn() {
+        return "";
+    }
+
+    @Override
+    protected String bo() {
+        return "";
+    }
     
     @Override
     public void b(NBTTagCompound nbttagcompound) {}

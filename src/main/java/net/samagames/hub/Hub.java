@@ -78,9 +78,9 @@ public class Hub extends JavaPlugin
     @Override
     public void onDisable()
     {
+        this.npcManager.onServerClose();
         this.hologramManager.onServerClose();
         this.scoreboardManager.onServerClose();
-        this.npcManager.onServerClose();
     }
 
     public void registerEvents()
