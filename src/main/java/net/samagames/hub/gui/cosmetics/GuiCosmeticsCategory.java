@@ -2,6 +2,8 @@ package net.samagames.hub.gui.cosmetics;
 
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
+import net.samagames.hub.cosmetics.common.AbstractCosmetic;
+import net.samagames.hub.cosmetics.common.AbstractCosmeticManager;
 import net.samagames.hub.cosmetics.particles.ParticleCosmetic;
 import net.samagames.hub.cosmetics.particles.ParticleManager;
 import net.samagames.hub.gui.AbstractGui;
@@ -13,15 +15,24 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 
-public class GuiParticles extends AbstractGui
+public class GuiCosmeticsCategory<T extends AbstractCosmetic> extends AbstractGui
 {
+    private final String title;
+    private final AbstractCosmeticManager<T> manager;
+
+    public GuiCosmeticsCategory(String title, AbstractCosmeticManager<T> manager)
+    {
+        this.title = title;
+        this.manager = manager;
+    }
+
     @Override
     public void display(Player player)
     {
         int lines = 0;
         int slot = 0;
 
-        for(ParticleCosmetic particle : Hub.getInstance().getCosmeticManager().getParticleManager().getRegistry().getElements().values())
+        for(AbstractCosmetic cosmetic : this.manager.getRegistry().getElements().values())
         {
             slot++;
 
@@ -32,7 +43,7 @@ public class GuiParticles extends AbstractGui
             }
         }
 
-        this.inventory = Bukkit.createInventory(null, 9 + (lines * 9) + (9 * 2), "Particules");
+        this.inventory = Bukkit.createInventory(null, 9 + (lines * 9) + (9 * 2), this.title);
 
         this.update(player);
 
@@ -46,9 +57,9 @@ public class GuiParticles extends AbstractGui
         int lines = 0;
         int slot = 0;
 
-        for(ParticleCosmetic particle : Hub.getInstance().getCosmeticManager().getParticleManager().getRegistry().getElements().values())
+        for(AbstractCosmetic cosmetic : this.manager.getRegistry().getElements().values())
         {
-            this.setSlotData(particle.getIcon(player), (baseSlots[slot] + (lines * 9)), "particle_" + particle.getDatabaseName());
+            this.setSlotData(cosmetic.getIcon(player), (baseSlots[slot] + (lines * 9)), "cosmetic_" + cosmetic.getDatabaseName());
 
             slot++;
 
@@ -67,16 +78,14 @@ public class GuiParticles extends AbstractGui
     @Override
     public void onClick(Player player, ItemStack stack, String action, ClickType clickType)
     {
-        if(action.startsWith("particle_"))
+        if(action.startsWith("cosmetic_"))
         {
-            String particle = action.split("_")[1];
-            ParticleManager manager = Hub.getInstance().getCosmeticManager().getParticleManager();
-            manager.enableCosmetic(player, manager.getRegistry().getElementByStorageName(particle));
+            String cosmetic = action.split("_")[1];
+            this.manager.enableCosmetic(player, this.manager.getRegistry().getElementByStorageName(cosmetic));
         }
         else if(action.equals("delete"))
         {
-            Hub.getInstance().getCosmeticManager().getParticleManager().disableCosmetic(player, false);
-            player.sendMessage(ChatColor.GREEN + "Votre effet disparait dans l'ombre...");
+            this.manager.disableCosmetic(player, false);
         }
         else if(action.equals("back"))
         {
