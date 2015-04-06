@@ -1,6 +1,9 @@
 package net.samagames.hub.common.managers;
 
-import net.minecraft.server.v1_8_R1.*;
+import net.minecraft.server.v1_8_R2.BiomeBase;
+import net.minecraft.server.v1_8_R2.EntityInsentient;
+import net.minecraft.server.v1_8_R2.EntityTypes;
+import net.minecraft.server.v1_8_R2.EntityVillager;
 import net.samagames.hub.Hub;
 import net.samagames.hub.npcs.CustomEntityVillager;
 
@@ -27,7 +30,7 @@ public class EntityManager extends AbstractManager
         Hub.getInstance().log(this, Level.INFO, "Registered custom entites with success!");
     }
 
-    public void registerEntity(String name, int id, Class<? extends Entity> nmsClass, Class<? extends Entity> customClass)
+    public void registerEntity(String name, int id, Class<? extends EntityInsentient> nmsClass, Class<? extends EntityInsentient> customClass)
     {
         BiomeBase[] biomes;
 
@@ -55,11 +58,9 @@ public class EntityManager extends AbstractManager
                 {
                     Field list = BiomeBase.class.getDeclaredField(field);
                     list.setAccessible(true);
-                    List<BiomeMeta> mobList = (List<BiomeMeta>) list.get(biomeBase);
+                    List<BiomeBase.BiomeMeta> mobList = (List<BiomeBase.BiomeMeta>) list.get(biomeBase);
 
-                    for (BiomeMeta meta : mobList)
-                        if(nmsClass.equals(meta.b))
-                            meta.b = customClass;
+                    mobList.stream().filter(meta -> nmsClass.equals(meta.b)).forEach(meta -> meta.b = customClass);
                 }
                 catch (Exception e)
                 {

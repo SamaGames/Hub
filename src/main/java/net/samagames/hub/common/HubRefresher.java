@@ -1,10 +1,10 @@
 package net.samagames.hub.common;
 
+import com.google.gson.Gson;
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import net.samagames.hub.gui.main.GuiSwitchHub;
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.libs.com.google.gson.Gson;
 import redis.clients.jedis.Jedis;
 
 import java.util.ArrayList;

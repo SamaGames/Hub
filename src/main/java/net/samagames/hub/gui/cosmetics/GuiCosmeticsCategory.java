@@ -4,8 +4,6 @@ import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import net.samagames.hub.cosmetics.common.AbstractCosmetic;
 import net.samagames.hub.cosmetics.common.AbstractCosmeticManager;
-import net.samagames.hub.cosmetics.particles.ParticleCosmetic;
-import net.samagames.hub.cosmetics.particles.ParticleManager;
 import net.samagames.hub.gui.AbstractGui;
 import net.samagames.hub.utils.GuiUtils;
 import org.bukkit.Bukkit;
@@ -19,24 +17,26 @@ public class GuiCosmeticsCategory<T extends AbstractCosmetic> extends AbstractGu
 {
     private final String title;
     private final AbstractCosmeticManager<T> manager;
+    private final boolean canBeRemoved;
 
-    public GuiCosmeticsCategory(String title, AbstractCosmeticManager<T> manager)
+    public GuiCosmeticsCategory(String title, AbstractCosmeticManager<T> manager, boolean canBeRemoved)
     {
         this.title = title;
         this.manager = manager;
+        this.canBeRemoved = canBeRemoved;
     }
 
     @Override
     public void display(Player player)
     {
-        int lines = 0;
+        int lines = 1;
         int slot = 0;
 
         for(AbstractCosmetic cosmetic : this.manager.getRegistry().getElements().values())
         {
             slot++;
 
-            if(slot == 7)
+            if(slot == 8)
             {
                 slot = 0;
                 lines++;
@@ -53,17 +53,17 @@ public class GuiCosmeticsCategory<T extends AbstractCosmetic> extends AbstractGu
     @Override
     public void update(Player player)
     {
-        int[] baseSlots = { 10, 11, 12, 13, 14, 15, 16 };
+        int[] baseSlots = {10, 11, 12, 13, 14, 15, 16};
         int lines = 0;
         int slot = 0;
 
-        for(AbstractCosmetic cosmetic : this.manager.getRegistry().getElements().values())
+        for (AbstractCosmetic cosmetic : this.manager.getRegistry().getElements().values())
         {
             this.setSlotData(cosmetic.getIcon(player), (baseSlots[slot] + (lines * 9)), "cosmetic_" + cosmetic.getDatabaseName());
 
             slot++;
 
-            if(slot == 7)
+            if (slot == 7)
             {
                 slot = 0;
                 lines++;
@@ -71,8 +71,16 @@ public class GuiCosmeticsCategory<T extends AbstractCosmetic> extends AbstractGu
         }
 
         this.setSlotData(ChatColor.AQUA + "Vous avez " + SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).getStars() + " étoiles", Material.NETHER_STAR, this.inventory.getSize() - 6, null, "none");
-        this.setSlotData(GuiUtils.getBackItem(), this.inventory.getSize() - 5, "back");
-        this.setSlotData(ChatColor.RED + "Supprimer votre effet actuel", Material.FLINT_AND_STEEL, this.inventory.getSize() - 4, null, "delete");
+
+        if (this.canBeRemoved)
+        {
+            this.setSlotData(GuiUtils.getBackItem(), this.inventory.getSize() - 5, "back");
+            this.setSlotData(ChatColor.RED + "Supprimer votre effet actuel", Material.FLINT_AND_STEEL, this.inventory.getSize() - 4, null, "delete");
+        }
+        else
+        {
+            this.setSlotData(GuiUtils.getBackItem(), this.inventory.getSize() - 4, "back");
+        }
     }
 
     @Override

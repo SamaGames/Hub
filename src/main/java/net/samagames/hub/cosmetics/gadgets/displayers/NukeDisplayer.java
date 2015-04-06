@@ -1,7 +1,9 @@
 package net.samagames.hub.cosmetics.gadgets.displayers;
 
-import net.samagames.lobbyutils.Plugin;
-import org.bukkit.*;
+import net.samagames.hub.Hub;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 import java.util.Collection;
@@ -21,7 +23,7 @@ public class NukeDisplayer extends AbstractDisplayer
         final Collection<Player> players = (Collection<Player>) Bukkit.getOnlinePlayers();
         Bukkit.broadcastMessage(ChatColor.DARK_RED + "[" + ChatColor.RED + "Nuke" + ChatColor.DARK_RED + "] " + ChatColor.RED + "Non ! " + player.getName() + " a lancé une Nuke sur le monde ! Tous aux abris !");
 
-        this.loopId = Bukkit.getScheduler().scheduleSyncRepeatingTask(Plugin.instance, new Runnable()
+        this.loopId = Bukkit.getScheduler().scheduleSyncRepeatingTask(Hub.getInstance(), new Runnable()
         {
             int timer = 10;
 
@@ -37,7 +39,7 @@ public class NukeDisplayer extends AbstractDisplayer
                         player.getWorld().createExplosion(player.getLocation().getX(), player.getLocation().getY(), player.getLocation().getZ(), 1.0F, false, false);
                     }
 
-                    Bukkit.getScheduler().runTaskLater(Plugin.instance, new Runnable()
+                    Bukkit.getScheduler().runTaskLater(Hub.getInstance(), new Runnable()
                     {
                         @Override
                         public void run()

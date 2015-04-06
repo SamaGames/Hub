@@ -1,9 +1,9 @@
 package net.samagames.hub.npcs;
 
+import com.google.gson.*;
 import net.samagames.hub.npcs.actions.AbstractNPCAction;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.libs.com.google.gson.*;
 import org.bukkit.entity.Villager;
 
 import java.lang.reflect.Type;

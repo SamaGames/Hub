@@ -1,9 +1,12 @@
 package net.samagames.hub.cosmetics.gadgets.displayers;
 
-import net.samagames.lobbyutils.Plugin;
-import net.samagames.lobbyutils.utils.ParticleEffect;
-import net.samagames.lobbyutils.utils.SimpleBlock;
-import org.bukkit.*;
+import net.samagames.hub.Hub;
+import net.samagames.hub.utils.SimpleBlock;
+import net.samagames.tools.ParticleEffect;
+import org.bukkit.Bukkit;
+import org.bukkit.DyeColor;
+import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
 import java.util.Random;
@@ -41,7 +44,7 @@ public class DiscoBombDisplayer extends AbstractDisplayer
             }
         }
 
-        this.loopId = Bukkit.getScheduler().scheduleSyncRepeatingTask(Plugin.instance, new Runnable()
+        this.loopId = Bukkit.getScheduler().scheduleSyncRepeatingTask(Hub.getInstance(), new Runnable()
         {
             int timer = 0;
             int ticks = 0;
@@ -56,15 +59,12 @@ public class DiscoBombDisplayer extends AbstractDisplayer
                     this.ticks = 0;
                     this.timer++;
 
-                    for (Location block : blocksUsed.keySet())
+                    blocksUsed.keySet().stream().filter(block -> block.getBlock().getType() != Material.GLOWSTONE).forEach(block ->
                     {
-                        if(block.getBlock().getType() != Material.GLOWSTONE)
-                        {
-                            DyeColor random = DyeColor.values()[new Random().nextInt(DyeColor.values().length)];
-                            block.getBlock().setType(Material.STAINED_GLASS);
-                            block.getBlock().setData(random.getData());
-                        }
-                    }
+                        DyeColor random = DyeColor.values()[new Random().nextInt(DyeColor.values().length)];
+                        block.getBlock().setType(Material.STAINED_GLASS);
+                        block.getBlock().setData(random.getData());
+                    });
                 }
 
                 ParticleEffect.NOTE.display(1.0F, 1.0F, 1.0F, 0.25F, 2, baseLocation, 160.0);
@@ -82,7 +82,9 @@ public class DiscoBombDisplayer extends AbstractDisplayer
 
     public boolean canUse()
     {
-        return Plugin.noteBlockMachine.getCurrentSong() != null;
+        return true;
+        //TODO
+        //return Plugin.noteBlockMachine.getCurrentSong() != null;
     }
 
     private void callback() {

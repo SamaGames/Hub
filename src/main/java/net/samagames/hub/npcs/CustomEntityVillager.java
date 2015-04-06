@@ -1,8 +1,8 @@
 package net.samagames.hub.npcs;
 
-import net.minecraft.server.v1_8_R1.EntityVillager;
-import net.minecraft.server.v1_8_R1.NBTTagCompound;
-import net.minecraft.server.v1_8_R1.World;
+import net.minecraft.server.v1_8_R2.EntityVillager;
+import net.minecraft.server.v1_8_R2.NBTTagCompound;
+import net.minecraft.server.v1_8_R2.World;
 import org.bukkit.Location;
 
 public class CustomEntityVillager extends EntityVillager
@@ -18,7 +18,7 @@ public class CustomEntityVillager extends EntityVillager
     @Override
     public void g(float sideMot, float forMot)
     {
-        this.j(0.0F);
+        this.k(0.0F);
         this.motY = 0.0D;
         this.motX = 0.0D;
         this.motZ = 0.0D;
@@ -35,7 +35,7 @@ public class CustomEntityVillager extends EntityVillager
     }
 
     @Override
-    protected String bn() {
+    protected String bp() {
         return "";
     }
 

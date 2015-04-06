@@ -1,7 +1,7 @@
 package net.samagames.hub.cosmetics.gadgets.displayers;
 
-import net.samagames.lobbyutils.Plugin;
-import net.samagames.lobbyutils.utils.SimpleBlock;
+import net.samagames.hub.Hub;
+import net.samagames.hub.utils.SimpleBlock;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -69,7 +69,7 @@ public abstract class AbstractDisplayer
 
     public void end()
     {
-        Plugin.gadgetMachine.callbackGadget(this);
+        Hub.getInstance().getCosmeticManager().getGadgetManager().callbackGadget(this);
     }
 
     public abstract void display();

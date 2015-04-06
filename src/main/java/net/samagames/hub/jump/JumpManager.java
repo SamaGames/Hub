@@ -1,5 +1,7 @@
 package net.samagames.hub.jump;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import net.samagames.hub.Hub;
 import net.samagames.hub.common.JsonConfiguration;
 import net.samagames.hub.common.managers.AbstractManager;
@@ -7,8 +9,6 @@ import net.samagames.tools.LocationUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.libs.com.google.gson.JsonArray;
-import org.bukkit.craftbukkit.libs.com.google.gson.JsonObject;
 
 import java.io.File;
 import java.util.ArrayList;

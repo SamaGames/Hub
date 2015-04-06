@@ -1,9 +1,9 @@
 package net.samagames.hub.cosmetics.gadgets.displayers;
 
-import net.samagames.lobbyutils.Plugin;
-import net.samagames.lobbyutils.utils.FireworkUtils;
-import net.samagames.lobbyutils.utils.ParticleEffect;
-import net.samagames.lobbyutils.utils.SimpleBlock;
+import net.samagames.hub.Hub;
+import net.samagames.hub.utils.FireworkUtils;
+import net.samagames.hub.utils.SimpleBlock;
+import net.samagames.tools.ParticleEffect;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 
@@ -63,7 +63,7 @@ public class TrampoSlimeDisplayer extends AbstractDisplayer
 
         this.player.teleport(this.baseLocation.clone().add(0.0D, 2.0D, 0.0D));
 
-        this.loopId = Bukkit.getScheduler().scheduleSyncRepeatingTask(Plugin.instance, new Runnable()
+        this.loopId = Bukkit.getScheduler().scheduleSyncRepeatingTask(Hub.getInstance(), new Runnable()
         {
             int timer = 0;
             int ticks = 0;

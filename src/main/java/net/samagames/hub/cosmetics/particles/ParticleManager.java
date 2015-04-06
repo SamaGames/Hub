@@ -23,28 +23,31 @@ public class ParticleManager extends AbstractCosmeticManager<ParticleCosmetic>
     }
 
     @Override
-    public void enableCosmetic(Player player, ParticleCosmetic particle)
+    public void enableCosmetic(Player player, ParticleCosmetic cosmetic)
     {
-        if (particle.isOwned(player))
+        if (cosmetic.isOwned(player))
         {
-            this.playersParticleEffect.put(player.getUniqueId(), particle.getParticleEffect());
-            SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).set("cosmetics.particles.current", particle.getDatabaseName());
+            this.playersParticleEffect.put(player.getUniqueId(), cosmetic.getParticleEffect());
+            SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).set("cosmetics.particles.current", cosmetic.getDatabaseName());
             player.sendMessage(ChatColor.GREEN + "Vous voilà noyé sous les particules...");
         }
         else
         {
-            particle.buy(player);
+            cosmetic.buy(player);
         }
     }
 
     @Override
     public void disableCosmetic(Player player, boolean logout)
     {
-        if(this.playersParticleEffect.containsKey(player.getUniqueId()))
+        if (this.playersParticleEffect.containsKey(player.getUniqueId()))
             this.playersParticleEffect.remove(player.getUniqueId());
 
-        if(!logout)
+        if (!logout)
+        {
             SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).remove("cosmetics.particles.current");
+            player.sendMessage(ChatColor.GREEN + "Votre effet disparait dans l'ombre...");
+        }
     }
 
     @Override

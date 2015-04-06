@@ -1,13 +1,14 @@
 package net.samagames.hub.cosmetics.gadgets.displayers;
 
-import net.minecraft.server.v1_8_R1.World;
-import net.samagames.lobbyutils.Plugin;
-import net.samagames.lobbyutils.utils.Colors;
-import net.samagames.lobbyutils.utils.FireworkUtils;
+import net.minecraft.server.v1_8_R2.*;
+import net.minecraft.server.v1_8_R2.World;
+import net.samagames.hub.Hub;
+import net.samagames.hub.utils.FireworkUtils;
+import net.samagames.tools.ColorUtils;
 import org.bukkit.*;
-import org.bukkit.craftbukkit.v1_8_R1.CraftWorld;
-import org.bukkit.craftbukkit.v1_8_R1.entity.CraftPlayer;
-import org.bukkit.craftbukkit.v1_8_R1.util.UnsafeList;
+import org.bukkit.craftbukkit.v1_8_R2.CraftWorld;
+import org.bukkit.craftbukkit.v1_8_R2.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_8_R2.util.UnsafeList;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Sheep;
 import org.bukkit.event.entity.CreatureSpawnEvent;
@@ -27,7 +28,7 @@ public class MoutMout2000Displayer extends AbstractDisplayer
     @Override
     public void display()
     {
-        World craftbukkitWorld = ((CraftWorld) player.getWorld()).getHandle();
+        World craftbukkitWorld = ((CraftWorld) this.player.getWorld()).getHandle();
         final MoutMout2000Sheep craftbukkitSheep = new MoutMout2000Sheep(craftbukkitWorld);
         craftbukkitSheep.setPosition(player.getLocation().getX(), player.getLocation().getY(), player.getLocation().getZ());
         craftbukkitWorld.addEntity(craftbukkitSheep, CreatureSpawnEvent.SpawnReason.CUSTOM);
@@ -37,7 +38,7 @@ public class MoutMout2000Displayer extends AbstractDisplayer
         sheep.setCustomNameVisible(true);
         sheep.setColor(DyeColor.WHITE);
 
-        this.loopId = Bukkit.getScheduler().scheduleSyncRepeatingTask(Plugin.instance, new Runnable()
+        this.loopId = Bukkit.getScheduler().scheduleSyncRepeatingTask(Hub.getInstance(), new Runnable()
         {
             int timer = 0;
             int ticks = 0;
@@ -52,8 +53,8 @@ public class MoutMout2000Displayer extends AbstractDisplayer
                     Random r = new Random();
                     int r1i = r.nextInt(17) + 1;
                     int r2i = r.nextInt(17) + 1;
-                    Color c1 = Colors.getColor(r1i);
-                    Color c2 = Colors.getColor(r2i);
+                    Color c1 = ColorUtils.getColor(r1i);
+                    Color c2 = ColorUtils.getColor(r2i);
 
                     sheep.setColor(DyeColor.values()[r.nextInt(DyeColor.values().length)]);
                     craftbukkitSheep.b(((CraftPlayer) player).getHandle());
@@ -90,7 +91,6 @@ public class MoutMout2000Displayer extends AbstractDisplayer
 
     public static class MoutMout2000Sheep extends EntitySheep
     {
-
         public MoutMout2000Sheep(World world)
         {
             super(world);
@@ -103,18 +103,16 @@ public class MoutMout2000Displayer extends AbstractDisplayer
                 Field cField = PathfinderGoalSelector.class.getDeclaredField("c");
                 cField.setAccessible(true);
 
-                //Reset Pathfinder list
-                bField.set(goalSelector, new UnsafeList<PathfinderGoalSelector>());
-                bField.set(targetSelector, new UnsafeList<PathfinderGoalSelector>());
-                cField.set(goalSelector, new UnsafeList<PathfinderGoalSelector>());
-                cField.set(targetSelector, new UnsafeList<PathfinderGoalSelector>());
+                bField.set(this.goalSelector, new UnsafeList<PathfinderGoalSelector>());
+                bField.set(this.targetSelector, new UnsafeList<PathfinderGoalSelector>());
+                cField.set(this.goalSelector, new UnsafeList<PathfinderGoalSelector>());
+                cField.set(this.targetSelector, new UnsafeList<PathfinderGoalSelector>());
 
                 ((Navigation) getNavigation()).a(true);
                 this.goalSelector.a(0, new PathfinderGoalPanic(this, 3.0D));
                 this.goalSelector.a(1, new PathfinderGoalFloat(this));
             }
-            catch (Exception ex) {}
-
+            catch (Exception ignored) {}
         }
 
         @Override
@@ -124,7 +122,7 @@ public class MoutMout2000Displayer extends AbstractDisplayer
         }
 
         @Override
-        public boolean bV()
+        public boolean bW()
         {
             return true;
         }

@@ -1,25 +1,50 @@
 package net.samagames.hub.gui.cosmetics;
 
 import net.samagames.hub.Hub;
+import net.samagames.hub.cosmetics.gadgets.GadgetCosmetic;
+import net.samagames.hub.cosmetics.particles.ParticleCosmetic;
 import net.samagames.hub.gui.AbstractGui;
 import net.samagames.hub.utils.GuiUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.Random;
 
 public class GuiCosmetics extends AbstractGui
 {
     @Override
     public void display(Player player)
     {
-        this.inventory = Bukkit.createInventory(null, 36, "Cosmétiques");
+        this.inventory = Bukkit.createInventory(null, 54, "Cosmétiques");
 
-        this.setSlotData(ChatColor.DARK_AQUA + "●" + ChatColor.AQUA + " Humeurs " + ChatColor.DARK_AQUA + "●", Material.BLAZE_POWDER, 10, new String[] {
-            ChatColor.GRAY + "Montrez-nous comment vous vous sentez :)"
-        }, "particles");
+        this.randomIcon(1, ChatColor.DARK_AQUA + "●" + ChatColor.AQUA + " Humeurs " + ChatColor.DARK_AQUA + "●", Material.BLAZE_POWDER, new String[]{
+                ChatColor.GRAY + "Montrez-nous comment vous vous sentez :)"
+        }, DyeColor.LIGHT_BLUE, "particles");
+
+        this.randomIcon(2, ChatColor.DARK_GREEN + "▲" + ChatColor.GREEN + " Montures " + ChatColor.DARK_GREEN + "▲", Material.SADDLE, new String[]{
+                ChatColor.GRAY + "Un fidèle compagnon qui vous suit",
+                ChatColor.GRAY + "où que vous soyez."
+        }, DyeColor.GREEN, "pets");
+
+        this.randomIcon(6, ChatColor.DARK_RED + "◼" + ChatColor.RED + " Déguisements " + ChatColor.DARK_RED + "◼", Material.SKULL_ITEM, new String[]{
+                ChatColor.GRAY + "Entrez dans la peau d'un autre",
+                ChatColor.GRAY + "personnage !"
+        }, DyeColor.RED, "disguises");
+
+        this.randomIcon(7, ChatColor.GOLD + "★" + ChatColor.YELLOW + " Gadgets " + ChatColor.GOLD + "★", Material.FIREWORK, new String[]{
+                ChatColor.GRAY + "Animez le serveur en exposant vos",
+                ChatColor.GRAY + "nombreux gadgets venant du futur !"
+        }, DyeColor.YELLOW, "gadgets");
+
+        this.setSlotData(ChatColor.DARK_PURPLE + "◢" + ChatColor.LIGHT_PURPLE + " Jukebox " + ChatColor.DARK_PURPLE + "◣", Material.JUKEBOX, 31, new String[]{
+                ChatColor.GRAY + "Devenez un véritable SamaDJ !"
+        }, "jukebox");
+        this.drawLineOfGlass(31, DyeColor.PURPLE, "jukebox");
 
         this.setSlotData(GuiUtils.getBackItem(), this.inventory.getSize() - 5, "back");
 
@@ -31,11 +56,50 @@ public class GuiCosmetics extends AbstractGui
     {
         if(action.equals("particles"))
         {
-            Hub.getInstance().getGuiManager().openGui(player, new GuiParticles());
+            Hub.getInstance().getGuiManager().openGui(player, new GuiCosmeticsCategory<ParticleCosmetic>("Particules", Hub.getInstance().getCosmeticManager().getParticleManager(), true));
+        }
+        else if(action.equals("pets"))
+        {
+
+        }
+        else if(action.equals("disguises"))
+        {
+
+        }
+        else if(action.equals("gadgets"))
+        {
+            Hub.getInstance().getGuiManager().openGui(player, new GuiCosmeticsCategory<GadgetCosmetic>("Gadgets", Hub.getInstance().getCosmeticManager().getGadgetManager(), false));
+        }
+        else if(action.equals("jukebox"))
+        {
+            Hub.getInstance().getGuiManager().openGui(player, new GuiJukebox());
         }
         else if(action.equals("back"))
         {
             Hub.getInstance().getGuiManager().closeGui(player);
+        }
+    }
+
+    private void randomIcon(int base, String displayName, Material material, String[] description, DyeColor color, String action)
+    {
+        Random random = new Random();
+        int randomized = random.nextInt(4) + 1;
+        int slot = base + (randomized * 9);
+
+        this.setSlotData(displayName, material, slot, description, action);
+        this.drawLineOfGlass(slot, color, action);
+    }
+
+    private void drawLineOfGlass(int baseSlot, DyeColor color, String action)
+    {
+        int slot = baseSlot - 9;
+
+        while(slot >= 0)
+        {
+            if(this.inventory.getItem(slot) == null)
+                this.setSlotData(ChatColor.GRAY + "", new ItemStack(Material.STAINED_GLASS_PANE, 1, color.getData()), slot, null, action);
+
+            slot -= 9;
         }
     }
 }
