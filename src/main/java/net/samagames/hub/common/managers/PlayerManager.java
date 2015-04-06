@@ -24,7 +24,7 @@ public class PlayerManager extends AbstractManager
         this.selections = new HashMap<>();
         this.staticInventory = new StaticInventory();
 
-        this.lobbySpawn = new Location(this.hub.getHubWorld(), -19, 51, 89);
+        this.lobbySpawn = new Location(this.hub.getHubWorld(), -19.5, 51, 89.5);
         this.canBuild = false;
     }
 

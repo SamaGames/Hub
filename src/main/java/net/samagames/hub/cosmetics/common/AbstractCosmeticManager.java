@@ -17,7 +17,7 @@ public abstract class AbstractCosmeticManager<T extends AbstractCosmetic> extend
     }
 
     public abstract void enableCosmetic(Player player, T cosmetic);
-    public abstract void disableCosmetic(Player player);
+    public abstract void disableCosmetic(Player player, boolean logout);
     public abstract void restoreCosmetic(Player player);
 
     public abstract void update();

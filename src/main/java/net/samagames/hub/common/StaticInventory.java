@@ -2,6 +2,7 @@ package net.samagames.hub.common;
 
 import net.md_5.bungee.api.ChatColor;
 import net.samagames.hub.Hub;
+import net.samagames.hub.gui.cosmetics.GuiCosmetics;
 import net.samagames.hub.gui.main.GuiMain;
 import net.samagames.hub.gui.profile.GuiProfile;
 import net.samagames.hub.gui.shop.GuiShop;
@@ -45,7 +46,7 @@ public class StaticInventory
         }
         else if(stack.getType() == Material.NETHER_STAR)
         {
-
+            Hub.getInstance().getGuiManager().openGui(player, new GuiCosmetics());
         }
         else if(stack.getType() == Material.BOW)
         {

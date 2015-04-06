@@ -1,7 +1,6 @@
 package net.samagames.hub.events.player;
 
 import net.samagames.api.SamaGamesAPI;
-import net.samagames.api.player.PlayerData;
 import net.samagames.hub.Hub;
 import net.samagames.hub.gui.profile.GuiClickMe;
 import net.samagames.permissionsbukkit.PermissionsBukkit;
@@ -135,13 +134,14 @@ public class PlayerListener implements Listener
         final Player player = event.getPlayer();
 
         player.setGameMode(GameMode.ADVENTURE);
-        player.setWalkSpeed(player.getWalkSpeed() * 2);
+        player.setWalkSpeed(player.getWalkSpeed() * 1.5F);
+        player.setFlySpeed(player.getFlySpeed() * 1.5F);
         InventoryUtils.cleanPlayer(player);
         Hub.getInstance().getPlayerManager().getStaticInventory().setInventoryToPlayer(player);
 
         Bukkit.getScheduler().runTaskAsynchronously(Hub.getInstance(), () ->
         {
-            Hub.getInstance().getCosmeticManager().getParticleManager().restoreCosmetic(player);
+            Hub.getInstance().getCosmeticManager().handleLogin(player);
 
             String chatOnSetting = SamaGamesAPI.get().getSettingsManager().getSetting(event.getPlayer().getUniqueId(), "chat");
 
@@ -273,55 +273,16 @@ public class PlayerListener implements Listener
     {
         Bukkit.getScheduler().runTaskAsynchronously(Hub.getInstance(), () ->
         {
-            /**
-             * TODO: Put in database the previous player game lobby
-             *
-             Region reg = Hub.getInstance().getRegionManager().getLobbyByLocation(p.getLocation());
-
-             if (reg != null)
-             {
-             FastJedis.set("signsarea:" + player.getUniqueId() + ":hub", reg.getName());
-             FastJedis.expire("signsarea:" + player.getUniqueId() + ":hub", 3 * 60 * 60);
-             }
-             **/
-
-            PlayerData data = SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId());
-
-            /**
-             * TODO: Remove player's particles
-             *
-             if (data.get("currentparticle") != null)
-             Hub.getInstance().getCosmeticsManager().getCosmeticHandler().removeFXLocaly(p.getUniqueId());
-             **/
-
-            /**
-             * TODO: Remove player's pet
-             *
-             if (data.get("selectedpet") != null)
-             Hub.getInstance().getCosmeticsManager().getPetsHandler().removePet(p);
-             **/
-
             if (Hub.getInstance().getPlayerManager().getSelection(player) != null)
                 Hub.getInstance().getPlayerManager().removeSelection(player);
+
+            Hub.getInstance().getCosmeticManager().handleLogout(player);
+
+            Hub.getInstance().getChatManager().removeChatDisabler(player);
+            Hub.getInstance().getChatManager().unmutePlayer(player);
+            Hub.getInstance().getNPCManager().talkFinished(player);
+            Hub.getInstance().getScoreboardManager().removeScoreboardReceiver(player);
+            Hub.getInstance().getHologramManager().removeReceiver(player);
         });
-
-        /**
-         * TODO: Remove player of hider mode
-         *
-        Plugin.hider.localHiding.remove(p.getUniqueId());
-        **/
-
-        Hub.getInstance().getChatManager().removeChatDisabler(player);
-
-        /**
-         * TODO: Remove player from note block machine
-         *
-        Hub.getInstance().getCosmeticsManager().getNoteBlockMachine().removePlayer(player);
-        **/
-
-        Hub.getInstance().getChatManager().unmutePlayer(player);
-        Hub.getInstance().getNPCManager().talkFinished(player);
-        Hub.getInstance().getScoreboardManager().removeScoreboardReceiver(player);
-        Hub.getInstance().getHologramManager().removeReceiver(player);
     }
 }

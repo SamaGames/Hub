@@ -3,17 +3,18 @@ package net.samagames.hub.cosmetics.particles;
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import net.samagames.hub.cosmetics.common.AbstractCosmeticManager;
-import net.samagames.tools.ParticleEffects;
+import net.samagames.tools.ParticleEffect;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 import java.util.UUID;
 import java.util.logging.Level;
 
-public class ParticleManager extends AbstractCosmeticManager<AbstractParticle>
+public class ParticleManager extends AbstractCosmeticManager<ParticleCosmetic>
 {
-    private HashMap<UUID, ParticleEffects> playersParticleEffect;
+    private HashMap<UUID, ParticleEffect> playersParticleEffect;
 
     public ParticleManager(Hub hub)
     {
@@ -22,19 +23,28 @@ public class ParticleManager extends AbstractCosmeticManager<AbstractParticle>
     }
 
     @Override
-    public void enableCosmetic(Player player, AbstractParticle particle)
+    public void enableCosmetic(Player player, ParticleCosmetic particle)
     {
-        this.playersParticleEffect.put(player.getUniqueId(), particle.getParticleEffect());
-        SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).set("cosmetics.particles.current", particle.getDatabaseName());
+        if (particle.isOwned(player))
+        {
+            this.playersParticleEffect.put(player.getUniqueId(), particle.getParticleEffect());
+            SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).set("cosmetics.particles.current", particle.getDatabaseName());
+            player.sendMessage(ChatColor.GREEN + "Vous voilà noyé sous les particules...");
+        }
+        else
+        {
+            particle.buy(player);
+        }
     }
 
     @Override
-    public void disableCosmetic(Player player)
+    public void disableCosmetic(Player player, boolean logout)
     {
         if(this.playersParticleEffect.containsKey(player.getUniqueId()))
             this.playersParticleEffect.remove(player.getUniqueId());
 
-        SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).remove("cosmetics.particles.current");
+        if(!logout)
+            SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).remove("cosmetics.particles.current");
     }
 
     @Override
@@ -55,8 +65,10 @@ public class ParticleManager extends AbstractCosmeticManager<AbstractParticle>
             {
                 Player player = Bukkit.getPlayer(uuid);
 
-                for(Player serverPlayer : Bukkit.getOnlinePlayers())
-                    this.playersParticleEffect.get(uuid).sendToPlayer(serverPlayer, player.getLocation(), 0.5F, 0.5F, 0.5F, 0.25F, 2);
+                if(player == null)
+                    continue;
+
+                this.playersParticleEffect.get(uuid).display(0.5F, 0.5F, 0.5F, 0.25F, 2, player.getLocation(), 100.0D);
             }
         }
         catch (Exception e)

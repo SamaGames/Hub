@@ -34,4 +34,9 @@ public abstract class AbstractCosmeticRegistry<T extends AbstractCosmetic>
         else
             return null;
     }
+
+    public HashMap<String, T> getElements()
+    {
+        return this.elements;
+    }
 }
