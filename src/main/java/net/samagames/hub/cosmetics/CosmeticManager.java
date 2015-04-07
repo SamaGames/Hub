@@ -3,6 +3,7 @@ package net.samagames.hub.cosmetics;
 import net.samagames.hub.Hub;
 import net.samagames.hub.common.managers.AbstractManager;
 import net.samagames.hub.cosmetics.gadgets.GadgetManager;
+import net.samagames.hub.cosmetics.jukebox.JukeboxManager;
 import net.samagames.hub.cosmetics.particles.ParticleManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -13,6 +14,7 @@ public class CosmeticManager extends AbstractManager
 {
     private ParticleManager particleManager;
     private GadgetManager gadgetManager;
+    private JukeboxManager jukeboxManager;
 
     public CosmeticManager(Hub hub)
     {
@@ -20,6 +22,7 @@ public class CosmeticManager extends AbstractManager
 
         this.particleManager = new ParticleManager(hub);
         this.gadgetManager = new GadgetManager(hub);
+        this.jukeboxManager = new JukeboxManager(hub);
 
         Bukkit.getScheduler().runTaskTimerAsynchronously(hub, () ->
         {
@@ -37,10 +40,14 @@ public class CosmeticManager extends AbstractManager
     public void handleLogout(Player player)
     {
         this.particleManager.disableCosmetic(player, true);
+
+        this.jukeboxManager.mute(player, false);
+        this.jukeboxManager.removePlayer(player);
     }
 
     public ParticleManager getParticleManager() { return this.particleManager; }
     public GadgetManager getGadgetManager() { return this.gadgetManager; }
+    public JukeboxManager getJukeboxManager() { return this.jukeboxManager; }
 
     @Override
     public String getName() { return "CosmeticManager"; }

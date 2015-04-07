@@ -2,6 +2,7 @@ package net.samagames.hub.events.player;
 
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
+import net.samagames.hub.cosmetics.jukebox.JukeboxPlaylist;
 import net.samagames.hub.gui.profile.GuiClickMe;
 import net.samagames.permissionsbukkit.PermissionsBukkit;
 import net.samagames.tools.InventoryUtils;
@@ -54,7 +55,7 @@ public class PlayerListener implements Listener
     {
         if (!Hub.getInstance().getChatManager().canChat())
         {
-            if (!PermissionsBukkit.hasPermission(event.getPlayer(), "lobby.bypassmute"))
+            if (!PermissionsBukkit.hasPermission(event.getPlayer(), "hub.bypassmute"))
             {
                 event.setCancelled(true);
                 event.getPlayer().sendMessage(ChatColor.RED + "Le chat est désactivé.");
@@ -96,16 +97,13 @@ public class PlayerListener implements Listener
             return;
         }
 
-        /**
-         * TODO: Add DJ tag to actual DJ
-         *
         if (!event.isCancelled())
         {
-            PlaylistSong current = Plugin.noteBlockMachine.getCurrentSong();
+            JukeboxPlaylist current = Hub.getInstance().getCosmeticManager().getJukeboxManager().getCurrentSong();
+
             if (current != null && current.getPlayedBy().equals(event.getPlayer().getName()))
                 event.setFormat(ChatColor.DARK_AQUA + "[" + ChatColor.AQUA + "DJ" + ChatColor.DARK_AQUA + "]" + event.getFormat());
         }
-        **/
 
         if(!Hub.getInstance().getNPCManager().canTalk(event.getPlayer()))
             event.setCancelled(true);
@@ -142,15 +140,7 @@ public class PlayerListener implements Listener
         Bukkit.getScheduler().runTaskAsynchronously(Hub.getInstance(), () ->
         {
             Hub.getInstance().getCosmeticManager().handleLogin(player);
-
-            String chatOnSetting = SamaGamesAPI.get().getSettingsManager().getSetting(event.getPlayer().getUniqueId(), "chat");
-
-            if (chatOnSetting != null && chatOnSetting.equals("false"))
-            {
-                Hub.getInstance().getChatManager().disableChat(event.getPlayer());
-                event.getPlayer().sendMessage(ChatColor.GOLD + "Vous avez désactivé le chat. Vous ne verrez donc pas les messages des joueurs.");
-            }
-
+            Hub.getInstance().getPlayerManager().updateSettings(player);
             Hub.getInstance().getScoreboardManager().addScoreboardReceiver(player);
             Hub.getInstance().getHologramManager().addReceiver(player);
 

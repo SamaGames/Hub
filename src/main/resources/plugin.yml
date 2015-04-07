@@ -11,6 +11,12 @@ commands:
     description: Commande relative au ClickMe
     usage: /click <Joueur>
     alias: /clickme
+  meh:
+    description: Commande relative au Jukebox
+    usage: /meh
+  woot:
+    description: Commande relative au Jukebox
+    usage: /woot
 
   # Admin commands -----------------------------
   npc:

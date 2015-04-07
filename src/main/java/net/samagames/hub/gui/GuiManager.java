@@ -18,14 +18,10 @@ public class GuiManager extends AbstractManager
         this.currentGUIs = new ConcurrentHashMap<>();
     }
 
-    public void resetGuiUsed() {
-        this.currentGUIs.clear();
-    }
-
     public void openGui(Player player, AbstractGui gui)
     {
         if (this.currentGUIs.containsKey(player.getUniqueId()))
-            player.closeInventory();
+            this.closeGui(player);
 
         this.currentGUIs.put(player.getUniqueId(), gui);
         gui.display(player);
@@ -40,7 +36,10 @@ public class GuiManager extends AbstractManager
     public void removeClosedGui(Player player)
     {
         if (this.currentGUIs.containsKey(player.getUniqueId()))
+        {
+            this.getPlayerGui(player).onClose(player);
             this.currentGUIs.remove(player.getUniqueId());
+        }
     }
 
     public AbstractGui getPlayerGui(HumanEntity player)

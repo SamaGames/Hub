@@ -4,23 +4,28 @@ import net.samagames.hub.Hub;
 
 import java.io.*;
 import java.util.HashMap;
+import java.util.logging.Level;
 
-public class NBSDecoder {
-    public static Song parse(String decodeFile) {
+public class NBSDecoder
+{
+    public static Song parse(String decodeFile)
+    {
         return parse(new File(Hub.getInstance().getDataFolder(), "nbs" + File.separator + decodeFile + ".nbs"));
     }
 
-    public static Song parse(File decodeFile) {
-        try {
+    public static Song parse(File decodeFile)
+    {
+        try
+        {
             return parse(new FileInputStream(decodeFile), decodeFile);
-        } catch (FileNotFoundException e) {
+        }
+        catch (FileNotFoundException e)
+        {
+            Hub.getInstance().log(Hub.getInstance().getCosmeticManager().getJukeboxManager(), Level.SEVERE, "Can't load music file '" + decodeFile.getAbsolutePath() + "'!");
             e.printStackTrace();
         }
-        return null;
-    }
 
-    public static Song parse(InputStream inputStream) {
-        return parse(inputStream, null); // Source is unknown -> no file
+        return null;
     }
 
     private static Song parse(InputStream inputStream, File decodeFile) {

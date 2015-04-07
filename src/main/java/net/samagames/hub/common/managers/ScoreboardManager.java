@@ -68,7 +68,7 @@ public class ScoreboardManager extends AbstractManager
     {
         ObjectiveSign objective = this.playerObjectives.get(uuid);
 
-        objective.setDisplayName(this.rainbowContent.get(this.rainbowIndex) + "✦" + ChatColor.BOLD + "SamaGames" + ChatColor.RESET + this.rainbowContent.get(this.rainbowIndex) + "✦");
+        objective.setDisplayName(this.rainbowContent.get(this.rainbowIndex) + "✦" + ChatColor.BOLD + " SamaGames " + ChatColor.RESET + this.rainbowContent.get(this.rainbowIndex) + "✦");
         objective.setLine(0, ChatColor.BLUE + "");
         objective.setLine(1, ChatColor.GREEN + "" + ChatColor.BOLD + "Serveur");
         objective.setLine(2, ChatColor.GRAY + "Hub " + SamaGamesAPI.get().getServerName().split("_")[1]);

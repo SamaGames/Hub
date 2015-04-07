@@ -32,12 +32,16 @@ public abstract class AbstractCosmetic
         ItemMeta meta = this.icon.getItemMeta();
         meta.setDisplayName(ChatColor.RESET + "" + ChatColor.GOLD + displayName);
 
-        ArrayList<String> lores = new ArrayList<>();
+        if(description != null)
+        {
+            ArrayList<String> lores = new ArrayList<>();
 
-        for(String str : description)
-            lores.add(ChatColor.GRAY + str);
+            for (String str : description)
+                lores.add(ChatColor.GRAY + str);
 
-        meta.setLore(lores);
+            meta.setLore(lores);
+        }
+
         this.icon.setItemMeta(meta);
     }
 
@@ -95,12 +99,21 @@ public abstract class AbstractCosmetic
         return this.databaseName;
     }
 
+    public ItemStack getIcon()
+    {
+        return this.icon;
+    }
+
     public ItemStack getIcon(Player player)
     {
         ItemStack icon = this.icon.clone();
         ItemMeta meta = icon.getItemMeta();
 
         List<String> lores = meta.getLore();
+
+        if(lores == null)
+            lores = new ArrayList<>();
+
         lores.add("");
 
         if(this.isOwned(player))

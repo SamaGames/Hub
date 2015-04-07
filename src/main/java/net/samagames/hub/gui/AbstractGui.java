@@ -17,6 +17,7 @@ public abstract class AbstractGui
 
     public abstract void display(Player player);
     public void update(Player player) {}
+    public void onClose(Player player) {}
 
     public void onClick(Player player, ItemStack stack, String action, ClickType clickType)
     {

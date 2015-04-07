@@ -87,6 +87,7 @@ public class GuiSettings extends AbstractGui
             else
                 SamaGamesAPI.get().getSettingsManager().setSetting(player.getUniqueId(), action.split("_")[1], "true");
 
+            Hub.getInstance().getPlayerManager().updateSettings(player);
             this.update(player);
         }
         else if(action.equals("back"))
