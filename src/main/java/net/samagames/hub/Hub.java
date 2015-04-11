@@ -1,11 +1,16 @@
 package net.samagames.hub;
 
-import net.samagames.hub.commands.CommandClickMe;
-import net.samagames.hub.commands.CommandMeh;
-import net.samagames.hub.commands.CommandNPC;
-import net.samagames.hub.commands.CommandWoot;
+import net.samagames.api.SamaGamesAPI;
+import net.samagames.hub.commands.admin.CommandNPC;
+import net.samagames.hub.commands.admin.CommandSign;
+import net.samagames.hub.commands.eastereggs.CommandPacman;
+import net.samagames.hub.commands.players.CommandClickMe;
+import net.samagames.hub.commands.players.CommandMeh;
+import net.samagames.hub.commands.players.CommandWoot;
 import net.samagames.hub.common.HubRefresher;
 import net.samagames.hub.common.managers.*;
+import net.samagames.hub.common.receivers.ArenaListener;
+import net.samagames.hub.common.receivers.SamaritanListener;
 import net.samagames.hub.cosmetics.CosmeticManager;
 import net.samagames.hub.events.player.GuiListener;
 import net.samagames.hub.events.player.JumpListener;
@@ -15,6 +20,7 @@ import net.samagames.hub.events.protection.InventoryEditionListener;
 import net.samagames.hub.events.protection.PlayerEditionListener;
 import net.samagames.hub.events.protection.WorldEditionListener;
 import net.samagames.hub.games.GameManager;
+import net.samagames.hub.games.sign.SignManager;
 import net.samagames.hub.gui.GuiManager;
 import net.samagames.hub.jump.JumpManager;
 import net.samagames.hub.npcs.NPCManager;
@@ -39,8 +45,8 @@ public class Hub extends JavaPlugin
     private NPCManager npcManager;
     private ScoreboardManager scoreboardManager;
     private GameManager gameManager;
+    private SignManager signManager;
     private JumpManager jumpManager;
-    private BarManager barManager;
     private CosmeticManager cosmeticManager;
 
     private HubRefresher hubRefresher;
@@ -61,10 +67,15 @@ public class Hub extends JavaPlugin
         this.npcManager = new NPCManager(this);
         this.scoreboardManager = new ScoreboardManager(this);
         this.gameManager = new GameManager(this);
+        this.signManager = new SignManager(this);
         this.jumpManager = new JumpManager(this);
-        this.barManager = new BarManager(this);
         this.cosmeticManager = new CosmeticManager(this);
         this.log(Level.INFO, "Managers loaded with success.");
+
+        this.log(Level.INFO, "Registering packets listeners...");
+        SamaGamesAPI.get().getPubSub().subscribe("cheat", new SamaritanListener());
+        SamaGamesAPI.get().getPubSub().subscribe("lobbysChannel", new ArenaListener());
+        this.log(Level.INFO, "Packets listeners registered with success.");
 
         this.log(Level.INFO, "Registering events...");
         this.registerEvents();
@@ -104,10 +115,14 @@ public class Hub extends JavaPlugin
 
     public void registerCommands()
     {
-        this.registerCommand("npc", CommandNPC.class);
         this.registerCommand("click", CommandClickMe.class);
         this.registerCommand("meh", CommandMeh.class);
         this.registerCommand("woot", CommandWoot.class);
+
+        this.registerCommand("npc", CommandNPC.class);
+        this.registerCommand("sign", CommandSign.class);
+
+        this.registerCommand("pacman", CommandPacman.class);
     }
 
     public void registerCommand(String executionTag, Class<? extends CommandExecutor> command)
@@ -134,8 +149,8 @@ public class Hub extends JavaPlugin
     public NPCManager getNPCManager() { return this.npcManager; }
     public ScoreboardManager getScoreboardManager() { return this.scoreboardManager; }
     public GameManager getGameManager() { return this.gameManager; }
+    public SignManager getSignManager() { return this.signManager; }
     public JumpManager getJumpManager() { return this.jumpManager; }
-    public BarManager getBarManager() { return this.barManager; }
     public CosmeticManager getCosmeticManager() { return this.cosmeticManager; }
 
     public World getHubWorld()

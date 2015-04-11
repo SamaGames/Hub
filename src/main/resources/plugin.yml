@@ -22,8 +22,12 @@ commands:
   npc:
     description: Commandes relatives aux NPC's
     usage: /npc
+  sign:
+    description: Commandes relatives aux panneaux
+    usage: /sign
+    alias: /area
 
   # Easter Eggs --------------------------------
-  lamernoar:
+  pacman:
     description: Easter Egg
-    usage: /lamernoar
+    usage: /pacman

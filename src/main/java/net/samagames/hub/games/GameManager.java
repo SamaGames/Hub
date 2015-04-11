@@ -11,7 +11,7 @@ import java.util.logging.Level;
 
 public class GameManager extends AbstractManager
 {
-    private final HashMap<String, IGame> games;
+    private final HashMap<String, AbstractGame> games;
 
     public GameManager(Hub hub)
     {
@@ -31,7 +31,7 @@ public class GameManager extends AbstractManager
         this.registerGame(new HeroBattleGame());
     }
 
-    public void registerGame(IGame game)
+    public void registerGame(AbstractGame game)
     {
         if(!this.games.containsKey(game.getCodeName()))
         {
@@ -40,7 +40,7 @@ public class GameManager extends AbstractManager
         }
     }
 
-    public IGame getGameByIdentifier(String identifier)
+    public AbstractGame getGameByIdentifier(String identifier)
     {
         if(this.games.containsKey(identifier))
             return this.games.get(identifier);
@@ -48,7 +48,7 @@ public class GameManager extends AbstractManager
             return null;
     }
 
-    public HashMap<String, IGame> getGames()
+    public HashMap<String, AbstractGame> getGames()
     {
         return this.games;
     }

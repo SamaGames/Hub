@@ -1,7 +1,7 @@
 package net.samagames.hub.games.shop;
 
 import net.samagames.hub.Hub;
-import net.samagames.hub.games.IGame;
+import net.samagames.hub.games.AbstractGame;
 import net.samagames.hub.gui.shop.GuiShopCategory;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -13,11 +13,11 @@ import java.util.ArrayList;
 
 public class ShopCategory extends ShopIcon
 {
-    private final IGame game;
+    private final AbstractGame game;
     private final String[] description;
     private final ArrayList<ShopIcon> contents;
 
-    public ShopCategory(IGame game, String actionName, String displayName, ItemStack icon, String[] description)
+    public ShopCategory(AbstractGame game, String actionName, String displayName, ItemStack icon, String[] description)
     {
         super(actionName, displayName, icon);
 

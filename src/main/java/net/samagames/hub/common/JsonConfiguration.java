@@ -1,7 +1,6 @@
 package net.samagames.hub.common;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.bukkit.Bukkit;
@@ -12,12 +11,10 @@ import java.util.logging.Level;
 public class JsonConfiguration
 {
     private final File configurationFile;
-    private JsonObject configuration;
 
     public JsonConfiguration(File configurationFile)
     {
         this.configurationFile = configurationFile;
-        this.reload();
     }
 
     public JsonConfiguration(String path)
@@ -25,7 +22,7 @@ public class JsonConfiguration
         this(new File(path));
     }
 
-    public void reload()
+    public JsonObject load()
     {
         try
         {
@@ -40,92 +37,35 @@ public class JsonConfiguration
 
             br.close();
 
-            this.configuration = new JsonParser().parse(builder.toString()).getAsJsonObject();
+            return new JsonParser().parse(builder.toString()).getAsJsonObject();
         }
         catch (IOException ex)
         {
             Bukkit.getLogger().log(Level.SEVERE, "Can't load file '" + this.configurationFile.getName() + "'");
         }
+
+        return null;
     }
 
-    public void save()
+    public void save(JsonObject object)
     {
         Gson gson = new Gson();
 
         try
         {
+            if(this.configurationFile.exists())
+            {
+                this.configurationFile.delete();
+                this.configurationFile.createNewFile();
+            }
+
             FileWriter writer = new FileWriter(this.configurationFile);
-            writer.write(gson.toJson(this.configuration));
+            writer.write(gson.toJson(object));
             writer.close();
         }
         catch (IOException e)
         {
             e.printStackTrace();
         }
-    }
-
-    public void setString(String key, String value)
-    {
-        this.configuration.addProperty(key, value);
-    }
-
-    public void setInt(String key, int value)
-    {
-        this.configuration.addProperty(key, value);
-    }
-
-    public void setBoolean(String key, boolean value)
-    {
-        this.configuration.addProperty(key, value);
-    }
-
-    public void setChar(String key, char value)
-    {
-        this.configuration.addProperty(key, value);
-    }
-
-    public void setJsonObject(String key, JsonObject value)
-    {
-        this.configuration.add(key, value);
-    }
-
-    public void setJsonArray(String key, JsonArray value)
-    {
-        this.configuration.add(key, value);
-    }
-
-    public String getString(String key)
-    {
-        return this.configuration.get(key).getAsString();
-    }
-
-    public int getInt(String key)
-    {
-        return this.configuration.get(key).getAsInt();
-    }
-
-    public boolean getBoolean(String key)
-    {
-        return this.configuration.get(key).getAsBoolean();
-    }
-
-    public char getChar(String key)
-    {
-        return this.configuration.get(key).getAsCharacter();
-    }
-
-    public JsonObject getJsonObject(String key)
-    {
-        return this.configuration.get(key).getAsJsonObject();
-    }
-
-    public JsonArray getJsonArray(String key)
-    {
-        return this.configuration.get(key).getAsJsonArray();
-    }
-
-    public JsonObject getConfiguration()
-    {
-        return this.configuration;
     }
 }

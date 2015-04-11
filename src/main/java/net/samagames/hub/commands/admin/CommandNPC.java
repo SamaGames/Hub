@@ -1,6 +1,7 @@
-package net.samagames.hub.commands;
+package net.samagames.hub.commands.admin;
 
 import net.samagames.hub.Hub;
+import net.samagames.hub.commands.AbstractCommand;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.entity.Player;
@@ -8,7 +9,7 @@ import org.bukkit.entity.Villager;
 
 import java.util.UUID;
 
-public class CommandNPC extends  AbstractCommand
+public class CommandNPC extends AbstractCommand
 {
     public CommandNPC()
     {

@@ -1,7 +1,7 @@
 package net.samagames.hub.gui.shop;
 
 import net.samagames.hub.Hub;
-import net.samagames.hub.games.IGame;
+import net.samagames.hub.games.AbstractGame;
 import net.samagames.hub.games.shop.ShopCategory;
 import net.samagames.hub.games.shop.ShopIcon;
 import net.samagames.hub.gui.AbstractGui;
@@ -13,11 +13,11 @@ import org.bukkit.inventory.ItemStack;
 
 public class GuiShopCategory extends AbstractGui
 {
-    private final IGame game;
+    private final AbstractGame game;
     private final ShopCategory category;
     private final AbstractGui before;
 
-    public GuiShopCategory(IGame game, ShopCategory category, AbstractGui before)
+    public GuiShopCategory(AbstractGame game, ShopCategory category, AbstractGui before)
     {
         this.game = game;
         this.category = category;

@@ -1,7 +1,7 @@
 package net.samagames.hub.gui.shop;
 
 import net.samagames.hub.Hub;
-import net.samagames.hub.games.IGame;
+import net.samagames.hub.games.AbstractGame;
 import net.samagames.hub.gui.AbstractGui;
 import net.samagames.hub.utils.GuiUtils;
 import org.bukkit.Bukkit;
@@ -20,7 +20,7 @@ public class GuiShop extends AbstractGui
 
         for(String gameIdentifier : Hub.getInstance().getGameManager().getGames().keySet())
         {
-            IGame game = Hub.getInstance().getGameManager().getGameByIdentifier(gameIdentifier);
+            AbstractGame game = Hub.getInstance().getGameManager().getGameByIdentifier(gameIdentifier);
 
             if (game.hasShop())
             {
@@ -43,7 +43,7 @@ public class GuiShop extends AbstractGui
         }
         else if(action.startsWith("game_"))
         {
-            IGame game = Hub.getInstance().getGameManager().getGameByIdentifier(action.split("_")[1]);
+            AbstractGame game = Hub.getInstance().getGameManager().getGameByIdentifier(action.split("_")[1]);
             Hub.getInstance().getGuiManager().openGui(player, new GuiShopCategory(game, game.getShopConfiguration(), this));
         }
     }

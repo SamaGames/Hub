@@ -2,7 +2,7 @@ package net.samagames.hub.games.shop;
 
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
-import net.samagames.hub.games.IGame;
+import net.samagames.hub.games.AbstractGame;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
@@ -13,12 +13,12 @@ import java.util.ArrayList;
 
 public class ShopImprovableItem extends ShopIcon
 {
-    private final IGame game;
+    private final AbstractGame game;
     private final String[] description;
     private final ArrayList<ItemLevel> levels;
     private ItemLevel defaultLevel;
 
-    public ShopImprovableItem(IGame game, String databaseName, String displayName, ItemStack icon, String[] description)
+    public ShopImprovableItem(AbstractGame game, String databaseName, String displayName, ItemStack icon, String[] description)
     {
         super(databaseName, displayName, icon);
 

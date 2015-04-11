@@ -1,7 +1,7 @@
 package net.samagames.hub.games.type;
 
 import net.samagames.hub.Hub;
-import net.samagames.hub.games.IGame;
+import net.samagames.hub.games.AbstractGame;
 import net.samagames.hub.games.shop.ShopCategory;
 import net.samagames.hub.games.shop.ShopImprovableItem;
 import org.bukkit.Location;
@@ -10,7 +10,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.Potion;
 import org.bukkit.potion.PotionType;
 
-public class DimensionsGame implements IGame
+public class DimensionsGame extends AbstractGame
 {
     @Override
     public String getCodeName()

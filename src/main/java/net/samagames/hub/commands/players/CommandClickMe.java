@@ -1,9 +1,9 @@
-package net.samagames.hub.commands;
+package net.samagames.hub.commands.players;
 
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
+import net.samagames.hub.commands.AbstractCommand;
 import net.samagames.hub.gui.profile.GuiClickMe;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.entity.Player;

@@ -1,6 +1,7 @@
-package net.samagames.hub.commands;
+package net.samagames.hub.commands.moderating;
 
 import net.samagames.hub.Hub;
+import net.samagames.hub.commands.AbstractCommand;
 import org.bukkit.command.Command;
 import org.bukkit.entity.Player;
 

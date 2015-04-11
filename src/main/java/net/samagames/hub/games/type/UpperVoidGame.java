@@ -1,14 +1,14 @@
 package net.samagames.hub.games.type;
 
 import net.samagames.hub.Hub;
-import net.samagames.hub.games.IGame;
+import net.samagames.hub.games.AbstractGame;
 import net.samagames.hub.games.shop.ShopCategory;
 import net.samagames.hub.games.shop.ShopImprovableItem;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
-public class UpperVoidGame implements IGame
+public class UpperVoidGame extends AbstractGame
 {
     @Override
     public String getCodeName()
@@ -56,7 +56,7 @@ public class UpperVoidGame implements IGame
         });
 
         grenadesItem.addDefault("1 grenade");
-        grenadesItem.addLevel(550, "2 grenade", "grenade-1");
+        grenadesItem.addLevel(550, "2 grenades", "grenade-1");
         grenadesItem.addLevel(2100, "3 grenades", "grenade-2");
         grenadesItem.addLevel(5300, "4 grenades", "grenade-3");
         grenadesItem.addLevel(19800, "5 grenades", "grenade-4");

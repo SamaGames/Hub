@@ -70,6 +70,8 @@ public class Jump
         player.sendMessage(Hub.getInstance().getJumpManager().getTag() + ChatColor.DARK_AQUA + "Vous commencez le " + ChatColor.AQUA + jumpName + ChatColor.DARK_AQUA + ". Bonne chance !");
         player.setAllowFlight(false);
         player.setFlying(false);
+        player.setWalkSpeed(0.1F);
+        player.setFlySpeed(0.1F);
 
         /**
          * TODO: Remove pet
@@ -142,6 +144,9 @@ public class Jump
             }
         }
 
+        player.setFlySpeed(0.3F);
+        player.setWalkSpeed(0.3F);
+
         if (player.hasPermission("lobby.fly"))
             player.setAllowFlight(true);
     }
@@ -150,6 +155,9 @@ public class Jump
     {
         player.sendMessage(Hub.getInstance().getJumpManager().getTag() + ChatColor.DARK_AQUA + "Vous avez échoué :'(");
         player.teleport(this.teleportFail);
+
+        player.setFlySpeed(0.3F);
+        player.setWalkSpeed(0.3F);
 
         if (player.hasPermission("lobby.fly"))
             Bukkit.getScheduler().runTask(Hub.getInstance(), () -> player.setAllowFlight(true));

@@ -3,12 +3,15 @@ package net.samagames.hub.events.player;
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import net.samagames.hub.cosmetics.jukebox.JukeboxPlaylist;
+import net.samagames.hub.games.AbstractGame;
+import net.samagames.hub.games.sign.GameSignZone;
 import net.samagames.hub.gui.profile.GuiClickMe;
 import net.samagames.permissionsbukkit.PermissionsBukkit;
 import net.samagames.tools.InventoryUtils;
 import net.samagames.tools.PlayerUtils;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.*;
+import org.bukkit.block.Sign;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -132,8 +135,8 @@ public class PlayerListener implements Listener
         final Player player = event.getPlayer();
 
         player.setGameMode(GameMode.ADVENTURE);
-        player.setWalkSpeed(player.getWalkSpeed() * 1.5F);
-        player.setFlySpeed(player.getFlySpeed() * 1.5F);
+        player.setWalkSpeed(0.3F);
+        player.setFlySpeed(0.2F);
         InventoryUtils.cleanPlayer(player);
         Hub.getInstance().getPlayerManager().getStaticInventory().setInventoryToPlayer(player);
 
@@ -149,7 +152,7 @@ public class PlayerListener implements Listener
             if (PermissionsBukkit.hasPermission(player, "lobby.fly"))
                 Bukkit.getScheduler().runTask(Hub.getInstance(), () -> player.setAllowFlight(true));
 
-            if(PermissionsBukkit.hasPermission(player, "lobby.announce"))
+            if (PermissionsBukkit.hasPermission(player, "lobby.announce"))
                 Bukkit.broadcastMessage(PlayerUtils.getFullyFormattedPlayerName(player) + ChatColor.YELLOW + " a rejoint le hub !");
         });
     }
@@ -255,6 +258,26 @@ public class PlayerListener implements Listener
                         if(Hub.getInstance().getNPCManager().canTalk(event.getPlayer()))
                             Hub.getInstance().getNPCManager().getNPCByID(UUID.fromString(event.getRightClicked().getMetadata("npc-id").get(0).asString())).getAction().execute(event.getPlayer());
                 });
+            }
+        }
+    }
+
+    @EventHandler
+    public void onPlayerInteractEvent(final PlayerInteractEvent event)
+    {
+        Material material = event.getClickedBlock().getType();
+
+        if(material == Material.SIGN || material == Material.SIGN_POST || material == Material.WALL_SIGN)
+        {
+            Sign sign = (Sign) event.getClickedBlock().getState();
+
+            if(sign.hasMetadata("game") && sign.hasMetadata("map"))
+            {
+                AbstractGame game = Hub.getInstance().getGameManager().getGameByIdentifier(sign.getMetadata("game").get(0).asString());
+                GameSignZone zone = game.getGameSignZoneByMap(sign.getMetadata("map").get(0).asString());
+
+                if(zone.getGameSignByLocation(event.getClickedBlock().getLocation()) != null)
+                    zone.getGameSignByLocation(event.getClickedBlock().getLocation()).click(event.getPlayer());
             }
         }
     }

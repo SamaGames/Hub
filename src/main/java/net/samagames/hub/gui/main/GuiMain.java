@@ -1,7 +1,7 @@
 package net.samagames.hub.gui.main;
 
 import net.samagames.hub.Hub;
-import net.samagames.hub.games.IGame;
+import net.samagames.hub.games.AbstractGame;
 import net.samagames.hub.gui.AbstractGui;
 import net.samagames.hub.gui.staff.GuiSelectZone;
 import net.samagames.permissionsbukkit.PermissionsBukkit;
@@ -38,7 +38,7 @@ public class GuiMain extends AbstractGui
 
         for(String gameIdentifier : Hub.getInstance().getGameManager().getGames().keySet())
         {
-            IGame game = Hub.getInstance().getGameManager().getGameByIdentifier(gameIdentifier);
+            AbstractGame game = Hub.getInstance().getGameManager().getGameByIdentifier(gameIdentifier);
 
             if(game.getSlotInMainMenu() != -1)
                 this.setSlotData(ChatColor.GOLD + game.getName(), game.getIcon(), game.getSlotInMainMenu(), this.getLores(game.getDescription(), false, true), "game_" + gameIdentifier);
@@ -80,7 +80,7 @@ public class GuiMain extends AbstractGui
         else if(action.startsWith("game"))
         {
             String[] actions = action.split("_");
-            IGame game = Hub.getInstance().getGameManager().getGameByIdentifier(actions[1]);
+            AbstractGame game = Hub.getInstance().getGameManager().getGameByIdentifier(actions[1]);
 
             if(!game.isLocked())
                 player.teleport(game.getLobbySpawn());

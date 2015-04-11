@@ -2,7 +2,7 @@ package net.samagames.hub.games.shop;
 
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
-import net.samagames.hub.games.IGame;
+import net.samagames.hub.games.AbstractGame;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
@@ -14,13 +14,13 @@ import java.util.List;
 
 public class ShopItem extends ShopIcon
 {
-    protected final IGame game;
+    protected final AbstractGame game;
     protected final String type;
     protected final String[] description;
     protected final int cost;
     protected boolean defaultItem;
 
-    public ShopItem(IGame game, String type, String databaseName, String displayName, ItemStack icon, String[] description, int cost)
+    public ShopItem(AbstractGame game, String type, String databaseName, String displayName, ItemStack icon, String[] description, int cost)
     {
         super(databaseName, displayName, icon);
 

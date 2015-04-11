@@ -10,7 +10,6 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <libdir>${basedir}/libs</libdir>
     </properties>
 
     <repositories>

@@ -1,13 +1,13 @@
 package net.samagames.hub.games.type;
 
 import net.samagames.hub.Hub;
-import net.samagames.hub.games.IGame;
+import net.samagames.hub.games.AbstractGame;
 import net.samagames.hub.games.shop.ShopCategory;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
-public class UHCGame implements IGame
+public class UHCGame extends AbstractGame
 {
     @Override
     public String getCodeName()

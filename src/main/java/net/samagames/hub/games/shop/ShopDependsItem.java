@@ -2,7 +2,7 @@ package net.samagames.hub.games.shop;
 
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
-import net.samagames.hub.games.IGame;
+import net.samagames.hub.games.AbstractGame;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
@@ -16,7 +16,7 @@ public class ShopDependsItem extends ShopItem
 {
     protected ShopItem dependsOn;
 
-    public ShopDependsItem(IGame game, String type, String databaseName, String displayName, ItemStack icon, String[] description, int cost, ShopItem dependsOn)
+    public ShopDependsItem(AbstractGame game, String type, String databaseName, String displayName, ItemStack icon, String[] description, int cost, ShopItem dependsOn)
     {
         super(game, type, databaseName, displayName, icon, description, cost);
         this.dependsOn = dependsOn;

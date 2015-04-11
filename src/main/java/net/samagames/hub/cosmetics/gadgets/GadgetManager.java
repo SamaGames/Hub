@@ -68,6 +68,7 @@ public class GadgetManager extends AbstractCosmeticManager<GadgetCosmetic>
                 AbstractDisplayer displayer = cosmetic.getDisplayerClass().getDeclaredConstructor(Player.class).newInstance(player);
 
                 if (!displayer.canUse()) flag = false;
+                if (!this.canUse(player)) flag = false;
 
                 for (Location location : displayer.getBlocksUsed().keySet())
                 {

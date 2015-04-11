@@ -1,14 +1,15 @@
-package net.samagames.hub.commands;
+package net.samagames.hub.commands.players;
 
 import net.samagames.hub.Hub;
+import net.samagames.hub.commands.AbstractCommand;
 import net.samagames.hub.cosmetics.jukebox.JukeboxPlaylist;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.entity.Player;
 
-public class CommandWoot extends AbstractCommand
+public class CommandMeh extends AbstractCommand
 {
-    public CommandWoot()
+    public CommandMeh()
     {
         super(null);
     }
@@ -25,10 +26,10 @@ public class CommandWoot extends AbstractCommand
         }
         else
         {
-            if (!current.woot(player))
-                player.sendMessage(tag + ChatColor.RED + "Vous avez déjà voté Woot pour cette musique.");
+            if (!current.meh(player))
+                player.sendMessage(tag + ChatColor.RED + "Vous avez déjà voté Meh pour cette musique.");
             else
-                player.sendMessage(tag + ChatColor.GREEN + "Vous avez marqué votre appréciation pour la musique jouée.");
+                player.sendMessage(tag + ChatColor.GREEN + "Vous avez bien indiqué que cette musique ne vous plait pas.");
         }
 
         return true;
