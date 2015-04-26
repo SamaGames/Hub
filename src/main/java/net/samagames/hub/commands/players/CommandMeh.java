@@ -9,11 +9,6 @@ import org.bukkit.entity.Player;
 
 public class CommandMeh extends AbstractCommand
 {
-    public CommandMeh()
-    {
-        super(null);
-    }
-
     @Override
     public boolean doAction(Player player, Command command, String s, String[] args)
     {

@@ -3,6 +3,7 @@ package net.samagames.hub.gui.profile;
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import net.samagames.hub.gui.AbstractGui;
+import net.samagames.hub.gui.profile.stats.GuiStats;
 import net.samagames.hub.utils.GuiUtils;
 import net.samagames.hub.utils.RankUtils;
 import net.samagames.tools.chat.FancyMessage;

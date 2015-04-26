@@ -11,11 +11,6 @@ import java.util.UUID;
 
 public class CommandNPC extends AbstractCommand
 {
-    public CommandNPC()
-    {
-        super("lobby.npc");
-    }
-
     @Override
     public boolean doAction(Player player, Command command, String s, String[] args)
     {

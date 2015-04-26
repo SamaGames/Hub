@@ -8,11 +8,6 @@ import org.bukkit.entity.Player;
 
 public class CommandPacman extends AbstractCommand
 {
-    public CommandPacman()
-    {
-        super(null);
-    }
-
     @Override
     public boolean doAction(Player player, Command command, String s, String[] args)
     {

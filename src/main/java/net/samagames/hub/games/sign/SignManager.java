@@ -23,7 +23,9 @@ import java.util.logging.Level;
 public class SignManager extends AbstractManager
 {
     private final JsonConfiguration jsonConfig;
+
     private Pacman pacman;
+    private boolean isMaintenance;
 
     public SignManager(Hub hub)
     {
@@ -49,7 +51,9 @@ public class SignManager extends AbstractManager
         }
 
         this.jsonConfig = new JsonConfiguration(config);
+
         this.pacman = null;
+        this.isMaintenance = false;
 
         this.reloadList();
     }
@@ -185,6 +189,11 @@ public class SignManager extends AbstractManager
         this.reloadList();
     }
 
+    public void setMaintenance(boolean flag)
+    {
+        this.isMaintenance = flag;
+    }
+
     public void startPacman(Player player)
     {
         this.pacman = new Pacman(player);
@@ -199,6 +208,11 @@ public class SignManager extends AbstractManager
     public Pacman getPacman()
     {
         return this.pacman;
+    }
+
+    public boolean isMaintenance()
+    {
+        return this.isMaintenance;
     }
 
     public boolean isPacmanEnabled()

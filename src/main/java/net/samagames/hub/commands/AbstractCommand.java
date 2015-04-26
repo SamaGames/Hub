@@ -9,12 +9,7 @@ import org.bukkit.entity.Player;
 
 public abstract class AbstractCommand implements CommandExecutor
 {
-    private final String permission;
-
-    public AbstractCommand(String permission)
-    {
-        this.permission = permission;
-    }
+    private String permission;
 
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] args)
@@ -38,6 +33,11 @@ public abstract class AbstractCommand implements CommandExecutor
     }
 
     public abstract boolean doAction(Player player, Command command, String s, String[] args);
+
+    public void setPermission(String permission)
+    {
+        this.permission = permission;
+    }
 
     public boolean hasPermission(Player player)
     {

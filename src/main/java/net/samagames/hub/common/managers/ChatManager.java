@@ -11,7 +11,6 @@ import java.util.UUID;
 public class ChatManager extends AbstractManager
 {
     private final HashMap<UUID, Date> lastPlayerMessages;
-    private final HashMap<UUID, Date> mutedPlayers;
     private final ArrayList<UUID> chatDisablers;
 
     private int actualSlowDuration;
@@ -22,9 +21,9 @@ public class ChatManager extends AbstractManager
         super(hub);
 
         this.lastPlayerMessages = new HashMap<>();
-        this.mutedPlayers = new HashMap<>();
         this.chatDisablers = new ArrayList<>();
 
+        this.actualSlowDuration = 0;
         this.canChat = true;
     }
 
@@ -33,22 +32,16 @@ public class ChatManager extends AbstractManager
         this.lastPlayerMessages.put(player.getUniqueId(), new Date());
     }
 
-    public void disableChat(Player player)
-    {
-        if(!this.chatDisablers.contains(player.getUniqueId()))
-            this.chatDisablers.add(player.getUniqueId());
-    }
-
-    public void unmutePlayer(Player player)
-    {
-        if(this.mutedPlayers.containsKey(player.getUniqueId()))
-            this.mutedPlayers.remove(player.getUniqueId());
-    }
-
-    public void removeChatDisabler(Player player)
+    public void enableChatFor(Player player)
     {
         if(this.chatDisablers.contains(player.getUniqueId()))
             this.chatDisablers.remove(player.getUniqueId());
+    }
+
+    public void disableChatFor(Player player)
+    {
+        if(!this.chatDisablers.contains(player.getUniqueId()))
+            this.chatDisablers.add(player.getUniqueId());
     }
 
     public void setChatEnabled(boolean flag)
@@ -82,6 +75,11 @@ public class ChatManager extends AbstractManager
     public boolean hasPlayerTalked(Player player)
     {
         return this.lastPlayerMessages.containsKey(player.getUniqueId());
+    }
+
+    public boolean hasChatDisabled(Player player)
+    {
+        return this.chatDisablers.contains(player.getUniqueId());
     }
 
     public boolean canChat()

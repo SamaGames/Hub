@@ -52,6 +52,9 @@ public class JukeboxRegistry extends AbstractCosmeticRegistry<JukeboxDiskCosmeti
         JukeboxDiskCosmetic takeMeOutDisk = new JukeboxDiskCosmetic("takemeout", new ItemStack(Material.RECORD_4, 1), NBSDecoder.parse("TakeMeOut"));
         takeMeOutDisk.buyableWithStars(500);
 
+        JukeboxDiskCosmetic smellLikeTheSpiritDisk = new JukeboxDiskCosmetic("smellslikethespirit", new ItemStack(Material.RECORD_3, 1), NBSDecoder.parse("SmellsLikeTeenSpirit"));
+        smellLikeTheSpiritDisk.buyableWithStars(500);
+
         this.registerElement(whatIsLoveDisk);
         this.registerElement(songOfStormsDisk);
         this.registerElement(caraMiaDisk);
@@ -66,5 +69,6 @@ public class JukeboxRegistry extends AbstractCosmeticRegistry<JukeboxDiskCosmeti
         this.registerElement(lostWoodsDisk);
         this.registerElement(hammerToFallDisk);
         this.registerElement(takeMeOutDisk);
+        this.registerElement(smellLikeTheSpiritDisk);
     }
 }

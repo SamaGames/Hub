@@ -2,10 +2,13 @@ package net.samagames.hub.games.type;
 
 import net.samagames.hub.Hub;
 import net.samagames.hub.games.AbstractGame;
+import net.samagames.hub.games.DisplayedStat;
 import net.samagames.hub.games.shop.ShopCategory;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.ArrayList;
 
 public class UHCGame extends AbstractGame
 {
@@ -45,6 +48,12 @@ public class UHCGame extends AbstractGame
 
     @Override
     public ShopCategory getShopConfiguration()
+    {
+        return null;
+    }
+
+    @Override
+    public ArrayList<DisplayedStat> getDisplayedStats()
     {
         return null;
     }

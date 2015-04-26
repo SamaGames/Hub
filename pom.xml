@@ -14,7 +14,7 @@
 
     <repositories>
         <repository>
-            <id>zyuiop-repo</id>
+            <id>samagames-repo</id>
             <url>http://maven.samagames.net/public/</url>
         </repository>
     </repositories>

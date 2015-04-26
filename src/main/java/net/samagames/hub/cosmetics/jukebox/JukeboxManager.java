@@ -11,13 +11,10 @@ import net.samagames.tools.ParticleEffect;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitTask;
 
-import java.util.LinkedList;
-import java.util.Random;
-import java.util.UUID;
-import java.util.concurrent.CopyOnWriteArraySet;
+import java.util.*;
 
 public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
 {
@@ -26,8 +23,8 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
     private final ParticleEffect mehEffect;
     private final LinkedList<JukeboxPlaylist> playlists;
     private final LinkedList<JukeboxPlaylist> recentsPlaylists;
-    private final CopyOnWriteArraySet<String> recentDJs;
-    private final CopyOnWriteArraySet<UUID> mutedPlayers;
+    private final HashMap<UUID, Integer> recentDJs;
+    private final ArrayList<UUID> mutedPlayers;
 
     private JukeboxPlaylist currentPlaylist;
     private boolean isLocked;
@@ -43,8 +40,8 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
 
         this.playlists = new LinkedList<>();
         this.recentsPlaylists = new LinkedList<>();
-        this.recentDJs = new CopyOnWriteArraySet<>();
-        this.mutedPlayers = new CopyOnWriteArraySet<>();
+        this.recentDJs = new HashMap<>();
+        this.mutedPlayers = new ArrayList<>();
 
         Bukkit.getScheduler().runTaskTimerAsynchronously(this.hub, () ->
         {
@@ -101,7 +98,7 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
     @Override
     public void update() {}
 
-    public void play(JukeboxDiskCosmetic disk, CommandSender playedBy)
+    public void play(JukeboxDiskCosmetic disk, Player playedBy)
     {
         Song song = disk.getSong();
         JukeboxPlaylist jukeboxPlaylist = new JukeboxPlaylist(disk, playedBy.getName());
@@ -112,9 +109,9 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
             playedBy.sendMessage(ChatColor.RED + "La playlist contient déjà une musique de vous.");
             return;
         }
-        else if (this.recentDJs.contains(playedBy.getName()) && !canBypassLimit)
+        else if (this.recentDJs.containsKey(playedBy.getUniqueId()) && !canBypassLimit)
         {
-            playedBy.sendMessage(ChatColor.RED + "Vous ne pouvez proposer un titre que toutes les 10 minutes.");
+            playedBy.sendMessage(ChatColor.RED + "Vous ne pouvez proposer un titre que dans " + this.recentDJs.get(playedBy.getUniqueId()) + " secondes.");
             return;
         }
         else if ((containsSong(song.getTitle()) || (this.currentPlaylist != null && this.currentPlaylist.getSong().getTitle().equals(song.getTitle()))) && !canBypassLimit)
@@ -133,15 +130,22 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
             return;
         }
 
+        this.recentDJs.put(playedBy.getUniqueId(), 600);
 
-        this.recentDJs.add(playedBy.getName());
-        final String name = playedBy.getName();
-
-        Bukkit.getScheduler().runTaskLater(this.hub, () ->
+        BukkitTask task = Bukkit.getScheduler().runTaskTimerAsynchronously(this.hub, () ->
         {
-            if (this.recentDJs.contains(name))
-                this.recentDJs.remove(name);
-        }, 20 * 10 * 60);
+            if (this.recentDJs.containsKey(playedBy.getUniqueId()))
+            {
+                int now = this.recentDJs.get(playedBy.getUniqueId()) - 1;
+                this.recentDJs.put(playedBy.getUniqueId(), now);
+            }
+        }, 20L, 20L);
+
+        Bukkit.getScheduler().runTaskLaterAsynchronously(Hub.getInstance(), () ->
+        {
+            this.recentDJs.remove(playedBy.getUniqueId());
+            task.cancel();
+        }, (20L * 60 * 10) + 5);
 
         this.playlists.addLast(jukeboxPlaylist);
 
@@ -212,6 +216,11 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
         {
             return this.jukeboxTag + ChatColor.RED + "Aucun son n'est lu actuellement.";
         }
+    }
+
+    public void clear()
+    {
+        this.playlists.clear();
     }
 
     public void addPlayer(Player player)

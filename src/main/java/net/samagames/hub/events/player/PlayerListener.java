@@ -68,7 +68,7 @@ public class PlayerListener implements Listener
                 event.getPlayer().sendMessage(ChatColor.GOLD + "Attention : chat désactivé");
             }
         }
-        else if (Hub.getInstance().getChatManager().getActualSlowDuration() > 0 && !PermissionsBukkit.hasPermission(event.getPlayer(), "slow.cancel"))
+        else if (Hub.getInstance().getChatManager().getActualSlowDuration() > 0 && !PermissionsBukkit.hasPermission(event.getPlayer(), "hub.bypassmute"))
         {
             if (!Hub.getInstance().getChatManager().hasPlayerTalked(event.getPlayer()))
             {
@@ -113,7 +113,7 @@ public class PlayerListener implements Listener
 
         if(!event.isCancelled())
             for (Player player : Bukkit.getOnlinePlayers())
-                if (!Hub.getInstance().getNPCManager().canTalk(player))
+                if (!Hub.getInstance().getNPCManager().canTalk(player) || Hub.getInstance().getChatManager().hasChatDisabled(player))
                    event.getRecipients().remove(player);
     }
 
@@ -143,16 +143,16 @@ public class PlayerListener implements Listener
         Bukkit.getScheduler().runTaskAsynchronously(Hub.getInstance(), () ->
         {
             Hub.getInstance().getCosmeticManager().handleLogin(player);
-            Hub.getInstance().getPlayerManager().updateSettings(player);
+            Hub.getInstance().getPlayerManager().handleLogin(player);
             Hub.getInstance().getScoreboardManager().addScoreboardReceiver(player);
             Hub.getInstance().getHologramManager().addReceiver(player);
 
             player.teleport(new Location(Bukkit.getWorlds().get(0), -19, 51, 89));
 
-            if (PermissionsBukkit.hasPermission(player, "lobby.fly"))
+            if (PermissionsBukkit.hasPermission(player, "hub.fly"))
                 Bukkit.getScheduler().runTask(Hub.getInstance(), () -> player.setAllowFlight(true));
 
-            if (PermissionsBukkit.hasPermission(player, "lobby.announce"))
+            if (PermissionsBukkit.hasPermission(player, "hub.announce"))
                 Bukkit.broadcastMessage(PlayerUtils.getFullyFormattedPlayerName(player) + ChatColor.YELLOW + " a rejoint le hub !");
         });
     }
@@ -265,19 +265,22 @@ public class PlayerListener implements Listener
     @EventHandler
     public void onPlayerInteractEvent(final PlayerInteractEvent event)
     {
-        Material material = event.getClickedBlock().getType();
-
-        if(material == Material.SIGN || material == Material.SIGN_POST || material == Material.WALL_SIGN)
+        if(event.getClickedBlock() != null)
         {
-            Sign sign = (Sign) event.getClickedBlock().getState();
+            Material material = event.getClickedBlock().getType();
 
-            if(sign.hasMetadata("game") && sign.hasMetadata("map"))
+            if (material == Material.SIGN || material == Material.SIGN_POST || material == Material.WALL_SIGN)
             {
-                AbstractGame game = Hub.getInstance().getGameManager().getGameByIdentifier(sign.getMetadata("game").get(0).asString());
-                GameSignZone zone = game.getGameSignZoneByMap(sign.getMetadata("map").get(0).asString());
+                Sign sign = (Sign) event.getClickedBlock().getState();
 
-                if(zone.getGameSignByLocation(event.getClickedBlock().getLocation()) != null)
-                    zone.getGameSignByLocation(event.getClickedBlock().getLocation()).click(event.getPlayer());
+                if (sign.hasMetadata("game") && sign.hasMetadata("map"))
+                {
+                    AbstractGame game = Hub.getInstance().getGameManager().getGameByIdentifier(sign.getMetadata("game").get(0).asString());
+                    GameSignZone zone = game.getGameSignZoneByMap(sign.getMetadata("map").get(0).asString());
+
+                    if (zone.getGameSignByLocation(event.getClickedBlock().getLocation()) != null)
+                        zone.getGameSignByLocation(event.getClickedBlock().getLocation()).click(event.getPlayer());
+                }
             }
         }
     }
@@ -286,13 +289,9 @@ public class PlayerListener implements Listener
     {
         Bukkit.getScheduler().runTaskAsynchronously(Hub.getInstance(), () ->
         {
-            if (Hub.getInstance().getPlayerManager().getSelection(player) != null)
-                Hub.getInstance().getPlayerManager().removeSelection(player);
-
             Hub.getInstance().getCosmeticManager().handleLogout(player);
-
-            Hub.getInstance().getChatManager().removeChatDisabler(player);
-            Hub.getInstance().getChatManager().unmutePlayer(player);
+            Hub.getInstance().getPlayerManager().handleLogout(player);
+            Hub.getInstance().getChatManager().enableChatFor(player);
             Hub.getInstance().getNPCManager().talkFinished(player);
             Hub.getInstance().getScoreboardManager().removeScoreboardReceiver(player);
             Hub.getInstance().getHologramManager().removeReceiver(player);

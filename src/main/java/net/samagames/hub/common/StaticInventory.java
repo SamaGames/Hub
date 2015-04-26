@@ -7,6 +7,7 @@ import net.samagames.hub.gui.main.GuiMain;
 import net.samagames.hub.gui.profile.GuiProfile;
 import net.samagames.hub.gui.shop.GuiShop;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -26,7 +27,7 @@ public class StaticInventory
         this.items.put(0, this.buildItemStack(Material.COMPASS, 1, 0, this.createTitle("Menu principal"), null));
         this.items.put(1, this.buildItemStack(Material.GOLD_INGOT, 1, 0, this.createTitle("Boutique"), null));
         this.items.put(4, this.buildItemStack(Material.SKULL_ITEM, 1, 3, this.createTitle("Profil"), null));
-        this.items.put(7, this.buildItemStack(Material.NETHER_STAR, 1, 0, this.createTitle("Cosmétiques"), null));
+        this.items.put(7, this.buildItemStack(Material.ENDER_CHEST, 1, 0, this.createTitle("Caverne aux trésors"), null));
         this.items.put(8, this.buildItemStack(Material.BOW, 1, 0, this.createTitle("Stalker 2000"), null));
     }
 
@@ -44,13 +45,14 @@ public class StaticInventory
         {
             Hub.getInstance().getGuiManager().openGui(player, new GuiProfile());
         }
-        else if(stack.getType() == Material.NETHER_STAR)
+        else if(stack.getType() == Material.ENDER_CHEST)
         {
+            player.playSound(player.getLocation(), Sound.CHEST_OPEN, 1.0F, 1.0F);
             Hub.getInstance().getGuiManager().openGui(player, new GuiCosmetics());
         }
         else if(stack.getType() == Material.BOW)
         {
-
+            ;
         }
     }
 

@@ -31,7 +31,7 @@ public class GuiCosmetics extends AbstractGui
     @Override
     public void display(Player player)
     {
-        this.inventory = Bukkit.createInventory(null, 54, "Cosmétiques");
+        this.inventory = Bukkit.createInventory(null, 54, "Caverne aux trésors");
 
         this.randomIcon(1, ChatColor.DARK_AQUA + "●" + ChatColor.AQUA + " Humeurs " + ChatColor.DARK_AQUA + "●", Material.BLAZE_POWDER, new String[]{
                 ChatColor.GRAY + "Montrez-nous comment vous vous sentez :)"

@@ -2,11 +2,14 @@ package net.samagames.hub.games.type;
 
 import net.samagames.hub.Hub;
 import net.samagames.hub.games.AbstractGame;
+import net.samagames.hub.games.DisplayedStat;
 import net.samagames.hub.games.shop.ShopCategory;
 import net.samagames.hub.games.shop.ShopImprovableItem;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.ArrayList;
 
 public class UpperVoidGame extends AbstractGame
 {
@@ -90,6 +93,20 @@ public class UpperVoidGame extends AbstractGame
         parentCategory.addContent(tntStick);
 
         return parentCategory;
+    }
+
+    @Override
+    public ArrayList<DisplayedStat> getDisplayedStats()
+    {
+        ArrayList<DisplayedStat> stats = new ArrayList<>();
+
+        stats.add(new DisplayedStat("wins", "Victoires", Material.NETHER_STAR));
+        stats.add(new DisplayedStat("blocs", "Blocs cassés", Material.QUARTZ_BLOCK));
+        stats.add(new DisplayedStat("tntlaunch", "TNTs lancées", Material.TNT));
+        stats.add(new DisplayedStat("grenade", "Grenades lancées", Material.CLAY_BALL));
+        stats.add(new DisplayedStat("played_games", "Parties jouées", Material.SIGN));
+
+        return stats;
     }
 
     @Override

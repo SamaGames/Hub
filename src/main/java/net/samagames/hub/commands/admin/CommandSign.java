@@ -17,17 +17,12 @@ import java.util.ArrayList;
 
 public class CommandSign extends AbstractCommand
 {
-    public CommandSign()
-    {
-        super("hub.admin.sign");
-    }
-
     @Override
     public boolean doAction(Player player, Command command, String s, String[] args)
     {
         if(args.length < 1)
         {
-            player.sendMessage(ChatColor.RED + "Usage: /sign <add|list> <...>");
+            player.sendMessage(ChatColor.RED + "Usage: /sign <add|maintenance|list> <...>");
             return true;
         }
 
@@ -37,8 +32,16 @@ public class CommandSign extends AbstractCommand
                 this.addSign(player, args);
                 break;
 
+            case "maintenance":
+                this.maintenanceSigns();
+                break;
+
             case "list":
                 this.listSigns(player);
+                break;
+
+            default:
+                player.sendMessage(ChatColor.RED + "Commande inconnue !");
                 break;
         }
 
@@ -80,6 +83,11 @@ public class CommandSign extends AbstractCommand
         }
 
         Hub.getInstance().getSignManager().addZone(player, game, map, signs);
+    }
+
+    private void maintenanceSigns()
+    {
+
     }
 
     private void listSigns(Player player)

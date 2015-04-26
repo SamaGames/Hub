@@ -91,8 +91,6 @@ public class GuiJukebox extends AbstractGui
         {
             if(i == 13)
             {
-                this.setSlotData(ChatColor.GRAY + "", new ItemStack(Material.STAINED_GLASS_PANE, 1, randomizedDye.getData()), (i - 9), null, "none");
-
                 if(song == null)
                 {
                     this.setSlotData(ChatColor.RED + "Aucun son actuellement !", Material.BARRIER, i, null, "none");

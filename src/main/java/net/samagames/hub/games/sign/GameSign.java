@@ -28,7 +28,19 @@ public class GameSign
     public void update(SignData data)
     {
         if(Hub.getInstance().getSignManager().isPacmanEnabled())
+        {
             return;
+        }
+        else if(Hub.getInstance().getSignManager().isMaintenance())
+        {
+            this.sign.setLine(0, "");
+            this.sign.setLine(1, ChatColor.DARK_RED + "Jeu en");
+            this.sign.setLine(2, ChatColor.DARK_RED + "maintenance !");
+            this.sign.setLine(3, "");
+
+            Bukkit.getScheduler().runTask(Hub.getInstance(), this.sign::update);
+            return;
+        }
 
         this.lastData = data;
         this.lastData.display(this.sign);

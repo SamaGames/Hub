@@ -12,11 +12,6 @@ import java.util.UUID;
 
 public class CommandClickMe extends AbstractCommand
 {
-    public CommandClickMe()
-    {
-        super(null);
-    }
-
     @Override
     public boolean doAction(Player player, Command command, String s, String[] args)
     {

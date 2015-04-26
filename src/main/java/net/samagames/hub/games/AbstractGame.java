@@ -5,6 +5,7 @@ import net.samagames.hub.games.sign.GameSignZone;
 import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public abstract class AbstractGame
@@ -22,6 +23,7 @@ public abstract class AbstractGame
     public abstract String[] getDescription();
     public abstract int getSlotInMainMenu();
     public abstract ShopCategory getShopConfiguration();
+    public abstract ArrayList<DisplayedStat> getDisplayedStats();
     public abstract Location getLobbySpawn();
     public abstract boolean isLocked();
 
@@ -36,6 +38,17 @@ public abstract class AbstractGame
             return this.signZones.get(map);
         else
             return null;
+    }
+
+    public DisplayedStat getDisplayedStatByIdentifier(String identifier)
+    {
+        for(DisplayedStat stat : this.getDisplayedStats())
+        {
+            if(stat.getDatabaseName().equals(identifier))
+                return stat;
+        }
+
+        return null;
     }
 
     public HashMap<String, GameSignZone> getSignZones()

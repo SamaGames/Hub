@@ -5,16 +5,19 @@ import net.samagames.hub.Hub;
 import net.samagames.hub.common.StaticInventory;
 import net.samagames.hub.cosmetics.jukebox.JukeboxPlaylist;
 import net.samagames.tools.Selection;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
 public class PlayerManager extends AbstractManager
 {
     private HashMap<UUID, Selection> selections;
+    private ArrayList<UUID> hiders;
     private Location lobbySpawn;
     private StaticInventory staticInventory;
 
@@ -25,20 +28,53 @@ public class PlayerManager extends AbstractManager
         super(hub);
 
         this.selections = new HashMap<>();
+        this.hiders = new ArrayList<>();
         this.staticInventory = new StaticInventory();
 
         this.lobbySpawn = new Location(this.hub.getHubWorld(), -19.5, 51, 89.5);
         this.canBuild = false;
     }
 
+    public void handleLogin(Player player)
+    {
+        this.updateSettings(player);
+        this.updateHiders(player);
+    }
+
+    public void handleLogout(Player player)
+    {
+        this.removeSelection(player);
+        this.removeHider(player);
+    }
+
     public void updateSettings(Player player)
     {
+        String playerOnSetting = SamaGamesAPI.get().getSettingsManager().getSetting(player.getUniqueId(), "players");
         String chatOnSetting = SamaGamesAPI.get().getSettingsManager().getSetting(player.getUniqueId(), "chat");
         String jukeboxSetting = SamaGamesAPI.get().getSettingsManager().getSetting(player.getUniqueId(), "jukebox");
 
+        if (playerOnSetting != null && playerOnSetting.equals("false"))
+        {
+            for(Player p : Bukkit.getOnlinePlayers())
+            {
+                //if(!PermissionsBukkit.hasPermission(p, "hub.announce"))
+                    player.hidePlayer(p);
+            }
+
+            this.addHider(player);
+            player.sendMessage(ChatColor.GOLD + "Vous avez désactivé les joueurs. Vous ne verrez donc aucun joueur excepté les membres de l'équipe.");
+        }
+        else
+        {
+            for(Player p : Bukkit.getOnlinePlayers())
+            {
+                player.showPlayer(p);
+            }
+        }
+
         if (chatOnSetting != null && chatOnSetting.equals("false"))
         {
-            Hub.getInstance().getChatManager().disableChat(player);
+            Hub.getInstance().getChatManager().disableChatFor(player);
             player.sendMessage(ChatColor.GOLD + "Vous avez désactivé le chat. Vous ne verrez donc pas les messages des joueurs.");
         }
 
@@ -57,6 +93,17 @@ public class PlayerManager extends AbstractManager
         }
     }
 
+    public void updateHiders(Player newConnected)
+    {
+        for(UUID hider : this.hiders)
+        {
+            if(!hider.equals(newConnected.getUniqueId()))
+            //if(!PermissionsBukkit.hasPermission(newConnected, "hub.announce"))
+                Bukkit.getScheduler().runTask(Hub.getInstance(), () ->
+                        Bukkit.getPlayer(hider).hidePlayer(newConnected));
+        }
+    }
+
     public void removeSelection(Player player)
     {
         if(this.selections.containsKey(player.getUniqueId()))
@@ -69,6 +116,17 @@ public class PlayerManager extends AbstractManager
             this.selections.remove(player.getUniqueId());
 
         this.selections.put(player.getUniqueId(), selection);
+    }
+
+    public void addHider(Player player)
+    {
+        this.hiders.add(player.getUniqueId());
+    }
+
+    public void removeHider(Player player)
+    {
+        if(this.hiders.contains(player.getUniqueId()))
+            this.hiders.remove(player.getUniqueId());
     }
 
     public void setLobbySpawn(Location lobbySpawn)

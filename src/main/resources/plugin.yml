@@ -10,13 +10,33 @@ commands:
   click:
     description: Commande relative au ClickMe
     usage: /click <Joueur>
-    alias: /clickme
+    aliases: clickme
   meh:
     description: Commande relative au Jukebox
     usage: /meh
   woot:
     description: Commande relative au Jukebox
     usage: /woot
+  jukebox:
+    description: Commande relative au Jukebox
+    usage: /jukebox
+
+  # Moderating commands ------------------------
+  pllock:
+    description: Commande relative au Jukebox
+    usage: /pllock
+  plnext:
+    description: Commande relative au Jukebox
+    usage: /plnext
+  plclear:
+    description: Commande relative au Jukebox
+    usage: /plclear
+  slow:
+    description: Commande relative au chat
+    usage: /slow
+  shutup:
+    description: Commande relative au chat
+    usage: /shutup
 
   # Admin commands -----------------------------
   npc:
@@ -25,7 +45,18 @@ commands:
   sign:
     description: Commandes relatives aux panneaux
     usage: /sign
-    alias: /area
+    aliases: /area
+  anguille:
+    description: Commande relative aux Anguilles de Maite
+    usage: /anguille
+    aliases: [jeanpierrecoffe, frontnational]
+  nbs:
+    description: Commande relative au Jukebox
+    usage: /nbs
+  evacuate:
+    description: Commande d'évacuation
+    usage: /evacuate
+    aliases: [bagdad]
 
   # Easter Eggs --------------------------------
   pacman:

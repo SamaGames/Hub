@@ -2,6 +2,7 @@ package net.samagames.hub.gui.profile;
 
 import net.samagames.hub.Hub;
 import net.samagames.hub.gui.AbstractGui;
+import net.samagames.hub.gui.profile.stats.GuiStats;
 import net.samagames.hub.utils.GuiUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

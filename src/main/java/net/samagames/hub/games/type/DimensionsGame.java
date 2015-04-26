@@ -2,6 +2,7 @@ package net.samagames.hub.games.type;
 
 import net.samagames.hub.Hub;
 import net.samagames.hub.games.AbstractGame;
+import net.samagames.hub.games.DisplayedStat;
 import net.samagames.hub.games.shop.ShopCategory;
 import net.samagames.hub.games.shop.ShopImprovableItem;
 import org.bukkit.Location;
@@ -9,6 +10,8 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.Potion;
 import org.bukkit.potion.PotionType;
+
+import java.util.ArrayList;
 
 public class DimensionsGame extends AbstractGame
 {
@@ -113,6 +116,12 @@ public class DimensionsGame extends AbstractGame
         parentCategory.addContent(swapCooldownItem);
 
         return parentCategory;
+    }
+
+    @Override
+    public ArrayList<DisplayedStat> getDisplayedStats()
+    {
+        return null;
     }
 
     @Override

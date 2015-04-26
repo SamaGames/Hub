@@ -5,12 +5,12 @@ import net.samagames.hub.commands.AbstractCommand;
 import org.bukkit.command.Command;
 import org.bukkit.entity.Player;
 
-public class CommandPlaylistLock extends AbstractCommand
+public class CommandPlaylistNext extends AbstractCommand
 {
     @Override
     public boolean doAction(Player player, Command command, String s, String[] args)
     {
-        Hub.getInstance().getCosmeticManager().getJukeboxManager().toggleLock();
+        Hub.getInstance().getCosmeticManager().getJukeboxManager().skipSong(false);
         return true;
     }
 }

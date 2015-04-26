@@ -1,12 +1,7 @@
 package net.samagames.hub;
 
 import net.samagames.api.SamaGamesAPI;
-import net.samagames.hub.commands.admin.CommandNPC;
-import net.samagames.hub.commands.admin.CommandSign;
-import net.samagames.hub.commands.eastereggs.CommandPacman;
-import net.samagames.hub.commands.players.CommandClickMe;
-import net.samagames.hub.commands.players.CommandMeh;
-import net.samagames.hub.commands.players.CommandWoot;
+import net.samagames.hub.commands.CommandManager;
 import net.samagames.hub.common.HubRefresher;
 import net.samagames.hub.common.managers.*;
 import net.samagames.hub.common.receivers.ArenaListener;
@@ -26,7 +21,6 @@ import net.samagames.hub.jump.JumpManager;
 import net.samagames.hub.npcs.NPCManager;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.logging.Level;
@@ -58,6 +52,8 @@ public class Hub extends JavaPlugin
 
         this.hubWorld = Bukkit.getWorlds().get(0);
 
+        this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
+
         this.log(Level.INFO, "Loading managers...");
         this.playerManager = new PlayerManager(this);
         this.chatManager = new ChatManager(this);
@@ -82,7 +78,7 @@ public class Hub extends JavaPlugin
         this.log(Level.INFO, "Events registered with success.");
 
         this.log(Level.INFO, "Registering commands...");
-        this.registerCommands();
+        new CommandManager(this);
         this.log(Level.INFO, "Commands registered with success.");
 
         this.log(Level.INFO, "Starting HubRefresher...");
@@ -111,31 +107,6 @@ public class Hub extends JavaPlugin
         Bukkit.getPluginManager().registerEvents(new InventoryEditionListener(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerEditionListener(), this);
         Bukkit.getPluginManager().registerEvents(new WorldEditionListener(), this);
-    }
-
-    public void registerCommands()
-    {
-        this.registerCommand("click", CommandClickMe.class);
-        this.registerCommand("meh", CommandMeh.class);
-        this.registerCommand("woot", CommandWoot.class);
-
-        this.registerCommand("npc", CommandNPC.class);
-        this.registerCommand("sign", CommandSign.class);
-
-        this.registerCommand("pacman", CommandPacman.class);
-    }
-
-    public void registerCommand(String executionTag, Class<? extends CommandExecutor> command)
-    {
-        try
-        {
-            this.getCommand(executionTag).setExecutor(command.newInstance());
-            this.log(Level.INFO, "Registered command '" + executionTag + "'");
-        }
-        catch (InstantiationException | IllegalAccessException e)
-        {
-            this.log(Level.SEVERE, "Failed to register command '" + executionTag + "'!");
-        }
     }
 
     public void log(AbstractManager manager, Level level, String message)  { this.getLogger().log(level, "[" + manager.getName() + "] " + message); }
