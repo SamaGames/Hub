@@ -11,12 +11,12 @@ import java.util.HashMap;
 
 public abstract class AbstractGame
 {
-    private final HashMap<String, GameSign> signZones;
+    private final HashMap<String, GameSign> signs;
     private boolean isMaintenance;
 
     public AbstractGame()
     {
-        this.signZones = new HashMap<>();
+        this.signs = new HashMap<>();
     }
 
     public abstract String getCodeName();
@@ -31,20 +31,15 @@ public abstract class AbstractGame
 
     public void addSignForMap(String map, Sign sign)
     {
-        this.signZones.put(map, new GameSign(this, map, sign));
+        this.signs.put(map, new GameSign(this, map, sign));
     }
 
     public void setMaintenance(boolean flag)
     {
         this.isMaintenance = flag;
-    }
 
-    public GameSign getGameSignZoneByMap(String map)
-    {
-        if(this.signZones.containsKey(map))
-            return this.signZones.get(map);
-        else
-            return null;
+        for(GameSign sign : this.signs.values())
+            sign.update(null);
     }
 
     public DisplayedStat getDisplayedStatByIdentifier(String identifier)
@@ -60,15 +55,15 @@ public abstract class AbstractGame
 
     public GameSign getGameSignByMap(String map)
     {
-        if(this.signZones.containsKey(map))
-            return this.signZones.get(map);
+        if(this.signs.containsKey(map))
+            return this.signs.get(map);
         else
             return null;
     }
 
     public HashMap<String, GameSign> getSigns()
     {
-        return this.signZones;
+        return this.signs;
     }
 
     public boolean hasShop()

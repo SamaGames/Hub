@@ -37,22 +37,21 @@ public class GameSign
 
     public void update(ServerStatus data)
     {
-        if(data == null)
-        {
-            this.sign.setLine(0, "");
-            this.sign.setLine(1, ChatColor.GREEN + "" + ChatColor.BOLD + map);
-            this.sign.setLine(2, "?/? joueurs");
-            this.sign.setLine(3, "");
-
-            Bukkit.getScheduler().runTask(Hub.getInstance(), this.sign::update);
-            return;
-        }
-
         if(this.game.isMaintenance())
         {
             this.sign.setLine(0, "");
             this.sign.setLine(1, ChatColor.DARK_RED + "Jeu en");
             this.sign.setLine(2, ChatColor.DARK_RED + "maintenance !");
+            this.sign.setLine(3, "");
+
+            Bukkit.getScheduler().runTask(Hub.getInstance(), this.sign::update);
+            return;
+        }
+        else if(data == null)
+        {
+            this.sign.setLine(0, "");
+            this.sign.setLine(1, ChatColor.DARK_AQUA + "" + ChatColor.BOLD + map);
+            this.sign.setLine(2, "?/? joueurs");
             this.sign.setLine(3, "");
 
             Bukkit.getScheduler().runTask(Hub.getInstance(), this.sign::update);
@@ -70,7 +69,7 @@ public class GameSign
             players += status.getPlayers();
 
         this.sign.setLine(0, "");
-        this.sign.setLine(1, ChatColor.GREEN + "" + ChatColor.BOLD + map);
+        this.sign.setLine(1, ChatColor.DARK_AQUA + "" + ChatColor.BOLD + map);
         this.sign.setLine(2, players + "/" + data.getMaxPlayers() + " joueurs");
         this.sign.setLine(3, "");
 
@@ -81,6 +80,11 @@ public class GameSign
     {
         if(this.lastDatas == null)
         {
+            return;
+        }
+        else if(this.lastDatas.isEmpty())
+        {
+            player.sendMessage(ChatColor.RED + "Aucun serveur n'est prêt à vous reçevoir actuellement.");
             return;
         }
 
