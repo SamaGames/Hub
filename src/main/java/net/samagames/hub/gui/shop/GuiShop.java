@@ -75,6 +75,10 @@ public class GuiShop extends AbstractGui
         {
             Hub.getInstance().getGuiManager().closeGui(player);
         }
+        if(action.equals("rank"))
+        {
+            Hub.getInstance().getGuiManager().openGui(player, new GuiRanksShop());
+        }
         else if(action.startsWith("game_"))
         {
             AbstractGame game = Hub.getInstance().getGameManager().getGameByIdentifier(action.split("_")[1]);
