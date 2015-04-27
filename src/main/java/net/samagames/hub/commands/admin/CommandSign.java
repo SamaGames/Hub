@@ -18,7 +18,7 @@ public class CommandSign extends AbstractCommand
     {
         if(args.length < 1)
         {
-            player.sendMessage(ChatColor.RED + "Usage: /sign <add|maintenance|list> <...>");
+            player.sendMessage(ChatColor.RED + "Usage: /sign <add|maintenance|reload|list> <...>");
             return true;
         }
 
@@ -30,6 +30,10 @@ public class CommandSign extends AbstractCommand
 
             case "maintenance":
                 this.maintenanceSigns(player, args);
+                break;
+
+            case "reload":
+                Hub.getInstance().getSignManager().reloadList();
                 break;
 
             case "list":
