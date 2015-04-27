@@ -4,6 +4,7 @@ import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import net.samagames.hub.cosmetics.jukebox.JukeboxPlaylist;
 import net.samagames.hub.games.AbstractGame;
+import net.samagames.hub.games.sign.GameSign;
 import net.samagames.hub.gui.profile.GuiClickMe;
 import net.samagames.permissionsbukkit.PermissionsBukkit;
 import net.samagames.tools.InventoryUtils;
@@ -275,7 +276,18 @@ public class PlayerListener implements Listener
                 if (sign.hasMetadata("game") && sign.hasMetadata("map"))
                 {
                     AbstractGame game = Hub.getInstance().getGameManager().getGameByIdentifier(sign.getMetadata("game").get(0).asString());
-                    game.getGameSignByMap(sign.getMetadata("map").get(0).asString()).click(event.getPlayer());
+                    GameSign gameSign = game.getGameSignByMap(sign.getMetadata("map").get(0).asString());
+
+                    if(PermissionsBukkit.hasPermission(event.getPlayer(), "hub.debug.sign"))
+                    {
+                        if(event.getPlayer().isSneaking())
+                        {
+                            gameSign.developperClick(event.getPlayer());
+                            return;
+                        }
+                    }
+
+                    gameSign.click(event.getPlayer());
                 }
             }
         }

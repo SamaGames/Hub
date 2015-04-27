@@ -59,12 +59,7 @@ public class GameSign
             else
                 this.lastDatas.put(data.getBungeeName(), data);
 
-            int temp = 0;
-
-            for(ServerStatus status : this.lastDatas.values())
-                temp += status.getPlayers();
-
-            players = String.valueOf(temp);
+            players = String.valueOf(this.getOnlinePlayers());
             clickLine = ChatColor.GREEN + "» Jouer «";
         }
 
@@ -93,6 +88,27 @@ public class GameSign
 
         player.sendMessage(ChatColor.GREEN + "Vous avez été envoyé vers le serveur " + serverNameParts[0] + " " + serverNameParts[1] + " !");
         SamaGamesAPI.get().getProxyDataManager().getProxiedPlayer(player.getUniqueId()).connect(firstServer.getBungeeName());
+    }
+
+    public void developperClick(Player player)
+    {
+        player.sendMessage(ChatColor.GOLD + "----------");
+        player.sendMessage(ChatColor.GOLD + "Informations du panneau de jeu :");
+        player.sendMessage(ChatColor.GOLD + "> " + ChatColor.AQUA + "Jeu : " + ChatColor.GREEN + this.game.getCodeName());
+        player.sendMessage(ChatColor.GOLD + "> " + ChatColor.AQUA + "Map : " + ChatColor.GREEN + this.map);
+        player.sendMessage(ChatColor.GOLD + "> " + ChatColor.AQUA + "Joueurs en ligne : " + ChatColor.GREEN + this.getOnlinePlayers());
+        player.sendMessage(ChatColor.GOLD + "> " + ChatColor.AQUA + "Serveurs en ligne : " + ChatColor.GREEN + this.lastDatas.size());
+        player.sendMessage(ChatColor.GOLD + "----------");
+    }
+
+    public int getOnlinePlayers()
+    {
+        int temp = 0;
+
+        for(ServerStatus status : this.lastDatas.values())
+            temp += status.getPlayers();
+
+        return temp;
     }
 
     public Sign getSign()
