@@ -5,11 +5,13 @@ import net.samagames.hub.Hub;
 import net.samagames.hub.gui.AbstractGui;
 import net.samagames.hub.utils.GuiUtils;
 import net.samagames.permissionsbukkit.PermissionsBukkit;
+import net.samagames.tools.BungeeUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.SkullType;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 import redis.clients.jedis.Jedis;
@@ -48,7 +50,7 @@ public class GuiStalker2000 extends AbstractGui
             }
         }
 
-        this.inventory = Bukkit.createInventory(null, 9 + (9 * lines) + (9 * 3), "Stalker 2000");
+        this.inventory = Bukkit.createInventory(null, 9 + (9 * lines) + (9 * 2), "Stalker 2000");
 
         slot = 0;
         lines = 0;
@@ -74,13 +76,8 @@ public class GuiStalker2000 extends AbstractGui
                 String formattedServer = ChatColor.GRAY + server.split("_")[0] + " " + server.split("_")[1];
 
                 if(Hub.getInstance().getGameManager().getGameByIdentifier(server.split("_")[0]) == null)
-                {
-                    formattedServer = ChatColor.RED + "× Inconnu ×";
-                }
-                else if(Hub.getInstance().getGameManager().getGameByIdentifier(server.split("_")[0]).getCodeName().equals("beta_staff"))
-                {
-                    formattedServer = ChatColor.RED + "Secret :o";
-                }
+                    if (Hub.getInstance().getGameManager().getGameByIdentifier(server.split("_")[0]).getCodeName().equals("beta_staff"))
+                        formattedServer = ChatColor.RED + "Secret :o";
 
                 lores.add(ChatColor.GOLD + "Actuellement sur : " + formattedServer);
                 lores.add("");
@@ -106,7 +103,7 @@ public class GuiStalker2000 extends AbstractGui
             headMeta.setLore(lores);
             head.setItemMeta(headMeta);
 
-            this.setSlotData(head, slots[slot] + (9 * lines), "join_" + username);
+            this.setSlotData(head, slots[slot] + (9 * lines), "server:" + username);
             slot++;
 
             if(slot == slots.length)
@@ -120,8 +117,8 @@ public class GuiStalker2000 extends AbstractGui
 
         this.setSlotData(ChatColor.GOLD + "Suivi", Material.LEASH, this.inventory.getSize() - 6, new String[] {
                 ChatColor.GRAY + "Etre informé de la connexion",
-                ChatColor.GRAY + "d'un " + ChatColor.GOLD + "Coupaing" + ChatColor.GRAY + " via",
-                ChatColor.GRAY + "un message envoyé dans le chat.",
+                ChatColor.GRAY + "d'un " + ChatColor.GOLD + "Coupaing" + ChatColor.GRAY + " via un message",
+                ChatColor.GRAY + "envoyé dans le chat.",
                 "",
                 (canSeeServer ? followEnabled ? ChatColor.GREEN + "Cliquez pour désactiver" : ChatColor.RED + "Cliquez pour activer" : ChatColor.RED + "Fonction réservée aux " + ChatColor.GREEN + "VIP" + ChatColor.RED + "s")
         }, "follow");
@@ -134,5 +131,60 @@ public class GuiStalker2000 extends AbstractGui
         }, "friends");
 
         player.openInventory(this.inventory);
+    }
+
+    @Override
+    public void update(Player player)
+    {
+        boolean canSeeServer = PermissionsBukkit.hasPermission(player, "tracker.vip");
+        boolean followEnabled = SamaGamesAPI.get().getSettingsManager().isEnabled(player.getUniqueId(), "tracker-follow", false);
+
+        this.setSlotData(ChatColor.GOLD + "Suivi", Material.LEASH, this.inventory.getSize() - 6, new String[] {
+                ChatColor.GRAY + "Etre informé de la connexion",
+                ChatColor.GRAY + "d'un " + ChatColor.GOLD + "Coupaing" + ChatColor.GRAY + " via un message",
+                ChatColor.GRAY + "envoyé dans le chat.",
+                "",
+                (canSeeServer ? followEnabled ? ChatColor.GREEN + "Cliquez pour désactiver" : ChatColor.RED + "Cliquez pour activer" : ChatColor.RED + "Fonction réservée aux " + ChatColor.GREEN + "VIP" + ChatColor.RED + "s")
+        }, "follow");
+
+        this.setSlotData(GuiUtils.getBackItem(), this.inventory.getSize() - 5, "back");
+
+        this.setSlotData(ChatColor.GOLD + "Amis", new ItemStack(Material.RAW_FISH, 1, (short) 3), this.inventory.getSize() - 4, new String[] {
+                ChatColor.GRAY + "Cliquez pour savoir où sont",
+                ChatColor.GRAY + "situés vos amis."
+        }, "friends");
+    }
+
+    @Override
+    public void onClick(Player player, ItemStack stack, String action, ClickType clickType)
+    {
+        if(action.startsWith("server:"))
+        {
+            String server = action.split(":")[1];
+
+            if(this.teleportEnabled)
+            {
+                BungeeUtils.sendPlayerToServer(player, server);
+            }
+            else
+            {
+                player.sendMessage(ChatColor.RED + "Cette fonctionnalité n'est réservée qu'au " + ChatColor.AQUA + "VIP" + ChatColor.LIGHT_PURPLE + "+" + ChatColor.RED + " !");
+            }
+        }
+        else if(action.equals("follow"))
+        {
+            boolean followEnabled = SamaGamesAPI.get().getSettingsManager().isEnabled(player.getUniqueId(), "tracker-follow", false);
+            SamaGamesAPI.get().getSettingsManager().setSetting(player.getUniqueId(), "tracker-follow", String.valueOf(!followEnabled));
+
+            this.update(player);
+        }
+        else if(action.equals("friends"))
+        {
+            Hub.getInstance().getGuiManager().openGui(player, new GuiStalkerFriends2000());
+        }
+        else if(action.equals("back"))
+        {
+            Hub.getInstance().getGuiManager().closeGui(player);
+        }
     }
 }
