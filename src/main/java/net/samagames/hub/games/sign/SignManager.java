@@ -2,7 +2,6 @@ package net.samagames.hub.games.sign;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
 import net.samagames.hub.Hub;
 import net.samagames.hub.common.JsonConfiguration;
 import net.samagames.hub.common.managers.AbstractManager;
@@ -18,7 +17,6 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.logging.Level;
 
 public class SignManager extends AbstractManager
@@ -75,13 +73,13 @@ public class SignManager extends AbstractManager
                 AbstractGame gameObject = this.hub.getGameManager().getGameByIdentifier(game);
                 Block block = Hub.getInstance().getHubWorld().getBlockAt(sign);
 
-                if(!(block instanceof Sign))
+                if(!(block.getState() instanceof Sign))
                 {
                     this.hub.log(this, Level.SEVERE, "Sign block for game '" + game + "' and map '" + map + "' is not a sign in the world!");
                     continue;
                 }
 
-                gameObject.addSignForMap(map, (Sign) Hub.getInstance().getHubWorld().getBlockAt(sign));
+                gameObject.addSignForMap(map, (Sign) Hub.getInstance().getHubWorld().getBlockAt(sign).getState());
 
                 this.hub.log(this, Level.INFO, "Registered sign zone for the game '" + game + "' and the map '" + map + "'!");
             }
@@ -90,7 +88,7 @@ public class SignManager extends AbstractManager
         this.hub.log(this, Level.INFO, "Reloaded game sign list.");
     }
 
-    public void addZone(Player player, String game, String map, ArrayList<Sign> signs)
+    public void setSignForMap(Player player, String game, String map, Sign sign)
     {
         JsonObject root = this.jsonConfig.load();
         JsonArray signZonesArray = root.getAsJsonArray("zones");
@@ -115,15 +113,8 @@ public class SignManager extends AbstractManager
                     {
                         player.sendMessage(ChatColor.GREEN + "Map existing.");
 
-                        JsonArray signsArray = mapObject.get("signs").getAsJsonArray();
-
-                        for (Sign sign : signs)
-                        {
-                            signsArray.add(new JsonPrimitive(LocationUtils.loc2str(sign.getLocation())));
-                            player.sendMessage(ChatColor.GREEN + "Added sign (" + LocationUtils.loc2str(sign.getLocation()) + ")");
-                        }
-
-                        mapObject.add("signs", signsArray);
+                        mapObject.addProperty("sign", LocationUtils.loc2str(sign.getLocation()));
+                        player.sendMessage(ChatColor.GREEN + "Added sign (" + LocationUtils.loc2str(sign.getLocation()) + ")");
 
                         player.sendMessage(ChatColor.GREEN + "Job finished.");
                         this.jsonConfig.save(root);
@@ -134,16 +125,7 @@ public class SignManager extends AbstractManager
 
                 JsonObject mapObject = new JsonObject();
                 mapObject.addProperty("map", map);
-
-                JsonArray signsArray = new JsonArray();
-
-                for (Sign sign : signs)
-                {
-                    signsArray.add(new JsonPrimitive(LocationUtils.loc2str(sign.getLocation())));
-                    player.sendMessage(ChatColor.GREEN + "Added sign (" + LocationUtils.loc2str(sign.getLocation()) + ")");
-                }
-
-                mapObject.add("signs", signsArray);
+                mapObject.addProperty("signs", LocationUtils.loc2str(sign.getLocation()));
                 maps.add(mapObject);
 
                 player.sendMessage(ChatColor.GREEN + "Job finished.");
@@ -162,16 +144,7 @@ public class SignManager extends AbstractManager
 
         JsonObject mapObject = new JsonObject();
         mapObject.addProperty("map", map);
-
-        JsonArray signsArray = new JsonArray();
-
-        for (Sign sign : signs)
-        {
-            signsArray.add(new JsonPrimitive(LocationUtils.loc2str(sign.getLocation())));
-            player.sendMessage(ChatColor.GREEN + "Added sign (" + LocationUtils.loc2str(sign.getLocation()) + ")");
-        }
-
-        mapObject.add("signs", signsArray);
+        mapObject.addProperty("sign", LocationUtils.loc2str(sign.getLocation()));
         maps.add(mapObject);
 
         signZoneObject.add("maps", maps);

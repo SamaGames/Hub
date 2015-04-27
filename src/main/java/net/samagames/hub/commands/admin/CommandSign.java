@@ -7,13 +7,9 @@ import net.samagames.hub.games.AbstractGame;
 import net.samagames.hub.games.sign.GameSign;
 import net.samagames.tools.Selection;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.command.Command;
 import org.bukkit.entity.Player;
-
-import java.util.ArrayList;
 
 public class CommandSign extends AbstractCommand
 {
@@ -66,23 +62,15 @@ public class CommandSign extends AbstractCommand
 
         String game = args[1];
         String map = args[2];
-        ArrayList<Sign> signs = new ArrayList<>();
 
-        for(int x = selection.getMinimumPoint().getBlockX(); x <= selection.getMaximumPoint().getBlockX(); x++)
+        if(!(selection.getMinimumPoint().getBlock().getState() instanceof Sign))
         {
-            for(int y = selection.getMinimumPoint().getBlockY(); y <= selection.getMaximumPoint().getBlockY(); y++)
-            {
-                for(int z = selection.getMinimumPoint().getBlockZ(); z <= selection.getMaximumPoint().getBlockZ(); z++)
-                {
-                    Block block = Hub.getInstance().getHubWorld().getBlockAt(x, y, z);
-
-                    if(block.getType() == Material.SIGN || block.getType() == Material.SIGN_POST || block.getType() == Material.WALL_SIGN)
-                        signs.add((Sign) block.getState());
-                }
-            }
+            player.sendMessage(ChatColor.RED + "Le bloc sélectionné n'est pas un panneau !");
+            return;
         }
 
-        Hub.getInstance().getSignManager().addZone(player, game, map, signs);
+        Sign sign = (Sign) selection.getMinimumPoint().getBlock().getState();
+        Hub.getInstance().getSignManager().setSignForMap(player, game, map, sign);
     }
 
     private void maintenanceSigns(Player player, String[] args)
