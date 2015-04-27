@@ -2,7 +2,6 @@ package net.samagames.hub.commands;
 
 import net.samagames.hub.Hub;
 import net.samagames.hub.commands.admin.*;
-import net.samagames.hub.commands.eastereggs.CommandPacman;
 import net.samagames.hub.commands.moderating.*;
 import net.samagames.hub.commands.players.CommandClickMe;
 import net.samagames.hub.commands.players.CommandJukebox;
@@ -43,7 +42,6 @@ public class CommandManager extends AbstractManager
         this.registerCommand("evacuate", "hub.admin.evacuate", CommandEvacuate.class);
 
         // Easter Eggs commands -----------------------------------------
-        this.registerCommand("pacman", null, CommandPacman.class);
     }
 
     private void registerCommand(String executionTag, String permission, Class<? extends AbstractCommand> command)

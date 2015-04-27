@@ -1,37 +1,41 @@
 package net.samagames.hub.games.sign;
 
 import net.samagames.api.SamaGamesAPI;
-import net.samagames.api.signs.SignData;
+import net.samagames.api.games.ServerStatus;
+import net.samagames.api.games.Status;
 import net.samagames.hub.Hub;
-import net.samagames.hub.utils.FireworkUtils;
+import net.samagames.hub.games.AbstractGame;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Color;
-import org.bukkit.FireworkEffect;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
 
+import java.util.LinkedHashMap;
+
 public class GameSign
 {
     private final Sign sign;
-    private SignData lastData;
-    private boolean hasPacman;
+    private final AbstractGame game;
+    private final String map;
 
-    public GameSign(GameSignZone zone, Sign sign)
+    private LinkedHashMap<String, ServerStatus> lastDatas;
+
+    public GameSign(AbstractGame game, String map, Sign sign)
     {
         this.sign = sign;
-        this.sign.setMetadata("game", new FixedMetadataValue(Hub.getInstance(), zone.getGame().getCodeName()));
-        this.sign.setMetadata("map", new FixedMetadataValue(Hub.getInstance(), zone.getMap()));
+        this.game = game;
+        this.map = map;
+
+        this.lastDatas = new LinkedHashMap<>();
+
+        this.sign.setMetadata("game", new FixedMetadataValue(Hub.getInstance(), game.getCodeName()));
+        this.sign.setMetadata("map", new FixedMetadataValue(Hub.getInstance(), map));
     }
 
-    public void update(SignData data)
+    public void update(ServerStatus data)
     {
-        if(Hub.getInstance().getSignManager().isPacmanEnabled())
-        {
-            return;
-        }
-        else if(Hub.getInstance().getSignManager().isMaintenance())
+        if(this.game.isMaintenance())
         {
             this.sign.setLine(0, "");
             this.sign.setLine(1, ChatColor.DARK_RED + "Jeu en");
@@ -42,43 +46,36 @@ public class GameSign
             return;
         }
 
-        this.lastData = data;
-        this.lastData.display(this.sign);
+        if(data.getStatus() != Status.WAITING_FOR_PLAYERS && data.getStatus() != Status.READY_TO_START)
+            this.lastDatas.remove(data.getBungeeName());
+        else
+            this.lastDatas.put(data.getBungeeName(), data);
+
+        int players = 0;
+
+        for(ServerStatus status : this.lastDatas.values())
+            players += status.getPlayers();
+
+        this.sign.setLine(0, "");
+        this.sign.setLine(1, ChatColor.GREEN + "" + ChatColor.BOLD + map);
+        this.sign.setLine(2, players + "/" + data.getMaxPlayers() + " joueurs");
+        this.sign.setLine(3, "");
+
+        Bukkit.getScheduler().runTask(Hub.getInstance(), this.sign::update);
     }
 
     public void click(Player player)
     {
-        if(Hub.getInstance().getSignManager().isPacmanEnabled())
-        {
-            if(this.hasPacman)
-            {
-                SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).creditStars(5, "MACOUM!", false);
-                Bukkit.broadcastMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "Pacman a été attrapé par " + ChatColor.RED + ChatColor.BOLD + player.getName() + ChatColor.GOLD + ChatColor.BOLD + " !");
-                FireworkUtils.launchfw(this.sign.getLocation(), FireworkEffect.builder().with(FireworkEffect.Type.STAR).withColor(Color.YELLOW).withFade(Color.ORANGE).withTrail().withFlicker().build());
-                Hub.getInstance().getSignManager().stopPacman();
-            }
-            else
-            {
-                player.sendMessage(ChatColor.GOLD + "Macoum macoum macoum...");
-            }
-
-            return;
-        }
-
-        if(this.lastData == null)
+        if(this.lastDatas == null)
         {
             return;
         }
 
-        String[] serverNameParts = this.lastData.getBungeeName().split("_");
+        ServerStatus firstServer = this.lastDatas.values().iterator().next();
+        String[] serverNameParts = firstServer.getBungeeName().split("_");
 
         player.sendMessage(ChatColor.GREEN + "Vous avez été envoyé vers le serveur " + serverNameParts[0] + " " + serverNameParts[1] + " !");
-        SamaGamesAPI.get().getProxyDataManager().getProxiedPlayer(player.getUniqueId()).connect(this.lastData.getBungeeName());
-    }
-
-    public void setPacman(boolean flag)
-    {
-        this.hasPacman = flag;
+        SamaGamesAPI.get().getProxyDataManager().getProxiedPlayer(player.getUniqueId()).connect(firstServer.getBungeeName());
     }
 
     public Sign getSign()

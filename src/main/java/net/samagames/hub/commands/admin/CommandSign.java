@@ -1,10 +1,10 @@
 package net.samagames.hub.commands.admin;
 
+import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import net.samagames.hub.commands.AbstractCommand;
 import net.samagames.hub.games.AbstractGame;
 import net.samagames.hub.games.sign.GameSign;
-import net.samagames.hub.games.sign.GameSignZone;
 import net.samagames.tools.Selection;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -33,7 +33,7 @@ public class CommandSign extends AbstractCommand
                 break;
 
             case "maintenance":
-                this.maintenanceSigns();
+                this.maintenanceSigns(player, args);
                 break;
 
             case "list":
@@ -85,9 +85,25 @@ public class CommandSign extends AbstractCommand
         Hub.getInstance().getSignManager().addZone(player, game, map, signs);
     }
 
-    private void maintenanceSigns()
+    private void maintenanceSigns(Player player, String[] args)
     {
+        if(args.length < 3)
+        {
+            player.sendMessage(ChatColor.RED + "Usage: /sign maintenance <game>");
+            return;
+        }
 
+        String game = args[1];
+
+        AbstractGame gameObject = Hub.getInstance().getGameManager().getGameByIdentifier(game);
+
+        if(gameObject == null)
+        {
+            player.sendMessage(ChatColor.RED + "Jeu non trouvé :(");
+            return;
+        }
+
+        SamaGamesAPI.get().getPubSub().send("maintenanceSignChannel", game + ":" + !gameObject.isMaintenance());
     }
 
     private void listSigns(Player player)
@@ -98,13 +114,8 @@ public class CommandSign extends AbstractCommand
         {
             int i = 0;
 
-            for(GameSignZone zone : game.getSignZones().values())
-            {
-                for(GameSign sign : zone.getSigns())
-                {
-                    i++;
-                }
-            }
+            for(GameSign sign : game.getSigns().values())
+                i++;
 
             player.sendMessage(ChatColor.GREEN + "-> " + ChatColor.AQUA + game.getCodeName() + ChatColor.GREEN + " (" + ChatColor.AQUA + i + " panneaux" + ChatColor.GREEN + ")");
         }

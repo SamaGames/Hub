@@ -10,6 +10,7 @@ import net.samagames.hub.games.AbstractGame;
 import net.samagames.tools.LocationUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 
@@ -23,9 +24,6 @@ import java.util.logging.Level;
 public class SignManager extends AbstractManager
 {
     private final JsonConfiguration jsonConfig;
-
-    private Pacman pacman;
-    private boolean isMaintenance;
 
     public SignManager(Hub hub)
     {
@@ -51,10 +49,6 @@ public class SignManager extends AbstractManager
         }
 
         this.jsonConfig = new JsonConfiguration(config);
-
-        this.pacman = null;
-        this.isMaintenance = false;
-
         this.reloadList();
     }
 
@@ -76,20 +70,19 @@ public class SignManager extends AbstractManager
             {
                 JsonObject mapObject = maps.get(j).getAsJsonObject();
                 String map = mapObject.get("map").getAsString();
-
-                JsonArray signs = mapObject.get("signs").getAsJsonArray();
-                ArrayList<Location> signsLocations = new ArrayList<>();
-
-                for(int k = 0; k < signs.size(); k++)
-                {
-                    String location = signs.get(k).getAsString();
-                    signsLocations.add(LocationUtils.str2loc(location));
-                }
+                Location sign = LocationUtils.str2loc(mapObject.get("sign").getAsString());
 
                 AbstractGame gameObject = this.hub.getGameManager().getGameByIdentifier(game);
-                GameSignZone signZone = new GameSignZone(gameObject, map, signsLocations);
+                Block block = Hub.getInstance().getHubWorld().getBlockAt(sign);
 
-                gameObject.addSignZone(map, signZone);
+                if(!(block instanceof Sign))
+                {
+                    this.hub.log(this, Level.SEVERE, "Sign block for game '" + game + "' and map '" + map + "' is not a sign in the world!");
+                    continue;
+                }
+
+                gameObject.addSignForMap(map, (Sign) Hub.getInstance().getHubWorld().getBlockAt(sign));
+
                 this.hub.log(this, Level.INFO, "Registered sign zone for the game '" + game + "' and the map '" + map + "'!");
             }
         }
@@ -187,37 +180,6 @@ public class SignManager extends AbstractManager
         player.sendMessage(ChatColor.GREEN + "Job finished.");
         this.jsonConfig.save(root);
         this.reloadList();
-    }
-
-    public void setMaintenance(boolean flag)
-    {
-        this.isMaintenance = flag;
-    }
-
-    public void startPacman(Player player)
-    {
-        this.pacman = new Pacman(player);
-    }
-
-    public void stopPacman()
-    {
-        this.pacman.stop();
-        this.pacman = null;
-    }
-
-    public Pacman getPacman()
-    {
-        return this.pacman;
-    }
-
-    public boolean isMaintenance()
-    {
-        return this.isMaintenance;
-    }
-
-    public boolean isPacmanEnabled()
-    {
-        return this.pacman != null;
     }
 
     @Override
