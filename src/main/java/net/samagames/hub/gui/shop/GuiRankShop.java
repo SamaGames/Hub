@@ -8,6 +8,7 @@ import net.samagames.permissionsbukkit.PermissionsBukkit;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
@@ -38,7 +39,7 @@ public class GuiRankShop extends AbstractGui
                 ChatColor.GRAY + "Acheter le grade " + this.rankName,
                 ChatColor.GRAY + "pour une durée de 1 mois",
                 "",
-                ChatColor.GOLD + "Prix : " + this.costLife + " étoiles"
+                ChatColor.GOLD + "Prix : " + this.costMonth + " étoiles"
         }, "month");
 
         this.setSlotData(ChatColor.AQUA + "Définitif", new ItemStack(Material.NETHER_STAR, 64), 15, new String[] {
@@ -80,6 +81,7 @@ public class GuiRankShop extends AbstractGui
             PermissionsBukkit.getApi().getUser(player.getUniqueId()).addParent(PermissionsBukkit.getApi().getGroup(this.inDatabase), calendar.getTime());
             PermissionsBukkit.getApi().getManager().refresh();
 
+            player.playSound(player.getLocation(), Sound.NOTE_PLING, 1.0F, 1.0F);
             player.sendMessage(ChatColor.GREEN + "Votre grade à bien été acheté. Celui-ci sera effectif d'ici 5 minutes. Une reconnexion est nécéssaire pour voir le grade.");
         }
         else if(action.equals("life"))
@@ -101,6 +103,7 @@ public class GuiRankShop extends AbstractGui
             PermissionsBukkit.getApi().getUser(player.getUniqueId()).addParent(PermissionsBukkit.getApi().getGroup(this.inDatabase));
             PermissionsBukkit.getApi().getManager().refresh();
 
+            player.playSound(player.getLocation(), Sound.NOTE_PLING, 1.0F, 1.0F);
             player.sendMessage(ChatColor.GREEN + "Votre grade à bien été acheté. Celui-ci sera effectif d'ici 5 minutes. Une reconnexion est nécéssaire pour voir le grade.");
         }
         else if(action.equals("back"))

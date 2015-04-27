@@ -22,13 +22,8 @@ public class GuiRanksShop extends AbstractGui
     {
         this.inventory = Bukkit.createInventory(null, 45, "Acheter un rang");
 
-        this.drawRank(ChatColor.GREEN, "VIP", "vip", Material.IRON_BOOTS, DyeColor.GREEN, 20, 1000, 6500, new String[] {
-
-        });
-
-        this.drawRank(ChatColor.AQUA, "VIP+", "vipplus", Material.GOLD_BOOTS, DyeColor.LIGHT_BLUE, 24, 2000, 13500, new String[] {
-
-        });
+        this.drawRank(ChatColor.GREEN, "VIP", "vip", Material.IRON_BOOTS, DyeColor.GREEN, 20, 1000, 6500);
+        this.drawRank(ChatColor.AQUA, "VIP+", "vipplus", Material.GOLD_BOOTS, DyeColor.LIGHT_BLUE, 24, 2000, 13500);
 
         this.setSlotData(ChatColor.AQUA + "Vous avez " + SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).getStars() + " étoiles", Material.NETHER_STAR, this.inventory.getSize() - 6, null, "none");
         this.setSlotData(GuiUtils.getBackItem(), this.inventory.getSize() - 4, "back");
@@ -55,9 +50,9 @@ public class GuiRanksShop extends AbstractGui
         }
     }
 
-    private void drawRank(ChatColor rankColor, String rankName, String inDatabase, Material boots, DyeColor glassColor, int baseSlot, int costMonth, int costLife, String[] options)
+    private void drawRank(ChatColor rankColor, String rankName, String inDatabase, Material boots, DyeColor glassColor, int baseSlot, int costMonth, int costLife)
     {
-        ItemStack rankBoots = new ItemStack(Material.LEATHER_HELMET, 1);
+        ItemStack rankBoots = new ItemStack(boots, 1);
         ItemMeta rankBootsMeta = rankBoots.getItemMeta();
         rankBootsMeta.setDisplayName(rankColor + rankName);
 
@@ -66,13 +61,12 @@ public class GuiRanksShop extends AbstractGui
         lores.add(rankColor + "d'obtenir des fonctionnalités");
         lores.add(rankColor + "inédites :");
         lores.add("");
-
-        for(String str : options)
-            lores.add(rankColor + str);
-
+        lores.add(rankColor + "Liste des fonctionnalités");
+        lores.add(rankColor + "disponnible sur la boutique :");
+        lores.add(rankColor + "http://samagames.net/boutique/");
         lores.add("");
         lores.add(ChatColor.GOLD + "1 mois : " + rankColor + costMonth + " étoiles");
-        lores.add(ChatColor.GOLD + "Définitif : " + rankColor + costMonth + " étoiles");
+        lores.add(ChatColor.GOLD + "Définitif : " + rankColor + costLife + " étoiles");
 
         rankBootsMeta.setLore(lores);
         rankBoots.setItemMeta(rankBootsMeta);
