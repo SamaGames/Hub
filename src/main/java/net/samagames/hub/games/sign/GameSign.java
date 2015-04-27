@@ -31,10 +31,23 @@ public class GameSign
 
         this.sign.setMetadata("game", new FixedMetadataValue(Hub.getInstance(), game.getCodeName()));
         this.sign.setMetadata("map", new FixedMetadataValue(Hub.getInstance(), map));
+
+        this.update(null);
     }
 
     public void update(ServerStatus data)
     {
+        if(data == null)
+        {
+            this.sign.setLine(0, "");
+            this.sign.setLine(1, ChatColor.GREEN + "" + ChatColor.BOLD + map);
+            this.sign.setLine(2, "?/? joueurs");
+            this.sign.setLine(3, "");
+
+            Bukkit.getScheduler().runTask(Hub.getInstance(), this.sign::update);
+            return;
+        }
+
         if(this.game.isMaintenance())
         {
             this.sign.setLine(0, "");

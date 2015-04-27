@@ -125,7 +125,7 @@ public class SignManager extends AbstractManager
 
                 JsonObject mapObject = new JsonObject();
                 mapObject.addProperty("map", map);
-                mapObject.addProperty("signs", LocationUtils.loc2str(sign.getLocation()));
+                mapObject.addProperty("sign", LocationUtils.loc2str(sign.getLocation()));
                 maps.add(mapObject);
 
                 player.sendMessage(ChatColor.GREEN + "Job finished.");
