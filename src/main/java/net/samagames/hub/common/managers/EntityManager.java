@@ -1,10 +1,8 @@
 package net.samagames.hub.common.managers;
 
-import net.minecraft.server.v1_8_R2.BiomeBase;
-import net.minecraft.server.v1_8_R2.EntityInsentient;
-import net.minecraft.server.v1_8_R2.EntityTypes;
-import net.minecraft.server.v1_8_R2.EntityVillager;
+import net.minecraft.server.v1_8_R2.*;
 import net.samagames.hub.Hub;
+import net.samagames.hub.cosmetics.gadgets.displayers.MoutMout2000Displayer;
 import net.samagames.hub.npcs.CustomEntityVillager;
 
 import java.lang.reflect.Field;
@@ -26,6 +24,7 @@ public class EntityManager extends AbstractManager
         Hub.getInstance().log(this, Level.INFO, "Registering custom entities...");
 
         this.registerEntity("NPC", 120, EntityVillager.class, CustomEntityVillager.class);
+        this.registerEntity("MoutMout2000", 91, EntitySheep.class, MoutMout2000Displayer.MoutMout2000Sheep.class);
 
         Hub.getInstance().log(this, Level.INFO, "Registered custom entites with success!");
     }

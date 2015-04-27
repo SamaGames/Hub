@@ -6,6 +6,7 @@ import net.samagames.hub.gui.cosmetics.GuiCosmetics;
 import net.samagames.hub.gui.main.GuiMain;
 import net.samagames.hub.gui.profile.GuiProfile;
 import net.samagames.hub.gui.shop.GuiShop;
+import net.samagames.hub.gui.stalker.GuiStalker2000;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -52,7 +53,7 @@ public class StaticInventory
         }
         else if(stack.getType() == Material.BOW)
         {
-            ;
+            ;Hub.getInstance().getGuiManager().openGui(player, new GuiStalker2000());
         }
     }
 

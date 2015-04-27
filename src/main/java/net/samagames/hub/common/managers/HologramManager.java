@@ -53,7 +53,8 @@ public class HologramManager extends AbstractManager
         for(Hologram hologram : this.holograms.values())
             hologram.addReceiver(player);
 
-        Hub.getInstance().log(this, Level.INFO, "Added hologram receiver (" + player.getUniqueId().toString() + ")");
+        if(Hub.getInstance().isDebugEnabled())
+            Hub.getInstance().log(this, Level.INFO, "Added hologram receiver (" + player.getUniqueId().toString() + ")");
     }
 
     public void removeReceiver(Player player)
@@ -61,7 +62,8 @@ public class HologramManager extends AbstractManager
         for(Hologram hologram : this.holograms.values())
             hologram.removeReceiver(player);
 
-        Hub.getInstance().log(this, Level.INFO, "Removed hologram receiver (" + player.getUniqueId().toString() + ")");
+        if(Hub.getInstance().isDebugEnabled())
+            Hub.getInstance().log(this, Level.INFO, "Removed hologram receiver (" + player.getUniqueId().toString() + ")");
     }
 
     public Hologram getHologramByID(UUID uuid)

@@ -24,10 +24,7 @@ public class CosmeticManager extends AbstractManager
         this.gadgetManager = new GadgetManager(hub);
         this.jukeboxManager = new JukeboxManager(hub);
 
-        Bukkit.getScheduler().runTaskTimerAsynchronously(hub, () ->
-        {
-            this.particleManager.update();
-        }, 1L, 1L);
+        Bukkit.getScheduler().runTaskTimerAsynchronously(hub, this.particleManager::update, 1L, 1L);
 
         hub.log(this, Level.INFO, "Registered cosmetics and started loop!");
     }

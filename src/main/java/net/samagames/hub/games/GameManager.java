@@ -42,8 +42,8 @@ public class GameManager extends AbstractManager
 
     public AbstractGame getGameByIdentifier(String identifier)
     {
-        if(this.games.containsKey(identifier))
-            return this.games.get(identifier);
+        if(this.games.containsKey(identifier.toLowerCase()))
+            return this.games.get(identifier.toLowerCase());
         else
             return null;
     }

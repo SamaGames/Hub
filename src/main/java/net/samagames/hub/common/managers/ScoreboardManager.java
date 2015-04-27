@@ -39,7 +39,9 @@ public class ScoreboardManager extends AbstractManager
             objective.addReceiver(player);
 
             this.playerObjectives.put(player.getUniqueId(), objective);
-            Hub.getInstance().log(this, Level.INFO, "Added scoreboard receiver (" + player.getUniqueId().toString() + ")");
+
+            if(Hub.getInstance().isDebugEnabled())
+                Hub.getInstance().log(this, Level.INFO, "Added scoreboard receiver (" + player.getUniqueId().toString() + ")");
 
             this.update(player.getUniqueId());
         }
@@ -50,7 +52,9 @@ public class ScoreboardManager extends AbstractManager
         if(this.playerObjectives.containsKey(player.getUniqueId()))
         {
             this.playerObjectives.remove(player.getUniqueId());
-            Hub.getInstance().log(this, Level.INFO, "Removed scoreboard receiver (" + player.getUniqueId().toString() + ")");
+
+            if(Hub.getInstance().isDebugEnabled())
+                Hub.getInstance().log(this, Level.INFO, "Removed scoreboard receiver (" + player.getUniqueId().toString() + ")");
         }
     }
 

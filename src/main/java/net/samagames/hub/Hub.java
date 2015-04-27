@@ -31,6 +31,7 @@ public class Hub extends JavaPlugin
     private static Hub instance;
 
     private World hubWorld;
+    private boolean debug;
 
     private PlayerManager playerManager;
     private ChatManager chatManager;
@@ -52,6 +53,9 @@ public class Hub extends JavaPlugin
         instance = this;
 
         this.hubWorld = Bukkit.getWorlds().get(0);
+
+        this.saveDefaultConfig();
+        this.debug = this.getConfig().getBoolean("debug", false);
 
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
 
@@ -134,6 +138,11 @@ public class Hub extends JavaPlugin
     public HubRefresher getHubRefresher()
     {
         return this.hubRefresher;
+    }
+
+    public boolean isDebugEnabled()
+    {
+        return this.debug;
     }
 
     public static Hub getInstance()
