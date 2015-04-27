@@ -16,6 +16,7 @@ import java.util.Random;
 
 public class ExpressBotaniaDisplayer extends AbstractDisplayer
 {
+    private ItemStack beforeBoots;
     private int loopId;
 
     public ExpressBotaniaDisplayer(Player player)
@@ -35,6 +36,8 @@ public class ExpressBotaniaDisplayer extends AbstractDisplayer
         {
             flowers.add(new ItemStack(Material.RED_ROSE, 1, i));
         }
+
+        this.beforeBoots = this.player.getInventory().getBoots();
 
         Color green = Color.fromRGB(100, 165, 120);
         this.player.getInventory().setHelmet(this.colorArmor(new ItemStack(Material.LEATHER_HELMET, 1), green));
@@ -99,7 +102,7 @@ public class ExpressBotaniaDisplayer extends AbstractDisplayer
 
         this.player.getInventory().setHelmet(null);
         this.player.getInventory().setLeggings(null);
-        this.player.getInventory().setBoots(null);
+        this.player.getInventory().setBoots(this.beforeBoots);
     }
 
     private ItemStack colorArmor(ItemStack stack, Color color)

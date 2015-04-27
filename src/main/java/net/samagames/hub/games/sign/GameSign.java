@@ -92,13 +92,13 @@ public class GameSign
 
     public void developperClick(Player player)
     {
-        player.sendMessage(ChatColor.GOLD + "----------");
+        player.sendMessage(ChatColor.GOLD + "----------------------------------------");
         player.sendMessage(ChatColor.GOLD + "Informations du panneau de jeu :");
         player.sendMessage(ChatColor.GOLD + "> " + ChatColor.AQUA + "Jeu : " + ChatColor.GREEN + this.game.getCodeName());
         player.sendMessage(ChatColor.GOLD + "> " + ChatColor.AQUA + "Map : " + ChatColor.GREEN + this.map);
         player.sendMessage(ChatColor.GOLD + "> " + ChatColor.AQUA + "Joueurs en ligne : " + ChatColor.GREEN + this.getOnlinePlayers());
         player.sendMessage(ChatColor.GOLD + "> " + ChatColor.AQUA + "Serveurs en ligne : " + ChatColor.GREEN + this.lastDatas.size());
-        player.sendMessage(ChatColor.GOLD + "----------");
+        player.sendMessage(ChatColor.GOLD + "----------------------------------------");
     }
 
     public int getOnlinePlayers()

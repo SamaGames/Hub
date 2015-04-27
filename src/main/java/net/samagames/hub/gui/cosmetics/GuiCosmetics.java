@@ -5,10 +5,7 @@ import net.samagames.hub.cosmetics.gadgets.GadgetCosmetic;
 import net.samagames.hub.cosmetics.particles.ParticleCosmetic;
 import net.samagames.hub.gui.AbstractGui;
 import net.samagames.hub.utils.GuiUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.DyeColor;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
@@ -89,6 +86,12 @@ public class GuiCosmetics extends AbstractGui
         {
             Hub.getInstance().getGuiManager().closeGui(player);
         }
+    }
+
+    @Override
+    public void onClose(Player player)
+    {
+        player.playSound(player.getLocation(), Sound.CHEST_CLOSE, 1.0F, 1.0F);
     }
 
     private void randomIcon(int base, String displayName, Material material, String[] description, DyeColor color, String action)

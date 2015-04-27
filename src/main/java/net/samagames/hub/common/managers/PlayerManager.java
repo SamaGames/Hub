@@ -4,11 +4,15 @@ import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import net.samagames.hub.common.StaticInventory;
 import net.samagames.hub.cosmetics.jukebox.JukeboxPlaylist;
+import net.samagames.permissionsapi.permissions.PermissionUser;
+import net.samagames.permissionsbukkit.PermissionsBukkit;
 import net.samagames.tools.Selection;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,6 +43,21 @@ public class PlayerManager extends AbstractManager
     {
         this.updateSettings(player);
         this.updateHiders(player);
+
+        PermissionUser permissionUser = PermissionsBukkit.getApi().getUser(player.getUniqueId());
+
+        if(permissionUser.inGroup("Guide"))
+        {
+            player.getInventory().setBoots(new ItemStack(Material.DIAMOND_BOOTS, 1));
+        }
+        else if(permissionUser.inGroup("vip"))
+        {
+            player.getInventory().setBoots(new ItemStack(Material.IRON_BOOTS, 1));
+        }
+        else if(permissionUser.inGroup("vipplus") || permissionUser.inGroup("Famous"))
+        {
+            player.getInventory().setBoots(new ItemStack(Material.GOLD_BOOTS, 1));
+        }
     }
 
     public void handleLogout(Player player)
@@ -57,7 +76,7 @@ public class PlayerManager extends AbstractManager
         {
             for(Player p : Bukkit.getOnlinePlayers())
             {
-                //if(!PermissionsBukkit.hasPermission(p, "hub.announce"))
+                if(!PermissionsBukkit.hasPermission(p, "hub.announce"))
                     player.hidePlayer(p);
             }
 
@@ -98,8 +117,8 @@ public class PlayerManager extends AbstractManager
         for(UUID hider : this.hiders)
         {
             if(!hider.equals(newConnected.getUniqueId()))
-            //if(!PermissionsBukkit.hasPermission(newConnected, "hub.announce"))
-                Bukkit.getScheduler().runTask(Hub.getInstance(), () ->
+                if(!PermissionsBukkit.hasPermission(newConnected, "hub.announce"))
+                    Bukkit.getScheduler().runTask(Hub.getInstance(), () ->
                         Bukkit.getPlayer(hider).hidePlayer(newConnected));
         }
     }
