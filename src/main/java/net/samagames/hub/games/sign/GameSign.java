@@ -68,8 +68,8 @@ public class GameSign
             clickLine = ChatColor.GREEN + "» Jouer «";
         }
 
-        this.sign.setLine(0, ChatColor.DARK_AQUA + this.game.getName());
-        this.sign.setLine(1, ChatColor.AQUA + "" + ChatColor.BOLD + map);
+        this.sign.setLine(0, this.game.getName());
+        this.sign.setLine(1, ChatColor.DARK_AQUA + "" + ChatColor.BOLD + map);
         this.sign.setLine(2, players + "/" + maxPlayers + " joueurs");
         this.sign.setLine(3, clickLine);
 
