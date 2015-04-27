@@ -132,5 +132,7 @@ public class GuiStalker2000 extends AbstractGui
                 ChatColor.GRAY + "Cliquez pour savoir où sont",
                 ChatColor.GRAY + "situés vos amis."
         }, "friends");
+
+        player.openInventory(this.inventory);
     }
 }
