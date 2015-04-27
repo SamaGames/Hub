@@ -33,6 +33,7 @@ public class HubRefresher implements Runnable
         Bukkit.getOnlinePlayers().forEach(thisHub::addConnectedPlayer);
 
         String thisHubJson = new Gson().toJson(thisHub);
+        jedis.hdel("hubs_connected", SamaGamesAPI.get().getServerName());
         jedis.hset("hubs_connected", SamaGamesAPI.get().getServerName(), thisHubJson);
 
         Map<String, String> redisHubs = jedis.hgetAll("hubs_connected");
@@ -48,11 +49,7 @@ public class HubRefresher implements Runnable
             String jsonHubString = hubsList.get(hubNumber);
             JsonHub jsonHub = new Gson().fromJson(jsonHubString, JsonHub.class);
             this.hubs.add(jsonHub);
-
-            Bukkit.broadcastMessage(jsonHubString);
         }
-
-        Bukkit.broadcastMessage(String.valueOf(this.hubs.size()));
 
         jedis.close();
 

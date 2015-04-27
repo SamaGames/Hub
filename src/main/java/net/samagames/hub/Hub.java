@@ -85,7 +85,7 @@ public class Hub extends JavaPlugin
 
         this.log(Level.INFO, "Starting HubRefresher...");
         this.hubRefresher = new HubRefresher(this);
-        Bukkit.getScheduler().runTaskTimerAsynchronously(this, this.hubRefresher, 20L * 5, 20L * 5);
+        Bukkit.getScheduler().runTaskTimerAsynchronously(this, this.hubRefresher, 20L, 20L);
         this.log(Level.INFO, "Hubs list will be refreshed every seconds.");
 
         this.log(Level.INFO, "Hub ready!");
