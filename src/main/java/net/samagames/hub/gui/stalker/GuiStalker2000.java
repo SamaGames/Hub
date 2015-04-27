@@ -75,7 +75,7 @@ public class GuiStalker2000 extends AbstractGui
             {
                 String formattedServer = ChatColor.GRAY + server.split("_")[0] + " " + server.split("_")[1];
 
-                if(Hub.getInstance().getGameManager().getGameByIdentifier(server.split("_")[0]) == null)
+                if(Hub.getInstance().getGameManager().getGameByIdentifier(server.split("_")[0]) != null)
                     if (Hub.getInstance().getGameManager().getGameByIdentifier(server.split("_")[0]).getCodeName().equals("beta_staff"))
                         formattedServer = ChatColor.RED + "Secret :o";
 
