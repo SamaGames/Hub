@@ -1,5 +1,6 @@
 package net.samagames.hub.games;
 
+import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.games.shop.ShopCategory;
 import net.samagames.hub.games.sign.GameSign;
 import org.bukkit.Location;
@@ -17,6 +18,11 @@ public abstract class AbstractGame
     public AbstractGame()
     {
         this.signs = new HashMap<>();
+
+        if(SamaGamesAPI.get().getResource().exists("hub:maintenance:" + this.getCodeName()))
+            this.setMaintenance(Boolean.valueOf(SamaGamesAPI.get().getResource().get("hub:maintenance:" + this.getCodeName())));
+        else
+            this.setMaintenance(false);
     }
 
     public abstract String getCodeName();

@@ -49,29 +49,39 @@ public class GameSign
         }
         else if(data == null)
         {
-            this.sign.setLine(0, "");
+            this.sign.setLine(0, this.game.getName());
             this.sign.setLine(1, ChatColor.DARK_AQUA + "" + ChatColor.BOLD + map);
             this.sign.setLine(2, "?/? joueurs");
-            this.sign.setLine(3, "");
+            this.sign.setLine(3, ChatColor.GREEN + "» Clic pour jouer «");
 
             Bukkit.getScheduler().runTask(Hub.getInstance(), this.sign::update);
             return;
         }
 
-        if(data.getStatus() != Status.WAITING_FOR_PLAYERS && data.getStatus() != Status.READY_TO_START)
-            this.lastDatas.remove(data.getBungeeName());
-        else
-            this.lastDatas.put(data.getBungeeName(), data);
+        String players = "?";
+        String maxPlayers = "?";
+        String clickLine = ChatColor.RED + "× Attente ×";
 
-        int players = 0;
+        if(data != null)
+        {
+            if(data.getStatus() != Status.WAITING_FOR_PLAYERS && data.getStatus() != Status.READY_TO_START)
+                this.lastDatas.remove(data.getBungeeName());
+            else
+                this.lastDatas.put(data.getBungeeName(), data);
 
-        for(ServerStatus status : this.lastDatas.values())
-            players += status.getPlayers();
+            int temp = 0;
 
-        this.sign.setLine(0, "");
+            for(ServerStatus status : this.lastDatas.values())
+                temp += status.getPlayers();
+
+            players = String.valueOf(temp);
+            clickLine = ChatColor.GREEN + "» Jouer «";
+        }
+
+        this.sign.setLine(0, this.game.getName());
         this.sign.setLine(1, ChatColor.DARK_AQUA + "" + ChatColor.BOLD + map);
-        this.sign.setLine(2, players + "/" + data.getMaxPlayers() + " joueurs");
-        this.sign.setLine(3, "");
+        this.sign.setLine(2, players + "/" + maxPlayers + " joueurs");
+        this.sign.setLine(3, clickLine);
 
         Bukkit.getScheduler().runTask(Hub.getInstance(), this.sign::update);
     }
