@@ -73,11 +73,11 @@ public class Hub extends JavaPlugin
         this.cosmeticManager = new CosmeticManager(this);
         this.log(Level.INFO, "Managers loaded with success.");
 
-        this.log(Level.INFO, "Registering packets listeners...");
+        this.log(Level.INFO, "Registering packets packets...");
         SamaGamesAPI.get().getPubSub().subscribe("cheat", new SamaritanListener());
         SamaGamesAPI.get().getPubSub().subscribe("hubsChannel", new ArenaListener());
         SamaGamesAPI.get().getPubSub().subscribe("maintenanceSignChannel", new MaintenanceListener());
-        this.log(Level.INFO, "Packets listeners registered with success.");
+        this.log(Level.INFO, "Packets packets registered with success.");
 
         this.log(Level.INFO, "Registering events...");
         this.registerEvents();

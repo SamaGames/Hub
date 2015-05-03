@@ -293,6 +293,13 @@ public class PlayerListener implements Listener
         }
     }
 
+    @EventHandler
+    public void onPlayerGameModeChangeEvent(PlayerGameModeChangeEvent event)
+    {
+        if (PermissionsBukkit.hasPermission(event.getPlayer(), "hub.fly"))
+            Bukkit.getScheduler().runTask(Hub.getInstance(), () -> event.getPlayer().setAllowFlight(true));
+    }
+
     private void onPlayerLeave(final Player player)
     {
         Bukkit.getScheduler().runTaskAsynchronously(Hub.getInstance(), () ->
