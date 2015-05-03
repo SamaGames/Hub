@@ -26,6 +26,9 @@ public class JsonConfiguration
     {
         try
         {
+            if(!this.configurationFile.exists())
+                return null;
+
             BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(this.configurationFile), "utf-8"));
             StringBuilder builder = new StringBuilder();
             String currentLine;
