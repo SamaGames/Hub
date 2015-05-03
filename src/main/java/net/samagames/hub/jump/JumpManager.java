@@ -39,6 +39,10 @@ public class JumpManager extends AbstractManager
     public void loadConfig()
     {
         JsonConfiguration jumpsConfig = new JsonConfiguration(new File(this.hub.getDataFolder(), "jumps.json"));
+
+        if(jumpsConfig == null)
+            return;
+
         JsonObject jsonRoot = jumpsConfig.load();
 
         if(jsonRoot == null)
