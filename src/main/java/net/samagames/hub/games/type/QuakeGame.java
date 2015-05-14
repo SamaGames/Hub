@@ -53,9 +53,7 @@ public class QuakeGame extends AbstractGame
     {
         ShopCategory parentCategory = new ShopCategory(this, null, null, null, null);
 
-
-
-        ShopCategory hoes = new ShopCategory(this, "hoe", "Houes", new ItemStack(Material.DIAMOND_HOE, 1), new String[] {
+        ShopCategory hoes = new ShopCategory(this, "hoeMenu", "Houes", new ItemStack(Material.DIAMOND_HOE, 1), new String[] {
                 "Améliorez votre hoe !",
                 "Ne ratez plus vos adversaires par manque de temps.",
         });
@@ -68,7 +66,7 @@ public class QuakeGame extends AbstractGame
 
         ShopDependsItem stoneHoe = new ShopDependsItem(this, "hoe", "stonehoe", ChatColor.DARK_AQUA + "Advanced SlowGun", new ItemStack(Material.DIAMOND_HOE, 1),new String[]{
                 ChatColor.DARK_GRAY + "Recharge en " + ChatColor.GOLD + "1.7" + ChatColor.DARK_GRAY + " secondes."
-        }, 500, null);
+        }, 500, woodenHoe);
         hoes.addContent(stoneHoe);
 
         ShopDependsItem ironHoe = new ShopDependsItem(this, "hoe", "ironhoe", ChatColor.DARK_AQUA + "Quick Gun", new ItemStack(Material.IRON_HOE, 1),new String[]{
@@ -94,8 +92,7 @@ public class QuakeGame extends AbstractGame
         ShopDependsItem blasterHoe = new ShopDependsItem(this, "hoe", "blaster", ChatColor.AQUA + "Blaster", GlowEffect.addGlow(new ItemStack(Material.DIAMOND_BARDING, 1)),new String[]{
                 ChatColor.DARK_GRAY + "Recharge en " + ChatColor.GOLD + "1.2" + ChatColor.DARK_GRAY + " secondes."
         }, 150000, amazingHoe);
-        hoes.addContent(blasterHoe);
-
+       hoes.addContent(blasterHoe);
 
         parentCategory.addContent(hoes);
 
