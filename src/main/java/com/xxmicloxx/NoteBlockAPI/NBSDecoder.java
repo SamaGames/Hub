@@ -117,6 +117,6 @@ public class NBSDecoder
             }
             sb.append(c);
         }
-        return sb.toString();
+        return new String(sb.toString().getBytes(), "UTF-8");
     }
 }
