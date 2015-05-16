@@ -2,6 +2,7 @@ package net.samagames.hub.cosmetics.particles;
 
 import net.samagames.hub.cosmetics.common.AbstractCosmeticRegistry;
 import net.samagames.hub.cosmetics.particles.types.FireEffect;
+import net.samagames.hub.cosmetics.particles.types.WitchHatEffect;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -46,15 +47,16 @@ public class ParticleRegistry extends AbstractCosmeticRegistry<ParticleCosmetic>
                 "",
                 ChatColor.YELLOW + "Particules enchantées"
         }, ParticleEffect.ENCHANTMENT_TABLE);
-        enchantmentParticle.buyableWithStars(1200);
+        enchantmentParticle.buyableWithStars(1200);*/
 
         ParticleCosmetic netherParticle = new ParticleCosmetic("nether", "Pensif", new ItemStack(Material.OBSIDIAN, 1), new String[] {
                 "Nous vous dérangerons pas plus de",
                 "temps, continuez de réfléchir ;)",
                 "",
                 ChatColor.YELLOW + "Particules des enfers"
-        }, ParticleEffect.PORTAL);
-        netherParticle.buyableWithStars(1500);*/
+        }, WitchHatEffect.class);
+        //netherParticle.buyableWithStars(1500);
+        netherParticle.buyableWithStars(0);
 
         ParticleCosmetic fireParticle = new ParticleCosmetic("fire", "Fulminant", new ItemStack(Material.FLINT_AND_STEEL, 1), new String[] {
                 "Vous brûlez d'une râge intense !",
@@ -67,8 +69,8 @@ public class ParticleRegistry extends AbstractCosmeticRegistry<ParticleCosmetic>
         this.registerElement(waterParticle);
         this.registerElement(musicParticle);
         this.registerElement(happyParticle);
-        this.registerElement(enchantmentParticle);
-        this.registerElement(netherParticle);*/
+        this.registerElement(enchantmentParticle);*/
+        this.registerElement(netherParticle);
         this.registerElement(fireParticle);
     }
 }

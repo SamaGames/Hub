@@ -27,17 +27,34 @@ public class FireEffect extends Effect {
     public FireEffect(EffectManager effectManager) {
         super(effectManager);
         type = EffectType.REPEATING;
-        period = 2;
-        iterations = 1;
+        period = 4;
+        iterations = 2;
     }
 
     @Override
     public void onRun() {
-        Location location = getLocation();
-        Vector vector = new Vector(0, -1, 0);
-        VectorUtils.rotateAroundAxisX(vector, 45.0* MathUtils.degreesToRadians);
-        VectorUtils.rotateAroundAxisY(vector, location.getYaw() * MathUtils.degreesToRadians);
+        Location location = this.getEntity().getLocation().add(0,1.5,0);
 
-        particle.display(vector, 1F, location, 50);
+        //Reactor Left
+        Vector relativePosL = new Vector(0.15, -0.15, -0.1);
+        Vector reactorLeft = new Vector(0, -0.5, 0);
+        VectorUtils.rotateAroundAxisX(reactorLeft, 35.0 * MathUtils.degreesToRadians);
+        VectorUtils.rotateAroundAxisZ(reactorLeft, 15.0 * MathUtils.degreesToRadians);
+        VectorUtils.rotateAroundAxisY(reactorLeft, -location.getYaw() * MathUtils.degreesToRadians);
+
+
+        VectorUtils.rotateAroundAxisY(relativePosL, -location.getYaw() * MathUtils.degreesToRadians);
+        particle.display(reactorLeft, 0.3F, location.clone().add(relativePosL), 50);
+
+        //Reactor Right
+        Vector relativePosR = new Vector(-0.15, -0.15, -0.1);
+        Vector reactorRight = new Vector(0, -0.5, 0);
+        VectorUtils.rotateAroundAxisX(reactorRight, 35.0 * MathUtils.degreesToRadians);
+        VectorUtils.rotateAroundAxisZ(reactorRight, -15.0 * MathUtils.degreesToRadians);
+        VectorUtils.rotateAroundAxisY(reactorRight, -location.getYaw() * MathUtils.degreesToRadians);
+
+
+        VectorUtils.rotateAroundAxisY(relativePosR, -location.getYaw() * MathUtils.degreesToRadians);
+        particle.display(reactorRight, 0.3F, location.clone().add(relativePosR), 50);
     }
 }

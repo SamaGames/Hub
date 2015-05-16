@@ -31,9 +31,11 @@ public class ParticleManager extends AbstractCosmeticManager<ParticleCosmetic>
     {
         if (cosmetic.isOwned(player))
         {
+            clearEffect(player.getUniqueId());
+
             try
             {
-                Effect particleEffectObject = cosmetic.getParticleEffect().getConstructor(EffectManager.class).newInstance(this.effectManager, player);
+                Effect particleEffectObject = cosmetic.getParticleEffect().getConstructor(EffectManager.class).newInstance(this.effectManager);
                 particleEffectObject.setEntity(player);
                 particleEffectObject.infinite();
                 particleEffectObject.start();
@@ -57,11 +59,7 @@ public class ParticleManager extends AbstractCosmeticManager<ParticleCosmetic>
     @Override
     public void disableCosmetic(Player player, boolean logout)
     {
-        if (this.playersParticleEffect.containsKey(player.getUniqueId()))
-        {
-            this.playersParticleEffect.get(player.getUniqueId()).cancel(false);
-            this.playersParticleEffect.remove(player.getUniqueId());
-        }
+        clearEffect(player.getUniqueId());
 
         if (!logout)
         {
@@ -81,6 +79,16 @@ public class ParticleManager extends AbstractCosmeticManager<ParticleCosmetic>
 
     @Override
     public void update() {}
+
+    public void clearEffect(UUID player)
+    {
+        if (this.playersParticleEffect.containsKey(player))
+        {
+            this.playersParticleEffect.get(player).cancel(true);
+            this.playersParticleEffect.remove(player);
+        }
+    }
+
 
     @Override
     public String getName() { return "ParticleManager"; }
