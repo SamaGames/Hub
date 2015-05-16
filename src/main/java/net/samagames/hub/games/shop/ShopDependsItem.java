@@ -34,7 +34,7 @@ public class ShopDependsItem extends ShopItem
             SamaGamesAPI.get().getShopsManager(this.game.getCodeName()).setCurrentLevel(player.getUniqueId(), this.type, this.getActionName());
             player.sendMessage(ChatColor.GREEN + "Vous avez équipé " + ChatColor.AQUA + this.getIcon().getItemMeta().getDisplayName());
         }
-        else if (!hasDepend(player))
+        else if (this.dependsOn != null && !hasDepend(player))
         {
             player.sendMessage(ChatColor.RED + "Il est nécessaire de posséder " + ChatColor.AQUA + this.dependsOn.getIcon().getItemMeta().getDisplayName() + ChatColor.RED + " pour acheter cela.");
         }
@@ -70,11 +70,11 @@ public class ShopDependsItem extends ShopItem
 
         lores.add("");
 
-        if(this.isActive(player))
+        if(this.isActive(player) || this.isDefaultItem())
             lores.add(ChatColor.GREEN + "Objet actif");
         else if(this.isOwned(player))
             lores.add(ChatColor.GREEN + "Objet possédé");
-        else if(this.hasDepend(player))
+        else if(this.hasDepend(player) || this.dependsOn == null)
             lores.add(ChatColor.GRAY + "Prix : " + ChatColor.GOLD + this.cost);
         else
             lores.add(ChatColor.RED + "Nécessite " + ChatColor.AQUA + this.dependsOn.getIcon().getItemMeta().getDisplayName());
@@ -88,6 +88,6 @@ public class ShopDependsItem extends ShopItem
     public boolean hasDepend(Player player)
     {
         List<String> own = SamaGamesAPI.get().getShopsManager(this.game.getCodeName()).getOwnedLevels(player, this.type);
-        return (own != null) && own.contains(this.dependsOn.getActionName());
+        return (own != null) && this.dependsOn != null && own.contains(this.dependsOn.getActionName());
     }
 }

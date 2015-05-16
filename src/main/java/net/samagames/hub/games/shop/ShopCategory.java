@@ -40,7 +40,7 @@ public class ShopCategory extends ShopIcon
     @Override
     public ItemStack getFormattedIcon(Player player)
     {
-        ItemStack icon = this.getIcon();
+        ItemStack icon = this.getIcon().clone();
         ItemMeta meta =  icon.getItemMeta();
         ArrayList<String> lores = new ArrayList<>();
 

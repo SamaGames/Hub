@@ -61,7 +61,8 @@ public class GuiShopCategory extends AbstractGui
         else
         {
             String iconAction = action.split("_")[1];
-            this.category.getIconByAction(iconAction).execute(player, clickType);
+            ShopIcon shopIcon = this.category.getIconByAction(iconAction);
+            shopIcon.execute(player, clickType);
         }
     }
 }
