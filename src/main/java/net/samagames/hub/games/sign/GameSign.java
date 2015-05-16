@@ -54,12 +54,13 @@ public class GameSign
 
         if(data != null)
         {
-            if(data.getStatus() != Status.WAITING_FOR_PLAYERS && data.getStatus() != Status.READY_TO_START)
+            if(!data.getStatus().equals(Status.WAITING_FOR_PLAYERS) && !data.getStatus().equals(Status.READY_TO_START))
                 this.lastDatas.remove(data.getBungeeName());
             else
                 this.lastDatas.put(data.getBungeeName(), data);
 
             players = String.valueOf(this.getOnlinePlayers());
+            maxPlayers = String.valueOf(data.getMaxPlayers());
             clickLine = ChatColor.GREEN + "» Jouer «";
         }
 
@@ -87,7 +88,7 @@ public class GameSign
         String[] serverNameParts = firstServer.getBungeeName().split("_");
 
         player.sendMessage(ChatColor.GREEN + "Vous avez été envoyé vers le serveur " + serverNameParts[0] + " " + serverNameParts[1] + " !");
-        SamaGamesAPI.get().getProxyDataManager().getProxiedPlayer(player.getUniqueId()).connect(firstServer.getBungeeName());
+        SamaGamesAPI.get().getProxyDataManager().getProxiedPlayer(player.getUniqueId()).connectGame(firstServer.getBungeeName());
     }
 
     public void developperClick(Player player)

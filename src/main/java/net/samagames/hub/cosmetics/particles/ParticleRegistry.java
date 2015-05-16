@@ -1,13 +1,17 @@
 package net.samagames.hub.cosmetics.particles;
 
 import net.samagames.hub.cosmetics.common.AbstractCosmeticRegistry;
+import net.samagames.hub.cosmetics.particles.types.FireEffect;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 
 public class ParticleRegistry extends AbstractCosmeticRegistry<ParticleCosmetic>
 {
     @Override
     public void register()
     {
-        /**ParticleCosmetic heartParticle = new ParticleCosmetic("heart", "Amoureux <3", new ItemStack(Material.RED_ROSE, 1), new String[] {
+        /*ParticleCosmetic heartParticle = new ParticleCosmetic("heart", "Amoureux <3", new ItemStack(Material.RED_ROSE, 1), new String[] {
                 "L'amour est la plus belle chose qui soit <3",
                 "",
                 ChatColor.YELLOW + "Particules en forme de coeur"
@@ -50,21 +54,21 @@ public class ParticleRegistry extends AbstractCosmeticRegistry<ParticleCosmetic>
                 "",
                 ChatColor.YELLOW + "Particules des enfers"
         }, ParticleEffect.PORTAL);
-        netherParticle.buyableWithStars(1500);
+        netherParticle.buyableWithStars(1500);*/
 
         ParticleCosmetic fireParticle = new ParticleCosmetic("fire", "Fulminant", new ItemStack(Material.FLINT_AND_STEEL, 1), new String[] {
                 "Vous brûlez d'une râge intense !",
                 "",
                 ChatColor.YELLOW + "Particules de feu"
-        }, ParticleEffect.FLAME);
+        }, FireEffect.class);
         fireParticle.permissionNeeded("particle.fire");
 
-        this.registerElement(heartParticle);
+        /*this.registerElement(heartParticle);
         this.registerElement(waterParticle);
         this.registerElement(musicParticle);
         this.registerElement(happyParticle);
         this.registerElement(enchantmentParticle);
-        this.registerElement(netherParticle);
-        this.registerElement(fireParticle);**/
+        this.registerElement(netherParticle);*/
+        this.registerElement(fireParticle);
     }
 }
