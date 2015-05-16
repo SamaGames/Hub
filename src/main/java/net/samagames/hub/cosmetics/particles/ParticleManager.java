@@ -1,25 +1,29 @@
 package net.samagames.hub.cosmetics.particles;
 
+import de.slikey.effectlib.EffectManager;
+import de.slikey.effectlib.effect.EntityEffect;
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import net.samagames.hub.cosmetics.common.AbstractCosmeticManager;
-import net.samagames.tools.ParticleEffect;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.UUID;
 import java.util.logging.Level;
 
 public class ParticleManager extends AbstractCosmeticManager<ParticleCosmetic>
 {
-    private HashMap<UUID, ParticleEffect> playersParticleEffect;
+    private final HashMap<UUID, EntityEffect> playersParticleEffect;
+    private final EffectManager effectManager;
 
     public ParticleManager(Hub hub)
     {
         super(hub, new ParticleRegistry());
+
         this.playersParticleEffect = new HashMap<>();
+        this.effectManager = new EffectManager(hub.getEffectLib());
     }
 
     @Override
@@ -27,9 +31,20 @@ public class ParticleManager extends AbstractCosmeticManager<ParticleCosmetic>
     {
         if (cosmetic.isOwned(player))
         {
-            this.playersParticleEffect.put(player.getUniqueId(), cosmetic.getParticleEffect());
-            SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).set("cosmetics.particles.current", cosmetic.getDatabaseName());
-            player.sendMessage(ChatColor.GREEN + "Vous voilà noyé sous les particules...");
+            try
+            {
+                EntityEffect particleEffectObject = cosmetic.getParticleEffect().getConstructor(EffectManager.class, Player.class).newInstance(this.effectManager, player);
+                particleEffectObject.infinite();
+                particleEffectObject.start();
+
+                this.playersParticleEffect.put(player.getUniqueId(), particleEffectObject);
+                SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).set("cosmetics.particles.current", cosmetic.getDatabaseName());
+                player.sendMessage(ChatColor.GREEN + "Vous voilà noyé sous les particules...");
+            }
+            catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e)
+            {
+                this.hub.log(this, Level.SEVERE, "Can't create EntityEffect object to " + player.getName() + "'s particle effect!");
+            }
         }
         else
         {
@@ -41,7 +56,10 @@ public class ParticleManager extends AbstractCosmeticManager<ParticleCosmetic>
     public void disableCosmetic(Player player, boolean logout)
     {
         if (this.playersParticleEffect.containsKey(player.getUniqueId()))
+        {
+            this.playersParticleEffect.get(player.getUniqueId()).cancel(false);
             this.playersParticleEffect.remove(player.getUniqueId());
+        }
 
         if (!logout)
         {
@@ -60,26 +78,7 @@ public class ParticleManager extends AbstractCosmeticManager<ParticleCosmetic>
     }
 
     @Override
-    public void update()
-    {
-        try
-        {
-            for(UUID uuid : this.playersParticleEffect.keySet())
-            {
-                Player player = Bukkit.getPlayer(uuid);
-
-                if(player == null)
-                    continue;
-
-                this.playersParticleEffect.get(uuid).display(0.5F, 0.5F, 0.5F, 0.25F, 2, player.getLocation(), 100.0D);
-            }
-        }
-        catch (Exception e)
-        {
-            Hub.getInstance().log(this, Level.SEVERE, "An exception occured when the update process!");
-            e.printStackTrace();
-        }
-    }
+    public void update() {}
 
     @Override
     public String getName() { return "ParticleManager"; }

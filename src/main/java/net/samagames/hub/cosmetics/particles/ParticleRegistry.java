@@ -1,17 +1,13 @@
 package net.samagames.hub.cosmetics.particles;
 
 import net.samagames.hub.cosmetics.common.AbstractCosmeticRegistry;
-import net.samagames.tools.ParticleEffect;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
 
 public class ParticleRegistry extends AbstractCosmeticRegistry<ParticleCosmetic>
 {
     @Override
     public void register()
     {
-        ParticleCosmetic heartParticle = new ParticleCosmetic("heart", "Amoureux <3", new ItemStack(Material.RED_ROSE, 1), new String[] {
+        /**ParticleCosmetic heartParticle = new ParticleCosmetic("heart", "Amoureux <3", new ItemStack(Material.RED_ROSE, 1), new String[] {
                 "L'amour est la plus belle chose qui soit <3",
                 "",
                 ChatColor.YELLOW + "Particules en forme de coeur"
@@ -69,6 +65,6 @@ public class ParticleRegistry extends AbstractCosmeticRegistry<ParticleCosmetic>
         this.registerElement(happyParticle);
         this.registerElement(enchantmentParticle);
         this.registerElement(netherParticle);
-        this.registerElement(fireParticle);
+        this.registerElement(fireParticle);**/
     }
 }

@@ -1,5 +1,6 @@
 package net.samagames.hub;
 
+import de.slikey.effectlib.EffectLib;
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.commands.CommandManager;
 import net.samagames.hub.common.HubRefresher;
@@ -22,6 +23,7 @@ import net.samagames.hub.jump.JumpManager;
 import net.samagames.hub.npcs.NPCManager;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.logging.Level;
@@ -138,6 +140,16 @@ public class Hub extends JavaPlugin
     public HubRefresher getHubRefresher()
     {
         return this.hubRefresher;
+    }
+
+    public EffectLib getEffectLib()
+    {
+        Plugin effectLib = Bukkit.getPluginManager().getPlugin("EffectLib");
+
+        if (effectLib == null || !(effectLib instanceof EffectLib))
+            return null;
+
+        return (EffectLib) effectLib;
     }
 
     public boolean isDebugEnabled()

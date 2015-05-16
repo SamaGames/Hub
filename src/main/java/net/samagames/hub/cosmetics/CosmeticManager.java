@@ -5,7 +5,6 @@ import net.samagames.hub.common.managers.AbstractManager;
 import net.samagames.hub.cosmetics.gadgets.GadgetManager;
 import net.samagames.hub.cosmetics.jukebox.JukeboxManager;
 import net.samagames.hub.cosmetics.particles.ParticleManager;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.logging.Level;
@@ -23,8 +22,6 @@ public class CosmeticManager extends AbstractManager
         this.particleManager = new ParticleManager(hub);
         this.gadgetManager = new GadgetManager(hub);
         this.jukeboxManager = new JukeboxManager(hub);
-
-        Bukkit.getScheduler().runTaskTimerAsynchronously(hub, this.particleManager::update, 1L, 1L);
 
         hub.log(this, Level.INFO, "Registered cosmetics and started loop!");
     }
