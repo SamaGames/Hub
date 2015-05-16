@@ -6,6 +6,7 @@ import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import net.samagames.hub.cosmetics.common.AbstractCosmeticManager;
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
 import java.lang.reflect.InvocationTargetException;
@@ -33,7 +34,8 @@ public class ParticleManager extends AbstractCosmeticManager<ParticleCosmetic>
         {
             try
             {
-                EntityEffect particleEffectObject = cosmetic.getParticleEffect().getConstructor(EffectManager.class, Player.class).newInstance(this.effectManager, player);
+                EntityEffect particleEffectObject = cosmetic.getParticleEffect().getConstructor(EffectManager.class, Entity.class).newInstance(this.effectManager, player);
+                particleEffectObject.setEntity(player);
                 particleEffectObject.infinite();
                 particleEffectObject.start();
 
@@ -44,6 +46,7 @@ public class ParticleManager extends AbstractCosmeticManager<ParticleCosmetic>
             catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e)
             {
                 this.hub.log(this, Level.SEVERE, "Can't create EntityEffect object to " + player.getName() + "'s particle effect!");
+                e.printStackTrace();
             }
         }
         else
