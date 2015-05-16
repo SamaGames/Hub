@@ -1,12 +1,11 @@
 package net.samagames.hub.cosmetics.particles;
 
+import de.slikey.effectlib.Effect;
 import de.slikey.effectlib.EffectManager;
-import de.slikey.effectlib.effect.EntityEffect;
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import net.samagames.hub.cosmetics.common.AbstractCosmeticManager;
 import org.bukkit.ChatColor;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
 import java.lang.reflect.InvocationTargetException;
@@ -16,7 +15,7 @@ import java.util.logging.Level;
 
 public class ParticleManager extends AbstractCosmeticManager<ParticleCosmetic>
 {
-    private final HashMap<UUID, EntityEffect> playersParticleEffect;
+    private final HashMap<UUID, Effect> playersParticleEffect;
     private final EffectManager effectManager;
 
     public ParticleManager(Hub hub)
@@ -34,7 +33,7 @@ public class ParticleManager extends AbstractCosmeticManager<ParticleCosmetic>
         {
             try
             {
-                EntityEffect particleEffectObject = cosmetic.getParticleEffect().getConstructor(EffectManager.class, Entity.class).newInstance(this.effectManager, player);
+                Effect particleEffectObject = cosmetic.getParticleEffect().getConstructor(EffectManager.class).newInstance(this.effectManager, player);
                 particleEffectObject.setEntity(player);
                 particleEffectObject.infinite();
                 particleEffectObject.start();

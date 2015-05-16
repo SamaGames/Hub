@@ -1,13 +1,12 @@
 package net.samagames.hub.cosmetics.particles.types;
 
+import de.slikey.effectlib.Effect;
 import de.slikey.effectlib.EffectManager;
 import de.slikey.effectlib.EffectType;
-import de.slikey.effectlib.effect.EntityEffect;
 import de.slikey.effectlib.util.MathUtils;
 import de.slikey.effectlib.util.ParticleEffect;
 import de.slikey.effectlib.util.VectorUtils;
 import org.bukkit.Location;
-import org.bukkit.entity.Entity;
 import org.bukkit.util.Vector;
 
 
@@ -18,15 +17,15 @@ import org.bukkit.util.Vector;
  * (C) Copyright Elydra Network 2014 & 2015
  * All rights reserved.
  */
-public class FireEffect extends EntityEffect {
+public class FireEffect extends Effect {
 
     /**
      * ParticleType of spawned particle
      */
     public ParticleEffect particle = ParticleEffect.FLAME;
 
-    public FireEffect(EffectManager effectManager, Entity entity) {
-        super(effectManager, entity);
+    public FireEffect(EffectManager effectManager) {
+        super(effectManager);
         type = EffectType.REPEATING;
         period = 2;
         iterations = 1;
@@ -34,7 +33,7 @@ public class FireEffect extends EntityEffect {
 
     @Override
     public void onRun() {
-        Location location = this.entity.getLocation();
+        Location location = getLocation();
         Vector vector = new Vector(0, -1, 0);
         VectorUtils.rotateAroundAxisX(vector, 45.0* MathUtils.degreesToRadians);
         VectorUtils.rotateAroundAxisY(vector, location.getYaw() * MathUtils.degreesToRadians);
