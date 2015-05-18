@@ -37,7 +37,7 @@ public class WitchHatEffect extends Effect {
 
     protected double marge = 0.5;
 
-    protected double numberCirclePlate = 2;
+    protected double numberCirclePlate = 3;
 
     protected double plateWidth = 0.8;
 
@@ -53,7 +53,7 @@ public class WitchHatEffect extends Effect {
     @Override
     public void onRun() {
         Bukkit.getScheduler().runTaskAsynchronously(Hub.getInstance(), () -> {
-            Location location = getLocation().clone().add(0, 0.5, 0);
+            Location location = getLocation().clone().add(normalizeFromHead(new Vector(0, 0.5, 0)));
             for(int l = 0; l < 10; l++)
             {
                 if(angle > 360)
