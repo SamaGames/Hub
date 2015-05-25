@@ -26,15 +26,16 @@ import org.bukkit.World;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.logging.Level;
 
 public class Hub extends JavaPlugin
 {
     private static Hub instance;
-
+    public ScheduledExecutorService executor;
     private World hubWorld;
     private boolean debug;
-
     private PlayerManager playerManager;
     private ChatManager chatManager;
     private GuiManager guiManager;
@@ -49,10 +50,17 @@ public class Hub extends JavaPlugin
 
     private HubRefresher hubRefresher;
 
+    public static Hub getInstance()
+    {
+        return instance;
+    }
+
     @Override
     public void onEnable()
     {
         instance = this;
+
+        executor = Executors.newScheduledThreadPool(16);
 
         this.hubWorld = Bukkit.getWorlds().get(0);
 
@@ -100,6 +108,7 @@ public class Hub extends JavaPlugin
     @Override
     public void onDisable()
     {
+        executor.shutdownNow();
         this.npcManager.onServerClose();
         this.hologramManager.onServerClose();
         this.scoreboardManager.onServerClose();
@@ -118,18 +127,29 @@ public class Hub extends JavaPlugin
     }
 
     public void log(AbstractManager manager, Level level, String message)  { this.getLogger().log(level, "[" + manager.getName() + "] " + message); }
+
     public void log(Level level, String message) { this.getLogger().log(level, "[Core] " + message); }
 
     public PlayerManager getPlayerManager() { return this.playerManager; }
+
     public ChatManager getChatManager() { return this.chatManager; }
+
     public GuiManager getGuiManager() { return this.guiManager; }
+
     public HologramManager getHologramManager() { return this.hologramManager; }
+
     public EntityManager getEntityManager() { return this.entityManager; }
+
     public NPCManager getNPCManager() { return this.npcManager; }
+
     public ScoreboardManager getScoreboardManager() { return this.scoreboardManager; }
+
     public GameManager getGameManager() { return this.gameManager; }
+
     public SignManager getSignManager() { return this.signManager; }
+
     public JumpManager getJumpManager() { return this.jumpManager; }
+
     public CosmeticManager getCosmeticManager() { return this.cosmeticManager; }
 
     public World getHubWorld()
@@ -152,13 +172,13 @@ public class Hub extends JavaPlugin
         return (EffectLib) effectLib;
     }
 
+    public ScheduledExecutorService getExecutor()
+    {
+        return executor;
+    }
+
     public boolean isDebugEnabled()
     {
         return this.debug;
-    }
-
-    public static Hub getInstance()
-    {
-        return instance;
     }
 }

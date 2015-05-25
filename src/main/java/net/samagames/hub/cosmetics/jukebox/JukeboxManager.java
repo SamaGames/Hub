@@ -6,7 +6,6 @@ import com.xxmicloxx.NoteBlockAPI.SongPlayer;
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import net.samagames.hub.cosmetics.common.AbstractCosmeticManager;
-import net.samagames.permissionsbukkit.PermissionsBukkit;
 import net.samagames.tools.ParticleEffect;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -102,7 +101,7 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
     {
         Song song = disk.getSong();
         JukeboxPlaylist jukeboxPlaylist = new JukeboxPlaylist(disk, playedBy.getName());
-        boolean canBypassLimit = PermissionsBukkit.hasPermission(playedBy, "hub.jukebox.limitbypass");
+        boolean canBypassLimit = SamaGamesAPI.get().getPermissionsManager().hasPermission(playedBy, "hub.jukebox.limitbypass");
 
         if ((this.containsSongFrom(playedBy.getName()) || (this.currentPlaylist != null && this.currentPlaylist.getPlayedBy().equals(playedBy.getName()))) && !canBypassLimit)
         {
@@ -134,8 +133,7 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
 
         BukkitTask task = Bukkit.getScheduler().runTaskTimerAsynchronously(this.hub, () ->
         {
-            if (this.recentDJs.containsKey(playedBy.getUniqueId()))
-            {
+            if (this.recentDJs.containsKey(playedBy.getUniqueId())) {
                 int now = this.recentDJs.get(playedBy.getUniqueId()) - 1;
                 this.recentDJs.put(playedBy.getUniqueId(), now);
             }
@@ -184,7 +182,10 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
         if (nextSong != null)
         {
             SongPlayer player = nextSong.getPlayer();
-            Bukkit.getOnlinePlayers().stream().filter(p -> !this.mutedPlayers.contains(p.getUniqueId())).forEach(player::addPlayer);
+            Bukkit.getOnlinePlayers().stream().filter(p -> !this.mutedPlayers.contains(p.getUniqueId())).forEach(p -> player.addPlayer(p.getUniqueId()));
+            //Bukkit.getOnlinePlayers().stream().filter(p -> !this.mutedPlayers.contains(p.getUniqueId())).forEach(player::addPlayer);
+
+            player.setPlaying(true);
 
             this.currentPlaylist = nextSong;
             this.currentPlaylist.getPlayer().setPlaying(true);

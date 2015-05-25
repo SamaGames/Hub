@@ -5,7 +5,6 @@ import net.samagames.hub.Hub;
 import net.samagames.hub.common.StaticInventory;
 import net.samagames.hub.cosmetics.jukebox.JukeboxPlaylist;
 import net.samagames.permissionsapi.permissions.PermissionUser;
-import net.samagames.permissionsbukkit.PermissionsBukkit;
 import net.samagames.tools.Selection;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -44,7 +43,7 @@ public class PlayerManager extends AbstractManager
         this.updateSettings(player);
         this.updateHiders(player);
 
-        PermissionUser permissionUser = PermissionsBukkit.getApi().getUser(player.getUniqueId());
+        PermissionUser permissionUser = SamaGamesAPI.get().getPermissionsManager().getApi().getUser(player.getUniqueId());
 
         if(permissionUser.inGroup("Guide"))
         {
@@ -76,7 +75,7 @@ public class PlayerManager extends AbstractManager
         {
             for(Player p : Bukkit.getOnlinePlayers())
             {
-                if(!PermissionsBukkit.hasPermission(p, "hub.announce"))
+                if(!SamaGamesAPI.get().getPermissionsManager().hasPermission(p, "hub.announce"))
                     player.hidePlayer(p);
             }
 
@@ -117,7 +116,7 @@ public class PlayerManager extends AbstractManager
         for(UUID hider : this.hiders)
         {
             if(!hider.equals(newConnected.getUniqueId()))
-                if(!PermissionsBukkit.hasPermission(newConnected, "hub.announce"))
+                if(!SamaGamesAPI.get().getPermissionsManager().hasPermission(newConnected, "hub.announce"))
                     Bukkit.getScheduler().runTask(Hub.getInstance(), () ->
                         Bukkit.getPlayer(hider).hidePlayer(newConnected));
         }
@@ -148,11 +147,6 @@ public class PlayerManager extends AbstractManager
             this.hiders.remove(player.getUniqueId());
     }
 
-    public void setLobbySpawn(Location lobbySpawn)
-    {
-        this.lobbySpawn = lobbySpawn;
-    }
-
     public void setBuildEnabled(boolean flag)
     {
         this.canBuild = flag;
@@ -167,6 +161,12 @@ public class PlayerManager extends AbstractManager
     }
 
     public Location getLobbySpawn() { return this.lobbySpawn; }
+
+    public void setLobbySpawn(Location lobbySpawn)
+    {
+        this.lobbySpawn = lobbySpawn;
+    }
+
     public StaticInventory getStaticInventory() { return this.staticInventory; }
 
     public boolean canBuild() { return this.canBuild; }

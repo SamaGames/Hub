@@ -4,7 +4,6 @@ import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import net.samagames.hub.gui.AbstractGui;
 import net.samagames.hub.utils.GuiUtils;
-import net.samagames.permissionsbukkit.PermissionsBukkit;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -78,8 +77,8 @@ public class GuiRankShop extends AbstractGui
 
             SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).withdrawStars(this.costMonth);
 
-            PermissionsBukkit.getApi().getUser(player.getUniqueId()).addParent(PermissionsBukkit.getApi().getGroup(this.inDatabase), calendar.getTime());
-            PermissionsBukkit.getApi().getManager().refresh();
+            SamaGamesAPI.get().getPermissionsManager().getApi().getUser(player.getUniqueId()).addParent(SamaGamesAPI.get().getPermissionsManager().getApi().getGroup(this.inDatabase), calendar.getTime());
+            SamaGamesAPI.get().getPermissionsManager().getApi().getManager().refresh();
 
             player.playSound(player.getLocation(), Sound.NOTE_PLING, 1.0F, 1.0F);
             player.sendMessage(ChatColor.GREEN + "Votre grade à bien été acheté. Celui-ci sera effectif d'ici 5 minutes. Une reconnexion est nécéssaire pour voir le grade.");
@@ -100,8 +99,8 @@ public class GuiRankShop extends AbstractGui
 
             SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).withdrawStars(this.costLife);
 
-            PermissionsBukkit.getApi().getUser(player.getUniqueId()).addParent(PermissionsBukkit.getApi().getGroup(this.inDatabase));
-            PermissionsBukkit.getApi().getManager().refresh();
+            SamaGamesAPI.get().getPermissionsManager().getApi().getUser(player.getUniqueId()).addParent(SamaGamesAPI.get().getPermissionsManager().getApi().getGroup(this.inDatabase));
+            SamaGamesAPI.get().getPermissionsManager().getApi().getManager().refresh();
 
             player.playSound(player.getLocation(), Sound.NOTE_PLING, 1.0F, 1.0F);
             player.sendMessage(ChatColor.GREEN + "Votre grade à bien été acheté. Celui-ci sera effectif d'ici 5 minutes. Une reconnexion est nécéssaire pour voir le grade.");

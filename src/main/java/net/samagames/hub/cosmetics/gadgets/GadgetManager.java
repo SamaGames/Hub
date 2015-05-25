@@ -1,10 +1,10 @@
 package net.samagames.hub.cosmetics.gadgets;
 
 import net.minecraft.server.v1_8_R2.EntityItem;
+import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import net.samagames.hub.cosmetics.common.AbstractCosmeticManager;
 import net.samagames.hub.cosmetics.gadgets.displayers.AbstractDisplayer;
-import net.samagames.permissionsbukkit.PermissionsBukkit;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -20,11 +20,10 @@ import java.util.logging.Level;
 
 public class GadgetManager extends AbstractCosmeticManager<GadgetCosmetic>
 {
-    public Field ageField;
-
     private final HashMap<UUID, Integer> cooldowns;
     private final HashMap<UUID, Integer> loopsIds;
     private final ArrayList<Location> blocksUsed;
+    public Field ageField;
 
     public GadgetManager(Hub hub)
     {
@@ -165,7 +164,7 @@ public class GadgetManager extends AbstractCosmeticManager<GadgetCosmetic>
     {
         if(this.cooldowns.containsKey(player.getUniqueId()))
         {
-            if(!PermissionsBukkit.hasPermission(player, "hub.gadgets.cooldownbypass"))
+            if(!SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "hub.gadgets.cooldownbypass"))
             {
                 if (this.cooldowns.get(player.getUniqueId()) <= 0)
                 {

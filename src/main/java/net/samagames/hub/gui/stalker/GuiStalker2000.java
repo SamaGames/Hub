@@ -4,7 +4,6 @@ import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import net.samagames.hub.gui.AbstractGui;
 import net.samagames.hub.utils.GuiUtils;
-import net.samagames.permissionsbukkit.PermissionsBukkit;
 import net.samagames.tools.BungeeUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -55,8 +54,8 @@ public class GuiStalker2000 extends AbstractGui
         slot = 0;
         lines = 0;
 
-        boolean canSeeServer = PermissionsBukkit.hasPermission(player, "tracker.vip");
-        this.teleportEnabled = PermissionsBukkit.hasPermission(player, "tracker.teleport");
+        boolean canSeeServer = SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "tracker.vip");
+        this.teleportEnabled = SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "tracker.teleport");
 
         for(String famousData : famous.values())
         {
@@ -136,7 +135,7 @@ public class GuiStalker2000 extends AbstractGui
     @Override
     public void update(Player player)
     {
-        boolean canSeeServer = PermissionsBukkit.hasPermission(player, "tracker.vip");
+        boolean canSeeServer = SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "tracker.vip");
         boolean followEnabled = SamaGamesAPI.get().getSettingsManager().isEnabled(player.getUniqueId(), "tracker-follow", false);
 
         this.setSlotData(ChatColor.GOLD + "Suivi", Material.LEASH, this.inventory.getSize() - 6, new String[] {

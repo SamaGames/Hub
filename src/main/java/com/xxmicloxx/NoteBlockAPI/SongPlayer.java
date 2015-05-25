@@ -1,17 +1,18 @@
 package com.xxmicloxx.NoteBlockAPI;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.HashMap;
+import java.util.Set;
+import java.util.UUID;
 
 public abstract class SongPlayer {
 
     protected Song song;
     protected boolean playing = false;
     protected short tick = -1;
-    protected CopyOnWriteArrayList<VirtualPlayer> playerList = new CopyOnWriteArrayList<>();
+    protected HashMap<UUID, Integer> playerList = new HashMap<>();
     protected boolean autoDestroy = false;
     protected boolean destroyed = false;
     protected Thread playerThread;
@@ -95,12 +96,14 @@ public abstract class SongPlayer {
                                 }
                             }
 
-                            for (VirtualPlayer p : playerList) {
-                                if (p == null || p.getPlayer() == null) {
-									playerList.remove(p);
+                            for (UUID p : playerList.keySet()) {
+                                if (p == null || Bukkit.getPlayer(p) == null) {
                                     continue;
                                 }
-                                playTick(p.getPlayer(), tick);
+
+                                //Hub.getInstance().getExecutor().schedule(() -> playTick(p, tick), difference, TimeUnit.MILLISECONDS);
+                                playTick(p, tick);
+
                             }
                         }
 
@@ -120,17 +123,17 @@ public abstract class SongPlayer {
         playerThread.start();
     }
 
-    public List<VirtualPlayer> getPlayerList() {
-        return Collections.unmodifiableList(playerList);
+    public Set<UUID> getPlayerList() {
+        return playerList.keySet();
     }
 
     public void addPlayer(Player p) {
-        addPlayer(new VirtualPlayer(p));
+        addPlayer(p.getUniqueId());
     }
 
-	public void addPlayer(VirtualPlayer p) {
-			if (!playerList.contains(p)) {
-				playerList.add(p);
+	public void addPlayer(UUID p) {
+			if (!playerList.containsKey(p)) {
+				playerList.put(p, 0);
 			}
 	}
 
@@ -146,7 +149,7 @@ public abstract class SongPlayer {
         }
     }
 
-    public abstract void playTick(Player p, int tick);
+    public abstract void playTick(UUID p, int tick);
 
     public void destroy() {
             destroyed = true;
@@ -171,10 +174,10 @@ public abstract class SongPlayer {
     }
 
     public void removePlayer(Player p) {
-        removePlayer(new VirtualPlayer(p));
+        removePlayer(p.getUniqueId());
     }
 
-	public void removePlayer(VirtualPlayer player) {
+	public void removePlayer(UUID player) {
 		playerList.remove(player);
 	}
 

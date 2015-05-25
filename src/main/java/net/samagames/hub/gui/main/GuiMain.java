@@ -1,10 +1,10 @@
 package net.samagames.hub.gui.main;
 
+import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import net.samagames.hub.games.AbstractGame;
 import net.samagames.hub.gui.AbstractGui;
 import net.samagames.hub.gui.staff.GuiSelectZone;
-import net.samagames.permissionsbukkit.PermissionsBukkit;
 import net.samagames.tools.BungeeUtils;
 import net.samagames.tools.events.EventUtils;
 import org.bukkit.Bukkit;
@@ -21,7 +21,7 @@ public class GuiMain extends AbstractGui
     @Override
     public void display(Player player)
     {
-        boolean staffFlag = PermissionsBukkit.hasPermission(player, "beta.staff");
+        boolean staffFlag = SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "beta.staff");
 
         this.inventory = Bukkit.createInventory(null, 45, "Menu Principal");
 
@@ -52,7 +52,7 @@ public class GuiMain extends AbstractGui
     {
         if(action.equals("beta_vip"))
         {
-            if(PermissionsBukkit.hasPermission(player, "beta.staff"))
+            if(SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "beta.staff"))
             {
                 Hub.getInstance().getGuiManager().openGui(player, new GuiSelectZone());
                 return;

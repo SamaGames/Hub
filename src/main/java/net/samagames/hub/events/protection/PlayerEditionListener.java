@@ -1,7 +1,7 @@
 package net.samagames.hub.events.protection;
 
+import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
-import net.samagames.permissionsbukkit.PermissionsBukkit;
 import net.samagames.tools.Selection;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -29,7 +29,7 @@ public class PlayerEditionListener implements Listener
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerDropItemEvent(PlayerDropItemEvent event)
     {
-        if (!PermissionsBukkit.hasPermission(event.getPlayer(), "lobby.drop"))
+        if (!SamaGamesAPI.get().getPermissionsManager().hasPermission(event.getPlayer(), "lobby.drop"))
             event.setCancelled(true);
     }
 
@@ -62,7 +62,7 @@ public class PlayerEditionListener implements Listener
 
         Bukkit.getScheduler().runTaskAsynchronously(Hub.getInstance(), () ->
         {
-            if (PermissionsBukkit.hasPermission(event.getPlayer(), "lobby.selection"))
+            if (SamaGamesAPI.get().getPermissionsManager().hasPermission(event.getPlayer(), "lobby.selection"))
             {
                 if (event.getItem() != null && event.getItem().getType() == Material.WOOD_AXE)
                 {

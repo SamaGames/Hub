@@ -1,6 +1,9 @@
 package com.xxmicloxx.NoteBlockAPI;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+
+import java.util.UUID;
 
 public class RadioSongPlayer extends SongPlayer {
 
@@ -9,7 +12,8 @@ public class RadioSongPlayer extends SongPlayer {
     }
 
     @Override
-    public void playTick(Player p, int tick) {
+    public void playTick(UUID up, int tick) {
+        Player p = Bukkit.getPlayer(up);
         byte playerVolume = NoteBlockPlayerMain.getPlayerVolume(p);
 
         for (Layer l : song.getLayerHashMap().values()) {
@@ -17,6 +21,7 @@ public class RadioSongPlayer extends SongPlayer {
             if (note == null) {
                 continue;
             }
+
             p.playSound(p.getLocation(),
                     Instrument.getInstrument(note.getInstrument()),
                     (l.getVolume() * (int) volume * (int) playerVolume) / 1000000f,

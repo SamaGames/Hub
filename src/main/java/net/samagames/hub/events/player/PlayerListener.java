@@ -6,7 +6,6 @@ import net.samagames.hub.cosmetics.jukebox.JukeboxPlaylist;
 import net.samagames.hub.games.AbstractGame;
 import net.samagames.hub.games.sign.GameSign;
 import net.samagames.hub.gui.profile.GuiClickMe;
-import net.samagames.permissionsbukkit.PermissionsBukkit;
 import net.samagames.tools.InventoryUtils;
 import net.samagames.tools.PlayerUtils;
 import org.apache.commons.lang.StringUtils;
@@ -58,7 +57,7 @@ public class PlayerListener implements Listener
     {
         if (!Hub.getInstance().getChatManager().canChat())
         {
-            if (!PermissionsBukkit.hasPermission(event.getPlayer(), "hub.bypassmute"))
+            if (!SamaGamesAPI.get().getPermissionsManager().hasPermission(event.getPlayer(), "hub.bypassmute"))
             {
                 event.setCancelled(true);
                 event.getPlayer().sendMessage(ChatColor.RED + "Le chat est désactivé.");
@@ -68,7 +67,7 @@ public class PlayerListener implements Listener
                 event.getPlayer().sendMessage(ChatColor.GOLD + "Attention : chat désactivé");
             }
         }
-        else if (Hub.getInstance().getChatManager().getActualSlowDuration() > 0 && !PermissionsBukkit.hasPermission(event.getPlayer(), "hub.bypassmute"))
+        else if (Hub.getInstance().getChatManager().getActualSlowDuration() > 0 && !SamaGamesAPI.get().getPermissionsManager().hasPermission(event.getPlayer(), "hub.bypassmute"))
         {
             if (!Hub.getInstance().getChatManager().hasPlayerTalked(event.getPlayer()))
             {
@@ -149,10 +148,10 @@ public class PlayerListener implements Listener
 
             player.teleport(new Location(Bukkit.getWorlds().get(0), -19, 51, 89));
 
-            if (PermissionsBukkit.hasPermission(player, "hub.fly"))
+            if (SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "hub.fly"))
                 Bukkit.getScheduler().runTask(Hub.getInstance(), () -> player.setAllowFlight(true));
 
-            if (PermissionsBukkit.hasPermission(player, "hub.announce"))
+            if (SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "hub.announce"))
                 Bukkit.broadcastMessage(PlayerUtils.getFullyFormattedPlayerName(player) + ChatColor.YELLOW + " a rejoint le hub !");
         });
     }
@@ -278,7 +277,7 @@ public class PlayerListener implements Listener
                     AbstractGame game = Hub.getInstance().getGameManager().getGameByIdentifier(sign.getMetadata("game").get(0).asString());
                     GameSign gameSign = game.getGameSignByMap(sign.getMetadata("map").get(0).asString());
 
-                    if(PermissionsBukkit.hasPermission(event.getPlayer(), "hub.debug.sign"))
+                    if(SamaGamesAPI.get().getPermissionsManager().hasPermission(event.getPlayer(), "hub.debug.sign"))
                     {
                         if(event.getPlayer().isSneaking())
                         {
@@ -296,7 +295,7 @@ public class PlayerListener implements Listener
     @EventHandler
     public void onPlayerGameModeChangeEvent(PlayerGameModeChangeEvent event)
     {
-        if (PermissionsBukkit.hasPermission(event.getPlayer(), "hub.fly"))
+        if (SamaGamesAPI.get().getPermissionsManager().hasPermission(event.getPlayer(), "hub.fly"))
             Bukkit.getScheduler().runTask(Hub.getInstance(), () -> event.getPlayer().setAllowFlight(true));
     }
 

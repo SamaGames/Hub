@@ -2,7 +2,6 @@ package net.samagames.hub.cosmetics.common;
 
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
-import net.samagames.permissionsbukkit.PermissionsBukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -13,16 +12,12 @@ import java.util.List;
 
 public abstract class AbstractCosmetic
 {
-    private enum BuyMethod { FREE, COINS, STARS, PERMISSION };
-
-    protected final String databaseName;
+        protected final String databaseName;;
     protected final ItemStack icon;
-
     private BuyMethod buyMethod;
     private String permissionNeeded;
     private int coinsCost;
     private int starsCost;
-
     public AbstractCosmetic(String databaseName, String displayName, ItemStack icon, String[] description)
     {
         this.databaseName = databaseName;
@@ -136,8 +131,10 @@ public abstract class AbstractCosmetic
     public boolean isOwned(Player player)
     {
         if(this.buyMethod == BuyMethod.PERMISSION)
-            return PermissionsBukkit.hasPermission(player, this.permissionNeeded);
+            return SamaGamesAPI.get().getPermissionsManager().hasPermission(player, this.permissionNeeded);
         else
             return SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).contains("cosmetics." + this.databaseName);
     }
+
+private enum BuyMethod { FREE, COINS, STARS, PERMISSION }
 }

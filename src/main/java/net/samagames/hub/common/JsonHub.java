@@ -1,7 +1,7 @@
 package net.samagames.hub.common;
 
+import net.samagames.api.SamaGamesAPI;
 import net.samagames.permissionsapi.permissions.PermissionUser;
-import net.samagames.permissionsbukkit.PermissionsBukkit;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -26,8 +26,8 @@ public class JsonHub
 
     public void addConnectedPlayer(Player player)
     {
-        PermissionUser user = PermissionsBukkit.getApi().getUser(player.getUniqueId());
-        String display = PermissionsBukkit.getDisplay(user);
+        PermissionUser user = SamaGamesAPI.get().getPermissionsManager().getApi().getUser(player.getUniqueId());
+        String display = SamaGamesAPI.get().getPermissionsManager().getDisplay(user);
 
         if (display.length() < 5)
             display += "Joueurs";
@@ -38,24 +38,24 @@ public class JsonHub
             this.playersDetails.put(display, 1);
     }
 
-    public void setHubNumber(int hubNumber)
-    {
-        this.hubNumber = hubNumber;
-    }
-
-    public void setConnectedPlayers(int connectedPlayers)
-    {
-        this.connectedPlayers = connectedPlayers;
-    }
-
     public int getHubNumber()
     {
         return this.hubNumber;
     }
 
+    public void setHubNumber(int hubNumber)
+    {
+        this.hubNumber = hubNumber;
+    }
+
     public int getConnectedPlayers()
     {
         return this.connectedPlayers;
+    }
+
+    public void setConnectedPlayers(int connectedPlayers)
+    {
+        this.connectedPlayers = connectedPlayers;
     }
 
     public HashMap<String, Integer> getPlayersDetails()
