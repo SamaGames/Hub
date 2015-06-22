@@ -21,6 +21,7 @@ public class DisguiseManager extends AbstractCosmeticManager<DisguiseCosmetic>
     {
         if (cosmetic.isOwned(player))
         {
+            cosmetic.getDisguise().setViewSelfDisguise(false);
             Disguise disguise = cosmetic.getDisguise().clone();
 
             if(disguise instanceof MobDisguise)
@@ -29,7 +30,6 @@ public class DisguiseManager extends AbstractCosmeticManager<DisguiseCosmetic>
                 disguise.getEntity().setCustomNameVisible(true);
             }
 
-            disguise.setViewSelfDisguise(false);
             DisguiseAPI.disguiseToAll(player, disguise);
 
             SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).set("cosmetics.disguise.current", cosmetic.getDatabaseName());
