@@ -1,4 +1,4 @@
-package net.samagames.hub.stats;
+package net.samagames.hub.common.managers;
 
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.core.api.stats.Leaderboard;

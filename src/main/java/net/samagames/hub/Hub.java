@@ -21,7 +21,7 @@ import net.samagames.hub.games.sign.SignManager;
 import net.samagames.hub.gui.GuiManager;
 import net.samagames.hub.jump.JumpManager;
 import net.samagames.hub.npcs.NPCManager;
-import net.samagames.hub.stats.StatsManager;
+import net.samagames.hub.common.managers.StatsManager;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.plugin.Plugin;
