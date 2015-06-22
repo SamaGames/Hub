@@ -19,12 +19,15 @@
         </repository>
         <repository>
             <id>elmakers-repo</id>
-            <url>http://maven.elmakers.com/repository/ </url>
+            <url>http://maven.elmakers.com/repository/</url>
+        </repository>
+        <repository>
+            <id>md_5</id>
+            <url>http://repo.md-5.net/content/groups/public</url>
         </repository>
     </repositories>
 
     <build>
-        <sourceDirectory>src</sourceDirectory>
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -56,6 +59,13 @@
             <artifactId>EffectLib</artifactId>
             <version>3.4-SNAPSHOT</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>LibsDisguises</groupId>
+            <artifactId>LibsDisguises</artifactId>
+            <version>8.2.6</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/LibsDisguises.jar</systemPath>
         </dependency>
     </dependencies>
 </project>

@@ -1,6 +1,7 @@
 package net.samagames.hub.gui.cosmetics;
 
 import net.samagames.hub.Hub;
+import net.samagames.hub.cosmetics.disguises.DisguiseCosmetic;
 import net.samagames.hub.cosmetics.gadgets.GadgetCosmetic;
 import net.samagames.hub.cosmetics.particles.ParticleCosmetic;
 import net.samagames.hub.gui.AbstractGui;
@@ -72,7 +73,7 @@ public class GuiCosmetics extends AbstractGui
         }
         else if(action.equals("disguises"))
         {
-
+            Hub.getInstance().getGuiManager().openGui(player, new GuiCosmeticsCategory<DisguiseCosmetic>("Déguisements", Hub.getInstance().getCosmeticManager().getDisguiseManager(), true));
         }
         else if(action.equals("gadgets"))
         {

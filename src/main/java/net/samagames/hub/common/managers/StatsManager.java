@@ -3,7 +3,6 @@ package net.samagames.hub.common.managers;
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.core.api.stats.Leaderboard;
 import net.samagames.hub.Hub;
-import net.samagames.hub.common.managers.AbstractManager;
 import net.samagames.hub.games.AbstractGame;
 import net.samagames.hub.games.DisplayedStat;
 import org.bukkit.Bukkit;
@@ -20,7 +19,7 @@ public class StatsManager extends AbstractManager
         super(hub);
         this.leaderboards = new HashMap<>();
 
-        Bukkit.getScheduler().runTaskTimerAsynchronously(this.hub, this::reloadStats, 20L * 120, 20L * 120);
+        Bukkit.getScheduler().runTaskTimerAsynchronously(this.hub, this::reloadStats, 20L * 60 * 3, 20L * 60 * 3);
 
         this.reloadStats();
     }
@@ -36,7 +35,8 @@ public class StatsManager extends AbstractManager
 
             for(DisplayedStat stat : game.getDisplayedStats())
             {
-                this.hub.log(this, Level.INFO, "Reloading stat '" + stat.getDatabaseName() + "' for the game " + game.getCodeName());
+                if(this.hub.isDebugEnabled())
+                    this.hub.log(this, Level.INFO, "Reloading stat '" + stat.getDatabaseName() + "' for the game " + game.getCodeName());
 
                 if(this.leaderboards.containsKey(stat.getDatabaseName()))
                     this.leaderboards.remove(stat.getDatabaseName());

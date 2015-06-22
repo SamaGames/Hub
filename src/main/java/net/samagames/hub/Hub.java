@@ -21,20 +21,16 @@ import net.samagames.hub.games.sign.SignManager;
 import net.samagames.hub.gui.GuiManager;
 import net.samagames.hub.jump.JumpManager;
 import net.samagames.hub.npcs.NPCManager;
-import net.samagames.hub.common.managers.StatsManager;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
 import java.util.logging.Level;
 
 public class Hub extends JavaPlugin
 {
     private static Hub instance;
-    public ScheduledExecutorService executor;
     private World hubWorld;
     private boolean debug;
     private PlayerManager playerManager;
@@ -61,8 +57,6 @@ public class Hub extends JavaPlugin
     public void onEnable()
     {
         instance = this;
-
-        executor = Executors.newScheduledThreadPool(16);
 
         this.hubWorld = Bukkit.getWorlds().get(0);
 
@@ -111,7 +105,6 @@ public class Hub extends JavaPlugin
     @Override
     public void onDisable()
     {
-        executor.shutdownNow();
         this.npcManager.onServerClose();
         this.hologramManager.onServerClose();
         this.scoreboardManager.onServerClose();
@@ -164,11 +157,6 @@ public class Hub extends JavaPlugin
             return null;
 
         return (EffectLib) effectLib;
-    }
-
-    public ScheduledExecutorService getExecutor()
-    {
-        return executor;
     }
 
     public boolean isDebugEnabled()
