@@ -21,6 +21,7 @@ import net.samagames.hub.games.sign.SignManager;
 import net.samagames.hub.gui.GuiManager;
 import net.samagames.hub.jump.JumpManager;
 import net.samagames.hub.npcs.NPCManager;
+import net.samagames.hub.time.TimeManager;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.plugin.Plugin;
@@ -45,6 +46,7 @@ public class Hub extends JavaPlugin
     private JumpManager jumpManager;
     private CosmeticManager cosmeticManager;
     private StatsManager statsManager;
+    private TimeManager timeManager;
 
     private HubRefresher hubRefresher;
 
@@ -78,6 +80,7 @@ public class Hub extends JavaPlugin
         this.jumpManager = new JumpManager(this);
         this.cosmeticManager = new CosmeticManager(this);
         this.statsManager = new StatsManager(this);
+        this.timeManager = new TimeManager(this);
         this.log(Level.INFO, "Managers loaded with success.");
 
         this.log(Level.INFO, "Registering packets packets...");
@@ -138,6 +141,7 @@ public class Hub extends JavaPlugin
     public JumpManager getJumpManager() { return this.jumpManager; }
     public CosmeticManager getCosmeticManager() { return this.cosmeticManager; }
     public StatsManager getStatsManager() { return this.statsManager; }
+    public TimeManager timeManager() { return this.timeManager; }
 
     public World getHubWorld()
     {
