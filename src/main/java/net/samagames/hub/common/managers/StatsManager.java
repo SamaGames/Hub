@@ -36,6 +36,8 @@ public class StatsManager extends AbstractManager
 
             for(DisplayedStat stat : game.getDisplayedStats())
             {
+                Bukkit.broadcastMessage("Reloading stat '" + stat.getDatabaseName() + "' for the game " + game.getCodeName());
+
                 if(this.leaderboards.containsKey(stat.getDatabaseName()))
                     this.leaderboards.remove(stat.getDatabaseName());
 
