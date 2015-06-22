@@ -1,7 +1,7 @@
 package net.samagames.hub.cosmetics.disguises;
 
 import me.libraryaddict.disguise.DisguiseAPI;
-import me.libraryaddict.disguise.disguisetypes.Disguise;
+import me.libraryaddict.disguise.disguisetypes.MobDisguise;
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import net.samagames.hub.cosmetics.common.AbstractCosmeticManager;
@@ -20,7 +20,7 @@ public class DisguiseManager extends AbstractCosmeticManager<DisguiseCosmetic>
     {
         if (cosmetic.isOwned(player))
         {
-            Disguise disguise = cosmetic.getDisguise().clone();
+            MobDisguise disguise = new MobDisguise(cosmetic.getDisguiseType());
             disguise.getEntity().setCustomName(player.getName());
             disguise.getEntity().setCustomNameVisible(true);
             disguise.setViewSelfDisguise(false);
