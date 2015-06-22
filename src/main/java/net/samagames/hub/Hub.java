@@ -141,7 +141,7 @@ public class Hub extends JavaPlugin
     public JumpManager getJumpManager() { return this.jumpManager; }
     public CosmeticManager getCosmeticManager() { return this.cosmeticManager; }
     public StatsManager getStatsManager() { return this.statsManager; }
-    public TimeManager timeManager() { return this.timeManager; }
+    public TimeManager getTimeManager() { return this.timeManager; }
 
     public World getHubWorld()
     {
