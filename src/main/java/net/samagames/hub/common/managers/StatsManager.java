@@ -41,7 +41,15 @@ public class StatsManager extends AbstractManager
                 if(this.leaderboards.containsKey(stat.getDatabaseName()))
                     this.leaderboards.remove(stat.getDatabaseName());
 
-                this.leaderboards.put(stat.getDatabaseName(), SamaGamesAPI.get().getStatsManager(game.getCodeName()).getLeaderboard(stat.getDatabaseName()));
+                try
+                {
+                    Leaderboard leaderboard = SamaGamesAPI.get().getStatsManager(game.getCodeName()).getLeaderboard(stat.getDatabaseName());
+                    this.leaderboards.put(stat.getDatabaseName(), leaderboard);
+                }
+                catch (Exception e)
+                {
+                    this.hub.log(this, Level.SEVERE, "Failed to reload the stat '" + stat.getDatabaseName() + "' for the game " + game.getCodeName());
+                }
             }
         }
 
