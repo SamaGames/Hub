@@ -13,11 +13,12 @@ import java.util.logging.Level;
 
 public class StatsManager extends AbstractManager
 {
-    private HashMap<String, Leaderboard> leaderboards;
+    private final HashMap<String, Leaderboard> leaderboards;
 
     public StatsManager(Hub hub)
     {
         super(hub);
+        this.leaderboards = new HashMap<>();
 
         Bukkit.getScheduler().runTaskTimerAsynchronously(this.hub, this::reloadStats, 20L * 120, 20L * 120);
 
