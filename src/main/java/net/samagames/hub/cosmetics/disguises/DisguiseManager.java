@@ -21,8 +21,7 @@ public class DisguiseManager extends AbstractCosmeticManager<DisguiseCosmetic>
         if (cosmetic.isOwned(player))
         {
             MobDisguise disguise = new MobDisguise(cosmetic.getDisguiseType());
-            disguise.getEntity().setCustomName(player.getName());
-            disguise.getEntity().setCustomNameVisible(true);
+            disguise.setShowName(true);
             disguise.setViewSelfDisguise(false);
 
             DisguiseAPI.disguiseToAll(player, disguise);
