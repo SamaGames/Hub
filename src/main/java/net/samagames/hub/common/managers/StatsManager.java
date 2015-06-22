@@ -9,6 +9,7 @@ import net.samagames.hub.games.DisplayedStat;
 import org.bukkit.Bukkit;
 
 import java.util.HashMap;
+import java.util.logging.Level;
 
 public class StatsManager extends AbstractManager
 {
@@ -25,8 +26,13 @@ public class StatsManager extends AbstractManager
 
     public void reloadStats()
     {
+        this.hub.log(this, Level.INFO, "Reloading leaderboards...");
+
         for(AbstractGame game : this.hub.getGameManager().getGames().values())
         {
+            if(game.getDisplayedStats() == null)
+                continue;
+
             for(DisplayedStat stat : game.getDisplayedStats())
             {
                 if(this.leaderboards.containsKey(stat.getDatabaseName()))
@@ -35,6 +41,8 @@ public class StatsManager extends AbstractManager
                 this.leaderboards.put(stat.getDatabaseName(), SamaGamesAPI.get().getStatsManager(game.getCodeName()).getLeaderboard(stat.getDatabaseName()));
             }
         }
+
+        this.hub.log(this, Level.INFO, "Leaderboards reloaded!");
     }
 
     public Leaderboard getLeaderbordOf(String stat)
