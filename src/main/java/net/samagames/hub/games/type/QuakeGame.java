@@ -10,6 +10,7 @@ import net.samagames.tools.GlowEffect;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.SkullType;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
@@ -119,8 +120,8 @@ public class QuakeGame extends AbstractGame
         ArrayList<DisplayedStat> stats = new ArrayList<>();
 
         stats.add(new DisplayedStat("wins", "Victoires", Material.NETHER_STAR));
-        stats.add(new DisplayedStat("kill", "Joueurs tués", Material.DIAMOND_SWORD));
-        stats.add(new DisplayedStat("death", "Morts", Material.REDSTONE_WIRE));
+        stats.add(new DisplayedStat("kill", "Joueurs tués", new ItemStack(Material.SKULL_ITEM, 1, (short) SkullType.PLAYER.ordinal())));
+        stats.add(new DisplayedStat("death", "Morts", Material.BONE));
         stats.add(new DisplayedStat("shot", "Tirs", Material.DIAMOND_HOE));
         stats.add(new DisplayedStat("played_games", "Parties jouées", Material.SIGN));
 

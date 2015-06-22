@@ -98,7 +98,7 @@ public class GuiSwitchHub extends AbstractGui
     {
         ItemStack glass = new ItemStack(Material.STAINED_GLASS, 1);
         ItemMeta meta = glass.getItemMeta();
-        String baseName = "Hub " + hub.getHubNumber();
+        String baseName = "Hub " + hub.getHubNumber() + " (" + hub.getConnectedPlayers() + " joueurs)";
 
         if(hub.getHubNumber() == Integer.valueOf(SamaGamesAPI.get().getServerName().split("_")[1]))
         {
@@ -130,7 +130,10 @@ public class GuiSwitchHub extends AbstractGui
 
         for(String group : hub.getPlayersDetails().keySet())
         {
-            lores.add(group.replace("[", "").replace("]", "") + ": " + hub.getPlayersDetails().get(group));
+            int value = hub.getPlayersDetails().get(group);
+            String finalGroup = (value <= 1 ? group : group + "s");
+
+            lores.add(finalGroup.replace("[", "").replace("]", "") + ": " + value);
         }
 
         lores.add("");

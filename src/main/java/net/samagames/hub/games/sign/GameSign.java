@@ -48,26 +48,23 @@ public class GameSign
             return;
         }
 
-        String players = "?";
-        String maxPlayers = "?";
-        String clickLine = ChatColor.RED + "× Attente ×";
+        String mapLine = ChatColor.DARK_RED + "× " + ChatColor.BOLD + this.map + ChatColor.RESET + ChatColor.DARK_RED + " ×";
 
         if(data != null)
         {
-            if(!data.getStatus().equals(Status.WAITING_FOR_PLAYERS) && !data.getStatus().equals(Status.READY_TO_START))
-                this.lastDatas.remove(data.getBungeeName());
-            else
+            if(data.getStatus() == Status.WAITING_FOR_PLAYERS || data.getStatus() == Status.READY_TO_START || data.getStatus() == Status.IN_GAME)
                 this.lastDatas.put(data.getBungeeName(), data);
+            else
+                this.lastDatas.remove(data.getBungeeName());
 
-            players = String.valueOf(this.getOnlinePlayers());
-            maxPlayers = String.valueOf(data.getMaxPlayers());
-            clickLine = ChatColor.GREEN + "» Jouer «";
+            if(!this.lastDatas.isEmpty())
+                mapLine = ChatColor.GREEN + "» " + ChatColor.BOLD + this.map + ChatColor.RESET + ChatColor.GREEN + " «";
         }
 
-        this.sign.setLine(0, "• " + this.game.getName() + " •");
-        this.sign.setLine(1, ChatColor.GREEN + "" + ChatColor.BOLD + map);
-        this.sign.setLine(2, players + "/" + maxPlayers + " joueurs");
-        this.sign.setLine(3, clickLine);
+        this.sign.setLine(0, this.game.getName());
+        this.sign.setLine(1, mapLine);
+        this.sign.setLine(2, this.getWaitingPlayers() + "" + ChatColor.RESET + " en attente");
+        this.sign.setLine(3, this.getPlayingPlayers() + "" + ChatColor.RESET + " en jeu");
 
         Bukkit.getScheduler().runTask(Hub.getInstance(), this.sign::update);
     }
@@ -97,17 +94,52 @@ public class GameSign
         player.sendMessage(ChatColor.GOLD + "Informations du panneau de jeu :");
         player.sendMessage(ChatColor.GOLD + "> " + ChatColor.AQUA + "Jeu : " + ChatColor.GREEN + this.game.getCodeName());
         player.sendMessage(ChatColor.GOLD + "> " + ChatColor.AQUA + "Map : " + ChatColor.GREEN + this.map);
-        player.sendMessage(ChatColor.GOLD + "> " + ChatColor.AQUA + "Joueurs en ligne : " + ChatColor.GREEN + this.getOnlinePlayers());
-        player.sendMessage(ChatColor.GOLD + "> " + ChatColor.AQUA + "Serveurs en ligne : " + ChatColor.GREEN + this.lastDatas.size());
+        player.sendMessage(ChatColor.GOLD + "> " + ChatColor.AQUA + "Joueurs en attente : " + ChatColor.GREEN + this.getWaitingPlayers());
+        player.sendMessage(ChatColor.GOLD + "> " + ChatColor.AQUA + "Joueurs en jeu : " + ChatColor.GREEN + this.getPlayingPlayers());
+        player.sendMessage(ChatColor.GOLD + "> " + ChatColor.AQUA + "Serveurs en ligne : " + ChatColor.GREEN + this.getWaitingServers() + " en attente et " + this.getPlayingServers() + " en jeu");
         player.sendMessage(ChatColor.GOLD + "----------------------------------------");
     }
 
-    public int getOnlinePlayers()
+    public int getWaitingPlayers()
     {
         int temp = 0;
 
         for(ServerStatus status : this.lastDatas.values())
-            temp += status.getPlayers();
+            if(status.getStatus() == Status.WAITING_FOR_PLAYERS || status.getStatus() == Status.READY_TO_START)
+                temp += status.getPlayers();
+
+        return temp;
+    }
+
+    public int getPlayingPlayers()
+    {
+        int temp = 0;
+
+        for(ServerStatus status : this.lastDatas.values())
+            if(status.getStatus() == Status.IN_GAME)
+                temp += status.getPlayers();
+
+        return temp;
+    }
+
+    public int getWaitingServers()
+    {
+        int temp = 0;
+
+        for(ServerStatus status : this.lastDatas.values())
+            if(status.getStatus() == Status.WAITING_FOR_PLAYERS || status.getStatus() == Status.READY_TO_START)
+                temp += 1;
+
+        return temp;
+    }
+
+    public int getPlayingServers()
+    {
+        int temp = 0;
+
+        for(ServerStatus status : this.lastDatas.values())
+            if(status.getStatus() == Status.IN_GAME)
+                temp += 1;
 
         return temp;
     }

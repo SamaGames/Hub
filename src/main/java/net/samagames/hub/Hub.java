@@ -21,6 +21,7 @@ import net.samagames.hub.games.sign.SignManager;
 import net.samagames.hub.gui.GuiManager;
 import net.samagames.hub.jump.JumpManager;
 import net.samagames.hub.npcs.NPCManager;
+import net.samagames.hub.stats.StatsManager;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.plugin.Plugin;
@@ -47,6 +48,7 @@ public class Hub extends JavaPlugin
     private SignManager signManager;
     private JumpManager jumpManager;
     private CosmeticManager cosmeticManager;
+    private StatsManager statsManager;
 
     private HubRefresher hubRefresher;
 
@@ -81,6 +83,7 @@ public class Hub extends JavaPlugin
         this.signManager = new SignManager(this);
         this.jumpManager = new JumpManager(this);
         this.cosmeticManager = new CosmeticManager(this);
+        this.statsManager = new StatsManager(this);
         this.log(Level.INFO, "Managers loaded with success.");
 
         this.log(Level.INFO, "Registering packets packets...");
@@ -131,26 +134,17 @@ public class Hub extends JavaPlugin
     public void log(Level level, String message) { this.getLogger().log(level, "[Core] " + message); }
 
     public PlayerManager getPlayerManager() { return this.playerManager; }
-
     public ChatManager getChatManager() { return this.chatManager; }
-
     public GuiManager getGuiManager() { return this.guiManager; }
-
     public HologramManager getHologramManager() { return this.hologramManager; }
-
     public EntityManager getEntityManager() { return this.entityManager; }
-
     public NPCManager getNPCManager() { return this.npcManager; }
-
     public ScoreboardManager getScoreboardManager() { return this.scoreboardManager; }
-
     public GameManager getGameManager() { return this.gameManager; }
-
     public SignManager getSignManager() { return this.signManager; }
-
     public JumpManager getJumpManager() { return this.jumpManager; }
-
     public CosmeticManager getCosmeticManager() { return this.cosmeticManager; }
+    public StatsManager getStatsManager() { return this.statsManager; }
 
     public World getHubWorld()
     {

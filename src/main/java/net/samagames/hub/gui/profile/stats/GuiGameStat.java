@@ -2,6 +2,7 @@ package net.samagames.hub.gui.profile.stats;
 
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.api.stats.PlayerStat;
+import net.samagames.core.api.stats.Leaderboard;
 import net.samagames.hub.Hub;
 import net.samagames.hub.games.AbstractGame;
 import net.samagames.hub.gui.AbstractGui;
@@ -66,12 +67,11 @@ public class GuiGameStat extends AbstractGui
 
     private void drawLeaderboard()
     {
-        ArrayList<PlayerStat> leaderboard = SamaGamesAPI.get().getStatsManager(this.game.getCodeName()).getLeaderboard(this.stat);
+        Leaderboard leaderboard = Hub.getInstance().getStatsManager().getLeaderbordOf(this.stat);
 
-        PlayerStat first = leaderboard.get(0);
-        PlayerStat second = leaderboard.get(1);
-        PlayerStat third = leaderboard.get(2);
-
+        PlayerStat first = leaderboard.getFirst();
+        PlayerStat second = leaderboard.getSecond();
+        PlayerStat third = leaderboard.getThird();
 
         this.setSlotData(ChatColor.AQUA + "1ère place", Material.DIAMOND_HELMET, 13, new String[] {
                 ChatColor.GRAY + "Détenue par : " + (first.getPlayerUUID() != null ? PlayerUtils.getFullyFormattedPlayerName(first.getPlayerUUID()) : ChatColor.RED + "Personne :("),
