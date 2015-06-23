@@ -121,7 +121,7 @@ public class PlayerListener implements Listener
             {
                 event.getRecipients().remove(player);
                 player.playSound(player.getLocation(), Sound.NOTE_PIANO, 1.0F, 1.0F);
-                player.sendMessage(event.getMessage().replaceAll("(?i)" + player.getName(), ChatColor.GOLD + player.getName()));
+                player.sendMessage(PlayerUtils.getFullyFormattedPlayerName(event.getPlayer()) + ChatColor.WHITE + ": " + event.getMessage().replaceAll("(?i)" + player.getName(), ChatColor.GOLD + player.getName()));
             }
         }
     }
