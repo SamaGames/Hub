@@ -120,8 +120,8 @@ public class PlayerListener implements Listener
             if(StringUtils.containsIgnoreCase(event.getMessage(), player.getName()))
             {
                 event.getRecipients().remove(player);
-                player.playSound(player.getLocation(), Sound.NOTE_PLING, 1.0F, 1.0F);
-                player.sendMessage(event.getFormat().replaceAll("(?i)" + player.getName(), ChatColor.GOLD + player.getName()));
+                player.playSound(player.getLocation(), Sound.NOTE_PIANO, 1.0F, 1.0F);
+                player.sendMessage(event.getMessage().replaceAll("(?i)" + player.getName(), ChatColor.GOLD + player.getName()));
             }
         }
     }
