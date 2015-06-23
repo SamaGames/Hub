@@ -114,6 +114,16 @@ public class PlayerListener implements Listener
             for (Player player : Bukkit.getOnlinePlayers())
                 if (!Hub.getInstance().getNPCManager().canTalk(player) || Hub.getInstance().getChatManager().hasChatDisabled(player))
                    event.getRecipients().remove(player);
+
+        for(Player player : Bukkit.getOnlinePlayers())
+        {
+            if(StringUtils.containsIgnoreCase(event.getMessage(), player.getName()))
+            {
+                event.getRecipients().remove(player);
+                player.playSound(player.getLocation(), Sound.NOTE_PLING, 1.0F, 1.0F);
+                player.sendMessage(event.getFormat().replaceAll("(?i)" + player.getName(), ChatColor.GOLD + player.getName()));
+            }
+        }
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
