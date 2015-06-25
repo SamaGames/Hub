@@ -1,13 +1,11 @@
 package net.samagames.hub.cosmetics.gadgets.displayers;
 
-import net.minecraft.server.v1_8_R2.EntityOcelot;
 import net.samagames.hub.Hub;
 import net.samagames.hub.utils.FireworkUtils;
 import net.samagames.tools.ColorUtils;
 import org.bukkit.*;
-import org.bukkit.craftbukkit.v1_8_R2.CraftWorld;
+import org.bukkit.entity.Ocelot;
 import org.bukkit.entity.Player;
-import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
 
@@ -63,25 +61,16 @@ public class NukeDisplayer extends AbstractDisplayer
             {
                 loops++;
 
-                if (loops == 120)
+                if (loops == 300)
                 {
                     end();
                     callback();
                 }
 
-                Location toLoc = player.getLocation().add(new Random().nextInt(8), 10, new Random().nextInt(8));
-                Vector originVector = player.getLocation().toVector();
-                Vector toVector = toLoc.setDirection(toLoc.toVector().subtract(originVector)).toVector();
-
-                final net.minecraft.server.v1_8_R2.World w = ((CraftWorld) player.getWorld()).getHandle();
-
-                EntityOcelot ocelot = new EntityOcelot(w);
-                ocelot.setPosition(player.getLocation().getX(), player.getLocation().getY(), player.getLocation().getZ());
-                //ocelot.getBukkitEntity().setVelocity(toVector);
+                Ocelot ocelot = player.getWorld().spawn(player.getLocation(), Ocelot.class);
+                ocelot.setVelocity(new Vector(new Random().nextInt(8), 10, new Random().nextInt(8)));
                 ocelot.setCustomName(ChatColor.GOLD + "" + ChatColor.BOLD + "Meow");
                 ocelot.setCustomNameVisible(true);
-
-                w.addEntity(ocelot, CreatureSpawnEvent.SpawnReason.CUSTOM);
 
                 for (Player player : Bukkit.getOnlinePlayers())
                     player.playSound(player.getLocation(), Sound.CAT_MEOW, 1.0F, 1.0F);
@@ -92,10 +81,10 @@ public class NukeDisplayer extends AbstractDisplayer
                     Color b = ColorUtils.getColor(new Random().nextInt(17) + 1);
 
                     FireworkEffect fw = FireworkEffect.builder().flicker(true).trail(true).with(FireworkEffect.Type.STAR).withColor(a).withFade(b).build();
-                    FireworkUtils.launchfw(ocelot.getBukkitEntity().getLocation(), fw);
+                    FireworkUtils.launchfw(ocelot.getLocation(), fw);
 
                     ocelot.setHealth(0);
-                    ocelot.getBukkitEntity().remove();
+                    ocelot.remove();
                 }, 20L * 10);
             }
         }, 2L, 2L);
