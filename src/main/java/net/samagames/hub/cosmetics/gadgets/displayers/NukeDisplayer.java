@@ -52,7 +52,7 @@ public class NukeDisplayer extends AbstractDisplayer
     {
         this.loopFirst.cancel();
 
-        this.loopSecond = Bukkit.getScheduler().runTaskTimerAsynchronously(Hub.getInstance(), new Runnable()
+        this.loopSecond = Bukkit.getScheduler().runTaskTimer(Hub.getInstance(), new Runnable()
         {
             int loops = 0;
 
@@ -82,7 +82,7 @@ public class NukeDisplayer extends AbstractDisplayer
                 for(Player player : Bukkit.getOnlinePlayers())
                     player.playSound(player.getLocation(), Sound.CAT_MEOW, 1.0F, 1.0F);
 
-                Bukkit.getScheduler().runTaskLaterAsynchronously(Hub.getInstance(), () ->
+                Bukkit.getScheduler().runTaskLater(Hub.getInstance(), () ->
                 {
                     Color a = ColorUtils.getColor(new Random().nextInt(17) + 1);
                     Color b = ColorUtils.getColor(new Random().nextInt(17) + 1);
