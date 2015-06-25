@@ -11,10 +11,11 @@ public class PetRegistry extends AbstractCosmeticRegistry<PetCosmetic>
     @Override
     public void register()
     {
-        PetBlackHorse blackHorsePet = new PetBlackHorse("blackhorse", "Cheval Noir", new ItemStack(Material.INK_SACK, 1, DyeColor.BLACK.getData()), new String[] {
+        PetBlackHorse blackHorsePet = new PetBlackHorse("blackhorse", "Cheval Noir", new ItemStack(Material.INK_SACK, 1, DyeColor.BLACK.getDyeData()), new String[] {
                 "Rapide et fier, il vous menera à",
                 "l'aventure !"
         });
+        blackHorsePet.buyableWithStars(1700);
 
         this.registerElement(blackHorsePet);
     }

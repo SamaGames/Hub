@@ -130,7 +130,9 @@ public abstract class AbstractCosmetic
 
     public boolean isOwned(Player player)
     {
-        if(this.buyMethod == BuyMethod.PERMISSION)
+        if(this.buyMethod == BuyMethod.FREE)
+            return true;
+        else if(this.buyMethod == BuyMethod.PERMISSION)
             return SamaGamesAPI.get().getPermissionsManager().hasPermission(player, this.permissionNeeded);
         else
             return SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).contains("cosmetics." + this.databaseName);
