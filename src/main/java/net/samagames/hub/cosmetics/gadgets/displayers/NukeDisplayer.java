@@ -1,14 +1,14 @@
 package net.samagames.hub.cosmetics.gadgets.displayers;
 
 import net.samagames.hub.Hub;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Sound;
+import net.samagames.hub.utils.FireworkUtils;
+import net.samagames.tools.ColorUtils;
+import org.bukkit.*;
 import org.bukkit.entity.Ocelot;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
+import org.bukkit.util.Vector;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Random;
 
@@ -26,7 +26,7 @@ public class NukeDisplayer extends AbstractDisplayer
     public void display()
     {
         final Collection<Player> players = (Collection<Player>) Bukkit.getOnlinePlayers();
-        Bukkit.broadcastMessage(ChatColor.DARK_RED + "[" + ChatColor.RED + "Nuke" + ChatColor.DARK_RED + "] " + ChatColor.RED + "Non ! " + player.getName() + " a lancé une Nuke sur le monde ! Tous aux abris !");
+        Bukkit.broadcastMessage(ChatColor.DARK_RED + "[" + ChatColor.RED + "Meow" + ChatColor.DARK_RED + "] " + ChatColor.RED + "Non ! " + player.getName() + " a lancé une Nuke sur le monde ! Tous aux abris !");
 
         this.loopFirst = Bukkit.getScheduler().runTaskTimerAsynchronously(Hub.getInstance(), new Runnable()
         {
@@ -40,7 +40,7 @@ public class NukeDisplayer extends AbstractDisplayer
                 if (timer == 0)
                     timeToSendCatInTheHairLikeTheHandsInTheFamousSing();
                 else if (timer <= 5)
-                    Bukkit.broadcastMessage(ChatColor.DARK_RED + "[" + ChatColor.RED + "Nuke" + ChatColor.DARK_RED + "] " + ChatColor.RED + this.timer);
+                    Bukkit.broadcastMessage(ChatColor.DARK_RED + "[" + ChatColor.RED + "Meow" + ChatColor.DARK_RED + "] " + ChatColor.RED + this.timer);
 
                 for (Player player : players)
                     player.playSound(player.getLocation(), Sound.CAT_MEOW, 1.0F, 1.0F);
@@ -53,7 +53,6 @@ public class NukeDisplayer extends AbstractDisplayer
         this.loopSecond = Bukkit.getScheduler().runTaskTimerAsynchronously(Hub.getInstance(), new Runnable()
         {
             int loops = 0;
-            ArrayList<Ocelot> cats = new ArrayList<>();
 
             @Override
             public void run()
@@ -66,10 +65,27 @@ public class NukeDisplayer extends AbstractDisplayer
                     callback();
                 }
 
+                Location toLoc = player.getLocation().add(new Random().nextInt(8), 10, new Random().nextInt(8));
+                Vector originVector = player.getLocation().toVector();
+                Vector toVector = toLoc.setDirection(toLoc.toVector().subtract(originVector)).toVector();
+
                 Ocelot ocelot = player.getWorld().spawn(player.getLocation().add(0.0D, 1.0D, 0.0D), Ocelot.class);
+                ocelot.setVelocity(toVector);
                 ocelot.setCatType(Ocelot.Type.values()[new Random().nextInt(Ocelot.Type.values().length)]);
                 ocelot.setCustomName(ChatColor.GOLD + "" + ChatColor.BOLD + "Meow");
                 ocelot.setCustomNameVisible(true);
+
+                Bukkit.getScheduler().runTaskLaterAsynchronously(Hub.getInstance(), () ->
+                {
+                    Color a = ColorUtils.getColor(new Random().nextInt(17) + 1);
+                    Color b = ColorUtils.getColor(new Random().nextInt(17) + 1);
+
+                    FireworkEffect fw = FireworkEffect.builder().flicker(true).trail(true).with(FireworkEffect.Type.STAR).withColor(a).withFade(b).build();
+                    FireworkUtils.launchfw(ocelot.getLocation(), fw);
+
+                    ocelot.setHealth(0);
+                    ocelot.remove();
+                }, 20L * 10);
             }
         }, 2L, 2L);
     }
