@@ -74,8 +74,9 @@ public class NukeDisplayer extends AbstractDisplayer
                 ocelot.setCustomName(ChatColor.GOLD + "" + ChatColor.BOLD + "Meow");
                 ocelot.setCustomNameVisible(true);
 
-                for (Player player : Bukkit.getOnlinePlayers())
-                    player.playSound(player.getLocation(), Sound.CAT_MEOW, 1.0F, 1.0F);
+                if(new Random().nextInt(5) == 3)
+                    for (Player player : Bukkit.getOnlinePlayers())
+                        player.playSound(player.getLocation(), Sound.CAT_MEOW, 1.0F, 1.0F);
 
                 Bukkit.getScheduler().runTaskLater(Hub.getInstance(), () ->
                 {
@@ -87,9 +88,9 @@ public class NukeDisplayer extends AbstractDisplayer
 
                     ocelot.setHealth(0);
                     ocelot.remove();
-                }, 20L * 5);
+                }, 20L * 3);
             }
-        }, 2L, 2L);
+        }, 1L, 1L);
     }
 
     public boolean canUse()
