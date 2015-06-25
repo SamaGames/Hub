@@ -67,7 +67,6 @@ public class NukeDisplayer extends AbstractDisplayer
                 }
 
                 Ocelot ocelot = player.getWorld().spawn(player.getLocation().add(0.0D, 1.0D, 0.0D), Ocelot.class);
-                ocelot.
                 ocelot.setCatType(Ocelot.Type.values()[new Random().nextInt(Ocelot.Type.values().length)]);
                 ocelot.setCustomName(ChatColor.GOLD + "" + ChatColor.BOLD + "Meow");
                 ocelot.setCustomNameVisible(true);
