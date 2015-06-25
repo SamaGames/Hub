@@ -2,7 +2,6 @@ package net.samagames.hub;
 
 import de.slikey.effectlib.EffectLib;
 import net.samagames.api.SamaGamesAPI;
-import net.samagames.hub.bar.BarManager;
 import net.samagames.hub.commands.CommandManager;
 import net.samagames.hub.common.HubRefresher;
 import net.samagames.hub.common.managers.*;
@@ -50,7 +49,6 @@ public class Hub extends JavaPlugin
     private CosmeticManager cosmeticManager;
     private StatsManager statsManager;
     private TimeManager timeManager;
-    private BarManager barManager;
 
     private HubRefresher hubRefresher;
 
@@ -85,7 +83,6 @@ public class Hub extends JavaPlugin
         this.cosmeticManager = new CosmeticManager(this);
         this.statsManager = new StatsManager(this);
         this.timeManager = new TimeManager(this);
-        this.barManager = new BarManager(this);
         this.log(Level.INFO, "Managers loaded with success.");
 
         this.log(Level.INFO, "Registering packets packets...");
@@ -147,7 +144,6 @@ public class Hub extends JavaPlugin
     public CosmeticManager getCosmeticManager() { return this.cosmeticManager; }
     public StatsManager getStatsManager() { return this.statsManager; }
     public TimeManager getTimeManager() { return this.timeManager; }
-    public BarManager getBarManager() { return this.barManager; }
 
     public World getHubWorld()
     {

@@ -6,16 +6,18 @@ import net.samagames.hub.cosmetics.disguises.DisguiseManager;
 import net.samagames.hub.cosmetics.gadgets.GadgetManager;
 import net.samagames.hub.cosmetics.jukebox.JukeboxManager;
 import net.samagames.hub.cosmetics.particles.ParticleManager;
+import net.samagames.hub.cosmetics.pets.PetManager;
 import org.bukkit.entity.Player;
 
 import java.util.logging.Level;
 
 public class CosmeticManager extends AbstractManager
 {
-    private ParticleManager particleManager;
-    private GadgetManager gadgetManager;
-    private JukeboxManager jukeboxManager;
-    private DisguiseManager disguiseManager;
+    private final ParticleManager particleManager;
+    private final GadgetManager gadgetManager;
+    private final JukeboxManager jukeboxManager;
+    private final DisguiseManager disguiseManager;
+    private final PetManager petManager;
 
     public CosmeticManager(Hub hub)
     {
@@ -25,6 +27,7 @@ public class CosmeticManager extends AbstractManager
         this.gadgetManager = new GadgetManager(hub);
         this.jukeboxManager = new JukeboxManager(hub);
         this.disguiseManager = new DisguiseManager(hub);
+        this.petManager = new PetManager(hub);
 
         hub.log(this, Level.INFO, "Registered cosmetics and started loop!");
     }
@@ -33,11 +36,14 @@ public class CosmeticManager extends AbstractManager
     {
         this.particleManager.restoreCosmetic(player);
         this.disguiseManager.restoreCosmetic(player);
+        this.petManager.restoreCosmetic(player);
     }
 
     public void handleLogout(Player player)
     {
         this.particleManager.disableCosmetic(player, true);
+        this.disguiseManager.disableCosmetic(player, true);
+        this.petManager.disableCosmetic(player, true);
 
         this.jukeboxManager.mute(player, false);
         this.jukeboxManager.removePlayer(player);
@@ -47,6 +53,7 @@ public class CosmeticManager extends AbstractManager
     public GadgetManager getGadgetManager() { return this.gadgetManager; }
     public JukeboxManager getJukeboxManager() { return this.jukeboxManager; }
     public DisguiseManager getDisguiseManager() { return this.disguiseManager; }
+    public PetManager getPetManager() { return this.petManager; }
 
     @Override
     public String getName() { return "CosmeticManager"; }

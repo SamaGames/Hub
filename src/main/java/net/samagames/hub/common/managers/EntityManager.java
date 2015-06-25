@@ -3,6 +3,7 @@ package net.samagames.hub.common.managers;
 import net.minecraft.server.v1_8_R2.*;
 import net.samagames.hub.Hub;
 import net.samagames.hub.cosmetics.gadgets.displayers.MoutMout2000Displayer;
+import net.samagames.hub.cosmetics.pets.nms.*;
 import net.samagames.hub.npcs.CustomEntityVillager;
 
 import java.lang.reflect.Field;
@@ -25,6 +26,17 @@ public class EntityManager extends AbstractManager
 
         this.registerEntity("NPC", 120, EntityVillager.class, CustomEntityVillager.class);
         this.registerEntity("MoutMout2000", 91, EntitySheep.class, MoutMout2000Displayer.MoutMout2000Sheep.class);
+
+        this.registerEntity("Chicken", 93, EntityChicken.class, CosmeticChicken.class);
+        this.registerEntity("Cow", 92, EntityCow.class, CosmeticCow.class);
+        this.registerEntity("EntityHorse", 100, EntityHorse.class, CosmeticHorse.class);
+        this.registerEntity("VillagerGolem", 99, EntityIronGolem.class, CosmeticIronGolem.class);
+        this.registerEntity("LavaSlime", 62, EntityMagmaCube.class, CosmeticMagmaCube.class);
+        this.registerEntity("Pig", 90, EntityPig.class, CosmeticPig.class);
+        this.registerEntity("Rabbit", 101, EntityRabbit.class, CosmeticRabbit.class);
+        this.registerEntity("Sheep", 91, EntitySheep.class, CosmeticSheep.class);
+        this.registerEntity("Slime", 55, EntitySlime.class, CosmeticSlime.class);
+        this.registerEntity("Wolf", 95, EntityWolf.class, CosmeticWolf.class);
 
         Hub.getInstance().log(this, Level.INFO, "Registered custom entites with success!");
     }
