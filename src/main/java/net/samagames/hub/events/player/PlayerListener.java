@@ -11,6 +11,7 @@ import net.samagames.tools.PlayerUtils;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.*;
 import org.bukkit.block.Sign;
+import org.bukkit.craftbukkit.v1_8_R2.entity.CraftEntity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -153,7 +154,6 @@ public class PlayerListener implements Listener
         {
             Hub.getInstance().getCosmeticManager().handleLogin(player);
             Hub.getInstance().getPlayerManager().handleLogin(player);
-            Hub.getInstance().getTimeManager().handleLogin(player);
             Hub.getInstance().getScoreboardManager().addScoreboardReceiver(player);
             Hub.getInstance().getHologramManager().addReceiver(player);
 
@@ -174,19 +174,14 @@ public class PlayerListener implements Listener
 
         if (player.getVehicle() != null)
         {
-            /**
-             * TODO: Create this event for the pets (Depends of CosmeticsManager)
-             *
-            if (Hub.getInstance().getCosmeticsManager().getPetsHandler().hadPet(player))
+            if (Hub.getInstance().getCosmeticManager().getPetManager().hadPet(player))
             {
-                Hub.getInstance().getCosmeticsManager().getPetsHandler().removePet(player);
-                Bukkit.getScheduler().runTaskAsynchronously(Hub.getInstance(), () -> SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).remove("selectedpet"));
+                Hub.getInstance().getCosmeticManager().getPetManager().disableCosmetic(player, true);
             }
             else
             {
-                ((CraftEntity) vehicle).getHandle().getWorld().removeEntity(((CraftEntity) vehicle).getHandle());
+                ((CraftEntity) player.getVehicle()).getHandle().getWorld().removeEntity(((CraftEntity) player.getVehicle()).getHandle());
             }
-            **/
         }
     }
 
@@ -198,15 +193,10 @@ public class PlayerListener implements Listener
         {
             final Player player = (Player) event.getEntity();
 
-            /**
-             * TODO: Create this event for the pets (Depends of CosmeticsManager)
-             *
-            if (Hub.getInstance().getCosmeticsManager().getPetsHandler().hadPet(player))
+            if (Hub.getInstance().getCosmeticManager().getPetManager().hadPet(player))
             {
-                Hub.getInstance().getCosmeticsManager().getPetsHandler().removePet(player);
-                Bukkit.getScheduler().runTaskAsynchronously(Hub.getInstance(), () -> SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).remove("selectedpet"));
+                Hub.getInstance().getCosmeticManager().getPetManager().disableCosmetic(player, true);
             }
-            **/
         }
     }
 
@@ -316,7 +306,6 @@ public class PlayerListener implements Listener
         {
             Hub.getInstance().getCosmeticManager().handleLogout(player);
             Hub.getInstance().getPlayerManager().handleLogout(player);
-            Hub.getInstance().getTimeManager().handleLogout(player);
             Hub.getInstance().getChatManager().enableChatFor(player);
             Hub.getInstance().getNPCManager().talkFinished(player);
             Hub.getInstance().getScoreboardManager().removeScoreboardReceiver(player);
