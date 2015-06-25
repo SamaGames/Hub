@@ -12,6 +12,7 @@ import org.apache.commons.lang.StringUtils;
 import org.bukkit.*;
 import org.bukkit.block.Sign;
 import org.bukkit.craftbukkit.v1_8_R2.entity.CraftEntity;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -170,19 +171,27 @@ public class PlayerListener implements Listener
     @EventHandler(priority = EventPriority.LOWEST)
     public void onTeleport(final PlayerTeleportEvent event)
     {
-        final Player player = event.getPlayer();
+        Player player = event.getPlayer();
 
-        if (player.getVehicle() != null)
+        if (player.getVehicle() != null && player.isSneaking())
         {
             if (Hub.getInstance().getCosmeticManager().getPetManager().hadPet(player))
             {
-                Bukkit.broadcastMessage("tp");
                 Hub.getInstance().getCosmeticManager().getPetManager().disableCosmetic(player, false);
             }
-            else
+        }
+        else if (player.isInsideVehicle())
+        {
+            final Entity vehicle = player.getVehicle();
+
+            Bukkit.getScheduler().runTaskLater(Hub.getInstance(), () ->
             {
-                ((CraftEntity) player.getVehicle()).getHandle().getWorld().removeEntity(((CraftEntity) player.getVehicle()).getHandle());
-            }
+                if (player.getVehicle() == null)
+                {
+                    ((CraftEntity) vehicle).getHandle().getWorld().removeEntity(((CraftEntity) vehicle).getHandle());
+                    Hub.getInstance().getCosmeticManager().getPetManager().disableCosmetic(player, false);
+                }
+            }, 5);
         }
     }
 
@@ -196,7 +205,6 @@ public class PlayerListener implements Listener
 
             if (Hub.getInstance().getCosmeticManager().getPetManager().hadPet(player))
             {
-                Bukkit.broadcastMessage("dismount");
                 Hub.getInstance().getCosmeticManager().getPetManager().disableCosmetic(player, false);
             }
         }
