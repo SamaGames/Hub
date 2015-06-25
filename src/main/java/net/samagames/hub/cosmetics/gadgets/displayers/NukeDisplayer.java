@@ -1,11 +1,13 @@
 package net.samagames.hub.cosmetics.gadgets.displayers;
 
+import net.minecraft.server.v1_8_R2.EntityOcelot;
 import net.samagames.hub.Hub;
 import net.samagames.hub.utils.FireworkUtils;
 import net.samagames.tools.ColorUtils;
 import org.bukkit.*;
-import org.bukkit.entity.Ocelot;
+import org.bukkit.craftbukkit.v1_8_R2.CraftWorld;
 import org.bukkit.entity.Player;
+import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
 
@@ -52,17 +54,14 @@ public class NukeDisplayer extends AbstractDisplayer
     {
         this.loopFirst.cancel();
 
-        this.loopSecond = Bukkit.getScheduler().runTaskTimer(Hub.getInstance(), new Runnable()
-        {
+        this.loopSecond = Bukkit.getScheduler().runTaskTimer(Hub.getInstance(), new Runnable() {
             int loops = 0;
 
             @Override
-            public void run()
-            {
+            public void run() {
                 loops++;
 
-                if(loops == 300)
-                {
+                if (loops == 120) {
                     end();
                     callback();
                 }
@@ -71,15 +70,19 @@ public class NukeDisplayer extends AbstractDisplayer
                 Vector originVector = player.getLocation().toVector();
                 Vector toVector = toLoc.setDirection(toLoc.toVector().subtract(originVector)).toVector();
 
-                Ocelot ocelot = player.getWorld().spawn(player.getLocation().add(0.0D, 1.0D, 0.0D), Ocelot.class);
-                ocelot.setVelocity(toVector);
-                ocelot.setCatType(Ocelot.Type.values()[new Random().nextInt(Ocelot.Type.values().length)]);
+                final net.minecraft.server.v1_8_R2.World w = ((CraftWorld) player.getWorld()).getHandle();
+
+                EntityOcelot ocelot = new EntityOcelot(w);
+                ocelot.setPosition(player.getLocation().getX(), player.getLocation().getY(), player.getLocation().getZ());
+                ocelot.getBukkitEntity().setVelocity(toVector);
                 ocelot.setCustomName(ChatColor.GOLD + "" + ChatColor.BOLD + "Meow");
                 ocelot.setCustomNameVisible(true);
 
+                w.addEntity(ocelot, CreatureSpawnEvent.SpawnReason.CUSTOM);
+
                 Bukkit.broadcastMessage("spawned");
 
-                for(Player player : Bukkit.getOnlinePlayers())
+                for (Player player : Bukkit.getOnlinePlayers())
                     player.playSound(player.getLocation(), Sound.CAT_MEOW, 1.0F, 1.0F);
 
                 Bukkit.getScheduler().runTaskLater(Hub.getInstance(), () ->
@@ -88,10 +91,10 @@ public class NukeDisplayer extends AbstractDisplayer
                     Color b = ColorUtils.getColor(new Random().nextInt(17) + 1);
 
                     FireworkEffect fw = FireworkEffect.builder().flicker(true).trail(true).with(FireworkEffect.Type.STAR).withColor(a).withFade(b).build();
-                    FireworkUtils.launchfw(ocelot.getLocation(), fw);
+                    FireworkUtils.launchfw(ocelot.getBukkitEntity().getLocation(), fw);
 
                     ocelot.setHealth(0);
-                    ocelot.remove();
+                    ocelot.getBukkitEntity().remove();
                 }, 20L * 10);
             }
         }, 2L, 2L);
