@@ -38,7 +38,7 @@ public class PetRegistry extends AbstractCosmeticRegistry<PetCosmetic>
         PetPig pigPet = new PetPig("pig", "Cochon", new ItemStack(Material.GRILLED_PORK), new String[] {
                 "Chevauchez donc ce gros sanglier !"
         });
-        pigPet.buyableWithStars(50000);
+        pigPet.buyableWithCoins(50000);
 
         PetRabbit rabbitPet = new PetRabbit("rabbit", "Lapin", new ItemStack(Material.RABBIT_FOOT), new String[] {
                 "Sautez jusqu'aux cieux !",
