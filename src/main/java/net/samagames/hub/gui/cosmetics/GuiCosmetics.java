@@ -4,6 +4,7 @@ import net.samagames.hub.Hub;
 import net.samagames.hub.cosmetics.disguises.DisguiseCosmetic;
 import net.samagames.hub.cosmetics.gadgets.GadgetCosmetic;
 import net.samagames.hub.cosmetics.particles.ParticleCosmetic;
+import net.samagames.hub.cosmetics.pets.PetCosmetic;
 import net.samagames.hub.gui.AbstractGui;
 import net.samagames.hub.utils.GuiUtils;
 import org.bukkit.*;
@@ -69,7 +70,7 @@ public class GuiCosmetics extends AbstractGui
         }
         else if(action.equals("pets"))
         {
-
+            Hub.getInstance().getGuiManager().openGui(player, new GuiCosmeticsCategory<PetCosmetic>("Montures", Hub.getInstance().getCosmeticManager().getPetManager(), true));
         }
         else if(action.equals("disguises"))
         {
