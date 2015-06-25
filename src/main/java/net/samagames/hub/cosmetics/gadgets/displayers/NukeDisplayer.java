@@ -28,13 +28,11 @@ public class NukeDisplayer extends AbstractDisplayer
         final Collection<Player> players = (Collection<Player>) Bukkit.getOnlinePlayers();
         Bukkit.broadcastMessage(ChatColor.DARK_RED + "" + ChatColor.BOLD + "[" + ChatColor.RED + ChatColor.BOLD + "Meow" + ChatColor.DARK_RED + ChatColor.BOLD + "] " + ChatColor.RED + ChatColor.BOLD + "Non ! " + player.getName() + " a lancé une bombe atomique à chat sur le monde ! Tous aux abris !");
 
-        this.loopFirst = Bukkit.getScheduler().runTaskTimerAsynchronously(Hub.getInstance(), new Runnable()
-        {
+        this.loopFirst = Bukkit.getScheduler().runTaskTimerAsynchronously(Hub.getInstance(), new Runnable() {
             int timer = 10;
 
             @Override
-            public void run()
-            {
+            public void run() {
                 this.timer--;
 
                 if (timer == 0)
@@ -61,14 +59,18 @@ public class NukeDisplayer extends AbstractDisplayer
             {
                 loops++;
 
-                if (loops == 300)
+                if (loops == 500)
                 {
                     end();
                     callback();
                 }
+                else if (loops == 1)
+                {
+                    player.getWorld().createExplosion(player.getLocation().getX(), player.getLocation().getY(), player.getLocation().getZ(), 5.0F, false, false);
+                }
 
                 Ocelot ocelot = player.getWorld().spawn(player.getLocation(), Ocelot.class);
-                ocelot.setVelocity(new Vector(new Random().nextInt(8), 10, new Random().nextInt(8)));
+                ocelot.setVelocity(new Vector(new Random().nextInt(8), 3, new Random().nextInt(8)));
                 ocelot.setCustomName(ChatColor.GOLD + "" + ChatColor.BOLD + "Meow");
                 ocelot.setCustomNameVisible(true);
 
@@ -85,7 +87,7 @@ public class NukeDisplayer extends AbstractDisplayer
 
                     ocelot.setHealth(0);
                     ocelot.remove();
-                }, 20L * 10);
+                }, 20L * 5);
             }
         }, 2L, 2L);
     }
