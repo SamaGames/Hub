@@ -25,10 +25,17 @@ public class PetManager extends AbstractCosmeticManager<PetCosmetic>
     @Override
     public void enableCosmetic(Player player, PetCosmetic cosmetic)
     {
-        if(cosmetic.isOverridingUse())
-            cosmetic.onUse(player);
+        if (cosmetic.isOwned(player))
+        {
+            if (cosmetic.isOverridingUse())
+                cosmetic.onUse(player);
+            else
+                this.enableCosmetic(player, cosmetic, null);
+        }
         else
-            this.enableCosmetic(player, cosmetic, null);
+        {
+            cosmetic.buy(player);
+        }
     }
 
     public void enableCosmetic(Player player, PetCosmetic cosmetic, String settings)

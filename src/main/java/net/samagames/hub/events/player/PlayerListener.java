@@ -176,7 +176,8 @@ public class PlayerListener implements Listener
         {
             if (Hub.getInstance().getCosmeticManager().getPetManager().hadPet(player))
             {
-                Hub.getInstance().getCosmeticManager().getPetManager().disableCosmetic(player, true);
+                Bukkit.broadcastMessage("tp");
+                Hub.getInstance().getCosmeticManager().getPetManager().disableCosmetic(player, false);
             }
             else
             {
@@ -195,7 +196,8 @@ public class PlayerListener implements Listener
 
             if (Hub.getInstance().getCosmeticManager().getPetManager().hadPet(player))
             {
-                Hub.getInstance().getCosmeticManager().getPetManager().disableCosmetic(player, true);
+                Bukkit.broadcastMessage("dismount");
+                Hub.getInstance().getCosmeticManager().getPetManager().disableCosmetic(player, false);
             }
         }
     }
