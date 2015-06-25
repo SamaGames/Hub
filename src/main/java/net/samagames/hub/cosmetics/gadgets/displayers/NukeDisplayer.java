@@ -26,7 +26,7 @@ public class NukeDisplayer extends AbstractDisplayer
     public void display()
     {
         final Collection<Player> players = (Collection<Player>) Bukkit.getOnlinePlayers();
-        Bukkit.broadcastMessage(ChatColor.DARK_RED + "[" + ChatColor.RED + "Meow" + ChatColor.DARK_RED + "] " + ChatColor.RED + "Non ! " + player.getName() + " a lancé une Nuke sur le monde ! Tous aux abris !");
+        Bukkit.broadcastMessage(ChatColor.DARK_RED + "" + ChatColor.BOLD + "[" + ChatColor.RED + ChatColor.BOLD + "Meow" + ChatColor.DARK_RED + ChatColor.BOLD + "] " + ChatColor.RED + ChatColor.BOLD + "Non ! " + player.getName() + " a lancé une bombe atomique à chat sur le monde ! Tous aux abris !");
 
         this.loopFirst = Bukkit.getScheduler().runTaskTimerAsynchronously(Hub.getInstance(), new Runnable()
         {
@@ -40,7 +40,7 @@ public class NukeDisplayer extends AbstractDisplayer
                 if (timer == 0)
                     timeToSendCatInTheHairLikeTheHandsInTheFamousSing();
                 else if (timer <= 5)
-                    Bukkit.broadcastMessage(ChatColor.DARK_RED + "[" + ChatColor.RED + "Meow" + ChatColor.DARK_RED + "] " + ChatColor.RED + this.timer);
+                    Bukkit.broadcastMessage(ChatColor.DARK_RED + "" + ChatColor.BOLD + "[" + ChatColor.RED + ChatColor.BOLD + "Meow" + ChatColor.DARK_RED + ChatColor.BOLD + "] " + ChatColor.RED + ChatColor.BOLD + this.timer);
 
                 for (Player player : players)
                     player.playSound(player.getLocation(), Sound.CAT_MEOW, 1.0F, 1.0F);
@@ -50,6 +50,8 @@ public class NukeDisplayer extends AbstractDisplayer
 
     public void timeToSendCatInTheHairLikeTheHandsInTheFamousSing()
     {
+        this.loopFirst.cancel();
+
         this.loopSecond = Bukkit.getScheduler().runTaskTimerAsynchronously(Hub.getInstance(), new Runnable()
         {
             int loops = 0;
@@ -75,6 +77,11 @@ public class NukeDisplayer extends AbstractDisplayer
                 ocelot.setCustomName(ChatColor.GOLD + "" + ChatColor.BOLD + "Meow");
                 ocelot.setCustomNameVisible(true);
 
+                Bukkit.broadcastMessage("spawned");
+
+                for(Player player : Bukkit.getOnlinePlayers())
+                    player.playSound(player.getLocation(), Sound.CAT_MEOW, 1.0F, 1.0F);
+
                 Bukkit.getScheduler().runTaskLaterAsynchronously(Hub.getInstance(), () ->
                 {
                     Color a = ColorUtils.getColor(new Random().nextInt(17) + 1);
@@ -97,7 +104,6 @@ public class NukeDisplayer extends AbstractDisplayer
 
     private void callback()
     {
-        this.loopFirst.cancel();
         this.loopSecond.cancel();
     }
 }
