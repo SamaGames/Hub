@@ -65,6 +65,12 @@ public class PetRegistry extends AbstractCosmeticRegistry<PetCosmetic>
         });
         wolfPet.buyableWithStars(750);
 
+        PetEnderman endermanPet = new PetEnderman("enderman", "Enderman", new ItemStack(Material.ENDER_PEARL), new String[] {
+                "Il vous fera voyager à la vitesse",
+                "de *plop* (Téléportation) !"
+        });
+        endermanPet.buyableWithStars(1500);
+
         PetBlackHorse blackHorsePet = new PetBlackHorse("blackhorse", "Cheval Noir", new ItemStack(Material.INK_SACK, 1, DyeColor.BLACK.getDyeData()), new String[] {
                 "Rapide et fier, il vous menera à",
                 "l'aventure !"
@@ -105,6 +111,7 @@ public class PetRegistry extends AbstractCosmeticRegistry<PetCosmetic>
         this.registerElement(sheepPet);
         this.registerElement(slimePet);
         this.registerElement(wolfPet);
+        this.registerElement(endermanPet);
         this.registerElement(brownHorsePet);
         this.registerElement(skeletonHorsePet);
         this.registerElement(whiteHorsePet);
