@@ -154,7 +154,6 @@ public class PlayerListener implements Listener
             Hub.getInstance().getCosmeticManager().handleLogin(player);
             Hub.getInstance().getPlayerManager().handleLogin(player);
             Hub.getInstance().getTimeManager().handleLogin(player);
-            Hub.getInstance().getBarManager().handleLogin(player);
             Hub.getInstance().getScoreboardManager().addScoreboardReceiver(player);
             Hub.getInstance().getHologramManager().addReceiver(player);
 
@@ -318,7 +317,6 @@ public class PlayerListener implements Listener
             Hub.getInstance().getCosmeticManager().handleLogout(player);
             Hub.getInstance().getPlayerManager().handleLogout(player);
             Hub.getInstance().getTimeManager().handleLogout(player);
-            Hub.getInstance().getBarManager().handleLogout(player);
             Hub.getInstance().getChatManager().enableChatFor(player);
             Hub.getInstance().getNPCManager().talkFinished(player);
             Hub.getInstance().getScoreboardManager().removeScoreboardReceiver(player);
