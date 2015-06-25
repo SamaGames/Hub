@@ -54,14 +54,17 @@ public class NukeDisplayer extends AbstractDisplayer
     {
         this.loopFirst.cancel();
 
-        this.loopSecond = Bukkit.getScheduler().runTaskTimer(Hub.getInstance(), new Runnable() {
+        this.loopSecond = Bukkit.getScheduler().runTaskTimer(Hub.getInstance(), new Runnable()
+        {
             int loops = 0;
 
             @Override
-            public void run() {
+            public void run()
+            {
                 loops++;
 
-                if (loops == 120) {
+                if (loops == 120)
+                {
                     end();
                     callback();
                 }
@@ -74,13 +77,11 @@ public class NukeDisplayer extends AbstractDisplayer
 
                 EntityOcelot ocelot = new EntityOcelot(w);
                 ocelot.setPosition(player.getLocation().getX(), player.getLocation().getY(), player.getLocation().getZ());
-                ocelot.getBukkitEntity().setVelocity(toVector);
+                //ocelot.getBukkitEntity().setVelocity(toVector);
                 ocelot.setCustomName(ChatColor.GOLD + "" + ChatColor.BOLD + "Meow");
                 ocelot.setCustomNameVisible(true);
 
                 w.addEntity(ocelot, CreatureSpawnEvent.SpawnReason.CUSTOM);
-
-                Bukkit.broadcastMessage("spawned");
 
                 for (Player player : Bukkit.getOnlinePlayers())
                     player.playSound(player.getLocation(), Sound.CAT_MEOW, 1.0F, 1.0F);
