@@ -12,7 +12,7 @@ import java.util.List;
 
 public abstract class AbstractCosmetic
 {
-        protected final String databaseName;;
+    protected final String databaseName;
     protected final ItemStack icon;
     private BuyMethod buyMethod;
     private String permissionNeeded;

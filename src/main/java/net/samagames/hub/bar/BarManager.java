@@ -23,7 +23,7 @@ public class BarManager extends AbstractManager
 
         this.messages = new ArrayList<>();
         this.toAdd = new ArrayList<>();
-        this.index = 0;
+        this.index = -1;
 
         this.loadMessages();
 
