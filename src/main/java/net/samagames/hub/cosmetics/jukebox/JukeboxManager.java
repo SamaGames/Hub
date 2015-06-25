@@ -183,7 +183,6 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
         {
             SongPlayer player = nextSong.getPlayer();
             Bukkit.getOnlinePlayers().stream().filter(p -> !this.mutedPlayers.contains(p.getUniqueId())).forEach(p -> player.addPlayer(p.getUniqueId()));
-            //Bukkit.getOnlinePlayers().stream().filter(p -> !this.mutedPlayers.contains(p.getUniqueId())).forEach(player::addPlayer);
 
             player.setPlaying(true);
 

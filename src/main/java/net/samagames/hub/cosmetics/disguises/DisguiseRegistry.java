@@ -53,10 +53,40 @@ public class DisguiseRegistry extends AbstractCosmeticRegistry<DisguiseCosmetic>
         }, DisguiseType.CAVE_SPIDER);
         caveSpiderDisguise.buyableWithStars(350);
 
-        DisguiseCosmetic rabbitDisguise = new DisguiseCosmetic("rabbit", "Lappin", new ItemStack(Material.RABBIT_FOOT), new String[] {
+        DisguiseCosmetic rabbitDisguise = new DisguiseCosmetic("rabbit", "Lapin", new ItemStack(Material.RABBIT_FOOT), new String[] {
                 "Devenez un petit lapin trop mignon !"
         }, DisguiseType.RABBIT);
         rabbitDisguise.buyableWithStars(1500);
+
+        DisguiseCosmetic endermanDisguise = new DisguiseCosmetic("enderman", "Enderman", new ItemStack(Material.ENDER_PEARL), new String[] {
+                "Effrayez les autres joueurs avec",
+                "votre taille sur-humaine !"
+        }, DisguiseType.ENDERMAN);
+        endermanDisguise.buyableWithStars(2000);
+
+        DisguiseCosmetic squidDisguise = new DisguiseCosmetic("squid", "Poulpe", new ItemStack(Material.INK_SACK), new String[] {
+                "`Bloups` `Bloups` `Bloups`"
+        }, DisguiseType.SQUID);
+        squidDisguise.buyableWithStars(2500);
+
+        DisguiseCosmetic chickenDisguise = new DisguiseCosmetic("chicken", "Poulet", new ItemStack(Material.EGG), new String[] {
+                "Essayez de vous infiltrer dans",
+                "la ferme pour voir Mr ou Mme Poulet !"
+        }, DisguiseType.CHICKEN);
+        chickenDisguise.buyableWithStars(1500);
+
+        DisguiseCosmetic pigDisguise = new DisguiseCosmetic("pig", "Cochon", new ItemStack(Material.GRILLED_PORK), new String[] {
+                "Vous connaissez le dicton :",
+                "\"Tout est bon dans le cochon !\""
+        }, DisguiseType.PIG);
+        pigDisguise.buyableWithStars(1500);
+
+        DisguiseCosmetic sheepDisguise = new DisguiseCosmetic("sheep", "Mouton", new ItemStack(Material.WOOL), new String[] {
+                "Faites attention à ceux qui",
+                "voudraient vous voler votre",
+                "somptueuse laine !"
+        }, DisguiseType.SHEEP);
+        sheepDisguise.buyableWithStars(1500);
 
         this.registerElement(creeperDisguise);
         this.registerElement(zombieDisguise);
@@ -67,5 +97,10 @@ public class DisguiseRegistry extends AbstractCosmeticRegistry<DisguiseCosmetic>
         this.registerElement(witchDisguise);
         this.registerElement(caveSpiderDisguise);
         this.registerElement(rabbitDisguise);
+        this.registerElement(endermanDisguise);
+        this.registerElement(squidDisguise);
+        this.registerElement(chickenDisguise);
+        this.registerElement(pigDisguise);
+        this.registerElement(sheepDisguise);
     }
 }

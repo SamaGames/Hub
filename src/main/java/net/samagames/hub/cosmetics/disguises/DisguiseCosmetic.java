@@ -10,7 +10,7 @@ public class DisguiseCosmetic extends AbstractCosmetic
 
     public DisguiseCosmetic(String databaseName, String displayName, ItemStack icon, String[] description, DisguiseType disguise)
     {
-        super("particle." + databaseName, displayName, icon, description);
+        super("disguise." + databaseName, displayName, icon, description);
         this.disguise = disguise;
     }
 
