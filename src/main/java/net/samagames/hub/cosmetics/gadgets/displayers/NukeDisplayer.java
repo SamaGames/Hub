@@ -10,8 +10,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
 
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.Random;
 
 public class NukeDisplayer extends AbstractDisplayer
@@ -23,80 +21,31 @@ public class NukeDisplayer extends AbstractDisplayer
     {
         super(player);
 
-        HashMap<Location, SimpleBlock> firstLayer = new HashMap<>();
-        firstLayer.put(this.baseLocation.clone().subtract(2.0D, 0.0D, 0.0D).add(0.0D, 0.0D, 2.0D), new SimpleBlock(Material.QUARTZ_BLOCK, 1));
-        firstLayer.put(this.baseLocation.clone().subtract(1.0D, 0.0D, 0.0D).add(0.0D, 0.0D, 2.0D), new SimpleBlock(Material.STEP, 7));
-        firstLayer.put(this.baseLocation.clone().add(0.0D, 0.0D, 2.0D), new SimpleBlock(Material.STEP, 7));
-        firstLayer.put(this.baseLocation.clone().add(1.0D, 0.0D, 2.0D), new SimpleBlock(Material.STEP, 7));
-        firstLayer.put(this.baseLocation.clone().add(2.0D, 0.0D, 2.0D), new SimpleBlock(Material.QUARTZ_BLOCK, 1));
-        firstLayer.put(this.baseLocation.clone().subtract(2.0D, 0.0D, 0.0D).add(0.0D, 0.0D, 1.0D), new SimpleBlock(Material.STEP, 7));
-        firstLayer.put(this.baseLocation.clone().subtract(1.0D, 0.0D, 0.0D).add(0.0D, 0.0D, 1.0D), new SimpleBlock(Material.HARD_CLAY, DyeColor.RED.getData()));
-        firstLayer.put(this.baseLocation.clone().add(0.0D, 0.0D, 1.0D), new SimpleBlock(Material.QUARTZ_BLOCK, 1));
-        firstLayer.put(this.baseLocation.clone().add(1.0D, 0.0D, 1.0D), new SimpleBlock(Material.HARD_CLAY, DyeColor.RED.getData()));
-        firstLayer.put(this.baseLocation.clone().add(2.0D, 0.0D, 1.0D), new SimpleBlock(Material.STEP, 7));
-        firstLayer.put(this.baseLocation.clone().subtract(2.0D, 0.0D, 0.0D), new SimpleBlock(Material.STEP, 7));
-        firstLayer.put(this.baseLocation.clone().subtract(1.0D, 0.0D, 0.0D), new SimpleBlock(Material.QUARTZ_BLOCK, 1));
-        firstLayer.put(this.baseLocation.clone(), new SimpleBlock(Material.SPONGE));
-        firstLayer.put(this.baseLocation.clone().add(1.0D, 0.0D, 0.0D), new SimpleBlock(Material.QUARTZ_BLOCK, 1));
-        firstLayer.put(this.baseLocation.clone().add(2.0D, 0.0D, 0.0D), new SimpleBlock(Material.STEP, 7));
-        firstLayer.put(this.baseLocation.clone().subtract(2.0D, 0.0D, 1.0D), new SimpleBlock(Material.STEP, 7));
-        firstLayer.put(this.baseLocation.clone().subtract(1.0D, 0.0D, 1.0D), new SimpleBlock(Material.HARD_CLAY, DyeColor.RED.getData()));
-        firstLayer.put(this.baseLocation.clone().subtract(0.0D, 0.0D, 1.0D), new SimpleBlock(Material.QUARTZ_BLOCK, 1));
-        firstLayer.put(this.baseLocation.clone().subtract(0.0D, 0.0D, 1.0D).add(1.0D, 0.0D, 0.0D), new SimpleBlock(Material.HARD_CLAY, DyeColor.RED.getData()));
-        firstLayer.put(this.baseLocation.clone().subtract(0.0D, 0.0D, 1.0D).add(2.0D, 0.0D, 0.0D), new SimpleBlock(Material.STEP, 7));
-        firstLayer.put(this.baseLocation.clone().subtract(2.0D, 0.0D, 2.0D), new SimpleBlock(Material.QUARTZ_BLOCK, 1));
-        firstLayer.put(this.baseLocation.clone().subtract(1.0D, 0.0D, 2.0D), new SimpleBlock(Material.STEP, 7));
-        firstLayer.put(this.baseLocation.clone().subtract(0.0D, 0.0D, 2.0D), new SimpleBlock(Material.STEP, 7));
-        firstLayer.put(this.baseLocation.clone().subtract(0.0D, 0.0D, 2.0D).add(1.0D, 0.0D, 0.0D), new SimpleBlock(Material.STEP, 7));
-        firstLayer.put(this.baseLocation.clone().subtract(0.0D, 0.0D, 2.0D).add(2.0D, 0.0D, 0.0D), new SimpleBlock(Material.QUARTZ_BLOCK, 1));
-
-        HashMap<Location, SimpleBlock> secondLayer = new HashMap<>();
-        secondLayer.put(this.baseLocation.clone().add(0.0D, 1.0D, 0.0D).subtract(1.0D, 0.0D, 0.0D).add(0.0D, 0.0D, 1.0D), new SimpleBlock(Material.HARD_CLAY, DyeColor.RED.getData()));
-        secondLayer.put(this.baseLocation.clone().add(0.0D, 1.0D, 0.0D).add(0.0D, 0.0D, 1.0D), new SimpleBlock(Material.STAINED_GLASS, DyeColor.WHITE.getData()));
-        secondLayer.put(this.baseLocation.clone().add(0.0D, 1.0D, 0.0D).add(1.0D, 0.0D, 1.0D), new SimpleBlock(Material.HARD_CLAY, DyeColor.RED.getData()));
-        secondLayer.put(this.baseLocation.clone().add(0.0D, 1.0D, 0.0D).subtract(1.0D, 0.0D, 0.0D), new SimpleBlock(Material.STAINED_GLASS, DyeColor.WHITE.getData()));
-        secondLayer.put(this.baseLocation.clone().add(0.0D, 1.0D, 0.0D).add(0.0D, 0.0D, 1.0D), new SimpleBlock(Material.STAINED_GLASS, DyeColor.WHITE.getData()));
-        secondLayer.put(this.baseLocation.clone().add(0.0D, 1.0D, 0.0D).subtract(1.0D, 0.0D, 1.0D), new SimpleBlock(Material.HARD_CLAY, DyeColor.RED.getData()));
-        secondLayer.put(this.baseLocation.clone().add(0.0D, 1.0D, 0.0D).subtract(0.0D, 0.0D, 1.0D), new SimpleBlock(Material.STAINED_GLASS, DyeColor.WHITE.getData()));
-        secondLayer.put(this.baseLocation.clone().add(0.0D, 1.0D, 0.0D).subtract(0.0D, 0.0D, 1.0D).add(1.0D, 0.0D, 0.0D), new SimpleBlock(Material.HARD_CLAY, DyeColor.RED.getData()));
-
-        HashMap<Location, SimpleBlock> thirdLayer = new HashMap<>();
-        thirdLayer.put(this.baseLocation.clone().add(0.0D, 2.0D, 0.0D).subtract(1.0D, 0.0D, 0.0D).add(0.0D, 0.0D, 1.0D), new SimpleBlock(Material.HARD_CLAY, DyeColor.RED.getData()));
-        thirdLayer.put(this.baseLocation.clone().add(0.0D, 2.0D, 0.0D).add(0.0D, 0.0D, 1.0D), new SimpleBlock(Material.STAINED_GLASS, DyeColor.WHITE.getData()));
-        thirdLayer.put(this.baseLocation.clone().add(0.0D, 2.0D, 0.0D).add(1.0D, 0.0D, 1.0D), new SimpleBlock(Material.HARD_CLAY, DyeColor.RED.getData()));
-        thirdLayer.put(this.baseLocation.clone().add(0.0D, 2.0D, 0.0D).subtract(1.0D, 0.0D, 0.0D), new SimpleBlock(Material.STAINED_GLASS, DyeColor.WHITE.getData()));
-        thirdLayer.put(this.baseLocation.clone().add(0.0D, 2.0D, 0.0D).add(0.0D, 0.0D, 1.0D), new SimpleBlock(Material.STAINED_GLASS, DyeColor.WHITE.getData()));
-        thirdLayer.put(this.baseLocation.clone().add(0.0D, 2.0D, 0.0D).subtract(1.0D, 0.0D, 1.0D), new SimpleBlock(Material.HARD_CLAY, DyeColor.RED.getData()));
-        thirdLayer.put(this.baseLocation.clone().add(0.0D, 2.0D, 0.0D).subtract(0.0D, 0.0D, 1.0D), new SimpleBlock(Material.STAINED_GLASS, DyeColor.WHITE.getData()));
-        thirdLayer.put(this.baseLocation.clone().add(0.0D, 2.0D, 0.0D).subtract(0.0D, 0.0D, 1.0D).add(1.0D, 0.0D, 0.0D), new SimpleBlock(Material.HARD_CLAY, DyeColor.RED.getData()));
-
-        HashMap<Location, SimpleBlock> fourthLayer = new HashMap<>();
-        fourthLayer.put(this.baseLocation.clone().add(0.0D, 3.0D, 0.0D).subtract(1.0D, 0.0D, 0.0D).add(0.0D, 0.0D, 1.0D), new SimpleBlock(Material.HARD_CLAY, DyeColor.RED.getData()));
-        fourthLayer.put(this.baseLocation.clone().add(0.0D, 3.0D, 0.0D).add(0.0D, 0.0D, 1.0D), new SimpleBlock(Material.STAINED_GLASS, DyeColor.WHITE.getData()));
-        fourthLayer.put(this.baseLocation.clone().add(0.0D, 3.0D, 0.0D).add(1.0D, 0.0D, 1.0D), new SimpleBlock(Material.HARD_CLAY, DyeColor.RED.getData()));
-        fourthLayer.put(this.baseLocation.clone().add(0.0D, 3.0D, 0.0D).subtract(1.0D, 0.0D, 0.0D), new SimpleBlock(Material.STAINED_GLASS, DyeColor.WHITE.getData()));
-        fourthLayer.put(this.baseLocation.clone().add(0.0D, 3.0D, 0.0D).add(0.0D, 0.0D, 1.0D), new SimpleBlock(Material.STAINED_GLASS, DyeColor.WHITE.getData()));
-        fourthLayer.put(this.baseLocation.clone().add(0.0D, 3.0D, 0.0D).subtract(1.0D, 0.0D, 1.0D), new SimpleBlock(Material.HARD_CLAY, DyeColor.RED.getData()));
-        fourthLayer.put(this.baseLocation.clone().add(0.0D, 3.0D, 0.0D).subtract(0.0D, 0.0D, 1.0D), new SimpleBlock(Material.STAINED_GLASS, DyeColor.WHITE.getData()));
-        fourthLayer.put(this.baseLocation.clone().add(0.0D, 3.0D, 0.0D).subtract(0.0D, 0.0D, 1.0D).add(1.0D, 0.0D, 0.0D), new SimpleBlock(Material.HARD_CLAY, DyeColor.RED.getData()));
-
-        HashMap<Location, SimpleBlock> fifthLayer = new HashMap<>();
-        fourthLayer.put(this.baseLocation.clone().add(0.0D, 4.0D, 0.0D).add(0.0D, 0.0D, 1.0D), new SimpleBlock(Material.HARD_CLAY, DyeColor.RED.getData()));
-        fourthLayer.put(this.baseLocation.clone().add(0.0D, 4.0D, 0.0D).subtract(1.0D, 0.0D, 0.0D), new SimpleBlock(Material.HARD_CLAY, DyeColor.RED.getData()));
-        fourthLayer.put(this.baseLocation.clone().add(0.0D, 4.0D, 0.0D), new SimpleBlock(Material.HARD_CLAY, DyeColor.RED.getData()));
-        fourthLayer.put(this.baseLocation.clone().add(0.0D, 4.0D, 0.0D).add(0.0D, 0.0D, 1.0D), new SimpleBlock(Material.HARD_CLAY, DyeColor.RED.getData()));
-        fourthLayer.put(this.baseLocation.clone().add(0.0D, 4.0D, 0.0D).subtract(0.0D, 0.0D, 1.0D), new SimpleBlock(Material.HARD_CLAY, DyeColor.RED.getData()));
-
-        this.addBlockToUse(this.baseLocation.clone().add(0.0D, 5.0D, 0.0D), new SimpleBlock(Material.QUARTZ_BLOCK, 1));
-        this.addBlockToUse(this.baseLocation.clone().add(0.0D, 6.0D, 0.0D), new SimpleBlock(Material.QUARTZ_BLOCK, 1));
-        this.addBlockToUse(this.baseLocation.clone().add(0.0D, 7.0D, 0.0D), new SimpleBlock(Material.QUARTZ_BLOCK, 1));
-        this.addBlockToUse(this.baseLocation.clone().add(0.0D, 8.0D, 0.0D), new SimpleBlock(Material.QUARTZ_BLOCK, 1));
-
-        this.addBlocksToUse(firstLayer);
-        this.addBlocksToUse(secondLayer);
-        this.addBlocksToUse(thirdLayer);
-        this.addBlocksToUse(fourthLayer);
-        this.addBlocksToUse(fifthLayer);
+        this.addBlockToUse(this.baseLocation.clone().subtract(2.0D, 0.0D, 0.0D).add(0.0D, 0.0D, 2.0D), new SimpleBlock(Material.QUARTZ_BLOCK, 1));
+        this.addBlockToUse(this.baseLocation.clone().subtract(1.0D, 0.0D, 0.0D).add(0.0D, 0.0D, 2.0D), new SimpleBlock(Material.STEP, 7));
+        this.addBlockToUse(this.baseLocation.clone().add(0.0D, 0.0D, 2.0D), new SimpleBlock(Material.STEP, 7));
+        this.addBlockToUse(this.baseLocation.clone().add(1.0D, 0.0D, 2.0D), new SimpleBlock(Material.STEP, 7));
+        this.addBlockToUse(this.baseLocation.clone().add(2.0D, 0.0D, 2.0D), new SimpleBlock(Material.QUARTZ_BLOCK, 1));
+        this.addBlockToUse(this.baseLocation.clone().subtract(2.0D, 0.0D, 0.0D).add(0.0D, 0.0D, 1.0D), new SimpleBlock(Material.STEP, 7));
+        this.addBlockToUse(this.baseLocation.clone().subtract(1.0D, 0.0D, 0.0D).add(0.0D, 0.0D, 1.0D), new SimpleBlock(Material.HARD_CLAY, DyeColor.RED.getData()));
+        this.addBlockToUse(this.baseLocation.clone().add(0.0D, 0.0D, 1.0D), new SimpleBlock(Material.QUARTZ_BLOCK, 1));
+        this.addBlockToUse(this.baseLocation.clone().add(1.0D, 0.0D, 1.0D), new SimpleBlock(Material.HARD_CLAY, DyeColor.RED.getData()));
+        this.addBlockToUse(this.baseLocation.clone().add(2.0D, 0.0D, 1.0D), new SimpleBlock(Material.STEP, 7));
+        this.addBlockToUse(this.baseLocation.clone().subtract(2.0D, 0.0D, 0.0D), new SimpleBlock(Material.STEP, 7));
+        this.addBlockToUse(this.baseLocation.clone().subtract(1.0D, 0.0D, 0.0D), new SimpleBlock(Material.QUARTZ_BLOCK, 1));
+        this.addBlockToUse(this.baseLocation.clone(), new SimpleBlock(Material.SPONGE));
+        this.addBlockToUse(this.baseLocation.clone().add(1.0D, 0.0D, 0.0D), new SimpleBlock(Material.QUARTZ_BLOCK, 1));
+        this.addBlockToUse(this.baseLocation.clone().add(2.0D, 0.0D, 0.0D), new SimpleBlock(Material.STEP, 7));
+        this.addBlockToUse(this.baseLocation.clone().subtract(2.0D, 0.0D, 1.0D), new SimpleBlock(Material.STEP, 7));
+        this.addBlockToUse(this.baseLocation.clone().subtract(1.0D, 0.0D, 1.0D), new SimpleBlock(Material.HARD_CLAY, DyeColor.RED.getData()));
+        this.addBlockToUse(this.baseLocation.clone().subtract(0.0D, 0.0D, 1.0D), new SimpleBlock(Material.QUARTZ_BLOCK, 1));
+        this.addBlockToUse(this.baseLocation.clone().subtract(0.0D, 0.0D, 1.0D).add(1.0D, 0.0D, 0.0D), new SimpleBlock(Material.HARD_CLAY, DyeColor.RED.getData()));
+        this.addBlockToUse(this.baseLocation.clone().subtract(0.0D, 0.0D, 1.0D).add(2.0D, 0.0D, 0.0D), new SimpleBlock(Material.STEP, 7));
+        this.addBlockToUse(this.baseLocation.clone().subtract(2.0D, 0.0D, 2.0D), new SimpleBlock(Material.QUARTZ_BLOCK, 1));
+        this.addBlockToUse(this.baseLocation.clone().subtract(1.0D, 0.0D, 2.0D), new SimpleBlock(Material.STEP, 7));
+        this.addBlockToUse(this.baseLocation.clone().subtract(0.0D, 0.0D, 2.0D), new SimpleBlock(Material.STEP, 7));
+        this.addBlockToUse(this.baseLocation.clone().subtract(0.0D, 0.0D, 2.0D).add(1.0D, 0.0D, 0.0D), new SimpleBlock(Material.STEP, 7));
+        this.addBlockToUse(this.baseLocation.clone().subtract(0.0D, 0.0D, 2.0D).add(2.0D, 0.0D, 0.0D), new SimpleBlock(Material.QUARTZ_BLOCK, 1));
     }
 
     @Override
@@ -110,7 +59,6 @@ public class NukeDisplayer extends AbstractDisplayer
 
         this.player.teleport(this.baseLocation.clone().add(0.0D, 2.0D, 0.0D));
 
-        final Collection<Player> players = (Collection<Player>) Bukkit.getOnlinePlayers();
         Bukkit.broadcastMessage(ChatColor.DARK_RED + "" + ChatColor.BOLD + "[" + ChatColor.RED + ChatColor.BOLD + "Meow" + ChatColor.DARK_RED + ChatColor.BOLD + "] " + ChatColor.RED + ChatColor.BOLD + "Non ! " + player.getName() + " a lancé une bombe atomique à chat sur le monde ! Tous aux abris !");
 
         this.loopFirst = Bukkit.getScheduler().runTaskTimerAsynchronously(Hub.getInstance(), new Runnable() {
@@ -125,7 +73,7 @@ public class NukeDisplayer extends AbstractDisplayer
                 else if (timer <= 5)
                     Bukkit.broadcastMessage(ChatColor.DARK_RED + "" + ChatColor.BOLD + "[" + ChatColor.RED + ChatColor.BOLD + "Meow" + ChatColor.DARK_RED + ChatColor.BOLD + "] " + ChatColor.RED + ChatColor.BOLD + this.timer);
 
-                for (Player player : players)
+                for (Player player : Bukkit.getOnlinePlayers())
                     player.playSound(player.getLocation(), Sound.CAT_MEOW, 1.0F, 1.0F);
             }
         }, 20L, 20L);
@@ -144,8 +92,10 @@ public class NukeDisplayer extends AbstractDisplayer
             {
                 loops++;
 
-                if (loops == 500)
+                if (loops == 600)
                 {
+                    baseLocation.getWorld().createExplosion(baseLocation.getX(), baseLocation.getY(), baseLocation.getZ(), 10, false, false);
+
                     restore();
                     end();
                     callback();
@@ -155,7 +105,7 @@ public class NukeDisplayer extends AbstractDisplayer
                     player.getWorld().createExplosion(player.getLocation().getX(), player.getLocation().getY(), player.getLocation().getZ(), 5.0F, false, false);
                 }
 
-                Ocelot ocelot = player.getWorld().spawn(player.getLocation().add(0.0D, 7.0D, 0.0D), Ocelot.class);
+                Ocelot ocelot = player.getWorld().spawn(player.getLocation().add(0.0D, 2.0D, 0.0D), Ocelot.class);
                 ocelot.setVelocity(new Vector(new Random().nextInt(8) - 4, 3, new Random().nextInt(8) - 4));
                 ocelot.setCustomName(ChatColor.GOLD + "" + ChatColor.BOLD + "Meow");
                 ocelot.setCustomNameVisible(true);

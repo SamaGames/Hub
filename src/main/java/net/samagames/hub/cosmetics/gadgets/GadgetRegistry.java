@@ -42,8 +42,8 @@ public class GadgetRegistry extends AbstractCosmeticRegistry<GadgetCosmetic>
         trampoSlimeGadget.buyableWithStars(2500);
 
         GadgetCosmetic nukeGadget = new GadgetCosmetic("nuke", "Bombe atomique", new ItemStack(Material.TNT, 1), new String[] {
-                "L'avenir du monde est entre",
-                "vos mains !"
+                ChatColor.MAGIC + "L'avenir du monde" + ChatColor.RESET + ChatColor.GRAY + " meow " + ChatColor.MAGIC + "entre",
+                ChatColor.MAGIC + "vos mains !"
         }, NukeDisplayer.class, 60);
         nukeGadget.buyableWithStars(Integer.MAX_VALUE);
 
