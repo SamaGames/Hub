@@ -1,6 +1,5 @@
 package net.samagames.hub.gui.profile.stats;
 
-import net.samagames.api.SamaGamesAPI;
 import net.samagames.api.stats.PlayerStat;
 import net.samagames.core.api.stats.Leaderboard;
 import net.samagames.hub.Hub;
@@ -16,7 +15,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
 import java.util.Random;
 import java.util.UUID;
 
@@ -69,24 +67,44 @@ public class GuiGameStat extends AbstractGui
     {
         Leaderboard leaderboard = Hub.getInstance().getStatsManager().getLeaderbordOf(this.stat);
 
-        PlayerStat first = leaderboard.getFirst();
-        PlayerStat second = leaderboard.getSecond();
-        PlayerStat third = leaderboard.getThird();
+        if(leaderboard != null)
+        {
+            PlayerStat first = leaderboard.getFirst();
+            PlayerStat second = leaderboard.getSecond();
+            PlayerStat third = leaderboard.getThird();
 
-        this.setSlotData(ChatColor.AQUA + "1ère place", Material.DIAMOND_HELMET, 13, new String[] {
-                ChatColor.GRAY + "Détenue par : " + (first.getPlayerUUID() != null ? PlayerUtils.getFullyFormattedPlayerName(first.getPlayerUUID()) : ChatColor.RED + "Personne :("),
-                (first.getPlayerUUID() != null ? ChatColor.GRAY + "Score : " + ChatColor.GOLD + first.getValue() : null)
-        }, "none");
+            this.setSlotData(ChatColor.AQUA + "1ère place", Material.DIAMOND_HELMET, 13, new String[]{
+                    ChatColor.GRAY + "Détenue par : " + (first.getPlayerUUID() != null ? PlayerUtils.getFullyFormattedPlayerName(first.getPlayerUUID()) : ChatColor.RED + "Personne :("),
+                    (first.getPlayerUUID() != null ? ChatColor.GRAY + "Score : " + ChatColor.GOLD + first.getValue() : null)
+            }, "none");
 
-        this.setSlotData(ChatColor.GOLD + "2ème place", Material.GOLD_HELMET, 14, new String[] {
-                ChatColor.GRAY + "Détenue par : " + (second.getPlayerUUID() != null ? PlayerUtils.getFullyFormattedPlayerName(second.getPlayerUUID()) : ChatColor.RED + "Personne :("),
-                (second.getPlayerUUID() != null ? ChatColor.GRAY + "Score : " + ChatColor.GOLD + second.getValue() : null)
-        }, "none");
+            this.setSlotData(ChatColor.GOLD + "2ème place", Material.GOLD_HELMET, 14, new String[]{
+                    ChatColor.GRAY + "Détenue par : " + (second.getPlayerUUID() != null ? PlayerUtils.getFullyFormattedPlayerName(second.getPlayerUUID()) : ChatColor.RED + "Personne :("),
+                    (second.getPlayerUUID() != null ? ChatColor.GRAY + "Score : " + ChatColor.GOLD + second.getValue() : null)
+            }, "none");
 
-        this.setSlotData(ChatColor.WHITE + "3ème place", Material.IRON_HELMET, 12, new String[] {
-                ChatColor.GRAY + "Détenue par : " + (third.getPlayerUUID() != null ? PlayerUtils.getFullyFormattedPlayerName(third.getPlayerUUID()) : ChatColor.RED + "Personne :("),
-                (third.getPlayerUUID() != null ? ChatColor.GRAY + "Score : " + ChatColor.GOLD + third.getValue() : null)
-        }, "none");
+            this.setSlotData(ChatColor.WHITE + "3ème place", Material.IRON_HELMET, 12, new String[]{
+                    ChatColor.GRAY + "Détenue par : " + (third.getPlayerUUID() != null ? PlayerUtils.getFullyFormattedPlayerName(third.getPlayerUUID()) : ChatColor.RED + "Personne :("),
+                    (third.getPlayerUUID() != null ? ChatColor.GRAY + "Score : " + ChatColor.GOLD + third.getValue() : null)
+            }, "none");
+        }
+        else
+        {
+            this.setSlotData(ChatColor.AQUA + "1ère place", Material.DIAMOND_HELMET, 13, new String[]{
+                    ChatColor.GRAY + "Détenue par : " + ChatColor.RED + "Personne :(",
+                    ChatColor.GRAY + "Score : /"
+            }, "none");
+
+            this.setSlotData(ChatColor.GOLD + "2ème place", Material.GOLD_HELMET, 14, new String[]{
+                    ChatColor.GRAY + "Détenue par : " + ChatColor.RED + "Personne :(",
+                    ChatColor.GRAY + "Score : /"
+            }, "none");
+
+            this.setSlotData(ChatColor.WHITE + "3ème place", Material.IRON_HELMET, 12, new String[]{
+                    ChatColor.GRAY + "Détenue par : " + ChatColor.RED + "Personne :(",
+                    ChatColor.GRAY + "Score : /"
+            }, "none");
+        }
     }
 
     private void drawLeaderboardLine()

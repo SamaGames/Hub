@@ -37,6 +37,7 @@ public class EntityManager extends AbstractManager
         this.registerEntity("Sheep", 91, EntitySheep.class, CosmeticSheep.class);
         this.registerEntity("Slime", 55, EntitySlime.class, CosmeticSlime.class);
         this.registerEntity("Wolf", 95, EntityWolf.class, CosmeticWolf.class);
+        this.registerEntity("Enderman", 58, EntityEnderman.class, CosmeticEnderman.class);
 
         Hub.getInstance().log(this, Level.INFO, "Registered custom entites with success!");
     }

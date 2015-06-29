@@ -11,6 +11,8 @@ import org.bukkit.inventory.ItemStack;
 
 public class GuiSettings extends AbstractGui
 {
+    private int page;
+
     @Override
     public void display(Player player)
     {
