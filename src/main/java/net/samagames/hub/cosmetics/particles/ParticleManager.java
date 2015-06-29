@@ -84,11 +84,15 @@ public class ParticleManager extends AbstractCosmeticManager<ParticleCosmetic>
     {
         if (this.playersParticleEffect.containsKey(player))
         {
-            this.playersParticleEffect.get(player).cancel(true);
+            this.playersParticleEffect.get(player).cancel();
             this.playersParticleEffect.remove(player);
         }
     }
 
+    public EffectManager getEffectManager()
+    {
+        return this.effectManager;
+    }
 
     @Override
     public String getName() { return "ParticleManager"; }

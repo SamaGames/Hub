@@ -163,12 +163,12 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
             int mehs = this.currentPlaylist.getMehs();
             Bukkit.broadcastMessage(this.jukeboxTag + ChatColor.GOLD + this.currentPlaylist.getPlayedBy() + ChatColor.YELLOW + " a reçu " + ChatColor.GREEN + woots + " Woot" + ChatColor.YELLOW + " et " + ChatColor.RED + mehs + " Meh" + ChatColor.YELLOW + ".");
 
-            Player player = Bukkit.getPlayerExact(this.currentPlaylist.getPlayedBy());
+            UUID playerUUID = SamaGamesAPI.get().getUUIDTranslator().getUUID(this.currentPlaylist.getPlayedBy());
 
-            if (player != null)
+            if (playerUUID != null)
             {
-                SamaGamesAPI.get().getStatsManager("hub").increase(player.getUniqueId(), "woots", woots);
-                SamaGamesAPI.get().getStatsManager("hub").increase(player.getUniqueId(), "mehs", mehs);
+                SamaGamesAPI.get().getStatsManager("hub").increase(playerUUID, "woots", woots);
+                SamaGamesAPI.get().getStatsManager("hub").increase(playerUUID, "mehs", mehs);
             }
 
             this.currentPlaylist = null;
