@@ -61,15 +61,17 @@ public class NukeDisplayer extends AbstractDisplayer
             block.getBlock().setData(this.blocksUsed.get(block).getData());
         }
 
-        this.player.teleport(this.baseLocation.clone().add(050D, 2.0D, 0.5D));
+        this.player.teleport(this.baseLocation.clone().add(0.5D, 2.0D, 0.5D));
 
         Bukkit.broadcastMessage(ChatColor.DARK_RED + "" + ChatColor.BOLD + "[" + ChatColor.RED + ChatColor.BOLD + "Meow" + ChatColor.DARK_RED + ChatColor.BOLD + "] " + ChatColor.RED + ChatColor.BOLD + "Non ! " + player.getName() + " a lancé une bombe atomique à chat sur le monde ! Tous aux abris !");
 
-        this.loopFirst = Bukkit.getScheduler().runTaskTimerAsynchronously(Hub.getInstance(), new Runnable() {
+        this.loopFirst = Bukkit.getScheduler().runTaskTimerAsynchronously(Hub.getInstance(), new Runnable()
+        {
             int timer = 10;
 
             @Override
-            public void run() {
+            public void run()
+            {
                 this.timer--;
 
                 if (timer == 0)
@@ -87,7 +89,8 @@ public class NukeDisplayer extends AbstractDisplayer
     {
         this.loopFirst.cancel();
 
-        this.helixNukeEffect = new HelixNukeEffect(Hub.getInstance().getCosmeticManager().getParticleManager().getEffectManager(), this.baseLocation);
+        this.helixNukeEffect = new HelixNukeEffect(Hub.getInstance().getCosmeticManager().getParticleManager().getEffectManager(), this.baseLocation.add(0.5D, 0.0D, 0.5D));
+        this.helixNukeEffect.start();
 
         this.loopSecond = Bukkit.getScheduler().runTaskTimer(Hub.getInstance(), new Runnable()
         {
@@ -111,7 +114,7 @@ public class NukeDisplayer extends AbstractDisplayer
                     player.getWorld().createExplosion(player.getLocation().getX(), player.getLocation().getY(), player.getLocation().getZ(), 5.0F, false, false);
                 }
 
-                Ocelot ocelot = baseLocation.getWorld().spawn(baseLocation.clone().add(0.0D, 2.0D, 0.0D), Ocelot.class);
+                Ocelot ocelot = baseLocation.getWorld().spawn(baseLocation.clone().add(0.5D, 3.0D, 0.5D), Ocelot.class);
                 ocelot.setCatType(Ocelot.Type.values()[new Random().nextInt(Ocelot.Type.values().length)]);
                 ocelot.setVelocity(new Vector(new Random().nextInt(8) - 4, 3, new Random().nextInt(8) - 4));
                 ocelot.setCustomName(ChatColor.GOLD + "" + ChatColor.BOLD + "Meow");
