@@ -2,6 +2,7 @@ package net.samagames.hub.cosmetics.common;
 
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
+import net.samagames.hub.gui.shop.GuiConfirm;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -12,17 +13,22 @@ import java.util.List;
 
 public abstract class AbstractCosmetic
 {
+    private enum BuyMethod { FREE, COINS, STARS, PERMISSION }
+
     protected final String databaseName;
     protected final ItemStack icon;
     private BuyMethod buyMethod;
     private String permissionNeeded;
+    private String permissionNeededToView;
     private int coinsCost;
     private int starsCost;
+
     public AbstractCosmetic(String databaseName, String displayName, ItemStack icon, String[] description)
     {
         this.databaseName = databaseName;
         this.icon = icon;
         this.buyMethod = BuyMethod.FREE;
+        this.permissionNeededToView = null;
 
         ItemMeta meta = this.icon.getItemMeta();
         meta.setDisplayName(ChatColor.RESET + "" + ChatColor.GOLD + displayName);
@@ -53,7 +59,13 @@ public abstract class AbstractCosmetic
                 return;
             }
 
-            SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).withdrawCoins(this.coinsCost);
+            GuiConfirm confirm = new GuiConfirm(Hub.getInstance().getGuiManager().getPlayerGui(player), () ->
+            {
+                SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).withdrawCoins(this.coinsCost);
+                this.buyCallback(player);
+            });
+
+            Hub.getInstance().getGuiManager().openGui(player, confirm);
         }
         else if(this.buyMethod == BuyMethod.STARS)
         {
@@ -63,9 +75,18 @@ public abstract class AbstractCosmetic
                 return;
             }
 
-            SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).withdrawStars(this.starsCost);
-        }
+            GuiConfirm confirm = new GuiConfirm(Hub.getInstance().getGuiManager().getPlayerGui(player), () ->
+            {
+                SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).withdrawStars(this.starsCost);
+                this.buyCallback(player);
+            });
 
+            Hub.getInstance().getGuiManager().openGui(player, confirm);
+        }
+    }
+
+    public void buyCallback(Player player)
+    {
         SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).set("cosmetics." + this.databaseName, "yes");
         Hub.getInstance().getGuiManager().getPlayerGui(player).update(player);
         player.sendMessage(ChatColor.GREEN + "Cosmétique achetée ! Re-cliquez pour l'utiliser.");
@@ -87,6 +108,11 @@ public abstract class AbstractCosmetic
     {
         this.buyMethod = BuyMethod.PERMISSION;
         this.permissionNeeded = permissionNeeded;
+    }
+
+    public void permissionNeededToView(String permissionNeededToView)
+    {
+        this.permissionNeededToView = permissionNeededToView;
     }
 
     public String getDatabaseName()
@@ -128,6 +154,14 @@ public abstract class AbstractCosmetic
         return icon;
     }
 
+    public boolean canView(Player player)
+    {
+        if(this.permissionNeededToView == null)
+            return true;
+        else
+            return SamaGamesAPI.get().getPermissionsManager().hasPermission(player, this.permissionNeededToView);
+    }
+
     public boolean isOwned(Player player)
     {
         if(this.buyMethod == BuyMethod.FREE)
@@ -137,6 +171,4 @@ public abstract class AbstractCosmetic
         else
             return SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).contains("cosmetics." + this.databaseName);
     }
-
-private enum BuyMethod { FREE, COINS, STARS, PERMISSION }
 }

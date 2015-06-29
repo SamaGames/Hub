@@ -3,6 +3,7 @@ package net.samagames.hub.games.shop;
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import net.samagames.hub.games.AbstractGame;
+import net.samagames.hub.gui.shop.GuiConfirm;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
@@ -54,17 +55,23 @@ public class ShopImprovableItem extends ShopIcon
         {
             player.sendMessage(ChatColor.RED + "Vous n'avez pas assez de pièces pour acheter cette amélioration.");
         }
-        else if (clickType == ClickType.LEFT)
-        {
-            player.sendMessage(ChatColor.GOLD + "Faites un clic droit pour valider votre achat.");
-        }
         else
         {
-            SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).withdrawCoins(next.getCost());
-            SamaGamesAPI.get().getShopsManager(this.game.getCodeName()).addOwnedLevel(player, this.getActionName(), next.getDatabaseStorageName());
-            SamaGamesAPI.get().getShopsManager(this.game.getCodeName()).setCurrentLevel(player, this.getActionName(), next.getDatabaseStorageName());
+            final ItemLevel finalLevel = next;
 
-            player.sendMessage(ChatColor.GREEN + "Vous avez débloqué le niveau supérieur pour cette amélioration.");
+            GuiConfirm confirm = new GuiConfirm(Hub.getInstance().getGuiManager().getPlayerGui(player), () ->
+            {
+                SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).withdrawCoins(finalLevel.getCost());
+                SamaGamesAPI.get().getShopsManager(this.game.getCodeName()).addOwnedLevel(player, this.getActionName(), finalLevel.getDatabaseStorageName());
+                SamaGamesAPI.get().getShopsManager(this.game.getCodeName()).setCurrentLevel(player, this.getActionName(), finalLevel.getDatabaseStorageName());
+
+                player.sendMessage(ChatColor.GREEN + "Vous avez débloqué le niveau supérieur pour cette amélioration.");
+
+                Hub.getInstance().getGuiManager().getPlayerGui(player).update(player);
+            });
+
+            Hub.getInstance().getGuiManager().openGui(player, confirm);
+            return;
         }
 
         Hub.getInstance().getGuiManager().getPlayerGui(player).update(player);

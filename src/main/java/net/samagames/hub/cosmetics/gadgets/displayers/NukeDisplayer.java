@@ -1,7 +1,5 @@
 package net.samagames.hub.cosmetics.gadgets.displayers;
 
-import de.slikey.effectlib.effect.TornadoEffect;
-import de.slikey.effectlib.util.ParticleEffect;
 import net.samagames.hub.Hub;
 import net.samagames.hub.utils.FireworkUtils;
 import net.samagames.hub.utils.SimpleBlock;
@@ -18,7 +16,6 @@ public class NukeDisplayer extends AbstractDisplayer
 {
     private BukkitTask loopFirst;
     private BukkitTask loopSecond;
-    private TornadoEffect tornadoNukeEffect;
 
     public NukeDisplayer(Player player)
     {
@@ -87,16 +84,6 @@ public class NukeDisplayer extends AbstractDisplayer
     public void timeToSendCatInTheHairLikeTheHandsInTheFamousSing()
     {
         this.loopFirst.cancel();
-
-        this.tornadoNukeEffect = new TornadoEffect(Hub.getInstance().getCosmeticManager().getParticleManager().getEffectManager());
-        this.tornadoNukeEffect.setLocation(this.baseLocation.getBlock().getLocation().add(0.5D, 0.0D, 0.5D));
-        this.tornadoNukeEffect.infinite();
-        this.tornadoNukeEffect.showCloud = false;
-        this.tornadoNukeEffect.tornadoParticle = ParticleEffect.FIREWORKS_SPARK;
-        this.tornadoNukeEffect.maxTornadoRadius = 30.0F;
-        this.tornadoNukeEffect.tornadoHeight = 250.0F;
-        this.tornadoNukeEffect.start();
-
         this.loopSecond = Bukkit.getScheduler().runTaskTimer(Hub.getInstance(), new Runnable()
         {
             int loops = 0;
@@ -152,6 +139,5 @@ public class NukeDisplayer extends AbstractDisplayer
     private void callback()
     {
         this.loopSecond.cancel();
-        this.tornadoNukeEffect.cancel();
     }
 }

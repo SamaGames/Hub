@@ -34,6 +34,9 @@ public class GuiCosmeticsCategory<T extends AbstractCosmetic> extends AbstractGu
 
         for(AbstractCosmetic cosmetic : this.manager.getRegistry().getElements().values())
         {
+            if(!cosmetic.canView(player))
+                continue;
+
             slot++;
 
             if(slot == 8)
@@ -59,6 +62,9 @@ public class GuiCosmeticsCategory<T extends AbstractCosmetic> extends AbstractGu
 
         for (AbstractCosmetic cosmetic : this.manager.getRegistry().getElements().values())
         {
+            if(!cosmetic.canView(player))
+                continue;
+
             this.setSlotData(cosmetic.getIcon(player), (baseSlots[slot] + (lines * 9)), "cosmetic_" + cosmetic.getDatabaseName());
 
             slot++;
