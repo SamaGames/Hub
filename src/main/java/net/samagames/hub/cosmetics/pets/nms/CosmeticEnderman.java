@@ -39,7 +39,7 @@ public class CosmeticEnderman extends EntityEnderman
     @Override
     protected boolean k(double d0, double d1, double d2)
     {
-        return true;
+        return false;
     }
 
     @Override
