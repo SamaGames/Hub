@@ -89,7 +89,7 @@ public class NukeDisplayer extends AbstractDisplayer
     {
         this.loopFirst.cancel();
 
-        this.helixNukeEffect = new HelixNukeEffect(Hub.getInstance().getCosmeticManager().getParticleManager().getEffectManager(), this.baseLocation.add(0.5D, 0.0D, 0.5D));
+        this.helixNukeEffect = new HelixNukeEffect(Hub.getInstance().getCosmeticManager().getParticleManager().getEffectManager(), this.baseLocation.subtract(0.5D, 0.0D, 0.5D));
         this.helixNukeEffect.start();
 
         this.loopSecond = Bukkit.getScheduler().runTaskTimer(Hub.getInstance(), new Runnable()
@@ -114,7 +114,7 @@ public class NukeDisplayer extends AbstractDisplayer
                     player.getWorld().createExplosion(player.getLocation().getX(), player.getLocation().getY(), player.getLocation().getZ(), 5.0F, false, false);
                 }
 
-                Ocelot ocelot = baseLocation.getWorld().spawn(baseLocation.clone().add(0.5D, 3.0D, 0.5D), Ocelot.class);
+                Ocelot ocelot = baseLocation.getWorld().spawn(baseLocation.clone().subtract(0.5D, 0.0D, 0.5D).add(0.0D, 3.0D, 0.0D), Ocelot.class);
                 ocelot.setCatType(Ocelot.Type.values()[new Random().nextInt(Ocelot.Type.values().length)]);
                 ocelot.setVelocity(new Vector(new Random().nextInt(8) - 4, 3, new Random().nextInt(8) - 4));
                 ocelot.setCustomName(ChatColor.GOLD + "" + ChatColor.BOLD + "Meow");
@@ -155,9 +155,7 @@ public class NukeDisplayer extends AbstractDisplayer
         public HelixNukeEffect(EffectManager effectManager, Location location)
         {
             super(effectManager, location);
-
             this.particle = ParticleEffect.FIREWORKS_SPARK;
-            this.radius = 1.5F;
         }
     }
 }
