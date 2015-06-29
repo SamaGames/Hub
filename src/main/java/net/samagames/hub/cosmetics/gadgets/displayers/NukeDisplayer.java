@@ -1,6 +1,6 @@
 package net.samagames.hub.cosmetics.gadgets.displayers;
 
-import de.slikey.effectlib.effect.HelixEffect;
+import de.slikey.effectlib.effect.TornadoEffect;
 import de.slikey.effectlib.util.ParticleEffect;
 import net.samagames.hub.Hub;
 import net.samagames.hub.utils.FireworkUtils;
@@ -18,7 +18,7 @@ public class NukeDisplayer extends AbstractDisplayer
 {
     private BukkitTask loopFirst;
     private BukkitTask loopSecond;
-    private HelixEffect helixNukeEffect;
+    private TornadoEffect tornadoNukeEffect;
 
     public NukeDisplayer(Player player)
     {
@@ -88,10 +88,11 @@ public class NukeDisplayer extends AbstractDisplayer
     {
         this.loopFirst.cancel();
 
-        this.helixNukeEffect = new HelixEffect(Hub.getInstance().getCosmeticManager().getParticleManager().getEffectManager());
-        this.helixNukeEffect.setLocation(this.baseLocation.getBlock().getLocation().add(0.5D, 0.0D, 0.5D));
-        this.helixNukeEffect.particle = ParticleEffect.FIREWORKS_SPARK;
-        this.helixNukeEffect.start();
+        this.tornadoNukeEffect = new TornadoEffect(Hub.getInstance().getCosmeticManager().getParticleManager().getEffectManager());
+        this.tornadoNukeEffect.setLocation(this.baseLocation.getBlock().getLocation().add(0.5D, 0.0D, 0.5D));
+        this.tornadoNukeEffect.infinite();
+        this.tornadoNukeEffect.tornadoParticle = ParticleEffect.FIREWORKS_SPARK;
+        this.tornadoNukeEffect.start();
 
         this.loopSecond = Bukkit.getScheduler().runTaskTimer(Hub.getInstance(), new Runnable()
         {
@@ -148,6 +149,6 @@ public class NukeDisplayer extends AbstractDisplayer
     private void callback()
     {
         this.loopSecond.cancel();
-        this.helixNukeEffect.cancel();
+        this.tornadoNukeEffect.cancel();
     }
 }
