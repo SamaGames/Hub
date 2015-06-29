@@ -75,7 +75,7 @@ public class PlayerManager extends AbstractManager
         {
             for(Player p : Bukkit.getOnlinePlayers())
             {
-                if(!SamaGamesAPI.get().getPermissionsManager().hasPermission(p, "hub.announce"))
+                if(!SamaGamesAPI.get().getPermissionsManager().hasPermission(p, "hub.announce") && !SamaGamesAPI.get().getFriendsManager().areFriends(player.getUniqueId(), p.getUniqueId()))
                     player.hidePlayer(p);
             }
 
@@ -116,7 +116,7 @@ public class PlayerManager extends AbstractManager
         for(UUID hider : this.hiders)
         {
             if(!hider.equals(newConnected.getUniqueId()))
-                if(!SamaGamesAPI.get().getPermissionsManager().hasPermission(newConnected, "hub.announce"))
+                if(!SamaGamesAPI.get().getPermissionsManager().hasPermission(newConnected, "hub.announce") && !SamaGamesAPI.get().getFriendsManager().areFriends(newConnected.getUniqueId(), hider))
                     Bukkit.getScheduler().runTask(Hub.getInstance(), () ->
                         Bukkit.getPlayer(hider).hidePlayer(newConnected));
         }
