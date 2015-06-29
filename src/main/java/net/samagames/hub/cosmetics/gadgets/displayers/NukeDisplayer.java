@@ -1,6 +1,6 @@
 package net.samagames.hub.cosmetics.gadgets.displayers;
 
-import de.slikey.effectlib.effect.HelixLocationEffect;
+import de.slikey.effectlib.effect.HelixEffect;
 import de.slikey.effectlib.util.ParticleEffect;
 import net.samagames.hub.Hub;
 import net.samagames.hub.utils.FireworkUtils;
@@ -18,7 +18,7 @@ public class NukeDisplayer extends AbstractDisplayer
 {
     private BukkitTask loopFirst;
     private BukkitTask loopSecond;
-    private HelixLocationEffect helixNukeEffect;
+    private HelixEffect helixNukeEffect;
 
     public NukeDisplayer(Player player)
     {
@@ -88,7 +88,8 @@ public class NukeDisplayer extends AbstractDisplayer
     {
         this.loopFirst.cancel();
 
-        this.helixNukeEffect = new HelixLocationEffect(Hub.getInstance().getCosmeticManager().getParticleManager().getEffectManager(), this.baseLocation.getBlock().getLocation().add(0.5D, 0.0D, 0.5D));
+        this.helixNukeEffect = new HelixEffect(Hub.getInstance().getCosmeticManager().getParticleManager().getEffectManager());
+        this.helixNukeEffect.setLocation(this.baseLocation.getBlock().getLocation().add(0.5D, 0.0D, 0.5D));
         this.helixNukeEffect.particle = ParticleEffect.FIREWORKS_SPARK;
         this.helixNukeEffect.start();
 
