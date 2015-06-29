@@ -93,7 +93,7 @@ public class NukeDisplayer extends AbstractDisplayer
         this.tornadoNukeEffect.infinite();
         this.tornadoNukeEffect.showCloud = false;
         this.tornadoNukeEffect.tornadoParticle = ParticleEffect.FIREWORKS_SPARK;
-        this.tornadoNukeEffect.maxTornadoRadius = 2.0F;
+        this.tornadoNukeEffect.maxTornadoRadius = 30.0F;
         this.tornadoNukeEffect.tornadoHeight = 250.0F;
         this.tornadoNukeEffect.start();
 
