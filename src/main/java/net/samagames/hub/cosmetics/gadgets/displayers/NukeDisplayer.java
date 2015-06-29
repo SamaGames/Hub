@@ -61,7 +61,7 @@ public class NukeDisplayer extends AbstractDisplayer
             block.getBlock().setData(this.blocksUsed.get(block).getData());
         }
 
-        this.player.teleport(this.baseLocation.clone().add(0.5D, 2.0D, 0.5D));
+        this.player.teleport(this.baseLocation.clone().subtract(0.5D, 0.0D, 0.5D).add(0.0D, 2.0D, 0.0D));
 
         Bukkit.broadcastMessage(ChatColor.DARK_RED + "" + ChatColor.BOLD + "[" + ChatColor.RED + ChatColor.BOLD + "Meow" + ChatColor.DARK_RED + ChatColor.BOLD + "] " + ChatColor.RED + ChatColor.BOLD + "Non ! " + player.getName() + " a lancé une bombe atomique à chat sur le monde ! Tous aux abris !");
 
@@ -155,7 +155,7 @@ public class NukeDisplayer extends AbstractDisplayer
         public HelixNukeEffect(EffectManager effectManager, Location location)
         {
             super(effectManager, location);
-            this.particle = ParticleEffect.FIREWORKS_SPARK;
+            this.particle = ParticleEffect.CRIT;
         }
     }
 }
