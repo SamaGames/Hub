@@ -91,7 +91,10 @@ public class NukeDisplayer extends AbstractDisplayer
         this.tornadoNukeEffect = new TornadoEffect(Hub.getInstance().getCosmeticManager().getParticleManager().getEffectManager());
         this.tornadoNukeEffect.setLocation(this.baseLocation.getBlock().getLocation().add(0.5D, 0.0D, 0.5D));
         this.tornadoNukeEffect.infinite();
+        this.tornadoNukeEffect.showCloud = false;
         this.tornadoNukeEffect.tornadoParticle = ParticleEffect.FIREWORKS_SPARK;
+        this.tornadoNukeEffect.maxTornadoRadius = 2.0F;
+        this.tornadoNukeEffect.tornadoHeight = 250.0F;
         this.tornadoNukeEffect.start();
 
         this.loopSecond = Bukkit.getScheduler().runTaskTimer(Hub.getInstance(), new Runnable()
