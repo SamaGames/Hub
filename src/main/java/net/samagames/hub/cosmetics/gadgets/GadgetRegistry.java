@@ -46,6 +46,7 @@ public class GadgetRegistry extends AbstractCosmeticRegistry<GadgetCosmetic>
                 ChatColor.MAGIC + "vos mains !"
         }, NukeDisplayer.class, 60);
         nukeGadget.buyableWithStars(Integer.MAX_VALUE);
+        nukeGadget.permissionNeededToView("hub.gadgets.nuke");
 
         GadgetCosmetic fakeCakeGadget = new GadgetCosmetic("cake", "Gâteau fantôme", new ItemStack(Material.CAKE, 1), new String[] {
                 "La légende raconte que ce gâteau",

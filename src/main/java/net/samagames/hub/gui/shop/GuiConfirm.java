@@ -27,6 +27,8 @@ public class GuiConfirm extends AbstractGui
 
         this.setSlotData(ChatColor.GREEN + "Oui", new ItemStack(Material.STAINED_GLASS, 1, DyeColor.GREEN.getWoolData()), 11, null, "confirm");
         this.setSlotData(ChatColor.RED + "Annuler", new ItemStack(Material.STAINED_GLASS, 1, DyeColor.RED.getWoolData()), 15, null, "cancel");
+
+        player.openInventory(this.inventory);
     }
 
     @Override
