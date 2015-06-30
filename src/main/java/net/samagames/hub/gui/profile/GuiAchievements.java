@@ -3,6 +3,7 @@ package net.samagames.hub.gui.profile;
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.api.achievements.Achievement;
 import net.samagames.api.achievements.AchievementCategory;
+import net.samagames.api.achievements.IncrementationAchievement;
 import net.samagames.hub.Hub;
 import net.samagames.hub.gui.AbstractGui;
 import net.samagames.hub.utils.GuiUtils;
@@ -57,33 +58,39 @@ public class GuiAchievements extends AbstractGui
 
     private void displayRoot(Player player)
     {
-        int[] baseSlots = { 10, 11, 12, 13, 14, 15, 16 };
-        int lines = 1;
-        int i = 0;
+        int[] baseSlots = {10, 11, 12, 13, 14, 15, 16};
+        int lines = 0;
+        int slot = 0;
 
         for(AchievementCategory category : SamaGamesAPI.get().getAchievementManager().getAchievementsCategories())
         {
-            i++;
+            slot++;
 
-            if(i == 7)
+            if(slot == 8)
             {
-                i = 0;
+                slot = 0;
                 lines++;
             }
         }
 
-        int line = 1;
-        int slots = (9 * lines) + (9 * 3);
-        this.inventory = Bukkit.createInventory(null, slots, "Objectifs");
+        this.inventory = Bukkit.createInventory(null, 9 + (lines * 9) + (9 * 2), "Objectifs");
+        lines = 0;
+        slot = 0;
 
         for(AchievementCategory category : SamaGamesAPI.get().getAchievementManager().getAchievementsCategories())
         {
-            this.setSlotData(ChatColor.GOLD + category.getDisplayName(), category.getIcon(), baseSlots[i] + (9 * line), this.formatDescription(category.getDescription()), "category_" + category.getID());
+            this.setSlotData(ChatColor.GOLD + category.getDisplayName(), category.getIcon(), (baseSlots[slot] + (lines * 9)), this.formatDescription(category.getDescription()), "category_" + category.getID());
 
-            i++;
+            slot++;
+
+            if (slot == 7)
+            {
+                slot = 0;
+                lines++;
+            }
         }
 
-        this.setSlotData(GuiUtils.getBackItem(), slots - 5, "back");
+        this.setSlotData(GuiUtils.getBackItem(), this.inventory.getSize() - 5, "back");
 
         player.openInventory(this.inventory);
     }
@@ -99,13 +106,24 @@ public class GuiAchievements extends AbstractGui
             if(achievement.getParentCategoryID().equals(this.category.getID()))
             {
                 if(SamaGamesAPI.get().getAchievementManager().isUnlocked(player, achievement))
-                    this.setSlotData(ChatColor.GOLD + achievement.getDisplayName(), Material.DIAMOND, i, this.formatDescription(achievement.getDescription()), "none");
+                {
+                    this.setSlotData(ChatColor.GREEN + achievement.getDisplayName(), Material.GOLDEN_APPLE, i, this.formatDescription(achievement.getDescription()), "none");
+                }
                 else
-                    this.setSlotData(ChatColor.RED + achievement.getDisplayName(), Material.COAL, i, this.formatDescription(achievement.getDescription()), "none");
+                {
+                    if(achievement instanceof IncrementationAchievement)
+                    {
+                        this.setSlotData(ChatColor.RED + achievement.getDisplayName() + " [" + ((IncrementationAchievement) achievement).getActualState(player) + "/" + ((IncrementationAchievement) achievement).getObjective() + "]", Material.APPLE, i, this.formatDescription(achievement.getDescription()), "none");
+                    }
+                    else
+                    {
+                        this.setSlotData(ChatColor.RED + achievement.getDisplayName(), Material.APPLE, i, this.formatDescription(achievement.getDescription()), "none");
+                    }
+                }
             }
         }
 
-        this.setSlotData(GuiUtils.getBackItem(), 50, "back-root");
+        this.setSlotData(GuiUtils.getBackItem(), this.inventory.getSize(), "back-root");
 
         player.openInventory(this.inventory);
     }

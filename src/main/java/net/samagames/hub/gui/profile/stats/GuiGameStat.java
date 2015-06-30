@@ -42,12 +42,20 @@ public class GuiGameStat extends AbstractGui
         this.drawLeaderboardLine();
 
         PlayerStat playerStat = new PlayerStat(this.uuid, this.game.getCodeName(), this.stat);
-        playerStat.fill();
 
-        this.setSlotData(ChatColor.RED + "Score de " + this.name, Material.LEATHER_HELMET, 22, new String[]{
-                ChatColor.GRAY + "Score : " + ChatColor.GOLD + playerStat.getValue(),
-                ChatColor.GRAY + "Rang : " + ChatColor.GOLD + playerStat.getRank()
-        }, "none");
+        if(playerStat.fill())
+        {
+            this.setSlotData(ChatColor.RED + "Score de " + this.name, Material.LEATHER_HELMET, 22, new String[]{
+                    ChatColor.GRAY + "Score : " + ChatColor.GOLD + playerStat.getValue(),
+                    ChatColor.GRAY + "Rang : " + ChatColor.GOLD + playerStat.getRank()
+            }, "none");
+        }
+        else
+        {
+            this.setSlotData(ChatColor.RED + "Score de " + this.name, Material.LEATHER_HELMET, 22, new String[]{
+                    ChatColor.RED + "Jeu jamais joué !"
+            }, "none");
+        }
 
         this.setSlotData(GuiUtils.getBackItem(), this.inventory.getSize() - 5, "back");
 

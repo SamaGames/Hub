@@ -5,11 +5,13 @@ import net.samagames.api.games.ServerStatus;
 import net.samagames.api.games.Status;
 import net.samagames.hub.Hub;
 import net.samagames.hub.games.AbstractGame;
+import net.samagames.hub.utils.TimeUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
+import redis.clients.jedis.Jedis;
 
 import java.util.LinkedHashMap;
 
@@ -71,6 +73,26 @@ public class GameSign
 
     public void click(Player player)
     {
+        Jedis jedis = SamaGamesAPI.get().getResource();
+
+        String ban = jedis.get("gamebanlist:reason:" + player.getUniqueId());
+
+        if (ban != null)
+        {
+            long ttl = jedis.ttl("gamebanlist:reason:" + player.getUniqueId());
+            String duration = "définitivement";
+
+            if (ttl >= 0)
+                duration = TimeUtils.formatTime(ttl);
+
+            player.sendMessage(ChatColor.RED + "Vous êtes banni du jeu " + duration + ".");
+            player.sendMessage(ChatColor.RED + "Motif : " + ban);
+
+            jedis.close();
+
+            return;
+        }
+
         if(this.lastDatas == null)
         {
             return;
