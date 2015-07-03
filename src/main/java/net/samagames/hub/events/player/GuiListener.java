@@ -7,6 +7,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.inventory.PlayerInventory;
 
 public class GuiListener implements Listener
 {
@@ -20,6 +21,9 @@ public class GuiListener implements Listener
 
             if (gui != null)
             {
+                if(event.getClickedInventory() instanceof PlayerInventory)
+                    return;
+
                 String action = gui.getAction(event.getSlot());
 
                 if (action != null)
