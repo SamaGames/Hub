@@ -3,7 +3,7 @@ main: net.samagames.hub.Hub
 version: 1.0.0
 authors: [BlueSlime]
 website: http://samagames.net/
-depend: [SamaGamesCore]
+depend: [SamaGamesAPI]
 
 commands:
   # Player commands ----------------------------
