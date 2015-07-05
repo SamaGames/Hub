@@ -1,7 +1,7 @@
 package net.samagames.hub.common.managers;
 
 import net.samagames.api.SamaGamesAPI;
-import net.samagames.core.api.stats.Leaderboard;
+import net.samagames.api.stats.Leaderboard;
 import net.samagames.hub.Hub;
 import net.samagames.hub.games.AbstractGame;
 import net.samagames.hub.games.DisplayedStat;

@@ -2,7 +2,7 @@ package net.samagames.hub.npcs.actions;
 
 import net.md_5.bungee.api.ChatColor;
 import net.samagames.api.SamaGamesAPI;
-import net.samagames.api.player.PlayerData;
+import net.samagames.api.player.AbstractPlayerData;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
@@ -27,7 +27,7 @@ public class WelcomeTutorialAction extends HistoryAction
     {
         super.historyCallback(player);
 
-        PlayerData playerData = SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId());
+        AbstractPlayerData playerData = SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId());
 
         playerData.creditCoins(20, "Tutoriel de bienvenue !", false);
         playerData.creditStars(5, "Tutoriel de bienvenue !", false);

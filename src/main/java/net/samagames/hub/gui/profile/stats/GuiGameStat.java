@@ -1,7 +1,8 @@
 package net.samagames.hub.gui.profile.stats;
 
-import net.samagames.api.stats.PlayerStat;
-import net.samagames.core.api.stats.Leaderboard;
+import net.samagames.api.stats.IPlayerStat;
+import net.samagames.api.stats.Leaderboard;
+import net.samagames.core.api.stats.PlayerStat;
 import net.samagames.hub.Hub;
 import net.samagames.hub.games.AbstractGame;
 import net.samagames.hub.gui.AbstractGui;
@@ -77,9 +78,9 @@ public class GuiGameStat extends AbstractGui
 
         if(leaderboard != null)
         {
-            PlayerStat first = leaderboard.getFirst();
-            PlayerStat second = leaderboard.getSecond();
-            PlayerStat third = leaderboard.getThird();
+            IPlayerStat first = leaderboard.getFirst();
+            IPlayerStat second = leaderboard.getSecond();
+            IPlayerStat third = leaderboard.getThird();
 
             this.setSlotData(ChatColor.AQUA + "1ère place", Material.DIAMOND_HELMET, 13, new String[]{
                     ChatColor.GRAY + "Détenue par : " + (first.getPlayerUUID() != null ? PlayerUtils.getFullyFormattedPlayerName(first.getPlayerUUID()) : ChatColor.RED + "Personne :("),

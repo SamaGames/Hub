@@ -1,7 +1,7 @@
 package net.samagames.hub.npcs.actions;
 
 import net.samagames.api.SamaGamesAPI;
-import net.samagames.api.player.PlayerData;
+import net.samagames.api.player.AbstractPlayerData;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -20,7 +20,7 @@ public class HubTutorialAction extends HistoryAction
     {
         super.historyCallback(player);
 
-        PlayerData playerData = SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId());
+        AbstractPlayerData playerData = SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId());
 
         //if(!SamaGamesAPI.get().getAchievementManager().isUnlocked(player, "lobby.tutorial.hub"))
         {
