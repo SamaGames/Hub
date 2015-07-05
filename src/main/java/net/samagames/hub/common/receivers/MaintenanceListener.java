@@ -1,9 +1,9 @@
 package net.samagames.hub.common.receivers;
 
-import net.samagames.api.channels.PacketsReceiver;
+import net.samagames.api.pubsub.IPacketsReceiver;
 import net.samagames.hub.Hub;
 
-public class MaintenanceListener implements PacketsReceiver
+public class MaintenanceListener implements IPacketsReceiver
 {
     @Override
     public void receive(String channel, String packet)

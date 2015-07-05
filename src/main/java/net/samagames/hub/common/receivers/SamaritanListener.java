@@ -1,12 +1,12 @@
 package net.samagames.hub.common.receivers;
 
-import net.samagames.api.channels.PacketsReceiver;
+import net.samagames.api.pubsub.IPacketsReceiver;
 import net.samagames.hub.Hub;
 import net.samagames.hub.utils.FireworkUtils;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 
-public class SamaritanListener implements PacketsReceiver
+public class SamaritanListener implements IPacketsReceiver
 {
     @Override
     public void receive(String channel, String packet)

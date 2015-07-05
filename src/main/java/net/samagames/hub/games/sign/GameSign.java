@@ -1,8 +1,8 @@
 package net.samagames.hub.games.sign;
 
 import net.samagames.api.SamaGamesAPI;
-import net.samagames.api.games.ServerStatus;
 import net.samagames.api.games.Status;
+import net.samagames.core.api.games.ServerStatus;
 import net.samagames.hub.Hub;
 import net.samagames.hub.games.AbstractGame;
 import net.samagames.hub.utils.TimeUtils;

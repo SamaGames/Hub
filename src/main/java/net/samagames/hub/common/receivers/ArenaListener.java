@@ -1,13 +1,13 @@
 package net.samagames.hub.common.receivers;
 
 import com.google.gson.Gson;
-import net.samagames.api.channels.PacketsReceiver;
-import net.samagames.api.games.ServerStatus;
+import net.samagames.api.pubsub.IPacketsReceiver;
+import net.samagames.core.api.games.ServerStatus;
 import net.samagames.hub.Hub;
 
 import java.util.logging.Level;
 
-public class ArenaListener implements PacketsReceiver
+public class ArenaListener implements IPacketsReceiver
 {
     @Override
     public void receive(String channel, String packet)

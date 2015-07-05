@@ -1,7 +1,7 @@
 package net.samagames.hub.gui.stalker;
 
 import net.samagames.api.SamaGamesAPI;
-import net.samagames.api.network.ProxiedPlayer;
+import net.samagames.api.network.IProxiedPlayer;
 import net.samagames.hub.Hub;
 import net.samagames.hub.gui.AbstractGui;
 import net.samagames.hub.utils.GuiUtils;
@@ -26,7 +26,7 @@ public class GuiStalkerFriends2000 extends AbstractGui
     public void display(Player player)
     {
         List<UUID> friendListRaw = SamaGamesAPI.get().getFriendsManager().uuidFriendsList(player.getUniqueId());
-        List<ProxiedPlayer> friendList = new ArrayList<>();
+        List<IProxiedPlayer> friendList = new ArrayList<>();
 
         for(UUID friend : friendListRaw)
             if(!SamaGamesAPI.get().getProxyDataManager().getProxiedPlayer(friend).getServer().equals("Inconnu"))
@@ -36,7 +36,7 @@ public class GuiStalkerFriends2000 extends AbstractGui
         int slot = 0;
         int lines = 1;
 
-        for(ProxiedPlayer friendData : friendList)
+        for(IProxiedPlayer friendData : friendList)
         {
             slot++;
 
@@ -52,7 +52,7 @@ public class GuiStalkerFriends2000 extends AbstractGui
         slot = 0;
         lines = 0;
 
-        for(ProxiedPlayer friendData : friendList)
+        for(IProxiedPlayer friendData : friendList)
         {
             String formattedUsername = PlayerUtils.getFullyFormattedPlayerName(friendData.getUUID());
             String username = friendData.getName();

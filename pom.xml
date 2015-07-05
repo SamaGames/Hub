@@ -18,8 +18,8 @@
             <url>http://maven.samagames.net/public/</url>
         </repository>
         <repository>
-            <id>samagames-developpers</id>
-            <url>http://maven.samagames.net/developpers/</url>
+            <id>samagames-network</id>
+            <url>http://maven.samagames.net/network/</url>
         </repository>
         <repository>
             <id>elmakers-repo</id>
@@ -70,7 +70,7 @@
         </dependency>
         <dependency>
             <groupId>net.samagames</groupId>
-            <artifactId>SamaGamesAPI</artifactId>
+            <artifactId>SamaGamesCore</artifactId>
             <version>1.0.0-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
