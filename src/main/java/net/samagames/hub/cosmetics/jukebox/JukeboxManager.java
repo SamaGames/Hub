@@ -182,12 +182,12 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
         if (nextSong != null)
         {
             SongPlayer player = nextSong.getPlayer();
-            Bukkit.getOnlinePlayers().stream().filter(p -> !this.mutedPlayers.contains(p.getUniqueId())).forEach(p -> player.addPlayer(p.getUniqueId()));
-
             player.setPlaying(true);
 
             this.currentPlaylist = nextSong;
             this.currentPlaylist.getPlayer().setPlaying(true);
+
+            Bukkit.getOnlinePlayers().stream().filter(p -> !this.mutedPlayers.contains(p.getUniqueId())).forEach(p -> this.currentPlaylist.getPlayer().addPlayer(p.getUniqueId()));
 
             Bukkit.broadcastMessage(this.jukeboxTag + ChatColor.GOLD + this.currentPlaylist.getPlayedBy() + ChatColor.YELLOW + " joue " + ChatColor.GOLD + ChatColor.ITALIC + this.currentPlaylist.getSong().getTitle() + ChatColor.YELLOW + " de " + ChatColor.GOLD + this.currentPlaylist.getSong().getAuthor());
             Bukkit.broadcastMessage(this.jukeboxTag + ChatColor.GRAY + ChatColor.ITALIC + "Tapez " + ChatColor.GREEN + "/woot" + ChatColor.GRAY + ChatColor.ITALIC + " pour apprécier ou " + ChatColor.RED + "/meh" + ChatColor.GRAY + ChatColor.ITALIC + " pour indiquer que vous n'aimez pas la musique jouée actuellement et la couper.");
