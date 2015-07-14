@@ -1,6 +1,5 @@
 package net.samagames.hub.cosmetics.gadgets.displayers;
 
-import de.slikey.effectlib.effect.VortexEffect;
 import net.samagames.hub.Hub;
 import net.samagames.hub.utils.FireworkUtils;
 import net.samagames.hub.utils.SimpleBlock;
@@ -163,14 +162,8 @@ public class NukeDisplayer extends AbstractDisplayer
                             this.cancel();
                     }
                 }.runTaskTimerAsynchronously(Hub.getInstance(), 0, 1);
-
-                VortexEffect effect = new VortexEffect(Hub.getInstance().getCosmeticManager().getParticleManager().getEffectManager());
-                effect.setLocation(baseLocation.getBlock().getLocation().clone().add(0.5D, 3.0D, 0.5D));
-                effect.particle = de.slikey.effectlib.util.ParticleEffect.FIREWORKS_SPARK;
-                effect.infinite();
-                effect.start();
             }
-        }, 1L, 1L);
+        }, 5L, 5L);
     }
 
     public boolean canUse()
