@@ -48,7 +48,6 @@ public class NukeDisplayer extends AbstractDisplayer
         this.addBlockToUse(this.baseLocation.clone().subtract(0.0D, 0.0D, 2.0D), new SimpleBlock(Material.STEP, 7));
         this.addBlockToUse(this.baseLocation.clone().subtract(0.0D, 0.0D, 2.0D).add(1.0D, 0.0D, 0.0D), new SimpleBlock(Material.STEP, 7));
         this.addBlockToUse(this.baseLocation.clone().subtract(0.0D, 0.0D, 2.0D).add(2.0D, 0.0D, 0.0D), new SimpleBlock(Material.QUARTZ_BLOCK, 1));
-
         this.addBlockToUse(this.baseLocation.clone().add(0.0D, 1.0D, 0.0D).subtract(1.0D, 0.0D, 0.0D), new SimpleBlock(Material.BARRIER, 1));
         this.addBlockToUse(this.baseLocation.clone().add(0.0D, 1.0D, 0.0D).add(1.0D, 0.0D, 0.0D), new SimpleBlock(Material.BARRIER, 1));
         this.addBlockToUse(this.baseLocation.clone().add(0.0D, 1.0D, 0.0D).subtract(0.0D, 0.0D, 1.0D), new SimpleBlock(Material.BARRIER, 1));
@@ -139,6 +138,11 @@ public class NukeDisplayer extends AbstractDisplayer
                     ocelot.setHealth(0);
                     ocelot.remove();
                 }, 20L * 5);
+
+                ParticleEffect.FLAME.display(0, 1.5F, 0, 0, 3, baseLocation.clone().subtract(2.0D, 0.0D, 0.0D).add(0.0D, 0.0D, 2.0D), 100.0D);
+                ParticleEffect.FLAME.display(0, 1.5F, 0, 0, 3, baseLocation.clone().subtract(2.0D, 0.0D, 2.0D), 100.0D);
+                ParticleEffect.FLAME.display(0, 1.5F, 0, 0, 3, baseLocation.clone().add(2.0D, 0.0D, 2.0D), 100.0D);
+                ParticleEffect.FLAME.display(0, 1.5F, 0, 0, 3, baseLocation.clone().add(2.0D, 0.0D, 0.0D).subtract(0.0D, 0.0D, 2.0D), 100.0D);
             }
         }, 1L, 1L);
 
