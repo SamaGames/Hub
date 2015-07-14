@@ -4,14 +4,11 @@ import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import net.samagames.hub.common.StaticInventory;
 import net.samagames.hub.cosmetics.jukebox.JukeboxPlaylist;
-import net.samagames.permissionsapi.permissions.PermissionUser;
 import net.samagames.tools.Selection;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -42,21 +39,6 @@ public class PlayerManager extends AbstractManager
     {
         this.updateSettings(player);
         this.updateHiders(player);
-
-        PermissionUser permissionUser = SamaGamesAPI.get().getPermissionsManager().getApi().getUser(player.getUniqueId());
-
-        if(permissionUser.inGroup("Guide"))
-        {
-            player.getInventory().setBoots(new ItemStack(Material.DIAMOND_BOOTS, 1));
-        }
-        else if(permissionUser.inGroup("vip"))
-        {
-            player.getInventory().setBoots(new ItemStack(Material.IRON_BOOTS, 1));
-        }
-        else if(permissionUser.inGroup("vipplus") || permissionUser.inGroup("Famous"))
-        {
-            player.getInventory().setBoots(new ItemStack(Material.GOLD_BOOTS, 1));
-        }
     }
 
     public void handleLogout(Player player)

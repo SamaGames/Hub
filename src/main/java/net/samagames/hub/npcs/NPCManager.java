@@ -13,7 +13,6 @@ import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_8_R2.CraftWorld;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Villager;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.metadata.FixedMetadataValue;
 
@@ -44,7 +43,7 @@ public class NPCManager extends AbstractManager
 
     public void reloadNPCS()
     {
-        String baseKey = "lobby:npcs";
+        String baseKey = "hub:npcs";
         Map<String, String> array = SamaGamesAPI.get().getResource().hgetAll(baseKey);
 
         this.removeNPCS();
@@ -64,22 +63,22 @@ public class NPCManager extends AbstractManager
         this.placeNPCS();
     }
 
-    public void addNPC(String name, Villager.Profession profession, Location location, String actionClassName)
+    public void addNPC(String name, NPCProperties properties, Location location, String actionClassName)
     {
         UUID uuid = UUID.randomUUID();
-        NPC npc = new NPC(uuid, ChatColor.translateAlternateColorCodes('&', name), profession, location, actionClassName);
+        NPC npc = new NPC(uuid, ChatColor.translateAlternateColorCodes('&', name), properties, location, actionClassName);
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.registerTypeAdapter(NPC.class, new NPCSerializer());
         gsonBuilder.setPrettyPrinting();
         Gson gson = gsonBuilder.create();
         String json = gson.toJson(npc);
 
-        SamaGamesAPI.get().getResource().hset("lobby:npcs", uuid.toString(), json);
+        SamaGamesAPI.get().getResource().hset("hub:npcs", uuid.toString(), json);
     }
 
     public void removeNPC(UUID uuid)
     {
-        SamaGamesAPI.get().getResource().hdel("lobby:npcs", uuid.toString());
+        SamaGamesAPI.get().getResource().hdel("hub:npcs", uuid.toString());
     }
 
     public void placeNPCS()
@@ -88,9 +87,9 @@ public class NPCManager extends AbstractManager
         {
             World craftbukkitWorld = ((CraftWorld) npc.getLocation().getWorld()).getHandle();
 
-            CustomEntityVillager villager = new CustomEntityVillager(craftbukkitWorld, npc.getLocation());
-            craftbukkitWorld.addEntity(villager, CreatureSpawnEvent.SpawnReason.CUSTOM);
-            villager.getBukkitEntity().teleport(npc.getLocation());
+            CustomEntityNPC entityNPC = new CustomEntityNPC(npc.getProperties(), npc.getLocation());
+            craftbukkitWorld.addEntity(entityNPC, CreatureSpawnEvent.SpawnReason.CUSTOM);
+            entityNPC.getBukkitEntity().teleport(npc.getLocation());
 
             ArrayList<String> lines = new ArrayList<>();
             lines.addAll(Arrays.asList(npc.getName().split("@")));
@@ -104,8 +103,7 @@ public class NPCManager extends AbstractManager
             hologram.setLocation(npc.getLocation().clone().add(0.0D, 2.0D, 0.0D));
             npc.setHologramID(Hub.getInstance().getHologramManager().registerHologram(hologram));
 
-            ((Villager) villager.getBukkitEntity()).setProfession(npc.getProfession());
-            villager.getBukkitEntity().setMetadata("npc-id", new FixedMetadataValue(Hub.getInstance(), npc.getID()));
+            entityNPC.getBukkitEntity().setMetadata("npc-id", new FixedMetadataValue(Hub.getInstance(), npc.getID()));
 
             Hub.getInstance().log(this, Level.INFO, "Placed NPC at [" + npc.getLocation().getBlockX() + "] [" + npc.getLocation().getBlockY() + "] [" + npc.getLocation().getBlockZ() + "]");
         }
@@ -129,13 +127,12 @@ public class NPCManager extends AbstractManager
 
         for(NPC npc : this.npcs.values())
         {
-            StringBuilder npcInfos = new StringBuilder();
-            npcInfos.append(ChatColor.DARK_GRAY + "[" + ChatColor.GRAY).append(npc.getID().toString()).append(ChatColor.DARK_GRAY + "] ");
-            npcInfos.append(ChatColor.DARK_GRAY + "[" + ChatColor.GRAY).append(npc.getName()).append(ChatColor.DARK_GRAY + "] ");
-            npcInfos.append(ChatColor.DARK_GRAY + "[" + ChatColor.GRAY).append(npc.getLocation().getBlockX() + ";" + npc.getLocation().getBlockY() + ";" + npc.getLocation().getBlockZ()).append(ChatColor.DARK_GRAY + "] ");
-            npcInfos.append(ChatColor.DARK_GRAY + "[" + ChatColor.GRAY).append(npc.getAction().getClass().getSimpleName()).append(ChatColor.DARK_GRAY + "] ");
-
-            player.sendMessage(npcInfos.toString());
+            player.sendMessage(ChatColor.DARK_GRAY + "{");
+            player.sendMessage(ChatColor.DARK_GRAY + "[" + ChatColor.GRAY + npc.getID().toString() + ChatColor.DARK_GRAY + "] ");
+            player.sendMessage(ChatColor.DARK_GRAY + "[" + ChatColor.GRAY + ChatColor.stripColor(npc.getName()) + ChatColor.DARK_GRAY + "] ");
+            player.sendMessage(ChatColor.DARK_GRAY + "[" + ChatColor.GRAY + npc.getLocation().getBlockX() + ";" + npc.getLocation().getBlockY() + ";" + npc.getLocation().getBlockZ() + ChatColor.DARK_GRAY + "] ");
+            player.sendMessage(ChatColor.DARK_GRAY + "[" + ChatColor.GRAY + npc.getAction().getClass().getSimpleName() + ChatColor.DARK_GRAY + "] ");
+            player.sendMessage(ChatColor.DARK_GRAY + "}");
         }
     }
 

@@ -2,7 +2,6 @@ package net.samagames.hub.npcs;
 
 import net.samagames.hub.npcs.actions.AbstractNPCAction;
 import org.bukkit.Location;
-import org.bukkit.entity.Villager;
 
 import java.util.UUID;
 
@@ -10,25 +9,25 @@ public class NPC
 {
     private UUID id;
     private String name;
-    private Villager.Profession profession;
+    private NPCProperties properties;
     private Location location;
     private UUID hologramID;
     private AbstractNPCAction action;
 
-    public NPC(UUID id, String name, Villager.Profession profession, Location location, AbstractNPCAction action)
+    public NPC(UUID id, String name, NPCProperties properties, Location location, AbstractNPCAction action)
     {
         this.id = id;
         this.name = name;
-        this.profession = profession;
+        this.properties = properties;
         this.location = location;
         this.action = action;
     }
 
-    public NPC(UUID id, String name, Villager.Profession profession, Location location, String actionClassName)
+    public NPC(UUID id, String name, NPCProperties properties, Location location, String actionClassName)
     {
         this.id = id;
         this.name = name;
-        this.profession = profession;
+        this.properties = properties;
         this.location = location;
 
         AbstractNPCAction action = null;
@@ -61,9 +60,9 @@ public class NPC
         return this.name;
     }
 
-    public Villager.Profession getProfession()
+    public NPCProperties getProperties()
     {
-        return this.profession;
+        return this.properties;
     }
 
     public Location getLocation()

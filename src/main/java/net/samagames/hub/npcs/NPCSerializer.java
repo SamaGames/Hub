@@ -1,9 +1,6 @@
 package net.samagames.hub.npcs;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
+import com.google.gson.*;
 
 import java.lang.reflect.Type;
 
@@ -16,7 +13,7 @@ public class NPCSerializer implements JsonSerializer<NPC>
 
         json.addProperty("id", npc.getID().toString());
         json.addProperty("name", npc.getName());
-        json.addProperty("profession", npc.getProfession().name());
+        json.addProperty("properties", new Gson().toJson(npc.getProperties()));
 
         JsonObject jsonLocation = new JsonObject();
         jsonLocation.addProperty("x", npc.getLocation().getBlockX());
