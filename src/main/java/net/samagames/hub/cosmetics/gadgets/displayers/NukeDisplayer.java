@@ -139,10 +139,10 @@ public class NukeDisplayer extends AbstractDisplayer
                     ocelot.remove();
                 }, 20L * 5);
 
-                ParticleEffect.FLAME.display(0, 1.5F, 0, 0, 3, baseLocation.clone().subtract(2.0D, 0.0D, 0.0D).add(0.0D, 0.0D, 2.0D), 100.0D);
-                ParticleEffect.FLAME.display(0, 1.5F, 0, 0, 3, baseLocation.clone().subtract(2.0D, 0.0D, 2.0D), 100.0D);
-                ParticleEffect.FLAME.display(0, 1.5F, 0, 0, 3, baseLocation.clone().add(2.0D, 0.0D, 2.0D), 100.0D);
-                ParticleEffect.FLAME.display(0, 1.5F, 0, 0, 3, baseLocation.clone().add(2.0D, 0.0D, 0.0D).subtract(0.0D, 0.0D, 2.0D), 100.0D);
+                ParticleEffect.FLAME.display(0.5F, 1.5F, 0.5F, 0, 5, baseLocation.clone().subtract(2.0D, 0.0D, 0.0D).add(0.0D, 0.0D, 2.0D).add(0.0D, 0.0D, 0.3D), 100.0D);
+                ParticleEffect.FLAME.display(0.5F, 1.5F, 0.5F, 0, 5, baseLocation.clone().subtract(2.0D, 0.0D, 2.0D).add(0.0D, 0.0D, 0.3D), 100.0D);
+                ParticleEffect.FLAME.display(0.5F, 1.5F, 0.5F, 0, 5, baseLocation.clone().add(2.0D, 0.0D, 2.0D).add(0.0D, 0.0D, 0.3D), 100.0D);
+                ParticleEffect.FLAME.display(0.5F, 1.5F, 0.5F, 0, 5, baseLocation.clone().add(2.0D, 0.0D, 0.0D).subtract(0.0D, 0.0D, 2.0D).add(0.0D, 0.0D, 0.3D), 100.0D);
             }
         }, 1L, 1L);
 
