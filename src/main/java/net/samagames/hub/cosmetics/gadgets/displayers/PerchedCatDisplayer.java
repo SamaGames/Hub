@@ -65,8 +65,8 @@ public class PerchedCatDisplayer extends AbstractDisplayer
             {
                 this.playerTargeted = with.getUniqueId();
 
-                this.playerWasFlying = this.player.isFlying();
-                this.targetWasFlying = ((Player) with).isFlying();
+                this.playerWasFlying = this.player.getAllowFlight();
+                this.targetWasFlying = ((Player) with).getAllowFlight();
 
                 this.player.setFlying(false);
                 this.player.setAllowFlight(false);
@@ -85,13 +85,13 @@ public class PerchedCatDisplayer extends AbstractDisplayer
                 {
                     Bukkit.broadcastMessage(this.tag + ChatColor.GOLD + this.player.getName() + ChatColor.YELLOW + " remporte le duel contre " + ChatColor.GOLD + with.getName() + ChatColor.YELLOW + " !");
 
-                    if(Bukkit.getPlayer(this.player.getUniqueId()) != null)
+                    if (Bukkit.getPlayer(this.player.getUniqueId()) != null)
                     {
                         this.player.playSound(this.player.getLocation(), Sound.CAT_MEOW, 1.0F, 1.0F);
                         this.player.setAllowFlight(this.playerWasFlying);
                     }
 
-                    if(Bukkit.getPlayer(with.getUniqueId()) != null)
+                    if (Bukkit.getPlayer(with.getUniqueId()) != null)
                         ((Player) with).setAllowFlight(this.targetWasFlying);
 
                     this.waitingSecondInteraction = false;
