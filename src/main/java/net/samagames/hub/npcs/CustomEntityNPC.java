@@ -9,30 +9,31 @@ import net.samagames.api.SamaGamesAPI;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_8_R2.CraftWorld;
 import org.bukkit.craftbukkit.v1_8_R2.inventory.CraftItemStack;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
 public class CustomEntityNPC extends EntityPlayer
 {
     private final Location location;
 
-    public CustomEntityNPC(NPCProperties properties, Location location)
+    public CustomEntityNPC(NPC npc, Location location)
     {
-        this(((CraftWorld) location.getWorld()).getHandle(), new GameProfile(properties.getSkin(), SamaGamesAPI.get().getUUIDTranslator().getName(properties.getSkin())), properties, location);
+        this(((CraftWorld) location.getWorld()).getHandle(), new GameProfile(npc.getOwner(), SamaGamesAPI.get().getUUIDTranslator().getName(npc.getOwner())), npc.getArmor(), npc.getItemInHand(), location);
     }
 
-    public CustomEntityNPC(WorldServer world, GameProfile profile, NPCProperties properties, Location location)
+    public CustomEntityNPC(WorldServer world, GameProfile profile, ItemStack[] armor, ItemStack itemInHand, Location location)
     {
         super(world.getMinecraftServer(), world, profile, new PlayerInteractManager(world));
 
         net.minecraft.server.v1_8_R2.ItemStack[] armorNMS = new net.minecraft.server.v1_8_R2.ItemStack[4];
-        armorNMS[0] = CraftItemStack.asNMSCopy(properties.getArmor()[0]);
-        armorNMS[1] = CraftItemStack.asNMSCopy(properties.getArmor()[1]);
-        armorNMS[2] = CraftItemStack.asNMSCopy(properties.getArmor()[2]);
-        armorNMS[3] = CraftItemStack.asNMSCopy(properties.getArmor()[3]);
+        armorNMS[0] = CraftItemStack.asNMSCopy(armor[0]);
+        armorNMS[1] = CraftItemStack.asNMSCopy(armor[1]);
+        armorNMS[2] = CraftItemStack.asNMSCopy(armor[2]);
+        armorNMS[3] = CraftItemStack.asNMSCopy(armor[3]);
 
         this.location = location;
         this.inventory.armor = armorNMS;
-        this.inventory.items[0] = CraftItemStack.asNMSCopy(properties.getItemInHand());
+        this.inventory.items[0] = CraftItemStack.asNMSCopy(itemInHand);
     }
     
     @Override

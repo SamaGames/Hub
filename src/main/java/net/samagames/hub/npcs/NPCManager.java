@@ -9,7 +9,6 @@ import net.samagames.hub.common.managers.AbstractManager;
 import net.samagames.tools.holograms.Hologram;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_8_R2.CraftWorld;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -63,31 +62,13 @@ public class NPCManager extends AbstractManager
         this.placeNPCS();
     }
 
-    public void addNPC(String name, NPCProperties properties, Location location, String actionClassName)
-    {
-        UUID uuid = UUID.randomUUID();
-        NPC npc = new NPC(uuid, ChatColor.translateAlternateColorCodes('&', name), properties, location, actionClassName);
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        gsonBuilder.registerTypeAdapter(NPC.class, new NPCSerializer());
-        gsonBuilder.setPrettyPrinting();
-        Gson gson = gsonBuilder.create();
-        String json = gson.toJson(npc);
-
-        SamaGamesAPI.get().getResource().hset("hub:npcs", uuid.toString(), json);
-    }
-
-    public void removeNPC(UUID uuid)
-    {
-        SamaGamesAPI.get().getResource().hdel("hub:npcs", uuid.toString());
-    }
-
     public void placeNPCS()
     {
         for(NPC npc : this.npcs.values())
         {
             World craftbukkitWorld = ((CraftWorld) npc.getLocation().getWorld()).getHandle();
 
-            CustomEntityNPC entityNPC = new CustomEntityNPC(npc.getProperties(), npc.getLocation());
+            CustomEntityNPC entityNPC = new CustomEntityNPC(npc, npc.getLocation());
             craftbukkitWorld.addEntity(entityNPC, CreatureSpawnEvent.SpawnReason.CUSTOM);
             entityNPC.getBukkitEntity().teleport(npc.getLocation());
 
