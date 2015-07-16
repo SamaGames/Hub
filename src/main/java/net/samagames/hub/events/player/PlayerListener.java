@@ -249,7 +249,7 @@ public class PlayerListener implements Listener
 
             if(Hub.getInstance().getCosmeticManager().getGadgetManager().hasGadget((Player) event.getDamager()))
             {
-                Hub.getInstance().getCosmeticManager().getGadgetManager().getPlayerGadget((Player) event.getDamager()).handleInteraction(event.getDamager(), event.getDamager());
+                Hub.getInstance().getCosmeticManager().getGadgetManager().getPlayerGadget((Player) event.getDamager()).handleInteraction(event.getDamager(), event.getEntity());
             }
             else if(Hub.getInstance().getCosmeticManager().getGadgetManager().hasGadget((Player) event.getEntity()))
             {
