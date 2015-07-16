@@ -35,6 +35,8 @@ public class DiscoBombDisplayer extends AbstractDisplayer
     @Override
     public void display()
     {
+        Hub.getInstance().getGuiManager().closeGui(this.player);
+
         for (Location block : this.blocksUsed.keySet())
         {
             block.getBlock().setType(this.blocksUsed.get(block).getType());

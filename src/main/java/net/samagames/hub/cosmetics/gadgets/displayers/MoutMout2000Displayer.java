@@ -29,6 +29,8 @@ public class MoutMout2000Displayer extends AbstractDisplayer
     @Override
     public void display()
     {
+        Hub.getInstance().getGuiManager().closeGui(this.player);
+
         World craftbukkitWorld = ((CraftWorld) this.player.getWorld()).getHandle();
         final MoutMout2000Sheep craftbukkitSheep = new MoutMout2000Sheep(craftbukkitWorld);
         craftbukkitSheep.setPosition(player.getLocation().getX(), player.getLocation().getY(), player.getLocation().getZ());
