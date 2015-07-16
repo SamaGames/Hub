@@ -1,5 +1,6 @@
 package net.samagames.hub.cosmetics.gadgets.displayers;
 
+import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
@@ -9,7 +10,10 @@ public class RandomPortalDisplayer extends AbstractDisplayer
     {
         super(player);
 
-        //MET ICI LA BASE LOCATION PD TA MER
+        Location location = player.getLocation().getBlock().getLocation();
+        double angleRadian = Math.toRadians(player.getLocation().getYaw());
+        location.add(Math.cos(angleRadian) * 3,0, Math.sin(angleRadian) * 3);
+
 
     }
 
