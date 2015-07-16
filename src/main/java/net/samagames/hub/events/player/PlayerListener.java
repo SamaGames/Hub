@@ -246,16 +246,15 @@ public class PlayerListener implements Listener
                     Hub.getInstance().getGuiManager().openGui(player, new GuiClickMe(target));
                 }
             });
-        }
 
-        if(event.getDamager() instanceof Player && Hub.getInstance().getCosmeticManager().getGadgetManager().hasGadget((Player) event.getDamager()))
-        {
-            Hub.getInstance().getCosmeticManager().getGadgetManager().getPlayerGadget((Player) event.getDamager()).handleInteraction(event.getEntity());
-        }
-
-        if(event.getEntity() instanceof Player && Hub.getInstance().getCosmeticManager().getGadgetManager().hasGadget((Player) event.getEntity()))
-        {
-            Hub.getInstance().getCosmeticManager().getGadgetManager().getPlayerGadget((Player) event.getEntity()).handleInteraction(event.getDamager());
+            if(Hub.getInstance().getCosmeticManager().getGadgetManager().hasGadget((Player) event.getDamager()))
+            {
+                Hub.getInstance().getCosmeticManager().getGadgetManager().getPlayerGadget((Player) event.getDamager()).handleInteraction(event.getDamager(), event.getDamager());
+            }
+            else if(Hub.getInstance().getCosmeticManager().getGadgetManager().hasGadget((Player) event.getEntity()))
+            {
+                Hub.getInstance().getCosmeticManager().getGadgetManager().getPlayerGadget((Player) event.getEntity()).handleInteraction(event.getDamager(), event.getEntity());
+            }
         }
     }
 
