@@ -1,12 +1,14 @@
 package net.samagames.hub.cosmetics.gadgets.displayers;
 
 import net.samagames.hub.Hub;
+import net.samagames.hub.utils.MusicUtils;
 import net.samagames.hub.utils.SimpleBlock;
 import net.samagames.tools.ParticleEffect;
 import org.bukkit.Bukkit;
 import org.bukkit.DyeColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
 import java.util.Random;
@@ -44,6 +46,8 @@ public class DiscoBombDisplayer extends AbstractDisplayer
             }
         }
 
+        MusicUtils.playRecord(this.baseLocation, MusicUtils.randomMusic());
+
         this.loopId = Bukkit.getScheduler().scheduleSyncRepeatingTask(Hub.getInstance(), new Runnable()
         {
             int timer = 0;
@@ -80,14 +84,17 @@ public class DiscoBombDisplayer extends AbstractDisplayer
         }, 1L, 1L);
     }
 
+    @Override
+    public void handleInteraction(Entity with) {}
+
     public boolean canUse()
     {
         return true;
-        //TODO
-        //return Plugin.noteBlockMachine.getCurrentSong() != null;
     }
 
-    private void callback() {
+    private void callback()
+    {
         Bukkit.getScheduler().cancelTask(this.loopId);
+        MusicUtils.stopRecord(this.baseLocation);
     }
 }

@@ -2,6 +2,7 @@ package net.samagames.hub.npcs;
 
 import net.samagames.hub.npcs.actions.AbstractNPCAction;
 import org.bukkit.Location;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.UUID;
 
@@ -9,25 +10,31 @@ public class NPC
 {
     private UUID id;
     private String name;
-    private NPCProperties properties;
+    private UUID owner;
+    private ItemStack[] armor;
+    private ItemStack itemInHand;
     private Location location;
     private UUID hologramID;
     private AbstractNPCAction action;
 
-    public NPC(UUID id, String name, NPCProperties properties, Location location, AbstractNPCAction action)
+    public NPC(UUID id, String name, UUID owner, ItemStack[] armor, ItemStack itemInHand, Location location, AbstractNPCAction action)
     {
         this.id = id;
         this.name = name;
-        this.properties = properties;
+        this.owner = owner;
+        this.armor = armor;
+        this.itemInHand = itemInHand;
         this.location = location;
         this.action = action;
     }
 
-    public NPC(UUID id, String name, NPCProperties properties, Location location, String actionClassName)
+    public NPC(UUID id, String name, UUID owner, ItemStack[] armor, ItemStack itemInHand, Location location, String actionClassName)
     {
         this.id = id;
         this.name = name;
-        this.properties = properties;
+        this.owner = owner;
+        this.armor = armor;
+        this.itemInHand = itemInHand;
         this.location = location;
 
         AbstractNPCAction action = null;
@@ -60,9 +67,19 @@ public class NPC
         return this.name;
     }
 
-    public NPCProperties getProperties()
+    public UUID getOwner()
     {
-        return this.properties;
+        return this.owner;
+    }
+
+    public ItemStack[] getArmor()
+    {
+        return this.armor;
+    }
+
+    public ItemStack getItemInHand()
+    {
+        return this.itemInHand;
     }
 
     public Location getLocation()

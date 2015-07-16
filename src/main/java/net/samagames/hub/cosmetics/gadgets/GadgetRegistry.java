@@ -5,6 +5,7 @@ import net.samagames.hub.cosmetics.gadgets.displayers.*;
 import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
+import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 
 public class GadgetRegistry extends AbstractCosmeticRegistry<GadgetCosmetic>
@@ -14,10 +15,7 @@ public class GadgetRegistry extends AbstractCosmeticRegistry<GadgetCosmetic>
     {
         GadgetCosmetic discoBombGadget = new GadgetCosmetic("discobomb", "Bombe Disco", new ItemStack(Material.STAINED_GLASS, 1, DyeColor.PURPLE.getData()), new String[] {
                 "Exprimez vos talents de danseur sous",
-                "les feux de votre Bombe Disco !",
-                "",
-                ChatColor.RESET + "" + ChatColor.RED + "Ne fonctionne qu'en présence",
-                ChatColor.RESET + "" + ChatColor.RED + "de musique !"
+                "les feux de votre Bombe Disco !"
         }, DiscoBombDisplayer.class, 30);
         discoBombGadget.buyableWithStars(2500);
 
@@ -45,15 +43,22 @@ public class GadgetRegistry extends AbstractCosmeticRegistry<GadgetCosmetic>
                 ChatColor.MAGIC + "L'avenir du monde" + ChatColor.RESET + ChatColor.GRAY + " meow " + ChatColor.MAGIC + "entre",
                 ChatColor.MAGIC + "vos mains !"
         }, NukeDisplayer.class, 60);
-        nukeGadget.buyableWithStars(Integer.MAX_VALUE);
+        nukeGadget.permissionNeeded("hub.gadgets.nuke");
         nukeGadget.permissionNeededToView("hub.gadgets.nuke");
 
         GadgetCosmetic fakeCakeGadget = new GadgetCosmetic("cake", "Gâteau fantôme", new ItemStack(Material.CAKE, 1), new String[] {
                 "La légende raconte que ce gâteau",
                 "n'apparait que pendant la pleine",
                 "lune, personne ne l'a jamais vu..."
-        }, CakeDisplayer.class, 30);
+        }, CakeDisplayer.class, 40);
         fakeCakeGadget.buyableWithStars(2500);
+
+        GadgetCosmetic perchedCatGadget = new GadgetCosmetic("catrun", "Chat perché !", new ItemStack(Material.MONSTER_EGG, 1, EntityType.OCELOT.getTypeId()), new String[] {
+                "Défiez en duel un joueur et faite",
+                "en sorte d'échapper à son imparable",
+                "poing qui vous ferez perdre le duel !"
+        }, PerchedCatDisplayer.class, 40);
+        perchedCatGadget.buyableWithStars(2500);
 
         this.registerElement(discoBombGadget);
         this.registerElement(moutMout2000Gadget);
@@ -61,5 +66,6 @@ public class GadgetRegistry extends AbstractCosmeticRegistry<GadgetCosmetic>
         this.registerElement(trampoSlimeGadget);
         this.registerElement(nukeGadget);
         this.registerElement(fakeCakeGadget);
+        this.registerElement(perchedCatGadget);
     }
 }

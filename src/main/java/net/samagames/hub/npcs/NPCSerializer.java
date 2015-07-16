@@ -1,6 +1,7 @@
 package net.samagames.hub.npcs;
 
 import com.google.gson.*;
+import net.samagames.hub.utils.ItemStackUtils;
 
 import java.lang.reflect.Type;
 
@@ -13,7 +14,15 @@ public class NPCSerializer implements JsonSerializer<NPC>
 
         json.addProperty("id", npc.getID().toString());
         json.addProperty("name", npc.getName());
-        json.addProperty("properties", new Gson().toJson(npc.getProperties()));
+        json.addProperty("owner", npc.getOwner().toString());
+
+        JsonArray jsonArmor = new JsonArray();
+
+        for(int i = 0; i < 4; i++)
+            jsonArmor.add(new JsonPrimitive(ItemStackUtils.isToStr(npc.getArmor()[i])));
+
+        json.add("armor", jsonArmor);
+        json.addProperty("item-in-hand", ItemStackUtils.isToStr(npc.getItemInHand()));
 
         JsonObject jsonLocation = new JsonObject();
         jsonLocation.addProperty("x", npc.getLocation().getBlockX());

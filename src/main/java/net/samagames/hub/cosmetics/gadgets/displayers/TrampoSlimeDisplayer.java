@@ -5,6 +5,7 @@ import net.samagames.hub.utils.FireworkUtils;
 import net.samagames.hub.utils.SimpleBlock;
 import net.samagames.tools.ParticleEffect;
 import org.bukkit.*;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -112,6 +113,9 @@ public class TrampoSlimeDisplayer extends AbstractDisplayer
             }
         }, 1L, 1L);
     }
+
+    @Override
+    public void handleInteraction(Entity with) {}
 
     public boolean canUse()
     {

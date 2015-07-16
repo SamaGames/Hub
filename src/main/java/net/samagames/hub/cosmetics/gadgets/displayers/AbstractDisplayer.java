@@ -3,6 +3,7 @@ package net.samagames.hub.cosmetics.gadgets.displayers;
 import net.samagames.hub.Hub;
 import net.samagames.hub.utils.SimpleBlock;
 import org.bukkit.Location;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -73,6 +74,7 @@ public abstract class AbstractDisplayer
     }
 
     public abstract void display();
+    public abstract void handleInteraction(Entity with);
     public abstract boolean canUse();
 
     public HashMap<Location, SimpleBlock> getBlocksUsed()

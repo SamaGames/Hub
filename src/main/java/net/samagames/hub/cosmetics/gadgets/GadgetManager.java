@@ -22,6 +22,7 @@ public class GadgetManager extends AbstractCosmeticManager<GadgetCosmetic>
 {
     private final HashMap<UUID, Integer> cooldowns;
     private final HashMap<UUID, Integer> loopsIds;
+    private final HashMap<UUID, AbstractDisplayer> playersGadgets;
     private final ArrayList<Location> blocksUsed;
     public Field ageField;
 
@@ -31,6 +32,7 @@ public class GadgetManager extends AbstractCosmeticManager<GadgetCosmetic>
 
         this.cooldowns = new HashMap<>();
         this.loopsIds = new HashMap<>();
+        this.playersGadgets = new HashMap<>();
         this.blocksUsed = new ArrayList<>();
 
         this.patch();
@@ -76,7 +78,10 @@ public class GadgetManager extends AbstractCosmeticManager<GadgetCosmetic>
                 }
 
                 if (flag && flag1)
+                {
                     displayer.display();
+                    this.playersGadgets.put(player.getUniqueId(), displayer);
+                }
             }
             catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException ex)
             {
@@ -148,6 +153,14 @@ public class GadgetManager extends AbstractCosmeticManager<GadgetCosmetic>
         displayer.getBlocksUsed().keySet().forEach(this.blocksUsed::remove);
     }
 
+    public AbstractDisplayer getPlayerGadget(Player player)
+    {
+        if(this.playersGadgets.containsKey(player.getUniqueId()))
+            return this.playersGadgets.get(player.getUniqueId());
+        else
+            return null;
+    }
+
     public int getCooldown(Player player)
     {
         if(this.cooldowns.containsKey(player.getUniqueId()))
@@ -162,6 +175,9 @@ public class GadgetManager extends AbstractCosmeticManager<GadgetCosmetic>
 
     public boolean canUse(Player player)
     {
+        if(this.hasGadget(player) && !SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "hub.gadgets.cooldownbypass"))
+            return false;
+
         if(this.cooldowns.containsKey(player.getUniqueId()))
         {
             if(!SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "hub.gadgets.cooldownbypass"))
@@ -186,6 +202,11 @@ public class GadgetManager extends AbstractCosmeticManager<GadgetCosmetic>
         {
             return true;
         }
+    }
+
+    public boolean hasGadget(Player player)
+    {
+        return this.playersGadgets.containsKey(player.getUniqueId());
     }
 
     @Override

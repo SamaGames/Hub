@@ -6,6 +6,7 @@ import net.samagames.hub.utils.SimpleBlock;
 import net.samagames.tools.ColorUtils;
 import net.samagames.tools.ParticleEffect;
 import org.bukkit.*;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Ocelot;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -92,6 +93,9 @@ public class NukeDisplayer extends AbstractDisplayer
         }, 20L, 20L);
     }
 
+    @Override
+    public void handleInteraction(Entity with) {}
+
     public void timeToSendCatInTheHairLikeTheHandsInTheFamousSing()
     {
         this.loopFirst.cancel();
@@ -139,10 +143,10 @@ public class NukeDisplayer extends AbstractDisplayer
                     ocelot.remove();
                 }, 20L * 5);
 
-                ParticleEffect.FLAME.display(0.5F, 1.5F, 0.5F, 0, 5, baseLocation.clone().subtract(2.0D, 0.0D, 0.0D).add(0.0D, 0.0D, 2.0D).add(0.0D, 0.0D, 0.3D), 100.0D);
-                ParticleEffect.FLAME.display(0.5F, 1.5F, 0.5F, 0, 5, baseLocation.clone().subtract(2.0D, 0.0D, 2.0D).add(0.0D, 0.0D, 0.3D), 100.0D);
-                ParticleEffect.FLAME.display(0.5F, 1.5F, 0.5F, 0, 5, baseLocation.clone().add(2.0D, 0.0D, 2.0D).add(0.0D, 0.0D, 0.3D), 100.0D);
-                ParticleEffect.FLAME.display(0.5F, 1.5F, 0.5F, 0, 5, baseLocation.clone().add(2.0D, 0.0D, 0.0D).subtract(0.0D, 0.0D, 2.0D).add(0.0D, 0.0D, 0.3D), 100.0D);
+                ParticleEffect.FLAME.display(0, 1.5F, 0, 0, 5, baseLocation.clone().subtract(2.0D, 0.0D, 0.0D).add(0.0D, 0.0D, 2.0D).add(0.0D, 0.0D, 0.3D), 100.0D);
+                ParticleEffect.FLAME.display(0, 1.5F, 0, 0, 5, baseLocation.clone().subtract(2.0D, 0.0D, 2.0D).add(0.0D, 0.0D, 0.3D), 100.0D);
+                ParticleEffect.FLAME.display(0, 1.5F, 0, 0, 5, baseLocation.clone().add(2.0D, 0.0D, 2.0D).add(0.0D, 0.0D, 0.3D), 100.0D);
+                ParticleEffect.FLAME.display(0, 1.5F, 0, 0, 5, baseLocation.clone().add(2.0D, 0.0D, 0.0D).subtract(0.0D, 0.0D, 2.0D).add(0.0D, 0.0D, 0.3D), 100.0D);
             }
         }, 1L, 1L);
 

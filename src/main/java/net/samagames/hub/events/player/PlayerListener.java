@@ -236,17 +236,26 @@ public class PlayerListener implements Listener
 
             Bukkit.getScheduler().runTaskAsynchronously(Hub.getInstance(), () ->
             {
+                Player target = (Player) event.getEntity();
+
                 if(SamaGamesAPI.get().getSettingsManager().isEnabled(player.getUniqueId(), "clickme-punch", true))
                 {
-                    Player target = (Player) event.getEntity();
-
                     if (!SamaGamesAPI.get().getSettingsManager().isEnabled(target.getUniqueId(), "clickme", false))
                         return;
 
                     Hub.getInstance().getGuiManager().openGui(player, new GuiClickMe(target));
                 }
             });
+        }
 
+        if(event.getDamager() instanceof Player && Hub.getInstance().getCosmeticManager().getGadgetManager().hasGadget((Player) event.getDamager()))
+        {
+            Hub.getInstance().getCosmeticManager().getGadgetManager().getPlayerGadget((Player) event.getDamager()).handleInteraction(event.getEntity());
+        }
+
+        if(event.getEntity() instanceof Player && Hub.getInstance().getCosmeticManager().getGadgetManager().hasGadget((Player) event.getEntity()))
+        {
+            Hub.getInstance().getCosmeticManager().getGadgetManager().getPlayerGadget((Player) event.getEntity()).handleInteraction(event.getDamager());
         }
     }
 
@@ -264,8 +273,8 @@ public class PlayerListener implements Listener
 
                 Bukkit.getScheduler().runTaskAsynchronously(Hub.getInstance(), () ->
                 {
-                    if(Hub.getInstance().getNPCManager().hasNPC(UUID.fromString(event.getRightClicked().getMetadata("npc-id").get(0).asString())))
-                        if(Hub.getInstance().getNPCManager().canTalk(event.getPlayer()))
+                    if (Hub.getInstance().getNPCManager().hasNPC(UUID.fromString(event.getRightClicked().getMetadata("npc-id").get(0).asString())))
+                        if (Hub.getInstance().getNPCManager().canTalk(event.getPlayer()))
                             Hub.getInstance().getNPCManager().getNPCByID(UUID.fromString(event.getRightClicked().getMetadata("npc-id").get(0).asString())).getAction().execute(event.getPlayer());
                 });
             }

@@ -49,105 +49,94 @@ public class CakeDisplayer extends AbstractDisplayer
 
 		getNearbyPlayers(this.centerLoc, 5).stream().filter(entity -> entity instanceof Player).forEach(entity -> entity.setVelocity(new Vector(0, 2, 0)));
 
-		this.loopId = Bukkit.getScheduler().scheduleSyncRepeatingTask(Hub.getInstance(), new Runnable()
-		{
-			int times = 0;
+		this.loopId = Bukkit.getScheduler().scheduleSyncRepeatingTask(Hub.getInstance(), new Runnable() {
+            int times = 0;
 
-			@Override
-			public void run()
-			{
-				for (int i = 0; i <= 5; i++)
-					centerLoc.getWorld().playEffect(centerLoc.clone().add((random.nextDouble() * 5) - 2.5, (random.nextDouble() * 4) - 1, (random.nextDouble() * 5) - 2.5), Effect.FLYING_GLYPH, 5);
+            @Override
+            public void run() {
+                for (int i = 0; i <= 5; i++)
+                    centerLoc.getWorld().playEffect(centerLoc.clone().add((random.nextDouble() * 5) - 2.5, (random.nextDouble() * 4) - 1, (random.nextDouble() * 5) - 2.5), Effect.FLYING_GLYPH, 5);
 
-				for (Entity entity : getNearbyPlayers(centerLoc, 5))
-				{
-					if (entity instanceof Player)
-					{
-						Player player = (Player) entity;
-						double pw = 8;
-						double xa = centerLoc.getX();
-						double ya = centerLoc.getZ();
-						double xb = player.getLocation().getX();
-						double yb = player.getLocation().getZ();
-						double m = (ya - yb) / (xa - xb);
-						double p = ya - m * xa;
-						double alpha = Math.atan(m * xa + p);
-						double xc1 = xb + pw * Math.cos(alpha);
-						double xc2 = xb - pw * Math.cos(alpha);
-						double yc;
-						double xc;
+                for (Entity entity : getNearbyPlayers(centerLoc, 5)) {
+                    if (entity instanceof Player) {
+                        Player player = (Player) entity;
+                        double pw = 8;
+                        double xa = centerLoc.getX();
+                        double ya = centerLoc.getZ();
+                        double xb = player.getLocation().getX();
+                        double yb = player.getLocation().getZ();
+                        double m = (ya - yb) / (xa - xb);
+                        double p = ya - m * xa;
+                        double alpha = Math.atan(m * xa + p);
+                        double xc1 = xb + pw * Math.cos(alpha);
+                        double xc2 = xb - pw * Math.cos(alpha);
+                        double yc;
+                        double xc;
 
-						if (Math.abs(xa - xc1) > Math.abs(xa - xc2))
-						{
-							yc = m * xc1 + p;
-							xc = xc1;
-						}
-						else
-						{
-							yc = m * xc2 + p;
-							xc = xc2;
-						}
+                        if (Math.abs(xa - xc1) > Math.abs(xa - xc2)) {
+                            yc = m * xc1 + p;
+                            xc = xc1;
+                        } else {
+                            yc = m * xc2 + p;
+                            xc = xc2;
+                        }
 
-						double a = xc - player.getLocation().getX();
-						double b = yc - player.getLocation().getZ();
+                        double a = xc - player.getLocation().getX();
+                        double b = yc - player.getLocation().getZ();
 
-						if (b > 10)
-							b = 10;
-						else if (b < -10)
-							b = -10;
+                        if (b > 10)
+                            b = 10;
+                        else if (b < -10)
+                            b = -10;
 
-						if (a != 0 && b != 0)
-						{
-							Vector v = new Vector(a / 10, (player.getLocation().getY() - centerLoc.getY()) / 10 + 1, b / 10);
-							player.setVelocity(v);
-							player.playSound(player.getLocation(), Sound.ENDERMAN_TELEPORT, 1F, 2F);
+                        if (a != 0 && b != 0) {
+                            Vector v = new Vector(a / 10, (player.getLocation().getY() - centerLoc.getY()) / 10 + 1, b / 10);
+                            player.setVelocity(v);
+                            player.playSound(player.getLocation(), Sound.ENDERMAN_TELEPORT, 1F, 2F);
 
-							int effect = random.nextInt(3);
+                            int effect = random.nextInt(3);
 
-							switch (effect)
-							{
-								case 0:
-									break;
-								case 1:
-									player.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 120, 0));
-									break;
-								case 2:
-									player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 80, 0));
-									break;
-								case 3:
-									player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 120, 4));
-									break;
-							}
-						}
-					}
-				}
+                            switch (effect) {
+                                case 0:
+                                    break;
+                                case 1:
+                                    player.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 120, 0));
+                                    break;
+                                case 2:
+                                    player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 80, 0));
+                                    break;
+                                case 3:
+                                    player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 120, 4));
+                                    break;
+                            }
+                        }
+                    }
+                }
 
-				if (times == 10 || times == 20 || times == 30 || times == 40 || times == 50 || times == 60)
-				{
-					baseLocation.getWorld().getBlockAt(baseLocation)
-							.setData((byte) (baseLocation.getWorld().getBlockAt(baseLocation).getData() + 1));
-					centerLoc.getWorld().playSound(centerLoc, Sound.BURP, 2, 1);
-				}
-				else if (times == 70)
-				{
-					baseLocation.getWorld().getBlockAt(baseLocation).setType(Material.AIR);
-					baseLocation.getWorld().playSound(baseLocation, Sound.BURP, 2, 1);
-				}
-				else if (times >= 80)
-				{
-					FireworkEffect.Builder builder = FireworkEffect.builder();
-					FireworkEffect effect = builder.flicker(false).trail(false).with(FireworkEffect.Type.BALL_LARGE).withColor(Color.BLUE).withFade(Color.PURPLE).withFlicker().build();
-					FireworkUtils.launchfw(baseLocation, effect);
+                if (times == 10 || times == 20 || times == 30 || times == 40 || times == 50 || times == 60) {
+                    baseLocation.getWorld().getBlockAt(baseLocation)
+                            .setData((byte) (baseLocation.getWorld().getBlockAt(baseLocation).getData() + 1));
+                    centerLoc.getWorld().playSound(centerLoc, Sound.BURP, 2, 1);
+                } else if (times == 70) {
+                    baseLocation.getWorld().getBlockAt(baseLocation).setType(Material.AIR);
+                    baseLocation.getWorld().playSound(baseLocation, Sound.BURP, 2, 1);
+                } else if (times >= 80) {
+                    FireworkEffect.Builder builder = FireworkEffect.builder();
+                    FireworkEffect effect = builder.flicker(false).trail(false).with(FireworkEffect.Type.BALL_LARGE).withColor(Color.BLUE).withFade(Color.PURPLE).withFlicker().build();
+                    FireworkUtils.launchfw(baseLocation, effect);
 
-					restore();
-					end();
-					callback();
-				}
+                    restore();
+                    end();
+                    callback();
+                }
 
-				times++;
-			}
-		}, 5L, 5L);
+                times++;
+            }
+        }, 5L, 5L);
 	}
+
+    @Override
+    public void handleInteraction(Entity with) {}
 
 	public List<Entity> getNearbyPlayers(Location where, int range)
 	{

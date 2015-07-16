@@ -3,10 +3,7 @@ package net.samagames.hub.cosmetics.gadgets.displayers;
 import net.samagames.hub.Hub;
 import org.bukkit.*;
 import org.bukkit.craftbukkit.v1_8_R2.entity.CraftItem;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Firework;
-import org.bukkit.entity.Item;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
@@ -16,7 +13,6 @@ import java.util.Random;
 
 public class ExpressBotaniaDisplayer extends AbstractDisplayer
 {
-    private ItemStack beforeBoots;
     private int loopId;
 
     public ExpressBotaniaDisplayer(Player player)
@@ -36,8 +32,6 @@ public class ExpressBotaniaDisplayer extends AbstractDisplayer
         {
             flowers.add(new ItemStack(Material.RED_ROSE, 1, i));
         }
-
-        this.beforeBoots = this.player.getInventory().getBoots();
 
         Color green = Color.fromRGB(100, 165, 120);
         this.player.getInventory().setHelmet(this.colorArmor(new ItemStack(Material.LEATHER_HELMET, 1), green));
@@ -91,6 +85,9 @@ public class ExpressBotaniaDisplayer extends AbstractDisplayer
         }, 20L, 20L);
     }
 
+    @Override
+    public void handleInteraction(Entity with) {}
+
     public boolean canUse()
     {
         return true;
@@ -102,7 +99,7 @@ public class ExpressBotaniaDisplayer extends AbstractDisplayer
 
         this.player.getInventory().setHelmet(null);
         this.player.getInventory().setLeggings(null);
-        this.player.getInventory().setBoots(this.beforeBoots);
+        this.player.getInventory().setBoots(null);
     }
 
     private ItemStack colorArmor(ItemStack stack, Color color)

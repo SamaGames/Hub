@@ -9,6 +9,7 @@ import org.bukkit.*;
 import org.bukkit.craftbukkit.v1_8_R2.CraftWorld;
 import org.bukkit.craftbukkit.v1_8_R2.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_8_R2.util.UnsafeList;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Sheep;
 import org.bukkit.event.entity.CreatureSpawnEvent;
@@ -78,6 +79,9 @@ public class MoutMout2000Displayer extends AbstractDisplayer
             }
         }, 1L, 1L);
     }
+
+    @Override
+    public void handleInteraction(Entity with) {}
 
     public boolean canUse()
     {
