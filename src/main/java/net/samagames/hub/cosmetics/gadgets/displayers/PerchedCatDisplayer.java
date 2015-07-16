@@ -98,7 +98,7 @@ public class PerchedCatDisplayer extends AbstractDisplayer
                     this.end();
                 }, 20L * 60);
             }
-            else if(this.waitingSecondInteraction && with.getUniqueId().equals(this.playerTargeted))
+            else if(this.waitingSecondInteraction && who.getUniqueId().equals(this.playerTargeted))
             {
                 this.waitingInteractionTask.cancel();
 
