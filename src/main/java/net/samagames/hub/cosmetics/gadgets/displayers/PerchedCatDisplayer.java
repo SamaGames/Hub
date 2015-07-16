@@ -62,6 +62,8 @@ public class PerchedCatDisplayer extends AbstractDisplayer
             if(this.waitingFirstInteraction && !with.getUniqueId().equals(this.player.getUniqueId()))
             {
                 this.playerTargetted = with.getUniqueId();
+                this.player.setFlying(false);
+                ((Player) with).setFlying(false);
 
                 Bukkit.broadcastMessage(this.tag + ChatColor.GOLD + this.player.getName() + ChatColor.YELLOW + " a provoqué " + ChatColor.GOLD + with.getName() + ChatColor.YELLOW + " en duel !");
 
@@ -75,7 +77,7 @@ public class PerchedCatDisplayer extends AbstractDisplayer
                 {
                     Bukkit.broadcastMessage(this.tag + ChatColor.GOLD + this.player.getName() + ChatColor.YELLOW + " remporte le duel contre " + ChatColor.GOLD + with.getName() + ChatColor.YELLOW + " !");
 
-                    if(this.player.isOnline())
+                    if(Bukkit.getPlayer(this.player.getUniqueId()) != null)
                     {
                         this.player.playSound(this.player.getLocation(), Sound.CAT_MEOW, 1.0F, 1.0F);
                         FireworkUtils.launchfw(this.player.getLocation(), FireworkEffect.builder().with(FireworkEffect.Type.STAR).withColor(Color.ORANGE).withFade(Color.YELLOW).withFlicker().build());
@@ -91,7 +93,7 @@ public class PerchedCatDisplayer extends AbstractDisplayer
 
                 Bukkit.broadcastMessage(this.tag + ChatColor.GOLD + with.getName() + ChatColor.YELLOW + " remporte le duel contre " + ChatColor.GOLD + this.player.getName() + ChatColor.YELLOW + " !");
 
-                if(((Player) with).isOnline())
+                if(Bukkit.getPlayer(with.getUniqueId()) != null)
                 {
                     ((Player) with).playSound(with.getLocation(), Sound.CAT_MEOW, 1.0F, 1.0F);
                     FireworkUtils.launchfw(with.getLocation(), FireworkEffect.builder().with(FireworkEffect.Type.STAR).withColor(Color.ORANGE).withFade(Color.YELLOW).withFlicker().build());

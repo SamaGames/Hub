@@ -16,11 +16,13 @@ import java.util.Random;
 public class DiscoBombDisplayer extends AbstractDisplayer
 {
     private int loopId;
+    private boolean music;
 
     public DiscoBombDisplayer(Player player)
     {
         super(player);
 
+        this.music = false;
         this.baseLocation = player.getLocation().add(0.0D, 6.0D, 0.0D);
 
         this.addBlockToUse(this.baseLocation, new SimpleBlock(Material.GLOWSTONE));
@@ -48,7 +50,11 @@ public class DiscoBombDisplayer extends AbstractDisplayer
             }
         }
 
-        MusicUtils.playRecord(this.baseLocation, MusicUtils.randomMusic());
+        if(Hub.getInstance().getCosmeticManager().getJukeboxManager().getCurrentSong() == null)
+        {
+            MusicUtils.playRecord(this.baseLocation, Material.RECORD_6);
+            this.music = true;
+        }
 
         this.loopId = Bukkit.getScheduler().scheduleSyncRepeatingTask(Hub.getInstance(), new Runnable()
         {
@@ -97,6 +103,8 @@ public class DiscoBombDisplayer extends AbstractDisplayer
     private void callback()
     {
         Bukkit.getScheduler().cancelTask(this.loopId);
-        MusicUtils.stopRecord(this.baseLocation);
+
+        if(this.music)
+            MusicUtils.stopRecord(this.baseLocation);
     }
 }
