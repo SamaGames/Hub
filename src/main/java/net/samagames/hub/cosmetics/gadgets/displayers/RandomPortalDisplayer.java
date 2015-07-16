@@ -11,7 +11,20 @@ public class RandomPortalDisplayer extends AbstractDisplayer
         super(player);
 
         Location location = player.getLocation().getBlock().getLocation();
-        double angleRadian = Math.toRadians(player.getLocation().getYaw());
+        float angleDegree = player.getLocation().getYaw();
+        if(angleDegree >= 45 && angleDegree <= 135)
+        {
+            angleDegree = 90;
+        }else if(angleDegree >= 135 && angleDegree <= 225)
+        {
+            angleDegree = 180;
+        }else if(angleDegree >= 225 && angleDegree <= 315)
+        {
+            angleDegree = 270;
+        }else{
+            angleDegree = 0;
+        }
+        double angleRadian = Math.toRadians(angleDegree);
         location.add(Math.cos(angleRadian) * 3,0, Math.sin(angleRadian) * 3);
 
 
