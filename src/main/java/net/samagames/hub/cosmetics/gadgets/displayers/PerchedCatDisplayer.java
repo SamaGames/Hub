@@ -1,9 +1,8 @@
 package net.samagames.hub.cosmetics.gadgets.displayers;
 
 import net.samagames.hub.Hub;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Sound;
+import net.samagames.hub.utils.FireworkUtils;
+import org.bukkit.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
@@ -12,6 +11,8 @@ import java.util.UUID;
 
 public class PerchedCatDisplayer extends AbstractDisplayer
 {
+    private final String tag;
+
     private UUID playerTargetted;
     private BukkitTask waitingTask;
     private BukkitTask waitingInteractionTask;
@@ -21,6 +22,8 @@ public class PerchedCatDisplayer extends AbstractDisplayer
     public PerchedCatDisplayer(Player player)
     {
         super(player);
+
+        this.tag = ChatColor.GOLD + "[" + ChatColor.YELLOW + "Chat perché" + ChatColor.GOLD + "] " + ChatColor.RESET;
 
         this.playerTargetted = null;
         this.waitingTask = null;
@@ -58,16 +61,23 @@ public class PerchedCatDisplayer extends AbstractDisplayer
             {
                 this.playerTargetted = with.getUniqueId();
 
-                this.player.sendMessage(ChatColor.YELLOW + "Vous avez provoqué " + ChatColor.GOLD + with.getName() + ChatColor.YELLOW + "en duel ! Il a " + ChatColor.GOLD + "1 minute" + ChatColor.YELLOW + " pour tenter de vous attraper !");
-                with.sendMessage(ChatColor.RED + "Vous avez été provoqué en duel par " + ChatColor.DARK_RED + this.player.getName() + ChatColor.RED + " essayez de l'attraper en moins d'" + ChatColor.DARK_RED + "1 minute" + ChatColor.RED + " sinon, vous perdez !");
+                Bukkit.broadcastMessage(this.tag + ChatColor.GOLD + this.player.getName() + ChatColor.YELLOW + " à provoqué " + ChatColor.GOLD + with.getName() + ChatColor.YELLOW + " en duel !");
+
+                this.player.playSound(with.getLocation(), Sound.CAT_MEOW, 1.0F, 1.0F);
+                ((Player) with).playSound(with.getLocation(), Sound.CAT_MEOW, 1.0F, 1.0F);
 
                 this.waitingFirstInteraction = false;
                 this.waitingSecondInteraction = true;
 
                 this.waitingInteractionTask = Bukkit.getScheduler().runTaskLaterAsynchronously(Hub.getInstance(), () ->
                 {
-                    this.player.sendMessage(ChatColor.GREEN + "Vous remportez le duel contre " + with.getName() + "!");
-                    with.sendMessage(ChatColor.RED + "Vous perdez le duel contre " + this.player.getName() + "!");
+                    Bukkit.broadcastMessage(this.tag + ChatColor.GOLD + this.player.getName() + ChatColor.YELLOW + " remporte le duel contre " + ChatColor.GOLD + with.getName() + ChatColor.YELLOW + " !");
+
+                    if(this.player.isOnline())
+                    {
+                        this.player.playSound(this.player.getLocation(), Sound.CAT_MEOW, 1.0F, 1.0F);
+                        FireworkUtils.launchfw(this.player.getLocation(), FireworkEffect.builder().with(FireworkEffect.Type.STAR).withColor(Color.ORANGE).withFade(Color.YELLOW).withFlicker().build());
+                    }
 
                     this.waitingSecondInteraction = false;
                     this.end();
@@ -77,8 +87,13 @@ public class PerchedCatDisplayer extends AbstractDisplayer
             {
                 this.waitingInteractionTask.cancel();
 
-                with.sendMessage(ChatColor.GREEN + "Vous remportez le duel contre " + this.player.getName() + "!");
-                this.player.sendMessage(ChatColor.RED + "Vous perdez le duel contre " + with.getName() + "!");
+                Bukkit.broadcastMessage(this.tag + ChatColor.GOLD + with.getName() + ChatColor.YELLOW + " remporte le duel contre " + ChatColor.GOLD + this.player.getName() + ChatColor.YELLOW + " !");
+
+                if(((Player) with).isOnline())
+                {
+                    ((Player) with).playSound(with.getLocation(), Sound.CAT_MEOW, 1.0F, 1.0F);
+                    FireworkUtils.launchfw(with.getLocation(), FireworkEffect.builder().with(FireworkEffect.Type.STAR).withColor(Color.ORANGE).withFade(Color.YELLOW).withFlicker().build());
+                }
 
                 this.waitingSecondInteraction = false;
                 this.end();
