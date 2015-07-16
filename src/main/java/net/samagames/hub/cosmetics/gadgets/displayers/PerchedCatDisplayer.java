@@ -81,7 +81,7 @@ public class PerchedCatDisplayer extends AbstractDisplayer
                 this.waitingFirstInteraction = false;
                 this.waitingSecondInteraction = true;
 
-                this.waitingInteractionTask = Bukkit.getScheduler().runTaskLaterAsynchronously(Hub.getInstance(), () ->
+                this.waitingInteractionTask = Bukkit.getScheduler().runTaskLater(Hub.getInstance(), () ->
                 {
                     Bukkit.broadcastMessage(this.tag + ChatColor.GOLD + this.player.getName() + ChatColor.YELLOW + " remporte le duel contre " + ChatColor.GOLD + with.getName() + ChatColor.YELLOW + " !");
 
