@@ -46,7 +46,7 @@ public class PerchedCatDisplayer extends AbstractDisplayer
         {
             if(this.waitingFirstInteraction)
             {
-                this.player.sendMessage(ChatColor.RED + "Vous n'avez pas provoqués de joueur pendant 10 seconde, le gadget s'annule !");
+                this.player.sendMessage(ChatColor.RED + "Vous n'avez pas provoqué de joueur pendant 10 secondes, le gadget s'annule !");
                 this.end();
             }
 
@@ -63,7 +63,7 @@ public class PerchedCatDisplayer extends AbstractDisplayer
             {
                 this.playerTargetted = with.getUniqueId();
 
-                Bukkit.broadcastMessage(this.tag + ChatColor.GOLD + this.player.getName() + ChatColor.YELLOW + " à provoqué " + ChatColor.GOLD + with.getName() + ChatColor.YELLOW + " en duel !");
+                Bukkit.broadcastMessage(this.tag + ChatColor.GOLD + this.player.getName() + ChatColor.YELLOW + " a provoqué " + ChatColor.GOLD + with.getName() + ChatColor.YELLOW + " en duel !");
 
                 this.player.playSound(with.getLocation(), Sound.CAT_MEOW, 1.0F, 1.0F);
                 ((Player) with).playSound(with.getLocation(), Sound.CAT_MEOW, 1.0F, 1.0F);
