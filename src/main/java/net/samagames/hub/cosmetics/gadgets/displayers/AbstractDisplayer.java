@@ -74,7 +74,7 @@ public abstract class AbstractDisplayer
     }
 
     public abstract void display();
-    public abstract void handleInteraction(Entity with);
+    public abstract void handleInteraction(Entity who, Entity with);
     public abstract boolean canUse();
 
     public HashMap<Location, SimpleBlock> getBlocksUsed()

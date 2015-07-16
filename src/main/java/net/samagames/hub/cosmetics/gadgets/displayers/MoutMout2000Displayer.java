@@ -83,7 +83,7 @@ public class MoutMout2000Displayer extends AbstractDisplayer
     }
 
     @Override
-    public void handleInteraction(Entity with) {}
+    public void handleInteraction(Entity who, Entity with) {}
 
     public boolean canUse()
     {

@@ -138,7 +138,7 @@ public class CakeDisplayer extends AbstractDisplayer
 	}
 
     @Override
-    public void handleInteraction(Entity with) {}
+    public void handleInteraction(Entity who, Entity with) {}
 
 	public List<Entity> getNearbyPlayers(Location where, int range)
 	{

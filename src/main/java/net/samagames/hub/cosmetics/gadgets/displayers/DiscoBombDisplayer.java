@@ -52,7 +52,7 @@ public class DiscoBombDisplayer extends AbstractDisplayer
 
         if(Hub.getInstance().getCosmeticManager().getJukeboxManager().getCurrentSong() == null)
         {
-            MusicUtils.playRecord(this.baseLocation, Material.RECORD_6);
+            MusicUtils.playRecord(this.baseLocation, Material.RECORD_7);
             this.music = true;
         }
 
@@ -93,7 +93,7 @@ public class DiscoBombDisplayer extends AbstractDisplayer
     }
 
     @Override
-    public void handleInteraction(Entity with) {}
+    public void handleInteraction(Entity who, Entity with) {}
 
     public boolean canUse()
     {

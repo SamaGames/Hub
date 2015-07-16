@@ -1,8 +1,9 @@
 package net.samagames.hub.cosmetics.gadgets.displayers;
 
 import net.samagames.hub.Hub;
-import net.samagames.hub.utils.FireworkUtils;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
@@ -13,11 +14,13 @@ public class PerchedCatDisplayer extends AbstractDisplayer
 {
     private final String tag;
 
-    private UUID playerTargetted;
+    private UUID playerTargeted;
     private BukkitTask waitingTask;
     private BukkitTask waitingInteractionTask;
     private boolean waitingFirstInteraction;
     private boolean waitingSecondInteraction;
+    private boolean playerWasFlying;
+    private boolean targetWasFlying;
 
     public PerchedCatDisplayer(Player player)
     {
@@ -25,7 +28,7 @@ public class PerchedCatDisplayer extends AbstractDisplayer
 
         this.tag = ChatColor.GOLD + "[" + ChatColor.YELLOW + "Chat perché" + ChatColor.GOLD + "] " + ChatColor.RESET;
 
-        this.playerTargetted = null;
+        this.playerTargeted = null;
         this.waitingTask = null;
         this.waitingFirstInteraction = false;
         this.waitingSecondInteraction = false;
@@ -37,8 +40,7 @@ public class PerchedCatDisplayer extends AbstractDisplayer
         Hub.getInstance().getGuiManager().closeGui(this.player);
 
         this.player.playSound(this.player.getLocation(), Sound.CAT_MEOW, 1.0F, 1.0F);
-        this.player.sendMessage(ChatColor.YELLOW + "Pour commencer à jouer, tape un joueur !");
-        this.player.sendMessage(ChatColor.RED + "Note: Tu ne peux pas utiliser un autre gadget avant la fin du jeu !");
+        this.player.sendMessage(this.tag + ChatColor.YELLOW + "Pour commencer à jouer, tape un joueur !");
 
         this.waitingFirstInteraction = true;
 
@@ -46,7 +48,7 @@ public class PerchedCatDisplayer extends AbstractDisplayer
         {
             if(this.waitingFirstInteraction)
             {
-                this.player.sendMessage(ChatColor.RED + "Vous n'avez pas provoqué de joueur pendant 10 secondes, le gadget s'annule !");
+                this.player.sendMessage(this.tag + ChatColor.RED + "Vous n'avez pas provoqué de joueur pendant 10 secondes, le gadget s'annule !");
                 this.end();
             }
 
@@ -55,15 +57,21 @@ public class PerchedCatDisplayer extends AbstractDisplayer
     }
 
     @Override
-    public void handleInteraction(Entity with)
+    public void handleInteraction(Entity who, Entity with)
     {
-        if(with instanceof Player)
+        if(who instanceof Player && with instanceof Player)
         {
-            if(this.waitingFirstInteraction && !with.getUniqueId().equals(this.player.getUniqueId()))
+            if(this.waitingFirstInteraction && who.getUniqueId().equals(this.player.getUniqueId()))
             {
-                this.playerTargetted = with.getUniqueId();
+                this.playerTargeted = with.getUniqueId();
+
+                this.playerWasFlying = this.player.isFlying();
+                this.targetWasFlying = ((Player) with).isFlying();
+
                 this.player.setFlying(false);
+                this.player.setAllowFlight(false);
                 ((Player) with).setFlying(false);
+                ((Player) with).setAllowFlight(false);
 
                 Bukkit.broadcastMessage(this.tag + ChatColor.GOLD + this.player.getName() + ChatColor.YELLOW + " a provoqué " + ChatColor.GOLD + with.getName() + ChatColor.YELLOW + " en duel !");
 
@@ -80,14 +88,17 @@ public class PerchedCatDisplayer extends AbstractDisplayer
                     if(Bukkit.getPlayer(this.player.getUniqueId()) != null)
                     {
                         this.player.playSound(this.player.getLocation(), Sound.CAT_MEOW, 1.0F, 1.0F);
-                        FireworkUtils.launchfw(this.player.getLocation(), FireworkEffect.builder().with(FireworkEffect.Type.STAR).withColor(Color.ORANGE).withFade(Color.YELLOW).withFlicker().build());
+                        this.player.setAllowFlight(this.playerWasFlying);
                     }
+
+                    if(Bukkit.getPlayer(with.getUniqueId()) != null)
+                        ((Player) with).setAllowFlight(this.targetWasFlying);
 
                     this.waitingSecondInteraction = false;
                     this.end();
                 }, 20L * 60);
             }
-            else if(this.waitingSecondInteraction && with.getUniqueId().equals(this.playerTargetted))
+            else if(this.waitingSecondInteraction && who.getUniqueId().equals(this.playerTargeted))
             {
                 this.waitingInteractionTask.cancel();
 
@@ -96,8 +107,11 @@ public class PerchedCatDisplayer extends AbstractDisplayer
                 if(Bukkit.getPlayer(with.getUniqueId()) != null)
                 {
                     ((Player) with).playSound(with.getLocation(), Sound.CAT_MEOW, 1.0F, 1.0F);
-                    FireworkUtils.launchfw(with.getLocation(), FireworkEffect.builder().with(FireworkEffect.Type.STAR).withColor(Color.ORANGE).withFade(Color.YELLOW).withFlicker().build());
+                    ((Player) with).setAllowFlight(this.targetWasFlying);
                 }
+
+                if(Bukkit.getPlayer(this.player.getUniqueId()) != null)
+                    this.player.setAllowFlight(this.playerWasFlying);
 
                 this.waitingSecondInteraction = false;
                 this.end();

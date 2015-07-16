@@ -94,7 +94,7 @@ public class NukeDisplayer extends AbstractDisplayer
     }
 
     @Override
-    public void handleInteraction(Entity with) {}
+    public void handleInteraction(Entity who, Entity with) {}
 
     public void timeToSendCatInTheHairLikeTheHandsInTheFamousSing()
     {
@@ -143,10 +143,10 @@ public class NukeDisplayer extends AbstractDisplayer
                     ocelot.remove();
                 }, 20L * 5);
 
-                ParticleEffect.FLAME.display(0, 1.5F, 0, 0, 5, baseLocation.clone().subtract(2.0D, 0.0D, 0.0D).add(0.0D, 0.0D, 2.0D).add(0.0D, 0.0D, 0.3D), 100.0D);
-                ParticleEffect.FLAME.display(0, 1.5F, 0, 0, 5, baseLocation.clone().subtract(2.0D, 0.0D, 2.0D).add(0.0D, 0.0D, 0.3D), 100.0D);
-                ParticleEffect.FLAME.display(0, 1.5F, 0, 0, 5, baseLocation.clone().add(2.0D, 0.0D, 2.0D).add(0.0D, 0.0D, 0.3D), 100.0D);
-                ParticleEffect.FLAME.display(0, 1.5F, 0, 0, 5, baseLocation.clone().add(2.0D, 0.0D, 0.0D).subtract(0.0D, 0.0D, 2.0D).add(0.0D, 0.0D, 0.3D), 100.0D);
+                ParticleEffect.FLAME.display(0, 1.5F, 0, 0, 5, baseLocation.getBlock().getLocation().clone().subtract(2.0D, 0.0D, 0.0D).add(0.0D, 0.0D, 2.0D).add(0.5D, 0.0D, 0.5D), 100.0D);
+                ParticleEffect.FLAME.display(0, 1.5F, 0, 0, 5, baseLocation.getBlock().getLocation().clone().subtract(2.0D, 0.0D, 2.0D).add(0.5D, 0.0D, 0.5D), 100.0D);
+                ParticleEffect.FLAME.display(0, 1.5F, 0, 0, 5, baseLocation.getBlock().getLocation().clone().add(2.0D, 0.0D, 2.0D).add(0.5D, 0.0D, 0.5D), 100.0D);
+                ParticleEffect.FLAME.display(0, 1.5F, 0, 0, 5, baseLocation.getBlock().getLocation().clone().add(2.0D, 0.0D, 0.0D).subtract(0.0D, 0.0D, 2.0D).add(0.5D, 0.0D, 0.5D), 100.0D);
             }
         }, 1L, 1L);
 

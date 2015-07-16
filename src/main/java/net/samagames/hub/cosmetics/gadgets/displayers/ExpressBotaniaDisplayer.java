@@ -88,7 +88,7 @@ public class ExpressBotaniaDisplayer extends AbstractDisplayer
     }
 
     @Override
-    public void handleInteraction(Entity with) {}
+    public void handleInteraction(Entity who, Entity with) {}
 
     public boolean canUse()
     {
