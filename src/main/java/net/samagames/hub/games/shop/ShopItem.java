@@ -21,9 +21,9 @@ public class ShopItem extends ShopIcon
     protected final int cost;
     protected boolean defaultItem;
 
-    public ShopItem(AbstractGame game, String type, String databaseName, String displayName, ItemStack icon, String[] description, int cost)
+    public ShopItem(AbstractGame game, String type, String databaseName, String displayName, ItemStack icon, int slot, String[] description, int cost)
     {
-        super(databaseName, displayName, icon);
+        super(databaseName, displayName, icon, slot);
 
         this.game = game;
         this.type = type;

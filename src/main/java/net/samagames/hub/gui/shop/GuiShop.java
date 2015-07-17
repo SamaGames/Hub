@@ -6,14 +6,9 @@ import net.samagames.hub.gui.AbstractGui;
 import net.samagames.hub.utils.GuiUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.DyeColor;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.ArrayList;
 
 public class GuiShop extends AbstractGui
 {
@@ -40,7 +35,7 @@ public class GuiShop extends AbstractGui
             }
         }
 
-        this.inventory = Bukkit.createInventory(null, 9 + (9 * lines) + (9 * 3), "Boutique");
+        this.inventory = Bukkit.createInventory(null, 9 + (9 * lines) + (9 * 2), "Boutique");
 
         slot = 0;
         lines = 0;
@@ -62,7 +57,6 @@ public class GuiShop extends AbstractGui
             }
         }
 
-        this.drawRankBuy();
         this.setSlotData(GuiUtils.getBackItem(), this.inventory.getSize() - 5, "back");
 
         player.openInventory(this.inventory)
@@ -75,37 +69,10 @@ public class GuiShop extends AbstractGui
         {
             Hub.getInstance().getGuiManager().closeGui(player);
         }
-        if(action.equals("rank"))
-        {
-            Hub.getInstance().getGuiManager().openGui(player, new GuiRanksShop());
-        }
         else if(action.startsWith("game_"))
         {
             AbstractGame game = Hub.getInstance().getGameManager().getGameByIdentifier(action.split("_")[1]);
             Hub.getInstance().getGuiManager().openGui(player, new GuiShopCategory(game, game.getShopConfiguration(), this));
-        }
-    }
-
-    private void drawRankBuy()
-    {
-        ItemStack rankStack = new ItemStack(Material.GOLD_HELMET, 1);
-        ItemMeta meta = rankStack.getItemMeta();
-        meta.setDisplayName(ChatColor.GOLD + "Acheter un rang");
-
-        ArrayList<String> lores = new ArrayList<>();
-        lores.add(ChatColor.YELLOW + "Acheter un grade sur le serveur");
-        lores.add(ChatColor.YELLOW + "permet de vous offrir certains");
-        lores.add(ChatColor.YELLOW + "droits et fonctionnalités inédites !");
-
-        meta.setLore(lores);
-        rankStack.setItemMeta(meta);
-
-        this.setSlotData(rankStack, this.inventory.getSize() - 5 - 9, "rank");
-
-        for(int i = 27; i < 36; i++)
-        {
-            if(this.inventory.getItem(i) == null)
-                this.setSlotData(ChatColor.GRAY + "", new ItemStack(Material.STAINED_GLASS_PANE, 1, DyeColor.YELLOW.getData()), i, null, "none");
         }
     }
 }

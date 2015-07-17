@@ -17,9 +17,9 @@ public class ShopCategory extends ShopIcon
     private final String[] description;
     private final ArrayList<ShopIcon> contents;
 
-    public ShopCategory(AbstractGame game, String actionName, String displayName, ItemStack icon, String[] description)
+    public ShopCategory(AbstractGame game, String actionName, String displayName, ItemStack icon, int slot, String[] description)
     {
-        super(actionName, displayName, icon);
+        super(actionName, displayName, icon, slot);
 
         this.game = game;
         this.description = description;

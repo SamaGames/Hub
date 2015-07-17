@@ -19,9 +19,9 @@ public class ShopImprovableItem extends ShopIcon
     private final ArrayList<ItemLevel> levels;
     private ItemLevel defaultLevel;
 
-    public ShopImprovableItem(AbstractGame game, String databaseName, String displayName, ItemStack icon, String[] description)
+    public ShopImprovableItem(AbstractGame game, String databaseName, String displayName, ItemStack icon, int slot, String[] description)
     {
-        super(databaseName, displayName, icon);
+        super(databaseName, displayName, icon, slot);
 
         this.game = game;
         this.description = description;

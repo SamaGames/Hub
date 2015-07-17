@@ -10,11 +10,13 @@ public abstract class ShopIcon
 {
     private final String actionName;
     private final ItemStack icon;
+    private final int slot;
 
-    public ShopIcon(String actionName, String displayName, ItemStack icon)
+    public ShopIcon(String actionName, String displayName, ItemStack icon, int slot)
     {
         this.actionName = actionName;
         this.icon = icon;
+        this.slot = slot;
 
         if(icon != null)
         {
@@ -35,5 +37,10 @@ public abstract class ShopIcon
     public ItemStack getIcon()
     {
         return this.icon;
+    }
+
+    public int getSlot()
+    {
+        return this.slot;
     }
 }

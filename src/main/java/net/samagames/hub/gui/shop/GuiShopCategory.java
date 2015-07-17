@@ -27,7 +27,7 @@ public class GuiShopCategory extends AbstractGui
     @Override
     public void display(Player player)
     {
-        this.inventory = Bukkit.createInventory(null, 9, "Boutique de " + this.game.getName());
+        this.inventory = Bukkit.createInventory(null, 54, "Boutique de " + this.game.getName());
 
         this.update(player);
 
@@ -41,11 +41,18 @@ public class GuiShopCategory extends AbstractGui
 
         for(ShopIcon item : this.category.getContents())
         {
-            this.setSlotData(item.getFormattedIcon(player), slot, "item_" + item.getActionName());
-            slot++;
+            if(item.getSlot() != -1)
+            {
+                this.setSlotData(item.getFormattedIcon(player), item.getSlot(), "item_" + item.getActionName());
+            }
+            else
+            {
+                this.setSlotData(item.getFormattedIcon(player), slot, "item_" + item.getActionName());
+                slot++;
+            }
         }
 
-        this.setSlotData(GuiUtils.getBackItem(), this.inventory.getSize() - 1, "back");
+        this.setSlotData(GuiUtils.getBackItem(), this.inventory.getSize() - 5, "back");
     }
 
     @Override

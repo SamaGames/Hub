@@ -46,29 +46,15 @@ public class DimensionsGame extends AbstractGame
     @Override
     public int getSlotInMainMenu()
     {
-        return 22;
+        return 23;
     }
 
     @Override
     public ShopCategory getShopConfiguration()
     {
-        ShopCategory parentCategory = new ShopCategory(this, null, null, null, null);
+        ShopCategory parentCategory = new ShopCategory(this, null, null, null, -1, null);
 
-        ShopImprovableItem healOnKillItem = new ShopImprovableItem(this, "healAtKill", "Soin au meurtre", new ItemStack(Material.SPECKLED_MELON, 1), new String[] {
-                "Quand vous causerez un meurtre,",
-                "vous serez plus ou moins soigné",
-                "suivant le niveau de cette amélioration."
-        });
-
-        healOnKillItem.addLevel(400, "1 coeur", "2");
-        healOnKillItem.addLevel(3200, "2 coeurs", "4");
-        healOnKillItem.addLevel(9100, "3 coeurs", "6");
-        healOnKillItem.addLevel(24700, "4 coeurs", "8");
-        healOnKillItem.addLevel(60000, "5 coeurs", "10");
-
-        parentCategory.addContent(healOnKillItem);
-
-        ShopImprovableItem strenghtOnKill = new ShopImprovableItem(this, "strengthAtKill", "Force au meurtre", new Potion(PotionType.STRENGTH).toItemStack(1), new String[] {
+        ShopImprovableItem strenghtOnKill = new ShopImprovableItem(this, "strengthAtKill", "Force au meurtre", new Potion(PotionType.STRENGTH).toItemStack(1), 11, new String[] {
                 "Quand vous causerez un meurtre,",
                 "vous aurez un bonus de force pendant un",
                 "certain temps suivant niveau de cette",
@@ -84,7 +70,7 @@ public class DimensionsGame extends AbstractGame
 
         parentCategory.addContent(strenghtOnKill);
 
-        ShopImprovableItem healOnStrikeItem = new ShopImprovableItem(this, "healAtStrike", "Soin au combat", new Potion(PotionType.INSTANT_HEAL).toItemStack(1), new String[] {
+        ShopImprovableItem healOnStrikeItem = new ShopImprovableItem(this, "healAtStrike", "Soin au combat", new Potion(PotionType.INSTANT_HEAL).toItemStack(1), 15, new String[] {
                 "Pendant un combat, vous avez un certain",
                 "pourcentage de chance de regagner de la vie",
                 "suivant niveau de cette amélioration."
@@ -100,7 +86,21 @@ public class DimensionsGame extends AbstractGame
 
         parentCategory.addContent(healOnStrikeItem);
 
-        ShopImprovableItem swapCooldownItem = new ShopImprovableItem(this, "tpTime", "Espacement de Swap", new ItemStack(Material.EYE_OF_ENDER, 1), new String[] {
+        ShopImprovableItem healOnKillItem = new ShopImprovableItem(this, "healAtKill", "Soin au meurtre", new ItemStack(Material.SPECKLED_MELON, 1), 30, new String[] {
+                "Quand vous causerez un meurtre,",
+                "vous serez plus ou moins soigné",
+                "suivant le niveau de cette amélioration."
+        });
+
+        healOnKillItem.addLevel(400, "1 coeur", "2");
+        healOnKillItem.addLevel(3200, "2 coeurs", "4");
+        healOnKillItem.addLevel(9100, "3 coeurs", "6");
+        healOnKillItem.addLevel(24700, "4 coeurs", "8");
+        healOnKillItem.addLevel(60000, "5 coeurs", "10");
+
+        parentCategory.addContent(healOnKillItem);
+
+        ShopImprovableItem swapCooldownItem = new ShopImprovableItem(this, "tpTime", "Espacement de Swap", new ItemStack(Material.EYE_OF_ENDER, 1), 32, new String[] {
                 "Pendant un combat, vous avez un certain",
                 "pourcentage de chance de regagner de la vie",
                 "suivant niveau de cette amélioration."
