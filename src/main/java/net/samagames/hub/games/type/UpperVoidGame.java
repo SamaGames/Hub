@@ -22,7 +22,7 @@ public class UpperVoidGame extends AbstractGame
     @Override
     public String getName()
     {
-        return "UpperVoid";
+        return "Uppervoid";
     }
 
     @Override
@@ -51,9 +51,21 @@ public class UpperVoidGame extends AbstractGame
     @Override
     public ShopCategory getShopConfiguration()
     {
-        ShopCategory parentCategory = new ShopCategory(this, null, null, null, null);
+        ShopCategory parentCategory = new ShopCategory(this, null, null, null, -1, null);
 
-        ShopImprovableItem grenadesItem = new ShopImprovableItem(this, "grenade", "Grenades", new ItemStack(Material.CLAY_BALL, 1), new String[] {
+        ShopImprovableItem tntStick = new ShopImprovableItem(this, "shooter", "Shooter", new ItemStack(Material.STICK, 1), 13, new String[] {
+                "Augmentez la qualité de votre shooter, donc",
+                "son temps de rechargement en augmentant cette",
+                "amélioration."
+        });
+
+        tntStick.addDefault("Basic (2s)");
+        tntStick.addLevel(1500, "ChaosGrabber (1.7s)", "chaosgrabber");
+        tntStick.addLevel(7000, "BladeSpinner (1.5s)", "bladespinner");
+
+        parentCategory.addContent(tntStick);
+
+        ShopImprovableItem grenadesItem = new ShopImprovableItem(this, "grenade", "Grenades", new ItemStack(Material.CLAY_BALL, 1), 30, new String[] {
                 "Augmentez votre nombre de grenades",
                 "en jeu en augmentant cette amélioration.",
         });
@@ -67,7 +79,7 @@ public class UpperVoidGame extends AbstractGame
 
         parentCategory.addContent(grenadesItem);
 
-        ShopImprovableItem grapnelItem = new ShopImprovableItem(this, "grapins", "Grapin", new ItemStack(Material.LEASH, 1), new String[] {
+        ShopImprovableItem grapnelItem = new ShopImprovableItem(this, "grapins", "Grapin", new ItemStack(Material.LEASH, 1), 32, new String[] {
                 "Augmentez le nombre d'utilisation de votre",
                 "grapin en augmentant cette amélioration.",
         });
@@ -79,18 +91,6 @@ public class UpperVoidGame extends AbstractGame
         grapnelItem.addLevel(60000, "5 utilisations", "grapin-4");
 
         parentCategory.addContent(grapnelItem);
-
-        ShopImprovableItem tntStick = new ShopImprovableItem(this, "shooter", "Shooter", new ItemStack(Material.STICK, 1), new String[] {
-                "Augmentez la qualité de votre shooter, donc",
-                "son temps de rechargement en augmentant cette",
-                "amélioration."
-        });
-
-        tntStick.addDefault("Basic (2s)");
-        tntStick.addLevel(1500, "ChaosGrabber (1.7s)", "chaosgrabber");
-        tntStick.addLevel(7000, "BladeSpinner (1.5s)", "bladespinner");
-
-        parentCategory.addContent(tntStick);
 
         return parentCategory;
     }
