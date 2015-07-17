@@ -151,6 +151,7 @@ public class GadgetManager extends AbstractCosmeticManager<GadgetCosmetic>
     public void callbackGadget(AbstractDisplayer displayer)
     {
         displayer.getBlocksUsed().keySet().forEach(this.blocksUsed::remove);
+        this.playersGadgets.remove(displayer.getPlayer().getUniqueId());
     }
 
     public AbstractDisplayer getPlayerGadget(Player player)

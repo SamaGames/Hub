@@ -48,6 +48,7 @@ public class PerchedCatDisplayer extends AbstractDisplayer
         {
             if(this.waitingFirstInteraction)
             {
+                this.player.playSound(this.player.getLocation(), Sound.CAT_MEOW, 1.0F, 1.0F);
                 this.player.sendMessage(this.tag + ChatColor.RED + "Vous n'avez pas provoqué de joueur pendant 10 secondes, le gadget s'annule !");
                 this.end();
             }

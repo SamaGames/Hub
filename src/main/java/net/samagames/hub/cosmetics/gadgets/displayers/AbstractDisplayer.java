@@ -23,6 +23,10 @@ public abstract class AbstractDisplayer
         this.blocksBefore = new HashMap<>();
     }
 
+    public abstract void display();
+    public abstract void handleInteraction(Entity who, Entity with);
+    public abstract boolean canUse();
+
     public void addBlockToUse(Location location, SimpleBlock block)
     {
         this.blocksUsed.put(new Location(location.getWorld(), location.getBlockX(), location.getBlockY(), location.getBlockZ()), block);
@@ -63,6 +67,11 @@ public abstract class AbstractDisplayer
         }
     }
 
+    public Player getPlayer()
+    {
+        return this.player;
+    }
+
     public boolean isBlockUsed(Location location)
     {
         return this.blocksUsed.containsKey(new Location(location.getWorld(), location.getBlockX(), location.getBlockY(), location.getBlockZ()));
@@ -73,9 +82,6 @@ public abstract class AbstractDisplayer
         Hub.getInstance().getCosmeticManager().getGadgetManager().callbackGadget(this);
     }
 
-    public abstract void display();
-    public abstract void handleInteraction(Entity who, Entity with);
-    public abstract boolean canUse();
 
     public HashMap<Location, SimpleBlock> getBlocksUsed()
     {
