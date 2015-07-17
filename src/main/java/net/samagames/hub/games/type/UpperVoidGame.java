@@ -11,7 +11,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 
-public class UppervoidGame extends AbstractGame
+public class UpperVoidGame extends AbstractGame
 {
     @Override
     public String getCodeName()
