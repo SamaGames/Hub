@@ -59,38 +59,38 @@ public class QuakeGame extends AbstractGame
                 "Ne ratez plus vos adversaires par manque de temps.",
         });
 
-        ShopDependsItem woodenHoe = new ShopDependsItem(this, "hoe", "woodhoe", "SlowGun", new ItemStack(Material.WOOD_HOE), -1, new String[]{
+        ShopDependsItem woodenHoe = new ShopDependsItem(this, "hoe", "woodhoe", "SlowGun", new ItemStack(Material.WOOD_HOE), 31, new String[]{
                 ChatColor.DARK_GRAY + "Recharge en " + ChatColor.GOLD + "1.8" + ChatColor.DARK_GRAY + " secondes."
         }, 0, null);
         woodenHoe.setDefaultItem(true);
         hoes.addContent(woodenHoe);
 
-        ShopDependsItem stoneHoe = new ShopDependsItem(this, "hoe", "stonehoe", ChatColor.DARK_AQUA + "Advanced SlowGun", new ItemStack(Material.DIAMOND_HOE, 1), -1, new String[]{
+        ShopDependsItem stoneHoe = new ShopDependsItem(this, "hoe", "stonehoe", ChatColor.DARK_AQUA + "Advanced SlowGun", new ItemStack(Material.STONE_HOE, 1), 20, new String[]{
                 ChatColor.DARK_GRAY + "Recharge en " + ChatColor.GOLD + "1.7" + ChatColor.DARK_GRAY + " secondes."
         }, 500, woodenHoe);
         hoes.addContent(stoneHoe);
 
-        ShopDependsItem ironHoe = new ShopDependsItem(this, "hoe", "ironhoe", ChatColor.DARK_AQUA + "Quick Gun", new ItemStack(Material.IRON_HOE, 1), -1, new String[]{
+        ShopDependsItem ironHoe = new ShopDependsItem(this, "hoe", "ironhoe", ChatColor.DARK_AQUA + "Quick Gun", new ItemStack(Material.IRON_HOE, 1), 21, new String[]{
                 ChatColor.DARK_GRAY + "Recharge en " + ChatColor.GOLD + "1.6" + ChatColor.DARK_GRAY + " secondes."
         }, 2000, stoneHoe);
         hoes.addContent(ironHoe);
 
-        ShopDependsItem goldHoe = new ShopDependsItem(this, "hoe", "goldenhoe", ChatColor.GOLD + "Golden Gun", new ItemStack(Material.GOLD_HOE, 1), -1, new String[]{
+        ShopDependsItem goldHoe = new ShopDependsItem(this, "hoe", "goldenhoe", ChatColor.GOLD + "Golden Gun", new ItemStack(Material.GOLD_HOE, 1), 22, new String[]{
                 ChatColor.DARK_GRAY + "Recharge en " + ChatColor.GOLD + "1.5" + ChatColor.DARK_GRAY + " secondes."
         }, 5000, ironHoe);
         hoes.addContent(goldHoe);
 
-        ShopDependsItem diamondHoe = new ShopDependsItem(this, "hoe", "dimaondhoe", ChatColor.BLUE + "PortalGun", new ItemStack(Material.DIAMOND_HOE, 1), -1, new String[]{
+        ShopDependsItem diamondHoe = new ShopDependsItem(this, "hoe", "dimaondhoe", ChatColor.BLUE + "PortalGun", new ItemStack(Material.DIAMOND_HOE, 1), 23, new String[]{
                 ChatColor.DARK_GRAY + "Recharge en " + ChatColor.GOLD + "1.4" + ChatColor.DARK_GRAY + " secondes."
         }, 20000, goldHoe);
         hoes.addContent(diamondHoe);
 
-        ShopDependsItem amazingHoe = new ShopDependsItem(this, "hoe", "amazinghoe", ChatColor.AQUA + "Amazing" + ChatColor.BLUE + " PortalGun", GlowEffect.addGlow(new ItemStack(Material.DIAMOND_HOE, 1)), -1, new String[]{
+        ShopDependsItem amazingHoe = new ShopDependsItem(this, "hoe", "amazinghoe", ChatColor.AQUA + "Amazing" + ChatColor.BLUE + " PortalGun", GlowEffect.addGlow(new ItemStack(Material.DIAMOND_HOE, 1)), 24, new String[]{
                 ChatColor.DARK_GRAY + "Recharge en " + ChatColor.GOLD + "1.3" + ChatColor.DARK_GRAY + " secondes."
         }, 50000, diamondHoe);
         hoes.addContent(amazingHoe);
 
-        ShopDependsItem blasterHoe = new ShopDependsItem(this, "hoe", "blaster", ChatColor.AQUA + "Blaster", GlowEffect.addGlow(new ItemStack(Material.DIAMOND_BARDING, 1)), -1, new String[]{
+        ShopDependsItem blasterHoe = new ShopDependsItem(this, "hoe", "blaster", ChatColor.AQUA + "Blaster", GlowEffect.addGlow(new ItemStack(Material.DIAMOND_BARDING, 1)), 13, new String[]{
                 ChatColor.DARK_GRAY + "Recharge en " + ChatColor.GOLD + "1.2" + ChatColor.DARK_GRAY + " secondes."
         }, 150000, amazingHoe);
         hoes.addContent(blasterHoe);
