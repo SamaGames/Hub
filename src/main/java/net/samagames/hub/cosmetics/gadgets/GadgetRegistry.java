@@ -63,7 +63,8 @@ public class GadgetRegistry extends AbstractCosmeticRegistry<GadgetCosmetic>
         GadgetCosmetic enderSwapGadget = new GadgetCosmetic("enderswap", "EnderSwap", new ItemStack(Material.ENDER_PEARL, 1), new String[] {
                 "Il est impossible de prédire l'effet de",
                 "ce gadget ni l'endroit où il vous ammenera.",
-                "A vous de prendre le risque !"
+                "A vous de prendre le risque !",
+                "Inutile donc Indispensable !"
         }, EnderSwapDisplayer.class, 60);
         trampoSlimeGadget.buyableWithStars(2500);
 

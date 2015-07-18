@@ -81,6 +81,8 @@ public class GadgetManager extends AbstractCosmeticManager<GadgetCosmetic>
                 {
                     displayer.display();
                     this.playersGadgets.put(player.getUniqueId(), displayer);
+
+                    Hub.getInstance().getGuiManager().closeGui(player);
                 }
             }
             catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException ex)

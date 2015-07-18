@@ -23,8 +23,6 @@ public class ExpressBotaniaDisplayer extends AbstractDisplayer
     @Override
     public void display()
     {
-        Hub.getInstance().getGuiManager().closeGui(this.player);
-
         final ArrayList<ItemStack> flowers = new ArrayList<>();
         flowers.add(new ItemStack(Material.YELLOW_FLOWER, 1));
         flowers.add(new ItemStack(Material.LEAVES, 1));

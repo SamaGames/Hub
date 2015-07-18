@@ -37,8 +37,6 @@ public class PerchedCatDisplayer extends AbstractDisplayer
     @Override
     public void display()
     {
-        Hub.getInstance().getGuiManager().closeGui(this.player);
-
         this.player.playSound(this.player.getLocation(), Sound.CAT_MEOW, 1.0F, 1.0F);
         this.player.sendMessage(this.tag + ChatColor.YELLOW + "Pour commencer à jouer, tape un joueur !");
 
