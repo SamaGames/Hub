@@ -51,6 +51,15 @@ public class JumpListener implements Listener
                     }
                 }
             }
+            else if(event.getClickedBlock().getType().equals(Material.GOLD_PLATE))
+            {
+                Jump jump = Hub.getInstance().getJumpManager().getOfPlayer(event.getPlayer().getUniqueId());
+
+                if (jump != null)
+                {
+                    jump.checkpoint(event.getPlayer(), event.getClickedBlock().getLocation());
+                }
+            }
         }
     }
 
@@ -86,7 +95,7 @@ public class JumpListener implements Listener
 
                 if (block == null || !jump.inWhitelist(block.getType()))
                 {
-                    jump.losePlayer(player);
+                    jump.failPlayer(player);
                 }
             }
         }

@@ -43,7 +43,8 @@ public class Jump
 
         Bukkit.getScheduler().runTaskTimerAsynchronously(Hub.getInstance(), () ->
         {
-            for (UUID uuid : this.jumping.keySet()) {
+            for (UUID uuid : this.jumping.keySet())
+            {
                 Player player = Bukkit.getPlayer(uuid);
 
                 if (player == null || !player.isOnline())
@@ -54,9 +55,7 @@ public class Jump
                 {
                     Block block = player.getLocation().getBlock().getRelative(BlockFace.DOWN);
 
-                    if (block.getType() == Material.GOLD_PLATE)
-                        this.checkpoint(player, block.getLocation());
-                    else if (!inWhitelist(block.getType()) && block.getType().isSolid())
+                    if (!inWhitelist(block.getType()) && block.getType().isSolid())
                         this.failPlayer(player);
                 }
             }
