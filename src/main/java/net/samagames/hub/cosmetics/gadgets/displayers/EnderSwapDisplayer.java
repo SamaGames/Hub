@@ -52,9 +52,11 @@ public class EnderSwapDisplayer extends AbstractDisplayer
     @Override
     public void display()
     {
+        this.player.playSound(this.player.getLocation(), Sound.ENDERMAN_IDLE, 1.0F, 1.0F);
+
         this.teleportTask = Bukkit.getScheduler().runTaskTimerAsynchronously(Hub.getInstance(), () ->
         {
-            ParticleEffect.PORTAL.display(1.0F, 0, 1.0F, 1.0F, 15, this.player.getLocation().clone().add(0.0D, 1D, 0.0D), 100.0D);
+            ParticleEffect.PORTAL.display(0.75F, 0, 0.75F, 1.5F, 20, this.player.getLocation().clone().add(0.0D, 1D, 0.0D), 100.0D);
 
             Bukkit.getScheduler().runTaskLater(Hub.getInstance(), () ->
             {
@@ -71,7 +73,7 @@ public class EnderSwapDisplayer extends AbstractDisplayer
                         this.end();
                         this.callback();
                     }
-                }, 2L);
+                }, 5L);
             }, 20L * 2);
 
         }, 0L, 20L * 6);
