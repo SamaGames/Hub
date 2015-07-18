@@ -60,6 +60,24 @@ public class GadgetRegistry extends AbstractCosmeticRegistry<GadgetCosmetic>
         }, PerchedCatDisplayer.class, 40);
         perchedCatGadget.buyableWithStars(2500);
 
+        GadgetCosmetic enderSwapGadget = new GadgetCosmetic("enderswap", "EnderSwap", new ItemStack(Material.ENDER_PEARL, 1), new String[] {
+                "Il est impossible de prédire l'effet de",
+                "ce gadget ni l'endroit où il vous ammenera.",
+                "A vous de prendre le risque !"
+        }, EnderSwapDisplayer.class, 60);
+        trampoSlimeGadget.buyableWithStars(2500);
+
+        GadgetCosmetic stargateGadget = new GadgetCosmetic("stargate", "Stargate", new ItemStack(Material.ENDER_PORTAL_FRAME, 1), new String[] {
+                "Ce gadget créera une faille spacio-temporelle",
+                "qui vous téléportera dans un monde parllèle",
+                "Minecraftien dotés de joueurs identiques au monde",
+                "où vous êtes actuellement. Fiction ou Science ?",
+                "",
+                ChatColor.RED + "Attention: La faille spacio-temporelle",
+                ChatColor.RED + "aspire tous les joueurs autour de celle-ci !"
+        }, StargateDisplayer.class, 60);
+        trampoSlimeGadget.buyableWithStars(10000);
+
         this.registerElement(discoBombGadget);
         this.registerElement(moutMout2000Gadget);
         this.registerElement(expressBotaniaGadget);
@@ -67,5 +85,7 @@ public class GadgetRegistry extends AbstractCosmeticRegistry<GadgetCosmetic>
         this.registerElement(nukeGadget);
         this.registerElement(fakeCakeGadget);
         this.registerElement(perchedCatGadget);
+        this.registerElement(enderSwapGadget);
+        this.registerElement(stargateGadget);
     }
 }
