@@ -133,7 +133,10 @@ public class StargateDisplayer extends AbstractDisplayer
             block.getBlock().setData(this.blocksUsed.get(block).getData());
         }
 
-        this.player.getLocation().setYaw(-90.0F);
+        Location newPlayerLocation = this.player.getLocation();
+        newPlayerLocation.setYaw(-90.0F);
+
+        this.player.teleport(newPlayerLocation);
 
         Bukkit.getScheduler().runTaskLater(Hub.getInstance(), () ->
         {
@@ -152,15 +155,24 @@ public class StargateDisplayer extends AbstractDisplayer
             this.helixEffect.infinite();
             this.helixEffect.start();
 
-            this.portalTask = Bukkit.getScheduler().runTaskTimerAsynchronously(Hub.getInstance(), new Runnable() {
+            Bukkit.broadcastMessage("helix");
+
+            this.portalTask = Bukkit.getScheduler().runTaskTimerAsynchronously(Hub.getInstance(), new Runnable()
+            {
                 int second = 0;
 
                 @Override
-                public void run() {
-                    if (this.second == 20) {
+                public void run()
+                {
+                    if (this.second == 20)
+                    {
                         basePortalLocation.getWorld().playSound(basePortalLocation, Sound.ENDERMAN_IDLE, 1.0F, 1.0F);
                         this.second = 0;
-                    } else {
+
+                        Bukkit.broadcastMessage("enderman sound (second)");
+                    }
+                    else
+                    {
                         this.second++;
                     }
 
@@ -171,9 +183,11 @@ public class StargateDisplayer extends AbstractDisplayer
                     {
                         if (player.getLocation().distanceSquared(blackHoleLocation) <= squared)
                         {
+                            Bukkit.broadcastMessage("<= squared (" + player.getName() + ")");
+
                             Vector entityVector = new Vector(player.getLocation().getX(), player.getLocation().getY(), player.getLocation().getZ());
                             Vector blackholeVector = new Vector(blackHoleLocation.getX(), blackHoleLocation.getY(), blackHoleLocation.getZ());
-                            player.setVelocity(blackholeVector.subtract(entityVector).multiply(0.05F));
+                            player.setVelocity(blackholeVector.subtract(entityVector).normalize().multiply(0.05F));
                         }
                     }
                 }
@@ -183,7 +197,8 @@ public class StargateDisplayer extends AbstractDisplayer
         Bukkit.getScheduler().runTaskLater(Hub.getInstance(), () ->
         {
             this.basePortalLocation.getWorld().playSound(this.basePortalLocation, Sound.ENDERMAN_DEATH, 1.0F, 6.0F);
-            this.basePortalLocation.getWorld().createExplosion(basePortalLocation.getX(), basePortalLocation.getY(), basePortalLocation.getZ(), 10, false, false);
+            this.basePortalLocation.getWorld().createExplosion(this.basePortalLocation.getX(), this.basePortalLocation.getY(), this.basePortalLocation.getZ(), 10, false, false);
+            this.exitPortalLocation.getWorld().createExplosion(this.exitPortalLocation.getX(), this.exitPortalLocation.getY(), this.exitPortalLocation.getZ(), 10, false, false);
 
             this.end();
             this.restore();
