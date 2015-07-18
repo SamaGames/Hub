@@ -54,7 +54,7 @@ public class EnderSwapDisplayer extends AbstractDisplayer
     {
         this.teleportTask = Bukkit.getScheduler().runTaskTimerAsynchronously(Hub.getInstance(), () ->
         {
-            ParticleEffect.PORTAL.display(0.5F, 0, 0.5F, 0.3F, 5, this.player.getLocation().clone().add(0.0D, 1D, 0.0D));
+            ParticleEffect.PORTAL.display(0.5F, 0, 0.5F, 0.3F, 5, this.player.getLocation().clone().add(0.0D, 1D, 0.0D), 100.0D);
 
             Bukkit.getScheduler().runTaskLater(Hub.getInstance(), () ->
             {
@@ -70,7 +70,7 @@ public class EnderSwapDisplayer extends AbstractDisplayer
                 }
             }, 20L);
 
-        }, 0L, 20L * 3);
+        }, 0L, 20L * 5);
     }
 
     @Override
