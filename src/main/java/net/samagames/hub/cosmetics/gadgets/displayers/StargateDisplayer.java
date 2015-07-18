@@ -175,15 +175,6 @@ public class StargateDisplayer extends AbstractDisplayer
                             Vector blackholeVector = new Vector(blackHoleLocation.getX(), blackHoleLocation.getY(), blackHoleLocation.getZ());
                             player.setVelocity(blackholeVector.subtract(entityVector).multiply(0.05F));
                         }
-                        else
-                        {
-                            player.teleport(exitPortalLocation.subtract(0.0D, 2.0D, 0.0D).add(0.5D, 0.0D, 0.5D));
-
-                            Bukkit.getScheduler().runTaskLater(Hub.getInstance(), () ->
-                            {
-                                player.playSound(player.getLocation(), Sound.ENDERMAN_TELEPORT, 1.0F, 1.0F);
-                            }, 5L);
-                        }
                     }
                 }
             }, 1L, 1L);
