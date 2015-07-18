@@ -3,9 +3,14 @@ package net.samagames.hub.cosmetics.gadgets.displayers;
 import de.slikey.effectlib.effect.HelixEffect;
 import de.slikey.effectlib.util.ParticleEffect;
 import net.samagames.hub.Hub;
+import net.samagames.hub.utils.EntityUtils;
 import net.samagames.hub.utils.SimpleBlock;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
@@ -27,57 +32,57 @@ public class StargateDisplayer extends AbstractDisplayer
         super(player);
 
         this.basePortalLocation = this.baseLocation.add(3.0D, 0.0D, 0.0D).getBlock().getLocation();
-        this.addBlocksToUse(this.createPortalFrame(this.basePortalLocation, DyeColor.ORANGE, false));
+        this.addBlocksToUse(this.createPortalFrame(this.basePortalLocation, false));
 
         this.portals = this.createPortal(this.basePortalLocation);
         this.addBlocksToUse(this.portals);
 
         Random random = new Random();
         this.exitPortalLocation = this.baseLocation.add(random.nextInt(120) - 60, 255, random.nextInt(120) - 60);
-        this.addBlocksToUse(this.createPortalFrame(this.exitPortalLocation, DyeColor.BLUE, true));
+        this.addBlocksToUse(this.createPortalFrame(this.exitPortalLocation, true));
     }
 
-    public HashMap<Location, SimpleBlock> createPortalFrame(Location basePortalLocation, DyeColor portalColor, boolean exit)
+    public HashMap<Location, SimpleBlock> createPortalFrame(Location basePortalLocation, boolean exit)
     {
         HashMap<Location, SimpleBlock> blocks = new HashMap<>();
 
         if(exit)
         {
-            blocks.put(basePortalLocation, new SimpleBlock(Material.STAINED_CLAY, portalColor.getWoolData()));
-            blocks.put(basePortalLocation.clone().subtract(0.0D, 0.0D, 1.0D), new SimpleBlock(Material.STAINED_CLAY, portalColor.getDyeData()));
-            blocks.put(basePortalLocation.clone().subtract(0.0D, 0.0D, 2.0D).add(1.0D, 0.0D, 0.0D), new SimpleBlock(Material.STAINED_CLAY, portalColor.getDyeData()));
-            blocks.put(basePortalLocation.clone().subtract(0.0D, 0.0D, 3.0D).add(2.0D, 0.0D, 0.0D), new SimpleBlock(Material.STAINED_CLAY, portalColor.getDyeData()));
-            blocks.put(basePortalLocation.clone().subtract(0.0D, 0.0D, 3.0D).add(3.0D, 0.0D, 0.0D), new SimpleBlock(Material.STAINED_CLAY, portalColor.getDyeData()));
-            blocks.put(basePortalLocation.clone().subtract(0.0D, 0.0D, 3.0D).add(4.0D, 0.0D, 0.0D), new SimpleBlock(Material.STAINED_CLAY, portalColor.getDyeData()));
-            blocks.put(basePortalLocation.clone().subtract(0.0D, 0.0D, 2.0D).add(5.0D, 0.0D, 0.0D), new SimpleBlock(Material.STAINED_CLAY, portalColor.getDyeData()));
-            blocks.put(basePortalLocation.clone().subtract(0.0D, 0.0D, 1.0D).add(6.0D, 0.0D, 0.0D), new SimpleBlock(Material.STAINED_CLAY, portalColor.getDyeData()));
-            blocks.put(basePortalLocation.clone().add(6.0D, 0.0D, 0.0D), new SimpleBlock(Material.STAINED_CLAY, portalColor.getDyeData()));
-            blocks.put(basePortalLocation.clone().add(6.0D, 0.0D, 1.0D), new SimpleBlock(Material.STAINED_CLAY, portalColor.getDyeData()));
-            blocks.put(basePortalLocation.clone().add(5.0D, 0.0D, 2.0D), new SimpleBlock(Material.STAINED_CLAY, portalColor.getDyeData()));
-            blocks.put(basePortalLocation.clone().add(4.0D, 0.0D, 3.0D), new SimpleBlock(Material.STAINED_CLAY, portalColor.getDyeData()));
-            blocks.put(basePortalLocation.clone().add(3.0D, 0.0D, 3.0D), new SimpleBlock(Material.STAINED_CLAY, portalColor.getDyeData()));
-            blocks.put(basePortalLocation.clone().add(2.0D, 0.0D, 3.0D), new SimpleBlock(Material.STAINED_CLAY, portalColor.getDyeData()));
-            blocks.put(basePortalLocation.clone().add(1.0D, 0.0D, 2.0D), new SimpleBlock(Material.STAINED_CLAY, portalColor.getDyeData()));
-            blocks.put(basePortalLocation.clone().add(0.0D, 0.0D, 1.0D), new SimpleBlock(Material.STAINED_CLAY, portalColor.getDyeData()));
+            blocks.put(basePortalLocation, new SimpleBlock(Material.STAINED_CLAY, 3));
+            blocks.put(basePortalLocation.clone().subtract(0.0D, 0.0D, 1.0D), new SimpleBlock(Material.STAINED_CLAY, 3));
+            blocks.put(basePortalLocation.clone().subtract(0.0D, 0.0D, 2.0D).add(1.0D, 0.0D, 0.0D), new SimpleBlock(Material.STAINED_CLAY, 3));
+            blocks.put(basePortalLocation.clone().subtract(0.0D, 0.0D, 3.0D).add(2.0D, 0.0D, 0.0D), new SimpleBlock(Material.STAINED_CLAY, 3));
+            blocks.put(basePortalLocation.clone().subtract(0.0D, 0.0D, 3.0D).add(3.0D, 0.0D, 0.0D), new SimpleBlock(Material.STAINED_CLAY, 3));
+            blocks.put(basePortalLocation.clone().subtract(0.0D, 0.0D, 3.0D).add(4.0D, 0.0D, 0.0D), new SimpleBlock(Material.STAINED_CLAY, 3));
+            blocks.put(basePortalLocation.clone().subtract(0.0D, 0.0D, 2.0D).add(5.0D, 0.0D, 0.0D), new SimpleBlock(Material.STAINED_CLAY, 3));
+            blocks.put(basePortalLocation.clone().subtract(0.0D, 0.0D, 1.0D).add(6.0D, 0.0D, 0.0D), new SimpleBlock(Material.STAINED_CLAY, 3));
+            blocks.put(basePortalLocation.clone().add(6.0D, 0.0D, 0.0D), new SimpleBlock(Material.STAINED_CLAY, 3));
+            blocks.put(basePortalLocation.clone().add(6.0D, 0.0D, 1.0D), new SimpleBlock(Material.STAINED_CLAY, 3));
+            blocks.put(basePortalLocation.clone().add(5.0D, 0.0D, 2.0D), new SimpleBlock(Material.STAINED_CLAY, 3));
+            blocks.put(basePortalLocation.clone().add(4.0D, 0.0D, 3.0D), new SimpleBlock(Material.STAINED_CLAY, 3));
+            blocks.put(basePortalLocation.clone().add(3.0D, 0.0D, 3.0D), new SimpleBlock(Material.STAINED_CLAY, 3));
+            blocks.put(basePortalLocation.clone().add(2.0D, 0.0D, 3.0D), new SimpleBlock(Material.STAINED_CLAY, 3));
+            blocks.put(basePortalLocation.clone().add(1.0D, 0.0D, 2.0D), new SimpleBlock(Material.STAINED_CLAY, 3));
+            blocks.put(basePortalLocation.clone().add(0.0D, 0.0D, 1.0D), new SimpleBlock(Material.STAINED_CLAY, 3));
         }
         else
         {
-            blocks.put(basePortalLocation, new SimpleBlock(Material.STAINED_CLAY, portalColor.getDyeData()));
-            blocks.put(basePortalLocation.clone().subtract(0.0D, 0.0D, 1.0D), new SimpleBlock(Material.STAINED_CLAY, portalColor.getDyeData()));
-            blocks.put(basePortalLocation.clone().subtract(0.0D, 0.0D, 2.0D).add(0.0D, 1.0D, 0.0D), new SimpleBlock(Material.STAINED_CLAY, portalColor.getDyeData()));
-            blocks.put(basePortalLocation.clone().subtract(0.0D, 0.0D, 3.0D).add(0.0D, 2.0D, 0.0D), new SimpleBlock(Material.STAINED_CLAY, portalColor.getDyeData()));
-            blocks.put(basePortalLocation.clone().subtract(0.0D, 0.0D, 3.0D).add(0.0D, 3.0D, 0.0D), new SimpleBlock(Material.STAINED_CLAY, portalColor.getDyeData()));
-            blocks.put(basePortalLocation.clone().subtract(0.0D, 0.0D, 3.0D).add(0.0D, 4.0D, 0.0D), new SimpleBlock(Material.STAINED_CLAY, portalColor.getDyeData()));
-            blocks.put(basePortalLocation.clone().subtract(0.0D, 0.0D, 2.0D).add(0.0D, 5.0D, 0.0D), new SimpleBlock(Material.STAINED_CLAY, portalColor.getDyeData()));
-            blocks.put(basePortalLocation.clone().subtract(0.0D, 0.0D, 1.0D).add(0.0D, 6.0D, 0.0D), new SimpleBlock(Material.STAINED_CLAY, portalColor.getDyeData()));
-            blocks.put(basePortalLocation.clone().add(0.0D, 6.0D, 0.0D), new SimpleBlock(Material.STAINED_CLAY, portalColor.getDyeData()));
-            blocks.put(basePortalLocation.clone().add(0.0D, 6.0D, 1.0D), new SimpleBlock(Material.STAINED_CLAY, portalColor.getDyeData()));
-            blocks.put(basePortalLocation.clone().add(0.0D, 5.0D, 2.0D), new SimpleBlock(Material.STAINED_CLAY, portalColor.getDyeData()));
-            blocks.put(basePortalLocation.clone().add(0.0D, 4.0D, 3.0D), new SimpleBlock(Material.STAINED_CLAY, portalColor.getDyeData()));
-            blocks.put(basePortalLocation.clone().add(0.0D, 3.0D, 3.0D), new SimpleBlock(Material.STAINED_CLAY, portalColor.getDyeData()));
-            blocks.put(basePortalLocation.clone().add(0.0D, 2.0D, 3.0D), new SimpleBlock(Material.STAINED_CLAY, portalColor.getDyeData()));
-            blocks.put(basePortalLocation.clone().add(0.0D, 1.0D, 2.0D), new SimpleBlock(Material.STAINED_CLAY, portalColor.getDyeData()));
-            blocks.put(basePortalLocation.clone().add(0.0D, 0.0D, 1.0D), new SimpleBlock(Material.STAINED_CLAY, portalColor.getDyeData()));
+            blocks.put(basePortalLocation, new SimpleBlock(Material.STAINED_CLAY, 1));
+            blocks.put(basePortalLocation.clone().subtract(0.0D, 0.0D, 1.0D), new SimpleBlock(Material.STAINED_CLAY, 1));
+            blocks.put(basePortalLocation.clone().subtract(0.0D, 0.0D, 2.0D).add(0.0D, 1.0D, 0.0D), new SimpleBlock(Material.STAINED_CLAY, 1));
+            blocks.put(basePortalLocation.clone().subtract(0.0D, 0.0D, 3.0D).add(0.0D, 2.0D, 0.0D), new SimpleBlock(Material.STAINED_CLAY, 1));
+            blocks.put(basePortalLocation.clone().subtract(0.0D, 0.0D, 3.0D).add(0.0D, 3.0D, 0.0D), new SimpleBlock(Material.STAINED_CLAY, 1));
+            blocks.put(basePortalLocation.clone().subtract(0.0D, 0.0D, 3.0D).add(0.0D, 4.0D, 0.0D), new SimpleBlock(Material.STAINED_CLAY, 1));
+            blocks.put(basePortalLocation.clone().subtract(0.0D, 0.0D, 2.0D).add(0.0D, 5.0D, 0.0D), new SimpleBlock(Material.STAINED_CLAY, 1));
+            blocks.put(basePortalLocation.clone().subtract(0.0D, 0.0D, 1.0D).add(0.0D, 6.0D, 0.0D), new SimpleBlock(Material.STAINED_CLAY, 1));
+            blocks.put(basePortalLocation.clone().add(0.0D, 6.0D, 0.0D), new SimpleBlock(Material.STAINED_CLAY, 1));
+            blocks.put(basePortalLocation.clone().add(0.0D, 6.0D, 1.0D), new SimpleBlock(Material.STAINED_CLAY, 1));
+            blocks.put(basePortalLocation.clone().add(0.0D, 5.0D, 2.0D), new SimpleBlock(Material.STAINED_CLAY, 1));
+            blocks.put(basePortalLocation.clone().add(0.0D, 4.0D, 3.0D), new SimpleBlock(Material.STAINED_CLAY, 1));
+            blocks.put(basePortalLocation.clone().add(0.0D, 3.0D, 3.0D), new SimpleBlock(Material.STAINED_CLAY, 1));
+            blocks.put(basePortalLocation.clone().add(0.0D, 2.0D, 3.0D), new SimpleBlock(Material.STAINED_CLAY, 1));
+            blocks.put(basePortalLocation.clone().add(0.0D, 1.0D, 2.0D), new SimpleBlock(Material.STAINED_CLAY, 1));
+            blocks.put(basePortalLocation.clone().add(0.0D, 0.0D, 1.0D), new SimpleBlock(Material.STAINED_CLAY, 1));
             blocks.put(basePortalLocation.clone().subtract(1.0D, 0.0D, 2.0D), new SimpleBlock(Material.QUARTZ_BLOCK, 1));
             blocks.put(basePortalLocation.clone().subtract(1.0D, 0.0D, 1.0D), new SimpleBlock(Material.STEP, 7));
             blocks.put(basePortalLocation.clone().subtract(1.0D, 0.0D, 0.0D), new SimpleBlock(Material.STEP, 7));
@@ -135,6 +140,7 @@ public class StargateDisplayer extends AbstractDisplayer
 
         Location newPlayerLocation = this.player.getLocation();
         newPlayerLocation.setYaw(-90.0F);
+        newPlayerLocation.setPitch(0.0F);
 
         this.player.teleport(newPlayerLocation);
 
@@ -143,7 +149,8 @@ public class StargateDisplayer extends AbstractDisplayer
             this.basePortalLocation.getWorld().playSound(this.basePortalLocation, Sound.ENDERMAN_SCREAM, 1.0F, 6.0F);
             this.basePortalLocation.getWorld().createExplosion(basePortalLocation.getX(), basePortalLocation.getY(), basePortalLocation.getZ(), 10, false, false);
 
-            for (Location block : this.portals.keySet()) {
+            for (Location block : this.portals.keySet())
+            {
                 block.getBlock().setType(Material.PORTAL);
                 block.getBlock().setData((byte) 2);
             }
@@ -164,31 +171,15 @@ public class StargateDisplayer extends AbstractDisplayer
                 @Override
                 public void run()
                 {
-                    if (this.second == 20)
-                    {
-                        basePortalLocation.getWorld().playSound(basePortalLocation, Sound.ENDERMAN_IDLE, 1.0F, 1.0F);
-                        this.second = 0;
-
-                        Bukkit.broadcastMessage("enderman sound (second)");
-                    }
-                    else
-                    {
-                        this.second++;
-                    }
-
                     Location blackHoleLocation = basePortalLocation.add(0.5D, 2.0D, 0.5D);
-                    int squared = 5 * 5;
 
-                    for (Player player : Bukkit.getOnlinePlayers())
+                    for (Entity entity : EntityUtils.getNearbyEntities(blackHoleLocation, 5, EntityType.PLAYER))
                     {
-                        if (player.getLocation().distanceSquared(blackHoleLocation) <= squared)
-                        {
-                            Bukkit.broadcastMessage("<= squared (" + player.getName() + ")");
+                        Player player = (Player) entity;
 
-                            Vector entityVector = new Vector(player.getLocation().getX(), player.getLocation().getY(), player.getLocation().getZ());
-                            Vector blackholeVector = new Vector(blackHoleLocation.getX(), blackHoleLocation.getY(), blackHoleLocation.getZ());
-                            player.setVelocity(blackholeVector.subtract(entityVector).normalize().multiply(0.05F));
-                        }
+                        Vector entityVector = new Vector(player.getLocation().getX(), player.getLocation().getY(), player.getLocation().getZ());
+                        Vector blackholeVector = new Vector(blackHoleLocation.getX(), blackHoleLocation.getY(), blackHoleLocation.getZ());
+                        player.setVelocity(blackholeVector.subtract(entityVector).normalize().multiply(0.05F));
                     }
                 }
             }, 1L, 1L);
@@ -197,8 +188,8 @@ public class StargateDisplayer extends AbstractDisplayer
         Bukkit.getScheduler().runTaskLater(Hub.getInstance(), () ->
         {
             this.basePortalLocation.getWorld().playSound(this.basePortalLocation, Sound.ENDERMAN_DEATH, 1.0F, 6.0F);
-            this.basePortalLocation.getWorld().createExplosion(this.basePortalLocation.getX(), this.basePortalLocation.getY(), this.basePortalLocation.getZ(), 10, false, false);
-            this.exitPortalLocation.getWorld().createExplosion(this.exitPortalLocation.getX(), this.exitPortalLocation.getY(), this.exitPortalLocation.getZ(), 10, false, false);
+            this.basePortalLocation.getWorld().createExplosion(this.basePortalLocation.getX(), this.basePortalLocation.getY(), this.basePortalLocation.getZ(), 8, false, false);
+            this.exitPortalLocation.getWorld().createExplosion(this.exitPortalLocation.getX(), this.exitPortalLocation.getY(), this.exitPortalLocation.getZ(), 8, false, false);
 
             this.end();
             this.restore();
