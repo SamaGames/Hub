@@ -28,7 +28,7 @@ public class EnderSwapDisplayer extends AbstractDisplayer
         Random random = new Random();
         Location last = this.baseLocation;
 
-        for(int i = 0; i < 5; i++)
+        for(int i = 0; i < 10; i++)
         {
             Location randomizedLocation = last.clone().add(random.nextInt(80) - 40, 0, random.nextInt(80) - 40);
             randomizedLocation.setY(256);
@@ -54,23 +54,27 @@ public class EnderSwapDisplayer extends AbstractDisplayer
     {
         this.teleportTask = Bukkit.getScheduler().runTaskTimerAsynchronously(Hub.getInstance(), () ->
         {
-            ParticleEffect.PORTAL.display(0.5F, 0, 0.5F, 0.3F, 5, this.player.getLocation().clone().add(0.0D, 1D, 0.0D), 100.0D);
+            ParticleEffect.PORTAL.display(1.0F, 0, 1.0F, 1.0F, 15, this.player.getLocation().clone().add(0.0D, 1D, 0.0D), 100.0D);
 
             Bukkit.getScheduler().runTaskLater(Hub.getInstance(), () ->
             {
                 this.player.getLocation().getWorld().playSound(this.player.getLocation(), Sound.ENDERMAN_TELEPORT, 1.0F, 1.0F);
-                this.player.teleport(this.teleportPositions.get(0));
 
-                this.teleportPositions.remove(0);
-
-                if(this.teleportPositions.isEmpty())
+                Bukkit.getScheduler().runTaskLater(Hub.getInstance(), () ->
                 {
-                    this.end();
-                    this.callback();
-                }
-            }, 20L);
+                    this.player.teleport(this.teleportPositions.get(0));
 
-        }, 0L, 20L * 5);
+                    this.teleportPositions.remove(0);
+
+                    if(this.teleportPositions.isEmpty())
+                    {
+                        this.end();
+                        this.callback();
+                    }
+                }, 2L);
+            }, 20L * 2);
+
+        }, 0L, 20L * 6);
     }
 
     @Override
