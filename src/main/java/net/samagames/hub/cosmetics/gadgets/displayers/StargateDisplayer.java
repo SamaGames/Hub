@@ -164,7 +164,7 @@ public class StargateDisplayer extends AbstractDisplayer
 
             Bukkit.broadcastMessage("helix");
 
-            this.portalTask = Bukkit.getScheduler().runTaskTimerAsynchronously(Hub.getInstance(), new Runnable()
+            this.portalTask = Bukkit.getScheduler().runTaskTimer(Hub.getInstance(), new Runnable()
             {
                 int second = 0;
 
@@ -175,6 +175,8 @@ public class StargateDisplayer extends AbstractDisplayer
 
                     for (Entity entity : EntityUtils.getNearbyEntities(blackHoleLocation, 5, EntityType.PLAYER))
                     {
+                        Bukkit.broadcastMessage("player in range");
+
                         Player player = (Player) entity;
 
                         Vector entityVector = new Vector(player.getLocation().getX(), player.getLocation().getY(), player.getLocation().getZ());
