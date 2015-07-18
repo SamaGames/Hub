@@ -164,25 +164,19 @@ public class StargateDisplayer extends AbstractDisplayer
 
             Bukkit.broadcastMessage("helix");
 
-            this.portalTask = Bukkit.getScheduler().runTaskTimer(Hub.getInstance(), new Runnable()
+            this.portalTask = Bukkit.getScheduler().runTaskTimer(Hub.getInstance(), () ->
             {
-                int second = 0;
+                Location blackHoleLocation = this.basePortalLocation.clone().add(0.5D, 2.0D, 0.5D);
 
-                @Override
-                public void run()
+                for (Entity entity : EntityUtils.getNearbyEntities(blackHoleLocation, 8, EntityType.PLAYER))
                 {
-                    Location blackHoleLocation = basePortalLocation.add(0.5D, 2.0D, 0.5D);
+                    Bukkit.broadcastMessage("player in range");
 
-                    for (Entity entity : EntityUtils.getNearbyEntities(blackHoleLocation, 5, EntityType.PLAYER))
-                    {
-                        Bukkit.broadcastMessage("player in range");
+                    Player player = (Player) entity;
 
-                        Player player = (Player) entity;
-
-                        Vector entityVector = new Vector(player.getLocation().getX(), player.getLocation().getY(), player.getLocation().getZ());
-                        Vector blackholeVector = new Vector(blackHoleLocation.getX(), blackHoleLocation.getY(), blackHoleLocation.getZ());
-                        player.setVelocity(blackholeVector.subtract(entityVector).normalize().multiply(0.05F));
-                    }
+                    Vector entityVector = new Vector(player.getLocation().getX(), player.getLocation().getY(), player.getLocation().getZ());
+                    Vector blackholeVector = new Vector(blackHoleLocation.getX(), blackHoleLocation.getY(), blackHoleLocation.getZ());
+                    player.setVelocity(blackholeVector.subtract(entityVector).normalize().multiply(0.05F));
                 }
             }, 1L, 1L);
         }, 20L * 5);
@@ -201,10 +195,7 @@ public class StargateDisplayer extends AbstractDisplayer
     }
 
     @Override
-    public void handleInteraction(Entity who, Entity with)
-    {
-
-    }
+    public void handleInteraction(Entity who, Entity with) {}
 
     @Override
     public boolean canUse()
