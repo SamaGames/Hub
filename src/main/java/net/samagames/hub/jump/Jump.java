@@ -4,6 +4,7 @@ import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import net.samagames.tools.ColorUtils;
 import org.bukkit.*;
+import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Firework;
@@ -17,7 +18,9 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class Jump
 {
-    private final ConcurrentHashMap<UUID, Long> jumping = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<UUID, Long> jumping;
+    private final ConcurrentHashMap<UUID, Location> checkpoints;
+    private final ConcurrentHashMap<UUID, Integer> tries;
     private final String jumpName;
     private final Location spawn;
     private final Location end;
@@ -27,6 +30,10 @@ public class Jump
 
     public Jump(String jumpName, Location spawn, Location end, Location teleportFail, ArrayList<Material> whitelist, String achievementName)
     {
+        this.jumping = new ConcurrentHashMap<>();
+        this.checkpoints = new ConcurrentHashMap<>();
+        this.tries = new ConcurrentHashMap<>();
+
         this.jumpName = jumpName;
         this.spawn = spawn;
         this.end = end;
@@ -34,38 +41,41 @@ public class Jump
         this.whitelist = whitelist;
         this.achievementName = achievementName;
 
-        Bukkit.getScheduler().runTaskTimerAsynchronously(Hub.getInstance(), new Runnable()
+        Bukkit.getScheduler().runTaskTimerAsynchronously(Hub.getInstance(), () ->
         {
-            @Override
-            public void run()
-            {
-                for (UUID uuid : jumping.keySet())
+            for (UUID uuid : this.jumping.keySet()) {
+                Player player = Bukkit.getPlayer(uuid);
+
+                if (player == null || !player.isOnline())
                 {
-                    Player player = Bukkit.getPlayer(uuid);
+                    this.removePlayer(uuid);
+                }
+                else
+                {
+                    Block block = player.getLocation().getBlock().getRelative(BlockFace.DOWN);
 
-                    if (player == null || !player.isOnline())
-                    {
-                        removePlayer(uuid);
-                    }
-                    else
-                    {
-                        Material block = player.getLocation().getBlock().getRelative(BlockFace.DOWN).getType();
-
-                        if (!inWhitelist(block) && block.isSolid())
-                            losePlayer(player);
-                    }
+                    if (block.getType() == Material.GOLD_PLATE)
+                        this.checkpoint(player, block.getLocation());
+                    else if (!inWhitelist(block.getType()) && block.getType().isSolid())
+                        this.failPlayer(player);
                 }
             }
-        }, 20L * 5, 20L * 5);
+        }, 20L, 20L);
     }
 
-    public Location getSpawn() {
-        return spawn;
+    public void checkpoint(Player player, Location location)
+    {
+        this.checkpoints.put(player.getUniqueId(), location);
+        this.tries.put(player.getUniqueId(), (this.tries.get(player.getUniqueId()) + 3));
+
+        player.sendMessage(Hub.getInstance().getJumpManager().getTag() + ChatColor.DARK_AQUA + "Checkpoint !");
     }
 
     public void addPlayer(Player player)
     {
         this.jumping.put(player.getUniqueId(), System.currentTimeMillis());
+        this.checkpoints.put(player.getUniqueId(), this.spawn);
+        this.tries.put(player.getUniqueId(), 3);
 
         player.sendMessage(Hub.getInstance().getJumpManager().getTag() + ChatColor.DARK_AQUA + "Vous commencez le " + ChatColor.AQUA + jumpName + ChatColor.DARK_AQUA + ". Bonne chance !");
         player.setAllowFlight(false);
@@ -73,12 +83,8 @@ public class Jump
         player.setWalkSpeed(0.1F);
         player.setFlySpeed(0.1F);
 
-        /**
-         * TODO: Remove pet
-         *
-        if (Plugin.cosmeticsManager.getPetsHandler().hadPet(player))
-            Plugin.cosmeticsManager.getPetsHandler().removePet(player);
-         **/
+        if (Hub.getInstance().getCosmeticManager().getPetManager().hadPet(player))
+            Hub.getInstance().getCosmeticManager().getPetManager().disableCosmetic(player, false);
     }
 
     public void winPlayer(final Player player)
@@ -129,7 +135,7 @@ public class Jump
 
                 fw.setFireworkMeta(fwm);
 
-                count++;
+                this.count++;
             }
 
         }, 5L, 5L);
@@ -147,27 +153,43 @@ public class Jump
         player.setFlySpeed(0.3F);
         player.setWalkSpeed(0.3F);
 
-        if (player.hasPermission("lobby.fly"))
+        if (player.hasPermission("hub.fly"))
             player.setAllowFlight(true);
     }
 
-    public void losePlayer(final Player player)
+    public void failPlayer(final Player player)
     {
-        player.sendMessage(Hub.getInstance().getJumpManager().getTag() + ChatColor.DARK_AQUA + "Vous avez échoué :'(");
-        player.teleport(this.teleportFail);
+        int now = this.tries.get(player.getUniqueId()) - 1;
+        this.tries.put(player.getUniqueId(), now);
 
-        player.setFlySpeed(0.3F);
-        player.setWalkSpeed(0.3F);
+        if(now > 0)
+        {
+            player.sendMessage(Hub.getInstance().getJumpManager().getTag() + ChatColor.DARK_AQUA + "Il vous reste plus que " + now + " essais !");
+            player.teleport(this.checkpoints.get(player.getUniqueId()));
+        }
+        else
+        {
+            player.sendMessage(Hub.getInstance().getJumpManager().getTag() + ChatColor.DARK_AQUA + "Vous avez échoué :'(");
+            player.teleport(this.teleportFail);
 
-        if (player.hasPermission("lobby.fly"))
-            Bukkit.getScheduler().runTask(Hub.getInstance(), () -> player.setAllowFlight(true));
+            player.setFlySpeed(0.3F);
+            player.setWalkSpeed(0.3F);
 
-        this.jumping.remove(player.getUniqueId());
+            if (player.hasPermission("hub.fly"))
+                Bukkit.getScheduler().runTask(Hub.getInstance(), () -> player.setAllowFlight(true));
+
+            this.jumping.remove(player.getUniqueId());
+        }
     }
 
     public void removePlayer(UUID player)
     {
         this.jumping.remove(player);
+    }
+
+    public Location getSpawn()
+    {
+        return this.spawn;
     }
 
     public Location getEnd()

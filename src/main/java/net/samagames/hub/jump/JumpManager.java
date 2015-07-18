@@ -58,6 +58,7 @@ public class JumpManager extends AbstractManager
             Location begin = LocationUtils.str2loc(jsonJump.get("begin").getAsString());
             Location end = LocationUtils.str2loc(jsonJump.get("end").getAsString());
             Location spawn = LocationUtils.str2loc(jsonJump.get("spawn").getAsString());
+
             ArrayList<Material> whitelist = new ArrayList<>();
 
             JsonArray jsonMaterials = jsonJump.get("whitelist").getAsJsonArray();
