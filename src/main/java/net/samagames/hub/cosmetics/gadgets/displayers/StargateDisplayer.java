@@ -4,10 +4,7 @@ import de.slikey.effectlib.effect.HelixEffect;
 import de.slikey.effectlib.util.ParticleEffect;
 import net.samagames.hub.Hub;
 import net.samagames.hub.utils.SimpleBlock;
-import org.bukkit.Bukkit;
-import org.bukkit.DyeColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
@@ -45,7 +42,7 @@ public class StargateDisplayer extends AbstractDisplayer
 
         if(exit)
         {
-            blocks.put(basePortalLocation, new SimpleBlock(Material.STAINED_CLAY, portalColor.getDyeData()));
+            blocks.put(basePortalLocation, new SimpleBlock(Material.STAINED_CLAY, portalColor.getWoolData()));
             blocks.put(basePortalLocation.clone().subtract(0.0D, 0.0D, 1.0D), new SimpleBlock(Material.STAINED_CLAY, portalColor.getDyeData()));
             blocks.put(basePortalLocation.clone().subtract(0.0D, 0.0D, 2.0D).add(1.0D, 0.0D, 0.0D), new SimpleBlock(Material.STAINED_CLAY, portalColor.getDyeData()));
             blocks.put(basePortalLocation.clone().subtract(0.0D, 0.0D, 3.0D).add(2.0D, 0.0D, 0.0D), new SimpleBlock(Material.STAINED_CLAY, portalColor.getDyeData()));
@@ -139,6 +136,9 @@ public class StargateDisplayer extends AbstractDisplayer
 
         Bukkit.getScheduler().runTaskLater(Hub.getInstance(), () ->
         {
+            this.basePortalLocation.getWorld().playSound(this.basePortalLocation, Sound.ENDERMAN_SCREAM, 1.0F, 4.75F);
+            this.basePortalLocation.getWorld().createExplosion(basePortalLocation.getX(), basePortalLocation.getY(), basePortalLocation.getZ(), 10, false, false);
+
             for (Location block : this.portals.keySet())
             {
                 block.getBlock().setType(Material.PORTAL);
@@ -148,7 +148,7 @@ public class StargateDisplayer extends AbstractDisplayer
             this.helixEffect = new HelixEffect(Hub.getInstance().getCosmeticManager().getParticleManager().getEffectManager());
             this.helixEffect.particle = ParticleEffect.FIREWORKS_SPARK;
             this.helixEffect.radius = 6;
-            this.helixEffect.setLocation(this.basePortalLocation.clone().add(0.5D, 0.0D, 0.5D));
+            this.helixEffect.setLocation(this.basePortalLocation.clone().add(0.5D, 0.0D, 1.5D));
             this.helixEffect.infinite();
             this.helixEffect.start();
 
@@ -157,6 +157,8 @@ public class StargateDisplayer extends AbstractDisplayer
 
         Bukkit.getScheduler().runTaskLater(Hub.getInstance(), () ->
         {
+            this.basePortalLocation.getWorld().createExplosion(basePortalLocation.getX(), basePortalLocation.getY(), basePortalLocation.getZ(), 10, false, false);
+
             this.end();
             this.restore();
             //this.portalTask.cancel();
