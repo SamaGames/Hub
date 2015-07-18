@@ -8,6 +8,7 @@ import org.bukkit.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
+import org.bukkit.util.Vector;
 
 import java.util.HashMap;
 import java.util.Random;
@@ -15,6 +16,7 @@ import java.util.Random;
 public class StargateDisplayer extends AbstractDisplayer
 {
     private final Location basePortalLocation;
+    private final Location exitPortalLocation;
     private HelixEffect helixEffect;
     private BukkitTask portalTask;
 
@@ -31,9 +33,8 @@ public class StargateDisplayer extends AbstractDisplayer
         this.addBlocksToUse(this.portals);
 
         Random random = new Random();
-        Location randomizedLocation = this.baseLocation.add(random.nextInt(120) - 60, 255, random.nextInt(120) - 60);
-
-        this.addBlocksToUse(this.createPortalFrame(randomizedLocation, DyeColor.BLUE, true));
+        this.exitPortalLocation = this.baseLocation.add(random.nextInt(120) - 60, 255, random.nextInt(120) - 60);
+        this.addBlocksToUse(this.createPortalFrame(this.exitPortalLocation, DyeColor.BLUE, true));
     }
 
     public HashMap<Location, SimpleBlock> createPortalFrame(Location basePortalLocation, DyeColor portalColor, boolean exit)
@@ -139,8 +140,7 @@ public class StargateDisplayer extends AbstractDisplayer
             this.basePortalLocation.getWorld().playSound(this.basePortalLocation, Sound.ENDERMAN_SCREAM, 1.0F, 6.0F);
             this.basePortalLocation.getWorld().createExplosion(basePortalLocation.getX(), basePortalLocation.getY(), basePortalLocation.getZ(), 10, false, false);
 
-            for (Location block : this.portals.keySet())
-            {
+            for (Location block : this.portals.keySet()) {
                 block.getBlock().setType(Material.PORTAL);
                 block.getBlock().setData((byte) 2);
             }
@@ -152,10 +152,41 @@ public class StargateDisplayer extends AbstractDisplayer
             this.helixEffect.infinite();
             this.helixEffect.start();
 
-            this.portalTask = Bukkit.getScheduler().runTaskTimerAsynchronously(Hub.getInstance(), () ->
-            {
+            this.portalTask = Bukkit.getScheduler().runTaskTimerAsynchronously(Hub.getInstance(), new Runnable() {
+                int second = 0;
 
-            }, 5L, 5L);
+                @Override
+                public void run() {
+                    if (this.second == 20) {
+                        basePortalLocation.getWorld().playSound(basePortalLocation, Sound.ENDERMAN_IDLE, 1.0F, 1.0F);
+                        this.second = 0;
+                    } else {
+                        this.second++;
+                    }
+
+                    Location blackHoleLocation = basePortalLocation.add(0.5D, 2.0D, 0.5D);
+                    int squared = 5 * 5;
+
+                    for (Player player : Bukkit.getOnlinePlayers())
+                    {
+                        if (player.getLocation().distanceSquared(blackHoleLocation) <= squared)
+                        {
+                            Vector entityVector = new Vector(player.getLocation().getX(), player.getLocation().getY(), player.getLocation().getZ());
+                            Vector blackholeVector = new Vector(blackHoleLocation.getX(), blackHoleLocation.getY(), blackHoleLocation.getZ());
+                            player.setVelocity(blackholeVector.subtract(entityVector).multiply(0.05F));
+                        }
+                        else
+                        {
+                            player.teleport(exitPortalLocation.subtract(0.0D, 2.0D, 0.0D).add(0.5D, 0.0D, 0.5D));
+
+                            Bukkit.getScheduler().runTaskLater(Hub.getInstance(), () ->
+                            {
+                                player.playSound(player.getLocation(), Sound.ENDERMAN_TELEPORT, 1.0F, 1.0F);
+                            }, 5L);
+                        }
+                    }
+                }
+            }, 1L, 1L);
         }, 20L * 5);
 
         Bukkit.getScheduler().runTaskLater(Hub.getInstance(), () ->
