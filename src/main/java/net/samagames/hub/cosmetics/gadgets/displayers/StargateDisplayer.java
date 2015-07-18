@@ -147,19 +147,21 @@ public class StargateDisplayer extends AbstractDisplayer
 
             this.helixEffect = new HelixEffect(Hub.getInstance().getCosmeticManager().getParticleManager().getEffectManager());
             this.helixEffect.particle = ParticleEffect.FIREWORKS_SPARK;
-            this.helixEffect.radius = 12;
-            this.helixEffect.setLocation(this.basePortalLocation);
+            this.helixEffect.radius = 6;
+            this.helixEffect.setLocation(this.basePortalLocation.clone().add(0.5D, 0.0D, 0.5D));
             this.helixEffect.infinite();
             this.helixEffect.start();
-        }, 20L * 2);
+
+
+        }, 20L * 5);
 
         Bukkit.getScheduler().runTaskLater(Hub.getInstance(), () ->
         {
             this.end();
             this.restore();
-            this.portalTask.cancel();
+            //this.portalTask.cancel();
             this.helixEffect.cancel();
-        }, 20L * 15);
+        }, 20L * 25);
     }
 
     @Override
