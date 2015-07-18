@@ -162,21 +162,27 @@ public class StargateDisplayer extends AbstractDisplayer
             this.helixEffect.infinite();
             this.helixEffect.start();
 
-            Bukkit.broadcastMessage("helix");
-
             this.portalTask = Bukkit.getScheduler().runTaskTimer(Hub.getInstance(), () ->
             {
                 Location blackHoleLocation = this.basePortalLocation.clone().add(0.5D, 2.0D, 0.5D);
 
                 for (Entity entity : EntityUtils.getNearbyEntities(blackHoleLocation, 8, EntityType.PLAYER))
                 {
-                    Bukkit.broadcastMessage("player in range");
-
                     Player player = (Player) entity;
 
                     Vector entityVector = new Vector(player.getLocation().getX(), player.getLocation().getY(), player.getLocation().getZ());
                     Vector blackholeVector = new Vector(blackHoleLocation.getX(), blackHoleLocation.getY(), blackHoleLocation.getZ());
-                    player.setVelocity(blackholeVector.subtract(entityVector).normalize().multiply(0.05F));
+                    player.setVelocity(blackholeVector.subtract(entityVector).normalize().multiply(0.25F));
+
+                    if (player.getLocation().distance(blackHoleLocation) <= 1.0D)
+                    {
+                        player.playSound(player.getLocation(), Sound.ENDERMAN_TELEPORT, 1.0F, 1.0F);
+
+                        Bukkit.getScheduler().runTaskLater(Hub.getInstance(), () ->
+                        {
+                            player.teleport(this.exitPortalLocation);
+                        }, 5L);
+                    }
                 }
             }, 1L, 1L);
         }, 20L * 5);
