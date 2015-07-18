@@ -136,7 +136,7 @@ public class StargateDisplayer extends AbstractDisplayer
 
         Bukkit.getScheduler().runTaskLater(Hub.getInstance(), () ->
         {
-            this.basePortalLocation.getWorld().playSound(this.basePortalLocation, Sound.ENDERMAN_SCREAM, 1.0F, 4.75F);
+            this.basePortalLocation.getWorld().playSound(this.basePortalLocation, Sound.ENDERMAN_SCREAM, 1.0F, 6.0F);
             this.basePortalLocation.getWorld().createExplosion(basePortalLocation.getX(), basePortalLocation.getY(), basePortalLocation.getZ(), 10, false, false);
 
             for (Location block : this.portals.keySet())
@@ -147,21 +147,25 @@ public class StargateDisplayer extends AbstractDisplayer
 
             this.helixEffect = new HelixEffect(Hub.getInstance().getCosmeticManager().getParticleManager().getEffectManager());
             this.helixEffect.particle = ParticleEffect.FIREWORKS_SPARK;
-            this.helixEffect.radius = 6;
-            this.helixEffect.setLocation(this.basePortalLocation.clone().add(0.5D, 0.0D, 1.5D));
+            this.helixEffect.radius = 10;
+            this.helixEffect.setLocation(this.basePortalLocation.clone().add(0.5D, 0.25D, 1.5D));
             this.helixEffect.infinite();
             this.helixEffect.start();
 
+            this.portalTask = Bukkit.getScheduler().runTaskTimerAsynchronously(Hub.getInstance(), () ->
+            {
 
+            }, 5L, 5L);
         }, 20L * 5);
 
         Bukkit.getScheduler().runTaskLater(Hub.getInstance(), () ->
         {
+            this.basePortalLocation.getWorld().playSound(this.basePortalLocation, Sound.ENDERMAN_DEATH, 1.0F, 6.0F);
             this.basePortalLocation.getWorld().createExplosion(basePortalLocation.getX(), basePortalLocation.getY(), basePortalLocation.getZ(), 10, false, false);
 
             this.end();
             this.restore();
-            //this.portalTask.cancel();
+            this.portalTask.cancel();
             this.helixEffect.cancel();
         }, 20L * 25);
     }
