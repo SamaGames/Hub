@@ -38,7 +38,7 @@ public class StargateDisplayer extends AbstractDisplayer
         this.addBlocksToUse(this.portals);
 
         Random random = new Random();
-        this.exitPortalLocation = this.baseLocation.add(random.nextInt(120) - 60, 255, random.nextInt(120) - 60);
+        this.exitPortalLocation = this.baseLocation.add(random.nextInt(120) - 60, 250, random.nextInt(120) - 60);
         this.addBlocksToUse(this.createPortalFrame(this.exitPortalLocation, true));
     }
 
@@ -166,7 +166,7 @@ public class StargateDisplayer extends AbstractDisplayer
             {
                 Location blackHoleLocation = this.basePortalLocation.clone().add(0.5D, 2.0D, 0.5D);
 
-                for (Entity entity : EntityUtils.getNearbyEntities(blackHoleLocation, 8, EntityType.PLAYER))
+                for (Entity entity : EntityUtils.getNearbyEntities(blackHoleLocation, 12, EntityType.PLAYER))
                 {
                     Player player = (Player) entity;
 
@@ -174,14 +174,11 @@ public class StargateDisplayer extends AbstractDisplayer
                     Vector blackholeVector = new Vector(blackHoleLocation.getX(), blackHoleLocation.getY(), blackHoleLocation.getZ());
                     player.setVelocity(blackholeVector.subtract(entityVector).normalize().multiply(0.25F));
 
-                    if (player.getLocation().distance(blackHoleLocation) <= 1.0D)
+                    if (player.getLocation().distanceSquared(blackHoleLocation) <= 1.0D)
                     {
                         player.playSound(player.getLocation(), Sound.ENDERMAN_TELEPORT, 1.0F, 1.0F);
 
-                        Bukkit.getScheduler().runTaskLater(Hub.getInstance(), () ->
-                        {
-                            player.teleport(this.exitPortalLocation);
-                        }, 5L);
+                        Bukkit.getScheduler().runTaskLater(Hub.getInstance(), () -> player.teleport(this.exitPortalLocation), 5L);
                     }
                 }
             }, 1L, 1L);

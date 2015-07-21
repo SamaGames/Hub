@@ -2,7 +2,7 @@ package net.samagames.hub.cosmetics.gadgets.displayers;
 
 import net.samagames.hub.Hub;
 import org.bukkit.*;
-import org.bukkit.craftbukkit.v1_8_R2.entity.CraftItem;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftItem;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkMeta;

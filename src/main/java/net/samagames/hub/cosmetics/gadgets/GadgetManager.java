@@ -1,6 +1,6 @@
 package net.samagames.hub.cosmetics.gadgets;
 
-import net.minecraft.server.v1_8_R2.EntityItem;
+import net.minecraft.server.v1_8_R3.EntityItem;
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import net.samagames.hub.cosmetics.common.AbstractCosmeticManager;

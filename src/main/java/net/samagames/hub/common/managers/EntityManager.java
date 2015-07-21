@@ -1,6 +1,6 @@
 package net.samagames.hub.common.managers;
 
-import net.minecraft.server.v1_8_R2.*;
+import net.minecraft.server.v1_8_R3.*;
 import net.samagames.hub.Hub;
 import net.samagames.hub.cosmetics.gadgets.displayers.MoutMout2000Displayer;
 import net.samagames.hub.cosmetics.pets.nms.*;

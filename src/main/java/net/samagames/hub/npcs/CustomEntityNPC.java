@@ -1,14 +1,14 @@
 package net.samagames.hub.npcs;
 
 import com.mojang.authlib.GameProfile;
-import net.minecraft.server.v1_8_R2.EntityPlayer;
-import net.minecraft.server.v1_8_R2.NBTTagCompound;
-import net.minecraft.server.v1_8_R2.PlayerInteractManager;
-import net.minecraft.server.v1_8_R2.WorldServer;
+import net.minecraft.server.v1_8_R3.EntityPlayer;
+import net.minecraft.server.v1_8_R3.NBTTagCompound;
+import net.minecraft.server.v1_8_R3.PlayerInteractManager;
+import net.minecraft.server.v1_8_R3.WorldServer;
 import net.samagames.api.SamaGamesAPI;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_8_R2.CraftWorld;
-import org.bukkit.craftbukkit.v1_8_R2.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
+import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
@@ -25,7 +25,7 @@ public class CustomEntityNPC extends EntityPlayer
     {
         super(world.getMinecraftServer(), world, profile, new PlayerInteractManager(world));
 
-        net.minecraft.server.v1_8_R2.ItemStack[] armorNMS = new net.minecraft.server.v1_8_R2.ItemStack[4];
+        net.minecraft.server.v1_8_R3.ItemStack[] armorNMS = new net.minecraft.server.v1_8_R3.ItemStack[4];
         armorNMS[0] = CraftItemStack.asNMSCopy(armor[0]);
         armorNMS[1] = CraftItemStack.asNMSCopy(armor[1]);
         armorNMS[2] = CraftItemStack.asNMSCopy(armor[2]);
