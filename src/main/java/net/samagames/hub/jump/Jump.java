@@ -43,17 +43,25 @@ public class Jump
 
         Bukkit.getScheduler().runTaskTimerAsynchronously(Hub.getInstance(), () ->
         {
-            for (UUID uuid : this.jumping.keySet()) {
+            for (UUID uuid : this.jumping.keySet())
+            {
                 Player player = Bukkit.getPlayer(uuid);
 
-                if (player == null || !player.isOnline()) {
+                if (player == null || !player.isOnline())
+                {
                     this.removePlayer(uuid);
-                } else {
+                }
+                else
+                {
                     Block block = player.getLocation().getBlock().getRelative(BlockFace.DOWN);
 
-                    if (!inWhitelist(block.getType()) && block.getType().isSolid())
-                        if (block.getType() != Material.GOLD_PLATE && block.getType() != Material.IRON_PLATE)
+                    if (block.getType() != Material.GOLD_PLATE && block.getType() != Material.IRON_PLATE)
+                    {
+                        if (!inWhitelist(block.getType()) && block.getType().isSolid())
+                        {
                             this.failPlayer(player);
+                        }
+                    }
                 }
             }
         }, 20L, 20L);
