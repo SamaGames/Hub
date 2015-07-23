@@ -19,14 +19,20 @@ public class JumpListener implements Listener
     @EventHandler
     public void onInteract(PlayerInteractEvent event)
     {
+        Bukkit.broadcastMessage("event");
+
         if (event.getAction().equals(Action.PHYSICAL))
         {
             if (event.getClickedBlock().getType().equals(Material.IRON_PLATE))
             {
+                Bukkit.broadcastMessage("plate");
+
                 Jump jump = Hub.getInstance().getJumpManager().getOfPlayer(event.getPlayer().getUniqueId());
 
                 if (jump != null)
                 {
+                    Bukkit.broadcastMessage("not null");
+
                     if (jump.getEnd().equals(event.getClickedBlock()))
                     {
                         jump.winPlayer(event.getPlayer());
@@ -42,10 +48,16 @@ public class JumpListener implements Listener
                     }
                 }
 
+                Bukkit.broadcastMessage("null");
+
                 for (Jump jumpp : Hub.getInstance().getJumpManager().getJumps())
                 {
+                    Bukkit.broadcastMessage("loop");
+
                     if (jumpp.getBegin().equals(event.getClickedBlock()))
                     {
+                        Bukkit.broadcastMessage("added");
+
                         jumpp.addPlayer(event.getPlayer());
                         return;
                     }
