@@ -17,28 +17,27 @@ import org.bukkit.event.player.PlayerQuitEvent;
 public class JumpListener implements Listener
 {
     @EventHandler
-    public void onInteract(PlayerInteractEvent event)
+    public void onPlayerInteract(PlayerInteractEvent event)
     {
-        Bukkit.broadcastMessage("event");
-
         if (event.getAction().equals(Action.PHYSICAL))
         {
             if (event.getClickedBlock().getType().equals(Material.IRON_PLATE))
             {
-                Bukkit.broadcastMessage("plate");
-
                 Jump jump = Hub.getInstance().getJumpManager().getOfPlayer(event.getPlayer().getUniqueId());
 
                 if (jump != null)
                 {
-                    Bukkit.broadcastMessage("not null");
+                    Location beginFormatted = new Location(jump.getBegin().getWorld(), jump.getBegin().getBlockX(), jump.getBegin().getBlockY(), jump.getBegin().getBlockZ());
+                    Location endFormatted = new Location(jump.getEnd().getWorld(), jump.getEnd().getBlockX(), jump.getEnd().getBlockY(), jump.getEnd().getBlockZ());
+                    Location blockFormatted = new Location(event.getClickedBlock().getWorld(), event.getClickedBlock().getLocation().getBlockX(), event.getClickedBlock().getLocation().getBlockY(), event.getClickedBlock().getLocation().getBlockZ());
 
-                    if (jump.getEnd().equals(event.getClickedBlock()))
+
+                    if (endFormatted.equals(blockFormatted))
                     {
                         jump.winPlayer(event.getPlayer());
                         return;
                     }
-                    else if (jump.getBegin().equals(event.getClickedBlock()))
+                    else if (beginFormatted.equals(blockFormatted))
                     {
                         return;
                     }
@@ -48,16 +47,13 @@ public class JumpListener implements Listener
                     }
                 }
 
-                Bukkit.broadcastMessage("null");
-
                 for (Jump jumpp : Hub.getInstance().getJumpManager().getJumps())
                 {
-                    Bukkit.broadcastMessage("loop");
+                    Location beginFormatted = new Location(jumpp.getBegin().getWorld(), jumpp.getBegin().getBlockX(), jumpp.getBegin().getBlockY(), jumpp.getBegin().getBlockZ());
+                    Location blockFormatted = new Location(event.getClickedBlock().getWorld(), event.getClickedBlock().getLocation().getBlockX(), event.getClickedBlock().getLocation().getBlockY(), event.getClickedBlock().getLocation().getBlockZ());
 
-                    if (jumpp.getBegin().equals(event.getClickedBlock()))
+                    if (beginFormatted.equals(blockFormatted))
                     {
-                        Bukkit.broadcastMessage("added");
-
                         jumpp.addPlayer(event.getPlayer());
                         return;
                     }
