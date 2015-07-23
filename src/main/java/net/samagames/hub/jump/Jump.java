@@ -19,7 +19,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class Jump
 {
     private final ConcurrentHashMap<UUID, Long> jumping;
-    private final ConcurrentHashMap<UUID, Location> checkpoints;
+    private final ConcurrentHashMap<UUID, ArrayList<Location>> checkpoints;
     private final ConcurrentHashMap<UUID, Integer> tries;
     private final String jumpName;
     private final Location spawn;
@@ -43,20 +43,16 @@ public class Jump
 
         Bukkit.getScheduler().runTaskTimerAsynchronously(Hub.getInstance(), () ->
         {
-            for (UUID uuid : this.jumping.keySet())
-            {
+            for (UUID uuid : this.jumping.keySet()) {
                 Player player = Bukkit.getPlayer(uuid);
 
-                if (player == null || !player.isOnline())
-                {
+                if (player == null || !player.isOnline()) {
                     this.removePlayer(uuid);
-                }
-                else
-                {
+                } else {
                     Block block = player.getLocation().getBlock().getRelative(BlockFace.DOWN);
 
                     if (!inWhitelist(block.getType()) && block.getType().isSolid())
-                        if(block.getType() != Material.GOLD_PLATE && block.getType() != Material.IRON_PLATE)
+                        if (block.getType() != Material.GOLD_PLATE && block.getType() != Material.IRON_PLATE)
                             this.failPlayer(player);
                 }
             }
@@ -65,7 +61,15 @@ public class Jump
 
     public void checkpoint(Player player, Location location)
     {
-        this.checkpoints.put(player.getUniqueId(), location);
+        ArrayList<Location> checkpoints = new ArrayList<>(this.checkpoints.get(player.getUniqueId()));
+        Location checkpointFormatted = new Location(location.getWorld(), location.getBlockX(), location.getBlockY(), location.getBlockZ());
+
+        if(checkpoints.contains(checkpointFormatted))
+            return;
+
+        checkpoints.add(checkpointFormatted);
+
+        this.checkpoints.put(player.getUniqueId(), checkpoints);
         this.tries.put(player.getUniqueId(), (this.tries.get(player.getUniqueId()) + 3));
 
         player.sendMessage(Hub.getInstance().getJumpManager().getTag() + ChatColor.DARK_AQUA + "Checkpoint !");
@@ -73,8 +77,11 @@ public class Jump
 
     public void addPlayer(Player player)
     {
+        ArrayList<Location> checkpoints = new ArrayList<>();
+        checkpoints.add(this.spawn);
+
         this.jumping.put(player.getUniqueId(), System.currentTimeMillis());
-        this.checkpoints.put(player.getUniqueId(), this.spawn);
+        this.checkpoints.put(player.getUniqueId(), checkpoints);
         this.tries.put(player.getUniqueId(), 3);
 
         player.sendMessage(Hub.getInstance().getJumpManager().getTag() + ChatColor.DARK_AQUA + "Vous commencez le " + ChatColor.AQUA + jumpName + ChatColor.DARK_AQUA + ". Bonne chance !");
@@ -165,7 +172,7 @@ public class Jump
         if(now > 0)
         {
             player.sendMessage(Hub.getInstance().getJumpManager().getTag() + ChatColor.DARK_AQUA + "Il vous reste plus que " + now + " essais !");
-            player.teleport(this.checkpoints.get(player.getUniqueId()));
+            player.teleport(this.checkpoints.get(player.getUniqueId()).get((this.checkpoints.get(player.getUniqueId()).size() - 1)));
         }
         else
         {
