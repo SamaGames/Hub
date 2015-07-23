@@ -43,16 +43,12 @@ public class Jump
 
         Bukkit.getScheduler().runTaskTimerAsynchronously(Hub.getInstance(), () ->
         {
-            for (UUID uuid : this.jumping.keySet())
-            {
+            for (UUID uuid : this.jumping.keySet()) {
                 Player player = Bukkit.getPlayer(uuid);
 
-                if (player == null || !player.isOnline())
-                {
+                if (player == null || !player.isOnline()) {
                     this.removePlayer(uuid);
-                }
-                else
-                {
+                } else {
                     Block block = player.getLocation().getBlock().getRelative(BlockFace.DOWN);
 
                     if (!inWhitelist(block.getType()) && block.getType().isSolid())
@@ -171,8 +167,11 @@ public class Jump
             player.sendMessage(Hub.getInstance().getJumpManager().getTag() + ChatColor.DARK_AQUA + "Vous avez échoué :'(");
             player.teleport(this.teleportFail);
 
-            player.setFlySpeed(0.3F);
-            player.setWalkSpeed(0.3F);
+            Bukkit.getScheduler().runTask(Hub.getInstance(), () ->
+            {
+                player.setFlySpeed(0.3F);
+                player.setWalkSpeed(0.3F);
+            });
 
             if (player.hasPermission("hub.fly"))
                 Bukkit.getScheduler().runTask(Hub.getInstance(), () -> player.setAllowFlight(true));
