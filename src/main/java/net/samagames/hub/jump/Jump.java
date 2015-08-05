@@ -90,7 +90,7 @@ public class Jump
 
         this.jumping.put(player.getUniqueId(), System.currentTimeMillis());
         this.checkpoints.put(player.getUniqueId(), checkpoints);
-        this.tries.put(player.getUniqueId(), 3);
+        this.tries.put(player.getUniqueId(), 0);
 
         player.sendMessage(Hub.getInstance().getJumpManager().getTag() + ChatColor.DARK_AQUA + "Vous commencez le " + ChatColor.AQUA + jumpName + ChatColor.DARK_AQUA + ". Bonne chance !");
         player.setAllowFlight(false);

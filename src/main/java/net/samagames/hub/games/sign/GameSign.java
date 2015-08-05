@@ -4,6 +4,8 @@ import net.samagames.api.SamaGamesAPI;
 import net.samagames.api.games.Status;
 import net.samagames.core.api.games.ServerStatus;
 import net.samagames.hub.Hub;
+import net.samagames.hub.common.hydroconnect.packets.QueueUpdateFromHub;
+import net.samagames.hub.common.hydroconnect.queue.QPlayer;
 import net.samagames.hub.games.AbstractGame;
 import net.samagames.hub.utils.TimeUtils;
 import org.bukkit.Bukkit;
@@ -13,7 +15,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
 import redis.clients.jedis.Jedis;
 
-import java.util.LinkedHashMap;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class GameSign
 {
@@ -93,7 +96,44 @@ public class GameSign
             return;
         }
 
-        if(this.lastDatas == null)
+        //TODO priority
+        UUID partyUUID = SamaGamesAPI.get().getPartiesManager().getPlayerParty(player.getUniqueId());
+
+        if(partyUUID == null)
+        {
+            List<QPlayer> players = new ArrayList<>();
+            players.add(new QPlayer(player.getUniqueId()));
+
+            QueueUpdateFromHub packet = new QueueUpdateFromHub(QueueUpdateFromHub.ActionQueue.ADD,
+                    this.game.getName(),
+                    map,
+                    QueueUpdateFromHub.TypeQueue.NAMED,
+                    players);
+
+            Hub.getInstance().getHydroManager().getConnectionManager().sendPacket(packet);
+        }else{
+            if(!SamaGamesAPI.get().getPartiesManager().getLeader(partyUUID).equals(player.getUniqueId()))
+            {
+                player.sendMessage(ChatColor.RED + "Vous êtes dans une partie, vous ne pouvez pas ajouter votre partie dans une queue.");
+                return;
+            }
+            HashMap<UUID, String> playersInParty = SamaGamesAPI.get().getPartiesManager().getPlayersInParty(partyUUID);
+            List<QPlayer> players = playersInParty.keySet().stream().map(QPlayer::new).collect(Collectors.toList());
+
+            QPlayer qPlayer = new QPlayer(player.getUniqueId());
+
+            QueueUpdateFromHub packet = new QueueUpdateFromHub(QueueUpdateFromHub.ActionQueue.ADD,
+                    this.game.getName().toLowerCase(),
+                    map.toLowerCase(),
+                    QueueUpdateFromHub.TypeQueue.NAMED,
+                    qPlayer,
+                    players);
+
+            Hub.getInstance().getHydroManager().getConnectionManager().sendPacket(packet);
+        }
+
+
+        /*if(this.lastDatas == null)
         {
             return;
         }
@@ -107,7 +147,7 @@ public class GameSign
         String[] serverNameParts = firstServer.getBungeeName().split("_");
 
         player.sendMessage(ChatColor.GREEN + "Vous avez été envoyé vers le serveur " + serverNameParts[0] + " " + serverNameParts[1] + " !");
-        SamaGamesAPI.get().getProxyDataManager().getProxiedPlayer(player.getUniqueId()).connectGame(firstServer.getBungeeName());
+        SamaGamesAPI.get().getProxyDataManager().getProxiedPlayer(player.getUniqueId()).connectGame(firstServer.getBungeeName());*/
     }
 
     public void developperClick(Player player)

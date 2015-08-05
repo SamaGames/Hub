@@ -4,6 +4,7 @@ import de.slikey.effectlib.EffectLib;
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.commands.CommandManager;
 import net.samagames.hub.common.HubRefresher;
+import net.samagames.hub.common.hydroconnect.HydroManager;
 import net.samagames.hub.common.managers.*;
 import net.samagames.hub.common.receivers.ArenaListener;
 import net.samagames.hub.common.receivers.MaintenanceListener;
@@ -50,6 +51,8 @@ public class Hub extends JavaPlugin
 
     private HubRefresher hubRefresher;
 
+    private HydroManager hydroManager;
+
     public static Hub getInstance()
     {
         return instance;
@@ -66,6 +69,7 @@ public class Hub extends JavaPlugin
         this.debug = this.getConfig().getBoolean("debug", false);
 
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
+        hydroManager = new HydroManager(this);
 
         this.log(Level.INFO, "Loading managers...");
         this.playerManager = new PlayerManager(this);
@@ -164,5 +168,9 @@ public class Hub extends JavaPlugin
     public boolean isDebugEnabled()
     {
         return this.debug;
+    }
+
+    public HydroManager getHydroManager() {
+        return hydroManager;
     }
 }
