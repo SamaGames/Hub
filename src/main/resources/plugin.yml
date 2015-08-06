@@ -49,7 +49,7 @@ commands:
   anguille:
     description: Commande relative aux Anguilles de Maite
     usage: /anguille
-    aliases: [jeanpierrecoffe, frontnational]
+    aliases: [jeanpierrecoffe, frontnational, boblebricoleur]
   nbs:
     description: Commande relative au Jukebox
     usage: /nbs
