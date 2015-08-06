@@ -14,10 +14,9 @@ public class QPlayer {
     private UUID uuid;
     private int priority;
 
-    public QPlayer(UUID uuid) {
+    public QPlayer(UUID uuid, int priority) {
         this.uuid = uuid;
-        //TODO calculate priority
-        this.priority = 10;
+        this.priority = priority;
     }
 
     public UUID getUUID() {

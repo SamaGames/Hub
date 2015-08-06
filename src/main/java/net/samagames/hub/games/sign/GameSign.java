@@ -4,8 +4,6 @@ import net.samagames.api.SamaGamesAPI;
 import net.samagames.api.games.Status;
 import net.samagames.core.api.games.ServerStatus;
 import net.samagames.hub.Hub;
-import net.samagames.hub.common.hydroconnect.packets.QueueUpdateFromHub;
-import net.samagames.hub.common.hydroconnect.queue.QPlayer;
 import net.samagames.hub.games.AbstractGame;
 import net.samagames.hub.utils.TimeUtils;
 import org.bukkit.Bukkit;
@@ -15,8 +13,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
 import redis.clients.jedis.Jedis;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.LinkedHashMap;
+import java.util.UUID;
 
 public class GameSign
 {
@@ -101,35 +99,14 @@ public class GameSign
 
         if(partyUUID == null)
         {
-            List<QPlayer> players = new ArrayList<>();
-            players.add(new QPlayer(player.getUniqueId()));
-
-            QueueUpdateFromHub packet = new QueueUpdateFromHub(QueueUpdateFromHub.ActionQueue.ADD,
-                    this.game.getName(),
-                    map,
-                    QueueUpdateFromHub.TypeQueue.NAMED,
-                    players);
-
-            Hub.getInstance().getHydroManager().getConnectionManager().sendPacket(packet);
+            Hub.getInstance().getHydroManager().addPlayerToQueue(player.getUniqueId(), game.getName(), map);
         }else{
             if(!SamaGamesAPI.get().getPartiesManager().getLeader(partyUUID).equals(player.getUniqueId()))
             {
-                player.sendMessage(ChatColor.RED + "Vous êtes dans une partie, vous ne pouvez pas ajouter votre partie dans une queue.");
+                player.sendMessage(ChatColor.RED + "Vous n'êtes pas le leader, vous ne pouvez pas ajouter votre partie dans une queue.");
                 return;
             }
-            HashMap<UUID, String> playersInParty = SamaGamesAPI.get().getPartiesManager().getPlayersInParty(partyUUID);
-            List<QPlayer> players = playersInParty.keySet().stream().map(QPlayer::new).collect(Collectors.toList());
-
-            QPlayer qPlayer = new QPlayer(player.getUniqueId());
-
-            QueueUpdateFromHub packet = new QueueUpdateFromHub(QueueUpdateFromHub.ActionQueue.ADD,
-                    this.game.getName().toLowerCase(),
-                    map.toLowerCase(),
-                    QueueUpdateFromHub.TypeQueue.NAMED,
-                    qPlayer,
-                    players);
-
-            Hub.getInstance().getHydroManager().getConnectionManager().sendPacket(packet);
+            Hub.getInstance().getHydroManager().addPartyToQueue(player.getUniqueId(), partyUUID, game.getName(), map);
         }
 
 
