@@ -95,7 +95,7 @@ public class Jump
         player.sendMessage(Hub.getInstance().getJumpManager().getTag() + ChatColor.DARK_AQUA + "Vous commencez le " + ChatColor.AQUA + jumpName + ChatColor.DARK_AQUA + ". Bonne chance !");
         player.setAllowFlight(false);
         player.setFlying(false);
-        player.setWalkSpeed(0.1F);
+        player.setWalkSpeed(0.2F);
         player.setFlySpeed(0.1F);
 
         if (Hub.getInstance().getCosmeticManager().getPetManager().hadPet(player))
