@@ -41,6 +41,8 @@ public class Jump
         this.whitelist = whitelist;
         this.achievementName = achievementName;
 
+        whitelist.add(Material.AIR);
+
         Bukkit.getScheduler().runTaskTimerAsynchronously(Hub.getInstance(), () ->
         {
             for (UUID uuid : this.jumping.keySet())
@@ -96,7 +98,6 @@ public class Jump
         player.setAllowFlight(false);
         player.setFlying(false);
         player.setWalkSpeed(0.2F);
-        player.setFlySpeed(0.1F);
 
         if (Hub.getInstance().getCosmeticManager().getPetManager().hadPet(player))
             Hub.getInstance().getCosmeticManager().getPetManager().disableCosmetic(player, false);
