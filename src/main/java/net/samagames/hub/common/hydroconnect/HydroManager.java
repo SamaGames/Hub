@@ -63,8 +63,4 @@ public class HydroManager {
     {
         return SamaGamesAPI.get().getPermissionsManager().getApi().getUser(uuid).getParents().first().getLadder();
     }
-
-    public ConnectionManager getConnectionManager() {
-        return connectionManager;
-    }
 }

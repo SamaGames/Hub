@@ -1,7 +1,6 @@
 package net.samagames.hub.games.sign;
 
 import net.samagames.api.SamaGamesAPI;
-import net.samagames.api.games.Status;
 import net.samagames.core.api.games.ServerStatus;
 import net.samagames.hub.Hub;
 import net.samagames.hub.games.AbstractGame;
@@ -13,7 +12,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
 import redis.clients.jedis.Jedis;
 
-import java.util.LinkedHashMap;
 import java.util.UUID;
 
 public class GameSign
@@ -22,15 +20,11 @@ public class GameSign
     private final AbstractGame game;
     private final String map;
 
-    private LinkedHashMap<String, ServerStatus> lastDatas;
-
     public GameSign(AbstractGame game, String map, Sign sign)
     {
         this.sign = sign;
         this.game = game;
         this.map = map;
-
-        this.lastDatas = new LinkedHashMap<>();
 
         this.sign.setMetadata("game", new FixedMetadataValue(Hub.getInstance(), game.getCodeName()));
         this.sign.setMetadata("map", new FixedMetadataValue(Hub.getInstance(), map));
@@ -51,23 +45,13 @@ public class GameSign
             return;
         }
 
-        String mapLine = ChatColor.DARK_RED + "× " + ChatColor.BOLD + this.map + ChatColor.RESET + ChatColor.DARK_RED + " ×";
-
-        if(data != null)
-        {
-            if(data.getStatus() == Status.WAITING_FOR_PLAYERS || data.getStatus() == Status.READY_TO_START || data.getStatus() == Status.IN_GAME)
-                this.lastDatas.put(data.getBungeeName(), data);
-            else
-                this.lastDatas.remove(data.getBungeeName());
-
-            if(!this.lastDatas.isEmpty())
-                mapLine = ChatColor.GREEN + "» " + ChatColor.BOLD + this.map + ChatColor.RESET + ChatColor.GREEN + " «";
-        }
+        //String mapLine = ChatColor.DARK_RED + "× " + ChatColor.BOLD + this.map + ChatColor.RESET + ChatColor.DARK_RED + " ×";
+        String mapLine = ChatColor.GREEN + "» " + ChatColor.BOLD + this.map + ChatColor.RESET + ChatColor.GREEN + " «";
 
         this.sign.setLine(0, this.game.getName());
         this.sign.setLine(1, mapLine);
-        this.sign.setLine(2, this.getWaitingPlayers() + "" + ChatColor.RESET + " en attente");
-        this.sign.setLine(3, this.getPlayingPlayers() + "" + ChatColor.RESET + " en jeu");
+        this.sign.setLine(2, 0 + "" + ChatColor.RESET + " en attente");
+        this.sign.setLine(3, 0 + "" + ChatColor.RESET + " en jeu");
 
         Bukkit.getScheduler().runTask(Hub.getInstance(), this.sign::update);
     }
@@ -76,6 +60,7 @@ public class GameSign
     {
         Jedis jedis = SamaGamesAPI.get().getResource();
 
+        //TODO: BUG FIX game name to add!
         String ban = jedis.get("gamebanlist:reason:" + player.getUniqueId());
 
         if (ban != null)
@@ -94,7 +79,6 @@ public class GameSign
             return;
         }
 
-        //TODO priority
         UUID partyUUID = SamaGamesAPI.get().getPartiesManager().getPlayerParty(player.getUniqueId());
 
         if(partyUUID == null)
@@ -133,54 +117,10 @@ public class GameSign
         player.sendMessage(ChatColor.GOLD + "Informations du panneau de jeu :");
         player.sendMessage(ChatColor.GOLD + "> " + ChatColor.AQUA + "Jeu : " + ChatColor.GREEN + this.game.getCodeName());
         player.sendMessage(ChatColor.GOLD + "> " + ChatColor.AQUA + "Map : " + ChatColor.GREEN + this.map);
-        player.sendMessage(ChatColor.GOLD + "> " + ChatColor.AQUA + "Joueurs en attente : " + ChatColor.GREEN + this.getWaitingPlayers());
-        player.sendMessage(ChatColor.GOLD + "> " + ChatColor.AQUA + "Joueurs en jeu : " + ChatColor.GREEN + this.getPlayingPlayers());
-        player.sendMessage(ChatColor.GOLD + "> " + ChatColor.AQUA + "Serveurs en ligne : " + ChatColor.GREEN + this.getWaitingServers() + " en attente et " + this.getPlayingServers() + " en jeu");
+        //player.sendMessage(ChatColor.GOLD + "> " + ChatColor.AQUA + "Joueurs en attente : " + ChatColor.GREEN + this.getWaitingPlayers());
+        //player.sendMessage(ChatColor.GOLD + "> " + ChatColor.AQUA + "Joueurs en jeu : " + ChatColor.GREEN + this.getPlayingPlayers());
+        //player.sendMessage(ChatColor.GOLD + "> " + ChatColor.AQUA + "Serveurs en ligne : " + ChatColor.GREEN + this.getWaitingServers() + " en attente et " + this.getPlayingServers() + " en jeu");
         player.sendMessage(ChatColor.GOLD + "----------------------------------------");
-    }
-
-    public int getWaitingPlayers()
-    {
-        int temp = 0;
-
-        for(ServerStatus status : this.lastDatas.values())
-            if(status.getStatus() == Status.WAITING_FOR_PLAYERS || status.getStatus() == Status.READY_TO_START)
-                temp += status.getPlayers();
-
-        return temp;
-    }
-
-    public int getPlayingPlayers()
-    {
-        int temp = 0;
-
-        for(ServerStatus status : this.lastDatas.values())
-            if(status.getStatus() == Status.IN_GAME)
-                temp += status.getPlayers();
-
-        return temp;
-    }
-
-    public int getWaitingServers()
-    {
-        int temp = 0;
-
-        for(ServerStatus status : this.lastDatas.values())
-            if(status.getStatus() == Status.WAITING_FOR_PLAYERS || status.getStatus() == Status.READY_TO_START)
-                temp += 1;
-
-        return temp;
-    }
-
-    public int getPlayingServers()
-    {
-        int temp = 0;
-
-        for(ServerStatus status : this.lastDatas.values())
-            if(status.getStatus() == Status.IN_GAME)
-                temp += 1;
-
-        return temp;
     }
 
     public Sign getSign()
