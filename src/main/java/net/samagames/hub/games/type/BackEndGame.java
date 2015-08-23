@@ -4,29 +4,21 @@ import net.samagames.hub.games.AbstractGame;
 import net.samagames.hub.games.DisplayedStat;
 import net.samagames.hub.games.shop.ShopCategory;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 
-public class OneWayGame extends AbstractGame
+public class BackEndGame extends AbstractGame
 {
     private final String codeName;
     private final String publicName;
-    private final ItemStack icon;
     private final Location spawn;
 
-    public OneWayGame(String codeName, String publicName, ItemStack icon, Location spawn)
+    public BackEndGame(String codeName, String publicName, Location spawn)
     {
         this.codeName = codeName;
         this.publicName = publicName;
-        this.icon = icon;
         this.spawn = spawn;
-    }
-
-    public OneWayGame(String codeName, String publicName, Material icon, Location spawn)
-    {
-        this(codeName, publicName, new ItemStack(icon, 1), spawn);
     }
 
     @Override
@@ -36,15 +28,14 @@ public class OneWayGame extends AbstractGame
     }
 
     @Override
-    public String getName()
-    {
+    public String getName() {
         return this.publicName;
     }
 
     @Override
     public ItemStack getIcon()
     {
-        return this.icon;
+        return null;
     }
 
     @Override

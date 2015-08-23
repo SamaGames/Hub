@@ -2,26 +2,26 @@ package net.samagames.hub.gui.cosmetics;
 
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
+import net.samagames.hub.cosmetics.jukebox.JukeboxAlbum;
 import net.samagames.hub.cosmetics.jukebox.JukeboxDiskCosmetic;
-import net.samagames.hub.cosmetics.jukebox.JukeboxManager;
-import net.samagames.hub.cosmetics.jukebox.JukeboxPlaylist;
+import net.samagames.hub.cosmetics.jukebox.JukeboxSong;
 import net.samagames.hub.gui.AbstractGui;
+import net.samagames.hub.gui.shop.GuiConfirm;
 import net.samagames.hub.utils.GuiUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 public class GuiJukebox extends AbstractGui
 {
-    private int loopId;
+    private BukkitTask loopTask;
 
     @Override
     public void display(Player player)
@@ -29,7 +29,7 @@ public class GuiJukebox extends AbstractGui
         this.inventory = Bukkit.createInventory(null, 54, "Jukebox");
 
         this.update(player);
-        this.loopId = Bukkit.getScheduler().scheduleAsyncRepeatingTask(Hub.getInstance(), () -> this.update(player), 20L, 20L);
+        this.loopTask = Bukkit.getScheduler().runTaskTimerAsynchronously(Hub.getInstance(), () -> this.update(player), 20L, 20L);
 
         player.openInventory(this.inventory);
     }
@@ -37,19 +37,29 @@ public class GuiJukebox extends AbstractGui
     @Override
     public void update(Player player)
     {
-        Random random = new Random();
-        JukeboxPlaylist song = Hub.getInstance().getCosmeticManager().getJukeboxManager().getCurrentSong();
-        DyeColor randomizedDye = (song != null ? DyeColor.values()[random.nextInt(DyeColor.values().length)] : DyeColor.GRAY);
+        JukeboxSong song = Hub.getInstance().getCosmeticManager().getJukeboxManager().getCurrentSong();
 
-        this.drawActualDiskLines(song, randomizedDye);
+        this.setSlotData(ChatColor.GREEN + "»", Material.JUKEBOX, 12, null, "none");
+        this.drawDisk(song);
+        this.setSlotData(ChatColor.GREEN + "«", Material.JUKEBOX, 14, null, "none");
 
         int[] baseSlots = new int[] { 19, 20, 21, 22, 23, 24, 25 };
         int lines = 0;
         int slot = 0;
 
-        for (JukeboxDiskCosmetic disk : Hub.getInstance().getCosmeticManager().getJukeboxManager().getRegistry().getElements().values())
+        ArrayList<JukeboxAlbum> albums = new ArrayList<>(Hub.getInstance().getCosmeticManager().getJukeboxManager().getAlbums().values());
+
+        for (int i = 0; i < 21; i++)
         {
-            this.setSlotData(disk.getIcon(player), (baseSlots[slot] + (lines * 9)), "disk_" + disk.getDatabaseName());
+            if(i >= albums.size())
+            {
+                this.setSlotData(ChatColor.RED + "Prochainement...", new ItemStack(Material.INK_SACK, 1, (short) 8), (baseSlots[slot] + (lines * 9)), null, "none");
+            }
+            else
+            {
+                JukeboxAlbum album = albums.get(i);
+                this.setSlotData(album.getIcon(), (baseSlots[slot] + (lines * 9)), "album_" + album.getIdentifier());
+            }
 
             slot++;
 
@@ -67,17 +77,67 @@ public class GuiJukebox extends AbstractGui
     @Override
     public void onClose(Player player)
     {
-        Bukkit.getScheduler().cancelTask(this.loopId);
+        this.loopTask.cancel();
     }
 
     @Override
     public void onClick(Player player, ItemStack stack, String action, ClickType clickType)
     {
-        if(action.startsWith("disk_"))
+        if(action.startsWith("album_"))
         {
-            String disk = action.split("_")[1];
-            JukeboxManager manager = Hub.getInstance().getCosmeticManager().getJukeboxManager();
-            manager.enableCosmetic(player, manager.getRegistry().getElementByStorageName(disk));
+            String albumIdentifier = action.split("_")[1];
+            JukeboxAlbum album = Hub.getInstance().getCosmeticManager().getJukeboxManager().getAlbum(albumIdentifier);
+
+            if(clickType == ClickType.LEFT)
+            {
+                Hub.getInstance().getGuiManager().openGui(player, new GuiJukeboxAlbum(album));
+            }
+            else if(clickType == ClickType.RIGHT)
+            {
+                boolean buyed = true;
+                boolean oneBuyed = true;
+
+                for(JukeboxDiskCosmetic disk : album.getDisks())
+                {
+                    if (!disk.isOwned(player))
+                    {
+                        buyed = false;
+                    }
+                    else
+                    {
+                        oneBuyed = true;
+                    }
+                }
+
+                if(buyed)
+                {
+                    player.sendMessage(ChatColor.RED + "L'album est déjà acheté !");
+                }
+                else if(oneBuyed)
+                {
+                    player.sendMessage(ChatColor.RED + "Vous ne pouvez acheter un album uniquement quand aucune de ses musique n'est achetée !");
+                }
+                else
+                {
+                    if(!SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).hasEnoughStars(album.getCost()))
+                    {
+                        player.sendMessage(ChatColor.RED + "Vous n'avez pas assez d'étoiles pour acheter cela.");
+                        return;
+                    }
+
+                    GuiConfirm confirm = new GuiConfirm(Hub.getInstance().getGuiManager().getPlayerGui(player), () ->
+                    {
+                        SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).withdrawStars(album.getCost());
+
+                        for(JukeboxDiskCosmetic disk : album.getDisks())
+                        {
+                            disk.buyCallback(player);
+                        }
+                    });
+
+                    Hub.getInstance().getGuiManager().openGui(player, confirm);
+                }
+            }
         }
         else if(action.equals("back"))
         {
@@ -85,52 +145,42 @@ public class GuiJukebox extends AbstractGui
         }
     }
 
-    private void drawActualDiskLines(JukeboxPlaylist song, DyeColor randomizedDye)
+    private void drawDisk(JukeboxSong song)
     {
-        for(int i = 9; i < 18; i++)
+        if(song == null)
         {
-            if(i == 13)
-            {
-                if(song == null)
-                {
-                    this.setSlotData(ChatColor.RED + "Aucun son actuellement !", Material.BARRIER, i, null, "none");
-                    continue;
-                }
-
-                ItemStack icon = song.getDisk().getIcon().clone();
-                ItemMeta meta = icon.getItemMeta();
-                meta.setDisplayName(ChatColor.GREEN + "" + ChatColor.BOLD + "En cours : " + song.getSong().getTitle());
-
-                ArrayList<String> lores = new ArrayList<>();
-                lores.add(ChatColor.GRAY + "par " + ChatColor.GOLD + song.getSong().getAuthor());
-                lores.add(ChatColor.GRAY + "joué par " + ChatColor.GOLD + song.getPlayedBy());
-                lores.add("");
-                lores.add(ChatColor.GREEN + "Morceaux à venir :");
-
-                for(int j = 0; j < 5; j++)
-                {
-                    if(Hub.getInstance().getCosmeticManager().getJukeboxManager().getPlaylists().isEmpty())
-                    {
-                        lores.add(ChatColor.RED + "Aucun :(");
-                        break;
-                    }
-                    else if(Hub.getInstance().getCosmeticManager().getJukeboxManager().getPlaylists().size() <= j)
-                    {
-                        continue;
-                    }
-
-                    JukeboxPlaylist next = Hub.getInstance().getCosmeticManager().getJukeboxManager().getPlaylists().get(j);
-                    lores.add(ChatColor.GOLD + String.valueOf((j + 1)) + ChatColor.GRAY + " : " + ChatColor.GOLD + next.getSong().getTitle() + ChatColor.GRAY + " joué par " + ChatColor.GOLD + next.getPlayedBy());
-                }
-
-                meta.setLore(lores);
-                icon.setItemMeta(meta);
-                this.setSlotData(icon, i, "none");
-            }
-            else
-            {
-                this.setSlotData(ChatColor.GRAY + "", new ItemStack(Material.STAINED_GLASS_PANE, 1, randomizedDye.getData()), i, null, "none");
-            }
+            this.setSlotData(ChatColor.RED + "Aucun son actuellement !", Material.BARRIER, 13, null, "none");
+            return;
         }
+
+        ItemStack icon = song.getDisk().getIcon().clone();
+        ItemMeta meta = icon.getItemMeta();
+        meta.setDisplayName(ChatColor.GREEN + "" + ChatColor.BOLD + "En cours : " + song.getSong().getTitle());
+
+        ArrayList<String> lores = new ArrayList<>();
+        lores.add(ChatColor.GRAY + "par " + ChatColor.GOLD + song.getSong().getAuthor());
+        lores.add(ChatColor.GRAY + "joué par " + ChatColor.GOLD + song.getPlayedBy());
+        lores.add("");
+        lores.add(ChatColor.GREEN + "Morceaux à venir :");
+
+        for(int i = 0; i < 5; i++)
+        {
+            if(Hub.getInstance().getCosmeticManager().getJukeboxManager().getPlaylists().isEmpty())
+            {
+                lores.add(ChatColor.RED + "Aucun :(");
+                break;
+            }
+            else if(Hub.getInstance().getCosmeticManager().getJukeboxManager().getPlaylists().size() <= i)
+            {
+                continue;
+            }
+
+            JukeboxSong next = Hub.getInstance().getCosmeticManager().getJukeboxManager().getPlaylists().get(i);
+            lores.add(ChatColor.GOLD + String.valueOf((i + 1)) + ChatColor.GRAY + " : " + ChatColor.GOLD + next.getSong().getTitle() + ChatColor.GRAY + " joué par " + ChatColor.GOLD + next.getPlayedBy());
+        }
+
+        meta.setLore(lores);
+        icon.setItemMeta(meta);
+        this.setSlotData(icon, 13, "none");
     }
 }

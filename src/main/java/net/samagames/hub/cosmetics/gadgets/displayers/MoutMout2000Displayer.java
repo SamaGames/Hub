@@ -13,13 +13,14 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Sheep;
 import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.lang.reflect.Field;
 import java.util.Random;
 
 public class MoutMout2000Displayer extends AbstractDisplayer
 {
-    private int loopId;
+    private BukkitTask loopTask;
 
     public MoutMout2000Displayer(Player player)
     {
@@ -39,7 +40,7 @@ public class MoutMout2000Displayer extends AbstractDisplayer
         sheep.setCustomNameVisible(true);
         sheep.setColor(DyeColor.WHITE);
 
-        this.loopId = Bukkit.getScheduler().scheduleSyncRepeatingTask(Hub.getInstance(), new Runnable()
+        this.loopTask = Bukkit.getScheduler().runTaskTimer(Hub.getInstance(), new Runnable()
         {
             int timer = 0;
             int ticks = 0;
@@ -90,7 +91,7 @@ public class MoutMout2000Displayer extends AbstractDisplayer
 
     private void callback()
     {
-        Bukkit.getScheduler().cancelTask(this.loopId);
+        this.loopTask.cancel();
     }
 
     public static class MoutMout2000Sheep extends EntitySheep

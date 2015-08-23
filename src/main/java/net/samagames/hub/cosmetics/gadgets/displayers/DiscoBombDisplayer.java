@@ -10,12 +10,13 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.util.Random;
 
 public class DiscoBombDisplayer extends AbstractDisplayer
 {
-    private int loopId;
+    private BukkitTask loopTask;
     private boolean music;
 
     public DiscoBombDisplayer(Player player)
@@ -54,7 +55,7 @@ public class DiscoBombDisplayer extends AbstractDisplayer
             this.music = true;
         }
 
-        this.loopId = Bukkit.getScheduler().scheduleSyncRepeatingTask(Hub.getInstance(), new Runnable()
+        this.loopTask = Bukkit.getScheduler().runTaskTimer(Hub.getInstance(), new Runnable()
         {
             int timer = 0;
             int ticks = 0;
@@ -100,7 +101,7 @@ public class DiscoBombDisplayer extends AbstractDisplayer
 
     private void callback()
     {
-        Bukkit.getScheduler().cancelTask(this.loopId);
+        this.loopTask.cancel();
 
         if(this.music)
             MusicUtils.stopRecord(this.baseLocation);

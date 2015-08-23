@@ -20,12 +20,13 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
     private final String jukeboxTag;
     private final ParticleEffect wootEffect;
     private final ParticleEffect mehEffect;
-    private final LinkedList<JukeboxPlaylist> playlists;
-    private final LinkedList<JukeboxPlaylist> recentsPlaylists;
+    private final LinkedList<JukeboxSong> playlists;
+    private final LinkedList<JukeboxSong> recentsPlaylists;
     private final HashMap<UUID, Integer> recentDJs;
+    private final HashMap<String, JukeboxAlbum> albums;
     private final ArrayList<UUID> mutedPlayers;
 
-    private JukeboxPlaylist currentPlaylist;
+    private JukeboxSong currentPlaylist;
     private boolean isLocked;
 
     public JukeboxManager(Hub hub)
@@ -41,11 +42,12 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
         this.recentsPlaylists = new LinkedList<>();
         this.recentDJs = new HashMap<>();
         this.mutedPlayers = new ArrayList<>();
+        this.albums = ((JukeboxRegistry) this.getRegistry()).getAlbums();
 
         Bukkit.getScheduler().runTaskTimerAsynchronously(this.hub, () ->
         {
             if (this.currentPlaylist == null || !this.currentPlaylist.getPlayer().isPlaying())
-                nextSong();
+                this.nextSong();
         }, 20, 20);
 
         Bukkit.getScheduler().runTaskTimerAsynchronously(this.hub, () ->
@@ -100,7 +102,7 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
     public void play(JukeboxDiskCosmetic disk, Player playedBy)
     {
         Song song = disk.getSong();
-        JukeboxPlaylist jukeboxPlaylist = new JukeboxPlaylist(disk, playedBy.getName());
+        JukeboxSong JukeboxSong = new JukeboxSong(disk, playedBy.getName());
         boolean canBypassLimit = SamaGamesAPI.get().getPermissionsManager().hasPermission(playedBy, "hub.jukebox.limitbypass");
 
         if ((this.containsSongFrom(playedBy.getName()) || (this.currentPlaylist != null && this.currentPlaylist.getPlayedBy().equals(playedBy.getName()))) && !canBypassLimit)
@@ -145,7 +147,7 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
             task.cancel();
         }, (20L * 60 * 10) + 5);
 
-        this.playlists.addLast(jukeboxPlaylist);
+        this.playlists.addLast(JukeboxSong);
 
         playedBy.sendMessage(ChatColor.GREEN + "Votre musique sera jouée prochainement. Position dans la playlist : " + ChatColor.AQUA + "#" + this.playlists.size());
     }
@@ -177,7 +179,7 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
         if (this.playlists.size() == 0)
             return false;
 
-        JukeboxPlaylist nextSong = this.playlists.pollFirst();
+        JukeboxSong nextSong = this.playlists.pollFirst();
 
         if (nextSong != null)
         {
@@ -254,12 +256,12 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
         this.isLocked = !this.isLocked;
     }
 
-    public JukeboxPlaylist getCurrentSong()
+    public JukeboxSong getCurrentSong()
     {
         return this.currentPlaylist;
     }
 
-    public LinkedList<JukeboxPlaylist> getPlaylists()
+    public LinkedList<JukeboxSong> getPlaylists()
     {
         return this.playlists;
     }
@@ -269,9 +271,22 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
         return this.jukeboxTag;
     }
 
+    public JukeboxAlbum getAlbum(String identifier)
+    {
+        if(this.albums.containsKey(identifier))
+            return this.albums.get(identifier);
+        else
+            return null;
+    }
+
+    public HashMap<String, JukeboxAlbum> getAlbums()
+    {
+        return this.albums;
+    }
+
     public boolean containsSongFrom(String playedBy)
     {
-        for (JukeboxPlaylist song : this.playlists)
+        for (JukeboxSong song : this.playlists)
             if (song.getPlayedBy().equals(playedBy))
                 return true;
 
@@ -280,7 +295,7 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
 
     public boolean containsSong(String title)
     {
-        for (JukeboxPlaylist song : this.playlists)
+        for (JukeboxSong song : this.playlists)
             if (song.getSong().getTitle().equals(title))
                 return true;
 
@@ -289,7 +304,7 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
 
     public boolean wasRecentlyPlayed(String title)
     {
-        for (JukeboxPlaylist song : this.recentsPlaylists)
+        for (JukeboxSong song : this.recentsPlaylists)
             if (song.getSong().getTitle().equals(title))
                 return true;
 

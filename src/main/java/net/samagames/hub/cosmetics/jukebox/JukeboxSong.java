@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 
-public class JukeboxPlaylist
+public class JukeboxSong
 {
     private final JukeboxDiskCosmetic disk;
     private final Song song;
@@ -18,7 +18,7 @@ public class JukeboxPlaylist
     private final ArrayList<String> wooters;
     private final ArrayList<String> mehers;
 
-    public JukeboxPlaylist(JukeboxDiskCosmetic disk, String playerBy)
+    public JukeboxSong(JukeboxDiskCosmetic disk, String playerBy)
     {
         this.disk = disk;
         this.song = disk.getSong();

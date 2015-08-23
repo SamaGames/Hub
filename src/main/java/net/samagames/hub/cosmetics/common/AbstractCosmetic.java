@@ -16,6 +16,7 @@ public abstract class AbstractCosmetic
     private enum BuyMethod { FREE, COINS, STARS, PERMISSION }
 
     protected final String databaseName;
+    protected final String displayName;
     protected final ItemStack icon;
     private BuyMethod buyMethod;
     private String permissionNeeded;
@@ -26,6 +27,7 @@ public abstract class AbstractCosmetic
     public AbstractCosmetic(String databaseName, String displayName, ItemStack icon, String[] description)
     {
         this.databaseName = databaseName;
+        this.displayName = displayName;
         this.icon = icon;
         this.buyMethod = BuyMethod.FREE;
         this.permissionNeededToView = null;
@@ -129,6 +131,7 @@ public abstract class AbstractCosmetic
     {
         ItemStack icon = this.icon.clone();
         ItemMeta meta = icon.getItemMeta();
+        meta.setDisplayName(this.displayName);
 
         List<String> lores = meta.getLore();
 
@@ -152,6 +155,16 @@ public abstract class AbstractCosmetic
         icon.setItemMeta(meta);
 
         return icon;
+    }
+
+    public int getCoinsCost()
+    {
+        return this.coinsCost;
+    }
+
+    public int getStarsCost()
+    {
+        return this.starsCost;
     }
 
     public boolean canView(Player player)

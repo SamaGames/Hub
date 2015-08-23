@@ -2,7 +2,7 @@ package net.samagames.hub.commands.players;
 
 import net.samagames.hub.Hub;
 import net.samagames.hub.commands.AbstractCommand;
-import net.samagames.hub.cosmetics.jukebox.JukeboxPlaylist;
+import net.samagames.hub.cosmetics.jukebox.JukeboxSong;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.entity.Player;
@@ -12,7 +12,7 @@ public class CommandWoot extends AbstractCommand
     @Override
     public boolean doAction(Player player, Command command, String s, String[] args)
     {
-        JukeboxPlaylist current = Hub.getInstance().getCosmeticManager().getJukeboxManager().getCurrentSong();
+        JukeboxSong current = Hub.getInstance().getCosmeticManager().getJukeboxManager().getCurrentSong();
         String tag = Hub.getInstance().getCosmeticManager().getJukeboxManager().getJukeboxTag();
 
         if (current == null)

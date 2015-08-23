@@ -21,7 +21,7 @@ public class CommandNBS extends AbstractCommand
         {
             if (new File(Hub.getInstance().getDataFolder(), "nbs" + File.separator + args[0] + ".nbs").exists())
             {
-                JukeboxDiskCosmetic disk = new JukeboxDiskCosmetic("", new ItemStack(Material.RECORD_12, 1), NBSDecoder.parse(args[0]));
+                JukeboxDiskCosmetic disk = new JukeboxDiskCosmetic(null, "", new ItemStack(Material.STONE, 1), NBSDecoder.parse(args[0]));
                 Hub.getInstance().getCosmeticManager().getJukeboxManager().play(disk, player);
             }
             else

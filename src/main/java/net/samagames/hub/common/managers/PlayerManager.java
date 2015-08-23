@@ -3,7 +3,7 @@ package net.samagames.hub.common.managers;
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import net.samagames.hub.common.StaticInventory;
-import net.samagames.hub.cosmetics.jukebox.JukeboxPlaylist;
+import net.samagames.hub.cosmetics.jukebox.JukeboxSong;
 import net.samagames.tools.Selection;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -82,7 +82,7 @@ public class PlayerManager extends AbstractManager
         {
             Hub.getInstance().getCosmeticManager().getJukeboxManager().addPlayer(player);
 
-            JukeboxPlaylist song = Hub.getInstance().getCosmeticManager().getJukeboxManager().getCurrentSong();
+            JukeboxSong song = Hub.getInstance().getCosmeticManager().getJukeboxManager().getCurrentSong();
 
             if (song != null)
                 player.sendMessage(Hub.getInstance().getCosmeticManager().getJukeboxManager().getJukeboxTag() + ChatColor.YELLOW + "La musique jouée actuellement est " + ChatColor.GOLD + ChatColor.ITALIC + song.getSong().getTitle() + ChatColor.YELLOW + " de " + ChatColor.GOLD + song.getSong().getAuthor() + ChatColor.YELLOW + ", proposée par " + ChatColor.GOLD + song.getPlayedBy());

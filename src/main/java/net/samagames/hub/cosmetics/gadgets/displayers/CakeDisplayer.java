@@ -8,6 +8,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
 
 import java.util.List;
@@ -17,7 +18,7 @@ import java.util.stream.Collectors;
 public class CakeDisplayer extends AbstractDisplayer
 {
 	private final Random random;
-	private int loopId;
+	private BukkitTask loopTask;
 	private Location centerLoc;
 
 	public CakeDisplayer(Player player)
@@ -30,7 +31,7 @@ public class CakeDisplayer extends AbstractDisplayer
 		this.addBlockToUse(this.baseLocation.clone().add(0.0D, -1.0D, 0.0D), new SimpleBlock(Material.QUARTZ_BLOCK, 2));
 		this.addBlockToUse(this.baseLocation, new SimpleBlock(Material.CAKE_BLOCK));
 
-		centerLoc = this.baseLocation.clone().add(0.5D, 0.5D, 0.5D);
+		this.centerLoc = this.baseLocation.clone().add(0.5D, 0.5D, 0.5D);
 	}
 
 	@Override
@@ -49,15 +50,18 @@ public class CakeDisplayer extends AbstractDisplayer
 
 		getNearbyPlayers(this.centerLoc, 5).stream().filter(entity -> entity instanceof Player).forEach(entity -> entity.setVelocity(new Vector(0, 2, 0)));
 
-		this.loopId = Bukkit.getScheduler().scheduleSyncRepeatingTask(Hub.getInstance(), new Runnable() {
+		this.loopTask = Bukkit.getScheduler().runTaskTimer(Hub.getInstance(), new Runnable()
+        {
             int times = 0;
 
             @Override
-            public void run() {
+            public void run()
+            {
                 for (int i = 0; i <= 5; i++)
                     centerLoc.getWorld().playEffect(centerLoc.clone().add((random.nextDouble() * 5) - 2.5, (random.nextDouble() * 4) - 1, (random.nextDouble() * 5) - 2.5), Effect.FLYING_GLYPH, 5);
 
-                for (Entity entity : getNearbyPlayers(centerLoc, 5)) {
+                for (Entity entity : getNearbyPlayers(centerLoc, 5))
+                {
                     if (entity instanceof Player) {
                         Player player = (Player) entity;
                         double pw = 8;
@@ -73,10 +77,13 @@ public class CakeDisplayer extends AbstractDisplayer
                         double yc;
                         double xc;
 
-                        if (Math.abs(xa - xc1) > Math.abs(xa - xc2)) {
+                        if (Math.abs(xa - xc1) > Math.abs(xa - xc2))
+                        {
                             yc = m * xc1 + p;
                             xc = xc1;
-                        } else {
+                        }
+                        else
+                        {
                             yc = m * xc2 + p;
                             xc = xc2;
                         }
@@ -89,14 +96,16 @@ public class CakeDisplayer extends AbstractDisplayer
                         else if (b < -10)
                             b = -10;
 
-                        if (a != 0 && b != 0) {
+                        if (a != 0 && b != 0)
+                        {
                             Vector v = new Vector(a / 10, (player.getLocation().getY() - centerLoc.getY()) / 10 + 1, b / 10);
                             player.setVelocity(v);
                             player.playSound(player.getLocation(), Sound.ENDERMAN_TELEPORT, 1F, 2F);
 
                             int effect = random.nextInt(3);
 
-                            switch (effect) {
+                            switch (effect)
+                            {
                                 case 0:
                                     break;
                                 case 1:
@@ -113,14 +122,18 @@ public class CakeDisplayer extends AbstractDisplayer
                     }
                 }
 
-                if (times == 10 || times == 20 || times == 30 || times == 40 || times == 50 || times == 60) {
-                    baseLocation.getWorld().getBlockAt(baseLocation)
-                            .setData((byte) (baseLocation.getWorld().getBlockAt(baseLocation).getData() + 1));
+                if (times == 10 || times == 20 || times == 30 || times == 40 || times == 50 || times == 60)
+                {
+                    baseLocation.getWorld().getBlockAt(baseLocation).setData((byte) (baseLocation.getWorld().getBlockAt(baseLocation).getData() + 1));
                     centerLoc.getWorld().playSound(centerLoc, Sound.BURP, 2, 1);
-                } else if (times == 70) {
+                }
+                else if (times == 70)
+                {
                     baseLocation.getWorld().getBlockAt(baseLocation).setType(Material.AIR);
                     baseLocation.getWorld().playSound(baseLocation, Sound.BURP, 2, 1);
-                } else if (times >= 80) {
+                }
+                else if (times >= 80)
+                {
                     FireworkEffect.Builder builder = FireworkEffect.builder();
                     FireworkEffect effect = builder.flicker(false).trail(false).with(FireworkEffect.Type.BALL_LARGE).withColor(Color.BLUE).withFade(Color.PURPLE).withFlicker().build();
                     FireworkUtils.launchfw(baseLocation, effect);
@@ -154,8 +167,8 @@ public class CakeDisplayer extends AbstractDisplayer
 		return true;
 	}
 
-	private void callback() {
-		Bukkit.getScheduler().cancelTask(this.loopId);
+	private void callback()
+    {
+		this.loopTask.cancel();
 	}
-
 }

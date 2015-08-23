@@ -2,7 +2,7 @@ package net.samagames.hub.events.player;
 
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
-import net.samagames.hub.cosmetics.jukebox.JukeboxPlaylist;
+import net.samagames.hub.cosmetics.jukebox.JukeboxSong;
 import net.samagames.hub.games.AbstractGame;
 import net.samagames.hub.games.sign.GameSign;
 import net.samagames.hub.gui.profile.GuiClickMe;
@@ -103,7 +103,7 @@ public class PlayerListener implements Listener
 
         if (!event.isCancelled())
         {
-            JukeboxPlaylist current = Hub.getInstance().getCosmeticManager().getJukeboxManager().getCurrentSong();
+            JukeboxSong current = Hub.getInstance().getCosmeticManager().getJukeboxManager().getCurrentSong();
 
             if (current != null && current.getPlayedBy().equals(event.getPlayer().getName()))
                 event.setFormat(ChatColor.DARK_AQUA + "[" + ChatColor.AQUA + "DJ" + ChatColor.DARK_AQUA + "]" + event.getFormat());

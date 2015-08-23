@@ -29,7 +29,7 @@ public class CosmeticManager extends AbstractManager
         this.disguiseManager = new DisguiseManager(hub);
         this.petManager = new PetManager(hub);
 
-        hub.log(this, Level.INFO, "Registered cosmetics and started loop!");
+        hub.log(this, Level.INFO, "Registered cosmetics and started loops!");
     }
 
     public void handleLogin(Player player)

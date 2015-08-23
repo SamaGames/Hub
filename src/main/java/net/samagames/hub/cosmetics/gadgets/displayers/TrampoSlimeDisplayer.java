@@ -7,12 +7,13 @@ import net.samagames.tools.ParticleEffect;
 import org.bukkit.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.util.HashMap;
 
 public class TrampoSlimeDisplayer extends AbstractDisplayer
 {
-    private int loopId;
+    private BukkitTask loopTask;
     private HashMap<Location, SimpleBlock> corners = new HashMap<>();
 
     public TrampoSlimeDisplayer(Player player)
@@ -64,7 +65,7 @@ public class TrampoSlimeDisplayer extends AbstractDisplayer
 
         this.player.teleport(this.baseLocation.clone().add(0.0D, 2.0D, 0.0D));
 
-        this.loopId = Bukkit.getScheduler().scheduleSyncRepeatingTask(Hub.getInstance(), new Runnable()
+        this.loopTask = Bukkit.getScheduler().runTaskTimer(Hub.getInstance(), new Runnable()
         {
             int timer = 0;
             int ticks = 0;
@@ -124,6 +125,6 @@ public class TrampoSlimeDisplayer extends AbstractDisplayer
 
     private void callback()
     {
-        Bukkit.getScheduler().cancelTask(this.loopId);
+        this.loopTask.cancel();
     }
 }

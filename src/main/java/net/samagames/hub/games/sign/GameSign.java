@@ -1,7 +1,6 @@
 package net.samagames.hub.games.sign;
 
 import net.samagames.api.SamaGamesAPI;
-import net.samagames.core.api.games.ServerStatus;
 import net.samagames.hub.Hub;
 import net.samagames.hub.games.AbstractGame;
 import net.samagames.hub.utils.TimeUtils;
@@ -29,10 +28,10 @@ public class GameSign
         this.sign.setMetadata("game", new FixedMetadataValue(Hub.getInstance(), game.getCodeName()));
         this.sign.setMetadata("map", new FixedMetadataValue(Hub.getInstance(), map));
 
-        this.update(null);
+        this.update();
     }
 
-    public void update(ServerStatus data)
+    public void update()
     {
         if(this.game.isMaintenance())
         {
@@ -45,7 +44,6 @@ public class GameSign
             return;
         }
 
-        //String mapLine = ChatColor.DARK_RED + "× " + ChatColor.BOLD + this.map + ChatColor.RESET + ChatColor.DARK_RED + " ×";
         String mapLine = ChatColor.GREEN + "» " + ChatColor.BOLD + this.map + ChatColor.RESET + ChatColor.GREEN + " «";
 
         this.sign.setLine(0, this.game.getName());
@@ -60,12 +58,11 @@ public class GameSign
     {
         Jedis jedis = SamaGamesAPI.get().getResource();
 
-        //TODO: BUG FIX game name to add!
-        String ban = jedis.get("gamebanlist:reason:" + player.getUniqueId());
+        String ban = jedis.get("gamebanlist:" + this.game.getCodeName() + ":reason:" + player.getUniqueId());
 
         if (ban != null)
         {
-            long ttl = jedis.ttl("gamebanlist:reason:" + player.getUniqueId());
+            long ttl = jedis.ttl("gamebanlist:" + this.game.getCodeName() + ":reason:" + player.getUniqueId());
             String duration = "définitivement";
 
             if (ttl >= 0)
@@ -84,31 +81,17 @@ public class GameSign
         if(partyUUID == null)
         {
             Hub.getInstance().getHydroManager().addPlayerToQueue(player.getUniqueId(), game.getName(), map);
-        }else{
+        }
+        else
+        {
             if(!SamaGamesAPI.get().getPartiesManager().getLeader(partyUUID).equals(player.getUniqueId()))
             {
                 player.sendMessage(ChatColor.RED + "Vous n'êtes pas le leader, vous ne pouvez pas ajouter votre partie dans une queue.");
                 return;
             }
+
             Hub.getInstance().getHydroManager().addPartyToQueue(player.getUniqueId(), partyUUID, game.getName(), map);
         }
-
-
-        /*if(this.lastDatas == null)
-        {
-            return;
-        }
-        else if(this.lastDatas.isEmpty())
-        {
-            player.sendMessage(ChatColor.RED + "Aucun serveur n'est prêt à vous reçevoir actuellement.");
-            return;
-        }
-
-        ServerStatus firstServer = this.lastDatas.values().iterator().next();
-        String[] serverNameParts = firstServer.getBungeeName().split("_");
-
-        player.sendMessage(ChatColor.GREEN + "Vous avez été envoyé vers le serveur " + serverNameParts[0] + " " + serverNameParts[1] + " !");
-        SamaGamesAPI.get().getProxyDataManager().getProxiedPlayer(player.getUniqueId()).connectGame(firstServer.getBungeeName());*/
     }
 
     public void developperClick(Player player)

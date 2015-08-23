@@ -7,13 +7,14 @@ import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 public class ExpressBotaniaDisplayer extends AbstractDisplayer
 {
-    private int loopId;
+    private BukkitTask loopTask;
 
     public ExpressBotaniaDisplayer(Player player)
     {
@@ -38,7 +39,7 @@ public class ExpressBotaniaDisplayer extends AbstractDisplayer
         this.player.getInventory().setLeggings(this.colorArmor(new ItemStack(Material.LEATHER_LEGGINGS, 1), green));
         this.player.getInventory().setBoots(this.colorArmor(new ItemStack(Material.LEATHER_BOOTS, 1), green));
 
-        this.loopId = Bukkit.getScheduler().scheduleSyncRepeatingTask(Hub.getInstance(), new Runnable()
+        this.loopTask = Bukkit.getScheduler().runTaskTimer(Hub.getInstance(), new Runnable()
         {
             int timer = 0;
 
@@ -95,7 +96,7 @@ public class ExpressBotaniaDisplayer extends AbstractDisplayer
 
     private void callback()
     {
-        Bukkit.getScheduler().cancelTask(this.loopId);
+        this.loopTask.cancel();
 
         this.player.getInventory().setHelmet(null);
         this.player.getInventory().setLeggings(null);

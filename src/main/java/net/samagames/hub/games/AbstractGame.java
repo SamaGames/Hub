@@ -43,9 +43,7 @@ public abstract class AbstractGame
     public void setMaintenance(boolean flag)
     {
         this.isMaintenance = flag;
-
-        for(GameSign sign : this.signs.values())
-            sign.update(null);
+        this.signs.values().forEach(net.samagames.hub.games.sign.GameSign::update);
     }
 
     public DisplayedStat getDisplayedStatByIdentifier(String identifier)
