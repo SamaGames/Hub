@@ -6,8 +6,10 @@ import net.samagames.hub.common.hydroconnect.connection.ConnectionManager;
 import net.samagames.hub.common.hydroconnect.packets.queues.QueueAddPlayerPacket;
 import net.samagames.hub.common.hydroconnect.packets.queues.QueueAttachPlayerPacket;
 import net.samagames.hub.common.hydroconnect.packets.queues.QueuePacket;
+import net.samagames.hub.common.hydroconnect.packets.queues.QueueRemovePlayerPacket;
 import net.samagames.hub.common.hydroconnect.queue.QPlayer;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -32,6 +34,18 @@ public class HydroManager {
         this.plugin = plugin;
 
         connectionManager = new ConnectionManager(plugin);
+    }
+
+    public void rejoinQueueToLeader(UUID leader, UUID player)
+    {
+        List<QPlayer> list = new ArrayList<>();
+        list.add(new QPlayer(player, getPriority(player)));
+        connectionManager.sendPacket(new QueueAttachPlayerPacket(new QPlayer(leader, getPriority(leader)), list));
+    }
+
+    public void removePlayerFromQueues(UUID uuid)
+    {
+        connectionManager.sendPacket(new QueueRemovePlayerPacket(new QPlayer(uuid, getPriority(uuid))));
     }
 
     public void addPlayerToQueue(UUID player, String game, String map)
