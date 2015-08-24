@@ -3,10 +3,11 @@ package net.samagames.hub.common.hydroconnect;
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import net.samagames.hub.common.hydroconnect.connection.ConnectionManager;
-import net.samagames.hub.common.hydroconnect.packets.QueueUpdateFromHub;
+import net.samagames.hub.common.hydroconnect.packets.queues.QueueAddPlayerPacket;
+import net.samagames.hub.common.hydroconnect.packets.queues.QueueAttachPlayerPacket;
+import net.samagames.hub.common.hydroconnect.packets.queues.QueuePacket;
 import net.samagames.hub.common.hydroconnect.queue.QPlayer;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -35,13 +36,19 @@ public class HydroManager {
 
     public void addPlayerToQueue(UUID player, String game, String map)
     {
-        List<QPlayer> players = new ArrayList<>();
-        players.add(new QPlayer(player, getPriority(player)));
-        connectionManager.sendPacket(new QueueUpdateFromHub(QueueUpdateFromHub.ActionQueue.ADD,
+        QPlayer qPlayer = new QPlayer(player, getPriority(player));
+        connectionManager.sendPacket(new QueueAddPlayerPacket(QueuePacket.TypeQueue.NAMED,
                 game,
                 map,
-                QueueUpdateFromHub.TypeQueue.NAMED,
-                players));
+                qPlayer));
+    }
+
+    public void addPlayerToQueue(UUID player, String templateID)
+    {
+        QPlayer qPlayer = new QPlayer(player, getPriority(player));
+        connectionManager.sendPacket(new QueueAddPlayerPacket(QueuePacket.TypeQueue.NAMEDID,
+                templateID,
+                qPlayer));
     }
 
     public void addPartyToQueue(UUID leader, UUID party, String game, String map)
@@ -51,12 +58,21 @@ public class HydroManager {
         List<QPlayer> players = playersInParty.keySet().stream().map(player -> new QPlayer(player, getPriority(player))).collect(Collectors.toList());
         QPlayer qPlayer = new QPlayer(leader, getPriority(leader));
 
-        connectionManager.sendPacket(new QueueUpdateFromHub(QueueUpdateFromHub.ActionQueue.ADD,
-                game,
-                map,
-                QueueUpdateFromHub.TypeQueue.NAMED,
-                qPlayer,
-                players));
+        addPlayerToQueue(leader, game, map);
+
+        connectionManager.sendPacket(new QueueAttachPlayerPacket(qPlayer, players));
+    }
+
+    public void addPartyToQueue(UUID leader, UUID party, String templateID)
+    {
+        HashMap<UUID, String> playersInParty = SamaGamesAPI.get().getPartiesManager().getPlayersInParty(party);
+
+        List<QPlayer> players = playersInParty.keySet().stream().map(player -> new QPlayer(player, getPriority(player))).collect(Collectors.toList());
+        QPlayer qPlayer = new QPlayer(leader, getPriority(leader));
+
+        addPlayerToQueue(leader, templateID);
+
+        connectionManager.sendPacket(new QueueAttachPlayerPacket(qPlayer, players));
     }
 
     public int getPriority(UUID uuid)

@@ -3,7 +3,10 @@ package net.samagames.hub.common.hydroconnect.connection;
 import com.google.gson.Gson;
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
-import net.samagames.hub.common.hydroconnect.packets.QueueUpdateFromHub;
+import net.samagames.hub.common.hydroconnect.packets.queues.QueueAddPlayerPacket;
+import net.samagames.hub.common.hydroconnect.packets.queues.QueueAttachPlayerPacket;
+import net.samagames.hub.common.hydroconnect.packets.queues.QueueDetachPlayerPacket;
+import net.samagames.hub.common.hydroconnect.packets.queues.QueueRemovePlayerPacket;
 
 import java.util.logging.Level;
 
@@ -24,7 +27,11 @@ public class ConnectionManager {
     public ConnectionManager(Hub plugin)
     {
 
-        packets[10] = new QueueUpdateFromHub();
+        //Queues Packets
+        packets[100] = new QueueAddPlayerPacket();
+        packets[101] = new QueueRemovePlayerPacket();
+        packets[102] = new QueueAttachPlayerPacket();
+        packets[103] = new QueueDetachPlayerPacket();
 
         this.plugin = plugin;
 
