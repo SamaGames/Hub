@@ -28,12 +28,24 @@ public class HydroManager {
 
     private ConnectionManager connectionManager;
 
+    private PacketReceiver packetReceiver;
+
     public HydroManager(Hub plugin)
     {
-
         this.plugin = plugin;
 
-        connectionManager = new ConnectionManager(plugin);
+        connectionManager = new ConnectionManager(plugin, this);
+
+        packetReceiver = new PacketReceiver(plugin, this);
+
+        SamaGamesAPI.get().getPubSub().subscribe("hydroHubReceiver", (channel, packet) -> {
+            try{
+                connectionManager.getPacket(packet);
+            }catch(Exception e)
+            {
+                e.printStackTrace();
+            }
+        });
     }
 
     public void rejoinQueueToLeader(UUID leader, UUID player)
@@ -92,5 +104,9 @@ public class HydroManager {
     public int getPriority(UUID uuid)
     {
         return SamaGamesAPI.get().getPermissionsManager().getApi().getUser(uuid).getParents().first().getLadder();
+    }
+
+    public PacketReceiver getPacketReceiver() {
+        return packetReceiver;
     }
 }
