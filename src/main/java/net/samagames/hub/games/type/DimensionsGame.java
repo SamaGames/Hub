@@ -127,7 +127,7 @@ public class DimensionsGame extends AbstractGame
     @Override
     public Location getLobbySpawn()
     {
-        return Hub.getInstance().getPlayerManager().getLobbySpawn();
+        return new Location(Hub.getInstance().getHubWorld(), -98.5D, 81.0D, 6.5D, 90.0F, 0.0F);
     }
 
     @Override

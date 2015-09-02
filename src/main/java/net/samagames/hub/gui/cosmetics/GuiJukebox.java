@@ -95,7 +95,7 @@ public class GuiJukebox extends AbstractGui
             else if(clickType == ClickType.RIGHT)
             {
                 boolean buyed = true;
-                boolean oneBuyed = true;
+                boolean oneBuyed = false;
 
                 for(JukeboxDiskCosmetic disk : album.getDisks())
                 {

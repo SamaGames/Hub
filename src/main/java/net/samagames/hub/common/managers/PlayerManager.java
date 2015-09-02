@@ -16,7 +16,7 @@ import java.util.UUID;
 
 public class PlayerManager extends AbstractManager
 {
-    private HashMap<UUID, Selection> selections;
+    private HashMap<UUID, Location> selections;
     private ArrayList<UUID> hiders;
     private Location lobbySpawn;
     private StaticInventory staticInventory;
@@ -110,7 +110,7 @@ public class PlayerManager extends AbstractManager
             this.selections.remove(player.getUniqueId());
     }
 
-    public void setSelection(Player player, Selection selection)
+    public void setSelection(Player player, Location selection)
     {
         if(this.selections.containsKey(player.getUniqueId()))
             this.selections.remove(player.getUniqueId());
@@ -134,7 +134,7 @@ public class PlayerManager extends AbstractManager
         this.canBuild = flag;
     }
 
-    public Selection getSelection(Player player)
+    public Location getSelection(Player player)
     {
         if(this.selections.containsKey(player.getUniqueId()))
             return this.selections.get(player.getUniqueId());

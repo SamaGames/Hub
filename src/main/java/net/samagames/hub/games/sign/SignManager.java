@@ -68,6 +68,8 @@ public class SignManager extends AbstractManager
             {
                 JsonObject mapObject = maps.get(j).getAsJsonObject();
                 String map = mapObject.get("map").getAsString();
+                String template = mapObject.get("template").getAsString();
+                ChatColor color = ChatColor.valueOf(mapObject.get("color").getAsString());
                 Location sign = LocationUtils.str2loc(mapObject.get("sign").getAsString());
 
                 AbstractGame gameObject = this.hub.getGameManager().getGameByIdentifier(game);
@@ -79,7 +81,7 @@ public class SignManager extends AbstractManager
                     continue;
                 }
 
-                gameObject.addSignForMap(map.replace("_", " "), (Sign) Hub.getInstance().getHubWorld().getBlockAt(sign).getState());
+                gameObject.addSignForMap(map.replace("_", " "), (Sign) Hub.getInstance().getHubWorld().getBlockAt(sign).getState(), template, color);
 
                 this.hub.log(this, Level.INFO, "Registered sign zone for the game '" + game + "' and the map '" + map + "'!");
             }
@@ -88,7 +90,7 @@ public class SignManager extends AbstractManager
         this.hub.log(this, Level.INFO, "Reloaded game sign list.");
     }
 
-    public void setSignForMap(Player player, String game, String map, Sign sign)
+    public void setSignForMap(Player player, String game, String map, ChatColor color, String template, Sign sign)
     {
         JsonObject root = this.jsonConfig.load();
         JsonArray signZonesArray = root.getAsJsonArray("zones");
@@ -105,26 +107,10 @@ public class SignManager extends AbstractManager
 
                 JsonArray maps = signZoneObject.get("maps").getAsJsonArray();
 
-                for(int j = 0; j < maps.size(); j++)
-                {
-                    JsonObject mapObject = maps.get(j).getAsJsonObject();
-
-                    if (mapObject.get("map").getAsString().equals(map))
-                    {
-                        player.sendMessage(ChatColor.GREEN + "Map existing.");
-
-                        mapObject.addProperty("sign", LocationUtils.loc2str(sign.getLocation()));
-                        player.sendMessage(ChatColor.GREEN + "Added sign (" + LocationUtils.loc2str(sign.getLocation()) + ")");
-
-                        player.sendMessage(ChatColor.GREEN + "Job finished.");
-                        this.jsonConfig.save(root);
-                        this.reloadList();
-                        return;
-                    }
-                }
-
                 JsonObject mapObject = new JsonObject();
                 mapObject.addProperty("map", map);
+                mapObject.addProperty("template", template);
+                mapObject.addProperty("color", color.name());
                 mapObject.addProperty("sign", LocationUtils.loc2str(sign.getLocation()));
                 maps.add(mapObject);
 
@@ -144,6 +130,8 @@ public class SignManager extends AbstractManager
 
         JsonObject mapObject = new JsonObject();
         mapObject.addProperty("map", map);
+        mapObject.addProperty("template", template);
+        mapObject.addProperty("color", color.name());
         mapObject.addProperty("sign", LocationUtils.loc2str(sign.getLocation()));
         maps.add(mapObject);
 

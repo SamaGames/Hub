@@ -21,13 +21,11 @@ public class GuiMain extends AbstractGui
     @Override
     public void display(Player player)
     {
-        boolean staffFlag = SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "beta.staff");
-
         this.inventory = Bukkit.createInventory(null, 45, "Menu Principal");
 
         this.setSlotData(ChatColor.GOLD + "Zone BETA - " + ChatColor.GREEN + "VIP", Material.DIAMOND, 9, this.getLores(new String[] { "Testez les jeux avant tout le monde !" }, false, true), "beta_vip");
         this.setSlotData(ChatColor.GOLD + "Spawn", Material.BED, 18, this.getLores(null, false, true), "spawn");
-        this.setSlotData(ChatColor.GOLD + "Jump du Ciel", Material.PACKED_ICE, 26, this.getLores(null, false, true), "jump");
+        this.setSlotData(ChatColor.GOLD + "Jump du Ciel", Material.PACKED_ICE, 26, this.getLores(null, false, true), "parkour");
         this.setSlotData(ChatColor.GOLD + "Informations", Material.EMPTY_MAP, 27, this.getInformationLores(), "none");
         this.setSlotData(ChatColor.GOLD + "Changer de hub", Material.ENDER_CHEST, 35, this.getLores(null, true, false), "switch_hub");
 
@@ -73,9 +71,9 @@ public class GuiMain extends AbstractGui
         {
             player.teleport(Hub.getInstance().getPlayerManager().getLobbySpawn());
         }
-        else if(action.equals("jump"))
+        else if(action.equals("parkour"))
         {
-            player.teleport(Hub.getInstance().getJumpManager().getJumps().get(0).getSpawn());
+            player.teleport(Hub.getInstance().getParkourManager().getParkours().get(0).getSpawn());
         }
         else if(action.startsWith("game"))
         {

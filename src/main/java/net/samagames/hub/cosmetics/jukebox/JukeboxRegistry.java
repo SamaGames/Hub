@@ -24,20 +24,58 @@ public class JukeboxRegistry extends AbstractCosmeticRegistry<JukeboxDiskCosmeti
 
         JukeboxAlbum streetFighterAlbum = new JukeboxAlbum("streetfighter", ChatColor.GOLD + "Street Fighter", new ItemStack(Material.STAINED_GLASS, 1, (short) 4));
 
-        JukeboxDiskCosmetic guilesThemeDisk = new JukeboxDiskCosmetic(streetFighterAlbum, "guilestheme", streetFighterAlbum.getSimpleIcon(), NBSDecoder.parse("GuilesTheme"));
+        JukeboxDiskCosmetic guilesThemeDisk = new JukeboxDiskCosmetic(streetFighterAlbum, "guilestheme", ChatColor.GOLD, streetFighterAlbum.getSimpleIcon(), NBSDecoder.parse("GuilesTheme"));
         guilesThemeDisk.buyableWithStars(500);
 
-        JukeboxDiskCosmetic ryusTheme = new JukeboxDiskCosmetic(streetFighterAlbum, "ryustheme", streetFighterAlbum.getSimpleIcon(), NBSDecoder.parse("RyusTheme"));
-        ryusTheme.buyableWithStars(500);
+        JukeboxDiskCosmetic ryusThemeDisk = new JukeboxDiskCosmetic(streetFighterAlbum, "ryustheme", ChatColor.GOLD, streetFighterAlbum.getSimpleIcon(), NBSDecoder.parse("RyusTheme"));
+        ryusThemeDisk.buyableWithStars(500);
 
-        JukeboxDiskCosmetic kensTheme = new JukeboxDiskCosmetic(streetFighterAlbum, "kenstheme", streetFighterAlbum.getSimpleIcon(), NBSDecoder.parse("KensTheme"));
-        kensTheme.buyableWithStars(500);
+        JukeboxDiskCosmetic kensThemeDisk = new JukeboxDiskCosmetic(streetFighterAlbum, "kenstheme", ChatColor.GOLD, streetFighterAlbum.getSimpleIcon(), NBSDecoder.parse("KensTheme"));
+        kensThemeDisk.buyableWithStars(500);
 
         this.registerElement(guilesThemeDisk);
-        this.registerElement(ryusTheme);
-        this.registerElement(kensTheme);
+        this.registerElement(ryusThemeDisk);
+        this.registerElement(kensThemeDisk);
 
         this.albumsTemp.put(streetFighterAlbum.getIdentifier(), streetFighterAlbum);
+
+        // --
+
+        JukeboxAlbum zeldaAlbum = new JukeboxAlbum("zelda", ChatColor.GREEN + "Zelda", new ItemStack(Material.STAINED_GLASS, 1, (short) 13));
+
+        JukeboxDiskCosmetic gerudoValleyDisk = new JukeboxDiskCosmetic(zeldaAlbum, "gerudovalley", ChatColor.GREEN, zeldaAlbum.getSimpleIcon(), NBSDecoder.parse("GerudoValley"));
+        guilesThemeDisk.buyableWithStars(500);
+
+        JukeboxDiskCosmetic windmillDisk = new JukeboxDiskCosmetic(zeldaAlbum, "windmill", ChatColor.GREEN, zeldaAlbum.getSimpleIcon(), NBSDecoder.parse("Windmill"));
+        windmillDisk.buyableWithStars(500);
+
+        JukeboxDiskCosmetic lostWoodsDisk = new JukeboxDiskCosmetic(zeldaAlbum, "lostwoods", ChatColor.GREEN, zeldaAlbum.getSimpleIcon(), NBSDecoder.parse("LostWoods"));
+        lostWoodsDisk.buyableWithStars(500);
+
+        this.registerElement(gerudoValleyDisk);
+        this.registerElement(windmillDisk);
+        this.registerElement(lostWoodsDisk);
+
+        this.albumsTemp.put(zeldaAlbum.getIdentifier(), zeldaAlbum);
+
+        // --
+
+        JukeboxAlbum pokemonAlbum = new JukeboxAlbum("pokemon", ChatColor.BLUE + "Pokémon", new ItemStack(Material.STAINED_GLASS, 1, (short) 11));
+
+        JukeboxDiskCosmetic routeOneDisk = new JukeboxDiskCosmetic(pokemonAlbum, "routeone", ChatColor.BLUE, pokemonAlbum.getSimpleIcon(), NBSDecoder.parse("RouteOne"));
+        routeOneDisk.buyableWithStars(500);
+
+        JukeboxDiskCosmetic centerTheme = new JukeboxDiskCosmetic(pokemonAlbum, "centertheme", ChatColor.BLUE, pokemonAlbum.getSimpleIcon(), NBSDecoder.parse("PokemonCenterTheme"));
+        centerTheme.buyableWithStars(500);
+
+        JukeboxDiskCosmetic gymBattle = new JukeboxDiskCosmetic(pokemonAlbum, "gymbattle", ChatColor.BLUE, pokemonAlbum.getSimpleIcon(), NBSDecoder.parse("GymBattle"));
+        gymBattle.buyableWithStars(500);
+
+        this.registerElement(routeOneDisk);
+        this.registerElement(centerTheme);
+        this.registerElement(gymBattle);
+
+        this.albumsTemp.put(pokemonAlbum.getIdentifier(), pokemonAlbum);
 
         // --
     }

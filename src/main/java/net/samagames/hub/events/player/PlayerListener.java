@@ -158,7 +158,7 @@ public class PlayerListener implements Listener
             Hub.getInstance().getScoreboardManager().addScoreboardReceiver(player);
             Hub.getInstance().getHologramManager().addReceiver(player);
 
-            player.teleport(new Location(Bukkit.getWorlds().get(0), -19, 51, 89));
+            player.teleport(Hub.getInstance().getPlayerManager().getLobbySpawn());
 
             if (SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "hub.fly"))
                 Bukkit.getScheduler().runTask(Hub.getInstance(), () -> player.setAllowFlight(true));

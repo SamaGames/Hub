@@ -1,7 +1,7 @@
 package net.samagames.hub.events.player;
 
 import net.samagames.hub.Hub;
-import net.samagames.hub.jump.Jump;
+import net.samagames.hub.parkour.Parkour;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -14,7 +14,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-public class JumpListener implements Listener
+public class ParkourListener implements Listener
 {
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event)
@@ -23,18 +23,18 @@ public class JumpListener implements Listener
         {
             if (event.getClickedBlock().getType().equals(Material.IRON_PLATE))
             {
-                Jump jump = Hub.getInstance().getJumpManager().getOfPlayer(event.getPlayer().getUniqueId());
+                Parkour parkour = Hub.getInstance().getParkourManager().getOfPlayer(event.getPlayer().getUniqueId());
 
-                if (jump != null)
+                if (parkour != null)
                 {
-                    Location beginFormatted = new Location(jump.getBegin().getWorld(), jump.getBegin().getBlockX(), jump.getBegin().getBlockY(), jump.getBegin().getBlockZ());
-                    Location endFormatted = new Location(jump.getEnd().getWorld(), jump.getEnd().getBlockX(), jump.getEnd().getBlockY(), jump.getEnd().getBlockZ());
+                    Location beginFormatted = new Location(parkour.getBegin().getWorld(), parkour.getBegin().getBlockX(), parkour.getBegin().getBlockY(), parkour.getBegin().getBlockZ());
+                    Location endFormatted = new Location(parkour.getEnd().getWorld(), parkour.getEnd().getBlockX(), parkour.getEnd().getBlockY(), parkour.getEnd().getBlockZ());
                     Location blockFormatted = new Location(event.getClickedBlock().getWorld(), event.getClickedBlock().getLocation().getBlockX(), event.getClickedBlock().getLocation().getBlockY(), event.getClickedBlock().getLocation().getBlockZ());
 
 
                     if (endFormatted.equals(blockFormatted))
                     {
-                        jump.winPlayer(event.getPlayer());
+                        parkour.winPlayer(event.getPlayer());
                         return;
                     }
                     else if (beginFormatted.equals(blockFormatted))
@@ -43,29 +43,29 @@ public class JumpListener implements Listener
                     }
                     else
                     {
-                        jump.removePlayer(event.getPlayer().getUniqueId());
+                        parkour.removePlayer(event.getPlayer().getUniqueId());
                     }
                 }
 
-                for (Jump jumpp : Hub.getInstance().getJumpManager().getJumps())
+                for (Parkour parkourp : Hub.getInstance().getParkourManager().getParkours())
                 {
-                    Location beginFormatted = new Location(jumpp.getBegin().getWorld(), jumpp.getBegin().getBlockX(), jumpp.getBegin().getBlockY(), jumpp.getBegin().getBlockZ());
+                    Location beginFormatted = new Location(parkourp.getBegin().getWorld(), parkourp.getBegin().getBlockX(), parkourp.getBegin().getBlockY(), parkourp.getBegin().getBlockZ());
                     Location blockFormatted = new Location(event.getClickedBlock().getWorld(), event.getClickedBlock().getLocation().getBlockX(), event.getClickedBlock().getLocation().getBlockY(), event.getClickedBlock().getLocation().getBlockZ());
 
                     if (beginFormatted.equals(blockFormatted))
                     {
-                        jumpp.addPlayer(event.getPlayer());
+                        parkourp.addPlayer(event.getPlayer());
                         return;
                     }
                 }
             }
             else if(event.getClickedBlock().getType().equals(Material.GOLD_PLATE))
             {
-                Jump jump = Hub.getInstance().getJumpManager().getOfPlayer(event.getPlayer().getUniqueId());
+                Parkour parkour = Hub.getInstance().getParkourManager().getOfPlayer(event.getPlayer().getUniqueId());
 
-                if (jump != null)
+                if (parkour != null)
                 {
-                    jump.checkpoint(event.getPlayer(), event.getClickedBlock().getLocation());
+                    parkour.checkpoint(event.getPlayer(), event.getClickedBlock().getLocation());
                 }
             }
         }
@@ -76,10 +76,10 @@ public class JumpListener implements Listener
     {
         Bukkit.getScheduler().runTaskAsynchronously(Hub.getInstance(), () ->
         {
-            Jump jump = Hub.getInstance().getJumpManager().getOfPlayer(event.getPlayer().getUniqueId());
+            Parkour parkour = Hub.getInstance().getParkourManager().getOfPlayer(event.getPlayer().getUniqueId());
 
-            if (jump != null)
-                jump.removePlayer(event.getPlayer().getUniqueId());
+            if (parkour != null)
+                parkour.removePlayer(event.getPlayer().getUniqueId());
         });
     }
 
@@ -96,14 +96,14 @@ public class JumpListener implements Listener
                 Block block = loc.getBlock();
                 loc.setY(loc.getY() - 1);
 
-                Jump jump = Hub.getInstance().getJumpManager().getOfPlayer(player.getUniqueId());
+                Parkour parkour = Hub.getInstance().getParkourManager().getOfPlayer(player.getUniqueId());
 
-                if (jump == null)
+                if (parkour == null)
                     return;
 
-                if (block == null || !jump.inWhitelist(block.getType()))
+                if (block == null || !parkour.inWhitelist(block.getType()))
                 {
-                    jump.failPlayer(player);
+                    parkour.failPlayer(player);
                 }
             }
         }

@@ -61,7 +61,7 @@ public class UHCGame extends AbstractGame
     @Override
     public Location getLobbySpawn()
     {
-        return Hub.getInstance().getPlayerManager().getLobbySpawn();
+        return new Location(Hub.getInstance().getHubWorld(), 85.5D, 81.0D, 132.5D, 0.0F, 0.0F);
     }
 
     @Override

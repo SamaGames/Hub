@@ -18,17 +18,21 @@ public class GameSign
     private final Sign sign;
     private final AbstractGame game;
     private final String map;
+    private final ChatColor color;
+    private final String template;
 
-    public GameSign(AbstractGame game, String map, Sign sign)
+    public GameSign(AbstractGame game, String map, ChatColor color, String template, Sign sign)
     {
         this.sign = sign;
         this.game = game;
         this.map = map;
+        this.color = color;
+        this.template = template;
 
         this.sign.setMetadata("game", new FixedMetadataValue(Hub.getInstance(), game.getCodeName()));
         this.sign.setMetadata("map", new FixedMetadataValue(Hub.getInstance(), map));
 
-        this.update();
+        Bukkit.getScheduler().runTaskTimerAsynchronously(Hub.getInstance(), this::update, 20L, 20L);
     }
 
     public void update()
@@ -44,12 +48,12 @@ public class GameSign
             return;
         }
 
-        String mapLine = ChatColor.GREEN + "» " + ChatColor.BOLD + this.map + ChatColor.RESET + ChatColor.GREEN + " «";
+        String mapLine = this.color + "» " + ChatColor.BOLD + this.map + ChatColor.RESET + this.color + " «";
 
         this.sign.setLine(0, this.game.getName());
         this.sign.setLine(1, mapLine);
-        this.sign.setLine(2, 0 + "" + ChatColor.RESET + " en attente");
-        this.sign.setLine(3, 0 + "" + ChatColor.RESET + " en jeu");
+        this.sign.setLine(2, 0 + "" + ChatColor.RESET + " en jeu");
+        this.sign.setLine(3, 0 + "" + ChatColor.RESET + " par map");
 
         Bukkit.getScheduler().runTask(Hub.getInstance(), this.sign::update);
     }
@@ -80,7 +84,7 @@ public class GameSign
 
         if(partyUUID == null)
         {
-            Hub.getInstance().getHydroManager().addPlayerToQueue(player.getUniqueId(), game.getName(), map);
+            Hub.getInstance().getHydroManager().addPlayerToQueue(player.getUniqueId(), this.template);
         }
         else
         {
@@ -90,7 +94,7 @@ public class GameSign
                 return;
             }
 
-            Hub.getInstance().getHydroManager().addPartyToQueue(player.getUniqueId(), partyUUID, game.getName(), map);
+            Hub.getInstance().getHydroManager().addPartyToQueue(player.getUniqueId(), partyUUID, this.template);
         }
     }
 

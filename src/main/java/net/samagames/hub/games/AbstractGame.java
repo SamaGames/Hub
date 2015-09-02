@@ -3,6 +3,7 @@ package net.samagames.hub.games;
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.games.shop.ShopCategory;
 import net.samagames.hub.games.sign.GameSign;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.block.Sign;
 import org.bukkit.inventory.ItemStack;
@@ -35,9 +36,9 @@ public abstract class AbstractGame
     public abstract Location getLobbySpawn();
     public abstract boolean isLocked();
 
-    public void addSignForMap(String map, Sign sign)
+    public void addSignForMap(String map, Sign sign, String template, ChatColor color)
     {
-        this.signs.put(map, new GameSign(this, map, sign));
+        this.signs.put(map, new GameSign(this, map, color, template, sign));
     }
 
     public void setMaintenance(boolean flag)

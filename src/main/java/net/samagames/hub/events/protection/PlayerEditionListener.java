@@ -5,6 +5,7 @@ import net.samagames.hub.Hub;
 import net.samagames.tools.Selection;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -67,26 +68,12 @@ public class PlayerEditionListener implements Listener
                 if (event.getItem() != null && event.getItem().getType() == Material.WOOD_AXE)
                 {
                     Action act = event.getAction();
-                    Selection selection = Hub.getInstance().getPlayerManager().getSelection(event.getPlayer());
 
                     if (act == Action.LEFT_CLICK_BLOCK)
                     {
-                        if (selection == null)
-                            selection = new Selection();
-
-                        selection.setFirstPoint(event.getClickedBlock().getLocation());
-                        event.getPlayer().sendMessage(ChatColor.GOLD + "Premier point établi.");
+                        Hub.getInstance().getPlayerManager().setSelection(event.getPlayer(), event.getClickedBlock().getLocation());
+                        event.getPlayer().sendMessage(ChatColor.GOLD + "Point sélectionné !");
                     }
-                    else if (act == Action.RIGHT_CLICK_BLOCK)
-                    {
-                        if (selection == null)
-                            selection = new Selection();
-
-                        selection.setLastPoint(event.getClickedBlock().getLocation());
-                        event.getPlayer().sendMessage(ChatColor.GOLD + "Second point établi.");
-                    }
-
-                    Hub.getInstance().getPlayerManager().setSelection(event.getPlayer(), selection);
                 }
             }
         });

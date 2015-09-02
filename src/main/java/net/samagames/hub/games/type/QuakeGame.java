@@ -131,7 +131,7 @@ public class QuakeGame extends AbstractGame
     @Override
     public Location getLobbySpawn()
     {
-        return Hub.getInstance().getPlayerManager().getLobbySpawn();
+        return new Location(Hub.getInstance().getHubWorld(), 5.5D, 92.0D, 115.5D, 90.0F, 0.0F);
     }
 
     @Override

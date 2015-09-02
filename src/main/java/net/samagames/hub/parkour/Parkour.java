@@ -1,4 +1,4 @@
-package net.samagames.hub.jump;
+package net.samagames.hub.parkour;
 
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
@@ -16,25 +16,25 @@ import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class Jump
+public class Parkour
 {
-    private final ConcurrentHashMap<UUID, Long> jumping;
+    private final ConcurrentHashMap<UUID, Long> parkouring;
     private final ConcurrentHashMap<UUID, ArrayList<Location>> checkpoints;
     private final ConcurrentHashMap<UUID, Integer> tries;
-    private final String jumpName;
+    private final String parkourName;
     private final Location spawn;
     private final Location end;
     private final Location teleportFail;
     private final ArrayList<Material> whitelist;
     private final String achievementName;
 
-    public Jump(String jumpName, Location spawn, Location end, Location teleportFail, ArrayList<Material> whitelist, String achievementName)
+    public Parkour(String parkourName, Location spawn, Location end, Location teleportFail, ArrayList<Material> whitelist, String achievementName)
     {
-        this.jumping = new ConcurrentHashMap<>();
+        this.parkouring = new ConcurrentHashMap<>();
         this.checkpoints = new ConcurrentHashMap<>();
         this.tries = new ConcurrentHashMap<>();
 
-        this.jumpName = jumpName;
+        this.parkourName = parkourName;
         this.spawn = spawn;
         this.end = end;
         this.teleportFail = teleportFail;
@@ -45,7 +45,7 @@ public class Jump
 
         Bukkit.getScheduler().runTaskTimerAsynchronously(Hub.getInstance(), () ->
         {
-            for (UUID uuid : this.jumping.keySet())
+            for (UUID uuid : this.parkouring.keySet())
             {
                 Player player = Bukkit.getPlayer(uuid);
 
@@ -82,7 +82,7 @@ public class Jump
         this.checkpoints.put(player.getUniqueId(), checkpoints);
         this.tries.put(player.getUniqueId(), (this.tries.get(player.getUniqueId()) + 3));
 
-        player.sendMessage(Hub.getInstance().getJumpManager().getTag() + ChatColor.DARK_AQUA + "Checkpoint !");
+        player.sendMessage(Hub.getInstance().getParkourManager().getTag() + ChatColor.DARK_AQUA + "Checkpoint !");
     }
 
     public void addPlayer(Player player)
@@ -90,11 +90,11 @@ public class Jump
         ArrayList<Location> checkpoints = new ArrayList<>();
         checkpoints.add(this.spawn);
 
-        this.jumping.put(player.getUniqueId(), System.currentTimeMillis());
+        this.parkouring.put(player.getUniqueId(), System.currentTimeMillis());
         this.checkpoints.put(player.getUniqueId(), checkpoints);
         this.tries.put(player.getUniqueId(), 0);
 
-        player.sendMessage(Hub.getInstance().getJumpManager().getTag() + ChatColor.DARK_AQUA + "Vous commencez le " + ChatColor.AQUA + jumpName + ChatColor.DARK_AQUA + ". Bonne chance !");
+        player.sendMessage(Hub.getInstance().getParkourManager().getTag() + ChatColor.DARK_AQUA + "Vous commencez le " + ChatColor.AQUA + parkourName + ChatColor.DARK_AQUA + ". Bonne chance !");
         player.setAllowFlight(false);
         player.setFlying(false);
         player.setWalkSpeed(0.2F);
@@ -106,10 +106,10 @@ public class Jump
     public void winPlayer(final Player player)
     {
         UUID playerId = player.getUniqueId();
-        long begin = jumping.get(playerId);
+        long begin = parkouring.get(playerId);
         double duration = Math.floor((System.currentTimeMillis() - begin) / 100) / 10;
 
-        Bukkit.broadcastMessage(Hub.getInstance().getJumpManager().getTag() + ChatColor.GREEN + player.getName() + ChatColor.DARK_AQUA + " a réussi le " + ChatColor.AQUA + jumpName + ChatColor.DARK_AQUA + " en " + duration + " secondes " + ChatColor.DARK_AQUA + "!");
+        Bukkit.broadcastMessage(Hub.getInstance().getParkourManager().getTag() + ChatColor.GREEN + player.getName() + ChatColor.DARK_AQUA + " a réussi le " + ChatColor.AQUA + parkourName + ChatColor.DARK_AQUA + " en " + duration + " secondes " + ChatColor.DARK_AQUA + "!");
 
         Bukkit.getScheduler().scheduleSyncRepeatingTask(Hub.getInstance(), new Runnable()
         {
@@ -156,7 +156,7 @@ public class Jump
 
         }, 5L, 5L);
 
-        this.jumping.remove(playerId);
+        this.parkouring.remove(playerId);
 
         if(this.achievementName != null)
         {
@@ -180,12 +180,12 @@ public class Jump
 
         if(now > 0)
         {
-            player.sendMessage(Hub.getInstance().getJumpManager().getTag() + ChatColor.DARK_AQUA + "Il vous reste plus que " + now + " essais !");
+            player.sendMessage(Hub.getInstance().getParkourManager().getTag() + ChatColor.DARK_AQUA + "Il vous reste plus que " + now + " essais !");
             player.teleport(this.checkpoints.get(player.getUniqueId()).get((this.checkpoints.get(player.getUniqueId()).size() - 1)));
         }
         else
         {
-            player.sendMessage(Hub.getInstance().getJumpManager().getTag() + ChatColor.DARK_AQUA + "Vous avez échoué :'(");
+            player.sendMessage(Hub.getInstance().getParkourManager().getTag() + ChatColor.DARK_AQUA + "Vous avez échoué :'(");
             player.teleport(this.teleportFail);
 
             Bukkit.getScheduler().runTask(Hub.getInstance(), () ->
@@ -197,13 +197,13 @@ public class Jump
             if (player.hasPermission("hub.fly"))
                 Bukkit.getScheduler().runTask(Hub.getInstance(), () -> player.setAllowFlight(true));
 
-            this.jumping.remove(player.getUniqueId());
+            this.parkouring.remove(player.getUniqueId());
         }
     }
 
     public void removePlayer(UUID player)
     {
-        this.jumping.remove(player);
+        this.parkouring.remove(player);
     }
 
     public Location getSpawn()
@@ -221,9 +221,9 @@ public class Jump
         return this.spawn;
     }
 
-    public boolean isJumping(UUID player)
+    public boolean isParkouring(UUID player)
     {
-        return this.jumping.containsKey(player);
+        return this.parkouring.containsKey(player);
     }
 
     public boolean inWhitelist(Material material)

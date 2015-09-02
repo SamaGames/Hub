@@ -7,6 +7,7 @@ import net.samagames.hub.games.AbstractGame;
 import net.samagames.hub.games.sign.GameSign;
 import net.samagames.tools.Selection;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.block.Sign;
 import org.bukkit.command.Command;
 import org.bukkit.entity.Player;
@@ -50,9 +51,9 @@ public class CommandSign extends AbstractCommand
 
     private void addSign(Player player, String[] args)
     {
-        if(args.length < 3)
+        if(args.length < 5)
         {
-            player.sendMessage(ChatColor.RED + "Usage: /sign add <game code name> <map>");
+            player.sendMessage(ChatColor.RED + "Usage: /sign add <game code name> <map> <color> <template>");
             return;
         }
 
@@ -62,19 +63,21 @@ public class CommandSign extends AbstractCommand
             return;
         }
 
-        Selection selection = Hub.getInstance().getPlayerManager().getSelection(player);
+        Location selection = Hub.getInstance().getPlayerManager().getSelection(player);
 
         String game = args[1];
         String map = args[2];
+        ChatColor color = ChatColor.valueOf(args[3].toUpperCase());
+        String template = args[4];
 
-        if(!(selection.getMinimumPoint().getBlock().getState() instanceof Sign))
+        if(!(selection.getBlock().getState() instanceof Sign))
         {
             player.sendMessage(ChatColor.RED + "Le bloc sélectionné n'est pas un panneau !");
             return;
         }
 
-        Sign sign = (Sign) selection.getMinimumPoint().getBlock().getState();
-        Hub.getInstance().getSignManager().setSignForMap(player, game, map, sign);
+        Sign sign = (Sign) selection.getBlock().getState();
+        Hub.getInstance().getSignManager().setSignForMap(player, game, map, color, template, sign);
     }
 
     private void maintenanceSigns(Player player, String[] args)
@@ -105,12 +108,7 @@ public class CommandSign extends AbstractCommand
 
         for(AbstractGame game : Hub.getInstance().getGameManager().getGames().values())
         {
-            int i = 0;
-
-            for(GameSign sign : game.getSigns().values())
-                i++;
-
-            player.sendMessage(ChatColor.GREEN + "-> " + ChatColor.AQUA + game.getCodeName() + ChatColor.GREEN + " (" + ChatColor.AQUA + i + " panneaux" + ChatColor.GREEN + ")");
+            player.sendMessage(ChatColor.GREEN + "-> " + ChatColor.AQUA + game.getCodeName() + ChatColor.GREEN + " (" + ChatColor.AQUA + game.getSigns().values().size() + " panneaux" + ChatColor.GREEN + ")");
         }
     }
 }

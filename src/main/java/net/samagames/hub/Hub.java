@@ -10,7 +10,7 @@ import net.samagames.hub.common.receivers.MaintenanceListener;
 import net.samagames.hub.common.receivers.SamaritanListener;
 import net.samagames.hub.cosmetics.CosmeticManager;
 import net.samagames.hub.events.player.GuiListener;
-import net.samagames.hub.events.player.JumpListener;
+import net.samagames.hub.events.player.ParkourListener;
 import net.samagames.hub.events.player.PlayerListener;
 import net.samagames.hub.events.protection.EntityEditionListener;
 import net.samagames.hub.events.protection.InventoryEditionListener;
@@ -19,8 +19,9 @@ import net.samagames.hub.events.protection.WorldEditionListener;
 import net.samagames.hub.games.GameManager;
 import net.samagames.hub.games.sign.SignManager;
 import net.samagames.hub.gui.GuiManager;
-import net.samagames.hub.jump.JumpManager;
 import net.samagames.hub.npcs.NPCManager;
+import net.samagames.hub.parkour.ParkourManager;
+import net.samagames.tools.LocationUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.plugin.Plugin;
@@ -44,13 +45,12 @@ public class Hub extends JavaPlugin
     private ScoreboardManager scoreboardManager;
     private GameManager gameManager;
     private SignManager signManager;
-    private JumpManager jumpManager;
+    private ParkourManager parkourManager;
     private CosmeticManager cosmeticManager;
     private StatsManager statsManager;
+    private HydroManager hydroManager;
 
     private HubRefresher hubRefresher;
-
-    private HydroManager hydroManager;
 
     public static Hub getInstance()
     {
@@ -68,9 +68,9 @@ public class Hub extends JavaPlugin
         this.debug = this.getConfig().getBoolean("debug", false);
 
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
-        hydroManager = new HydroManager(this);
 
         this.log(Level.INFO, "Loading managers...");
+        this.hydroManager = new HydroManager(this);
         this.playerManager = new PlayerManager(this);
         this.chatManager = new ChatManager(this);
         this.guiManager = new GuiManager(this);
@@ -80,10 +80,12 @@ public class Hub extends JavaPlugin
         this.scoreboardManager = new ScoreboardManager(this);
         this.gameManager = new GameManager(this);
         this.signManager = new SignManager(this);
-        this.jumpManager = new JumpManager(this);
+        this.parkourManager = new ParkourManager(this);
         this.cosmeticManager = new CosmeticManager(this);
         this.statsManager = new StatsManager(this);
         this.log(Level.INFO, "Managers loaded with success.");
+
+        this.playerManager.setLobbySpawn(LocationUtils.str2loc(this.getConfig().getString("spawn", "world, 0.0, 0.0, 0.0")));
 
         this.log(Level.INFO, "Registering packets packets...");
         SamaGamesAPI.get().getPubSub().subscribe("cheat", new SamaritanListener());
@@ -118,7 +120,7 @@ public class Hub extends JavaPlugin
     {
         Bukkit.getPluginManager().registerEvents(new PlayerListener(), this);
         Bukkit.getPluginManager().registerEvents(new GuiListener(), this);
-        Bukkit.getPluginManager().registerEvents(new JumpListener(), this);
+        Bukkit.getPluginManager().registerEvents(new ParkourListener(), this);
 
         Bukkit.getPluginManager().registerEvents(new EntityEditionListener(), this);
         Bukkit.getPluginManager().registerEvents(new InventoryEditionListener(), this);
@@ -139,7 +141,7 @@ public class Hub extends JavaPlugin
     public ScoreboardManager getScoreboardManager() { return this.scoreboardManager; }
     public GameManager getGameManager() { return this.gameManager; }
     public SignManager getSignManager() { return this.signManager; }
-    public JumpManager getJumpManager() { return this.jumpManager; }
+    public ParkourManager getParkourManager() { return this.parkourManager; }
     public CosmeticManager getCosmeticManager() { return this.cosmeticManager; }
     public StatsManager getStatsManager() { return this.statsManager; }
 
