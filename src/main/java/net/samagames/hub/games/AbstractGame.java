@@ -41,12 +41,6 @@ public abstract class AbstractGame
         this.signs.put(map, new GameSign(this, map, color, template, sign));
     }
 
-    public void setMaintenance(boolean flag)
-    {
-        this.isMaintenance = flag;
-        this.signs.values().forEach(net.samagames.hub.games.sign.GameSign::update);
-    }
-
     public DisplayedStat getDisplayedStatByIdentifier(String identifier)
     {
         for(DisplayedStat stat : this.getDisplayedStats())
@@ -79,5 +73,11 @@ public abstract class AbstractGame
     public boolean isMaintenance()
     {
         return this.isMaintenance;
+    }
+
+    public void setMaintenance(boolean flag)
+    {
+        this.isMaintenance = flag;
+        this.signs.values().forEach(net.samagames.hub.games.sign.GameSign::update);
     }
 }

@@ -21,6 +21,10 @@ public class GameSign
     private final ChatColor color;
     private final String template;
 
+    private int playerMaxForMap;
+    private int playerWaitFor;
+    private int totalPlayerOnServers;
+
     public GameSign(AbstractGame game, String map, ChatColor color, String template, Sign sign)
     {
         this.sign = sign;
@@ -52,8 +56,8 @@ public class GameSign
 
         this.sign.setLine(0, this.game.getName());
         this.sign.setLine(1, mapLine);
-        this.sign.setLine(2, 0 + "" + ChatColor.RESET + " en jeu");
-        this.sign.setLine(3, 0 + "" + ChatColor.RESET + " par map");
+        this.sign.setLine(2, playerWaitFor + "" + ChatColor.RESET + " en attente");
+        this.sign.setLine(3, playerMaxForMap + "" + ChatColor.RESET + " par map");
 
         Bukkit.getScheduler().runTask(Hub.getInstance(), this.sign::update);
     }
@@ -104,14 +108,50 @@ public class GameSign
         player.sendMessage(ChatColor.GOLD + "Informations du panneau de jeu :");
         player.sendMessage(ChatColor.GOLD + "> " + ChatColor.AQUA + "Jeu : " + ChatColor.GREEN + this.game.getCodeName());
         player.sendMessage(ChatColor.GOLD + "> " + ChatColor.AQUA + "Map : " + ChatColor.GREEN + this.map);
-        //player.sendMessage(ChatColor.GOLD + "> " + ChatColor.AQUA + "Joueurs en attente : " + ChatColor.GREEN + this.getWaitingPlayers());
-        //player.sendMessage(ChatColor.GOLD + "> " + ChatColor.AQUA + "Joueurs en jeu : " + ChatColor.GREEN + this.getPlayingPlayers());
+        player.sendMessage(ChatColor.GOLD + "> " + ChatColor.AQUA + "Joueurs en attente : " + ChatColor.GREEN + playerWaitFor);
+        player.sendMessage(ChatColor.GOLD + "> " + ChatColor.AQUA + "Joueurs en jeu : " + ChatColor.GREEN + totalPlayerOnServers);
         //player.sendMessage(ChatColor.GOLD + "> " + ChatColor.AQUA + "Serveurs en ligne : " + ChatColor.GREEN + this.getWaitingServers() + " en attente et " + this.getPlayingServers() + " en jeu");
         player.sendMessage(ChatColor.GOLD + "----------------------------------------");
+    }
+
+    public String getTemplate() {
+        return template;
+    }
+
+    public String getMap() {
+        return map;
+    }
+
+    public ChatColor getColor() {
+        return color;
     }
 
     public Sign getSign()
     {
         return this.sign;
+    }
+
+    public int getPlayerMaxForMap() {
+        return playerMaxForMap;
+    }
+
+    public void setPlayerMaxForMap(int playerMaxForMap) {
+        this.playerMaxForMap = playerMaxForMap;
+    }
+
+    public int getPlayerWaitFor() {
+        return playerWaitFor;
+    }
+
+    public void setPlayerWaitFor(int playerWaitFor) {
+        this.playerWaitFor = playerWaitFor;
+    }
+
+    public int getTotalPlayerOnServers() {
+        return totalPlayerOnServers;
+    }
+
+    public void setTotalPlayerOnServers(int totalPlayerOnServers) {
+        this.totalPlayerOnServers = totalPlayerOnServers;
     }
 }

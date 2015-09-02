@@ -1,6 +1,8 @@
 package net.samagames.hub.games;
 
 import net.samagames.hub.Hub;
+import net.samagames.hub.common.hydroconnect.packets.hubinfo.GameInfoToHubPacket;
+import net.samagames.hub.common.hydroconnect.utils.PacketCallBack;
 import net.samagames.hub.common.managers.AbstractManager;
 import net.samagames.hub.games.type.*;
 import org.bukkit.Location;
@@ -37,6 +39,21 @@ public class GameManager extends AbstractManager
         this.registerGame(new BackEndGame("hangovergames", "HangoverGames", arcadeGame.getLobbySpawn()));
 
         //this.registerGame(new CoquelicotGame());
+
+        hub.getHydroManager().getPacketReceiver().registerCallBack(new PacketCallBack<GameInfoToHubPacket>() {
+            @Override
+            public void call(GameInfoToHubPacket packet) {
+                for(AbstractGame game : games.values())
+                {
+                    game.getSigns().values().stream().filter(sign -> sign.getTemplate().equalsIgnoreCase(packet.getTemplateID())).forEach(sign -> {
+                        sign.setPlayerWaitFor(packet.getPlayerWaitFor());
+                        sign.setPlayerMaxForMap(packet.getPlayerMaxForMap());
+                        sign.setTotalPlayerOnServers(packet.getTotalPlayerOnServers());
+                        sign.update();
+                    });
+                }
+            }
+        });
     }
 
     public void registerGame(AbstractGame game)

@@ -9,7 +9,7 @@ import net.samagames.hub.common.hydroconnect.connection.AbstractPacket;
  * (C) Copyright Elydra Network 2014 & 2015
  * All rights reserved.
  */
-public class GameInfosToHubPacket extends AbstractPacket {
+public class GameInfoToHubPacket extends AbstractPacket {
 
     private int playerMaxForMap;
     private int playerWaitFor;
@@ -17,11 +17,11 @@ public class GameInfosToHubPacket extends AbstractPacket {
 
     private String templateID;
 
-    public GameInfosToHubPacket()
+    public GameInfoToHubPacket()
     {
     }
 
-    public GameInfosToHubPacket(String templateID)
+    public GameInfoToHubPacket(String templateID)
     {
 
         this.templateID = templateID;
