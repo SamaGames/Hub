@@ -29,10 +29,6 @@
             <id>elmakers-repo</id>
             <url>http://maven.elmakers.com/repository/</url>
         </repository>
-        <repository>
-            <id>md_5</id>
-            <url>http://repo.md-5.net/content/groups/public</url>
-        </repository>
     </repositories>
 
     <build>

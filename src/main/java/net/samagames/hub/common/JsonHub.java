@@ -1,7 +1,7 @@
 package net.samagames.hub.common;
 
 import net.samagames.api.SamaGamesAPI;
-import net.samagames.permissionsapi.permissions.PermissionUser;
+import net.samagames.api.permissions.permissions.PermissionUser;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
