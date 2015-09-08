@@ -25,7 +25,7 @@ public class HubRefresher implements Runnable
     @Override
     public void run()
     {
-        Jedis jedis = SamaGamesAPI.get().getResource();
+        Jedis jedis = SamaGamesAPI.get().getBungeeResource();
 
         JsonHub thisHub = new JsonHub();
         thisHub.setHubNumber(Integer.parseInt(SamaGamesAPI.get().getServerName().split("_")[1]));

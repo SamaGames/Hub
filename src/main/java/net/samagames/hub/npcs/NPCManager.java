@@ -43,7 +43,7 @@ public class NPCManager extends AbstractManager
     public void reloadNPCS()
     {
         String baseKey = "hub:npcs";
-        Map<String, String> array = SamaGamesAPI.get().getResource().hgetAll(baseKey);
+        Map<String, String> array = SamaGamesAPI.get().getBungeeResource().hgetAll(baseKey);
 
         this.removeNPCS();
         this.npcs.clear();

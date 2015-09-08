@@ -30,7 +30,7 @@ public class GuiStalker2000 extends AbstractGui
     @Override
     public void display(Player player)
     {
-        Jedis jedis = SamaGamesAPI.get().getResource();
+        Jedis jedis = SamaGamesAPI.get().getBungeeResource();
         Map<String, String> famous = jedis.hgetAll("famouslocations");
         jedis.close();
 

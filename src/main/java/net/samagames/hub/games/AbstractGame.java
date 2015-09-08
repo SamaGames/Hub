@@ -20,8 +20,8 @@ public abstract class AbstractGame
     {
         this.signs = new HashMap<>();
 
-        if(SamaGamesAPI.get().getResource().exists("hub:maintenance:" + this.getCodeName()))
-            this.setMaintenance(Boolean.valueOf(SamaGamesAPI.get().getResource().get("hub:maintenance:" + this.getCodeName())));
+        if(SamaGamesAPI.get().getBungeeResource().exists("hub:maintenance:" + this.getCodeName()))
+            this.setMaintenance(Boolean.valueOf(SamaGamesAPI.get().getBungeeResource().get("hub:maintenance:" + this.getCodeName())));
         else
             this.setMaintenance(false);
     }

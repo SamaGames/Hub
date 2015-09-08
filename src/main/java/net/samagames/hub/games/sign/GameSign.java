@@ -64,7 +64,9 @@ public class GameSign
 
     public void click(Player player)
     {
-        Jedis jedis = SamaGamesAPI.get().getResource();
+
+        //TODO: check if we keep it
+        Jedis jedis = SamaGamesAPI.get().getBungeeResource();
 
         String ban = jedis.get("gamebanlist:" + this.game.getCodeName() + ":reason:" + player.getUniqueId());
 

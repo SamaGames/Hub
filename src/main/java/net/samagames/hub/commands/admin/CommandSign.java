@@ -98,7 +98,7 @@ public class CommandSign extends AbstractCommand
             return;
         }
 
-        SamaGamesAPI.get().getResource().set("hub:maintenance:" + game, String.valueOf(!gameObject.isMaintenance()));
+        SamaGamesAPI.get().getBungeeResource().set("hub:maintenance:" + game, String.valueOf(!gameObject.isMaintenance()));
         SamaGamesAPI.get().getPubSub().send("maintenanceSignChannel", game + ":" + !gameObject.isMaintenance());
     }
 
