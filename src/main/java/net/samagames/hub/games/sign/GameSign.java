@@ -64,7 +64,6 @@ public class GameSign
 
     public void click(Player player)
     {
-
         //TODO: check if we keep it
         Jedis jedis = SamaGamesAPI.get().getBungeeResource();
 
@@ -80,11 +79,9 @@ public class GameSign
 
             player.sendMessage(ChatColor.RED + "Vous êtes banni du jeu " + duration + ".");
             player.sendMessage(ChatColor.RED + "Motif : " + ban);
-
-            jedis.close();
-
             return;
         }
+        jedis.close();
 
         UUID partyUUID = SamaGamesAPI.get().getPartiesManager().getPlayerParty(player.getUniqueId());
 

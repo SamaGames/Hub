@@ -7,6 +7,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.block.Sign;
 import org.bukkit.inventory.ItemStack;
+import redis.clients.jedis.Jedis;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,10 +21,12 @@ public abstract class AbstractGame
     {
         this.signs = new HashMap<>();
 
-        if(SamaGamesAPI.get().getBungeeResource().exists("hub:maintenance:" + this.getCodeName()))
-            this.setMaintenance(Boolean.valueOf(SamaGamesAPI.get().getBungeeResource().get("hub:maintenance:" + this.getCodeName())));
+        Jedis jedis = SamaGamesAPI.get().getBungeeResource();
+        if(jedis.exists("hub:maintenance:" + this.getCodeName()))
+            this.setMaintenance(Boolean.valueOf(jedis.get("hub:maintenance:" + this.getCodeName())));
         else
             this.setMaintenance(false);
+        jedis.close();
     }
 
     public abstract String getCodeName();

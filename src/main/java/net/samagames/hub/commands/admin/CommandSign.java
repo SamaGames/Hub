@@ -11,6 +11,7 @@ import org.bukkit.Location;
 import org.bukkit.block.Sign;
 import org.bukkit.command.Command;
 import org.bukkit.entity.Player;
+import redis.clients.jedis.Jedis;
 
 public class CommandSign extends AbstractCommand
 {
@@ -98,7 +99,9 @@ public class CommandSign extends AbstractCommand
             return;
         }
 
-        SamaGamesAPI.get().getBungeeResource().set("hub:maintenance:" + game, String.valueOf(!gameObject.isMaintenance()));
+        Jedis jedis = SamaGamesAPI.get().getBungeeResource();
+        jedis.set("hub:maintenance:" + game, String.valueOf(!gameObject.isMaintenance()));
+        jedis.close();
         SamaGamesAPI.get().getPubSub().send("maintenanceSignChannel", game + ":" + !gameObject.isMaintenance());
     }
 

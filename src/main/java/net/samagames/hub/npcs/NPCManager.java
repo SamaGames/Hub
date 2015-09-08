@@ -14,6 +14,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.metadata.FixedMetadataValue;
+import redis.clients.jedis.Jedis;
 
 import java.util.*;
 import java.util.logging.Level;
@@ -42,9 +43,11 @@ public class NPCManager extends AbstractManager
 
     public void reloadNPCS()
     {
+        //TODO: check if we keep it
         String baseKey = "hub:npcs";
-        Map<String, String> array = SamaGamesAPI.get().getBungeeResource().hgetAll(baseKey);
-
+        Jedis jedis = SamaGamesAPI.get().getBungeeResource();
+        Map<String, String> array = jedis.hgetAll(baseKey);
+        jedis.close();
         this.removeNPCS();
         this.npcs.clear();
 
