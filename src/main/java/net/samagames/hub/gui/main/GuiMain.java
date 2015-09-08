@@ -5,8 +5,6 @@ import net.samagames.hub.Hub;
 import net.samagames.hub.games.AbstractGame;
 import net.samagames.hub.gui.AbstractGui;
 import net.samagames.hub.gui.staff.GuiSelectZone;
-import net.samagames.tools.BungeeUtils;
-import net.samagames.tools.events.EventUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -28,11 +26,7 @@ public class GuiMain extends AbstractGui
         this.setSlotData(ChatColor.GOLD + "Jump du Ciel", Material.PACKED_ICE, 26, this.getLores(null, false, true), "parkour");
         this.setSlotData(ChatColor.GOLD + "Informations", Material.EMPTY_MAP, 27, this.getInformationLores(), "none");
         this.setSlotData(ChatColor.GOLD + "Changer de hub", Material.ENDER_CHEST, 35, this.getLores(null, true, false), "switch_hub");
-
-        if(!EventUtils.isCurrentlyEvent())
-            this.setSlotData(ChatColor.GOLD + "Évenement", Material.IRON_FENCE, 17, this.getLores(new String[] { "Aucun évenement en cours !" }, false, false), "event");
-        else
-            this.setSlotData(ChatColor.GOLD + "Évenement - " + EventUtils.getCurrentEvent().getName(), Material.CAKE, 17, this.getLores(new String[] { EventUtils.getCurrentEvent().getDescription() }, true, false), "event");
+        this.setSlotData(ChatColor.GOLD + "Évenement", Material.IRON_FENCE, 17, this.getLores(new String[] { "Aucun évenement en cours !" }, false, false), "event");
 
         for(String gameIdentifier : Hub.getInstance().getGameManager().getGames().keySet())
         {
@@ -61,11 +55,6 @@ public class GuiMain extends AbstractGui
         else if(action.equals("switch_hub"))
         {
             Hub.getInstance().getGuiManager().openGui(player, new GuiSwitchHub());
-        }
-        else if(action.equals("event"))
-        {
-            if(EventUtils.isCurrentlyEvent())
-                BungeeUtils.sendPlayerToServer(player, EventUtils.getCurrentEvent().getServer());
         }
         else if(action.equals("spawn"))
         {
