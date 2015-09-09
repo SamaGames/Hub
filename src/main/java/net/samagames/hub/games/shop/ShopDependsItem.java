@@ -80,7 +80,7 @@ public class ShopDependsItem extends ShopItem
 
         lores.add("");
 
-        if(this.isActive(player) || this.isDefaultItem())
+        if(this.isActive(player))
             lores.add(ChatColor.GREEN + "Objet actif");
         else if(this.isOwned(player))
             lores.add(ChatColor.GREEN + "Objet possédé");
