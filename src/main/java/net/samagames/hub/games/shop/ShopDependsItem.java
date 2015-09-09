@@ -97,7 +97,9 @@ public class ShopDependsItem extends ShopItem
 
     public boolean hasDepend(Player player)
     {
-        if(this.dependsOn.isDefaultItem())
+        if (this.dependsOn == null)
+            return false;
+        else if(this.dependsOn.isDefaultItem())
             return true;
 
         List<String> own = SamaGamesAPI.get().getShopsManager(this.game.getCodeName()).getOwnedLevels(player, this.type);
