@@ -82,9 +82,9 @@ public class ShopDependsItem extends ShopItem
 
         if(this.isActive(player))
             lores.add(ChatColor.GREEN + "Objet actif");
-        else if(this.isOwned(player))
+        else if(this.isOwned(player) || this.isDefaultItem())
             lores.add(ChatColor.GREEN + "Objet possédé");
-        else if((this.hasDepend(player) && this.dependsOn != null) || this.dependsOn == null)
+        else if(( this.dependsOn != null && this.hasDepend(player)) || this.dependsOn == null)
             lores.add(ChatColor.GRAY + "Prix : " + ChatColor.GOLD + this.cost);
         else
             lores.add(ChatColor.RED + "Nécessite " + ChatColor.AQUA + this.dependsOn.getIcon().getItemMeta().getDisplayName());
@@ -97,9 +97,7 @@ public class ShopDependsItem extends ShopItem
 
     public boolean hasDepend(Player player)
     {
-        if (this.dependsOn == null)
-            return false;
-        else if(this.dependsOn.isDefaultItem())
+        if(this.dependsOn.isDefaultItem())
             return true;
 
         List<String> own = SamaGamesAPI.get().getShopsManager(this.game.getCodeName()).getOwnedLevels(player, this.type);
