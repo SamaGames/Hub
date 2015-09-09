@@ -8,9 +8,9 @@ public class ParticleCosmetic extends AbstractCosmetic
 {
     private final Class<? extends Effect> particleEffect;
 
-    public ParticleCosmetic(String databaseName, String displayName, ItemStack icon, String[] description, Class<? extends Effect> particleEffect)
+    public ParticleCosmetic(String key, String displayName, ItemStack icon, String[] description, Class<? extends Effect> particleEffect)
     {
-        super("particle." + databaseName, displayName, icon, description);
+        super("particle", key, displayName, icon, description);
         this.particleEffect = particleEffect;
     }
 

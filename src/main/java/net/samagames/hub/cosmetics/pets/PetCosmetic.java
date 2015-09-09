@@ -1,5 +1,7 @@
 package net.samagames.hub.cosmetics.pets;
 
+import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.chat.TextComponent;
 import net.minecraft.server.v1_8_R3.EntityInsentient;
 import net.minecraft.server.v1_8_R3.World;
 import net.samagames.hub.Hub;
@@ -19,9 +21,9 @@ public abstract class PetCosmetic<T extends LivingEntity> extends AbstractCosmet
 {
     private final Class<? extends EntityInsentient> entityClass;
 
-    public PetCosmetic(String databaseName, String displayName, ItemStack icon, String[] description, Class<? extends EntityInsentient> entityClass)
+    public PetCosmetic(String key, String displayName, ItemStack icon, String[] description, Class<? extends EntityInsentient> entityClass)
     {
-        super("pet." + databaseName, displayName, icon, description);
+        super("pet", key, displayName, icon, description);
         this.entityClass = entityClass;
     }
 
@@ -64,5 +66,13 @@ public abstract class PetCosmetic<T extends LivingEntity> extends AbstractCosmet
     public boolean isOverridingUse()
     {
         return false;
+    }
+
+    @Override
+    public BaseComponent getBuyResponse()
+    {
+        TextComponent txt = new TextComponent("Votre " + this.displayName + " vous attend à l'écurie ! Re-cliquez pour l'appeler.");
+        txt.setColor(net.md_5.bungee.api.ChatColor.GREEN);
+        return txt;
     }
 }

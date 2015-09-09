@@ -18,13 +18,13 @@ public abstract class AbstractCosmeticRegistry<T extends AbstractCosmetic>
 
     public void registerElement(T element)
     {
-        if(this.elements.containsKey(element.getDatabaseName()))
+        if(this.elements.containsKey(element.getKey()))
         {
-            Hub.getInstance().log(Hub.getInstance().getCosmeticManager(), Level.SEVERE, "Cosmetic already registered with the database name '" + element.getDatabaseName() + "'!");
+            Hub.getInstance().log(Hub.getInstance().getCosmeticManager(), Level.SEVERE, "Cosmetic already registered with the database name '" + element.getKey() + "'!");
             return;
         }
 
-        this.elements.put(element.getDatabaseName(), element);
+        this.elements.put(element.getKey(), element);
     }
 
     public T getElementByStorageName(String databaseName)

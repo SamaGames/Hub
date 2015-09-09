@@ -52,7 +52,7 @@ public class PetManager extends AbstractCosmeticManager<PetCosmetic>
 
             this.pets.put(player.getUniqueId(), pet);
 
-            SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).set("cosmetics.pet.current", cosmetic.getDatabaseName());
+            SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).set("cosmetics.pet.current", cosmetic.getKey());
 
             if(settings == null && SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).get("cosmetics.pet.current.settings") == null)
                 return;

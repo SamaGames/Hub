@@ -1,6 +1,8 @@
 package net.samagames.hub.cosmetics.jukebox;
 
 import com.xxmicloxx.NoteBlockAPI.Song;
+import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.chat.TextComponent;
 import net.samagames.hub.cosmetics.common.AbstractCosmetic;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -14,10 +16,9 @@ public class JukeboxDiskCosmetic extends AbstractCosmetic
     private final Song song;
     private final short data;
 
-    public JukeboxDiskCosmetic(JukeboxAlbum album, String databaseName, ChatColor color, ItemStack icon, Song song)
+    public JukeboxDiskCosmetic(JukeboxAlbum album, String key, ChatColor color, ItemStack icon, Song song)
     {
-        super("jukebox." + databaseName, song.getTitle(), icon, null);
-
+        super("jukebox", key, song.getTitle(), icon, null);
         this.color = color;
         this.album = album;
         this.song = song;
@@ -44,5 +45,13 @@ public class JukeboxDiskCosmetic extends AbstractCosmetic
     public Song getSong()
     {
         return this.song;
+    }
+
+    @Override
+    public BaseComponent getBuyResponse()
+    {
+        TextComponent txt = new TextComponent("Disque acheté ! Re-cliquez pour l'ajouter à la liste d'attente.");
+        txt.setColor(net.md_5.bungee.api.ChatColor.GREEN);
+        return txt;
     }
 }

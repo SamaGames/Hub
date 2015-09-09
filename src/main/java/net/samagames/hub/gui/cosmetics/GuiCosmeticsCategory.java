@@ -65,7 +65,7 @@ public class GuiCosmeticsCategory<T extends AbstractCosmetic> extends AbstractGu
             if(!cosmetic.canView(player))
                 continue;
 
-            this.setSlotData(cosmetic.getIcon(player), (baseSlots[slot] + (lines * 9)), "cosmetic_" + cosmetic.getDatabaseName());
+            this.setSlotData(cosmetic.getIcon(player), (baseSlots[slot] + (lines * 9)), "cosmetic_" + cosmetic.getKey());
 
             slot++;
 

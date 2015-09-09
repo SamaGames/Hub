@@ -26,7 +26,7 @@ public class DisguiseManager extends AbstractCosmeticManager<DisguiseCosmetic>
 
             DisguiseAPI.disguiseToAll(player, disguise);
 
-            SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).set("cosmetics.disguise.current", cosmetic.getDatabaseName());
+            SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).set("cosmetics.disguise.current", cosmetic.getKey());
             player.sendMessage(ChatColor.GREEN + "Vous êtes maintenant déguisé !");
         }
         else

@@ -41,7 +41,7 @@ public class ParticleManager extends AbstractCosmeticManager<ParticleCosmetic>
                 particleEffectObject.start();
 
                 this.playersParticleEffect.put(player.getUniqueId(), particleEffectObject);
-                SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).set("cosmetics.particles.current", cosmetic.getDatabaseName());
+                SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).set("cosmetics.particles.current", cosmetic.getKey());
                 player.sendMessage(ChatColor.GREEN + "Vous voilà noyé sous les particules...");
             }
             catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e)

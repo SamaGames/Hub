@@ -42,7 +42,7 @@ public class GuiJukeboxAlbum extends AbstractGui
 
         for (JukeboxDiskCosmetic disk : this.album.getDisks())
         {
-            this.setSlotData(disk.getIcon(player), (baseSlots[slot] + (lines * 9)), "disk_" + disk.getDatabaseName());
+            this.setSlotData(disk.getIcon(player), (baseSlots[slot] + (lines * 9)), "disk_" + disk.getKey());
 
             slot++;
 
