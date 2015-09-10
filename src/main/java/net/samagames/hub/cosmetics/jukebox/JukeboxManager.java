@@ -206,14 +206,30 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
 
             if(this.barTask == null)
             {
-                this.barTask = Bukkit.getScheduler().runTaskTimerAsynchronously(Hub.getInstance(), () ->
+                this.barTask = Bukkit.getScheduler().runTaskTimerAsynchronously(Hub.getInstance(), new Runnable()
                 {
-                    ChatColor randomizedColor = ChatColor.values()[new Random().nextInt(ChatColor.values().length)];
+                    ChatColor[] colors = {ChatColor.RED, ChatColor.GOLD, ChatColor.YELLOW, ChatColor.DARK_RED, ChatColor.DARK_PURPLE, ChatColor.DARK_AQUA};
+                    int i = 0;
 
-                    for(Player barPlayer : Bukkit.getOnlinePlayers())
+                    @Override
+                    public void run()
                     {
-                        BarAPI.removeBar(barPlayer);
-                        BarAPI.setMessage(barPlayer, randomizedColor + "♫" + ChatColor.YELLOW + " " + ChatColor.GOLD + this.currentPlaylist.getSong().getTitle() + ChatColor.YELLOW + " par " + ChatColor.GOLD + this.currentPlaylist.getSong().getAuthor() + ChatColor.YELLOW + " jouée par " + ChatColor.GOLD + this.currentPlaylist.getPlayedBy() + " " + randomizedColor + "♪");
+                        ChatColor randomizedColor = this.colors[new Random().nextInt(this.colors.length)];
+
+                        for(Player barPlayer : Bukkit.getOnlinePlayers())
+                        {
+                            BarAPI.removeBar(barPlayer);
+
+                            if(this.i <= 2)
+                                BarAPI.setMessage(barPlayer, randomizedColor + "♫" + ChatColor.YELLOW + " " + ChatColor.GOLD + currentPlaylist.getSong().getTitle() + ChatColor.YELLOW + " jouée par " + ChatColor.GOLD + currentPlaylist.getPlayedBy() + " " + randomizedColor + "♪");
+                            else
+                                BarAPI.setMessage(barPlayer, randomizedColor + "♫" + ChatColor.GRAY + " " + currentPlaylist.getWoots() + " Woot" + (currentPlaylist.getWoots() > 1 ? "s" : "") + ChatColor.YELLOW + " et " + ChatColor.RED + currentPlaylist.getMehs() + " Meh" + (currentPlaylist.getMehs() > 1 ? "s" : "") + " " + randomizedColor + "♪");
+                        }
+
+                        this.i++;
+
+                        if(this.i == 6)
+                            this.i = 0;
                     }
                 }, 20L, 20L);
             }
