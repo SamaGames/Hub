@@ -209,7 +209,12 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
                 this.barTask = Bukkit.getScheduler().runTaskTimerAsynchronously(Hub.getInstance(), () ->
                 {
                     ChatColor randomizedColor = ChatColor.values()[new Random().nextInt(ChatColor.values().length)];
-                    BarAPI.setMessage(randomizedColor + "♫" + ChatColor.YELLOW + " " + this.currentPlaylist.getSong().getTitle() + " par " + this.currentPlaylist.getSong().getAuthor() + " jouée par " + this.currentPlaylist.getPlayedBy() + " " + randomizedColor + "♪");
+
+                    for(Player barPlayer : Bukkit.getOnlinePlayers())
+                    {
+                        BarAPI.removeBar(barPlayer);
+                        BarAPI.setMessage(barPlayer, randomizedColor + "♫" + ChatColor.YELLOW + " " + ChatColor.GOLD + this.currentPlaylist.getSong().getTitle() + ChatColor.YELLOW + " par " + ChatColor.GOLD + this.currentPlaylist.getSong().getAuthor() + ChatColor.YELLOW + " jouée par " + ChatColor.GOLD + this.currentPlaylist.getPlayedBy() + " " + randomizedColor + "♪");
+                    }
                 }, 20L, 20L);
             }
 
