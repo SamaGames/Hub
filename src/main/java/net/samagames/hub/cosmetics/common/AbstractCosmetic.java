@@ -37,7 +37,7 @@ public abstract class AbstractCosmetic
     {
         this.category = category;
         this.key = key;
-        this.displayName = displayName;
+        this.displayName = ChatColor.RESET + "" + ChatColor.GOLD + displayName;
         this.icon = icon;
         this.buyMethod = BuyMethod.FREE;
         this.permissionNeededToView = null;

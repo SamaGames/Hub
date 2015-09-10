@@ -6,6 +6,7 @@ import com.xxmicloxx.NoteBlockAPI.SongPlayer;
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import net.samagames.hub.cosmetics.common.AbstractCosmeticManager;
+import net.samagames.tools.BarAPI.BarAPI;
 import net.samagames.tools.ParticleEffect;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -27,6 +28,7 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
     private final ArrayList<UUID> mutedPlayers;
 
     private JukeboxSong currentPlaylist;
+    private BukkitTask barTask;
     private boolean isLocked;
 
     public JukeboxManager(Hub hub)
@@ -174,6 +176,14 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
             }
 
             this.currentPlaylist = null;
+
+            if(this.barTask != null)
+            {
+                this.barTask.cancel();
+                this.barTask = null;
+
+                Bukkit.getOnlinePlayers().forEach(BarAPI::removeBar);
+            }
         }
 
         if (this.playlists.size() == 0)
@@ -193,6 +203,15 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
 
             Bukkit.broadcastMessage(this.jukeboxTag + ChatColor.GOLD + this.currentPlaylist.getPlayedBy() + ChatColor.YELLOW + " joue " + ChatColor.GOLD + ChatColor.ITALIC + this.currentPlaylist.getSong().getTitle() + ChatColor.YELLOW + " de " + ChatColor.GOLD + this.currentPlaylist.getSong().getAuthor());
             Bukkit.broadcastMessage(this.jukeboxTag + ChatColor.GRAY + ChatColor.ITALIC + "Tapez " + ChatColor.GREEN + "/woot" + ChatColor.GRAY + ChatColor.ITALIC + " pour apprécier ou " + ChatColor.RED + "/meh" + ChatColor.GRAY + ChatColor.ITALIC + " pour indiquer que vous n'aimez pas la musique jouée actuellement et la couper.");
+
+            if(this.barTask == null)
+            {
+                this.barTask = Bukkit.getScheduler().runTaskTimerAsynchronously(Hub.getInstance(), () ->
+                {
+                    ChatColor randomizedColor = ChatColor.values()[new Random().nextInt(ChatColor.values().length)];
+                    BarAPI.setMessage(randomizedColor + "♫" + ChatColor.YELLOW + " " + this.currentPlaylist.getSong().getTitle() + " par " + this.currentPlaylist.getSong().getAuthor() + " jouée par " + this.currentPlaylist.getPlayedBy() + " " + randomizedColor + "♪");
+                }, 20L, 20L);
+            }
 
             return true;
         }
