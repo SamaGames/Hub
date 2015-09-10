@@ -7,10 +7,12 @@ import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
+import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.UUID;
 
 public class ExpressBotaniaDisplayer extends AbstractDisplayer
 {
@@ -65,6 +67,8 @@ public class ExpressBotaniaDisplayer extends AbstractDisplayer
                     {
                         ItemStack flower = flowers.get(new Random().nextInt(flowers.size())).clone();
                         Item item = player.getWorld().dropItemNaturally(fwLocation, flower);
+
+                        item.setMetadata("flower-swag-level", new FixedMetadataValue(Hub.getInstance(), UUID.randomUUID().toString()));
 
                         try
                         {

@@ -4,8 +4,6 @@ import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import net.samagames.hub.commands.AbstractCommand;
 import net.samagames.hub.games.AbstractGame;
-import net.samagames.hub.games.sign.GameSign;
-import net.samagames.tools.Selection;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.block.Sign;
@@ -54,7 +52,7 @@ public class CommandSign extends AbstractCommand
     {
         if(args.length < 5)
         {
-            player.sendMessage(ChatColor.RED + "Usage: /sign add <game code name> <map> <color> <template>");
+            player.sendMessage(ChatColor.RED + "Usage: /sign add <game code name> <map> <color [default GREEN]> <template>");
             return;
         }
 
