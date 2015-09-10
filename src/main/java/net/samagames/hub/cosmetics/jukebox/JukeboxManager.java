@@ -220,15 +220,15 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
                         {
                             BarAPI.removeBar(barPlayer);
 
-                            if(this.i <= 2)
+                            if(this.i <= 4)
                                 BarAPI.setMessage(barPlayer, randomizedColor + "♫" + ChatColor.YELLOW + " " + ChatColor.GOLD + currentPlaylist.getSong().getTitle() + ChatColor.YELLOW + " jouée par " + ChatColor.GOLD + currentPlaylist.getPlayedBy() + " " + randomizedColor + "♪");
                             else
-                                BarAPI.setMessage(barPlayer, randomizedColor + "♫" + ChatColor.GRAY + " " + currentPlaylist.getWoots() + " Woot" + (currentPlaylist.getWoots() > 1 ? "s" : "") + ChatColor.YELLOW + " et " + ChatColor.RED + currentPlaylist.getMehs() + " Meh" + (currentPlaylist.getMehs() > 1 ? "s" : "") + " " + randomizedColor + "♪");
+                                BarAPI.setMessage(barPlayer, randomizedColor + "♫" + ChatColor.GREEN + " " + currentPlaylist.getWoots() + " Woot" + (currentPlaylist.getWoots() > 1 ? "s" : "") + ChatColor.YELLOW + " et " + ChatColor.RED + currentPlaylist.getMehs() + " Meh" + (currentPlaylist.getMehs() > 1 ? "s" : "") + " " + randomizedColor + "♪");
                         }
 
                         this.i++;
 
-                        if(this.i == 6)
+                        if(this.i == 10)
                             this.i = 0;
                     }
                 }, 20L, 20L);
