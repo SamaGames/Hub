@@ -2,7 +2,6 @@ package net.samagames.hub.cosmetics.particles;
 
 import de.slikey.effectlib.Effect;
 import de.slikey.effectlib.EffectManager;
-import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import net.samagames.hub.cosmetics.common.AbstractCosmeticManager;
 import org.bukkit.ChatColor;
@@ -41,13 +40,12 @@ public class ParticleManager extends AbstractCosmeticManager<ParticleCosmetic>
                 particleEffectObject.start();
 
                 this.playersParticleEffect.put(player.getUniqueId(), particleEffectObject);
-                SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).set("cosmetics.particles.current", cosmetic.getKey());
+                cosmeticManager.setCurrentLevel(player, "particle", cosmetic.getKey());
                 player.sendMessage(ChatColor.GREEN + "Vous voilà noyé sous les particules...");
             }
             catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e)
             {
                 this.hub.log(this, Level.SEVERE, "Can't create EntityEffect object to " + player.getName() + "'s particle effect!");
-                e.printStackTrace();
             }
         }
         else
@@ -63,7 +61,7 @@ public class ParticleManager extends AbstractCosmeticManager<ParticleCosmetic>
 
         if (!logout)
         {
-            SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).remove("cosmetics.particles.current");
+            cosmeticManager.setCurrentLevel(player, "particle", "");
             player.sendMessage(ChatColor.GREEN + "Votre effet disparait dans l'ombre...");
         }
     }
@@ -71,9 +69,9 @@ public class ParticleManager extends AbstractCosmeticManager<ParticleCosmetic>
     @Override
     public void restoreCosmetic(Player player)
     {
-        String value = SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).get("cosmetics.particles.current");
+        String value = cosmeticManager.getItemLevelForPlayer(player, "particle");
 
-        if(value != null)
+        if(value != null && !value.isEmpty())
             this.enableCosmetic(player, this.getRegistry().getElementByStorageName(value));
     }
 

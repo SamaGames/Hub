@@ -240,7 +240,7 @@ public class PlayerListener implements Listener
 
                 if(SamaGamesAPI.get().getSettingsManager().isEnabled(player.getUniqueId(), "clickme-punch", true))
                 {
-                    if (!SamaGamesAPI.get().getSettingsManager().isEnabled(target.getUniqueId(), "clickme", false))
+                    if (!SamaGamesAPI.get().getSettingsManager().isEnabled(target.getUniqueId(), "clickme", true))
                         return;
 
                     Hub.getInstance().getGuiManager().openGui(player, new GuiClickMe(target));
