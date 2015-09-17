@@ -47,7 +47,11 @@ public class GuiGameStats extends AbstractGui
     {
         if(action.startsWith("stat_"))
         {
-            String stat = action.split("_")[1];
+            String[] sp  = action.split("_");
+            String stat = sp[1];
+            if (sp.length > 2)
+                stat = sp[1] + "_" +  sp[2];
+
             Hub.getInstance().getGuiManager().openGui(player, new GuiGameStat(this.name, this.uuid, this.game, stat));
         }
         else if(action.equals("back"))
