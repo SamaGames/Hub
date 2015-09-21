@@ -19,7 +19,6 @@ public class QueueRemovePlayerPacket extends QueuePacket {
 
     public QueueRemovePlayerPacket(QPlayer player)
     {
-
         this.player = player;
     }
 

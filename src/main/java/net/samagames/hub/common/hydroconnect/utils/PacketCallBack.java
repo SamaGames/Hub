@@ -22,7 +22,7 @@ public abstract class PacketCallBack<PACKET extends AbstractPacket> {
 
     public Class getPacketClass()
     {
-        return packet.getClass();
+        return packet;
     }
 
 }
