@@ -40,7 +40,7 @@ public class GameManager extends AbstractManager
 
         //this.registerGame(new CoquelicotGame());
 
-        hub.getHydroManager().getPacketReceiver().registerCallBack(new PacketCallBack<GameInfoToHubPacket>() {
+        hub.getHydroManager().getPacketReceiver().registerCallBack(new PacketCallBack<GameInfoToHubPacket>(GameInfoToHubPacket.class) {
             @Override
             public void call(GameInfoToHubPacket packet) {
                 for(AbstractGame game : games.values())
