@@ -6,6 +6,7 @@ import net.samagames.hub.commands.CommandManager;
 import net.samagames.hub.common.HubRefresher;
 import net.samagames.hub.common.hydroconnect.HydroManager;
 import net.samagames.hub.common.managers.*;
+import net.samagames.hub.common.receivers.InteractionListener;
 import net.samagames.hub.common.receivers.MaintenanceListener;
 import net.samagames.hub.common.receivers.SamaritanListener;
 import net.samagames.hub.cosmetics.CosmeticManager;
@@ -90,6 +91,7 @@ public class Hub extends JavaPlugin
         this.log(Level.INFO, "Registering packets packets...");
         SamaGamesAPI.get().getPubSub().subscribe("cheat", new SamaritanListener());
         SamaGamesAPI.get().getPubSub().subscribe("maintenanceSignChannel", new MaintenanceListener());
+        SamaGamesAPI.get().getPubSub().subscribe("interaction." + SamaGamesAPI.get().getServerName(), new InteractionListener());
         this.log(Level.INFO, "Packets packets registered with success.");
 
         this.log(Level.INFO, "Registering events...");

@@ -123,7 +123,11 @@ public class PlayerListener implements Listener
             {
                 event.getRecipients().remove(player);
                 player.playSound(player.getLocation(), Sound.NOTE_PIANO, 1.0F, 1.0F);
-                player.sendMessage(PlayerUtils.getFullyFormattedPlayerName(event.getPlayer()) + SamaGamesAPI.get().getPermissionsManager().getApi().getUser(event.getPlayer().getUniqueId()).getProperties().get("suffix") + ": " + event.getMessage().replaceAll("(?i)" + player.getName(), ChatColor.GOLD + player.getName() + SamaGamesAPI.get().getPermissionsManager().getApi().getUser(event.getPlayer().getUniqueId()).getProperties().get("suffix")));
+
+                String suffixRaw = SamaGamesAPI.get().getPermissionsManager().getApi().getUser(event.getPlayer().getUniqueId()).getProperties().get("suffix");
+                ChatColor suffix = ChatColor.getByChar(suffixRaw.charAt(1));
+
+                player.sendMessage(PlayerUtils.getFullyFormattedPlayerName(event.getPlayer()) + suffix + ": " + event.getMessage().replace(player.getName(), ChatColor.GOLD + player.getName() + suffix));
             }
         }
     }

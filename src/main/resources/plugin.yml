@@ -20,6 +20,9 @@ commands:
   jukebox:
     description: Commande relative au Jukebox
     usage: /jukebox
+  internal:
+    description: Commmande executée en interne pour un joueur
+    usage: /internal
 
   # Moderating commands ------------------------
   pllock:
