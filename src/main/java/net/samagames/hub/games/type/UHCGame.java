@@ -6,9 +6,11 @@ import net.samagames.hub.games.DisplayedStat;
 import net.samagames.hub.games.shop.ShopCategory;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.SkullType;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class UHCGame extends AbstractGame
 {
@@ -53,9 +55,12 @@ public class UHCGame extends AbstractGame
     }
 
     @Override
-    public ArrayList<DisplayedStat> getDisplayedStats()
+    public List<DisplayedStat> getDisplayedStats()
     {
-        return null;
+        List<DisplayedStat> stats = super.getDisplayedStats();
+        stats.add(new DisplayedStat("kills", "Joueurs tués", new ItemStack(Material.SKULL_ITEM, 1, (short) SkullType.PLAYER.ordinal())));
+        stats.add(new DisplayedStat("deaths", "Morts", Material.BONE));
+        return stats;
     }
 
     @Override

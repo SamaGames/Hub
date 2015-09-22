@@ -10,6 +10,7 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class UpperVoidGame extends AbstractGame
 {
@@ -96,15 +97,12 @@ public class UpperVoidGame extends AbstractGame
     }
 
     @Override
-    public ArrayList<DisplayedStat> getDisplayedStats()
+    public List<DisplayedStat> getDisplayedStats()
     {
-        ArrayList<DisplayedStat> stats = new ArrayList<>();
-
-        stats.add(new DisplayedStat("wins", "Victoires", Material.NETHER_STAR));
-        stats.add(new DisplayedStat("blocs", "Blocs cassés", Material.QUARTZ_BLOCK));
-        stats.add(new DisplayedStat("tntlaunch", "TNTs lancées", Material.TNT));
+        List<DisplayedStat> stats = super.getDisplayedStats();
+        stats.add(new DisplayedStat("blocks", "Blocs cassés", Material.QUARTZ_BLOCK));
+        stats.add(new DisplayedStat("tnt-launch", "TNTs lancées", Material.TNT));
         stats.add(new DisplayedStat("grenade", "Grenades lancées", Material.CLAY_BALL));
-        stats.add(new DisplayedStat("played_games", "Parties jouées", Material.SIGN));
 
         return stats;
     }

@@ -10,6 +10,7 @@ import org.bukkit.SkullType;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class UHCRunGame extends AbstractGame
 {
@@ -58,13 +59,11 @@ public class UHCRunGame extends AbstractGame
     }
 
     @Override
-    public ArrayList<DisplayedStat> getDisplayedStats()
+    public List<DisplayedStat> getDisplayedStats()
     {
-        ArrayList<DisplayedStat> stats = new ArrayList<>();
-
-        stats.add(new DisplayedStat("victories", "Victoires", Material.NETHER_STAR));
+        List<DisplayedStat> stats = super.getDisplayedStats();
         stats.add(new DisplayedStat("kills", "Joueurs tués", new ItemStack(Material.SKULL_ITEM, 1, (short) SkullType.PLAYER.ordinal())));
-
+        stats.add(new DisplayedStat("deaths", "Morts", Material.BONE));
         return stats;
     }
 
