@@ -1,12 +1,16 @@
 package net.samagames.hub.games;
 
 import net.samagames.hub.Hub;
+import net.samagames.hub.common.hydroconnect.connection.AbstractPacket;
 import net.samagames.hub.common.hydroconnect.packets.hubinfo.GameInfoToHubPacket;
+import net.samagames.hub.common.hydroconnect.packets.queues.QueueInfosUpdatePacket;
 import net.samagames.hub.common.hydroconnect.utils.PacketCallBack;
 import net.samagames.hub.common.managers.AbstractManager;
 import net.samagames.hub.games.type.*;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 import java.util.logging.Level;
@@ -40,7 +44,7 @@ public class GameManager extends AbstractManager
 
         //this.registerGame(new CoquelicotGame());
 
-        hub.getHydroManager().getPacketReceiver().registerCallBack(new PacketCallBack<GameInfoToHubPacket>() {
+        hub.getHydroManager().getPacketReceiver().registerCallBack(new PacketCallBack<GameInfoToHubPacket>(GameInfoToHubPacket.class) {
             @Override
             public void call(GameInfoToHubPacket packet) {
                 for(AbstractGame game : games.values())
@@ -52,6 +56,18 @@ public class GameManager extends AbstractManager
                         sign.update();
                     });
                 }
+            }
+        });
+
+        hub.getHydroManager().getPacketReceiver().registerCallBack(new PacketCallBack<QueueInfosUpdatePacket>(QueueInfosUpdatePacket.class)
+        {
+            @Override
+            public void call(QueueInfosUpdatePacket packet)
+            {
+                Player player = Bukkit.getPlayer(packet.getPlayer().getUUID());
+                if (player == null || packet.isSuccess() || packet.getErrorMessage() == null)
+                    return;
+                player.sendRawMessage(packet.getErrorMessage());
             }
         });
     }

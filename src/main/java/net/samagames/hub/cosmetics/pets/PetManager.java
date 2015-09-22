@@ -52,14 +52,14 @@ public class PetManager extends AbstractCosmeticManager<PetCosmetic>
 
             this.pets.put(player.getUniqueId(), pet);
 
-            SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).set("cosmetics.pet.current", cosmetic.getKey());
+            cosmeticManager.setCurrentLevel(player, "pet", cosmetic.getKey());
 
-            if(settings == null && SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).get("cosmetics.pet.current.settings") == null)
+            if(settings == null && SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).get("settings.cosmetics.pet.current") == null)
                 return;
 
             cosmetic.applySettings(pet, settings);
 
-            SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).set("cosmetics.pet.current.settings", settings);
+            SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).set("settings.cosmetics.pet.current", settings);
         }
         else
         {
@@ -85,8 +85,8 @@ public class PetManager extends AbstractCosmeticManager<PetCosmetic>
 
         if (!logout)
         {
-            SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).remove("cosmetics.pet.current");
-            SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).remove("cosmetics.pet.current.settings");
+            cosmeticManager.setCurrentLevel(player, "pet", "");
+            SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).set("settings.cosmetics.pet.current", "");
             player.sendMessage(ChatColor.GREEN + "Votre animal disparait dans l'ombre...");
         }
     }
@@ -94,9 +94,9 @@ public class PetManager extends AbstractCosmeticManager<PetCosmetic>
     @Override
     public void restoreCosmetic(Player player)
     {
-        String value = SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).get("cosmetics.pet.current");
+        String value = cosmeticManager.getItemLevelForPlayer(player, "pet");
 
-        if(value != null)
+        if(value != null && !value.isEmpty())
             this.enableCosmetic(player, this.getRegistry().getElementByStorageName(value));
     }
 

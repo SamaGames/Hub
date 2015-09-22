@@ -11,16 +11,18 @@ import net.samagames.hub.common.hydroconnect.connection.AbstractPacket;
  */
 public abstract class PacketCallBack<PACKET extends AbstractPacket> {
 
-    public PacketCallBack()
+    private Class<? extends AbstractPacket> packet;
+
+    public PacketCallBack(Class<? extends AbstractPacket> packet)
     {
+        this.packet = packet;
     }
 
     public abstract void call(PACKET packet);
 
     public Class getPacketClass()
     {
-        PACKET packet = null;
-        return packet.getClass();
+        return packet;
     }
 
 }

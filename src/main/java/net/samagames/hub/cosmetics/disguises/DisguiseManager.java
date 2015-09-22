@@ -2,7 +2,6 @@ package net.samagames.hub.cosmetics.disguises;
 
 import me.libraryaddict.disguise.DisguiseAPI;
 import me.libraryaddict.disguise.disguisetypes.MobDisguise;
-import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import net.samagames.hub.cosmetics.common.AbstractCosmeticManager;
 import org.bukkit.ChatColor;
@@ -26,7 +25,7 @@ public class DisguiseManager extends AbstractCosmeticManager<DisguiseCosmetic>
 
             DisguiseAPI.disguiseToAll(player, disguise);
 
-            SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).set("cosmetics.disguise.current", cosmetic.getKey());
+            cosmeticManager.setCurrentLevel(player, "disguise", cosmetic.getKey());
             player.sendMessage(ChatColor.GREEN + "Vous êtes maintenant déguisé !");
         }
         else
@@ -43,7 +42,7 @@ public class DisguiseManager extends AbstractCosmeticManager<DisguiseCosmetic>
 
         if (!logout)
         {
-            SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).remove("cosmetics.disguise.current");
+            cosmeticManager.setCurrentLevel(player, "disguise", "");
             player.sendMessage(ChatColor.GREEN + "Votre déguisement disparait dans l'ombre...");
         }
     }
@@ -51,9 +50,8 @@ public class DisguiseManager extends AbstractCosmeticManager<DisguiseCosmetic>
     @Override
     public void restoreCosmetic(Player player)
     {
-        String value = SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).get("cosmetics.disguise.current");
-
-        if(value != null)
+        String value = cosmeticManager.getItemLevelForPlayer(player, "disguise");
+        if(value != null && !value.isEmpty())
             this.enableCosmetic(player, this.getRegistry().getElementByStorageName(value));
     }
 

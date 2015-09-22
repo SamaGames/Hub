@@ -57,7 +57,7 @@ public class GameSign
         this.sign.setLine(0, this.game.getName());
         this.sign.setLine(1, mapLine);
         this.sign.setLine(2, playerWaitFor + "" + ChatColor.RESET + " en attente");
-        this.sign.setLine(3, playerMaxForMap + "" + ChatColor.RESET + " par map");
+        this.sign.setLine(3, totalPlayerOnServers + "" + ChatColor.RESET + " en jeu");
 
         Bukkit.getScheduler().runTask(Hub.getInstance(), this.sign::update);
     }

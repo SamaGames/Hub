@@ -14,6 +14,7 @@ import org.bukkit.SkullType;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class QuakeGame extends AbstractGame
 {
@@ -115,15 +116,12 @@ public class QuakeGame extends AbstractGame
     }
 
     @Override
-    public ArrayList<DisplayedStat> getDisplayedStats()
+    public List<DisplayedStat> getDisplayedStats()
     {
-        ArrayList<DisplayedStat> stats = new ArrayList<>();
-
-        stats.add(new DisplayedStat("wins", "Victoires", Material.NETHER_STAR));
-        stats.add(new DisplayedStat("kill", "Joueurs tués", new ItemStack(Material.SKULL_ITEM, 1, (short) SkullType.PLAYER.ordinal())));
-        stats.add(new DisplayedStat("death", "Morts", Material.BONE));
-        stats.add(new DisplayedStat("shot", "Tirs", Material.DIAMOND_HOE));
-        stats.add(new DisplayedStat("played_games", "Parties jouées", Material.SIGN));
+        List<DisplayedStat> stats = super.getDisplayedStats();
+        stats.add(new DisplayedStat("kills", "Joueurs tués", new ItemStack(Material.SKULL_ITEM, 1, (short) SkullType.PLAYER.ordinal())));
+        stats.add(new DisplayedStat("deaths", "Morts", Material.BONE));
+        stats.add(new DisplayedStat("shots", "Tirs", Material.DIAMOND_HOE));
 
         return stats;
     }

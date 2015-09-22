@@ -5,12 +5,14 @@ import net.samagames.hub.games.shop.ShopCategory;
 import net.samagames.hub.games.sign.GameSign;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.Sign;
 import org.bukkit.inventory.ItemStack;
 import redis.clients.jedis.Jedis;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public abstract class AbstractGame
 {
@@ -35,9 +37,16 @@ public abstract class AbstractGame
     public abstract String[] getDescription();
     public abstract int getSlotInMainMenu();
     public abstract ShopCategory getShopConfiguration();
-    public abstract ArrayList<DisplayedStat> getDisplayedStats();
     public abstract Location getLobbySpawn();
     public abstract boolean isLocked();
+
+    public List<DisplayedStat> getDisplayedStats()
+    {
+        List<DisplayedStat> stats = new ArrayList<>();
+        stats.add(new DisplayedStat("wins", "Victoires", Material.NETHER_STAR));
+        stats.add(new DisplayedStat("played-games", "Parties jouées", Material.SIGN));
+        return stats;
+    }
 
     public void addSignForMap(String map, Sign sign, String template, ChatColor color)
     {
