@@ -10,8 +10,6 @@ public class InteractionListener implements IPacketsReceiver
     @Override
     public void receive(String channel, String packet)
     {
-        Bukkit.broadcastMessage("Received packet: " + packet);
-
         String type = packet.split(":")[0];
         String playerName = packet.split(":")[1];
 
