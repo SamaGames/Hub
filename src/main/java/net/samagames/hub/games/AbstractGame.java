@@ -44,7 +44,7 @@ public abstract class AbstractGame
     {
         List<DisplayedStat> stats = new ArrayList<>();
         stats.add(new DisplayedStat("wins", "Victoires", Material.NETHER_STAR));
-        stats.add(new DisplayedStat("played_games", "Parties jouées", Material.SIGN));
+        stats.add(new DisplayedStat("played-games", "Parties jouées", Material.SIGN));
         return stats;
     }
 
