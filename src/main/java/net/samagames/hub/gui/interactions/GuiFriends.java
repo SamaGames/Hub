@@ -45,6 +45,9 @@ public class GuiFriends extends AbstractGui
 
         this.inventory = Bukkit.createInventory(null, 54, "Amis");
 
+        player.sendMessage("Friends: " + friends.size());
+        player.sendMessage("Selected: " + toDisplay.size());
+
         int[] baseSlots = {10, 11, 12, 13, 14, 15, 16};
         int lines = 0;
         int slot = 0;
