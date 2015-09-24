@@ -21,7 +21,14 @@ public abstract class AbstractGame
 
     public AbstractGame()
     {
-        this.signs = new HashMap<>();
+        this.signs = new HashMap<String, GameSign>() {
+            @Override
+            public void clear()
+            {
+                this.values().forEach(net.samagames.hub.games.sign.GameSign::onDelete);
+                super.clear();
+            }
+        };
 
         Jedis jedis = SamaGamesAPI.get().getBungeeResource();
         if(jedis.exists("hub:maintenance:" + this.getCodeName()))
@@ -51,6 +58,11 @@ public abstract class AbstractGame
     public void addSignForMap(String map, Sign sign, String template, ChatColor color)
     {
         this.signs.put(map, new GameSign(this, map, color, template, sign));
+    }
+
+    public void clearSigns()
+    {
+        this.signs.clear();
     }
 
     public DisplayedStat getDisplayedStatByIdentifier(String identifier)

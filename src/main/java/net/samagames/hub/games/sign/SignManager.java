@@ -54,6 +54,8 @@ public class SignManager extends AbstractManager
     {
         this.hub.log(this, Level.INFO, "Reloading game sign list...");
 
+        this.hub.getGameManager().getGames().values().forEach(net.samagames.hub.games.AbstractGame::clearSigns);
+
         JsonArray signZonesArray = this.jsonConfig.load().getAsJsonArray("zones");
 
         for(int i = 0; i < signZonesArray.size(); i++)

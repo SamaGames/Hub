@@ -9,6 +9,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.scheduler.BukkitTask;
 import redis.clients.jedis.Jedis;
 
 import java.util.UUID;
@@ -20,6 +21,7 @@ public class GameSign
     private final String map;
     private final ChatColor color;
     private final String template;
+    private final BukkitTask updateTask;
 
     private int playerMaxForMap;
     private int playerWaitFor;
@@ -36,7 +38,7 @@ public class GameSign
         this.sign.setMetadata("game", new FixedMetadataValue(Hub.getInstance(), game.getCodeName()));
         this.sign.setMetadata("map", new FixedMetadataValue(Hub.getInstance(), map));
 
-        Bukkit.getScheduler().runTaskTimerAsynchronously(Hub.getInstance(), this::update, 20L, 20L);
+        this.updateTask = Bukkit.getScheduler().runTaskTimerAsynchronously(Hub.getInstance(), this::update, 20L, 20L);
     }
 
     public void update()
@@ -152,5 +154,10 @@ public class GameSign
 
     public void setTotalPlayerOnServers(int totalPlayerOnServers) {
         this.totalPlayerOnServers = totalPlayerOnServers;
+    }
+
+    public void onDelete()
+    {
+        updateTask.cancel();
     }
 }
