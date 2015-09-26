@@ -53,7 +53,7 @@ public class StaticInventory
         }
         else if(stack.getType() == Material.BOW)
         {
-            ;Hub.getInstance().getGuiManager().openGui(player, new GuiStalker2000());
+            Hub.getInstance().getGuiManager().openGui(player, new GuiStalker2000());
         }
     }
 
