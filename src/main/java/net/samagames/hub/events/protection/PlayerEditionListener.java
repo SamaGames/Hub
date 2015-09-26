@@ -2,10 +2,8 @@ package net.samagames.hub.events.protection;
 
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
-import net.samagames.tools.Selection;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -30,8 +28,7 @@ public class PlayerEditionListener implements Listener
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerDropItemEvent(PlayerDropItemEvent event)
     {
-        if (!SamaGamesAPI.get().getPermissionsManager().hasPermission(event.getPlayer(), "lobby.drop"))
-            event.setCancelled(true);
+        event.setCancelled(true);
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
