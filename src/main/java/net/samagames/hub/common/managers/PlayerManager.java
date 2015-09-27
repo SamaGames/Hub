@@ -49,36 +49,29 @@ public class PlayerManager extends AbstractManager
 
     public void updateSettings(Player player)
     {
-        String playerOnSetting = SamaGamesAPI.get().getSettingsManager().getSetting(player.getUniqueId(), "players");
-        String chatOnSetting = SamaGamesAPI.get().getSettingsManager().getSetting(player.getUniqueId(), "chat");
-        String jukeboxSetting = SamaGamesAPI.get().getSettingsManager().getSetting(player.getUniqueId(), "jukebox");
+        boolean playerOnSetting = SamaGamesAPI.get().getSettingsManager().isEnabled(player.getUniqueId(), "players", true);
+        boolean chatOnSetting = SamaGamesAPI.get().getSettingsManager().isEnabled(player.getUniqueId(), "chat", true);
+        boolean jukeboxSetting = SamaGamesAPI.get().getSettingsManager().isEnabled(player.getUniqueId(), "jukebox", true);
 
-        if (playerOnSetting != null && playerOnSetting.equals("false"))
+        if (!playerOnSetting)
         {
-            for(Player p : Bukkit.getOnlinePlayers())
-            {
-                if(!SamaGamesAPI.get().getPermissionsManager().hasPermission(p, "hub.announce") && !SamaGamesAPI.get().getFriendsManager().areFriends(player.getUniqueId(), p.getUniqueId()))
-                    player.hidePlayer(p);
-            }
+            Bukkit.getOnlinePlayers().stream().filter(p -> !SamaGamesAPI.get().getPermissionsManager().hasPermission(p, "hub.announce") && !SamaGamesAPI.get().getFriendsManager().areFriends(player.getUniqueId(), p.getUniqueId())).forEach(player::hidePlayer);
 
             this.addHider(player);
             player.sendMessage(ChatColor.GOLD + "Vous avez désactivé les joueurs. Vous ne verrez donc aucun joueur excepté les membres de l'équipe.");
         }
         else
         {
-            for(Player p : Bukkit.getOnlinePlayers())
-            {
-                player.showPlayer(p);
-            }
+            Bukkit.getOnlinePlayers().forEach(player::showPlayer);
         }
 
-        if (chatOnSetting != null && chatOnSetting.equals("false"))
+        if (!chatOnSetting)
         {
             Hub.getInstance().getChatManager().disableChatFor(player);
             player.sendMessage(ChatColor.GOLD + "Vous avez désactivé le chat. Vous ne verrez donc pas les messages des joueurs.");
         }
 
-        if (jukeboxSetting != null && jukeboxSetting.equals("true"))
+        if (jukeboxSetting)
         {
             Hub.getInstance().getCosmeticManager().getJukeboxManager().addPlayer(player);
 
