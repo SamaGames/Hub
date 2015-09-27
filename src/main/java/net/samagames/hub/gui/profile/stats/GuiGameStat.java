@@ -1,8 +1,9 @@
 package net.samagames.hub.gui.profile.stats;
 
+import net.samagames.api.SamaGamesAPI;
+import net.samagames.api.stats.AbstractStatsManager;
 import net.samagames.api.stats.IPlayerStat;
 import net.samagames.api.stats.Leaderboard;
-import net.samagames.core.api.stats.PlayerStat;
 import net.samagames.hub.Hub;
 import net.samagames.hub.games.AbstractGame;
 import net.samagames.hub.gui.AbstractGui;
@@ -25,6 +26,7 @@ public class GuiGameStat extends AbstractGui
     private final UUID uuid;
     private final AbstractGame game;
     private final String stat;
+    private final AbstractStatsManager statManager;
 
     public GuiGameStat(String name, UUID uuid, AbstractGame game, String stat)
     {
@@ -32,6 +34,7 @@ public class GuiGameStat extends AbstractGui
         this.uuid = uuid;
         this.game = game;
         this.stat = stat;
+        this.statManager = SamaGamesAPI.get().getStatsManager(this.game.getCodeName());
     }
 
     @Override
@@ -42,13 +45,13 @@ public class GuiGameStat extends AbstractGui
         this.drawLeaderboard();
         this.drawLeaderboardLine();
 
-        PlayerStat playerStat = new PlayerStat(this.uuid, this.game.getCodeName(), this.stat);
+        double value = statManager.getStatValue(this.uuid, this.stat);
 
-        if(playerStat.fill())
+        if(value != 0.0D)
         {
             this.setSlotData(ChatColor.RED + "Score de " + this.name, Material.LEATHER_HELMET, 22, new String[]{
-                    ChatColor.GRAY + "Score : " + ChatColor.GOLD + playerStat.getValue(),
-                    ChatColor.GRAY + "Rang : " + ChatColor.GOLD + playerStat.getRank()
+                    ChatColor.GRAY + "Score : " + ChatColor.GOLD + value,
+                    ChatColor.GRAY + "Rang : " + ChatColor.GOLD + statManager.getRankValue(this.uuid, this.stat)
             }, "none");
         }
         else

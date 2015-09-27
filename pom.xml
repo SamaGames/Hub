@@ -54,7 +54,7 @@
         </dependency>
         <dependency>
             <groupId>net.samagames</groupId>
-            <artifactId>SamaGamesCore</artifactId>
+            <artifactId>SamaGamesAPI</artifactId>
             <version>1.0.0-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
