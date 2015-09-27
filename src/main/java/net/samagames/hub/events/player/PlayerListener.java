@@ -154,10 +154,9 @@ public class PlayerListener implements Listener
         player.setFlySpeed(0.2F);
         InventoryUtils.cleanPlayer(player);
         Hub.getInstance().getPlayerManager().getStaticInventory().setInventoryToPlayer(player);
-        Hub.getInstance().getCosmeticManager().restorePet(player);
+        Bukkit.getScheduler().runTaskLater(Hub.getInstance(), () -> Hub.getInstance().getCosmeticManager().handleLogin(player), 20L);
         Bukkit.getScheduler().runTaskAsynchronously(Hub.getInstance(), () ->
         {
-            Hub.getInstance().getCosmeticManager().handleLogin(player);
             Hub.getInstance().getPlayerManager().handleLogin(player);
             Hub.getInstance().getScoreboardManager().addScoreboardReceiver(player);
             Hub.getInstance().getHologramManager().addReceiver(player);

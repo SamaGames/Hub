@@ -34,13 +34,9 @@ public class CosmeticManager extends AbstractManager
 
     public void handleLogin(Player player)
     {
+        this.petManager.restoreCosmetic(player);
         this.particleManager.restoreCosmetic(player);
         this.disguiseManager.restoreCosmetic(player);
-    }
-
-    public void restorePet(Player player)
-    {
-        this.petManager.restoreCosmetic(player);
     }
 
     public void handleLogout(Player player)
