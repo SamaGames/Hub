@@ -78,43 +78,40 @@ public abstract class SongPlayer {
     }
 
     protected void createThread() {
-        playerThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (!destroyed) {
-                    long startTime = System.currentTimeMillis();
+        playerThread = new Thread(() -> {
+            while (!destroyed) {
+                long startTime = System.currentTimeMillis();
 
-                        if (playing) {
-                            calculateFade();
-                            tick++;
-                            if (tick > song.getLength()) {
-                                playing = false;
-                                tick = -1;
-                                if (autoDestroy) {
-                                    destroy();
-                                    return;
-                                }
-                            }
-
-                            for (UUID p : playerList.keySet()) {
-                                if (p == null || Bukkit.getPlayer(p) == null) {
-                                    continue;
-                                }
-
-                                //Hub.getInstance().getExecutor().schedule(() -> playTick(p, tick), difference, TimeUnit.MILLISECONDS);
-                                playTick(p, tick);
-
+                    if (playing) {
+                        calculateFade();
+                        tick++;
+                        if (tick > song.getLength()) {
+                            playing = false;
+                            tick = -1;
+                            if (autoDestroy) {
+                                destroy();
+                                return;
                             }
                         }
 
-                    long duration = System.currentTimeMillis() - startTime;
-                    float delayMillis = song.getDelay() * 50;
-                    if (duration < delayMillis) {
-                        try {
-                            Thread.sleep((long) (delayMillis - duration));
-                        } catch (InterruptedException e) {
-                            // do nothing
+                        for (UUID p : playerList.keySet()) {
+                            if (p == null || Bukkit.getPlayer(p) == null) {
+                                continue;
+                            }
+
+                            //Hub.getInstance().getExecutor().schedule(() -> playTick(p, tick), difference, TimeUnit.MILLISECONDS);
+                            playTick(p, tick);
+
                         }
+                    }
+
+                long duration = System.currentTimeMillis() - startTime;
+                float delayMillis = song.getDelay() * 50;
+                if (duration < delayMillis) {
+                    try {
+                        Thread.sleep((long) (delayMillis - duration));
+                    } catch (InterruptedException e) {
+                        // do nothing
                     }
                 }
             }

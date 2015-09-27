@@ -60,7 +60,7 @@ public class PetMagmaCube extends PetCosmetic<MagmaCube>
     @Override
     public void applySettings(MagmaCube spawned, String settings)
     {
-        spawned.setSize(Integer.valueOf(settings) + 1);
+        spawned.setSize(Integer.parseInt(settings) + 1);
     }
 
     @Override

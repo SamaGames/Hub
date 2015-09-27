@@ -30,21 +30,20 @@ public class GuiProfile extends AbstractGui
     @Override
     public void onClick(Player player, ItemStack stack, String action, ClickType clickType)
     {
-        if(action.equals("stats"))
+        switch (action)
         {
-            Hub.getInstance().getGuiManager().openGui(player, new GuiStats(player));
-        }
-        else if(action.equals("achievements"))
-        {
-            Hub.getInstance().getGuiManager().openGui(player, new GuiAchievements());
-        }
-        else if(action.equals("settings"))
-        {
-            Hub.getInstance().getGuiManager().openGui(player, new GuiSettings());
-        }
-        else if(action.equals("back"))
-        {
-            Hub.getInstance().getGuiManager().closeGui(player);
+            case "stats":
+                Hub.getInstance().getGuiManager().openGui(player, new GuiStats(player));
+                break;
+            case "achievements":
+                Hub.getInstance().getGuiManager().openGui(player, new GuiAchievements());
+                break;
+            case "settings":
+                Hub.getInstance().getGuiManager().openGui(player, new GuiSettings());
+                break;
+            case "back":
+                Hub.getInstance().getGuiManager().closeGui(player);
+                break;
         }
     }
 }

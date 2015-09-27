@@ -85,11 +85,11 @@ public class EntityManager extends AbstractManager
 
     private void registerEntityInEntityEnum(Class paramClass, String paramString, int paramInt) throws Exception
     {
-        ((Map) this.getPrivateStatic(EntityTypes.class, "c")).put(paramString, paramClass);
-        ((Map) this.getPrivateStatic(EntityTypes.class, "d")).put(paramClass, paramString);
-        ((Map) this.getPrivateStatic(EntityTypes.class, "e")).put(paramInt, paramClass);
-        ((Map) this.getPrivateStatic(EntityTypes.class, "f")).put(paramClass, paramInt);
-        ((Map) this.getPrivateStatic(EntityTypes.class, "g")).put(paramString, paramInt);
+        ((Map<String, Class<? extends Entity>>) this.getPrivateStatic(EntityTypes.class, "c")).put(paramString, paramClass);
+        ((Map<Class<? extends Entity>, String>) this.getPrivateStatic(EntityTypes.class, "d")).put(paramClass, paramString);
+        ((Map<Integer, Class<? extends Entity>>) this.getPrivateStatic(EntityTypes.class, "e")).put(paramInt, paramClass);
+        ((Map<Class<? extends Entity>, Integer>) this.getPrivateStatic(EntityTypes.class, "f")).put(paramClass, paramInt);
+        ((Map<String, Integer>) this.getPrivateStatic(EntityTypes.class, "g")).put(paramString, paramInt);
     }
 
     private Object getPrivateStatic(Class clazz, String f) throws Exception

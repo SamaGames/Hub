@@ -8,8 +8,8 @@ import java.util.HashMap;
 public class NoteBlockPlayerMain
 {
     public static NoteBlockPlayerMain instance;
-    public HashMap<String, ArrayList<SongPlayer>> playingSongs = new HashMap<String, ArrayList<SongPlayer>>();
-    public HashMap<String, Byte> playerVolume = new HashMap<String, Byte>();
+    public HashMap<String, ArrayList<SongPlayer>> playingSongs = new HashMap<>();
+    public HashMap<String, Byte> playerVolume = new HashMap<>();
 
     public NoteBlockPlayerMain()
     {

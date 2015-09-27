@@ -19,6 +19,7 @@ import org.bukkit.inventory.meta.SkullMeta;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class GuiStalkerFriends2000 extends AbstractGui
 {
@@ -26,11 +27,7 @@ public class GuiStalkerFriends2000 extends AbstractGui
     public void display(Player player)
     {
         List<UUID> friendListRaw = SamaGamesAPI.get().getFriendsManager().uuidFriendsList(player.getUniqueId());
-        List<IProxiedPlayer> friendList = new ArrayList<>();
-
-        for(UUID friend : friendListRaw)
-            if(!SamaGamesAPI.get().getProxyDataManager().getProxiedPlayer(friend).getServer().equals("Inconnu"))
-                friendList.add(SamaGamesAPI.get().getProxyDataManager().getProxiedPlayer(friend));
+        List<IProxiedPlayer> friendList = friendListRaw.stream().filter(friend -> !SamaGamesAPI.get().getProxyDataManager().getProxiedPlayer(friend).getServer().equals("Inconnu")).map(friend -> SamaGamesAPI.get().getProxyDataManager().getProxiedPlayer(friend)).collect(Collectors.toList());
 
         int[] slots = new int[] { 10, 11, 12, 13, 14, 15, 16, 17 };
         int slot = 0;

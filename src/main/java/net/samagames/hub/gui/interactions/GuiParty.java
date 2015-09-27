@@ -79,27 +79,26 @@ public class GuiParty extends AbstractGui
     @Override
     public void onClick(Player player, ItemStack stack, String action, ClickType clickType)
     {
-        if(action.equals("back"))
+        switch (action)
         {
-            Hub.getInstance().getGuiManager().closeGui(player);
-        }
-        else if(action.equals("page_back"))
-        {
-            Hub.getInstance().getGuiManager().openGui(player, new GuiParty((this.page - 1)));
-        }
-        else if(action.equals("page_next"))
-        {
-            Hub.getInstance().getGuiManager().openGui(player, new GuiParty((this.page + 1)));
-        }
-        else
-        {
-            UUID friend = UUID.fromString(action.split("_")[1]);
+            case "back":
+                Hub.getInstance().getGuiManager().closeGui(player);
+                break;
+            case "page_back":
+                Hub.getInstance().getGuiManager().openGui(player, new GuiParty((this.page - 1)));
+                break;
+            case "page_next":
+                Hub.getInstance().getGuiManager().openGui(player, new GuiParty((this.page + 1)));
+                break;
+            default:
+                UUID friend = UUID.fromString(action.split("_")[1]);
 
-            if(clickType == ClickType.LEFT)
-            {
-                String name = SamaGamesAPI.get().getUUIDTranslator().getName(friend);
-                //TODO
-            }
+                if (clickType == ClickType.LEFT)
+                {
+                    String name = SamaGamesAPI.get().getUUIDTranslator().getName(friend);
+                    //TODO
+                }
+                break;
         }
     }
 

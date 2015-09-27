@@ -5,7 +5,7 @@ import java.util.HashMap;
 
 public class Song {
 
-    private HashMap<Integer, Layer> layerHashMap = new HashMap<Integer, Layer>();
+    private HashMap<Integer, Layer> layerHashMap = new HashMap<>();
     private short songHeight;
     private short length;
     private String title;

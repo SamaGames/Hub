@@ -6,6 +6,7 @@ import com.google.gson.JsonParser;
 import org.bukkit.Bukkit;
 
 import java.io.*;
+import java.nio.charset.Charset;
 import java.util.logging.Level;
 
 public class JsonConfiguration
@@ -62,7 +63,7 @@ public class JsonConfiguration
                 this.configurationFile.createNewFile();
             }
 
-            FileWriter writer = new FileWriter(this.configurationFile);
+            OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(this.configurationFile), Charset.forName("UTF-8"));
             writer.write(gson.toJson(object));
             writer.close();
         }

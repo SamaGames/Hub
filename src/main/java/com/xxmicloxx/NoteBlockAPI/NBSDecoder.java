@@ -29,7 +29,7 @@ public class NBSDecoder
     }
 
     private static Song parse(InputStream inputStream, File decodeFile) {
-        HashMap<Integer, Layer> layerHashMap = new HashMap<Integer, Layer>();
+        HashMap<Integer, Layer> layerHashMap = new HashMap<>();
         try {
             DataInputStream dis = new DataInputStream(inputStream);
             short length = readShort(dis);
@@ -76,8 +76,6 @@ public class NBSDecoder
                 }
             }
             return new Song(speed, layerHashMap, songHeight, length, title, author, description, decodeFile);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }

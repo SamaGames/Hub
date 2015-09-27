@@ -61,26 +61,22 @@ public class GuiClickMe extends AbstractGui
     @Override
     public void onClick(Player player, ItemStack stack, String action, ClickType clickType)
     {
-        if(action.equals("friend"))
+        switch (action)
         {
-
-        }
-        else if(action.equals("mp"))
-        {
-            new FancyMessage(ChatColor.YELLOW + "Cliquez sur ").then("[Envoyer]").color(ChatColor.GREEN).suggest("/msg " + this.name + " ").then(" pour envoyer un message privé à " + this.name).color(ChatColor.YELLOW).send(player);
-            Hub.getInstance().getGuiManager().closeGui(player);
-        }
-        else if(action.equals("party"))
-        {
-
-        }
-        else if(action.equals("stats"))
-        {
-            Hub.getInstance().getGuiManager().openGui(player, new GuiStats(this.name, this.uuid, true));
-        }
-        else if(action.equals("back"))
-        {
-            Hub.getInstance().getGuiManager().closeGui(player);
+            case "friend":
+                break;
+            case "mp":
+                new FancyMessage(ChatColor.YELLOW + "Cliquez sur ").then("[Envoyer]").color(ChatColor.GREEN).suggest("/msg " + this.name + " ").then(" pour envoyer un message privé à " + this.name).color(ChatColor.YELLOW).send(player);
+                Hub.getInstance().getGuiManager().closeGui(player);
+                break;
+            case "party":
+                break;
+            case "stats":
+                Hub.getInstance().getGuiManager().openGui(player, new GuiStats(this.name, this.uuid, true));
+                break;
+            case "back":
+                Hub.getInstance().getGuiManager().closeGui(player);
+                break;
         }
     }
 

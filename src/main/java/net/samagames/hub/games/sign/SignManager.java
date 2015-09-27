@@ -13,10 +13,8 @@ import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.Charset;
 import java.util.logging.Level;
 
 public class SignManager extends AbstractManager
@@ -35,7 +33,7 @@ public class SignManager extends AbstractManager
             {
                 config.createNewFile();
 
-                FileWriter fw = new FileWriter(config.getAbsoluteFile());
+                OutputStreamWriter fw = new OutputStreamWriter(new FileOutputStream(config), Charset.forName("UTF-8"));
                 BufferedWriter bw = new BufferedWriter(fw);
                 bw.write("{\"zones\":[]}");
                 bw.close();

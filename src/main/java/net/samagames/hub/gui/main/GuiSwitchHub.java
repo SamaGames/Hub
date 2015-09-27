@@ -80,7 +80,7 @@ public class GuiSwitchHub extends AbstractGui
                 player.sendMessage(ChatColor.RED + "Vous ne pouvez pas aller sur votre hub actuel !");
                 return;
             }
-            else if(Hub.getInstance().getHubRefresher().getHubByID(Integer.valueOf(action.split("_")[1])).getConnectedPlayers() >= 120)
+            else if(Hub.getInstance().getHubRefresher().getHubByID(Integer.parseInt(action.split("_")[1])).getConnectedPlayers() >= 120)
             {
                 player.sendMessage(ChatColor.RED + "Le hub sélectionné est plein !");
                 return;
@@ -100,7 +100,7 @@ public class GuiSwitchHub extends AbstractGui
         ItemMeta meta = glass.getItemMeta();
         String baseName = "Hub " + hub.getHubNumber() + " (" + hub.getConnectedPlayers() + " joueurs)";
 
-        if(hub.getHubNumber() == Integer.valueOf(SamaGamesAPI.get().getServerName().split("_")[1]))
+        if(hub.getHubNumber() == Integer.parseInt(SamaGamesAPI.get().getServerName().split("_")[1]))
         {
             glass.setDurability(DyeColor.LIGHT_BLUE.getData());
             meta.setDisplayName(ChatColor.AQUA + baseName);

@@ -1,10 +1,7 @@
 package net.samagames.hub.cosmetics.gadgets;
 
-import net.md_5.bungee.api.chat.BaseComponent;
-import net.md_5.bungee.api.chat.TextComponent;
 import net.samagames.hub.cosmetics.common.AbstractCosmetic;
 import net.samagames.hub.cosmetics.gadgets.displayers.AbstractDisplayer;
-import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 
 public class GadgetCosmetic extends AbstractCosmetic

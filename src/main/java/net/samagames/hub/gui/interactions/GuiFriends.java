@@ -76,33 +76,31 @@ public class GuiFriends extends AbstractGui
     @Override
     public void onClick(Player player, ItemStack stack, String action, ClickType clickType)
     {
-        if(action.equals("back"))
+        switch (action)
         {
-            Hub.getInstance().getGuiManager().closeGui(player);
-        }
-        else if(action.equals("page_back"))
-        {
-            Hub.getInstance().getGuiManager().openGui(player, new GuiFriends((this.page - 1)));
-        }
-        else if(action.equals("page_next"))
-        {
-            Hub.getInstance().getGuiManager().openGui(player, new GuiFriends((this.page + 1)));
-        }
-        else
-        {
-            UUID friend = UUID.fromString(action.split("_")[1]);
+            case "back":
+                Hub.getInstance().getGuiManager().closeGui(player);
+                break;
+            case "page_back":
+                Hub.getInstance().getGuiManager().openGui(player, new GuiFriends((this.page - 1)));
+                break;
+            case "page_next":
+                Hub.getInstance().getGuiManager().openGui(player, new GuiFriends((this.page + 1)));
+                break;
+            default:
+                UUID friend = UUID.fromString(action.split("_")[1]);
 
-            if(clickType == ClickType.LEFT)
-            {
-                String name = SamaGamesAPI.get().getUUIDTranslator().getName(friend);
+                if (clickType == ClickType.LEFT)
+                {
+                    String name = SamaGamesAPI.get().getUUIDTranslator().getName(friend);
 
-                //TODO: Clickable message
-                //player.sendMessage(new ComponentBuilder("Cliquez ici pour envoyer un message à " + name).color(net.md_5.bungee.api.ChatColor.YELLOW).event(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/msg " + name)).create());
-            }
-            else if(clickType == ClickType.RIGHT)
-            {
-                //TODO: Not implemented yet in RestAPI
-            }
+                    //TODO: Clickable message
+                    //player.sendMessage(new ComponentBuilder("Cliquez ici pour envoyer un message à " + name).color(net.md_5.bungee.api.ChatColor.YELLOW).event(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/msg " + name)).create());
+                } else if (clickType == ClickType.RIGHT)
+                {
+                    //TODO: Not implemented yet in RestAPI
+                }
+                break;
         }
     }
 

@@ -4,7 +4,6 @@ import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import net.samagames.hub.common.StaticInventory;
 import net.samagames.hub.cosmetics.jukebox.JukeboxSong;
-import net.samagames.tools.Selection;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -88,13 +87,8 @@ public class PlayerManager extends AbstractManager
 
     public void updateHiders(Player newConnected)
     {
-        for(UUID hider : this.hiders)
-        {
-            if(!hider.equals(newConnected.getUniqueId()))
-                if(!SamaGamesAPI.get().getPermissionsManager().hasPermission(newConnected, "hub.announce") && !SamaGamesAPI.get().getFriendsManager().areFriends(newConnected.getUniqueId(), hider))
-                    Bukkit.getScheduler().runTask(Hub.getInstance(), () ->
-                        Bukkit.getPlayer(hider).hidePlayer(newConnected));
-        }
+        this.hiders.stream().filter(hider -> !hider.equals(newConnected.getUniqueId())).filter(hider -> !SamaGamesAPI.get().getPermissionsManager().hasPermission(newConnected, "hub.announce") && !SamaGamesAPI.get().getFriendsManager().areFriends(newConnected.getUniqueId(), hider)).forEach(hider -> Bukkit.getScheduler().runTask(Hub.getInstance(), () ->
+                Bukkit.getPlayer(hider).hidePlayer(newConnected)));
     }
 
     public void removeSelection(Player player)

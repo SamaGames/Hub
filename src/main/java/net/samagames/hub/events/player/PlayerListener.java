@@ -113,23 +113,17 @@ public class PlayerListener implements Listener
             event.setCancelled(true);
 
         if(!event.isCancelled())
-            for (Player player : Bukkit.getOnlinePlayers())
-                if (!Hub.getInstance().getNPCManager().canTalk(player) || Hub.getInstance().getChatManager().hasChatDisabled(player))
-                   event.getRecipients().remove(player);
+            Bukkit.getOnlinePlayers().stream().filter(player -> !Hub.getInstance().getNPCManager().canTalk(player) || Hub.getInstance().getChatManager().hasChatDisabled(player)).forEach(player -> event.getRecipients().remove(player));
 
-        for(Player player : Bukkit.getOnlinePlayers())
-        {
-            if(StringUtils.containsIgnoreCase(event.getMessage(), player.getName()))
-            {
-                event.getRecipients().remove(player);
-                player.playSound(player.getLocation(), Sound.NOTE_PIANO, 1.0F, 1.0F);
+        Bukkit.getOnlinePlayers().stream().filter(player -> StringUtils.containsIgnoreCase(event.getMessage(), player.getName())).forEach(player -> {
+            event.getRecipients().remove(player);
+            player.playSound(player.getLocation(), Sound.NOTE_PIANO, 1.0F, 1.0F);
 
-                String suffixRaw = SamaGamesAPI.get().getPermissionsManager().getApi().getUser(event.getPlayer().getUniqueId()).getProperties().get("suffix");
-                ChatColor suffix = ChatColor.getByChar(suffixRaw.charAt(1));
+            String suffixRaw = SamaGamesAPI.get().getPermissionsManager().getApi().getUser(event.getPlayer().getUniqueId()).getProperties().get("suffix");
+            ChatColor suffix = ChatColor.getByChar(suffixRaw.charAt(1));
 
-                player.sendMessage(PlayerUtils.getFullyFormattedPlayerName(event.getPlayer()) + suffix + ": " + event.getMessage().replace(player.getName(), ChatColor.GOLD + player.getName() + suffix));
-            }
-        }
+            player.sendMessage(PlayerUtils.getFullyFormattedPlayerName(event.getPlayer()) + suffix + ": " + event.getMessage().replace(player.getName(), ChatColor.GOLD + player.getName() + suffix));
+        });
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
@@ -223,9 +217,7 @@ public class PlayerListener implements Listener
             return;
 
         Bukkit.getScheduler().runTaskAsynchronously(Hub.getInstance(), () ->
-        {
-            Hub.getInstance().getPlayerManager().getStaticInventory().doInteraction(player, item);
-        });
+                Hub.getInstance().getPlayerManager().getStaticInventory().doInteraction(player, item));
     }
 
     @EventHandler

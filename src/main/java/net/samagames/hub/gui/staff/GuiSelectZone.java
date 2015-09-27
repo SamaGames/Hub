@@ -29,20 +29,20 @@ public class GuiSelectZone extends AbstractGui
     @Override
     public void onClick(Player player, ItemStack stack, String action, ClickType clickType)
     {
-        if(action.equals("vip"))
+        switch (action)
         {
-            player.teleport(Hub.getInstance().getGameManager().getGameByIdentifier("beta_vip").getLobbySpawn());
-            Hub.getInstance().getGuiManager().closeGui(player);
-        }
-        else if(action.equals("staff"))
-        {
-            player.teleport(Hub.getInstance().getGameManager().getGameByIdentifier("beta_staff").getLobbySpawn());
-            Hub.getInstance().getGuiManager().closeGui(player);
-            SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).creditCoins(1, "Cookie c:");
-        }
-        else if(action.equals("back"))
-        {
-            Hub.getInstance().getGuiManager().openGui(player, new GuiMain());
+            case "vip":
+                player.teleport(Hub.getInstance().getGameManager().getGameByIdentifier("beta_vip").getLobbySpawn());
+                Hub.getInstance().getGuiManager().closeGui(player);
+                break;
+            case "staff":
+                player.teleport(Hub.getInstance().getGameManager().getGameByIdentifier("beta_staff").getLobbySpawn());
+                Hub.getInstance().getGuiManager().closeGui(player);
+                SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).creditCoins(1, "Cookie c:");
+                break;
+            case "back":
+                Hub.getInstance().getGuiManager().openGui(player, new GuiMain());
+                break;
         }
     }
 }

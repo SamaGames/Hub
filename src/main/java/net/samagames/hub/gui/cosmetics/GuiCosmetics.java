@@ -1,10 +1,6 @@
 package net.samagames.hub.gui.cosmetics;
 
 import net.samagames.hub.Hub;
-import net.samagames.hub.cosmetics.disguises.DisguiseCosmetic;
-import net.samagames.hub.cosmetics.gadgets.GadgetCosmetic;
-import net.samagames.hub.cosmetics.particles.ParticleCosmetic;
-import net.samagames.hub.cosmetics.pets.PetCosmetic;
 import net.samagames.hub.gui.AbstractGui;
 import net.samagames.hub.utils.GuiUtils;
 import org.bukkit.*;
@@ -64,29 +60,26 @@ public class GuiCosmetics extends AbstractGui
     @Override
     public void onClick(Player player, ItemStack stack, String action, ClickType clickType)
     {
-        if(action.equals("particles"))
+        switch (action)
         {
-            Hub.getInstance().getGuiManager().openGui(player, new GuiCosmeticsCategory<ParticleCosmetic>("Particules", Hub.getInstance().getCosmeticManager().getParticleManager(), true));
-        }
-        else if(action.equals("pets"))
-        {
-            Hub.getInstance().getGuiManager().openGui(player, new GuiCosmeticsCategory<PetCosmetic>("Montures", Hub.getInstance().getCosmeticManager().getPetManager(), true));
-        }
-        else if(action.equals("disguises"))
-        {
-            Hub.getInstance().getGuiManager().openGui(player, new GuiCosmeticsCategory<DisguiseCosmetic>("Déguisements", Hub.getInstance().getCosmeticManager().getDisguiseManager(), true));
-        }
-        else if(action.equals("gadgets"))
-        {
-            Hub.getInstance().getGuiManager().openGui(player, new GuiCosmeticsCategory<GadgetCosmetic>("Gadgets", Hub.getInstance().getCosmeticManager().getGadgetManager(), false));
-        }
-        else if(action.equals("jukebox"))
-        {
-            Hub.getInstance().getGuiManager().openGui(player, new GuiJukebox());
-        }
-        else if(action.equals("back"))
-        {
-            Hub.getInstance().getGuiManager().closeGui(player);
+            case "particles":
+                Hub.getInstance().getGuiManager().openGui(player, new GuiCosmeticsCategory<>("Particules", Hub.getInstance().getCosmeticManager().getParticleManager(), true));
+                break;
+            case "pets":
+                Hub.getInstance().getGuiManager().openGui(player, new GuiCosmeticsCategory<>("Montures", Hub.getInstance().getCosmeticManager().getPetManager(), true));
+                break;
+            case "disguises":
+                Hub.getInstance().getGuiManager().openGui(player, new GuiCosmeticsCategory<>("Déguisements", Hub.getInstance().getCosmeticManager().getDisguiseManager(), true));
+                break;
+            case "gadgets":
+                Hub.getInstance().getGuiManager().openGui(player, new GuiCosmeticsCategory<>("Gadgets", Hub.getInstance().getCosmeticManager().getGadgetManager(), false));
+                break;
+            case "jukebox":
+                Hub.getInstance().getGuiManager().openGui(player, new GuiJukebox());
+                break;
+            case "back":
+                Hub.getInstance().getGuiManager().closeGui(player);
+                break;
         }
     }
 

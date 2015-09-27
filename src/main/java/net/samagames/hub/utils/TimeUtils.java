@@ -24,7 +24,7 @@ public class TimeUtils
         if (mins > 0)
             ret += mins+" minutes ";
 
-        if (ret.equals("") && mins == 0)
+        if (ret.isEmpty() && mins == 0)
             ret += "moins d'une minute";
 
         return ret;

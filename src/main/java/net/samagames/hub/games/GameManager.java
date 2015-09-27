@@ -1,7 +1,6 @@
 package net.samagames.hub.games;
 
 import net.samagames.hub.Hub;
-import net.samagames.hub.common.hydroconnect.connection.AbstractPacket;
 import net.samagames.hub.common.hydroconnect.packets.hubinfo.GameInfoToHubPacket;
 import net.samagames.hub.common.hydroconnect.packets.queues.QueueInfosUpdatePacket;
 import net.samagames.hub.common.hydroconnect.utils.PacketCallBack;

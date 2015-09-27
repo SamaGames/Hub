@@ -33,8 +33,6 @@ public class SamaritanListener implements IPacketsReceiver
         Bukkit.broadcastMessage(samaritanTag + ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "Le joueur " + ChatColor.LIGHT_PURPLE + ChatColor.BOLD + player + ChatColor.DARK_PURPLE + ChatColor.BOLD + " à été banni pour la raison " + ChatColor.LIGHT_PURPLE + ChatColor.BOLD + reason);
 
         Bukkit.getScheduler().runTaskLaterAsynchronously(Hub.getInstance(), () ->
-        {
-            world.setTime(6000);
-        }, 20L * 3);
+                world.setTime(6000), 20L * 3);
     }
 }
