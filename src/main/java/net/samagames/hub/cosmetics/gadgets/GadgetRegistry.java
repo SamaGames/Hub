@@ -70,8 +70,8 @@ public class GadgetRegistry extends AbstractCosmeticRegistry<GadgetCosmetic>
 
         GadgetCosmetic stargateGadget = new GadgetCosmetic("stargate", "Stargate", new ItemStack(Material.ENDER_PORTAL_FRAME, 1), new String[] {
                 "Ce gadget créera une faille spacio-temporelle",
-                "qui vous téléportera dans un monde parllèle",
-                "Minecraftien dotés de joueurs identiques au monde",
+                "qui vous téléportera dans un monde parallèle",
+                "Minecraftien doté de joueurs identiques au monde",
                 "où vous êtes actuellement. Fiction ou Science ?",
                 "",
                 ChatColor.RED + "Attention: La faille spacio-temporelle",
@@ -79,6 +79,12 @@ public class GadgetRegistry extends AbstractCosmeticRegistry<GadgetCosmetic>
         }, StargateDisplayer.class, 60);
         trampoSlimeGadget.buyableWithStars(10000);
 
+        GadgetCosmetic animalChestGadget = new GadgetCosmetic("animalchest", "Coffre animal", new ItemStack(Material.CHEST, 1), new String[] {
+        		"Ce coffre contient un animal, mais ... lequel ?",
+        		"Ouvrez le pour découvrir votre surprise !"
+        }, AnimalChestDisplayer.class, 60);
+        animalChestGadget.buyableWithStars(8000);
+        
         this.registerElement(discoBombGadget);
         this.registerElement(moutMout2000Gadget);
         this.registerElement(expressBotaniaGadget);
@@ -88,5 +94,6 @@ public class GadgetRegistry extends AbstractCosmeticRegistry<GadgetCosmetic>
         this.registerElement(perchedCatGadget);
         this.registerElement(enderSwapGadget);
         this.registerElement(stargateGadget);
+        this.registerElement(animalChestGadget);
     }
 }
