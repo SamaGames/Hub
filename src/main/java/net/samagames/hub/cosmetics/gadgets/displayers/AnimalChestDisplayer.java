@@ -31,9 +31,9 @@ public class AnimalChestDisplayer extends AbstractDisplayer
 {
 	private Location centerLoc;
 	private EntityType[] TYPES = new EntityType[]{EntityType.CAVE_SPIDER, EntityType.COW, EntityType.CREEPER, EntityType.ENDERMAN, EntityType.ENDERMITE,
-			EntityType.GUARDIAN, EntityType.HORSE, EntityType.IRON_GOLEM, EntityType.MAGMA_CUBE, EntityType.OCELOT, EntityType.PIG, EntityType.PIG_ZOMBIE,
+			EntityType.GUARDIAN, EntityType.IRON_GOLEM, EntityType.MAGMA_CUBE, EntityType.OCELOT, EntityType.PIG, EntityType.PIG_ZOMBIE,
 			EntityType.RABBIT, EntityType.SHEEP, EntityType.SILVERFISH, EntityType.SKELETON, EntityType.SLIME, EntityType.SNOWMAN, EntityType.SPIDER,
-			EntityType.SQUID, EntityType.VILLAGER, EntityType.WITCH, EntityType.WITHER_SKULL, EntityType.WOLF, EntityType.ZOMBIE};
+			EntityType.SQUID, EntityType.VILLAGER, EntityType.WITCH, EntityType.WOLF, EntityType.ZOMBIE};
 	private EntityType type;
 	
 	public AnimalChestDisplayer(Player player)
@@ -69,7 +69,7 @@ public class AnimalChestDisplayer extends AbstractDisplayer
 				double x = centerLoc.getX() + (1 * Math.sin(phi) * Math.cos(theta));
 				double y = centerLoc.getY() + (1 * Math.sin(phi) * Math.sin(theta));
 				double z = centerLoc.getZ() + (1 * Math.cos(phi));
-				ParticleEffect.PORTAL.display(new Vector(x, y, z), 0.1F, centerLoc.clone().add(new Vector(x, y, z).multiply(0.3)), 160.0D);
+				ParticleEffect.PORTAL.display(new Vector(x, y, z), 0.1F, centerLoc.clone().add(new Vector(x, y, z).multiply(0.9)), 160.0D);
 			}
 		}, 2, 2);
 		Bukkit.getScheduler().runTaskLater(Hub.getInstance(), new Runnable()
@@ -87,12 +87,13 @@ public class AnimalChestDisplayer extends AbstractDisplayer
 					@Override
 					public void run()
 					{
-						Entity e = centerLoc.getWorld().spawnEntity(centerLoc.clone().add(0, 0.5, 0), type);
+						Entity e = centerLoc.getWorld().spawnEntity(centerLoc.clone().add(0, 0.3, 0), type);
+						e.teleport(centerLoc);
 						freeze(e);
 						double x = Math.random() * 2 - 1;
 						double y = Math.random();
 						double z = Math.random() * 2 - 1;
-						e.setVelocity(new Vector(x, y, z).multiply(2));
+						e.setVelocity(new Vector(x, y, z).multiply(0.9));
 						Bukkit.getScheduler().runTaskLater(Hub.getInstance(), new Runnable()
 						{
 							@Override
@@ -102,7 +103,7 @@ public class AnimalChestDisplayer extends AbstractDisplayer
 							}
 						}, 20);
 					}
-				}, 20, 2);
+				}, 10, 2);
 				Bukkit.getScheduler().runTaskLater(Hub.getInstance(), new Runnable()
 				{
 					@Override
