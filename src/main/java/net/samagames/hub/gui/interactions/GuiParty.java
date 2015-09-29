@@ -54,7 +54,7 @@ public class GuiParty extends AbstractGui
 
         for(UUID friend : toDisplay)
         {
-            this.setSlotData(this.makeHeadOf(friend), (baseSlots[slot] + (lines * 9)), "party_" + friend.toString());
+            this.setSlotData(this.makeHeadOf(friend), (baseSlots[slot] + (lines * 9)), "party_" + friend);
 
             slot++;
 

@@ -1,11 +1,12 @@
 package net.samagames.hub.gui.interactions;
 
+import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import net.samagames.hub.gui.AbstractGui;
 import net.samagames.hub.utils.GuiUtils;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.SkullType;
 import org.bukkit.entity.Player;
@@ -51,7 +52,7 @@ public class GuiFriends extends AbstractGui
 
         for(UUID friend : toDisplay)
         {
-            this.setSlotData(this.makeHeadOf(friend), (baseSlots[slot] + (lines * 9)), "friend_" + friend.toString());
+            this.setSlotData(this.makeHeadOf(friend), (baseSlots[slot] + (lines * 9)), "friend_" + friend);
 
             slot++;
 
@@ -89,16 +90,17 @@ public class GuiFriends extends AbstractGui
                 break;
             default:
                 UUID friend = UUID.fromString(action.split("_")[1]);
-
+                String name = SamaGamesAPI.get().getUUIDTranslator().getName(friend);
                 if (clickType == ClickType.LEFT)
                 {
-                    String name = SamaGamesAPI.get().getUUIDTranslator().getName(friend);
-
                     //TODO: Clickable message
                     //player.sendMessage(new ComponentBuilder("Cliquez ici pour envoyer un message à " + name).color(net.md_5.bungee.api.ChatColor.YELLOW).event(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/msg " + name)).create());
                 } else if (clickType == ClickType.RIGHT)
                 {
-                    //TODO: Not implemented yet in RestAPI
+                    if (SamaGamesAPI.get().getFriendsManager().removeFriend(player.getUniqueId(), friend))
+                        player.spigot().sendMessage(new ComponentBuilder("Vous avez supprimé " + name + " de votre liste d'amis").color(ChatColor.GREEN).create());
+                    else
+                        player.spigot().sendMessage(new ComponentBuilder("Erreur lors de la suppression de " + name + " de votre liste d'amis").color(ChatColor.RED).create());
                 }
                 break;
         }

@@ -59,7 +59,7 @@ public class NPCManager extends AbstractManager
             NPC npc = gson.fromJson(npcJson, NPC.class);
 
             this.npcs.put(npc.getID(), npc);
-            Hub.getInstance().log(this, Level.INFO, "Registered NPC '" + npc.getID().toString() + "'");
+            Hub.getInstance().log(this, Level.INFO, "Registered NPC '" + npc.getID() + "'");
         }
 
         this.placeNPCS();
@@ -79,7 +79,7 @@ public class NPCManager extends AbstractManager
             lines.addAll(Arrays.asList(npc.getName().split("@")));
 
             if(this.debug)
-                lines.add(ChatColor.RED + "[" + npc.getID().toString() + "]");
+                lines.add(ChatColor.RED + "[" + npc.getID() + "]");
 
             String[] linesArray = new String[] {};
             Hologram hologram = new Hologram(lines.toArray(linesArray));

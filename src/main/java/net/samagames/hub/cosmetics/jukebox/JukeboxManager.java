@@ -186,7 +186,7 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
             }
         }
 
-        if (this.playlists.size() == 0)
+        if (this.playlists.isEmpty())
             return false;
 
         JukeboxSong nextSong = this.playlists.pollFirst();

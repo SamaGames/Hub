@@ -20,7 +20,7 @@ public class Interpolator {
         // Calculate the line equation (i.e. slope and intercept) between each point
         for (int i = 0; i < x.length - 1; i++) {
             dx[i] = x[i + 1] - x[i];
-            if (dx[i] == 0) {
+            if (dx[i] == 0.0D) {
                 throw new IllegalArgumentException("X must be montotonic. A duplicate " + "x-value was found");
             }
             if (dx[i] < 0) {

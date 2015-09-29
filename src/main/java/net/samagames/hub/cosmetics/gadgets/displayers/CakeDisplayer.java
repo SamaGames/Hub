@@ -96,7 +96,7 @@ public class CakeDisplayer extends AbstractDisplayer
                         else if (b < -10)
                             b = -10;
 
-                        if (a != 0 && b != 0)
+                        if (a != 0.0D && b != 0.0D)
                         {
                             Vector v = new Vector(a / 10, (player.getLocation().getY() - centerLoc.getY()) / 10 + 1, b / 10);
                             player.setVelocity(v);

@@ -8,6 +8,7 @@ import net.samagames.tools.scoreboards.ObjectiveSign;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,6 +20,7 @@ public class ScoreboardManager extends AbstractManager
     private final HashMap<UUID, ObjectiveSign> playerObjectives;
     private final ArrayList<ChatColor> rainbowContent;
     private int rainbowIndex;
+    private BukkitTask refreshTask;
 
     public ScoreboardManager(Hub hub)
     {
@@ -28,7 +30,7 @@ public class ScoreboardManager extends AbstractManager
         this.rainbowContent = Rainbow.getRainbow();
         this.rainbowIndex = 0;
 
-        Bukkit.getScheduler().scheduleAsyncRepeatingTask(this.hub, this::update, 20L, 20L);
+        refreshTask = hub.getServer().getScheduler().runTaskTimerAsynchronously(this.hub, this::update, 20L, 20L);
     }
 
     public void addScoreboardReceiver(Player player)
@@ -41,7 +43,7 @@ public class ScoreboardManager extends AbstractManager
             this.playerObjectives.put(player.getUniqueId(), objective);
 
             if(Hub.getInstance().isDebugEnabled())
-                Hub.getInstance().log(this, Level.INFO, "Added scoreboard receiver (" + player.getUniqueId().toString() + ")");
+                Hub.getInstance().log(this, Level.INFO, "Added scoreboard receiver (" + player.getUniqueId() + ")");
 
             this.update(player.getUniqueId());
         }
@@ -54,7 +56,7 @@ public class ScoreboardManager extends AbstractManager
             this.playerObjectives.remove(player.getUniqueId());
 
             if(Hub.getInstance().isDebugEnabled())
-                Hub.getInstance().log(this, Level.INFO, "Removed scoreboard receiver (" + player.getUniqueId().toString() + ")");
+                Hub.getInstance().log(this, Level.INFO, "Removed scoreboard receiver (" + player.getUniqueId() + ")");
         }
     }
 
@@ -95,6 +97,7 @@ public class ScoreboardManager extends AbstractManager
     @Override
     public void onServerClose()
     {
+        this.refreshTask.cancel();
         for(UUID uuid : this.playerObjectives.keySet())
         {
             this.playerObjectives.get(uuid).removeReceiver(Bukkit.getOfflinePlayer(uuid));
