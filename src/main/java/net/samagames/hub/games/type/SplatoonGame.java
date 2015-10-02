@@ -1,34 +1,29 @@
 package net.samagames.hub.games.type;
 
-import net.samagames.hub.Hub;
 import net.samagames.hub.games.AbstractGame;
-import net.samagames.hub.games.DisplayedStat;
 import net.samagames.hub.games.shop.ShopCategory;
-import org.bukkit.DyeColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
-
-public class HeroBattleGame extends AbstractGame
+public class SplatoonGame extends AbstractGame
 {
     @Override
     public String getCodeName()
     {
-        return "herobattle";
+        return "splatoon";
     }
 
     @Override
     public String getName()
     {
-        return "HeroBattle";
+        return "Splatoon";
     }
 
     @Override
     public ItemStack getIcon()
     {
-        return new ItemStack(Material.INK_SACK, 1, DyeColor.RED.getDyeData());
+        return new ItemStack(Material.INK_SACK, 1);
     }
 
     @Override
@@ -42,7 +37,7 @@ public class HeroBattleGame extends AbstractGame
     @Override
     public int getSlotInMainMenu()
     {
-        return 30;
+        return 32;
     }
 
     @Override
@@ -52,15 +47,9 @@ public class HeroBattleGame extends AbstractGame
     }
 
     @Override
-    public ArrayList<DisplayedStat> getDisplayedStats()
-    {
-        return null;
-    }
-
-    @Override
     public Location getLobbySpawn()
     {
-        return Hub.getInstance().getPlayerManager().getLobbySpawn();
+        return null;
     }
 
     @Override

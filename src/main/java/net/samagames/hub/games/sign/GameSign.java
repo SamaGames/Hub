@@ -3,14 +3,12 @@ package net.samagames.hub.games.sign;
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import net.samagames.hub.games.AbstractGame;
-import net.samagames.hub.utils.TimeUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitTask;
-import redis.clients.jedis.Jedis;
 
 import java.util.UUID;
 
@@ -23,7 +21,6 @@ public class GameSign
     private final String template;
     private final BukkitTask updateTask;
 
-    private int playerMaxForMap;
     private int playerWaitFor;
     private int totalPlayerOnServers;
 
@@ -66,24 +63,11 @@ public class GameSign
 
     public void click(Player player)
     {
-        //TODO: check if we keep it
-        Jedis jedis = SamaGamesAPI.get().getBungeeResource();
-
-        String ban = jedis.get("gamebanlist:" + this.game.getCodeName() + ":reason:" + player.getUniqueId());
-
-        if (ban != null)
+        if(this.game.isMaintenance())
         {
-            long ttl = jedis.ttl("gamebanlist:" + this.game.getCodeName() + ":reason:" + player.getUniqueId());
-            String duration = "définitivement";
-
-            if (ttl >= 0)
-                duration = TimeUtils.formatTime(ttl);
-
-            player.sendMessage(ChatColor.RED + "Vous êtes banni du jeu " + duration + ".");
-            player.sendMessage(ChatColor.RED + "Motif : " + ban);
+            player.sendMessage(ChatColor.RED + "Ce jeu est actuellement en maintenance.");
             return;
         }
-        jedis.close();
 
         UUID partyUUID = SamaGamesAPI.get().getPartiesManager().getPlayerParty(player.getUniqueId());
 
@@ -115,44 +99,28 @@ public class GameSign
         player.sendMessage(ChatColor.GOLD + "----------------------------------------");
     }
 
-    public String getTemplate() {
+    public String getTemplate()
+    {
         return template;
     }
 
-    public String getMap() {
+    public String getMap()
+    {
         return map;
     }
 
-    public ChatColor getColor() {
+    public ChatColor getColor()
+    {
         return color;
     }
 
-    public Sign getSign()
+    public void setPlayerWaitFor(int playerWaitFor)
     {
-        return this.sign;
-    }
-
-    public int getPlayerMaxForMap() {
-        return playerMaxForMap;
-    }
-
-    public void setPlayerMaxForMap(int playerMaxForMap) {
-        this.playerMaxForMap = playerMaxForMap;
-    }
-
-    public int getPlayerWaitFor() {
-        return playerWaitFor;
-    }
-
-    public void setPlayerWaitFor(int playerWaitFor) {
         this.playerWaitFor = playerWaitFor;
     }
 
-    public int getTotalPlayerOnServers() {
-        return totalPlayerOnServers;
-    }
-
-    public void setTotalPlayerOnServers(int totalPlayerOnServers) {
+    public void setTotalPlayerOnServers(int totalPlayerOnServers)
+    {
         this.totalPlayerOnServers = totalPlayerOnServers;
     }
 
