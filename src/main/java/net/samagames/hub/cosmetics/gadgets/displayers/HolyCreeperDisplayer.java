@@ -40,17 +40,17 @@ public class HolyCreeperDisplayer extends AbstractDisplayer
         }, 5L, 5L);
     }
 
-    public void explode(Location location)
+    public void explode(Creeper creeper)
     {
         this.lovingTask.cancel();
 
-        Location flowerSpawnLocation = location.clone().add(0.0D, 0.5D, 0.0D);
+        Location flowerSpawnLocation = creeper.getLocation().clone().add(0.0D, 0.5D, 0.0D);
 
         for(int i = 0; i < 64; i++)
         {
             ItemStack redDye = new ItemStack(Material.INK_SACK, 1, (short) 1);
             Item item = this.player.getWorld().dropItemNaturally(flowerSpawnLocation, redDye);
-            item.setVelocity(new Vector(new Random().nextInt(6) - 3, 2, new Random().nextInt(6) - 3));
+            item.setVelocity(new Vector(new Random().nextInt(4) - 3, 2, new Random().nextInt(4) - 2));
 
             try
             {
@@ -61,15 +61,16 @@ public class HolyCreeperDisplayer extends AbstractDisplayer
                 e.printStackTrace();
             }
         }
+
+        creeper.getWorld().strikeLightningEffect(creeper.getLocation());
+        creeper.getWorld().createExplosion(creeper.getLocation().getX(), (creeper.getLocation().getY() + 2.0D), creeper.getLocation().getZ(), 4.0F, false, false);
+        creeper.remove();
     }
 
     @Override
     public void handleInteraction(Entity who, Entity with)
     {
-        Creeper creeper = (Creeper) with;
-        creeper.getWorld().createExplosion(creeper.getLocation().getX(), creeper.getLocation().getY(), creeper.getLocation().getZ(), 1.0F, false, false);
-
-        this.explode(creeper.getLocation());
+        this.explode((Creeper) with);
     }
 
     @Override
