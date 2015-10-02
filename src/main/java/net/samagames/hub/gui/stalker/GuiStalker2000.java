@@ -74,7 +74,7 @@ public class GuiStalker2000 extends AbstractGui
             {
                 String formattedServer;
 
-                if(server.equals("hidden"))
+                if(server.equals("hidden") && !server.startsWith("Hub_"))
                 {
                     formattedServer = ChatColor.RED + "Secret :o";
                 }

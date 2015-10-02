@@ -44,7 +44,6 @@ public class GadgetRegistry extends AbstractCosmeticRegistry<GadgetCosmetic>
                 ChatColor.MAGIC + "vos mains !"
         }, NukeDisplayer.class, 60);
         nukeGadget.permissionNeeded("hub.gadgets.nuke");
-        nukeGadget.permissionNeededToView("hub.gadgets.nuke");
 
         GadgetCosmetic fakeCakeGadget = new GadgetCosmetic("cake", "Gâteau fantôme", new ItemStack(Material.CAKE, 1), new String[] {
                 "La légende raconte que ce gâteau",
@@ -79,11 +78,17 @@ public class GadgetRegistry extends AbstractCosmeticRegistry<GadgetCosmetic>
         }, StargateDisplayer.class, 60);
         trampoSlimeGadget.buyableWithStars(10000);
 
-        GadgetCosmetic animalChestGadget = new GadgetCosmetic("animalchest", "Coffre animal", new ItemStack(Material.CHEST, 1), new String[] {
-        		"Ce coffre contient un animal, mais ... lequel ?",
-        		"Ouvrez le pour découvrir votre surprise !"
+        GadgetCosmetic animalChestGadget = new GadgetCosmetic("secretchest", "Coffre super secret", new ItemStack(Material.CHEST, 1), new String[] {
+        		"Nos chercheurs n'ont jamais réussis à déterminer",
+        		"le contenu de ce coffre. Saurez-vous nous aider ?"
         }, AnimalChestDisplayer.class, 60);
         animalChestGadget.buyableWithStars(8000);
+
+        GadgetCosmetic holyCreeper = new GadgetCosmetic("holycreeper", "Mon ami le Creeper", new ItemStack(Material.SULPHUR, 1), new String[] {
+                "Mais qu'il est mignon ce Creeper !",
+                "Avec un peu de chance vous arriverez à l'apprivoiser...",
+                "Enfin, on espère pour vous !"
+        }, HolyCreeperDisplayer.class, 60);
         
         this.registerElement(discoBombGadget);
         this.registerElement(moutMout2000Gadget);
@@ -95,5 +100,6 @@ public class GadgetRegistry extends AbstractCosmeticRegistry<GadgetCosmetic>
         this.registerElement(enderSwapGadget);
         this.registerElement(stargateGadget);
         this.registerElement(animalChestGadget);
+        this.registerElement(holyCreeper);
     }
 }

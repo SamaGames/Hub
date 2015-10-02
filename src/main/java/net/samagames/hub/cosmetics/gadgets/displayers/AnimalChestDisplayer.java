@@ -1,18 +1,9 @@
 package net.samagames.hub.cosmetics.gadgets.displayers;
 
-import java.lang.reflect.Field;
-import java.util.Random;
-
-import net.minecraft.server.v1_8_R3.Block;
-import net.minecraft.server.v1_8_R3.BlockPosition;
-import net.minecraft.server.v1_8_R3.EntityInsentient;
-import net.minecraft.server.v1_8_R3.Navigation;
-import net.minecraft.server.v1_8_R3.PacketPlayOutBlockAction;
-import net.minecraft.server.v1_8_R3.PathfinderGoalSelector;
+import net.minecraft.server.v1_8_R3.*;
 import net.samagames.hub.Hub;
 import net.samagames.hub.utils.SimpleBlock;
 import net.samagames.tools.ParticleEffect;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -25,6 +16,9 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
+
+import java.lang.reflect.Field;
+import java.util.Random;
 
 
 public class AnimalChestDisplayer extends AbstractDisplayer
@@ -45,7 +39,7 @@ public class AnimalChestDisplayer extends AbstractDisplayer
 		
 		this.centerLoc = this.baseLocation.clone().add(0.5D, 0.5D, 0.5D);
 		Random r = new Random();
-		type = TYPES[r.nextInt(TYPES.length)];
+		this.type = this.TYPES[r.nextInt(this.TYPES.length)];
 	}
 
 	@SuppressWarnings("deprecation")
@@ -58,65 +52,47 @@ public class AnimalChestDisplayer extends AbstractDisplayer
             block.getBlock().setData(this.blocksUsed.get(block).getData());
         }
 		
-		BukkitTask particletask = Bukkit.getScheduler().runTaskTimer(Hub.getInstance(), new Runnable()
+		BukkitTask particletask = Bukkit.getScheduler().runTaskTimer(Hub.getInstance(), () ->
 		{
-			@Override
-			public void run()
-			{
-				Random random = new Random();
-				double theta = 2 * Math.PI * random.nextDouble();
-				double phi = Math.acos(2 * random.nextDouble() - 1);
-				double x = centerLoc.getX() + (1 * Math.sin(phi) * Math.cos(theta));
-				double y = centerLoc.getY() + (1 * Math.sin(phi) * Math.sin(theta));
-				double z = centerLoc.getZ() + (1 * Math.cos(phi));
-				ParticleEffect.PORTAL.display(new Vector(x, y, z), 0.1F, centerLoc.clone().add(new Vector(x, y, z).multiply(0.9)), 160.0D);
-			}
-		}, 2, 2);
-		Bukkit.getScheduler().runTaskLater(Hub.getInstance(), new Runnable()
+            Random random = new Random();
+            double theta = 2 * Math.PI * random.nextDouble();
+            double phi = Math.acos(2 * random.nextDouble() - 1);
+            double x = this.centerLoc.getX() + (1 * Math.sin(phi) * Math.cos(theta));
+            double y = this.centerLoc.getY() + (1 * Math.sin(phi) * Math.sin(theta));
+            double z = this.centerLoc.getZ() + (1 * Math.cos(phi));
+            ParticleEffect.PORTAL.display(new Vector(x, y, z), 0.1F, this.centerLoc.clone().add(new Vector(x, y, z).multiply(0.9)), 160.0D);
+        }, 2, 2);
+
+		Bukkit.getScheduler().runTaskLater(Hub.getInstance(), () ->
 		{
-			@Override
-			public void run()
+            BlockPosition position = new BlockPosition(this.baseLocation.getX(), this.baseLocation.getY(), this.baseLocation.getZ());
+            Block block = ((CraftWorld) this.baseLocation.getWorld()).getHandle().c(position);
+            PacketPlayOutBlockAction openingpacket = new PacketPlayOutBlockAction(position, block, 1, 1);
+
+            for (Player p : Bukkit.getOnlinePlayers())
+                ((CraftPlayer)p).getHandle().playerConnection.sendPacket(openingpacket);
+
+            BukkitTask spawningtask = Bukkit.getScheduler().runTaskTimer(Hub.getInstance(), () ->
 			{
-				BlockPosition position = new BlockPosition(baseLocation.getX(), baseLocation.getY(), baseLocation.getZ());
-				Block block = ((CraftWorld)baseLocation.getWorld()).getHandle().c(position);
-				PacketPlayOutBlockAction openingpacket = new PacketPlayOutBlockAction(position, block, 1, 1);
-				for (Player p : Bukkit.getOnlinePlayers())
-					((CraftPlayer)p).getHandle().playerConnection.sendPacket(openingpacket);
-				BukkitTask spawningtask = Bukkit.getScheduler().runTaskTimer(Hub.getInstance(), new Runnable()
-				{
-					@Override
-					public void run()
-					{
-						Entity e = centerLoc.getWorld().spawnEntity(centerLoc.clone().add(0, 0.3, 0), type);
-						e.teleport(centerLoc);
-						freeze(e);
-						double x = Math.random() * 2 - 1;
-						double y = Math.random();
-						double z = Math.random() * 2 - 1;
-						e.setVelocity(new Vector(x, y, z).multiply(0.9));
-						Bukkit.getScheduler().runTaskLater(Hub.getInstance(), new Runnable()
-						{
-							@Override
-							public void run()
-							{
-								e.remove();
-							}
-						}, 20);
-					}
-				}, 10, 2);
-				Bukkit.getScheduler().runTaskLater(Hub.getInstance(), new Runnable()
-				{
-					@Override
-					public void run()
-					{
-						particletask.cancel();
-						spawningtask.cancel();
-						restore();
-						end();
-					}
-				}, 200);
-			}
-		}, 100);
+                Entity e = this.centerLoc.getWorld().spawnEntity(this.centerLoc.clone().add(0, 0.3, 0), this.type);
+                e.teleport(this.centerLoc);
+				this.freeze(e);
+                double x = Math.random() * 2 - 1;
+                double y = Math.random();
+                double z = Math.random() * 2 - 1;
+                e.setVelocity(new Vector(x, y, z).multiply(0.9));
+
+                Bukkit.getScheduler().runTaskLater(Hub.getInstance(), e::remove, 20);
+            }, 10, 2);
+
+            Bukkit.getScheduler().runTaskLater(Hub.getInstance(), () ->
+			{
+                particletask.cancel();
+                spawningtask.cancel();
+				this.restore();
+                this.end();
+            }, 200);
+        }, 100);
 	}
 
 	@Override
