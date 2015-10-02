@@ -26,9 +26,9 @@ public class GuiProfile extends AbstractGui
         this.inventory = Bukkit.createInventory(null, 45, "Profil");
 
         this.setSlotData(this.createPlayerHead(player), 13, "none");
-        this.setSlotData(ChatColor.GOLD + "Statistiques", Material.ENCHANTED_BOOK, 30, new String[] { ChatColor.GRAY + "Retrouvez vos scores et classements !" }, "stats");
-        this.setSlotData(ChatColor.GOLD + "Objectifs", Material.DIAMOND, 31, new String[] { ChatColor.GRAY + "Allez-vous réussir à tous les", ChatColor.GRAY + "compléter ?" }, "achievements");
-        this.setSlotData(ChatColor.GOLD + "Paramètres", Material.DIODE, 32, new String[] { ChatColor.GRAY + "Vos préférences sur le serveur" }, "settings");
+        this.setSlotData(ChatColor.GOLD + "Statistiques", Material.ENCHANTED_BOOK, 21, new String[] { ChatColor.GRAY + "Retrouvez vos scores et classements !" }, "stats");
+        this.setSlotData(ChatColor.GOLD + "Objectifs", Material.DIAMOND, 22, new String[] { ChatColor.GRAY + "Allez-vous réussir à tous les", ChatColor.GRAY + "compléter ?" }, "achievements");
+        this.setSlotData(ChatColor.GOLD + "Paramètres", Material.DIODE, 23, new String[] { ChatColor.GRAY + "Vos préférences sur le serveur" }, "settings");
 
         this.setSlotData(GuiUtils.getBackItem(), this.inventory.getSize() - 5, "back");
 
@@ -70,6 +70,7 @@ public class GuiProfile extends AbstractGui
         lores.add(ChatColor.GRAY + "Etoiles : " + ChatColor.AQUA + playerData.getCoins());
 
         meta.setLore(lores);
+        stack.setItemMeta(meta);
 
         return stack;
     }

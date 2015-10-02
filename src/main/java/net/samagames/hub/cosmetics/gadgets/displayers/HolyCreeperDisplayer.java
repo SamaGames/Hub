@@ -44,7 +44,7 @@ public class HolyCreeperDisplayer extends AbstractDisplayer
     {
         this.lovingTask.cancel();
 
-        Location flowerSpawnLocation = creeper.getLocation().clone().add(0.0D, 0.5D, 0.0D);
+        Location flowerSpawnLocation = creeper.getLocation().clone().add(0.0D, 1.5D, 0.0D);
 
         for(int i = 0; i < 64; i++)
         {
@@ -54,7 +54,7 @@ public class HolyCreeperDisplayer extends AbstractDisplayer
 
             try
             {
-                Hub.getInstance().getCosmeticManager().getGadgetManager().ageField.set((((CraftItem) item).getHandle()), 5750);
+                Hub.getInstance().getCosmeticManager().getGadgetManager().ageField.set((((CraftItem) item).getHandle()), 5500);
             }
             catch (IllegalAccessException e)
             {
