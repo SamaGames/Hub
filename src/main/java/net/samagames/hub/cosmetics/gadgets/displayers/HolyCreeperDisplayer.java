@@ -36,7 +36,7 @@ public class HolyCreeperDisplayer extends AbstractDisplayer
         this.lovingTask = Bukkit.getScheduler().runTaskTimer(Hub.getInstance(), () ->
         {
             if(!creeper.isDead())
-                ParticleEffect.HEART.display(0.25F, 0.5F, 0.25F, 1.0F, 6, creeper.getLocation());
+                ParticleEffect.HEART.display(0.25F, 0.5F, 0.25F, 1.0F, 6, creeper.getLocation(), 20.0D);
         }, 5L, 5L);
     }
 
@@ -69,7 +69,7 @@ public class HolyCreeperDisplayer extends AbstractDisplayer
         Creeper creeper = (Creeper) with;
         creeper.getWorld().createExplosion(creeper.getLocation().getX(), creeper.getLocation().getY(), creeper.getLocation().getZ(), 1.0F, false, false);
 
-        this.explode(who.getLocation());
+        this.explode(creeper.getLocation());
     }
 
     @Override

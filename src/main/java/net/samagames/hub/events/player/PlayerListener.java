@@ -251,6 +251,18 @@ public class PlayerListener implements Listener
                 Hub.getInstance().getCosmeticManager().getGadgetManager().getPlayerGadget((Player) event.getEntity()).handleInteraction(event.getDamager(), event.getEntity());
             }
         }
+        else if(event.getDamager() instanceof Player && !(event.getEntity() instanceof Player))
+        {
+            if(event.getEntity().hasMetadata("owner-id"))
+            {
+                UUID uuid = UUID.fromString(event.getEntity().getMetadata("owner-id").get(0).asString());
+
+                if(Hub.getInstance().getCosmeticManager().getGadgetManager().hasGadget(uuid))
+                {
+                    Hub.getInstance().getCosmeticManager().getGadgetManager().getPlayerGadget(uuid).handleInteraction(event.getDamager(), event.getEntity());
+                }
+            }
+        }
     }
 
     @EventHandler

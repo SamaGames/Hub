@@ -158,8 +158,13 @@ public class GadgetManager extends AbstractCosmeticManager<GadgetCosmetic>
 
     public AbstractDisplayer getPlayerGadget(Player player)
     {
-        if(this.playersGadgets.containsKey(player.getUniqueId()))
-            return this.playersGadgets.get(player.getUniqueId());
+        return getPlayerGadget(player.getUniqueId());
+    }
+
+    public AbstractDisplayer getPlayerGadget(UUID player)
+    {
+        if(this.playersGadgets.containsKey(player))
+            return this.playersGadgets.get(player);
         else
             return null;
     }
@@ -209,7 +214,12 @@ public class GadgetManager extends AbstractCosmeticManager<GadgetCosmetic>
 
     public boolean hasGadget(Player player)
     {
-        return this.playersGadgets.containsKey(player.getUniqueId());
+        return this.hasGadget(player.getUniqueId());
+    }
+
+    public boolean hasGadget(UUID player)
+    {
+        return this.playersGadgets.containsKey(player);
     }
 
     @Override
