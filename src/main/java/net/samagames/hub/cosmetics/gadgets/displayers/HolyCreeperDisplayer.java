@@ -1,5 +1,6 @@
 package net.samagames.hub.cosmetics.gadgets.displayers;
 
+import de.slikey.effectlib.effect.HeartEffect;
 import net.samagames.hub.Hub;
 import net.samagames.tools.ParticleEffect;
 import org.bukkit.Bukkit;
@@ -65,6 +66,11 @@ public class HolyCreeperDisplayer extends AbstractDisplayer
         creeper.getWorld().strikeLightningEffect(creeper.getLocation());
         creeper.getWorld().createExplosion(creeper.getLocation().getX(), (creeper.getLocation().getY() + 2.0D), creeper.getLocation().getZ(), 2.5F, false, false);
         creeper.remove();
+
+        HeartEffect heartEffect = new HeartEffect(Hub.getInstance().getCosmeticManager().getParticleManager().getEffectManager());
+        heartEffect.particle = de.slikey.effectlib.util.ParticleEffect.FIREWORKS_SPARK;
+        heartEffect.setLocation(flowerSpawnLocation.clone().add(0.0D, 1.5D, 0.0D));
+        heartEffect.start();
     }
 
     @Override
