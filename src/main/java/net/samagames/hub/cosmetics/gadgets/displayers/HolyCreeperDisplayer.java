@@ -68,7 +68,7 @@ public class HolyCreeperDisplayer extends AbstractDisplayer
         creeper.remove();
 
         HeartEffect heartEffect = new HeartEffect(Hub.getInstance().getCosmeticManager().getParticleManager().getEffectManager());
-        heartEffect.particle = de.slikey.effectlib.util.ParticleEffect.FIREWORKS_SPARK;
+        heartEffect.particle = de.slikey.effectlib.util.ParticleEffect.HEART;
         heartEffect.setLocation(flowerSpawnLocation.clone().add(0.0D, 1.5D, 0.0D));
         heartEffect.start();
     }
