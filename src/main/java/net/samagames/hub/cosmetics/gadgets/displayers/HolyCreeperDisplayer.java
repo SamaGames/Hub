@@ -50,7 +50,7 @@ public class HolyCreeperDisplayer extends AbstractDisplayer
         {
             ItemStack redDye = new ItemStack(Material.INK_SACK, 1, (short) 1);
             Item item = this.player.getWorld().dropItemNaturally(flowerSpawnLocation, redDye);
-            item.setVelocity(new Vector(new Random().nextInt(4) - 3, 2, new Random().nextInt(4) - 2));
+            item.setVelocity(new Vector(new Random().nextInt(2) - 1, 1.5, new Random().nextInt(2) - 1));
 
             try
             {
@@ -63,7 +63,7 @@ public class HolyCreeperDisplayer extends AbstractDisplayer
         }
 
         creeper.getWorld().strikeLightningEffect(creeper.getLocation());
-        creeper.getWorld().createExplosion(creeper.getLocation().getX(), (creeper.getLocation().getY() + 2.0D), creeper.getLocation().getZ(), 4.0F, false, false);
+        creeper.getWorld().createExplosion(creeper.getLocation().getX(), (creeper.getLocation().getY() + 2.0D), creeper.getLocation().getZ(), 2.5F, false, false);
         creeper.remove();
     }
 

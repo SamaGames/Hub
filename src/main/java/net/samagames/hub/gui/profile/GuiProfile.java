@@ -67,7 +67,7 @@ public class GuiProfile extends AbstractGui
 
         ArrayList<String> lores = new ArrayList<>();
         lores.add(ChatColor.GRAY + "Pièces : " + ChatColor.GOLD + playerData.getCoins());
-        lores.add(ChatColor.GRAY + "Etoiles : " + ChatColor.AQUA + playerData.getCoins());
+        lores.add(ChatColor.GRAY + "Etoiles : " + ChatColor.AQUA + playerData.getStars());
 
         meta.setLore(lores);
         stack.setItemMeta(meta);

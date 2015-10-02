@@ -38,6 +38,8 @@ public class PlayerManager extends AbstractManager
     {
         this.updateSettings(player);
         this.updateHiders(player);
+
+        player.sendMessage(ChatColor.DARK_RED + "" + ChatColor.BOLD + "Avertissement ! " + ChatColor.RESET + ChatColor.RED + "SamaGames est actuellement en période Bêta ! Cela signifie que de nombreux bugs peuvent survenir et pouvant donc géner votre expérience de jeu. Nous vous prions de nous reporter les bugs sur le forum " + ChatColor.GOLD + "http://samagames.net/forum" + ChatColor.RED + ". Nous nous empresserons de le corriger rapidement. Merci de votre compréhension.");
     }
 
     public void handleLogout(Player player)
