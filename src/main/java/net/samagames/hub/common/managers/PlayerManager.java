@@ -4,7 +4,6 @@ import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import net.samagames.hub.common.StaticInventory;
 import net.samagames.hub.cosmetics.jukebox.JukeboxSong;
-import net.samagames.tools.chat.ChatUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -39,12 +38,6 @@ public class PlayerManager extends AbstractManager
     {
         this.updateSettings(player);
         this.updateHiders(player);
-
-        player.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
-        player.sendMessage(ChatUtils.getCenteredText(ChatColor.WHITE + "•" + ChatColor.BOLD + " Avertissement " + ChatColor.RESET + ChatColor.WHITE + "•"));
-        player.sendMessage("");
-        player.sendMessage(ChatColor.RED + "SamaGames est actuellement en période Bêta ! Cela signifie que de nombreux bugs peuvent survenir pouvant géner votre expérience de jeu. Nous vous prions de nous reporter les bugs à un membre de l'équipe ou directement sur le forum. Nous nous empresserons de le corriger rapidement. Merci de votre compréhension.");
-        player.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
     }
 
     public void handleLogout(Player player)
