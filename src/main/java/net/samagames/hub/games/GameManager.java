@@ -70,16 +70,21 @@ public class GameManager extends AbstractManager
             }
         });
 
-        hub.getHydroManager().getPacketReceiver().registerCallBack(new PacketCallBack<QueueAddPlayerPacket>(QueueAddPlayerPacket.class)
+        hub.getHydroManager().getPacketReceiver().registerCallBack(new PacketCallBack<QueueInfosUpdatePacket>(QueueInfosUpdatePacket.class)
         {
             @Override
-            public void call(QueueAddPlayerPacket packet)
+            public void call(QueueInfosUpdatePacket packet)
             {
                 Player player = Bukkit.getPlayer(packet.getPlayer().getUUID());
 
                 if(player != null)
                 {
-                    player.sendMessage(ChatColor.GREEN + "Vous avez été ajouté à la queue " + ChatColor.GOLD + games.get(packet.getGame()).getName() + " : " + packet.getMap() + ChatColor.GREEN + " !");
+                    if(packet.getType().equals(QueueInfosUpdatePacket.Type.ADD))
+                    {
+                        player.sendMessage(ChatColor.GREEN + "Vous avez été ajouté à la queue " + ChatColor.GOLD + packet.getTemplateID()+  ChatColor.GREEN + " !");
+                    }else{
+                        player.sendMessage(ChatColor.GREEN + "Vous avez été retiré de la queue " + ChatColor.GOLD + packet.getTemplateID()+  ChatColor.GREEN + " !");
+                    }
                 }
             }
         });
