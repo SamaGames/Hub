@@ -23,7 +23,6 @@ public class GameInfoToHubPacket extends AbstractPacket {
 
     public GameInfoToHubPacket(String templateID)
     {
-
         this.templateID = templateID;
     }
 

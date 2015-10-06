@@ -10,13 +10,15 @@ import net.samagames.hub.common.hydroconnect.queue.QPlayer;
  * (C) Copyright Elydra Network 2014 & 2015
  * All rights reserved.
  */
-public class QueueInfosUpdatePacket extends AbstractPacket {
+public class QueueInfosUpdatePacket extends AbstractPacket
+{
 
     private Type type;
     private boolean success;
     private String errorMessage;
 
-    private String templateID;
+    private String game;
+    private String map;
 
     private QPlayer player;
 
@@ -26,43 +28,53 @@ public class QueueInfosUpdatePacket extends AbstractPacket {
 
     public QueueInfosUpdatePacket(QPlayer player, Type type, boolean success, String errorMessage)
     {
-
         this.player = player;
         this.type = type;
         this.success = success;
         this.errorMessage = errorMessage;
     }
 
-    public QueueInfosUpdatePacket(QPlayer player, Type type, String templateID)
+    public QueueInfosUpdatePacket(QPlayer player, Type type, String game, String map)
     {
-
         this.player = player;
         this.type = type;
-        this.templateID = templateID;
+        this.game = game;
+        this.map = map;
     }
 
-    public Type getType() {
+    public Type getType()
+    {
         return type;
     }
 
-    public boolean isSuccess() {
+    public boolean isSuccess()
+    {
         return success;
     }
 
-    public String getErrorMessage() {
+    public String getErrorMessage()
+    {
         return errorMessage;
     }
 
-    public String getTemplateID() {
-        return templateID;
+    public String getGame()
+    {
+        return game;
     }
 
-    public QPlayer getPlayer() {
+    public String getMap()
+    {
+        return map;
+    }
+
+    public QPlayer getPlayer()
+    {
         return player;
     }
 
 
-    public enum Type {
+    public enum Type
+    {
         ADD, REMOVE
     }
 }
