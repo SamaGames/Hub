@@ -52,7 +52,12 @@ public class GuiFriends extends AbstractGui
 
         for(UUID friend : toDisplay)
         {
-            this.setSlotData(this.makeHeadOf(friend), (baseSlots[slot] + (lines * 9)), "friend_" + friend);
+            String friendName = SamaGamesAPI.get().getUUIDTranslator().getName(friend);
+
+            // Avoid Unknown players
+            if (friendName == null)
+                continue;
+            this.setSlotData(this.makeHeadOf(friendName), (baseSlots[slot] + (lines * 9)), "friend_" + friend);
 
             slot++;
 
@@ -106,12 +111,10 @@ public class GuiFriends extends AbstractGui
         }
     }
 
-    private ItemStack makeHeadOf(UUID friend)
+    private ItemStack makeHeadOf(String name)
     {
         ItemStack head = new ItemStack(Material.SKULL_ITEM, 1, (short) SkullType.PLAYER.ordinal());
         SkullMeta meta = (SkullMeta) head.getItemMeta();
-
-        String name = SamaGamesAPI.get().getUUIDTranslator().getName(friend);
 
         meta.setOwner(name);
         meta.setDisplayName(ChatColor.GOLD + name);
