@@ -27,7 +27,7 @@ public class GuiStalkerFriends2000 extends AbstractGui
     public void display(Player player)
     {
         List<UUID> friendListRaw = SamaGamesAPI.get().getFriendsManager().uuidFriendsList(player.getUniqueId());
-        List<IProxiedPlayer> friendList = friendListRaw.stream().filter(friend -> SamaGamesAPI.get().getProxyDataManager().getProxiedPlayer(friend).getServer().equals("Inconnu")).map(friend -> SamaGamesAPI.get().getProxyDataManager().getProxiedPlayer(friend)).collect(Collectors.toList());
+        List<IProxiedPlayer> friendList = friendListRaw.stream().filter(friend -> !SamaGamesAPI.get().getProxyDataManager().getProxiedPlayer(friend).getServer().equals("Inconnu")).map(friend -> SamaGamesAPI.get().getProxyDataManager().getProxiedPlayer(friend)).collect(Collectors.toList());
 
         int[] slots = new int[] { 10, 11, 12, 13, 14, 15, 16, 17 };
         int slot = 0;
@@ -64,15 +64,10 @@ public class GuiStalkerFriends2000 extends AbstractGui
 
             String formattedServer;
 
-            if (!server.equals("Inconnu"))
-            {
-                formattedServer = ChatColor.GRAY + server.split("_")[0] + " " + server.split("_")[1];
-                if(Hub.getInstance().getGameManager().getGameByIdentifier(server.split("_")[0]) != null)
-                    if (Hub.getInstance().getGameManager().getGameByIdentifier(server.split("_")[0]).getCodeName().equals("beta_staff"))
-                        formattedServer = ChatColor.RED + "Secret :o";
-            }
-            else
-                formattedServer = server;
+            formattedServer = ChatColor.GRAY + server.split("_")[0] + " " + server.split("_")[1];
+            if(Hub.getInstance().getGameManager().getGameByIdentifier(server.split("_")[0]) != null)
+                if (Hub.getInstance().getGameManager().getGameByIdentifier(server.split("_")[0]).getCodeName().equals("beta_staff"))
+                    formattedServer = ChatColor.RED + "Secret :o";
 
 
 
