@@ -62,11 +62,19 @@ public class GuiStalkerFriends2000 extends AbstractGui
 
             ArrayList<String> lores = new ArrayList<>();
 
-            String formattedServer = ChatColor.GRAY + server.split("_")[0] + " " + server.split("_")[1];
+            String formattedServer;
 
-            if(Hub.getInstance().getGameManager().getGameByIdentifier(server.split("_")[0]) != null)
-                if (Hub.getInstance().getGameManager().getGameByIdentifier(server.split("_")[0]).getCodeName().equals("beta_staff"))
-                    formattedServer = ChatColor.RED + "Secret :o";
+            if (!server.equals("Inconnu"))
+            {
+                formattedServer = ChatColor.GRAY + server.split("_")[0] + " " + server.split("_")[1];
+                if(Hub.getInstance().getGameManager().getGameByIdentifier(server.split("_")[0]) != null)
+                    if (Hub.getInstance().getGameManager().getGameByIdentifier(server.split("_")[0]).getCodeName().equals("beta_staff"))
+                        formattedServer = ChatColor.RED + "Secret :o";
+            }
+            else
+                formattedServer = server;
+
+
 
             lores.add(ChatColor.GOLD + "Actuellement sur : " + formattedServer);
             lores.add("");
