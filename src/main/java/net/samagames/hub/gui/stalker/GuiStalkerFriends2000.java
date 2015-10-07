@@ -27,7 +27,7 @@ public class GuiStalkerFriends2000 extends AbstractGui
     public void display(Player player)
     {
         List<UUID> friendListRaw = SamaGamesAPI.get().getFriendsManager().uuidFriendsList(player.getUniqueId());
-        List<IProxiedPlayer> friendList = friendListRaw.stream().filter(friend -> !SamaGamesAPI.get().getProxyDataManager().getProxiedPlayer(friend).getServer().equals("Inconnu")).map(friend -> SamaGamesAPI.get().getProxyDataManager().getProxiedPlayer(friend)).collect(Collectors.toList());
+        List<IProxiedPlayer> friendList = friendListRaw.stream().filter(friend -> SamaGamesAPI.get().getProxyDataManager().getProxiedPlayer(friend).getServer() != null).map(friend -> SamaGamesAPI.get().getProxyDataManager().getProxiedPlayer(friend)).collect(Collectors.toList());
 
         int[] slots = new int[] { 10, 11, 12, 13, 14, 15, 16, 17 };
         int slot = 0;
