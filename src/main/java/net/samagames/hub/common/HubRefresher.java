@@ -56,6 +56,13 @@ public class HubRefresher implements Runnable
         this.hub.getGuiManager().getPlayersGui().keySet().stream().filter(uuid -> this.hub.getGuiManager().getPlayersGui().get(uuid) instanceof GuiSwitchHub).forEach(uuid -> this.hub.getGuiManager().getPlayersGui().get(uuid).update(Bukkit.getPlayer(uuid)));
     }
 
+    public void removeFromList()
+    {
+        Jedis jedis = SamaGamesAPI.get().getBungeeResource();
+        jedis.hdel("hubs_connected", SamaGamesAPI.get().getServerName());
+        jedis.close();
+    }
+
     public JsonHub getHubByID(int id)
     {
         for(JsonHub hub : this.hubs)

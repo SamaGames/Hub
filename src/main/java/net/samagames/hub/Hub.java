@@ -116,6 +116,8 @@ public class Hub extends JavaPlugin
         this.npcManager.onServerClose();
         this.hologramManager.onServerClose();
         this.scoreboardManager.onServerClose();
+        if (this.hubRefresher != null)
+            this.hubRefresher.removeFromList();
     }
 
     public void registerEvents()
