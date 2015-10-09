@@ -13,9 +13,9 @@ import java.util.ArrayList;
 
 public class ShopCategory extends ShopIcon
 {
-    private final AbstractGame game;
-    private final String[] description;
-    private final ArrayList<ShopIcon> contents;
+    protected final AbstractGame game;
+    protected final String[] description;
+    protected final ArrayList<ShopIcon> contents;
 
     public ShopCategory(AbstractGame game, String actionName, String displayName, ItemStack icon, int slot, String[] description)
     {
