@@ -7,9 +7,9 @@ import java.util.List;
 import net.samagames.hub.Hub;
 import net.samagames.hub.games.AbstractGame;
 import net.samagames.hub.games.DisplayedStat;
+import net.samagames.hub.games.shop.ShopBuyableCategory;
 import net.samagames.hub.games.shop.ShopCategory;
 import net.samagames.hub.games.shop.ShopImprovableItem;
-import net.samagames.tools.ItemUtils;
 
 import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
@@ -88,7 +88,7 @@ public class HeroBattleGame extends AbstractGame
         	tools.addLevel(20000, powerPrefix + "1", "1");
         	tools.addLevel(50000, powerPrefix + "2", "2");
         	
-        	categories[i] = new ShopCategory(this, "class." + className, classesDisplays.get(i), new ItemStack(classesItems.get(i)), i, new String[]{});
+        	categories[i] = new ShopBuyableCategory(this, "class." + className, classesDisplays.get(i), new ItemStack(classesItems.get(i)), i, new String[]{}, prices.get(i));
         	categories[i].addContent(cooldown);
         	categories[i].addContent(power);
         	categories[i].addContent(tools);
