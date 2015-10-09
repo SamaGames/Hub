@@ -51,7 +51,7 @@ public class GuiGameStat extends AbstractGui
         {
             this.setSlotData(ChatColor.RED + "Score de " + this.name, Material.LEATHER_HELMET, 22, new String[]{
                     ChatColor.GRAY + "Score : " + ChatColor.GOLD + value,
-                    ChatColor.GRAY + "Rang : " + ChatColor.GOLD + statManager.getRankValue(this.uuid, this.stat)
+                    ChatColor.GRAY + "Rang : " + ChatColor.RED + "  Prochainement ..."
             }, "none");
         }
         else
