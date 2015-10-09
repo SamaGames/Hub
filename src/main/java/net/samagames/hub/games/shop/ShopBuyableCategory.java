@@ -15,14 +15,12 @@ import java.util.List;
 
 public class ShopBuyableCategory extends ShopCategory
 {
-    private final String type;
     private final int cost;
 
-    public ShopBuyableCategory(AbstractGame game, String type, String actionName, String displayName, ItemStack icon, int slot, String[] description, int cost)
+    public ShopBuyableCategory(AbstractGame game, String actionName, String displayName, ItemStack icon, int slot, String[] description, int cost)
     {
         super(game, actionName, displayName, icon, slot, description);
 
-        this.type = type;
         this.cost = cost;
     }
 
@@ -46,8 +44,8 @@ public class ShopBuyableCategory extends ShopCategory
             GuiConfirm confirm = new GuiConfirm(Hub.getInstance().getGuiManager().getPlayerGui(player), () ->
             {
                 SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).withdrawCoins(this.cost);
-                SamaGamesAPI.get().getShopsManager(this.game.getCodeName()).addOwnedLevel(player, this.type, this.getActionName());
-                SamaGamesAPI.get().getShopsManager(this.game.getCodeName()).setCurrentLevel(player, this.type, this.getActionName());
+                SamaGamesAPI.get().getShopsManager(this.game.getCodeName()).addOwnedLevel(player, this.getActionName(), "flag");
+                SamaGamesAPI.get().getShopsManager(this.game.getCodeName()).setCurrentLevel(player, this.getActionName(), "flag");
 
                 player.sendMessage(ChatColor.GREEN + "Vous avez acheté et équipé " + ChatColor.AQUA + this.getIcon().getItemMeta().getDisplayName());
 
@@ -86,7 +84,7 @@ public class ShopBuyableCategory extends ShopCategory
 
     public boolean isOwned(Player player)
     {
-        List<String> own = SamaGamesAPI.get().getShopsManager(this.game.getCodeName()).getOwnedLevels(player, this.type);
-        return (own != null) && own.contains(this.getActionName());
+        List<String> own = SamaGamesAPI.get().getShopsManager(this.game.getCodeName()).getOwnedLevels(player, this.getActionName());
+        return (own != null) && own.contains("flag");
     }
 }
