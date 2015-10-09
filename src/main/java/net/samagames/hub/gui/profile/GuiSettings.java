@@ -47,7 +47,7 @@ public class GuiSettings extends AbstractGui
                 ChatColor.GRAY + "envoyer des messages."
         });
         
-        this.drawSetting(player, "notifications", "Notifications", new ItemStack(Material.PAPER, 1), 11, new String[] {
+        this.drawSetting(player, "notifications", "Notifications", new ItemStack(Material.MAP, 1), 12, new String[] {
             ChatColor.GRAY + "Quand cette option est activée, vous pourrez",
             ChatColor.GRAY + "recevoir un signal sonore lorsqu'un joueur",
             ChatColor.GRAY + "écrit votre nom dans le chat.",
@@ -71,7 +71,7 @@ public class GuiSettings extends AbstractGui
                 ChatColor.GRAY + "les hubs."
         });
 
-        this.drawSetting(player, "clickme", "ClickMe", new ItemStack(Material.WOOD_BUTTON, 1), 16, new String[] {
+        this.drawSetting(player, "clickme", "ClickMe", new ItemStack(Material.WOOD_BUTTON, 1), 17, new String[] {
                 ChatColor.GRAY + "En cliquant, vous accéderez à un menu",
                 ChatColor.GRAY + "avec les différents paramètres du ClickMe.",
                 ChatColor.GRAY + "Avec celui-ci vous pourrez accéder aux",
