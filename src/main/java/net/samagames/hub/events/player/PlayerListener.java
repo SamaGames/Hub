@@ -117,7 +117,8 @@ public class PlayerListener implements Listener
 
         Bukkit.getOnlinePlayers().stream().filter(player -> StringUtils.containsIgnoreCase(event.getMessage(), player.getName())).forEach(player -> {
             event.getRecipients().remove(player);
-            player.playSound(player.getLocation(), Sound.NOTE_PIANO, 1.0F, 1.0F);
+            if (SamaGamesAPI.get().getSettingsManager().isEnabled(player.getUniqueId(), "notifications", true))
+            	player.playSound(player.getLocation(), Sound.NOTE_PIANO, 1.0F, 1.0F);
 
             String suffixRaw = SamaGamesAPI.get().getPermissionsManager().getApi().getUser(event.getPlayer().getUniqueId()).getProperties().get("suffix");
             ChatColor suffix = ChatColor.getByChar(suffixRaw.charAt(1));

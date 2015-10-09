@@ -4,15 +4,18 @@ import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import net.samagames.hub.gui.AbstractGui;
 import net.samagames.hub.utils.GuiUtils;
-import org.bukkit.*;
+
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.DyeColor;
+import org.bukkit.Material;
+import org.bukkit.SkullType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 
 public class GuiSettings extends AbstractGui
 {
-    private int page;
-
     @Override
     public void display(Player player)
     {
@@ -25,38 +28,44 @@ public class GuiSettings extends AbstractGui
     @Override
     public void update(Player player)
     {
-        this.drawSetting(player, "players", "Joueurs", new ItemStack(Material.SKULL_ITEM, 1, (short) SkullType.PLAYER.ordinal()), 10, new String[] {
+        this.drawSetting(player, "players", "Joueurs", new ItemStack(Material.SKULL_ITEM, 1, (short) SkullType.PLAYER.ordinal()), 9, new String[] {
                 ChatColor.GRAY + "Quand cette option est activée, vous verrez",
                 ChatColor.GRAY + "les joueurs autour de vous dans le hub. Le cas",
                 ChatColor.GRAY + "contraire, vous verrez seulement le " + ChatColor.GOLD + "Staff" + ChatColor.GRAY + ",",
                 ChatColor.GRAY + "les " + ChatColor.GOLD + "Coupaings" + ChatColor.GRAY + " et vos " + ChatColor.GOLD + "amis" + ChatColor.GRAY + "."
         });
 
-        this.drawSetting(player, "chat", "Chat", new ItemStack(Material.BOOK_AND_QUILL, 1), 11, new String[] {
+        this.drawSetting(player, "chat", "Chat", new ItemStack(Material.BOOK_AND_QUILL, 1), 10, new String[] {
                 ChatColor.GRAY + "Quand cette option est activée, vous pourrez",
                 ChatColor.GRAY + "voir les messages des joueurs dans le chat."
         });
 
-        this.drawSetting(player, "private-messages", "Messages privés", new ItemStack(Material.PAPER, 1), 12, new String[] {
+        this.drawSetting(player, "private-messages", "Messages privés", new ItemStack(Material.PAPER, 1), 11, new String[] {
                 ChatColor.GRAY + "Quand cette option est activée, vous pourrez",
-                ChatColor.GRAY + "receoir des messages privés de la part des",
+                ChatColor.GRAY + "recevoir des messages privés de la part des",
                 ChatColor.GRAY + "joueurs. Vos amis pourront quand même vous",
                 ChatColor.GRAY + "envoyer des messages."
         });
+        
+        this.drawSetting(player, "notifications", "Notifications", new ItemStack(Material.PAPER, 1), 11, new String[] {
+            ChatColor.GRAY + "Quand cette option est activée, vous pourrez",
+            ChatColor.GRAY + "recevoir un signal sonore lorsqu'un joueur",
+            ChatColor.GRAY + "écrit votre nom dans le chat.",
+        });
 
-        this.drawSetting(player, "friend-requests", "Demandes d'amis", new ItemStack(Material.RAW_FISH, 1, (short) 3), 13, new String[] {
+        this.drawSetting(player, "friend-requests", "Demandes d'amis", new ItemStack(Material.RAW_FISH, 1, (short) 3), 14, new String[] {
                 ChatColor.GRAY + "Quand cette option est activée, les joueurs",
                 ChatColor.GRAY + "pourront vous envoyer des demandes d'amis."
         });
 
-        this.drawSetting(player, "party-requests", "Demandes de groupe", new ItemStack(Material.LEASH, 1), 14, new String[] {
+        this.drawSetting(player, "party-requests", "Demandes de groupe", new ItemStack(Material.LEASH, 1), 15, new String[] {
                 ChatColor.GRAY + "Quand cette option est activée, les joueurs",
                 ChatColor.GRAY + "pourront vous envoyer des demandes de groupe.",
                 ChatColor.GRAY + "Vos amis pourront quand même vous inviter",
                 ChatColor.GRAY + "dans un groupe."
         });
 
-        this.drawSetting(player, "jukebox", "Jukebox", new ItemStack(Material.JUKEBOX, 1), 15, new String[] {
+        this.drawSetting(player, "jukebox", "Jukebox", new ItemStack(Material.JUKEBOX, 1), 16, new String[] {
                 ChatColor.GRAY + "Quand cette option est activée, vous",
                 ChatColor.GRAY + "entenderez la musique du Jukebox dans",
                 ChatColor.GRAY + "les hubs."

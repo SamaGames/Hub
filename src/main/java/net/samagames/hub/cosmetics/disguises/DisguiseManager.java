@@ -42,7 +42,7 @@ public class DisguiseManager extends AbstractCosmeticManager<DisguiseCosmetic>
 
         if (!logout)
         {
-            cosmeticManager.setCurrentLevel(player, "disguise", "");
+            cosmeticManager.resetLevel(player, "disguise");
             player.sendMessage(ChatColor.GREEN + "Votre déguisement disparait dans l'ombre...");
         }
     }

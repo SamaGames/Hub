@@ -61,7 +61,7 @@ public class ParticleManager extends AbstractCosmeticManager<ParticleCosmetic>
 
         if (!logout)
         {
-            cosmeticManager.setCurrentLevel(player, "particle", "");
+            cosmeticManager.resetLevel(player, "particle");
             player.sendMessage(ChatColor.GREEN + "Votre effet disparait dans l'ombre...");
         }
     }
