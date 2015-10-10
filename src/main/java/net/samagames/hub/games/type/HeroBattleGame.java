@@ -1,21 +1,19 @@
 package net.samagames.hub.games.type;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import net.samagames.hub.Hub;
 import net.samagames.hub.games.AbstractGame;
 import net.samagames.hub.games.DisplayedStat;
 import net.samagames.hub.games.shop.ShopBuyableCategory;
 import net.samagames.hub.games.shop.ShopCategory;
 import net.samagames.hub.games.shop.ShopImprovableItem;
-
 import org.bukkit.ChatColor;
-import org.bukkit.DyeColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.SkullType;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class HeroBattleGame extends AbstractGame
 {
@@ -34,7 +32,7 @@ public class HeroBattleGame extends AbstractGame
     @Override
     public ItemStack getIcon()
     {
-        return new ItemStack(Material.INK_SACK, 1, DyeColor.RED.getDyeData());
+        return new ItemStack(Material.MAGMA_CREAM);
     }
 
     @Override
@@ -48,7 +46,7 @@ public class HeroBattleGame extends AbstractGame
     @Override
     public int getSlotInMainMenu()
     {
-        return 30;
+        return 31;
     }
 
     @Override
@@ -100,9 +98,13 @@ public class HeroBattleGame extends AbstractGame
     }
 
     @Override
-    public ArrayList<DisplayedStat> getDisplayedStats()
+    public List<DisplayedStat> getDisplayedStats()
     {
-        return null;
+        List<DisplayedStat> stats = super.getDisplayedStats();
+        stats.add(new DisplayedStat("elo", "ELO", new ItemStack(Material.ITEM_FRAME)));
+        stats.add(new DisplayedStat("kills", "Joueurs tués", new ItemStack(Material.SKULL_ITEM, 1, (short) SkullType.PLAYER.ordinal())));
+        stats.add(new DisplayedStat("deaths", "Morts", Material.BONE));
+        return stats;
     }
 
     @Override

@@ -9,16 +9,22 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class CommandEvacuate extends AbstractCommand
 {
+    public CommandEvacuate()
+    {
+        playerrRestricted = false;
+    }
+
     @Override
-    public boolean doAction(Player player, Command command, String s, String[] args)
+    public boolean onCommand(CommandSender sender, Command command, String s, String[] args)
     {
         if(args.length != 1)
         {
-            player.sendMessage(ChatColor.RED + "Usage: /evacuate <Destination>");
+            sender.sendMessage(ChatColor.RED + "Usage: /evacuate <Destination>");
             return true;
         }
 
@@ -39,7 +45,8 @@ public class CommandEvacuate extends AbstractCommand
                     else if (this.timer > 10 && this.timer <= 30)
                         p.playSound(p.getLocation(), Sound.NOTE_PLING, 0.8F, 1.0F);
 
-                    Titles.sendTitle(player, 0, 22, 0, ChatColor.RED + "Attention !", ChatColor.GOLD + "Votre hub va redémarrer dans " + ChatColor.AQUA + this.timer + " seconde" + (this.timer > 1 ? "s" : ""));
+                    if (sender instanceof Player)
+                        Titles.sendTitle((Player) sender, 0, 22, 0, ChatColor.RED + "Attention !", ChatColor.GOLD + "Votre hub va redémarrer dans " + ChatColor.AQUA + this.timer + " seconde" + (this.timer > 1 ? "s" : ""));
                 });
 
                 if (this.timer == 0)
@@ -69,5 +76,11 @@ public class CommandEvacuate extends AbstractCommand
         }, 20L, 20L);
 
         return true;
+    }
+
+    @Override
+    public boolean doAction(Player player, Command command, String s, String[] args)
+    {
+        return false;
     }
 }
