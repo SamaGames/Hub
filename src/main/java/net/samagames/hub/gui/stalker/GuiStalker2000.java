@@ -80,10 +80,17 @@ public class GuiStalker2000 extends AbstractGui
                 }
                 else
                 {
-                    if (!Hub.getInstance().getGameManager().getGameByIdentifier(server.split("_")[0]).getCodeName().equals("beta_staff"))
+                    if (server.startsWith("Hub_"))
+                    {
                         formattedServer = ChatColor.GRAY + server.split("_")[0] + " " + server.split("_")[1];
+                    }
                     else
-                        formattedServer = ChatColor.RED + "Secret :o";
+                    {
+                        if (!Hub.getInstance().getGameManager().getGameByIdentifier(server.split("_")[0]).getCodeName().equals("beta_staff"))
+                            formattedServer = ChatColor.GRAY + server.split("_")[0] + " " + server.split("_")[1];
+                        else
+                            formattedServer = ChatColor.RED + "Secret :o";
+                    }
                 }
 
                 lores.add(ChatColor.GOLD + "Actuellement sur : " + formattedServer);

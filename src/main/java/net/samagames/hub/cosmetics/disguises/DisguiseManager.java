@@ -21,7 +21,7 @@ public class DisguiseManager extends AbstractCosmeticManager<DisguiseCosmetic>
         {
             MobDisguise disguise = new MobDisguise(cosmetic.getDisguiseType());
             disguise.setShowName(true);
-            disguise.setViewSelfDisguise(true);
+            disguise.setViewSelfDisguise(false);
 
             DisguiseAPI.disguiseToAll(player, disguise);
 
@@ -42,7 +42,7 @@ public class DisguiseManager extends AbstractCosmeticManager<DisguiseCosmetic>
 
         if (!logout)
         {
-            cosmeticManager.resetLevel(player, "disguise");
+            this.cosmeticManager.resetLevel(player, "disguise");
             player.sendMessage(ChatColor.GREEN + "Votre déguisement disparait dans l'ombre...");
         }
     }

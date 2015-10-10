@@ -14,6 +14,7 @@ public abstract class AbstractCosmeticManager<T extends AbstractCosmetic> extend
     public AbstractCosmeticManager(Hub hub, AbstractCosmeticRegistry<T> registry)
     {
         super(hub);
+
         this.cosmeticManager = SamaGamesAPI.get().getShopsManager("cosmetic");
         this.registry = registry;
         this.registry.register();
