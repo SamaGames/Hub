@@ -65,7 +65,7 @@ public class HeroBattleGame extends AbstractGame
         int i = 0;
         for (String className : classes)
         {
-        	ShopImprovableItem cooldown = new ShopImprovableItem(this, className + ".cooldown", "Réduction des cooldowns", new ItemStack(Material.WEB), 0, new String[]{"Réduisez le temps de rafraîchissement", "de toutes les capacités pour", "cette classe."});
+        	ShopImprovableItem cooldown = new ShopImprovableItem(this, className + ".cooldown", "Réduction des cooldowns", new ItemStack(Material.WEB), 21, new String[]{"Réduisez le temps de rafraîchissement", "de toutes les capacités pour", "cette classe."});
         	cooldown.addDefault(cooldownPrefix + "0%");
         	cooldown.addLevel(500, cooldownPrefix + "5% à 10%", "1");
         	cooldown.addLevel(1000, cooldownPrefix + "10% à 15%", "2");
@@ -73,7 +73,7 @@ public class HeroBattleGame extends AbstractGame
         	cooldown.addLevel(20000, cooldownPrefix + "20% à 25%", "4");
         	cooldown.addLevel(50000, cooldownPrefix + "25% à 30%", "5");
         	
-        	ShopImprovableItem power = new ShopImprovableItem(this, className + ".power", "Puissance des capacités", new ItemStack(Material.BLAZE_POWDER), 1, new String[]{"Augmentez la puissance et la durée", "de toutes les capacités pour", "cette classe."});
+        	ShopImprovableItem power = new ShopImprovableItem(this, className + ".power", "Puissance des capacités", new ItemStack(Material.BLAZE_POWDER), 22, new String[]{"Augmentez la puissance et la durée", "de toutes les capacités pour", "cette classe."});
         	power.addDefault(powerPrefix + "0");
         	power.addLevel(750, powerPrefix + "1", "1");
         	power.addLevel(2000, powerPrefix + "2", "2");
@@ -81,7 +81,7 @@ public class HeroBattleGame extends AbstractGame
         	power.addLevel(30000, powerPrefix + "4", "4");
         	power.addLevel(75000, powerPrefix + "5", "5");
         	
-        	ShopImprovableItem tools = new ShopImprovableItem(this, className + ".tools", "Nouvelles capacités", new ItemStack(Material.NETHER_STAR), 2, new String[]{"Apprenez une nouvelle capacité", "à chaque niveau d'amélioration", "pour cette classe."});
+        	ShopImprovableItem tools = new ShopImprovableItem(this, className + ".tools", "Nouvelles capacités", new ItemStack(Material.NETHER_STAR), 23, new String[]{"Apprenez une nouvelle capacité", "à chaque niveau d'amélioration", "pour cette classe."});
         	tools.addDefault(powerPrefix + "0");
         	tools.addLevel(20000, powerPrefix + "1", "1");
         	tools.addLevel(50000, powerPrefix + "2", "2");
