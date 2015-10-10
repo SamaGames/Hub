@@ -47,7 +47,7 @@ public class DimensionsGame extends AbstractGame
     public String[] getDeveloppers()
     {
         return new String[] {
-                "zyuiop"
+                "Silvanosky"
         };
     }
 
