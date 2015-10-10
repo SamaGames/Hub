@@ -22,7 +22,7 @@ public abstract class AbstractCommand implements CommandExecutor
             return true;
         }
 
-        if(this.permission != null)
+        if(this.permission != null && !playerrRestricted)
         {
             if(!hasPermission((Player) commandSender))
             {
