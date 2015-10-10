@@ -40,7 +40,6 @@ public class GameManager extends AbstractManager
         this.registerGame(new QuakeGame());
         this.registerGame(new DimensionsGame());
         this.registerGame(new HeroBattleGame());
-        this.registerGame(new SplatoonGame());
 
 
         /** Arcade games **/

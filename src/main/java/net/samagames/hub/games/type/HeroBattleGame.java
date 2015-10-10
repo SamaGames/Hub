@@ -11,10 +11,7 @@ import net.samagames.hub.games.shop.ShopBuyableCategory;
 import net.samagames.hub.games.shop.ShopCategory;
 import net.samagames.hub.games.shop.ShopImprovableItem;
 
-import org.bukkit.ChatColor;
-import org.bukkit.DyeColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.inventory.ItemStack;
 
 public class HeroBattleGame extends AbstractGame
@@ -34,7 +31,7 @@ public class HeroBattleGame extends AbstractGame
     @Override
     public ItemStack getIcon()
     {
-        return new ItemStack(Material.INK_SACK, 1, DyeColor.RED.getDyeData());
+        return new ItemStack(Material.MAGMA_CREAM);
     }
 
     @Override
@@ -100,9 +97,13 @@ public class HeroBattleGame extends AbstractGame
     }
 
     @Override
-    public ArrayList<DisplayedStat> getDisplayedStats()
+    public List<DisplayedStat> getDisplayedStats()
     {
-        return null;
+        List<DisplayedStat> stats = super.getDisplayedStats();
+        stats.add(new DisplayedStat("elo", "ELO", new ItemStack(Material.ITEM_FRAME)));
+        stats.add(new DisplayedStat("kills", "Joueurs tués", new ItemStack(Material.SKULL_ITEM, 1, (short) SkullType.PLAYER.ordinal())));
+        stats.add(new DisplayedStat("deaths", "Morts", Material.BONE));
+        return stats;
     }
 
     @Override
