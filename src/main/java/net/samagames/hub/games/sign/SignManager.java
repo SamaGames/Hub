@@ -81,7 +81,7 @@ public class SignManager extends AbstractManager
                     continue;
                 }
 
-                gameObject.addSignForMap(map.replace("_", " "), (Sign) Hub.getInstance().getHubWorld().getBlockAt(sign).getState(), template, color);
+                gameObject.addSignForMap(map.replace("_", " "), (Sign) block.getState(), template, color);
 
                 this.hub.log(this, Level.INFO, "Registered sign zone for the game '" + game + "' and the map '" + map + "'!");
             }
