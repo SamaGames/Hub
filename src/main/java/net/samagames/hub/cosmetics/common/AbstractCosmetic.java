@@ -16,7 +16,6 @@ import java.util.List;
 
 public abstract class AbstractCosmetic
 {
-
     private enum BuyMethod
     {
         FREE, COINS, STARS, PERMISSION
