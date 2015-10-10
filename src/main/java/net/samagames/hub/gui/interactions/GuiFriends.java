@@ -1,11 +1,17 @@
 package net.samagames.hub.gui.interactions;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
 import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import net.samagames.hub.gui.AbstractGui;
 import net.samagames.hub.utils.GuiUtils;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.SkullType;
@@ -13,10 +19,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
 
 public class GuiFriends extends AbstractGui
 {
@@ -98,8 +100,7 @@ public class GuiFriends extends AbstractGui
                 String name = SamaGamesAPI.get().getUUIDTranslator().getName(friend);
                 if (clickType == ClickType.LEFT)
                 {
-                    //TODO: Clickable message
-                    //player.sendMessage(new ComponentBuilder("Cliquez ici pour envoyer un message à " + name).color(net.md_5.bungee.api.ChatColor.YELLOW).event(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/msg " + name)).create());
+                    player.spigot().sendMessage(new ComponentBuilder("Cliquez ici pour envoyer un message à " + name).color(net.md_5.bungee.api.ChatColor.YELLOW).event(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/msg " + name)).create());
                 } else if (clickType == ClickType.RIGHT)
                 {
                     if (SamaGamesAPI.get().getFriendsManager().removeFriend(player.getUniqueId(), friend))
