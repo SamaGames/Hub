@@ -85,7 +85,7 @@ public class ShopDependsItem extends ShopItem
         else if(this.isOwned(player) || this.isDefaultItem())
             lores.add(ChatColor.GREEN + "Objet possédé");
         else if(( this.dependsOn != null && this.hasDepend(player)) || this.dependsOn == null)
-            lores.add(ChatColor.GRAY + "Prix : " + ChatColor.GOLD + this.cost);
+            lores.add(ChatColor.GRAY + "Prix : " + ChatColor.GOLD + this.cost + " pièces");
         else
             lores.add(ChatColor.RED + "Nécessite " + ChatColor.AQUA + this.dependsOn.getIcon().getItemMeta().getDisplayName());
 
