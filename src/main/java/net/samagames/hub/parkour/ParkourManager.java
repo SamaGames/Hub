@@ -11,6 +11,8 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.UUID;
 import java.util.logging.Level;
@@ -38,7 +40,24 @@ public class ParkourManager extends AbstractManager
 
     public void loadConfig()
     {
-        JsonConfiguration parkoursConfig = new JsonConfiguration(new File(this.hub.getDataFolder(), "parkours.json"));
+        File configuration = new File(this.hub.getDataFolder(), "parkours.json");
+
+        if(!configuration.exists())
+        {
+            try
+            {
+                configuration.createNewFile();
+
+                PrintWriter writer = new PrintWriter(configuration);
+                writer.println("{}");
+                writer.close();
+            } catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+        }
+
+        JsonConfiguration parkoursConfig = new JsonConfiguration(configuration);
 
         if(parkoursConfig == null)
             return;
