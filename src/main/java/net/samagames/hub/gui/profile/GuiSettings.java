@@ -4,12 +4,7 @@ import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import net.samagames.hub.gui.AbstractGui;
 import net.samagames.hub.utils.GuiUtils;
-
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.DyeColor;
-import org.bukkit.Material;
-import org.bukkit.SkullType;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
@@ -48,9 +43,9 @@ public class GuiSettings extends AbstractGui
         });
         
         this.drawSetting(player, "notifications", "Notifications", new ItemStack(Material.MAP, 1), 12, new String[] {
-            ChatColor.GRAY + "Quand cette option est activée, vous pourrez",
-            ChatColor.GRAY + "recevoir un signal sonore lorsqu'un joueur",
-            ChatColor.GRAY + "écrit votre nom dans le chat.",
+                ChatColor.GRAY + "Quand cette option est activée, vous pourrez",
+                ChatColor.GRAY + "recevoir un signal sonore lorsqu'un joueur",
+                ChatColor.GRAY + "écrit votre nom dans le chat.",
         });
 
         this.drawSetting(player, "friend-requests", "Demandes d'amis", new ItemStack(Material.RAW_FISH, 1, (short) 3), 14, new String[] {

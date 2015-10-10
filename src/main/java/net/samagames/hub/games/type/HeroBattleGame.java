@@ -1,18 +1,19 @@
 package net.samagames.hub.games.type;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import net.samagames.hub.Hub;
 import net.samagames.hub.games.AbstractGame;
 import net.samagames.hub.games.DisplayedStat;
 import net.samagames.hub.games.shop.ShopBuyableCategory;
 import net.samagames.hub.games.shop.ShopCategory;
 import net.samagames.hub.games.shop.ShopImprovableItem;
-
-import org.bukkit.*;
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.SkullType;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class HeroBattleGame extends AbstractGame
 {
@@ -45,7 +46,7 @@ public class HeroBattleGame extends AbstractGame
     @Override
     public int getSlotInMainMenu()
     {
-        return 30;
+        return 31;
     }
 
     @Override
