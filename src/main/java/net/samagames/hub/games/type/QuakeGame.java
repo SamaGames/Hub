@@ -39,7 +39,8 @@ public class QuakeGame extends AbstractGame
     public String[] getDescription()
     {
         return new String[] {
-                "Prochainement..."
+                "Même si vous n'êtes pas un fermier,",
+                "tirez sur vos adversaires avec votre houe !"
         };
     }
 

@@ -131,7 +131,7 @@ public class ShopImprovableItem extends ShopIcon
         if(next == null)
             lores.add(ChatColor.GREEN + "Améliorations débloquées");
         else
-            lores.add(ChatColor.GRAY + "Prix : " + ChatColor.GOLD + next.getCost());
+            lores.add(ChatColor.GRAY + "Prix : " + ChatColor.GOLD + next.getCost() + " pièces");
 
         ItemStack icon = this.getIcon();
         ItemMeta meta = icon.getItemMeta();

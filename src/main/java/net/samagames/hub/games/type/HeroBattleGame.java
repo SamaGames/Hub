@@ -39,7 +39,8 @@ public class HeroBattleGame extends AbstractGame
     public String[] getDescription()
     {
         return new String[] {
-                "Prochainement..."
+                "Tel que sur Smash, choisissez votre classe",
+                "puis battez-vous dans des univers uniques !"
         };
     }
 

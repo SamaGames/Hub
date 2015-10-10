@@ -74,7 +74,7 @@ public class ShopBuyableCategory extends ShopCategory
         if(isOwned(player))
             lores.add(ChatColor.GREEN + "Objet possédé");
         else
-            lores.add(ChatColor.GRAY + "Prix : " + ChatColor.GOLD + this.cost);
+            lores.add(ChatColor.GRAY + "Prix : " + ChatColor.GOLD + this.cost + " pièces");
 
         meta.setLore(lores);
         stack.setItemMeta(meta);
@@ -84,6 +84,9 @@ public class ShopBuyableCategory extends ShopCategory
 
     public boolean isOwned(Player player)
     {
+        if(this.cost == 0)
+            return true;
+
         List<String> own = SamaGamesAPI.get().getShopsManager(this.game.getCodeName()).getOwnedLevels(player, this.getActionName());
         return (own != null) && own.contains("flag");
     }

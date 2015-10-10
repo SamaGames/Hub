@@ -88,7 +88,7 @@ public class ShopItem extends ShopIcon
         else if(isDefaultItem() || isOwned(player))
             lores.add(ChatColor.GREEN + "Objet possédé");
         else
-            lores.add(ChatColor.GRAY + "Prix : " + ChatColor.GOLD + this.cost);
+            lores.add(ChatColor.GRAY + "Prix : " + ChatColor.GOLD + this.cost + " pièces");
 
         meta.setLore(lores);
         stack.setItemMeta(meta);
