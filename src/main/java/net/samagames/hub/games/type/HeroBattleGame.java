@@ -53,11 +53,11 @@ public class HeroBattleGame extends AbstractGame
     public ShopCategory getShopConfiguration()
     {
     	ShopCategory parentCategory = new ShopCategory(this, null, null, null, -1, null);
-    	
-    	List<String> classes = Arrays.asList("brute", "guerrier", "archer", "mage", "druide", "pyrobarbare", "cryogenie");
-    	List<String> classesDisplays = Arrays.asList("Brute", "Guerrier", "Archer", "Mage", "Druide", "Pyrobarbare", "Cryogénie");
-    	List<Material> classesItems = Arrays.asList(Material.DIAMOND_CHESTPLATE, Material.DIAMOND_SWORD, Material.BOW, Material.POTION, Material.GOLDEN_APPLE, Material.ICE, Material.FLINT_AND_STEEL);
-        List<Integer> prices = Arrays.asList(0, 0, 0, 0, 3000, 5000, 5000);
+
+        List<String> classes = Arrays.asList("brute", "guerrier", "archer", "mage", "mineur", "gardien", "druide", "cryogenie", "pyrobarbare");
+        List<String> classesDisplays = Arrays.asList("Brute", "Guerrier", "Archer", "Mage", "Mineur", "Gardien", "Druide", "Cryogénie", "Pyrobarbare");
+        List<Material> classesItems = Arrays.asList(Material.DIAMOND_CHESTPLATE, Material.DIAMOND_SWORD, Material.BOW, Material.POTION, Material.DIAMOND_PICKAXE, Material.LONG_GRASS, Material.GOLDEN_APPLE, Material.ICE, Material.FLINT_AND_STEEL);
+        List<Integer> prices = Arrays.asList(0, 0, 0, 0, 0, 0, 3000, 5000, 5000);
     	String cooldownPrefix = "Temps réduit de ";
     	String powerPrefix = "Niveau ";
         ShopCategory[] categories = new ShopCategory[classes.size()];
