@@ -15,7 +15,6 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class GuiMain extends AbstractGui
 {
@@ -37,7 +36,7 @@ public class GuiMain extends AbstractGui
 
             if(game.getSlotInMainMenu() != -1)
             {
-                List<String> description = Arrays.asList(game.getDescription());
+                ArrayList<String> description = new ArrayList<>(Arrays.asList(game.getDescription()));
                 String[] developpers = game.getDeveloppers();
 
                 if (developpers != null)
