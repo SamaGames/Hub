@@ -10,11 +10,13 @@ import org.bukkit.entity.Player;
 public abstract class AbstractCommand implements CommandExecutor
 {
     private String permission;
+    protected boolean playerrRestricted = true;
+
 
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] args)
     {
-        if(!(commandSender instanceof Player))
+        if(!(commandSender instanceof Player) && playerrRestricted)
         {
             commandSender.sendMessage(ChatColor.RED + "Vous devez être un joueur en jeu pour pouvoir utiliser cette commande.");
             return true;
