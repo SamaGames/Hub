@@ -169,6 +169,12 @@ public class GuiStalker2000 extends AbstractGui
         {
             String server = action.split(":")[1];
 
+            if(server.contains("Secret"))
+            {
+                player.sendMessage(ChatColor.RED + "Vous ne pouvez pas vous téléporter sur un serveur secret :o");
+                return;
+            }
+
             if(this.teleportEnabled)
             {
                 BungeeUtils.sendPlayerToServer(player, server);
