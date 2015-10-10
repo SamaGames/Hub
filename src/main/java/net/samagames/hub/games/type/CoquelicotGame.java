@@ -41,6 +41,14 @@ public class CoquelicotGame extends AbstractGame
     }
 
     @Override
+    public String[] getDeveloppers()
+    {
+        return new String[] {
+                "IamBlueSlime"
+        };
+    }
+
+    @Override
     public int getSlotInMainMenu()
     {
         return 13;

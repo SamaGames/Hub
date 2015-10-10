@@ -45,6 +45,14 @@ public class QuakeGame extends AbstractGame
     }
 
     @Override
+    public String[] getDeveloppers()
+    {
+        return new String[] {
+                "Silvanosky"
+        };
+    }
+
+    @Override
     public int getSlotInMainMenu()
     {
         return 24;

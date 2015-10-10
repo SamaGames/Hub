@@ -44,6 +44,15 @@ public class HeroBattleGame extends AbstractGame
     }
 
     @Override
+    public String[] getDeveloppers()
+    {
+        return new String[] {
+                "AmauryPi",
+                "6infinity8"
+        };
+    }
+
+    @Override
     public int getSlotInMainMenu()
     {
         return 31;

@@ -43,7 +43,6 @@ public class NPCManager extends AbstractManager
 
     public void reloadNPCS()
     {
-        //TODO: check if we keep it
         String baseKey = "hub:npcs";
         Jedis jedis = SamaGamesAPI.get().getBungeeResource();
         Map<String, String> array = jedis.hgetAll(baseKey);

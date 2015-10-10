@@ -21,7 +21,8 @@ public abstract class AbstractGame
 
     public AbstractGame()
     {
-        this.signs = new HashMap<String, GameSign>() {
+        this.signs = new HashMap<String, GameSign>()
+        {
             @Override
             public void clear()
             {
@@ -31,10 +32,12 @@ public abstract class AbstractGame
         };
 
         Jedis jedis = SamaGamesAPI.get().getBungeeResource();
+
         if(jedis.exists("hub:maintenance:" + this.getCodeName()))
             this.setMaintenance(Boolean.valueOf(jedis.get("hub:maintenance:" + this.getCodeName())));
         else
             this.setMaintenance(false);
+
         jedis.close();
     }
 
@@ -42,6 +45,7 @@ public abstract class AbstractGame
     public abstract String getName();
     public abstract ItemStack getIcon();
     public abstract String[] getDescription();
+    public abstract String[] getDeveloppers();
     public abstract int getSlotInMainMenu();
     public abstract ShopCategory getShopConfiguration();
     public abstract Location getLobbySpawn();

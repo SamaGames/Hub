@@ -11,7 +11,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
 
-public class UpperVoidGame extends AbstractGame
+public class UppervoidGame extends AbstractGame
 {
     @Override
     public String getCodeName()
@@ -39,6 +39,14 @@ public class UpperVoidGame extends AbstractGame
                 "Faites-les tomber dans le vide à l'aide de vos",
                 "impitoyables TNT's, mais gare à ne pas tomber à",
                 "votre tour !"
+        };
+    }
+
+    @Override
+    public String[] getDeveloppers()
+    {
+        return new String[] {
+                "Silvanosky"
         };
     }
 

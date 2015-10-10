@@ -35,6 +35,14 @@ public class SplatoonGame extends AbstractGame
     }
 
     @Override
+    public String[] getDeveloppers()
+    {
+        return new String[] {
+                "6infinity8"
+        };
+    }
+
+    @Override
     public int getSlotInMainMenu()
     {
         return 32;

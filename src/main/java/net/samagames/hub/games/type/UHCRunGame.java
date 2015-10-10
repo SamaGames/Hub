@@ -46,6 +46,15 @@ public class UHCRunGame extends AbstractGame
     }
 
     @Override
+    public String[] getDeveloppers()
+    {
+        return new String[] {
+                "Thog",
+                "zyuiop"
+        };
+    }
+
+    @Override
     public int getSlotInMainMenu()
     {
         return 13;

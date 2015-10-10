@@ -54,6 +54,12 @@ public class OneWayGame extends AbstractGame
     }
 
     @Override
+    public String[] getDeveloppers()
+    {
+        return null;
+    }
+
+    @Override
     public int getSlotInMainMenu()
     {
         return -1;

@@ -16,20 +16,20 @@ public class GadgetRegistry extends AbstractCosmeticRegistry<GadgetCosmetic>
         GadgetCosmetic discoBombGadget = new GadgetCosmetic("discobomb", "Bombe Disco", new ItemStack(Material.STAINED_GLASS, 1, DyeColor.PURPLE.getData()), new String[] {
                 "Exprimez vos talents de danseur sous",
                 "les feux de votre Bombe Disco !"
-        }, DiscoBombDisplayer.class, 30);
+        }, DiscoBombDisplayer.class, 60);
         discoBombGadget.buyableWithStars(2500);
 
         GadgetCosmetic moutMout2000Gadget = new GadgetCosmetic("moutmout2000", "MoutMout 2000", new ItemStack(Material.WOOL, 1), new String[] {
                 "Faites attention à lui, il ne",
                 "sait absolument pas s'arrêter."
-        }, MoutMout2000Displayer.class, 30);
+        }, MoutMout2000Displayer.class, 60);
         moutMout2000Gadget.buyableWithStars(2500);
 
         GadgetCosmetic expressBotaniaGadget = new GadgetCosmetic("expressbotania", "Apprenti botaniste", new ItemStack(Material.RED_ROSE, 1), new String[] {
                 "Les fleurs, ce n'est pas",
                 "que pour les filles.",
                 "Profitez-en :)"
-        }, ExpressBotaniaDisplayer.class, 30);
+        }, ExpressBotaniaDisplayer.class, 60);
         expressBotaniaGadget.buyableWithStars(2500);
 
         GadgetCosmetic trampoSlimeGadget = new GadgetCosmetic("tramposlime", "TrampoSlime", new ItemStack(Material.SLIME_BLOCK, 1), new String[] {
@@ -49,14 +49,14 @@ public class GadgetRegistry extends AbstractCosmeticRegistry<GadgetCosmetic>
                 "La légende raconte que ce gâteau",
                 "n'apparait que pendant la pleine",
                 "lune, personne ne l'a jamais vu..."
-        }, CakeDisplayer.class, 40);
+        }, CakeDisplayer.class, 60);
         fakeCakeGadget.buyableWithStars(2500);
 
         GadgetCosmetic perchedCatGadget = new GadgetCosmetic("catrun", "Chat perché !", new ItemStack(Material.MONSTER_EGG, 1, EntityType.OCELOT.getTypeId()), new String[] {
                 "Défiez en duel un joueur et faites",
                 "en sorte d'échapper à son imparable",
                 "poing qui vous ferait perdre le duel !"
-        }, PerchedCatDisplayer.class, 40);
+        }, PerchedCatDisplayer.class, 100);
         perchedCatGadget.buyableWithStars(2500);
 
         GadgetCosmetic enderSwapGadget = new GadgetCosmetic("enderswap", "EnderSwap", new ItemStack(Material.ENDER_PEARL, 1), new String[] {
@@ -75,20 +75,21 @@ public class GadgetRegistry extends AbstractCosmeticRegistry<GadgetCosmetic>
                 "",
                 ChatColor.RED + "Attention: La faille spacio-temporelle",
                 ChatColor.RED + "aspire tous les joueurs autour de celle-ci !"
-        }, StargateDisplayer.class, 60);
+        }, StargateDisplayer.class, 120);
         trampoSlimeGadget.buyableWithStars(10000);
 
         GadgetCosmetic animalChestGadget = new GadgetCosmetic("secretchest", "Coffre super secret", new ItemStack(Material.CHEST, 1), new String[] {
         		"Nos chercheurs n'ont jamais réussis à déterminer",
         		"le contenu de ce coffre. Saurez-vous nous aider ?"
         }, AnimalChestDisplayer.class, 60);
-        animalChestGadget.buyableWithStars(8000);
+        animalChestGadget.buyableWithStars(3000);
 
         GadgetCosmetic holyCreeper = new GadgetCosmetic("holycreeper", "Mon ami le Creeper", new ItemStack(Material.SULPHUR, 1), new String[] {
                 "Mais qu'il est mignon ce Creeper !",
                 "Avec un peu de chance vous arriverez à l'apprivoiser...",
                 "Enfin, on espère pour vous !"
-        }, HolyCreeperDisplayer.class, 60);
+        }, HolyCreeperDisplayer.class, 40);
+        holyCreeper.buyableWithStars(1200);
         
         this.registerElement(discoBombGadget);
         this.registerElement(moutMout2000Gadget);

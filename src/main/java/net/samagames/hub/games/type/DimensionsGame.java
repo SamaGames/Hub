@@ -44,6 +44,14 @@ public class DimensionsGame extends AbstractGame
     }
 
     @Override
+    public String[] getDeveloppers()
+    {
+        return new String[] {
+                "zyuiop"
+        };
+    }
+
+    @Override
     public int getSlotInMainMenu()
     {
         return 23;

@@ -5,6 +5,7 @@ import net.samagames.hub.Hub;
 import net.samagames.hub.games.AbstractGame;
 import net.samagames.hub.gui.AbstractGui;
 import net.samagames.hub.gui.staff.GuiSelectZone;
+import org.apache.commons.lang3.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -13,6 +14,8 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class GuiMain extends AbstractGui
 {
@@ -33,7 +36,18 @@ public class GuiMain extends AbstractGui
             AbstractGame game = Hub.getInstance().getGameManager().getGameByIdentifier(gameIdentifier);
 
             if(game.getSlotInMainMenu() != -1)
-                this.setSlotData(ChatColor.GOLD + game.getName(), game.getIcon(), game.getSlotInMainMenu(), this.getLores(game.getDescription(), false, true), "game_" + gameIdentifier);
+            {
+                List<String> description = Arrays.asList(game.getDescription());
+                String[] developpers = game.getDeveloppers();
+
+                if (developpers != null)
+                {
+                    description.add("");
+                    description.add(ChatColor.GOLD + "Développeur" + (developpers.length > 1 ? "s" : "") + " : " + ChatColor.GRAY + StringUtils.join(developpers, ", "));
+                }
+
+                this.setSlotData(ChatColor.GOLD + game.getName(), game.getIcon(), game.getSlotInMainMenu(), this.getLores((String[]) description.toArray(), false, true), "game_" + gameIdentifier);
+            }
         }
 
         player.openInventory(this.inventory);

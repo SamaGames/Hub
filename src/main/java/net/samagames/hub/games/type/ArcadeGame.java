@@ -41,6 +41,12 @@ public class ArcadeGame extends AbstractGame
     }
 
     @Override
+    public String[] getDeveloppers()
+    {
+        return null;
+    }
+
+    @Override
     public int getSlotInMainMenu()
     {
         return 22;
