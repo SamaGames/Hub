@@ -23,7 +23,7 @@ public class GuiMain extends AbstractGui
 
         this.setSlotData(ChatColor.GOLD + "Zone BETA - " + ChatColor.GREEN + "VIP", Material.DIAMOND, 9, this.getLores(new String[] { "Testez les jeux avant tout le monde !" }, false, true), "beta_vip");
         this.setSlotData(ChatColor.GOLD + "Spawn", Material.BED, 18, this.getLores(null, false, true), "spawn");
-        this.setSlotData(ChatColor.GOLD + "Jump du Ciel", Material.PACKED_ICE, 26, this.getLores(null, false, true), "parkour");
+        this.setSlotData(ChatColor.GOLD + "Parkour du Ciel", Material.PACKED_ICE, 26, this.getLores(null, false, true), "parkour");
         this.setSlotData(ChatColor.GOLD + "Informations", Material.EMPTY_MAP, 27, this.getInformationLores(), "none");
         this.setSlotData(ChatColor.GOLD + "Changer de hub", Material.ENDER_CHEST, 35, this.getLores(null, true, false), "switch_hub");
         this.setSlotData(ChatColor.GOLD + "Évenement", Material.IRON_FENCE, 17, this.getLores(new String[] { "Aucun évenement en cours !" }, false, false), "event");
@@ -44,13 +44,16 @@ public class GuiMain extends AbstractGui
     {
         if(action.equals("beta_vip"))
         {
-            if(SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "beta.staff"))
+            if(SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "hub.beta.vip"))
             {
-                Hub.getInstance().getGuiManager().openGui(player, new GuiSelectZone());
-                return;
-            }
+                if(SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "hub.beta.staff"))
+                {
+                    Hub.getInstance().getGuiManager().openGui(player, new GuiSelectZone());
+                    return;
+                }
 
-            player.teleport(Hub.getInstance().getGameManager().getGameByIdentifier("beta_vip").getLobbySpawn());
+                player.teleport(Hub.getInstance().getGameManager().getGameByIdentifier("beta_vip").getLobbySpawn());
+            }
         }
         else if(action.equals("switch_hub"))
         {

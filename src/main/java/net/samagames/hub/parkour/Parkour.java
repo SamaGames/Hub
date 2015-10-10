@@ -208,7 +208,7 @@ public class Parkour
 
     public Location getSpawn()
     {
-        return this.spawn;
+        return this.teleportFail;
     }
 
     public Location getEnd()
