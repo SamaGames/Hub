@@ -6,7 +6,7 @@ import net.samagames.hub.gui.AbstractGui;
 import net.samagames.hub.gui.profile.stats.GuiStats;
 import net.samagames.hub.utils.GuiUtils;
 import net.samagames.hub.utils.RankUtils;
-import net.samagames.tools.chat.FancyMessage;
+import net.samagames.tools.chat.fanciful.FancyMessage;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
