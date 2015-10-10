@@ -38,7 +38,7 @@ public class PerchedCatDisplayer extends AbstractDisplayer
     public void display()
     {
         this.player.playSound(this.player.getLocation(), Sound.CAT_MEOW, 1.0F, 1.0F);
-        this.player.sendMessage(this.tag + ChatColor.YELLOW + "Pour commencer à jouer, tape un joueur !");
+        this.player.sendMessage(this.tag + ChatColor.YELLOW + "Pour commencer à jouer, tapez un joueur !");
 
         this.waitingFirstInteraction = true;
 

@@ -34,7 +34,7 @@ public class ArcadeGame extends AbstractGame
     public String[] getDescription()
     {
         return new String[] {
-                "Tout un tas de mini-jeu les",
+                "Tout un tas de mini-jeux les",
                 "plus improbables les uns que",
                 "les autres !"
         };

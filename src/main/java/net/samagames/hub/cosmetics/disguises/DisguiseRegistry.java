@@ -18,7 +18,7 @@ public class DisguiseRegistry extends AbstractCosmeticRegistry<DisguiseCosmetic>
         creeperDisguise.permissionNeeded("disguise.creeper");
 
         DisguiseCosmetic zombieDisguise = new DisguiseCosmetic("zombie", "Zombie", new ItemStack(Material.MONSTER_EGG, 1, EntityType.ZOMBIE.getTypeId()), new String[] {
-                "Nourissez vous de chair fraiche !"
+                "Nourissez vous de chair fraîche !"
         }, DisguiseType.ZOMBIE);
         zombieDisguise.permissionNeeded("disguise.zombie");
 

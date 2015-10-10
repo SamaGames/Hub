@@ -202,7 +202,7 @@ public abstract class AbstractCosmetic
 
     public BaseComponent getBuyResponse()
     {
-        TextComponent txt = new TextComponent("Vous possedez désormais " + this.displayName + " ! Re-cliquez pour l'utiliser.");
+        TextComponent txt = new TextComponent("Vous possédez désormais " + this.displayName + " ! Re-cliquez pour l'utiliser.");
         txt.setColor(net.md_5.bungee.api.ChatColor.GREEN);
         return txt;
     }
