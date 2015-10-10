@@ -54,7 +54,7 @@ public class PetRegistry extends AbstractCosmeticRegistry<PetCosmetic>
         sheepPet.buyableWithStars(1000);
 
         PetSlime slimePet = new PetSlime("slime", "Slime", new ItemStack(Material.MONSTER_EGG, 1, EntityType.SLIME.getTypeId()), new String[] {
-                "La monture gluante par excellance !",
+                "La monture gluante par excellence !",
                 "Approuvé par le comité officiel européen",
                 "des Slimes (COES) !"
         });
@@ -73,7 +73,7 @@ public class PetRegistry extends AbstractCosmeticRegistry<PetCosmetic>
         endermanPet.buyableWithStars(1500);
 
         PetBlackHorse blackHorsePet = new PetBlackHorse("blackhorse", "Cheval Noir", new ItemStack(Material.MONSTER_EGG, 1, EntityType.HORSE.getTypeId()), new String[] {
-                "Rapide et fier, il vous menera à",
+                "Rapide et fier, il vous mènera à",
                 "l'aventure !"
         });
         blackHorsePet.buyableWithStars(1700);

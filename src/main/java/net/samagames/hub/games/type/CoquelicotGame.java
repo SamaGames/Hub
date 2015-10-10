@@ -36,7 +36,7 @@ public class CoquelicotGame extends AbstractGame
         return new String[] {
                 "Il est prévu qu'une invasion de zombie",
                 "survienne, serez-vous le premier à",
-                "vous échappez de cet enfer ?"
+                "vous échapper de cet enfer ?"
         };
     }
 

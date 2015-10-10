@@ -39,7 +39,7 @@ public class CommandSlow extends AbstractCommand
         }
         else
         {
-            player.sendMessage(ChatColor.GREEN + "Rélentissement actuel du chat : " + ChatColor.GOLD + Hub.getInstance().getChatManager().getActualSlowDuration());
+            player.sendMessage(ChatColor.GREEN + "Ralentissement actuel du chat : " + ChatColor.GOLD + Hub.getInstance().getChatManager().getActualSlowDuration());
         }
 
         return true;

@@ -129,7 +129,7 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
         }
         else if (this.isLocked && !canBypassLimit)
         {
-            playedBy.sendMessage(ChatColor.RED + "La playlist est actuellement vérouillée.");
+            playedBy.sendMessage(ChatColor.RED + "La playlist est actuellement vérrouillée.");
             return;
         }
 

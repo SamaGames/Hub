@@ -53,9 +53,9 @@ public class GadgetRegistry extends AbstractCosmeticRegistry<GadgetCosmetic>
         fakeCakeGadget.buyableWithStars(2500);
 
         GadgetCosmetic perchedCatGadget = new GadgetCosmetic("catrun", "Chat perché !", new ItemStack(Material.MONSTER_EGG, 1, EntityType.OCELOT.getTypeId()), new String[] {
-                "Défiez en duel un joueur et faite",
+                "Défiez en duel un joueur et faites",
                 "en sorte d'échapper à son imparable",
-                "poing qui vous ferez perdre le duel !"
+                "poing qui vous ferait perdre le duel !"
         }, PerchedCatDisplayer.class, 40);
         perchedCatGadget.buyableWithStars(2500);
 

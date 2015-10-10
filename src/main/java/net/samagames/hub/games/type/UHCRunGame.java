@@ -40,7 +40,7 @@ public class UHCRunGame extends AbstractGame
     public String[] getDescription()
     {
         return new String[] {
-                "Vous aimes les UHC mais vous n'avez",
+                "Vous aimez les UHC mais vous n'avez",
                 "pas le temps ? Ce jeu est fait pour vous !"
         };
     }

@@ -26,12 +26,12 @@ public class CommandNBS extends AbstractCommand
             }
             else
             {
-                player.sendMessage(ChatColor.RED + "Cette musique n'éxiste !");
+                player.sendMessage(ChatColor.RED + "Cette musique n'éxiste pas !");
             }
         }
         else
         {
-            player.sendMessage(ChatColor.RED + "Veuiller indiquer une musique !");
+            player.sendMessage(ChatColor.RED + "Veuillez indiquer une musique !");
         }
 
         return true;
