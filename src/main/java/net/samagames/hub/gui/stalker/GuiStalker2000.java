@@ -54,8 +54,8 @@ public class GuiStalker2000 extends AbstractGui
         slot = 0;
         lines = 0;
 
-        boolean canSeeServer = SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "tracker.vip");
-        this.teleportEnabled = SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "tracker.teleport");
+        boolean canSeeServer = SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "hub.stalker.view");
+        this.teleportEnabled = SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "hub.stalker.teleport");
 
         for(String famousData : famous.values())
         {

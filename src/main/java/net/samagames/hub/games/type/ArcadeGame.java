@@ -61,7 +61,7 @@ public class ArcadeGame extends AbstractGame
     @Override
     public Location getLobbySpawn()
     {
-        return Hub.getInstance().getPlayerManager().getLobbySpawn();
+        return new Location(Hub.getInstance().getHubWorld(), 107.5D, 86.0D, 138.5D, 0.0F, 0.0F);
     }
 
     @Override

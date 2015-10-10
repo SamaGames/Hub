@@ -2,7 +2,6 @@ package net.samagames.hub.games;
 
 import net.samagames.hub.Hub;
 import net.samagames.hub.common.hydroconnect.packets.hubinfo.GameInfoToHubPacket;
-import net.samagames.hub.common.hydroconnect.packets.queues.QueueAddPlayerPacket;
 import net.samagames.hub.common.hydroconnect.packets.queues.QueueInfosUpdatePacket;
 import net.samagames.hub.common.hydroconnect.utils.PacketCallBack;
 import net.samagames.hub.common.managers.AbstractManager;
@@ -28,8 +27,8 @@ public class GameManager extends AbstractManager
 
         /** Private zones **/
 
-        this.registerGame(new OneWayGame("beta_vip", "VIP", Material.DIAMOND, new Location(this.hub.getHubWorld(), 2003.5, 55, 70.5, -180, 0)));
-        this.registerGame(new OneWayGame("beta_staff", "Staff", Material.COOKIE, new Location(this.hub.getHubWorld(), -2016.5, 51, 92.5, -180, 0)));
+        this.registerGame(new OneWayGame("beta_vip", "VIP", Material.DIAMOND, new Location(this.hub.getHubWorld(), -221.5D, 203.0D, 31.5D, -90.0F, 0.0F)));
+        this.registerGame(new OneWayGame("beta_staff", "Staff", Material.COOKIE, new Location(this.hub.getHubWorld(), -221.5D, 203.0D, 31.5D, -90.0F, 0.0F)));
 
 
         /** Games **/
