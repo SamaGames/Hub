@@ -73,6 +73,13 @@ public class SignManager extends AbstractManager
                 Location sign = LocationUtils.str2loc(mapObject.get("sign").getAsString());
 
                 AbstractGame gameObject = this.hub.getGameManager().getGameByIdentifier(game);
+
+                if(gameObject == null)
+                {
+                    this.hub.log(this, Level.SEVERE, "Wanted to register a game sign withing an unknown game!");
+                    continue;
+                }
+
                 Block block = Hub.getInstance().getHubWorld().getBlockAt(sign);
 
                 if(!(block.getState() instanceof Sign))
