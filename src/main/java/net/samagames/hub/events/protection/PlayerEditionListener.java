@@ -60,7 +60,7 @@ public class PlayerEditionListener implements Listener
 
         Bukkit.getScheduler().runTaskAsynchronously(Hub.getInstance(), () ->
         {
-            if (SamaGamesAPI.get().getPermissionsManager().hasPermission(event.getPlayer(), "lobby.selection"))
+            if (SamaGamesAPI.get().getPermissionsManager().hasPermission(event.getPlayer(), "hub.sign.selection"))
             {
                 if (event.getItem() != null && event.getItem().getType() == Material.WOOD_AXE)
                 {
