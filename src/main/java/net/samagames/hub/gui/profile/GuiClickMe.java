@@ -64,12 +64,16 @@ public class GuiClickMe extends AbstractGui
         switch (action)
         {
             case "friend":
+                new FancyMessage(ChatColor.YELLOW + "Cliquez sur ").then("[Inviter]").color(ChatColor.GREEN).suggest("/friends add " + this.name).then(" pour inviter ce joueur en ami.").color(ChatColor.YELLOW).send(player);
+                Hub.getInstance().getGuiManager().closeGui(player);
                 break;
             case "mp":
-                new FancyMessage(ChatColor.YELLOW + "Cliquez sur ").then("[Envoyer]").color(ChatColor.GREEN).suggest("/msg " + this.name + " ").then(" pour envoyer un message privé à " + this.name).color(ChatColor.YELLOW).send(player);
+                new FancyMessage(ChatColor.YELLOW + "Cliquez sur ").then("[Envoyer]").color(ChatColor.GREEN).suggest("/msg " + this.name + " ").then(" pour envoyer un message privé à " + this.name + ".").color(ChatColor.YELLOW).send(player);
                 Hub.getInstance().getGuiManager().closeGui(player);
                 break;
             case "party":
+                new FancyMessage(ChatColor.YELLOW + "Cliquez sur ").then("[Inviter]").color(ChatColor.GREEN).suggest("/party invite " + this.name).then(" pour inviter ce joueur dans votre partie.").color(ChatColor.YELLOW).send(player);
+                Hub.getInstance().getGuiManager().closeGui(player);
                 break;
             case "stats":
                 Hub.getInstance().getGuiManager().openGui(player, new GuiStats(this.name, this.uuid, true));
