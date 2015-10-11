@@ -65,13 +65,13 @@ public class GameSign
         this.sign.setLine(2, playerWaitFor + "" + ChatColor.RESET + " en attente");
         this.sign.setLine(3, totalPlayerOnServers + "" + ChatColor.RESET + " en jeu");
 
-        Bukkit.getScheduler().runTask(Hub.getInstance(), this.sign::update);
+        Bukkit.getScheduler().runTask(Hub.getInstance(), () -> sign.update(true, false));
     }
 
     public void updateMapName()
     {
         this.sign.setLine(1, this.color + "» " + ChatColor.BOLD + this.scrolledMapName + ChatColor.RESET + this.color + " «");
-        Bukkit.getScheduler().runTask(Hub.getInstance(), this.sign::update);
+        Bukkit.getScheduler().runTask(Hub.getInstance(), () -> sign.update(true, false));
     }
 
     public void scrollMapName()
