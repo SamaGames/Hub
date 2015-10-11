@@ -89,7 +89,7 @@ public class GameSign
                 };
         PacketPlayOutUpdateSign packet = new PacketPlayOutUpdateSign(worldServer, new BlockPosition(sign.getX(), sign.getY(), sign.getZ()), lines);
 
-        sign.getWorld().getNearbyEntities(sign.getLocation(), 30, 30, 30).stream().filter(entity -> entity instanceof Player).forEach(entity -> {
+        sign.getWorld().getNearbyEntities(sign.getLocation(), 15, 15, 15).stream().filter(entity -> entity instanceof Player).forEach(entity -> {
             Player player = (Player) entity;
 
             ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
