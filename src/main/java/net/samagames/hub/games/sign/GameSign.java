@@ -11,6 +11,7 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 public class GameSign
 {
@@ -20,8 +21,6 @@ public class GameSign
     private final ChatColor color;
     private final String template;
     private final BukkitTask updateTask;
-
-    private final BukkitTask scrollTask;
 
     private int scrollIndex = 0;
     private int scrollVector = +1;
@@ -41,7 +40,7 @@ public class GameSign
         this.sign.setMetadata("game", new FixedMetadataValue(Hub.getInstance(), game.getCodeName()));
         this.sign.setMetadata("map", new FixedMetadataValue(Hub.getInstance(), map));
 
-        this.scrollTask = Bukkit.getScheduler().runTaskTimerAsynchronously(Hub.getInstance(), this::scrollMapName, 20L, 9L);
+        Hub.getInstance().getScheduledExecutorService().scheduleAtFixedRate(() -> scrollMapName(), 1000, 500, TimeUnit.MILLISECONDS);
 
         this.updateTask = Bukkit.getScheduler().runTaskTimerAsynchronously(Hub.getInstance(), this::update, 20L, 20L);
     }

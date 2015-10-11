@@ -28,6 +28,8 @@ import org.bukkit.World;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.logging.Level;
 
 public class Hub extends JavaPlugin
@@ -53,6 +55,8 @@ public class Hub extends JavaPlugin
 
     private HubRefresher hubRefresher;
 
+    private ScheduledExecutorService scheduledExecutorService;
+
     public static Hub getInstance()
     {
         return instance;
@@ -67,6 +71,8 @@ public class Hub extends JavaPlugin
 
         this.saveDefaultConfig();
         this.debug = this.getConfig().getBoolean("debug", false);
+
+        this.scheduledExecutorService = Executors.newScheduledThreadPool(16);
 
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
 
@@ -118,6 +124,8 @@ public class Hub extends JavaPlugin
         this.scoreboardManager.onServerClose();
         if (this.hubRefresher != null)
             this.hubRefresher.removeFromList();
+
+        scheduledExecutorService.shutdown();
     }
 
     public void registerEvents()
@@ -176,5 +184,9 @@ public class Hub extends JavaPlugin
 
     public HydroManager getHydroManager() {
         return hydroManager;
+    }
+
+    public ScheduledExecutorService getScheduledExecutorService() {
+        return scheduledExecutorService;
     }
 }
