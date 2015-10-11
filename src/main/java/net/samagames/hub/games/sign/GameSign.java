@@ -21,6 +21,11 @@ public class GameSign
     private final String template;
     private final BukkitTask updateTask;
 
+    private final BukkitTask scrollTask;
+
+    private int scrollIndex = 0;
+    private String scrolledMapName;
+
     private int playerWaitFor;
     private int totalPlayerOnServers;
 
@@ -34,6 +39,8 @@ public class GameSign
 
         this.sign.setMetadata("game", new FixedMetadataValue(Hub.getInstance(), game.getCodeName()));
         this.sign.setMetadata("map", new FixedMetadataValue(Hub.getInstance(), map));
+
+        this.scrollTask = Bukkit.getScheduler().runTaskTimerAsynchronously(Hub.getInstance(), this::scrollMapName, 20L, 12L);
 
         this.updateTask = Bukkit.getScheduler().runTaskTimerAsynchronously(Hub.getInstance(), this::update, 20L, 20L);
     }
@@ -51,7 +58,7 @@ public class GameSign
             return;
         }
 
-        String mapLine = this.color + "» " + ChatColor.BOLD + this.map + ChatColor.RESET + this.color + " «";
+        String mapLine = this.color + "» " + ChatColor.BOLD + this.scrolledMapName + ChatColor.RESET + this.color + " «";
 
         this.sign.setLine(0, this.game.getName());
         this.sign.setLine(1, mapLine);
@@ -59,6 +66,31 @@ public class GameSign
         this.sign.setLine(3, totalPlayerOnServers + "" + ChatColor.RESET + " en jeu");
 
         Bukkit.getScheduler().runTask(Hub.getInstance(), this.sign::update);
+    }
+
+    public void updateMapName()
+    {
+        this.sign.setLine(1, this.color + "» " + ChatColor.BOLD + this.scrolledMapName + ChatColor.RESET + this.color + " «");
+        Bukkit.getScheduler().runTask(Hub.getInstance(), this.sign::update);
+    }
+
+    public void scrollMapName()
+    {
+        if(map.length() <= 10)
+            return;
+
+        int start = scrollIndex;
+        int end = scrollIndex+10;
+
+        if(end > map.length())
+        {
+            scrollIndex=0;
+            return;
+        }
+
+        scrolledMapName = map.substring(start, end);
+        scrollIndex++;
+        updateMapName();
     }
 
     public void click(Player player)
