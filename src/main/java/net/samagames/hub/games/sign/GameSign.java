@@ -11,6 +11,7 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 public class GameSign
 {
@@ -20,6 +21,10 @@ public class GameSign
     private final ChatColor color;
     private final String template;
     private final BukkitTask updateTask;
+
+    private int scrollIndex = 0;
+    private int scrollVector = +1;
+    private String scrolledMapName;
 
     private int playerWaitFor;
     private int totalPlayerOnServers;
@@ -34,6 +39,8 @@ public class GameSign
 
         this.sign.setMetadata("game", new FixedMetadataValue(Hub.getInstance(), game.getCodeName()));
         this.sign.setMetadata("map", new FixedMetadataValue(Hub.getInstance(), map));
+
+        Hub.getInstance().getScheduledExecutorService().scheduleAtFixedRate(() -> scrollMapName(), 1000, 500, TimeUnit.MILLISECONDS);
 
         this.updateTask = Bukkit.getScheduler().runTaskTimerAsynchronously(Hub.getInstance(), this::update, 20L, 20L);
     }
@@ -51,7 +58,7 @@ public class GameSign
             return;
         }
 
-        String mapLine = this.color + "» " + ChatColor.BOLD + this.map + ChatColor.RESET + this.color + " «";
+        String mapLine = this.color + "» " + ChatColor.BOLD + this.scrolledMapName + ChatColor.RESET + this.color + " «";
 
         this.sign.setLine(0, this.game.getName());
         this.sign.setLine(1, mapLine);
@@ -59,6 +66,41 @@ public class GameSign
         this.sign.setLine(3, totalPlayerOnServers + "" + ChatColor.RESET + " en jeu");
 
         Bukkit.getScheduler().runTask(Hub.getInstance(), this.sign::update);
+    }
+
+    public void updateMapName()
+    {
+        this.sign.setLine(1, this.color + "» " + ChatColor.BOLD + this.scrolledMapName + ChatColor.RESET + this.color + " «");
+        Bukkit.getScheduler().runTask(Hub.getInstance(), this.sign::update);
+    }
+
+    public void scrollMapName()
+    {
+        if(map.length() <= 10)
+        {
+            scrolledMapName = map;
+            return;
+        }
+
+        int start = scrollIndex;
+        int end = scrollIndex+10;
+
+        if(end > map.length())
+        {
+            scrollVector = -1;
+            scrollIndex = map.length()-10;
+            return;
+        }
+        if(start < 0)
+        {
+            scrollVector = 1;
+            scrollIndex = 0;
+            return;
+        }
+
+        scrolledMapName = map.substring(start, end);
+        scrollIndex += scrollVector;
+        updateMapName();
     }
 
     public void click(Player player)
