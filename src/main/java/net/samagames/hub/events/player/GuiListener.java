@@ -21,15 +21,18 @@ public class GuiListener implements Listener
 
             if (gui != null)
             {
+                event.setCancelled(true);
+
                 if(event.getClickedInventory() instanceof PlayerInventory)
+                {
+                    Hub.getInstance().getPlayerManager().getStaticInventory().doInteraction(player, event.getCurrentItem());
                     return;
+                }
 
                 String action = gui.getAction(event.getSlot());
 
                 if (action != null)
                     gui.onClick(player, event.getCurrentItem(), action, event.getClick());
-
-                event.setCancelled(true);
             }
         }
     }
