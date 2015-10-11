@@ -24,6 +24,7 @@ public class GameSign
     private final BukkitTask scrollTask;
 
     private int scrollIndex = 0;
+    private int scrollVector = +1;
     private String scrolledMapName;
 
     private int playerWaitFor;
@@ -77,19 +78,29 @@ public class GameSign
     public void scrollMapName()
     {
         if(map.length() <= 10)
+        {
+            scrolledMapName = map;
             return;
+        }
 
         int start = scrollIndex;
         int end = scrollIndex+10;
 
         if(end > map.length())
         {
-            scrollIndex=0;
+            scrollVector = -1;
+            scrollIndex = map.length()-10;
+            return;
+        }
+        if(start < 0)
+        {
+            scrollVector = 1;
+            scrollIndex = 0;
             return;
         }
 
         scrolledMapName = map.substring(start, end);
-        scrollIndex++;
+        scrollIndex += scrollVector;
         updateMapName();
     }
 
