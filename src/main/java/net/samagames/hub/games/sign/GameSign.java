@@ -41,7 +41,7 @@ public class GameSign
         this.sign.setMetadata("game", new FixedMetadataValue(Hub.getInstance(), game.getCodeName()));
         this.sign.setMetadata("map", new FixedMetadataValue(Hub.getInstance(), map));
 
-        this.scrollTask = Bukkit.getScheduler().runTaskTimerAsynchronously(Hub.getInstance(), this::scrollMapName, 20L, 12L);
+        this.scrollTask = Bukkit.getScheduler().runTaskTimerAsynchronously(Hub.getInstance(), this::scrollMapName, 20L, 9L);
 
         this.updateTask = Bukkit.getScheduler().runTaskTimerAsynchronously(Hub.getInstance(), this::update, 20L, 20L);
     }
