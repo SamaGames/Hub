@@ -76,7 +76,10 @@ public class GameManager extends AbstractManager
                 Player player = Bukkit.getPlayer(packet.getPlayer().getUUID());
 
                 if (player == null || !packet.isSuccess() || packet.getErrorMessage() != null)
+                {
+                    player.sendRawMessage(packet.getErrorMessage());
                     return;
+                }
 
                 if(player != null)
                 {
@@ -88,20 +91,6 @@ public class GameManager extends AbstractManager
                     }
                 }
 
-            }
-        });
-
-        hub.getHydroManager().getPacketReceiver().registerCallBack(new PacketCallBack<QueueInfosUpdatePacket>(QueueInfosUpdatePacket.class)
-        {
-            @Override
-            public void call(QueueInfosUpdatePacket packet)
-            {
-                Player player = Bukkit.getPlayer(packet.getPlayer().getUUID());
-
-                if (player == null || packet.isSuccess() || packet.getErrorMessage() == null)
-                    return;
-
-                player.sendRawMessage(packet.getErrorMessage());
             }
         });
     }
