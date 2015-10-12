@@ -28,7 +28,7 @@ public class EnderSwapDisplayer extends AbstractDisplayer
         Random random = new Random();
         Location last = this.baseLocation;
 
-        for(int i = 0; i < 8; i++)
+        for(int i = 0; i < 10; i++)
         {
             Location randomizedLocation = last.clone().add(random.nextInt(80) - 40, 0, random.nextInt(80) - 40);
             randomizedLocation.setY(256);
@@ -74,9 +74,9 @@ public class EnderSwapDisplayer extends AbstractDisplayer
                         this.teleportTask.cancel();
                     }
                 }, 5L);
-            }, 20L * 2);
+            }, 10L);
 
-        }, 0L, 20L * 5);
+        }, 0L, 20L * 2);
     }
 
     @Override
