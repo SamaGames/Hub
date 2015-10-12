@@ -92,6 +92,13 @@ public class GameSign
         sign.getWorld().getNearbyEntities(sign.getLocation(), 15, 15, 15).stream().filter(entity -> entity instanceof Player).forEach(entity -> {
             Player player = (Player) entity;
 
+            try
+            {
+                player.sendBlockChange(sign.getLocation(), sign.getType().getId(), sign.getData().getData());
+            }catch(Exception e)
+            {
+                /* Ignore */
+            }
             ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
         });
     }
