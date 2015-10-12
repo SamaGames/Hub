@@ -1,11 +1,19 @@
 package net.samagames.hub.games.sign;
 
+import net.md_5.bungee.api.chat.ComponentBuilder;
+import net.md_5.bungee.api.chat.TextComponent;
+import net.minecraft.server.v1_8_R3.BlockPosition;
+import net.minecraft.server.v1_8_R3.IChatBaseComponent;
+import net.minecraft.server.v1_8_R3.PacketPlayOutUpdateSign;
+import net.minecraft.server.v1_8_R3.WorldServer;
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import net.samagames.hub.games.AbstractGame;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.block.Sign;
+import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitTask;
@@ -54,7 +62,7 @@ public class GameSign
             this.sign.setLine(2, ChatColor.DARK_RED + "maintenance !");
             this.sign.setLine(3, "");
 
-            Bukkit.getScheduler().runTask(Hub.getInstance(), this.sign::update);
+            updateSign();
             return;
         }
 
@@ -65,13 +73,33 @@ public class GameSign
         this.sign.setLine(2, playerWaitFor + "" + ChatColor.RESET + " en attente");
         this.sign.setLine(3, totalPlayerOnServers + "" + ChatColor.RESET + " en jeu");
 
-        Bukkit.getScheduler().runTask(Hub.getInstance(), () -> sign.update(true, false));
+        updateSign();
+    }
+
+    public void updateSign()
+    {
+        WorldServer worldServer = ((CraftWorld) sign.getWorld()).getHandle();
+
+        IChatBaseComponent[] lines = new IChatBaseComponent[]
+                {
+                        IChatBaseComponent.ChatSerializer.a("{\"text\": \"" + sign.getLine(0) + "\"}"),
+                        IChatBaseComponent.ChatSerializer.a("{\"text\": \"" + sign.getLine(1) + "\"}"),
+                        IChatBaseComponent.ChatSerializer.a("{\"text\": \"" + sign.getLine(2) + "\"}"),
+                        IChatBaseComponent.ChatSerializer.a("{\"text\": \"" + sign.getLine(3) + "\"}")
+                };
+        PacketPlayOutUpdateSign packet = new PacketPlayOutUpdateSign(worldServer, new BlockPosition(sign.getX(), sign.getY(), sign.getZ()), lines);
+
+        sign.getWorld().getNearbyEntities(sign.getLocation(), 15, 15, 15).stream().filter(entity -> entity instanceof Player).forEach(entity -> {
+            Player player = (Player) entity;
+
+            ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
+        });
     }
 
     public void updateMapName()
     {
         this.sign.setLine(1, this.color + "» " + ChatColor.BOLD + this.scrolledMapName + ChatColor.RESET + this.color + " «");
-        Bukkit.getScheduler().runTask(Hub.getInstance(), () -> sign.update(true, false));
+        updateSign();
     }
 
     public void scrollMapName()

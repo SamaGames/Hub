@@ -31,6 +31,12 @@ public class JukeboxAlbum
     public void addDisk(JukeboxDiskCosmetic disk)
     {
         this.disks.add(disk);
+        this.cost = 0;
+        
+        for(JukeboxDiskCosmetic d : disks)
+            this.cost += d.getStarsCost();
+        
+        this.cost -= (this.cost * 100 / 5);
     }
 
     public String getIdentifier()

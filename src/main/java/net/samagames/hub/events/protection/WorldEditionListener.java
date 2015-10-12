@@ -7,6 +7,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.*;
 import org.bukkit.event.weather.WeatherChangeEvent;
+import org.bukkit.event.world.ChunkUnloadEvent;
 
 public class WorldEditionListener implements Listener
 {
@@ -145,6 +146,12 @@ public class WorldEditionListener implements Listener
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onWeatherChangeEvent(WeatherChangeEvent event)
+    {
+        event.setCancelled(true);
+    }
+
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onChunkUnload(final ChunkUnloadEvent event)
     {
         event.setCancelled(true);
     }
