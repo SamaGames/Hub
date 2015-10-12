@@ -19,6 +19,7 @@ public class JukeboxDiskCosmetic extends AbstractCosmetic
     public JukeboxDiskCosmetic(JukeboxAlbum album, String key, ChatColor color, ItemStack icon, Song song)
     {
         super("jukebox", key, song.getTitle(), icon, null);
+
         this.color = color;
         this.album = album;
         this.song = song;

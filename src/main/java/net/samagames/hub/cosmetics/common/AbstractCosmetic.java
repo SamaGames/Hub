@@ -74,7 +74,7 @@ public abstract class AbstractCosmetic
             GuiConfirm confirm = new GuiConfirm(Hub.getInstance().getGuiManager().getPlayerGui(player), () ->
             {
                 SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).withdrawCoins(this.coinsCost);
-                this.buyCallback(player);
+                this.buyCallback(player, false);
             });
 
             Hub.getInstance().getGuiManager().openGui(player, confirm);
@@ -89,18 +89,20 @@ public abstract class AbstractCosmetic
             GuiConfirm confirm = new GuiConfirm(Hub.getInstance().getGuiManager().getPlayerGui(player), () ->
             {
                 SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).withdrawStars(this.starsCost);
-                this.buyCallback(player);
+                this.buyCallback(player, false);
             });
 
             Hub.getInstance().getGuiManager().openGui(player, confirm);
         }
     }
 
-    public void buyCallback(Player player)
+    public void buyCallback(Player player, boolean album)
     {
         shopsManager.addOwnedLevel(player, category, key);
         Hub.getInstance().getGuiManager().getPlayerGui(player).update(player);
-        player.spigot().sendMessage(getBuyResponse());
+
+        if(!album)
+            player.spigot().sendMessage(getBuyResponse());
     }
 
     public void buyableWithCoins(int cost)

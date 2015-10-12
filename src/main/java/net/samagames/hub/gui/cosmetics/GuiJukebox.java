@@ -77,7 +77,8 @@ public class GuiJukebox extends AbstractGui
     @Override
     public void onClose(Player player)
     {
-        this.loopTask.cancel();
+        if(this.loopTask != null)
+            this.loopTask.cancel();
     }
 
     @Override
@@ -131,8 +132,10 @@ public class GuiJukebox extends AbstractGui
 
                         for(JukeboxDiskCosmetic disk : album.getDisks())
                         {
-                            disk.buyCallback(player);
+                            disk.buyCallback(player, true);
                         }
+
+                        player.sendMessage(ChatColor.GREEN + "L'album a bien été acheté !");
                     });
 
                     Hub.getInstance().getGuiManager().openGui(player, confirm);

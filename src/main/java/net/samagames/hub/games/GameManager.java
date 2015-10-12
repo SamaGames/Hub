@@ -49,7 +49,7 @@ public class GameManager extends AbstractManager
         this.registerGame(new BackEndGame("craftmything", "CraftMyThing", arcadeGame.getLobbySpawn()));
         this.registerGame(new BackEndGame("witherparty", "WitherParty", arcadeGame.getLobbySpawn()));
         this.registerGame(new BackEndGame("hangovergames", "HangoverGames", arcadeGame.getLobbySpawn()));
-        this.registerGame(new BackEndGame("agarmc", "AgarMC", arcadeGame.getLobbySpawn()));
+        this.registerGame(new OneWayGame("agarmc", "AgarMC", Material.SLIME_BLOCK, new Location(this.hub.getHubWorld(), 150.5D, 87.0D, 46.5D)));
 
         hub.getHydroManager().getPacketReceiver().registerCallBack(new PacketCallBack<GameInfoToHubPacket>(GameInfoToHubPacket.class)
         {
