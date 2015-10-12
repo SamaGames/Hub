@@ -134,7 +134,7 @@ public class GuiStalker2000 extends AbstractGui
                 ChatColor.GRAY + "d'un " + ChatColor.GOLD + "Coupaing" + ChatColor.GRAY + " via un message",
                 ChatColor.GRAY + "envoyé dans le chat.",
                 "",
-                (canSeeServer ? followEnabled ? ChatColor.GREEN + "Cliquez pour désactiver" : ChatColor.RED + "Cliquez pour activer" : ChatColor.RED + "Fonction réservée aux " + ChatColor.GREEN + "VIP" + ChatColor.RED + "s")
+                (canSeeServer ? followEnabled ? ChatColor.GREEN + "Cliquez pour désactiver" : ChatColor.RED + "Cliquez pour activer" : ChatColor.RED + "Fonction réservée aux " + ChatColor.GREEN + "VIP")
         }, "follow");
 
         this.setSlotData(GuiUtils.getBackItem(), this.inventory.getSize() - 5, "back");

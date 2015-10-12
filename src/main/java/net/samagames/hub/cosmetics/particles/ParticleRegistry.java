@@ -14,19 +14,13 @@ public class ParticleRegistry extends AbstractCosmeticRegistry<ParticleCosmetic>
     @Override
     public void register()
     {
+        // FIXME: reactivate this
         /*ParticleCosmetic heartParticle = new ParticleCosmetic("heart", "Amoureux <3", new ItemStack(Material.RED_ROSE, 1), new String[] {
                 "L'amour est la plus belle chose qui soit <3",
                 "",
                 ChatColor.YELLOW + "Particules en forme de coeur"
         }, ParticleEffect.HEART);
         heartParticle.buyableWithStars(400);
-
-        ParticleCosmetic waterParticle = new ParticleCosmetic("eau", "Trempé", new ItemStack(Material.RAW_FISH, 1), new String[] {
-                "Attention à ne pas glisser !",
-                "",
-                ChatColor.YELLOW + "Particules d'eau"
-        }, ParticleEffect.DRIP_WATER);
-        waterParticle.buyableWithStars(340);
 
         ParticleCosmetic musicParticle = new ParticleCosmetic("music", "Musical", new ItemStack(Material.RECORD_12, 1), new String[] {
                 "Chantons tous ensemble ♪♫",
