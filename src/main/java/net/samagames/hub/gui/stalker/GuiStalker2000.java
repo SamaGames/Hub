@@ -200,7 +200,8 @@ public class GuiStalker2000 extends AbstractGui
         }
         else if(action.equals("friends"))
         {
-            Hub.getInstance().getGuiManager().openGui(player, new GuiStalkerFriends2000());
+            //TODO Fix friends gui
+            //Hub.getInstance().getGuiManager().openGui(player, new GuiStalkerFriends2000());
         }
         else if(action.equals("back"))
         {
