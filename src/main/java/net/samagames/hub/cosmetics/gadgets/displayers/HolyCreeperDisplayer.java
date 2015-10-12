@@ -76,7 +76,8 @@ public class HolyCreeperDisplayer extends AbstractDisplayer
     @Override
     public void handleInteraction(Entity who, Entity with)
     {
-        this.explode((Creeper) with);
+        if(with instanceof Creeper)
+            this.explode((Creeper) with);
     }
 
     @Override
