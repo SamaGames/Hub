@@ -133,10 +133,11 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
             return;
         }
 
-        if (SamaGamesAPI.get().getPermissionsManager().hasPermission(playedBy, "hub.jukebox.limitstaff"))
-            this.recentDJs.put(playedBy.getUniqueId(), 600);
-        else
+        boolean hasLimitStaff = SamaGamesAPI.get().getPermissionsManager().hasPermission(playedBy, "hub.jukebox.limitstaff");
+        if (hasLimitStaff)
             this.recentDJs.put(playedBy.getUniqueId(), 300);
+        else
+            this.recentDJs.put(playedBy.getUniqueId(), 600);
 
         BukkitTask task = Bukkit.getScheduler().runTaskTimerAsynchronously(this.hub, () ->
         {
@@ -150,7 +151,7 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
         {
             this.recentDJs.remove(playedBy.getUniqueId());
             task.cancel();
-        }, (20L * 60 * 10) + 5);
+        }, (20L * (hasLimitStaff ? 30 : 60) * 10) + 5);
 
         this.playlists.addLast(JukeboxSong);
 
