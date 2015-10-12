@@ -14,11 +14,6 @@ import org.bukkit.entity.Player;
 
 public class CommandEvacuate extends AbstractCommand
 {
-    public CommandEvacuate()
-    {
-        playerrRestricted = false;
-    }
-
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args)
     {
