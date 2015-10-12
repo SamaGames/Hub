@@ -97,7 +97,8 @@ public class GadgetManager extends AbstractCosmeticManager<GadgetCosmetic>
             }
             else if (flag && flag1)
             {
-                this.loopsIds.put(player.getUniqueId(), Bukkit.getScheduler().scheduleAsyncRepeatingTask(this.hub, new Runnable() {
+                this.loopsIds.put(player.getUniqueId(), Bukkit.getScheduler().scheduleAsyncRepeatingTask(this.hub, new Runnable()
+                {
                     int timer = cosmetic.getCooldown();
 
                     @Override
