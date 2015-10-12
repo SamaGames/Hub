@@ -29,6 +29,7 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
 
     private JukeboxSong currentPlaylist;
     private BukkitTask barTask;
+    private boolean lockFlag;
     private boolean isLocked;
 
     public JukeboxManager(Hub hub)
@@ -45,11 +46,13 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
         this.recentDJs = new HashMap<>();
         this.mutedPlayers = new ArrayList<>();
         this.albums = ((JukeboxRegistry) this.getRegistry()).getAlbums();
+        this.lockFlag = false;
 
         Bukkit.getScheduler().runTaskTimerAsynchronously(this.hub, () ->
         {
             if (this.currentPlaylist == null || !this.currentPlaylist.getPlayer().isPlaying())
-                this.nextSong();
+                if (!this.lockFlag)
+                    this.nextSong();
         }, 20, 20);
 
         Bukkit.getScheduler().runTaskTimerAsynchronously(this.hub, () ->
@@ -159,6 +162,8 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
 
     public boolean nextSong()
     {
+        this.lockFlag = true;
+
         if (this.currentPlaylist != null)
         {
             this.recentsPlaylists.addLast(this.currentPlaylist);
@@ -221,12 +226,15 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
 
                         for(Player barPlayer : Bukkit.getOnlinePlayers())
                         {
-                            BarAPI.removeBar(barPlayer);
+                            if(!mutedPlayers.contains(barPlayer.getUniqueId()))
+                            {
+                                BarAPI.removeBar(barPlayer);
 
-                            if(this.i <= 4)
-                                BarAPI.setMessage(barPlayer, randomizedColor + "♫" + ChatColor.YELLOW + " " + ChatColor.GOLD + currentPlaylist.getSong().getTitle() + ChatColor.YELLOW + " jouée par " + ChatColor.GOLD + currentPlaylist.getPlayedBy() + " " + randomizedColor + "♪");
-                            else
-                                BarAPI.setMessage(barPlayer, randomizedColor + "♫" + ChatColor.GREEN + " " + currentPlaylist.getWoots() + " Woot" + (currentPlaylist.getWoots() > 1 ? "s" : "") + ChatColor.YELLOW + " et " + ChatColor.RED + currentPlaylist.getMehs() + " Meh" + (currentPlaylist.getMehs() > 1 ? "s" : "") + " " + randomizedColor + "♪");
+                                if(this.i <= 4)
+                                    BarAPI.setMessage(barPlayer, randomizedColor + "♫" + ChatColor.YELLOW + " " + ChatColor.GOLD + currentPlaylist.getSong().getTitle() + ChatColor.YELLOW + " jouée par " + ChatColor.GOLD + currentPlaylist.getPlayedBy() + " " + randomizedColor + "♪");
+                                else
+                                    BarAPI.setMessage(barPlayer, randomizedColor + "♫" + ChatColor.GREEN + " " + currentPlaylist.getWoots() + " Woot" + (currentPlaylist.getWoots() > 1 ? "s" : "") + ChatColor.YELLOW + " et " + ChatColor.RED + currentPlaylist.getMehs() + " Meh" + (currentPlaylist.getMehs() > 1 ? "s" : "") + " " + randomizedColor + "♪");
+                            }
                         }
 
                         this.i++;
@@ -237,8 +245,12 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
                 }, 20L, 20L);
             }
 
+            this.lockFlag = false;
+
             return true;
         }
+
+        this.lockFlag = false;
 
         return false;
     }
