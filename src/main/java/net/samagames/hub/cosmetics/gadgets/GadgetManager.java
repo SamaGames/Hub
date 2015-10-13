@@ -10,6 +10,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -21,7 +22,7 @@ import java.util.logging.Level;
 public class GadgetManager extends AbstractCosmeticManager<GadgetCosmetic>
 {
     private final HashMap<UUID, Integer> cooldowns;
-    private final HashMap<UUID, Integer> loopsIds;
+    private final HashMap<UUID, BukkitTask> loopsIds;
     private final HashMap<UUID, AbstractDisplayer> playersGadgets;
     private final ArrayList<Location> blocksUsed;
     public Field ageField;
@@ -81,21 +82,18 @@ public class GadgetManager extends AbstractCosmeticManager<GadgetCosmetic>
                     displayer.display();
                     this.playersGadgets.put(player.getUniqueId(), displayer);
 
-                    this.loopsIds.put(player.getUniqueId(), Bukkit.getScheduler().scheduleAsyncRepeatingTask(this.hub, new Runnable()
-                    {
+                    this.loopsIds.put(player.getUniqueId(), Bukkit.getScheduler().runTaskTimerAsynchronously(this.hub, new Runnable() {
                         int timer = cosmetic.getCooldown();
 
                         @Override
-                        public void run()
-                        {
+                        public void run() {
                             if (!cooldowns.containsKey(player.getUniqueId()))
                                 cooldowns.put(player.getUniqueId(), timer);
 
                             timer--;
                             cooldowns.put(player.getUniqueId(), timer);
 
-                            if (timer == 0)
-                            {
+                            if (timer == 0) {
                                 cooldowns.remove(player.getUniqueId());
                                 callbackLoop(player.getUniqueId());
                             }
@@ -144,7 +142,13 @@ public class GadgetManager extends AbstractCosmeticManager<GadgetCosmetic>
     {
         if(this.loopsIds.containsKey(uuid))
         {
-            Bukkit.getScheduler().cancelTask(this.loopsIds.get(uuid));
+            try{
+                this.loopsIds.get(uuid).cancel();
+            }catch(Exception e)
+            {
+                //In case of nullpointer
+                e.printStackTrace();
+            }
             this.loopsIds.remove(uuid);
         }
     }
