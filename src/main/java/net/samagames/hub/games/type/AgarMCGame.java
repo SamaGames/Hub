@@ -1,11 +1,15 @@
 package net.samagames.hub.games.type;
 
+import net.md_5.bungee.api.ChatColor;
 import net.samagames.hub.Hub;
 import net.samagames.hub.games.AbstractGame;
+import net.samagames.hub.games.DisplayedStat;
 import net.samagames.hub.games.shop.ShopCategory;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.List;
 
 public class AgarMCGame extends AbstractGame
 {
@@ -19,6 +23,12 @@ public class AgarMCGame extends AbstractGame
     public String getName()
     {
         return "AgarMC";
+    }
+
+    @Override
+    public String getGuiName()
+    {
+        return "" + ChatColor.AQUA + ChatColor.BOLD + "[NEW] " + ChatColor.RED + ChatColor.BOLD + "[ALPHA] " + ChatColor.RESET + super.getGuiName();
     }
 
     @Override
@@ -68,5 +78,11 @@ public class AgarMCGame extends AbstractGame
     public boolean isLocked()
     {
         return false;
+    }
+
+    @Override
+    public List<DisplayedStat> getDisplayedStats()
+    {
+        return null;
     }
 }

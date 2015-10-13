@@ -45,7 +45,7 @@ public class GuiMain extends AbstractGui
                     description.add(ChatColor.GOLD + "Développeur" + (developpers.length > 1 ? "s" : "") + " : " + ChatColor.GRAY + StringUtils.join(developpers, ", "));
                 }
 
-                this.setSlotData(ChatColor.GOLD + game.getName(), game.getIcon(), game.getSlotInMainMenu(), this.getLores(description.toArray(new String[description.size()]), false, true), "game_" + gameIdentifier);
+                this.setSlotData(ChatColor.GOLD + game.getGuiName(), game.getIcon(), game.getSlotInMainMenu(), this.getLores(description.toArray(new String[description.size()]), false, true), "game_" + gameIdentifier);
             }
         }
 

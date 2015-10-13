@@ -46,7 +46,7 @@ public class GuiShop extends AbstractGui
 
             if (game.hasShop())
             {
-                this.setSlotData(ChatColor.GOLD + game.getName(), game.getIcon(), slots[slot] + (9 * lines), null, "game_" + game.getCodeName());
+                this.setSlotData(game.getGuiName(), game.getIcon(), slots[slot] + (9 * lines), null, "game_" + game.getCodeName());
                 slot++;
 
                 if(slot == slots.length)

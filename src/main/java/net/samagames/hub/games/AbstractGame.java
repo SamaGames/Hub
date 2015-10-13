@@ -51,6 +51,11 @@ public abstract class AbstractGame
     public abstract Location getLobbySpawn();
     public abstract boolean isLocked();
 
+    public String getGuiName()
+    {
+        return ChatColor.GOLD  + getName();
+    }
+
     public List<DisplayedStat> getDisplayedStats()
     {
         List<DisplayedStat> stats = new ArrayList<>();
@@ -108,4 +113,5 @@ public abstract class AbstractGame
         this.isMaintenance = flag;
         this.signs.values().forEach(net.samagames.hub.games.sign.GameSign::update);
     }
+
 }

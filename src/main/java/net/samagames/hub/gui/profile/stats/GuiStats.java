@@ -42,7 +42,7 @@ public class GuiStats extends AbstractGui
         {
             if(game.getDisplayedStats() != null && !game.getDisplayedStats().isEmpty())
             {
-                this.setSlotData(ChatColor.GOLD + game.getName(), game.getIcon(), slot, null, "game_" + game.getCodeName());
+                this.setSlotData(ChatColor.GOLD + game.getGuiName(), game.getIcon(), slot, null, "game_" + game.getCodeName());
                 slot++;
             }
         }

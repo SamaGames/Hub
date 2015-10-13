@@ -40,7 +40,7 @@ public class GuiGameStat extends AbstractGui
     @Override
     public void display(Player player)
     {
-        this.inventory = Bukkit.createInventory(null, 45, "> " + this.game.getName() + " (" + this.game.getDisplayedStatByIdentifier(this.stat).getDisplayName() + ")");
+        this.inventory = Bukkit.createInventory(null, 45, "> " + this.game.getGuiName() + " (" + this.game.getDisplayedStatByIdentifier(this.stat).getDisplayName() + ")");
 
         this.drawLeaderboard();
         this.drawLeaderboardLine();

@@ -41,9 +41,7 @@ public class GuiClickMe extends AbstractGui
 
         this.setSlotData(ChatColor.GOLD + this.name, this.getPlayerHead(), 13, new String[] {
                 ChatColor.GRAY + "Rang : " + RankUtils.getFormattedRank(this.uuid),
-                "",
-                ChatColor.GRAY + "Idée du ClickMe par " + ChatColor.GOLD + "zyuiop",
-                ChatColor.GRAY + "Intégré par " + ChatColor.GOLD + "IamBlueSlime"
+                ""
         }, "none");
 
         this.setSlotData(this.getCoinsItemTitle(), Material.GOLD_INGOT, 20, null, "none");
