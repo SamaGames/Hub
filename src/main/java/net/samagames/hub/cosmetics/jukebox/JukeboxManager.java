@@ -15,6 +15,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
 {
@@ -48,14 +49,14 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
         this.albums = ((JukeboxRegistry) this.getRegistry()).getAlbums();
         this.lockFlag = false;
 
-        Bukkit.getScheduler().runTaskTimerAsynchronously(this.hub, () ->
+        hub.getScheduledExecutorService().scheduleAtFixedRate(() ->
         {
             if (this.currentPlaylist == null || !this.currentPlaylist.getPlayer().isPlaying())
                 if (!this.lockFlag)
                     this.nextSong();
-        }, 20, 20);
+        }, 1, 1, TimeUnit.SECONDS);
 
-        Bukkit.getScheduler().runTaskTimerAsynchronously(this.hub, () ->
+        hub.getScheduledExecutorService().scheduleAtFixedRate(() ->
         {
             if (this.currentPlaylist != null)
             {
@@ -83,7 +84,7 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
                     }
                 }
             }
-        }, 6, 6);
+        }, 300, 300, TimeUnit.MILLISECONDS);
     }
 
     @Override
@@ -107,7 +108,7 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
     public void play(JukeboxDiskCosmetic disk, Player playedBy)
     {
         Song song = disk.getSong();
-        JukeboxSong JukeboxSong = new JukeboxSong(disk, playedBy.getName());
+        JukeboxSong jukeboxSong = new JukeboxSong(disk, playedBy.getName());
         boolean canBypassLimit = SamaGamesAPI.get().getPermissionsManager().hasPermission(playedBy, "hub.jukebox.limitbypass");
 
         if ((this.containsSongFrom(playedBy.getName()) || (this.currentPlaylist != null && this.currentPlaylist.getPlayedBy().equals(playedBy.getName()))) && !canBypassLimit)
@@ -156,7 +157,7 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
             task.cancel();
         }, (20L * (hasLimitStaff ? 30 : 60) * 10) + 5);
 
-        this.playlists.addLast(JukeboxSong);
+        this.playlists.addLast(jukeboxSong);
 
         playedBy.sendMessage(ChatColor.GREEN + "Votre musique sera jouée prochainement. Position dans la playlist : " + ChatColor.AQUA + "#" + this.playlists.size());
     }
@@ -165,94 +166,101 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
     {
         this.lockFlag = true;
 
-        if (this.currentPlaylist != null)
-        {
-            this.recentsPlaylists.addLast(this.currentPlaylist);
-
-            if (this.recentsPlaylists.size() > 3)
-                this.recentsPlaylists.removeFirst();
-
-            int woots = this.currentPlaylist.getWoots();
-            int mehs = this.currentPlaylist.getMehs();
-            Bukkit.broadcastMessage(this.jukeboxTag + ChatColor.GOLD + this.currentPlaylist.getPlayedBy() + ChatColor.YELLOW + " a reçu " + ChatColor.GREEN + woots + " Woot" + ChatColor.YELLOW + " et " + ChatColor.RED + mehs + " Meh" + ChatColor.YELLOW + ".");
-
-            UUID playerUUID = SamaGamesAPI.get().getUUIDTranslator().getUUID(this.currentPlaylist.getPlayedBy());
-
-            if (playerUUID != null)
+        try{
+            if (this.currentPlaylist != null)
             {
-                SamaGamesAPI.get().getStatsManager("hub").increase(playerUUID, "woots", woots);
-                SamaGamesAPI.get().getStatsManager("hub").increase(playerUUID, "mehs", mehs);
-            }
+                this.recentsPlaylists.addLast(this.currentPlaylist);
 
-            this.currentPlaylist = null;
+                if (this.recentsPlaylists.size() > 3)
+                    this.recentsPlaylists.removeFirst();
 
-            if(this.barTask != null)
-            {
-                this.barTask.cancel();
-                this.barTask = null;
+                int woots = this.currentPlaylist.getWoots();
+                int mehs = this.currentPlaylist.getMehs();
+                Bukkit.broadcastMessage(this.jukeboxTag + ChatColor.GOLD + this.currentPlaylist.getPlayedBy() + ChatColor.YELLOW + " a reçu " + ChatColor.GREEN + woots + " Woot" + ChatColor.YELLOW + " et " + ChatColor.RED + mehs + " Meh" + ChatColor.YELLOW + ".");
 
-                Bukkit.getOnlinePlayers().forEach(BarAPI::removeBar);
-            }
-        }
+                UUID playerUUID = SamaGamesAPI.get().getUUIDTranslator().getUUID(this.currentPlaylist.getPlayedBy());
 
-        if (this.playlists.isEmpty())
-            return false;
-
-        JukeboxSong nextSong = this.playlists.pollFirst();
-
-        if (nextSong != null)
-        {
-            SongPlayer player = nextSong.getPlayer();
-            player.setPlaying(true);
-
-            this.currentPlaylist = nextSong;
-            this.currentPlaylist.getPlayer().setPlaying(true);
-
-            Bukkit.getOnlinePlayers().stream().filter(p -> !this.mutedPlayers.contains(p.getUniqueId())).forEach(p -> this.currentPlaylist.getPlayer().addPlayer(p.getUniqueId()));
-
-            Bukkit.broadcastMessage(this.jukeboxTag + ChatColor.GOLD + this.currentPlaylist.getPlayedBy() + ChatColor.YELLOW + " joue " + ChatColor.GOLD + ChatColor.ITALIC + this.currentPlaylist.getSong().getTitle() + ChatColor.YELLOW + " de " + ChatColor.GOLD + this.currentPlaylist.getSong().getAuthor());
-            Bukkit.broadcastMessage(this.jukeboxTag + ChatColor.GRAY + ChatColor.ITALIC + "Tapez " + ChatColor.GREEN + "/woot" + ChatColor.GRAY + ChatColor.ITALIC + " pour apprécier ou " + ChatColor.RED + "/meh" + ChatColor.GRAY + ChatColor.ITALIC + " pour indiquer que vous n'aimez pas la musique jouée actuellement et la couper.");
-
-            if(this.barTask == null)
-            {
-                this.barTask = Bukkit.getScheduler().runTaskTimerAsynchronously(Hub.getInstance(), new Runnable()
+                if (playerUUID != null)
                 {
-                    ChatColor[] colors = {ChatColor.RED, ChatColor.GOLD, ChatColor.YELLOW, ChatColor.DARK_RED, ChatColor.DARK_PURPLE, ChatColor.DARK_AQUA};
-                    int i = 0;
+                    SamaGamesAPI.get().getStatsManager("hub").increase(playerUUID, "woots", woots);
+                    SamaGamesAPI.get().getStatsManager("hub").increase(playerUUID, "mehs", mehs);
+                }
 
-                    @Override
-                    public void run()
+                this.currentPlaylist = null;
+
+                if(this.barTask != null)
+                {
+                    this.barTask.cancel();
+                    this.barTask = null;
+
+                    Bukkit.getOnlinePlayers().forEach(BarAPI::removeBar);
+                }
+            }
+
+            if (this.playlists.isEmpty())
+                return false;
+
+            JukeboxSong nextSong = this.playlists.pollFirst();
+
+            if (nextSong != null)
+            {
+                SongPlayer player = nextSong.getPlayer();
+                player.setPlaying(true);
+
+                this.currentPlaylist = nextSong;
+                this.currentPlaylist.getPlayer().setPlaying(true);
+
+                Bukkit.getOnlinePlayers().stream().filter(p -> !this.mutedPlayers.contains(p.getUniqueId())).forEach(p -> this.currentPlaylist.getPlayer().addPlayer(p.getUniqueId()));
+
+                Bukkit.broadcastMessage(this.jukeboxTag + ChatColor.GOLD + this.currentPlaylist.getPlayedBy() + ChatColor.YELLOW + " joue " + ChatColor.GOLD + ChatColor.ITALIC + this.currentPlaylist.getSong().getTitle() + ChatColor.YELLOW + " de " + ChatColor.GOLD + this.currentPlaylist.getSong().getAuthor());
+                Bukkit.broadcastMessage(this.jukeboxTag + ChatColor.GRAY + ChatColor.ITALIC + "Tapez " + ChatColor.GREEN + "/woot" + ChatColor.GRAY + ChatColor.ITALIC + " pour apprécier ou " + ChatColor.RED + "/meh" + ChatColor.GRAY + ChatColor.ITALIC + " pour indiquer que vous n'aimez pas la musique jouée actuellement et la couper.");
+
+                if(this.barTask == null)
+                {
+                    this.barTask = Bukkit.getScheduler().runTaskTimerAsynchronously(Hub.getInstance(), new Runnable()
                     {
-                        ChatColor randomizedColor = this.colors[new Random().nextInt(this.colors.length)];
+                        ChatColor[] colors = {ChatColor.RED, ChatColor.GOLD, ChatColor.YELLOW, ChatColor.DARK_RED, ChatColor.DARK_PURPLE, ChatColor.DARK_AQUA};
+                        int i = 0;
 
-                        for(Player barPlayer : Bukkit.getOnlinePlayers())
+                        @Override
+                        public void run()
                         {
-                            if(!mutedPlayers.contains(barPlayer.getUniqueId()))
+                            ChatColor randomizedColor = this.colors[new Random().nextInt(this.colors.length)];
+
+                            for(Player barPlayer : Bukkit.getOnlinePlayers())
                             {
-                                BarAPI.removeBar(barPlayer);
+                                if(!mutedPlayers.contains(barPlayer.getUniqueId()))
+                                {
+                                    BarAPI.removeBar(barPlayer);
 
-                                if(this.i <= 4)
-                                    BarAPI.setMessage(barPlayer, randomizedColor + "♫" + ChatColor.YELLOW + " " + ChatColor.GOLD + currentPlaylist.getSong().getTitle() + ChatColor.YELLOW + " jouée par " + ChatColor.GOLD + currentPlaylist.getPlayedBy() + " " + randomizedColor + "♪");
-                                else
-                                    BarAPI.setMessage(barPlayer, randomizedColor + "♫" + ChatColor.GREEN + " " + currentPlaylist.getWoots() + " Woot" + (currentPlaylist.getWoots() > 1 ? "s" : "") + ChatColor.YELLOW + " et " + ChatColor.RED + currentPlaylist.getMehs() + " Meh" + (currentPlaylist.getMehs() > 1 ? "s" : "") + " " + randomizedColor + "♪");
+                                    if(this.i <= 4)
+                                        BarAPI.setMessage(barPlayer, randomizedColor + "♫" + ChatColor.YELLOW + " " + ChatColor.GOLD + currentPlaylist.getSong().getTitle() + ChatColor.YELLOW + " jouée par " + ChatColor.GOLD + currentPlaylist.getPlayedBy() + " " + randomizedColor + "♪");
+                                    else
+                                        BarAPI.setMessage(barPlayer, randomizedColor + "♫" + ChatColor.GREEN + " " + currentPlaylist.getWoots() + " Woot" + (currentPlaylist.getWoots() > 1 ? "s" : "") + ChatColor.YELLOW + " et " + ChatColor.RED + currentPlaylist.getMehs() + " Meh" + (currentPlaylist.getMehs() > 1 ? "s" : "") + " " + randomizedColor + "♪");
+                                }
                             }
+
+                            this.i++;
+
+                            if(this.i == 10)
+                                this.i = 0;
                         }
+                    }, 20L, 20L);
+                }
 
-                        this.i++;
+                this.lockFlag = false;
 
-                        if(this.i == 10)
-                            this.i = 0;
-                    }
-                }, 20L, 20L);
+                return true;
             }
 
             this.lockFlag = false;
 
-            return true;
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }finally {
+            lockFlag = false;
         }
-
-        this.lockFlag = false;
-
         return false;
     }
 
