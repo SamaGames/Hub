@@ -2,10 +2,7 @@ package net.samagames.hub.games.sign;
 
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.TextComponent;
-import net.minecraft.server.v1_8_R3.BlockPosition;
-import net.minecraft.server.v1_8_R3.IChatBaseComponent;
-import net.minecraft.server.v1_8_R3.PacketPlayOutUpdateSign;
-import net.minecraft.server.v1_8_R3.WorldServer;
+import net.minecraft.server.v1_8_R3.*;
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import net.samagames.hub.games.AbstractGame;
@@ -82,10 +79,10 @@ public class GameSign
 
         IChatBaseComponent[] lines = new IChatBaseComponent[]
                 {
-                        IChatBaseComponent.ChatSerializer.a("{\"text\": \"" + sign.getLine(0) + "\"}"),
-                        IChatBaseComponent.ChatSerializer.a("{\"text\": \"" + sign.getLine(1) + "\"}"),
-                        IChatBaseComponent.ChatSerializer.a("{\"text\": \"" + sign.getLine(2) + "\"}"),
-                        IChatBaseComponent.ChatSerializer.a("{\"text\": \"" + sign.getLine(3) + "\"}")
+                        new ChatComponentText(sign.getLine(0)),
+                        new ChatComponentText(sign.getLine(1)),
+                        new ChatComponentText(sign.getLine(2)),
+                        new ChatComponentText(sign.getLine(3))
                 };
         PacketPlayOutUpdateSign packet = new PacketPlayOutUpdateSign(worldServer, new BlockPosition(sign.getX(), sign.getY(), sign.getZ()), lines);
 
