@@ -95,7 +95,7 @@ public class HeroBattleGame extends AbstractGame
         	tools.addLevel(20000, powerPrefix + "1", "1");
         	tools.addLevel(50000, powerPrefix + "2", "2");
         	
-        	categories[i] = new ShopBuyableCategory(this, "class." + className, classesDisplays.get(i), new ItemStack(classesItems.get(i)), i + 19, new String[]{}, prices.get(i));
+        	categories[i] = new ShopBuyableCategory(this, "class." + className, classesDisplays.get(i), new ItemStack(classesItems.get(i)), i + 18, new String[]{}, prices.get(i));
         	categories[i].addContent(cooldown);
         	categories[i].addContent(power);
         	categories[i].addContent(tools);
