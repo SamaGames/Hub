@@ -161,11 +161,11 @@ public class GameSign
     {
         player.sendMessage(ChatColor.GOLD + "----------------------------------------");
         player.sendMessage(ChatColor.GOLD + "Informations du panneau de jeu :");
+        player.sendMessage(ChatColor.GOLD + "> " + ChatColor.AQUA + "Template : " + template);
         player.sendMessage(ChatColor.GOLD + "> " + ChatColor.AQUA + "Jeu : " + ChatColor.GREEN + this.game.getCodeName());
         player.sendMessage(ChatColor.GOLD + "> " + ChatColor.AQUA + "Map : " + ChatColor.GREEN + this.map);
         player.sendMessage(ChatColor.GOLD + "> " + ChatColor.AQUA + "Joueurs en attente : " + ChatColor.GREEN + playerWaitFor);
         player.sendMessage(ChatColor.GOLD + "> " + ChatColor.AQUA + "Joueurs en jeu : " + ChatColor.GREEN + totalPlayerOnServers);
-        //player.sendMessage(ChatColor.GOLD + "> " + ChatColor.AQUA + "Serveurs en ligne : " + ChatColor.GREEN + this.getWaitingServers() + " en attente et " + this.getPlayingServers() + " en jeu");
         player.sendMessage(ChatColor.GOLD + "----------------------------------------");
     }
 
