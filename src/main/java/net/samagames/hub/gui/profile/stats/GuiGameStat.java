@@ -77,7 +77,7 @@ public class GuiGameStat extends AbstractGui
 
     private void drawLeaderboard()
     {
-        Leaderboard leaderboard = Hub.getInstance().getStatsManager().getLeaderbordOf(this.stat);
+        Leaderboard leaderboard = Hub.getInstance().getStatsManager().getLeaderbordOf(game.getCodeName(), this.stat);
 
         if(leaderboard != null)
         {

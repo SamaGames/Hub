@@ -36,13 +36,13 @@ public class StatsManager extends AbstractManager
                 if(this.hub.isDebugEnabled())
                     this.hub.log(this, Level.INFO, "Reloading stat '" + stat.getDatabaseName() + "' for the game " + game.getCodeName());
 
-                if(this.leaderboards.containsKey(stat.getDatabaseName()))
-                    this.leaderboards.remove(stat.getDatabaseName());
+                if(this.leaderboards.containsKey(game.getCodeName() + "_" + stat.getDatabaseName()))
+                    this.leaderboards.remove(game.getCodeName() + "_" + stat.getDatabaseName());
 
                 try
                 {
                     Leaderboard leaderboard = SamaGamesAPI.get().getStatsManager(game.getCodeName()).getLeaderboard(stat.getDatabaseName());
-                    this.leaderboards.put(stat.getDatabaseName(), leaderboard);
+                    this.leaderboards.put(game.getCodeName() + "_" + stat.getDatabaseName(), leaderboard);
                 }
                 catch (Exception e)
                 {
@@ -54,10 +54,10 @@ public class StatsManager extends AbstractManager
         this.hub.log(this, Level.INFO, "Leaderboards reloaded!");
     }
 
-    public Leaderboard getLeaderbordOf(String stat)
+    public Leaderboard getLeaderbordOf(String game, String stat)
     {
-        if(this.leaderboards.containsKey(stat))
-            return this.leaderboards.get(stat);
+        if(this.leaderboards.containsKey(game + "_" + stat))
+            return this.leaderboards.get(game + "_" + stat);
         else
             return null;
     }
