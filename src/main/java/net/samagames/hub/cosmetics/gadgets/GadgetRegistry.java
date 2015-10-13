@@ -76,7 +76,7 @@ public class GadgetRegistry extends AbstractCosmeticRegistry<GadgetCosmetic>
                 ChatColor.RED + "Attention: La faille spacio-temporelle",
                 ChatColor.RED + "aspire tous les joueurs autour de celle-ci !"
         }, StargateDisplayer.class, 120);
-        trampoSlimeGadget.buyableWithStars(10000);
+        stargateGadget.permissionNeeded("staff.member");
 
         GadgetCosmetic animalChestGadget = new GadgetCosmetic("secretchest", "Coffre super secret", new ItemStack(Material.CHEST, 1), new String[] {
         		"Nos chercheurs n'ont jamais réussis à déterminer",
