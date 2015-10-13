@@ -61,28 +61,49 @@ public class GadgetManager extends AbstractCosmeticManager<GadgetCosmetic>
     {
         if (cosmetic.isOwned(player))
         {
-            boolean flag = true;
-            boolean flag1 = true;
+            boolean hasRightToUse = true;
+            boolean hasSpaceToUse = true;
 
             try
             {
                 AbstractDisplayer displayer = cosmetic.getDisplayerClass().getDeclaredConstructor(Player.class).newInstance(player);
 
-                if (!displayer.canUse()) flag = false;
-                if (!this.canUse(player)) flag = false;
+                hasRightToUse = displayer.canUse() && canUse(player);
 
                 for (Location location : displayer.getBlocksUsed().keySet())
                 {
                     if (location.getBlock().getType() != Material.AIR || this.blocksUsed.contains(location))
-                        flag1 = false;
+                        hasSpaceToUse = false;
                 }
 
-                if (flag && flag1)
+                if (hasRightToUse && hasSpaceToUse)
                 {
                     displayer.display();
                     this.playersGadgets.put(player.getUniqueId(), displayer);
 
+                    this.loopsIds.put(player.getUniqueId(), Bukkit.getScheduler().scheduleAsyncRepeatingTask(this.hub, new Runnable()
+                    {
+                        int timer = cosmetic.getCooldown();
+
+                        @Override
+                        public void run()
+                        {
+                            if (!cooldowns.containsKey(player.getUniqueId()))
+                                cooldowns.put(player.getUniqueId(), timer);
+
+                            timer--;
+                            cooldowns.put(player.getUniqueId(), timer);
+
+                            if (timer == 0)
+                            {
+                                cooldowns.remove(player.getUniqueId());
+                                callbackLoop(player.getUniqueId());
+                            }
+                        }
+                    }, 20L, 20L));
+
                     Hub.getInstance().getGuiManager().closeGui(player);
+                    return;
                 }
             }
             catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException ex)
@@ -95,34 +116,11 @@ public class GadgetManager extends AbstractCosmeticManager<GadgetCosmetic>
             {
                 player.sendMessage(ChatColor.RED + "Vous pourrez utiliser un gadget que dans " + this.getCooldown(player) + " secondes.");
             }
-            else if (flag && flag1)
-            {
-                this.loopsIds.put(player.getUniqueId(), Bukkit.getScheduler().scheduleAsyncRepeatingTask(this.hub, new Runnable()
-                {
-                    int timer = cosmetic.getCooldown();
-
-                    @Override
-                    public void run()
-                    {
-                        if (!cooldowns.containsKey(player.getUniqueId()))
-                            cooldowns.put(player.getUniqueId(), timer);
-
-                        timer--;
-                        cooldowns.put(player.getUniqueId(), timer);
-
-                        if (timer == 0)
-                        {
-                            cooldowns.remove(player.getUniqueId());
-                            callbackLoop(player.getUniqueId());
-                        }
-                    }
-                }, 20L, 20L));
-            }
-            else if (!flag)
+            else if (!hasRightToUse)
             {
                 player.sendMessage(ChatColor.RED + "Vous ne pouvez pas utiliser ce gadget actuellement.");
             }
-            else if (!flag1)
+            else if (!hasSpaceToUse)
             {
                 player.sendMessage(ChatColor.RED + "Vous ne pouvez pas utiliser ce gadget ici.");
             }
@@ -184,12 +182,17 @@ public class GadgetManager extends AbstractCosmeticManager<GadgetCosmetic>
 
     public boolean canUse(Player player)
     {
-        if(this.hasGadget(player) && !SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "hub.gadgets.cooldownbypass"))
+        if(this.hasGadget(player))
             return false;
 
         if(this.cooldowns.containsKey(player.getUniqueId()))
         {
-            if(!SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "hub.gadgets.cooldownbypass"))
+            if(SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "hub.gadgets.cooldownbypass"))
+            {
+                this.cooldowns.remove(player.getUniqueId());
+                return true;
+            }
+            else
             {
                 if (this.cooldowns.get(player.getUniqueId()) <= 0)
                 {
@@ -201,16 +204,9 @@ public class GadgetManager extends AbstractCosmeticManager<GadgetCosmetic>
                     return false;
                 }
             }
-            else
-            {
-                this.cooldowns.remove(player.getUniqueId());
-                return true;
-            }
         }
-        else
-        {
-            return true;
-        }
+
+        return true;
     }
 
     public boolean hasGadget(Player player)
