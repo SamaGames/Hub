@@ -4,7 +4,6 @@ import net.samagames.api.SamaGamesAPI;
 import net.samagames.api.player.AbstractPlayerData;
 import net.samagames.hub.Hub;
 import net.samagames.hub.gui.AbstractGui;
-import net.samagames.hub.gui.profile.stats.GuiStats;
 import net.samagames.hub.utils.GuiUtils;
 import net.samagames.tools.PlayerUtils;
 import org.bukkit.Bukkit;
@@ -41,7 +40,8 @@ public class GuiProfile extends AbstractGui
         switch (action)
         {
             case "stats":
-                Hub.getInstance().getGuiManager().openGui(player, new GuiStats(player));
+                //Hub.getInstance().getGuiManager().openGui(player, new GuiStats(player));
+                player.sendMessage(ChatColor.RED + "Prochainement...");
                 break;
             case "achievements":
                 //Hub.getInstance().getGuiManager().openGui(player, new GuiAchievements());

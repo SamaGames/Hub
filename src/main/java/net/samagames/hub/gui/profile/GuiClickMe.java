@@ -3,7 +3,6 @@ package net.samagames.hub.gui.profile;
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import net.samagames.hub.gui.AbstractGui;
-import net.samagames.hub.gui.profile.stats.GuiStats;
 import net.samagames.hub.utils.GuiUtils;
 import net.samagames.hub.utils.RankUtils;
 import net.samagames.tools.chat.fanciful.FancyMessage;
@@ -74,7 +73,8 @@ public class GuiClickMe extends AbstractGui
                 Hub.getInstance().getGuiManager().closeGui(player);
                 break;
             case "stats":
-                Hub.getInstance().getGuiManager().openGui(player, new GuiStats(this.name, this.uuid, true));
+                //Hub.getInstance().getGuiManager().openGui(player, new GuiStats(this.name, this.uuid, true));
+                player.sendMessage(ChatColor.RED + "Prochainement...");
                 break;
             case "back":
                 Hub.getInstance().getGuiManager().closeGui(player);
