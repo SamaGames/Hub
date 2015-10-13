@@ -8,6 +8,7 @@ import net.samagames.hub.games.DisplayedStat;
 import org.bukkit.Bukkit;
 
 import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
 public class StatsManager extends AbstractManager
@@ -19,7 +20,7 @@ public class StatsManager extends AbstractManager
         super(hub);
         this.leaderboards = new HashMap<>();
 
-        Bukkit.getScheduler().runTaskTimerAsynchronously(this.hub, this::reloadStats, 0L, 20L * 60 * 3);
+        hub.getScheduledExecutorService().scheduleAtFixedRate(this::reloadStats, 0L, 60 * 3, TimeUnit.SECONDS);
     }
 
     public void reloadStats()

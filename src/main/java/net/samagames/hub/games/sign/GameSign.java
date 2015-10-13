@@ -100,6 +100,9 @@ public class GameSign
 
     public void scrollMapName()
     {
+        if(game.isMaintenance())
+            return;
+
         if(map.length() <= 10)
         {
             scrolledMapName = map;
