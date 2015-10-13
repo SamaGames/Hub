@@ -38,8 +38,25 @@ public class ScoreboardManager extends AbstractManager
     {
         if(!this.playerObjectives.containsKey(player.getUniqueId()))
         {
-            ObjectiveSign objective = new ObjectiveSign("ixeDiDiDi", "SamaGames");
-            objective.addReceiver(player);
+            AbstractPlayerData data = SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId());
+            ObjectiveSign objective = this.playerObjectives.get(player.getUniqueId());
+
+            objective.setDisplayName(this.rainbowContent.get(this.rainbowIndex) + "✦" + ChatColor.BOLD + " SamaGames " + ChatColor.RESET + this.rainbowContent.get(this.rainbowIndex) + "✦");
+            objective.setLine(0, ChatColor.BLUE + "");
+            objective.setLine(1, ChatColor.GREEN + "" + ChatColor.BOLD + "Serveur");
+            objective.setLine(2, ChatColor.GRAY + "Hub " + SamaGamesAPI.get().getServerName().split("_")[1]);
+            objective.setLine(3, ChatColor.AQUA + "");
+            objective.setLine(4, ChatColor.RED + "" + ChatColor.BOLD + "Rang");
+            objective.setLine(5, RankUtils.getFormattedRank(player.getUniqueId()));
+            objective.setLine(6, ChatColor.GREEN + "");
+            objective.setLine(7, ChatColor.GOLD + "" + ChatColor.BOLD + "Pièces");
+            objective.setLine(8, ChatColor.GRAY + (data == null ? "Erreur" : String.valueOf(data.getCoins())));
+            objective.setLine(9, ChatColor.DARK_GREEN + "");
+            objective.setLine(10, ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "Étoiles");
+            objective.setLine(11, ChatColor.RESET + "" + ChatColor.GRAY + (data == null ? "Erreur" : String.valueOf(data.getStars())));
+            objective.setLine(12, ChatColor.BLACK + "");
+            objective.setLine(13, ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "TeamSpeak");
+            objective.setLine(14, ChatColor.GRAY + "ts.samagames.net");
 
             this.playerObjectives.put(player.getUniqueId(), objective);
 
@@ -71,28 +88,24 @@ public class ScoreboardManager extends AbstractManager
             this.rainbowIndex = 0;
     }
 
-    public void update(UUID uuid)
+    private void update(UUID uuid)
     {
-        AbstractPlayerData data = SamaGamesAPI.get().getPlayerManager().getPlayerData(uuid);
+        update(uuid, false);
+    }
+
+    public void update(UUID uuid, boolean refresh)
+    {
         ObjectiveSign objective = this.playerObjectives.get(uuid);
 
-        objective.setDisplayName(this.rainbowContent.get(this.rainbowIndex) + "✦" + ChatColor.BOLD + " SamaGames " + ChatColor.RESET + this.rainbowContent.get(this.rainbowIndex) + "✦");
-        objective.setLine(0, ChatColor.BLUE + "");
-        objective.setLine(1, ChatColor.GREEN + "" + ChatColor.BOLD + "Serveur");
-        objective.setLine(2, ChatColor.GRAY + "Hub " + SamaGamesAPI.get().getServerName().split("_")[1]);
-        objective.setLine(3, ChatColor.AQUA + "");
-        objective.setLine(4, ChatColor.RED + "" + ChatColor.BOLD + "Rang");
-        objective.setLine(5, RankUtils.getFormattedRank(uuid));
-        objective.setLine(6, ChatColor.GREEN + "");
-        objective.setLine(7, ChatColor.GOLD + "" + ChatColor.BOLD + "Pièces");
-        objective.setLine(8, ChatColor.GRAY + (data == null ? "Erreur" : String.valueOf(data.getCoins())));
-        objective.setLine(9, ChatColor.DARK_GREEN + "");
-        objective.setLine(10, ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "Étoiles");
-        objective.setLine(11, ChatColor.RESET + "" + ChatColor.GRAY + (data == null ? "Erreur" : String.valueOf(data.getStars())));
-        objective.setLine(12, ChatColor.BLACK + "");
-        objective.setLine(13, ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "TeamSpeak");
-        objective.setLine(14, ChatColor.GRAY + "ts.samagames.net");
+        ChatColor rainbow = this.rainbowContent.get(this.rainbowIndex);
+        objective.setDisplayName(rainbow + "✦" + ChatColor.BOLD + " SamaGames " + ChatColor.RESET + rainbow + "✦");
 
+        if (refresh)
+        {
+            AbstractPlayerData data = SamaGamesAPI.get().getPlayerManager().getPlayerData(uuid);
+            objective.setLine(8, ChatColor.GRAY + (data == null ? "Erreur" : String.valueOf(data.getCoins())));
+            objective.setLine(11, ChatColor.RESET + "" + ChatColor.GRAY + (data == null ? "Erreur" : String.valueOf(data.getStars())));
+        }
         objective.updateLines();
     }
 

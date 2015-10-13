@@ -86,6 +86,8 @@ public class GameSign
                 };
         PacketPlayOutUpdateSign packet = new PacketPlayOutUpdateSign(worldServer, new BlockPosition(sign.getX(), sign.getY(), sign.getZ()), lines);
 
+
+        // FIXME: This method can be low
         sign.getWorld().getNearbyEntities(sign.getLocation(), 15, 15, 15).stream().filter(entity -> entity instanceof Player).forEach(entity -> {
             Player player = (Player) entity;
 

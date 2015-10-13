@@ -55,7 +55,7 @@ public class ShopItem extends ShopIcon
         {
             GuiConfirm confirm = new GuiConfirm(Hub.getInstance().getGuiManager().getPlayerGui(player), () ->
             {
-                SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).withdrawCoins(this.cost);
+                SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).withdrawCoins(this.cost, (newAmount, difference, error) -> Hub.getInstance().getScoreboardManager().update(player.getUniqueId(), true));
                 SamaGamesAPI.get().getShopsManager(this.game.getCodeName()).addOwnedLevel(player, this.type, this.getActionName());
                 SamaGamesAPI.get().getShopsManager(this.game.getCodeName()).setCurrentLevel(player, this.type, this.getActionName());
 

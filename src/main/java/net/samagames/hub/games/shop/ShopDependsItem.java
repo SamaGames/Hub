@@ -1,6 +1,7 @@
 package net.samagames.hub.games.shop;
 
 import net.samagames.api.SamaGamesAPI;
+import net.samagames.api.player.IFinancialCallback;
 import net.samagames.hub.Hub;
 import net.samagames.hub.games.AbstractGame;
 import net.samagames.hub.gui.shop.GuiConfirm;
@@ -51,7 +52,7 @@ public class ShopDependsItem extends ShopItem
         {
             GuiConfirm confirm = new GuiConfirm(Hub.getInstance().getGuiManager().getPlayerGui(player), () ->
             {
-                SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).withdrawCoins(this.cost);
+                SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).withdrawCoins(this.cost, (newAmount, difference, error) -> Hub.getInstance().getScoreboardManager().update(player.getUniqueId(), true));
                 SamaGamesAPI.get().getShopsManager(this.game.getCodeName()).addOwnedLevel(player.getUniqueId(), this.type, this.getActionName());
                 SamaGamesAPI.get().getShopsManager(this.game.getCodeName()).setCurrentLevel(player.getUniqueId(), this.type, this.getActionName());
                 
