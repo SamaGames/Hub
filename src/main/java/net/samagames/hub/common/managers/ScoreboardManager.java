@@ -39,7 +39,7 @@ public class ScoreboardManager extends AbstractManager
         if(!this.playerObjectives.containsKey(player.getUniqueId()))
         {
             AbstractPlayerData data = SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId());
-            ObjectiveSign objective = this.playerObjectives.get(player.getUniqueId());
+            ObjectiveSign objective = new ObjectiveSign("ixeDiDiDi", "SamaGames");
 
             objective.setDisplayName(this.rainbowContent.get(this.rainbowIndex) + "✦" + ChatColor.BOLD + " SamaGames " + ChatColor.RESET + this.rainbowContent.get(this.rainbowIndex) + "✦");
             objective.setLine(0, ChatColor.BLUE + "");
@@ -57,6 +57,7 @@ public class ScoreboardManager extends AbstractManager
             objective.setLine(12, ChatColor.BLACK + "");
             objective.setLine(13, ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "TeamSpeak");
             objective.setLine(14, ChatColor.GRAY + "ts.samagames.net");
+            objective.addReceiver(player);
 
             this.playerObjectives.put(player.getUniqueId(), objective);
 

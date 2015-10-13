@@ -75,7 +75,7 @@ public class GameManager extends AbstractManager
             {
                 Player player = Bukkit.getPlayer(packet.getPlayer().getUUID());
 
-                if (packet.isSuccess() || packet.getErrorMessage() != null)
+                if (!packet.isSuccess() || (packet.getErrorMessage() != null && !packet.getErrorMessage().isEmpty()))
                 {
                     player.sendRawMessage(packet.getErrorMessage());
                     return;

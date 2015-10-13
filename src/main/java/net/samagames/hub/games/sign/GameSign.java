@@ -1,7 +1,5 @@
 package net.samagames.hub.games.sign;
 
-import net.md_5.bungee.api.chat.ComponentBuilder;
-import net.md_5.bungee.api.chat.TextComponent;
 import net.minecraft.server.v1_8_R3.*;
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
@@ -79,13 +77,12 @@ public class GameSign
 
         IChatBaseComponent[] lines = new IChatBaseComponent[]
                 {
-                        new ChatComponentText(sign.getLine(0)),
-                        new ChatComponentText(sign.getLine(1)),
-                        new ChatComponentText(sign.getLine(2)),
-                        new ChatComponentText(sign.getLine(3))
+                        new ChatMessage(sign.getLine(0)),
+                        new ChatMessage(sign.getLine(1)),
+                        new ChatMessage(sign.getLine(2)),
+                        new ChatMessage(sign.getLine(3))
                 };
         PacketPlayOutUpdateSign packet = new PacketPlayOutUpdateSign(worldServer, new BlockPosition(sign.getX(), sign.getY(), sign.getZ()), lines);
-
 
         // FIXME: This method can be low
         sign.getWorld().getNearbyEntities(sign.getLocation(), 15, 15, 15).stream().filter(entity -> entity instanceof Player).forEach(entity -> {
