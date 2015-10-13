@@ -35,7 +35,7 @@ public class GuiConfirm extends AbstractGui
     public void onClick(Player player, ItemStack stack, String action)
     {
         if(action.equals("confirm"))
-            Bukkit.getScheduler().runTask(Hub.getInstance(), this.callback);
+            Hub.getInstance().getExecutorMonoThread().execute(this.callback);
 
         Hub.getInstance().getGuiManager().openGui(player, this.parent);
     }

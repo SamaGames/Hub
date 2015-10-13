@@ -55,6 +55,8 @@ public class Hub extends JavaPlugin
 
     private HubRefresher hubRefresher;
 
+    private ScheduledExecutorService executorMonoThread;
+
     private ScheduledExecutorService scheduledExecutorService;
 
     public static Hub getInstance()
@@ -73,6 +75,7 @@ public class Hub extends JavaPlugin
         this.debug = this.getConfig().getBoolean("debug", false);
 
         this.scheduledExecutorService = Executors.newScheduledThreadPool(16);
+        this.executorMonoThread = Executors.newScheduledThreadPool(1);
 
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
 
@@ -126,6 +129,7 @@ public class Hub extends JavaPlugin
             this.hubRefresher.removeFromList();
 
         scheduledExecutorService.shutdown();
+        executorMonoThread.shutdown();
     }
 
     public void registerEvents()
@@ -189,4 +193,9 @@ public class Hub extends JavaPlugin
     public ScheduledExecutorService getScheduledExecutorService() {
         return scheduledExecutorService;
     }
+
+    public ScheduledExecutorService getExecutorMonoThread() {
+        return executorMonoThread;
+    }
+
 }
