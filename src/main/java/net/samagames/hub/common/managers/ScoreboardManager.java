@@ -1,6 +1,7 @@
 package net.samagames.hub.common.managers;
 
 import net.samagames.api.SamaGamesAPI;
+import net.samagames.api.player.AbstractPlayerData;
 import net.samagames.hub.Hub;
 import net.samagames.hub.utils.RankUtils;
 import net.samagames.tools.Rainbow;
@@ -72,6 +73,7 @@ public class ScoreboardManager extends AbstractManager
 
     public void update(UUID uuid)
     {
+        AbstractPlayerData data = SamaGamesAPI.get().getPlayerManager().getPlayerData(uuid);
         ObjectiveSign objective = this.playerObjectives.get(uuid);
 
         objective.setDisplayName(this.rainbowContent.get(this.rainbowIndex) + "✦" + ChatColor.BOLD + " SamaGames " + ChatColor.RESET + this.rainbowContent.get(this.rainbowIndex) + "✦");
@@ -83,10 +85,10 @@ public class ScoreboardManager extends AbstractManager
         objective.setLine(5, RankUtils.getFormattedRank(uuid));
         objective.setLine(6, ChatColor.GREEN + "");
         objective.setLine(7, ChatColor.GOLD + "" + ChatColor.BOLD + "Pièces");
-        objective.setLine(8, ChatColor.GRAY + String.valueOf(SamaGamesAPI.get().getPlayerManager().getPlayerData(uuid).getCoins()));
+        objective.setLine(8, ChatColor.GRAY + (data == null ? "Erreur" : String.valueOf(data.getCoins())));
         objective.setLine(9, ChatColor.DARK_GREEN + "");
         objective.setLine(10, ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "Étoiles");
-        objective.setLine(11, ChatColor.RESET + "" + ChatColor.GRAY + String.valueOf(SamaGamesAPI.get().getPlayerManager().getPlayerData(uuid).getStars()));
+        objective.setLine(11, ChatColor.RESET + "" + ChatColor.GRAY + (data == null ? "Erreur" : String.valueOf(data.getStars())));
         objective.setLine(12, ChatColor.BLACK + "");
         objective.setLine(13, ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "TeamSpeak");
         objective.setLine(14, ChatColor.GRAY + "ts.samagames.net");
