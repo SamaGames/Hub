@@ -67,7 +67,7 @@ public class GadgetRegistry extends AbstractCosmeticRegistry<GadgetCosmetic>
         }, EnderSwapDisplayer.class, 60);
         trampoSlimeGadget.buyableWithStars(2500);
 
-        GadgetCosmetic stargateGadget = new GadgetCosmetic("stargate", "Stargate", new ItemStack(Material.ENDER_PORTAL_FRAME, 1), new String[] {
+        GadgetCosmetic stargateGadget = new GadgetCosmetic("stargate-staff", "Stargate", new ItemStack(Material.ENDER_PORTAL_FRAME, 1), new String[] {
                 "Ce gadget créera une faille spacio-temporelle",
                 "qui vous téléportera dans un monde parallèle",
                 "Minecraftien doté de joueurs identiques au monde",
