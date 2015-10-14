@@ -4,7 +4,6 @@ import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import net.samagames.hub.games.AbstractGame;
 import net.samagames.hub.gui.AbstractGui;
-import net.samagames.hub.gui.staff.GuiSelectZone;
 import org.apache.commons.lang3.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -59,12 +58,6 @@ public class GuiMain extends AbstractGui
         {
             if(SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "hub.beta.vip"))
             {
-                if(SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "hub.beta.staff"))
-                {
-                    Hub.getInstance().getGuiManager().openGui(player, new GuiSelectZone());
-                    return;
-                }
-
                 player.teleport(Hub.getInstance().getGameManager().getGameByIdentifier("beta_vip").getLobbySpawn());
             }
         }

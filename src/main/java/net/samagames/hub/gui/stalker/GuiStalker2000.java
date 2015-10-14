@@ -72,26 +72,7 @@ public class GuiStalker2000 extends AbstractGui
 
             if(canSeeServer)
             {
-                String formattedServer;
-
-                if(server.equals("hidden") && !server.startsWith("Hub_"))
-                {
-                    formattedServer = ChatColor.RED + "Secret :o";
-                }
-                else
-                {
-                    if (server.startsWith("Hub_"))
-                    {
-                        formattedServer = ChatColor.GRAY + server.split("_")[0] + " " + server.split("_")[1];
-                    }
-                    else
-                    {
-                        if (!Hub.getInstance().getGameManager().getGameByIdentifier(server.split("_")[0]).getCodeName().equals("beta_staff"))
-                            formattedServer = ChatColor.GRAY + server.split("_")[0] + " " + server.split("_")[1];
-                        else
-                            formattedServer = ChatColor.RED + "Secret :o";
-                    }
-                }
+                String formattedServer = ChatColor.GRAY + server.split("_")[0] + " " + server.split("_")[1];
 
                 lores.add(ChatColor.GOLD + "Actuellement sur : " + formattedServer);
                 lores.add("");
