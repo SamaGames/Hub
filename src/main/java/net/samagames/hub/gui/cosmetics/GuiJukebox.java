@@ -128,14 +128,14 @@ public class GuiJukebox extends AbstractGui
 
                     GuiConfirm confirm = new GuiConfirm(Hub.getInstance().getGuiManager().getPlayerGui(player), () ->
                     {
-                        SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).withdrawStars(album.getCost());
+                        SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).withdrawStars(album.getCost(), (a, b, c) -> {
+                            for(JukeboxDiskCosmetic disk : album.getDisks())
+                            {
+                                disk.buyCallback(player, true);
+                            }
 
-                        for(JukeboxDiskCosmetic disk : album.getDisks())
-                        {
-                            disk.buyCallback(player, true);
-                        }
-
-                        player.sendMessage(ChatColor.GREEN + "L'album a bien été acheté !");
+                            player.sendMessage(ChatColor.GREEN + "L'album a bien été acheté !");
+                        });
                     });
 
                     Hub.getInstance().getGuiManager().openGui(player, confirm);

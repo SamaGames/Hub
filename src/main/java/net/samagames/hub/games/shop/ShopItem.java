@@ -59,11 +59,13 @@ public class ShopItem extends ShopIcon
                 if(SamaGamesAPI.get().getShopsManager(this.game.getCodeName()).getItemLevelForPlayer(player, type) == this.getActionName())
                     return;
 
-                SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).withdrawCoins(this.cost, (newAmount, difference, error) -> Hub.getInstance().getScoreboardManager().update(player.getUniqueId(), true));
-                SamaGamesAPI.get().getShopsManager(this.game.getCodeName()).addOwnedLevel(player, this.type, this.getActionName());
-                SamaGamesAPI.get().getShopsManager(this.game.getCodeName()).setCurrentLevel(player, this.type, this.getActionName());
+                SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).withdrawCoins(this.cost, (newAmount, difference, error) -> {
+                    SamaGamesAPI.get().getShopsManager(this.game.getCodeName()).addOwnedLevel(player, this.type, this.getActionName());
+                    SamaGamesAPI.get().getShopsManager(this.game.getCodeName()).setCurrentLevel(player, this.type, this.getActionName());
 
-                player.sendMessage(ChatColor.GREEN + "Vous avez acheté et équipé " + ChatColor.AQUA + this.getIcon().getItemMeta().getDisplayName());
+                    player.sendMessage(ChatColor.GREEN + "Vous avez acheté et équipé " + ChatColor.AQUA + this.getIcon().getItemMeta().getDisplayName());
+                    Hub.getInstance().getScoreboardManager().update(player.getUniqueId(), true);
+                });
 
                 Hub.getInstance().getGuiManager().getPlayerGui(player).update(player);
             });
