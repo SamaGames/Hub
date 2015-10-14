@@ -131,7 +131,7 @@ public class GuiStalker2000 extends AbstractGui
     @Override
     public void update(Player player)
     {
-        boolean canSeeServer = SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "tracker.vip");
+        boolean canSeeServer = SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "hub.stalker.view");
         boolean followEnabled = SamaGamesAPI.get().getSettingsManager().isEnabled(player.getUniqueId(), "tracker-follow", false);
 
         this.setSlotData(ChatColor.GOLD + "Suivi", Material.LEASH, this.inventory.getSize() - 6, new String[] {
@@ -157,12 +157,6 @@ public class GuiStalker2000 extends AbstractGui
         {
             String server = action.split(":")[1];
 
-            if(server.contains("Secret"))
-            {
-                player.sendMessage(ChatColor.RED + "Vous ne pouvez pas vous téléporter sur un serveur secret :o");
-                return;
-            }
-
             if(this.teleportEnabled)
             {
                 BungeeUtils.sendPlayerToServer(player, server);
@@ -174,10 +168,13 @@ public class GuiStalker2000 extends AbstractGui
         }
         else if(action.equals("follow"))
         {
-            boolean followEnabled = SamaGamesAPI.get().getSettingsManager().isEnabled(player.getUniqueId(), "tracker-follow", false);
-            SamaGamesAPI.get().getSettingsManager().setSetting(player.getUniqueId(), "tracker-follow", String.valueOf(!followEnabled));
+            Bukkit.getScheduler().runTaskAsynchronously(Hub.getInstance(), () ->
+            {
+                boolean followEnabled = SamaGamesAPI.get().getSettingsManager().isEnabled(player.getUniqueId(), "tracker-follow", false);
+                SamaGamesAPI.get().getSettingsManager().setSetting(player.getUniqueId(), "tracker-follow", String.valueOf(!followEnabled));
 
-            this.update(player);
+                this.update(player);
+            });
         }
         else if(action.equals("friends"))
         {
