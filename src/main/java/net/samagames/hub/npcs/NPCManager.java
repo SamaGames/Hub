@@ -63,13 +63,13 @@ public class NPCManager extends AbstractManager
     {
         for(NPCData npcData : this.npcsDatas.values())
         {
-            HumanNPC npc = this.npcRegistry.createHumanNPC("");
+            HumanNPC npc = this.npcRegistry.createHumanNPC(npcData.getOwner(), "");
             npc.spawn(npcData.getLocation());
             npc.setProtected(true);
             npc.setSkin(npcData.getOwner());
-            npc.faceLocation(npcData.getLocation());
             npc.setShowInTabList(false);
 
+            npc.getEntity().teleport(npcData.getLocation());
             npc.getEntity().setMetadata("npc-id", new FixedMetadataValue(Hub.getInstance(), npcData.getID()));
 
             Hologram hologram = new Hologram(npcData.getText());
