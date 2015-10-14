@@ -180,7 +180,7 @@ public class Parkour
 
         if(now > 0)
         {
-            player.sendMessage(Hub.getInstance().getParkourManager().getTag() + ChatColor.DARK_AQUA + "Il vous reste plus que " + now + " essais !");
+            player.sendMessage(Hub.getInstance().getParkourManager().getTag() + ChatColor.DARK_AQUA + "Il vous reste plus que " + now + " essai" + (now == 1 ? "" : "s") + " !");
             player.teleport(this.checkpoints.get(player.getUniqueId()).get((this.checkpoints.get(player.getUniqueId()).size() - 1)));
         }
         else
