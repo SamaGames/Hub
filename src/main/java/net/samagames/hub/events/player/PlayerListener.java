@@ -2,6 +2,7 @@ package net.samagames.hub.events.player;
 
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
+import net.samagames.hub.cosmetics.gadgets.displayers.AbstractDisplayer;
 import net.samagames.hub.cosmetics.jukebox.JukeboxSong;
 import net.samagames.hub.games.AbstractGame;
 import net.samagames.hub.games.sign.GameSign;
@@ -232,16 +233,15 @@ public class PlayerListener implements Listener
 
             if(Hub.getInstance().getCosmeticManager().getGadgetManager().hasGadget((Player) event.getDamager()))
             {
-                if(SamaGamesAPI.get().getSettingsManager().isEnabled(event.getEntity().getUniqueId(), "interactions", true))
-                {
-                    Hub.getInstance().getCosmeticManager().getGadgetManager().getPlayerGadget((Player) event.getDamager()).handleInteraction(event.getDamager(), event.getEntity());
-                    return;
-                }
-                else
+                AbstractDisplayer displayer = Hub.getInstance().getCosmeticManager().getGadgetManager().getPlayerGadget((Player) event.getDamager());
+
+                if(displayer.isInteractionsEnabled() && !SamaGamesAPI.get().getSettingsManager().isEnabled(event.getEntity().getUniqueId(), "interactions", true))
                 {
                     event.getDamager().sendMessage(ChatColor.RED + "Ce joueur n'accepte pas les intéractions !");
                     return;
                 }
+
+                Hub.getInstance().getCosmeticManager().getGadgetManager().getPlayerGadget((Player) event.getDamager()).handleInteraction(event.getDamager(), event.getEntity());
             }
             else if(Hub.getInstance().getCosmeticManager().getGadgetManager().hasGadget((Player) event.getEntity()))
             {
