@@ -72,7 +72,13 @@ public class GuiStalker2000 extends AbstractGui
 
             if(canSeeServer)
             {
-                String formattedServer = ChatColor.GRAY + server.split("_")[0] + " " + server.split("_")[1];
+                System.out.println(server);
+                String formattedServer = server;
+                if (server.length() == 2)
+                {
+                    formattedServer = ChatColor.GRAY + server.split("_")[0] + " " + server.split("_")[1];
+                }
+
 
                 lores.add(ChatColor.GOLD + "Actuellement sur : " + formattedServer);
                 lores.add("");
