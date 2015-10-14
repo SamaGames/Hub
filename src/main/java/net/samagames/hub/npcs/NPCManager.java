@@ -2,6 +2,7 @@ package net.samagames.hub.npcs;
 
 import net.samagames.hub.Hub;
 import net.samagames.hub.common.managers.AbstractManager;
+import net.samagames.tools.holograms.Hologram;
 import net.techcable.npclib.HumanNPC;
 import net.techcable.npclib.NPC;
 import net.techcable.npclib.NPCLib;
@@ -9,7 +10,6 @@ import net.techcable.npclib.NPCRegistry;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
 
@@ -64,13 +64,17 @@ public class NPCManager extends AbstractManager
         for(NPCData npcData : this.npcsDatas.values())
         {
             HumanNPC npc = this.npcRegistry.createHumanNPC("");
+            npc.spawn(npcData.getLocation());
             npc.setProtected(true);
             npc.setSkin(npcData.getOwner());
-            npc.spawn(npcData.getLocation());
             npc.faceLocation(npcData.getLocation());
             npc.setShowInTabList(false);
 
             npc.getEntity().setMetadata("npc-id", new FixedMetadataValue(Hub.getInstance(), npcData.getID()));
+
+            Hologram hologram = new Hologram(npcData.getText());
+            hologram.setLocation(npc.getEntity().getLocation().clone().add(0.0D, 2.0D, 0.0D));
+            npcData.setHologramID(Hub.getInstance().getHologramManager().registerHologram(hologram));
 
             this.npcs.put(npcData.getID(), npc);
 
@@ -80,7 +84,7 @@ public class NPCManager extends AbstractManager
 
     public void removeNPCS()
     {
-        Bukkit.getWorlds().get(0).getEntities().stream().filter(entity -> entity.getType() == EntityType.VILLAGER).filter(entity -> entity.hasMetadata("npc-id")).forEach(entity ->
+        Bukkit.getWorlds().get(0).getEntities().stream().filter(entity -> entity.hasMetadata("npc-id")).forEach(entity ->
         {
             UUID uuid = UUID.fromString(entity.getMetadata("npc-id").get(0).asString());
 
@@ -100,9 +104,9 @@ public class NPCManager extends AbstractManager
         for(NPCData npcData : this.npcsDatas.values())
         {
             player.sendMessage(ChatColor.DARK_GRAY + "{");
-            player.sendMessage(ChatColor.DARK_GRAY + "[" + ChatColor.GRAY + npcData.getID().toString() + ChatColor.DARK_GRAY + "] ");
-            player.sendMessage(ChatColor.DARK_GRAY + "[" + ChatColor.GRAY + npcData.getLocation().getBlockX() + ";" + npcData.getLocation().getBlockY() + ";" + npcData.getLocation().getBlockZ() + ChatColor.DARK_GRAY + "] ");
-            player.sendMessage(ChatColor.DARK_GRAY + "[" + ChatColor.GRAY + npcData.getAction().getClass().getSimpleName() + ChatColor.DARK_GRAY + "] ");
+            player.sendMessage(ChatColor.DARK_GRAY + "  [" + ChatColor.GRAY + npcData.getID().toString() + ChatColor.DARK_GRAY + "] ");
+            player.sendMessage(ChatColor.DARK_GRAY + "  [" + ChatColor.GRAY + npcData.getLocation().getBlockX() + ";" + npcData.getLocation().getBlockY() + ";" + npcData.getLocation().getBlockZ() + ChatColor.DARK_GRAY + "] ");
+            player.sendMessage(ChatColor.DARK_GRAY + "  [" + ChatColor.GRAY + npcData.getAction().getClass().getSimpleName() + ChatColor.DARK_GRAY + "] ");
             player.sendMessage(ChatColor.DARK_GRAY + "}");
         }
     }
