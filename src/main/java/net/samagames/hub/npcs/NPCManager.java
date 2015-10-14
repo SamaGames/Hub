@@ -62,10 +62,9 @@ public class NPCManager extends AbstractManager
     {
         for(NPCData npcData : this.npcsDatas.values())
         {
-            NPC npc = this.npcRegistry.createNPC(EntityType.PLAYER, "");
+            NPC npc = this.npcRegistry.createHumanNPC("");
             npc.setProtected(true);
             npc.spawn(npcData.getLocation());
-            npc.faceLocation(npcData.getLocation());
             npc.getEntity().setMetadata("npc-id", new FixedMetadataValue(Hub.getInstance(), npcData.getID()));
 
             this.npcs.put(npcData.getID(), npc);
