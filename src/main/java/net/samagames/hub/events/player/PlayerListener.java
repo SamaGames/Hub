@@ -240,19 +240,12 @@ public class PlayerListener implements Listener
                 else
                 {
                     event.getDamager().sendMessage(ChatColor.RED + "Ce joueur n'accepte pas les intéractions !");
+                    return;
                 }
             }
             else if(Hub.getInstance().getCosmeticManager().getGadgetManager().hasGadget((Player) event.getEntity()))
             {
-                if(SamaGamesAPI.get().getSettingsManager().isEnabled(event.getEntity().getUniqueId(), "interactions", true))
-                {
-                    Hub.getInstance().getCosmeticManager().getGadgetManager().getPlayerGadget((Player) event.getEntity()).handleInteraction(event.getDamager(), event.getEntity());
-                    return;
-                }
-                else
-                {
-                    event.getDamager().sendMessage(ChatColor.RED + "Ce joueur n'accepte pas les intéractions !");
-                }
+                Hub.getInstance().getCosmeticManager().getGadgetManager().getPlayerGadget((Player) event.getEntity()).handleInteraction(event.getDamager(), event.getEntity());
             }
 
             Bukkit.getScheduler().runTaskAsynchronously(Hub.getInstance(), () ->
