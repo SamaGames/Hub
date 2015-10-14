@@ -230,6 +230,31 @@ public class PlayerListener implements Listener
         {
             final Player player = (Player) event.getDamager();
 
+            if(Hub.getInstance().getCosmeticManager().getGadgetManager().hasGadget((Player) event.getDamager()))
+            {
+                if(SamaGamesAPI.get().getSettingsManager().isEnabled(event.getEntity().getUniqueId(), "interactions", true))
+                {
+                    Hub.getInstance().getCosmeticManager().getGadgetManager().getPlayerGadget((Player) event.getDamager()).handleInteraction(event.getDamager(), event.getEntity());
+                    return;
+                }
+                else
+                {
+                    event.getDamager().sendMessage(ChatColor.RED + "Ce joueur n'accepte pas les intéractions !");
+                }
+            }
+            else if(Hub.getInstance().getCosmeticManager().getGadgetManager().hasGadget((Player) event.getEntity()))
+            {
+                if(SamaGamesAPI.get().getSettingsManager().isEnabled(event.getEntity().getUniqueId(), "interactions", true))
+                {
+                    Hub.getInstance().getCosmeticManager().getGadgetManager().getPlayerGadget((Player) event.getEntity()).handleInteraction(event.getDamager(), event.getEntity());
+                    return;
+                }
+                else
+                {
+                    event.getDamager().sendMessage(ChatColor.RED + "Ce joueur n'accepte pas les intéractions !");
+                }
+            }
+
             Bukkit.getScheduler().runTaskAsynchronously(Hub.getInstance(), () ->
             {
                 Player target = (Player) event.getEntity();
@@ -242,15 +267,6 @@ public class PlayerListener implements Listener
                     Hub.getInstance().getGuiManager().openGui(player, new GuiClickMe(target));
                 }
             });
-
-            if(Hub.getInstance().getCosmeticManager().getGadgetManager().hasGadget((Player) event.getDamager()))
-            {
-                Hub.getInstance().getCosmeticManager().getGadgetManager().getPlayerGadget((Player) event.getDamager()).handleInteraction(event.getDamager(), event.getEntity());
-            }
-            else if(Hub.getInstance().getCosmeticManager().getGadgetManager().hasGadget((Player) event.getEntity()))
-            {
-                Hub.getInstance().getCosmeticManager().getGadgetManager().getPlayerGadget((Player) event.getEntity()).handleInteraction(event.getDamager(), event.getEntity());
-            }
         }
         else if(event.getDamager() instanceof Player && !(event.getEntity() instanceof Player))
         {

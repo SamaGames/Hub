@@ -184,6 +184,12 @@ public class NukeDisplayer extends AbstractDisplayer
         }.runTaskTimerAsynchronously(Hub.getInstance(), 0, 1);
     }
 
+    @Override
+    public boolean isInteractionsEnabled()
+    {
+        return false;
+    }
+
     public boolean canUse()
     {
         return true;

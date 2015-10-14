@@ -84,6 +84,12 @@ public class MoutMout2000Displayer extends AbstractDisplayer
     @Override
     public void handleInteraction(Entity who, Entity with) {}
 
+    @Override
+    public boolean isInteractionsEnabled()
+    {
+        return false;
+    }
+
     public boolean canUse()
     {
         return true;

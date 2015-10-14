@@ -25,6 +25,7 @@ public abstract class AbstractDisplayer
 
     public abstract void display();
     public abstract void handleInteraction(Entity who, Entity with);
+    public abstract boolean isInteractionsEnabled();
     public abstract boolean canUse();
 
     public void addBlockToUse(Location location, SimpleBlock block)

@@ -119,6 +119,12 @@ public class PerchedCatDisplayer extends AbstractDisplayer
     }
 
     @Override
+    public boolean isInteractionsEnabled()
+    {
+        return true;
+    }
+
+    @Override
     public boolean canUse()
     {
         return true;

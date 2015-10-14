@@ -56,8 +56,8 @@ public class GadgetRegistry extends AbstractCosmeticRegistry<GadgetCosmetic>
                 "Défiez en duel un joueur et faites",
                 "en sorte d'échapper à son imparable",
                 "poing qui vous ferait perdre le duel !"
-        }, PerchedCatDisplayer.class, 100);
-        perchedCatGadget.buyableWithStars(2500);
+        }, PerchedCatDisplayer.class, 240);
+        perchedCatGadget.buyableWithStars(7500);
 
         GadgetCosmetic enderSwapGadget = new GadgetCosmetic("enderswap", "EnderSwap", new ItemStack(Material.ENDER_PEARL, 1), new String[] {
                 "Il est impossible de prédire l'effet de",

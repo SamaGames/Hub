@@ -11,6 +11,11 @@ import org.bukkit.inventory.ItemStack;
 
 public class GuiClickMeSettings extends GuiSettings
 {
+    public GuiClickMeSettings()
+    {
+        super(-1);
+    }
+
     @Override
     public void display(Player player)
     {
@@ -64,7 +69,7 @@ public class GuiClickMeSettings extends GuiSettings
 
         if(action.equals("back"))
         {
-            Hub.getInstance().getGuiManager().openGui(player, new GuiSettings());
+            Hub.getInstance().getGuiManager().openGui(player, new GuiSettings(0));
         }
     }
 }

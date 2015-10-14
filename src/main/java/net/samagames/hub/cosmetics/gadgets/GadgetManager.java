@@ -142,11 +142,12 @@ public class GadgetManager extends AbstractCosmeticManager<GadgetCosmetic>
     {
         if(this.loopsIds.containsKey(uuid))
         {
-            try{
-                this.loopsIds.get(uuid).cancel();
-            }catch(Exception e)
+            try
             {
-                //In case of nullpointer
+                this.loopsIds.get(uuid).cancel();
+            }
+            catch(Exception e)
+            {
                 e.printStackTrace();
             }
             this.loopsIds.remove(uuid);

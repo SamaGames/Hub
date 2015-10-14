@@ -81,6 +81,12 @@ public class HolyCreeperDisplayer extends AbstractDisplayer
     }
 
     @Override
+    public boolean isInteractionsEnabled()
+    {
+        return false;
+    }
+
+    @Override
     public boolean canUse()
     {
         return true;

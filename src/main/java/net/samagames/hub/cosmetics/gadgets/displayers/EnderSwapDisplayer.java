@@ -83,6 +83,12 @@ public class EnderSwapDisplayer extends AbstractDisplayer
     public void handleInteraction(Entity who, Entity with) {}
 
     @Override
+    public boolean isInteractionsEnabled()
+    {
+        return false;
+    }
+
+    @Override
     public boolean canUse()
     {
         return true;

@@ -36,7 +36,7 @@ public class PlayerManager extends AbstractManager
 
     public void handleLogin(Player player)
     {
-        this.updateSettings(player);
+        this.updateSettings(player, true);
         this.updateHiders(player);
     }
 
@@ -46,7 +46,7 @@ public class PlayerManager extends AbstractManager
         this.removeHider(player);
     }
 
-    public void updateSettings(Player player)
+    public void updateSettings(Player player, boolean jukeboxMessage)
     {
         boolean playerOnSetting = SamaGamesAPI.get().getSettingsManager().isEnabled(player.getUniqueId(), "players", true);
         boolean chatOnSetting = SamaGamesAPI.get().getSettingsManager().isEnabled(player.getUniqueId(), "chat", true);
@@ -76,7 +76,7 @@ public class PlayerManager extends AbstractManager
 
             JukeboxSong song = Hub.getInstance().getCosmeticManager().getJukeboxManager().getCurrentSong();
 
-            if (song != null)
+            if (song != null && jukeboxMessage)
                 player.sendMessage(Hub.getInstance().getCosmeticManager().getJukeboxManager().getJukeboxTag() + ChatColor.YELLOW + "La musique jouée actuellement est " + ChatColor.GOLD + ChatColor.ITALIC + song.getSong().getTitle() + ChatColor.YELLOW + " de " + ChatColor.GOLD + song.getSong().getAuthor() + ChatColor.YELLOW + ", proposée par " + ChatColor.GOLD + song.getPlayedBy());
         }
         else
