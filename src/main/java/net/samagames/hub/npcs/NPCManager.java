@@ -65,10 +65,10 @@ public class NPCManager extends AbstractManager
         {
             HumanNPC npc = this.npcRegistry.createHumanNPC("");
             npc.setProtected(true);
-            npc.setShowInTabList(false);
             npc.setSkin(npcData.getOwner());
             npc.faceLocation(npcData.getLocation());
             npc.spawn(npcData.getLocation());
+            npc.setShowInTabList(false);
 
             npc.getEntity().setMetadata("npc-id", new FixedMetadataValue(Hub.getInstance(), npcData.getID()));
 
