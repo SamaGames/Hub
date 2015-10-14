@@ -126,17 +126,17 @@ public class GuiJukebox extends AbstractGui
                         return;
                     }
 
-                    GuiConfirm confirm = new GuiConfirm(Hub.getInstance().getGuiManager().getPlayerGui(player), () ->
-                    {
-                        SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).withdrawStars(album.getCost(), (a, b, c) -> {
-                            for(JukeboxDiskCosmetic disk : album.getDisks())
-                            {
-                                disk.buyCallback(player, true);
-                            }
+                    GuiConfirm confirm = new GuiConfirm(Hub.getInstance().getGuiManager().getPlayerGui(player), (parent) ->
+                            SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).withdrawStars(album.getCost(), (a, b, c) -> {
+                                for(JukeboxDiskCosmetic disk : album.getDisks())
+                                {
+                                    disk.buyCallback(player, true);
+                                }
 
-                            player.sendMessage(ChatColor.GREEN + "L'album a bien été acheté !");
-                        });
-                    });
+                                Hub.getInstance().getScoreboardManager().update(player.getUniqueId(), true);
+                                Hub.getInstance().getGuiManager().openGui(player, parent);
+                                player.sendMessage(ChatColor.GREEN + "L'album a bien été acheté !");
+                            }));
 
                     Hub.getInstance().getGuiManager().openGui(player, confirm);
                 }

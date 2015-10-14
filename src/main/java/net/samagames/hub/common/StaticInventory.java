@@ -5,6 +5,7 @@ import net.samagames.hub.Hub;
 import net.samagames.hub.gui.cosmetics.GuiCosmetics;
 import net.samagames.hub.gui.main.GuiMain;
 import net.samagames.hub.gui.profile.GuiProfile;
+import net.samagames.hub.gui.shop.GuiShop;
 import net.samagames.hub.gui.stalker.GuiStalker2000;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -39,8 +40,7 @@ public class StaticInventory
         }
         else if(stack.getType() == Material.GOLD_INGOT)
         {
-            //Hub.getInstance().getGuiManager().openGui(player, new GuiShop());
-            player.sendMessage(ChatColor.RED + "Prochainement...");
+            Hub.getInstance().getGuiManager().openGui(player, new GuiShop());
         }
         else if(stack.getType() == Material.SKULL_ITEM)
         {

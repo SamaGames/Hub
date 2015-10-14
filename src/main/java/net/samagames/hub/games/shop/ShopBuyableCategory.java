@@ -35,13 +35,9 @@ public class ShopBuyableCategory extends ShopCategory
         {
             player.sendMessage(ChatColor.RED + "Vous n'avez pas assez de pièces pour acheter cet objet.");
         }
-        else if(clickType == ClickType.LEFT)
-        {
-            player.sendMessage(ChatColor.GOLD + "Faites un clic droit pour valider votre achat.");
-        }
         else
         {
-            GuiConfirm confirm = new GuiConfirm(Hub.getInstance().getGuiManager().getPlayerGui(player), () ->
+            GuiConfirm confirm = new GuiConfirm(Hub.getInstance().getGuiManager().getPlayerGui(player), (parent) ->
             {
                 //check if multilple click
                 if(SamaGamesAPI.get().getShopsManager(this.game.getCodeName()).getItemLevelForPlayer(player, this.getActionName()) == "flag")
@@ -54,6 +50,7 @@ public class ShopBuyableCategory extends ShopCategory
                     player.sendMessage(ChatColor.GREEN + "Vous avez acheté et équipé " + ChatColor.AQUA + this.getIcon().getItemMeta().getDisplayName());
                 });
                 Hub.getInstance().getGuiManager().getPlayerGui(player).update(player);
+                Hub.getInstance().getGuiManager().openGui(player, parent);
             });
 
             Hub.getInstance().getGuiManager().openGui(player, confirm);

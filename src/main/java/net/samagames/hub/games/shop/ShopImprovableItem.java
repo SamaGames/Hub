@@ -59,7 +59,7 @@ public class ShopImprovableItem extends ShopIcon
         {
             final ItemLevel finalLevel = next;
 
-            GuiConfirm confirm = new GuiConfirm(Hub.getInstance().getGuiManager().getPlayerGui(player), () ->
+            GuiConfirm confirm = new GuiConfirm(Hub.getInstance().getGuiManager().getPlayerGui(player), (parent) ->
             {
                 //check if multilple click
                 if(SamaGamesAPI.get().getShopsManager(this.game.getCodeName()).getItemLevelForPlayer(player, this.getActionName()) == finalLevel.getDatabaseStorageName())
@@ -71,6 +71,7 @@ public class ShopImprovableItem extends ShopIcon
 
                     player.sendMessage(ChatColor.GREEN + "Vous avez débloqué le niveau supérieur pour cette amélioration.");
                     Hub.getInstance().getScoreboardManager().update(player.getUniqueId(), true);
+                    Hub.getInstance().getGuiManager().openGui(player, parent);
                 });
 
                 Hub.getInstance().getGuiManager().getPlayerGui(player).update(player);

@@ -44,13 +44,9 @@ public class ShopDependsItem extends ShopItem
         {
             player.sendMessage(ChatColor.RED + "Vous n'avez pas assez de pièces pour acheter cela.");
         }
-        else if (clickType == ClickType.LEFT)
-        {
-            player.sendMessage(ChatColor.GOLD + "Faites un clic droit pour valider votre achat.");
-        }
         else
         {
-            GuiConfirm confirm = new GuiConfirm(Hub.getInstance().getGuiManager().getPlayerGui(player), () ->
+            GuiConfirm confirm = new GuiConfirm(Hub.getInstance().getGuiManager().getPlayerGui(player), (parent) ->
             {
                 //check if multilple click
                 if(SamaGamesAPI.get().getShopsManager(this.game.getCodeName()).getItemLevelForPlayer(player, type) == this.getActionName())
@@ -65,6 +61,7 @@ public class ShopDependsItem extends ShopItem
                 });
 
                 Hub.getInstance().getGuiManager().getPlayerGui(player).update(player);
+                Hub.getInstance().getGuiManager().openGui(player, parent);
             });
 
             Hub.getInstance().getGuiManager().openGui(player, confirm);

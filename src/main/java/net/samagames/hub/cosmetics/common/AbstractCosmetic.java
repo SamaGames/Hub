@@ -71,11 +71,12 @@ public abstract class AbstractCosmetic
                 return;
             }
 
-            GuiConfirm confirm = new GuiConfirm(Hub.getInstance().getGuiManager().getPlayerGui(player), () ->
+            GuiConfirm confirm = new GuiConfirm(Hub.getInstance().getGuiManager().getPlayerGui(player), (parent) ->
             {
                 SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).withdrawCoins(this.coinsCost, (newAmount, difference, error) -> {
                     this.buyCallback(player, false);
                     Hub.getInstance().getScoreboardManager().update(player.getUniqueId(), true);
+                    Hub.getInstance().getGuiManager().openGui(player, parent);
                 });
             });
 
@@ -88,11 +89,12 @@ public abstract class AbstractCosmetic
                 return;
             }
 
-            GuiConfirm confirm = new GuiConfirm(Hub.getInstance().getGuiManager().getPlayerGui(player), () ->
+            GuiConfirm confirm = new GuiConfirm(Hub.getInstance().getGuiManager().getPlayerGui(player), (parent) ->
             {
                 SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).withdrawStars(this.starsCost, (newAmount, difference, error) -> {
                     this.buyCallback(player, false);
                     Hub.getInstance().getScoreboardManager().update(player.getUniqueId(), true);
+                    Hub.getInstance().getGuiManager().openGui(player, parent);
                 });
             });
 

@@ -12,10 +12,12 @@ import org.bukkit.inventory.ItemStack;
 public class GuiConfirm extends AbstractGui
 {
     private final AbstractGui parent;
-    private final Runnable callback;
+    private final ConfirmCallback callback;
+    private boolean isInProgress;
 
-    public GuiConfirm(AbstractGui parent, Runnable callback)
+    public GuiConfirm(AbstractGui parent, ConfirmCallback callback)
     {
+        this.isInProgress = false;
         this.parent = parent;
         this.callback = callback;
     }
@@ -34,9 +36,24 @@ public class GuiConfirm extends AbstractGui
     @Override
     public void onClick(Player player, ItemStack stack, String action)
     {
-        if(action.equals("confirm"))
-            Hub.getInstance().getExecutorMonoThread().execute(this.callback);
+        if(action.equals("confirm") && !this.isInProgress)
+            Hub.getInstance().getExecutorMonoThread().execute(() -> {
+                this.isInProgress = true;
+                this.callback.run(parent);
+            });
+        else
+            Hub.getInstance().getGuiManager().openGui(player, this.parent);
+    }
 
-        Hub.getInstance().getGuiManager().openGui(player, this.parent);
+    public AbstractGui getParent()
+    {
+        return parent;
+    }
+
+
+
+    public interface ConfirmCallback {
+
+        void run(AbstractGui parent);
     }
 }
