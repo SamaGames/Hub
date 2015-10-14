@@ -14,7 +14,6 @@ import org.bukkit.*;
 import org.bukkit.block.Sign;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -281,19 +280,16 @@ public class PlayerListener implements Listener
     @EventHandler
     public void onPlayerInteractEntityEvent(final PlayerInteractEntityEvent event)
     {
-        if(event.getRightClicked().getType() == EntityType.VILLAGER)
+        if(event.getRightClicked().hasMetadata("npc-id"))
         {
-            if(event.getRightClicked().hasMetadata("npc-id"))
-            {
-                event.setCancelled(true);
+            event.setCancelled(true);
 
-                Bukkit.getScheduler().runTaskAsynchronously(Hub.getInstance(), () ->
-                {
-                    if (Hub.getInstance().getNPCManager().hasNPC(UUID.fromString(event.getRightClicked().getMetadata("npc-id").get(0).asString())))
-                        if (Hub.getInstance().getNPCManager().canTalk(event.getPlayer()))
-                            Hub.getInstance().getNPCManager().getNPCDataByID(UUID.fromString(event.getRightClicked().getMetadata("npc-id").get(0).asString())).getAction().execute(event.getPlayer());
-                });
-            }
+            Bukkit.getScheduler().runTaskAsynchronously(Hub.getInstance(), () ->
+            {
+                if (Hub.getInstance().getNPCManager().hasNPC(UUID.fromString(event.getRightClicked().getMetadata("npc-id").get(0).asString())))
+                    if (Hub.getInstance().getNPCManager().canTalk(event.getPlayer()))
+                        Hub.getInstance().getNPCManager().getNPCDataByID(UUID.fromString(event.getRightClicked().getMetadata("npc-id").get(0).asString())).getAction().execute(event.getPlayer());
+            });
         }
     }
 

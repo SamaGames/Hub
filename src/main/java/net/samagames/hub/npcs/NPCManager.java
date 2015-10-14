@@ -2,6 +2,7 @@ package net.samagames.hub.npcs;
 
 import net.samagames.hub.Hub;
 import net.samagames.hub.common.managers.AbstractManager;
+import net.techcable.npclib.HumanNPC;
 import net.techcable.npclib.NPC;
 import net.techcable.npclib.NPCLib;
 import net.techcable.npclib.NPCRegistry;
@@ -62,9 +63,13 @@ public class NPCManager extends AbstractManager
     {
         for(NPCData npcData : this.npcsDatas.values())
         {
-            NPC npc = this.npcRegistry.createHumanNPC("");
+            HumanNPC npc = this.npcRegistry.createHumanNPC("");
             npc.setProtected(true);
+            npc.setShowInTabList(false);
+            npc.setSkin(npcData.getOwner());
+            npc.faceLocation(npcData.getLocation());
             npc.spawn(npcData.getLocation());
+
             npc.getEntity().setMetadata("npc-id", new FixedMetadataValue(Hub.getInstance(), npcData.getID()));
 
             this.npcs.put(npcData.getID(), npc);
