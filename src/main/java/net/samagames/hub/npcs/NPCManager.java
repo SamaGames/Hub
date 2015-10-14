@@ -91,6 +91,7 @@ public class NPCManager extends AbstractManager
             if (this.getNPCDataByID(uuid) != null)
                 Hub.getInstance().getHologramManager().removeHologram(this.getNPCDataByID(uuid).getHologramID());
 
+            this.npcRegistry.deregister(this.getNPCByID(uuid));
             this.npcs.get(uuid).despawn();
 
             Hub.getInstance().log(this, Level.INFO, "Removed NPC at [" + entity.getLocation().getBlockX() + "] [" + entity.getLocation().getBlockY() + "] [" + entity.getLocation().getBlockZ() + "]");
