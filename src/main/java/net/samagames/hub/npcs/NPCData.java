@@ -6,10 +6,10 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.UUID;
 
-public class NPC
+public class NPCData
 {
     private UUID id;
-    private String name;
+    private String[] text;
     private UUID owner;
     private ItemStack[] armor;
     private ItemStack itemInHand;
@@ -17,10 +17,10 @@ public class NPC
     private UUID hologramID;
     private AbstractNPCAction action;
 
-    public NPC(UUID id, String name, UUID owner, ItemStack[] armor, ItemStack itemInHand, Location location, AbstractNPCAction action)
+    public NPCData(UUID id, String[] text, UUID owner, ItemStack[] armor, ItemStack itemInHand, Location location, AbstractNPCAction action)
     {
         this.id = id;
-        this.name = name;
+        this.text = text;
         this.owner = owner;
         this.armor = armor;
         this.itemInHand = itemInHand;
@@ -28,10 +28,10 @@ public class NPC
         this.action = action;
     }
 
-    public NPC(UUID id, String name, UUID owner, ItemStack[] armor, ItemStack itemInHand, Location location, String actionClassName)
+    public NPCData(UUID id, String[] text, UUID owner, ItemStack[] armor, ItemStack itemInHand, Location location, String actionClassName)
     {
         this.id = id;
-        this.name = name;
+        this.text = text;
         this.owner = owner;
         this.armor = armor;
         this.itemInHand = itemInHand;
@@ -62,9 +62,9 @@ public class NPC
         return this.id;
     }
 
-    public String getName()
+    public String[] getText()
     {
-        return this.name;
+        return this.text;
     }
 
     public UUID getOwner()

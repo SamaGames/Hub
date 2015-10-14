@@ -1,37 +1,38 @@
 package net.samagames.hub.npcs;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import net.minecraft.server.v1_8_R3.World;
-import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import net.samagames.hub.common.managers.AbstractManager;
-import net.samagames.tools.holograms.Hologram;
+import net.techcable.npclib.NPC;
+import net.techcable.npclib.NPCLib;
+import net.techcable.npclib.NPCRegistry;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
+import org.bukkit.Location;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
-import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.metadata.FixedMetadataValue;
-import redis.clients.jedis.Jedis;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.UUID;
 import java.util.logging.Level;
 
 public class NPCManager extends AbstractManager
 {
-    private HashMap<UUID, NPC> npcs;
-    private ArrayList<UUID> talking;
-    private boolean debug;
+    private final NPCRegistry npcRegistry;
+    private final HashMap<UUID, NPCData> npcsDatas;
+    private final HashMap<UUID, NPC> npcs;
+    private final ArrayList<UUID> talking;
 
     public NPCManager(Hub hub)
     {
         super(hub);
 
-        this.debug = false;
+        this.npcRegistry = NPCLib.getNPCRegistry(hub);
+        this.npcsDatas = new HashMap<>();
         this.npcs = new HashMap<>();
         this.talking = new ArrayList<>();
+
         this.reloadNPCS();
     }
 
@@ -43,52 +44,33 @@ public class NPCManager extends AbstractManager
 
     public void reloadNPCS()
     {
-        String baseKey = "hub:npcs";
-        Jedis jedis = SamaGamesAPI.get().getBungeeResource();
-        Map<String, String> array = jedis.hgetAll(baseKey);
-        jedis.close();
         this.removeNPCS();
+
+        this.npcsDatas.clear();
         this.npcs.clear();
 
-        for(String npcJson : array.values())
-        {
-            GsonBuilder gsonBuilder = new GsonBuilder();
-            gsonBuilder.registerTypeAdapter(NPC.class, new NPCDeserializer());
-            Gson gson = gsonBuilder.create();
-            NPC npc = gson.fromJson(npcJson, NPC.class);
+        UUID uuid = UUID.randomUUID();
 
-            this.npcs.put(npc.getID(), npc);
-            Hub.getInstance().log(this, Level.INFO, "Registered NPC '" + npc.getID() + "'");
-        }
+        this.npcsDatas.put(uuid, new NPCData(uuid, new String[]{
+                ChatColor.AQUA + "" + ChatColor.BOLD + "• Tutoriel de Bienvenu •"
+        }, UUID.fromString("c59220b1-662f-4aa8-b9d9-72660eb97c10"), null, null, new Location(this.hub.getHubWorld(), -10.5D, 80.0D, -12.5D, -45.0F, 0.0F), "TestAction"));
 
         this.placeNPCS();
     }
 
     public void placeNPCS()
     {
-        for(NPC npc : this.npcs.values())
+        for(NPCData npcData : this.npcsDatas.values())
         {
-            World craftbukkitWorld = ((CraftWorld) npc.getLocation().getWorld()).getHandle();
+            NPC npc = this.npcRegistry.createNPC(EntityType.PLAYER, "");
+            npc.setProtected(true);
+            npc.spawn(npcData.getLocation());
+            npc.faceLocation(npcData.getLocation());
+            npc.getEntity().setMetadata("npc-id", new FixedMetadataValue(Hub.getInstance(), npcData.getID()));
 
-            CustomEntityNPC entityNPC = new CustomEntityNPC(npc, npc.getLocation());
-            craftbukkitWorld.addEntity(entityNPC, CreatureSpawnEvent.SpawnReason.CUSTOM);
-            entityNPC.getBukkitEntity().teleport(npc.getLocation());
+            this.npcs.put(npcData.getID(), npc);
 
-            ArrayList<String> lines = new ArrayList<>();
-            lines.addAll(Arrays.asList(npc.getName().split("@")));
-
-            if(this.debug)
-                lines.add(ChatColor.RED + "[" + npc.getID() + "]");
-
-            String[] linesArray = new String[] {};
-            Hologram hologram = new Hologram(lines.toArray(linesArray));
-
-            hologram.setLocation(npc.getLocation().clone().add(0.0D, 2.0D, 0.0D));
-            npc.setHologramID(Hub.getInstance().getHologramManager().registerHologram(hologram));
-
-            entityNPC.getBukkitEntity().setMetadata("npc-id", new FixedMetadataValue(Hub.getInstance(), npc.getID()));
-
-            Hub.getInstance().log(this, Level.INFO, "Placed NPC at [" + npc.getLocation().getBlockX() + "] [" + npc.getLocation().getBlockY() + "] [" + npc.getLocation().getBlockZ() + "]");
+            Hub.getInstance().log(this, Level.INFO, "Placed NPC at [" + npcData.getLocation().getBlockX() + "] [" + npcData.getLocation().getBlockY() + "] [" + npcData.getLocation().getBlockZ() + "]");
         }
     }
 
@@ -96,11 +78,14 @@ public class NPCManager extends AbstractManager
     {
         Bukkit.getWorlds().get(0).getEntities().stream().filter(entity -> entity.getType() == EntityType.VILLAGER).filter(entity -> entity.hasMetadata("npc-id")).forEach(entity ->
         {
-            if (this.getNPCByID(UUID.fromString(entity.getMetadata("npc-id").get(0).asString())) != null)
-                Hub.getInstance().getHologramManager().removeHologram(this.getNPCByID(UUID.fromString(entity.getMetadata("npc-id").get(0).asString())).getHologramID());
+            UUID uuid = UUID.fromString(entity.getMetadata("npc-id").get(0).asString());
+
+            if (this.getNPCDataByID(uuid) != null)
+                Hub.getInstance().getHologramManager().removeHologram(this.getNPCDataByID(uuid).getHologramID());
+
+            this.npcs.get(uuid).despawn();
 
             Hub.getInstance().log(this, Level.INFO, "Removed NPC at [" + entity.getLocation().getBlockX() + "] [" + entity.getLocation().getBlockY() + "] [" + entity.getLocation().getBlockZ() + "]");
-            entity.remove();
         });
     }
 
@@ -108,13 +93,12 @@ public class NPCManager extends AbstractManager
     {
         player.sendMessage(ChatColor.GREEN + "Liste des NPCs :");
 
-        for(NPC npc : this.npcs.values())
+        for(NPCData npcData : this.npcsDatas.values())
         {
             player.sendMessage(ChatColor.DARK_GRAY + "{");
-            player.sendMessage(ChatColor.DARK_GRAY + "[" + ChatColor.GRAY + npc.getID().toString() + ChatColor.DARK_GRAY + "] ");
-            player.sendMessage(ChatColor.DARK_GRAY + "[" + ChatColor.GRAY + ChatColor.stripColor(npc.getName()) + ChatColor.DARK_GRAY + "] ");
-            player.sendMessage(ChatColor.DARK_GRAY + "[" + ChatColor.GRAY + npc.getLocation().getBlockX() + ";" + npc.getLocation().getBlockY() + ";" + npc.getLocation().getBlockZ() + ChatColor.DARK_GRAY + "] ");
-            player.sendMessage(ChatColor.DARK_GRAY + "[" + ChatColor.GRAY + npc.getAction().getClass().getSimpleName() + ChatColor.DARK_GRAY + "] ");
+            player.sendMessage(ChatColor.DARK_GRAY + "[" + ChatColor.GRAY + npcData.getID().toString() + ChatColor.DARK_GRAY + "] ");
+            player.sendMessage(ChatColor.DARK_GRAY + "[" + ChatColor.GRAY + npcData.getLocation().getBlockX() + ";" + npcData.getLocation().getBlockY() + ";" + npcData.getLocation().getBlockZ() + ChatColor.DARK_GRAY + "] ");
+            player.sendMessage(ChatColor.DARK_GRAY + "[" + ChatColor.GRAY + npcData.getAction().getClass().getSimpleName() + ChatColor.DARK_GRAY + "] ");
             player.sendMessage(ChatColor.DARK_GRAY + "}");
         }
     }
@@ -129,10 +113,9 @@ public class NPCManager extends AbstractManager
         this.talking.remove(player.getUniqueId());
     }
 
-    public void toggleDebug(boolean debug)
+    public NPCData getNPCDataByID(UUID uuid)
     {
-        this.debug = debug;
-        this.reloadNPCS();
+        return this.npcsDatas.get(uuid);
     }
 
     public NPC getNPCByID(UUID uuid)
