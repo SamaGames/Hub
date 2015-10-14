@@ -291,7 +291,7 @@ public class PlayerListener implements Listener
                 {
                     if (Hub.getInstance().getNPCManager().hasNPC(UUID.fromString(event.getRightClicked().getMetadata("npc-id").get(0).asString())))
                         if (Hub.getInstance().getNPCManager().canTalk(event.getPlayer()))
-                            Hub.getInstance().getNPCManager().getNPCByID(UUID.fromString(event.getRightClicked().getMetadata("npc-id").get(0).asString())).getAction().execute(event.getPlayer());
+                            Hub.getInstance().getNPCManager().getNPCDataByID(UUID.fromString(event.getRightClicked().getMetadata("npc-id").get(0).asString())).getAction().execute(event.getPlayer());
                 });
             }
         }
