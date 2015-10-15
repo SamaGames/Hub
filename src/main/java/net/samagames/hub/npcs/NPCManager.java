@@ -9,7 +9,6 @@ import net.techcable.npclib.NPCLib;
 import net.techcable.npclib.NPCRegistry;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
 
@@ -52,9 +51,9 @@ public class NPCManager extends AbstractManager
 
         UUID uuid = UUID.randomUUID();
 
-        this.npcsDatas.put(uuid, new NPCData(uuid, new String[]{
+        /**this.npcsDatas.put(uuid, new NPCData(uuid, new String[]{
                 ChatColor.AQUA + "" + ChatColor.BOLD + "• Tutoriel de Bienvenu •"
-        }, UUID.fromString("c59220b1-662f-4aa8-b9d9-72660eb97c10"), null, null, new Location(this.hub.getHubWorld(), -10.5D, 80.0D, -12.5D, -45.0F, 0.0F), "TestAction"));
+        }, UUID.fromString("c59220b1-662f-4aa8-b9d9-72660eb97c10"), null, null, new Location(this.hub.getHubWorld(), -10.5D, 80.0D, -12.5D, -45.0F, 0.0F), "TestAction"));**/
 
         this.placeNPCS();
     }
