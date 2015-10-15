@@ -118,14 +118,11 @@ public class GuiSettings extends AbstractGui
             {
                 boolean enabled = SamaGamesAPI.get().getSettingsManager().isEnabled(player.getUniqueId(), action.split("_")[1], true);
 
-                if (enabled)
-                    SamaGamesAPI.get().getSettingsManager().setSetting(player.getUniqueId(), action.split("_")[1], "false");
-                else
-                    SamaGamesAPI.get().getSettingsManager().setSetting(player.getUniqueId(), action.split("_")[1], "true");
-
-                Hub.getInstance().getPlayerManager().updateSettings(player, (action.equals("setting_jukebox")));
-
-                this.update(player);
+                SamaGamesAPI.get().getSettingsManager().setSetting(player.getUniqueId(), action.split("_")[1], String.valueOf(!enabled), () ->
+                {
+                    Hub.getInstance().getPlayerManager().updateSettings(player, (action.equals("setting_jukebox")));
+                    this.update(player);
+                });
             });
         }
         else if(action.equals("page_back"))
