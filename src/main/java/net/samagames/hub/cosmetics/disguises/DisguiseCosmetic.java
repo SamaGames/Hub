@@ -24,7 +24,7 @@ public class DisguiseCosmetic extends AbstractCosmetic
     @Override
     public BaseComponent getBuyResponse()
     {
-        TextComponent txt = new TextComponent("Disque acheté ! Re-cliquez pour l'ajouter à la liste d'attente.");
+        TextComponent txt = new TextComponent("Vous possédez désormais le déguisement " + this.displayName + " ! Re-cliquez pour l'utiliser.");
         txt.setColor(net.md_5.bungee.api.ChatColor.GREEN);
         return txt;
     }
