@@ -19,9 +19,9 @@ public class InteractionListener implements IPacketsReceiver
 
         switch(type)
         {
-            case "friends":
+            /*case "friends":
                 Hub.getInstance().getGuiManager().openGui(Bukkit.getPlayer(playerName), new GuiFriends(1));
-                break;
+                break;*/
 
             case "party":
                 Hub.getInstance().getGuiManager().openGui(Bukkit.getPlayer(playerName), new GuiParty(1));
