@@ -27,31 +27,39 @@ public class HubRefresher implements Runnable
     {
         Jedis jedis = SamaGamesAPI.get().getBungeeResource();
 
-        JsonHub thisHub = new JsonHub();
-        thisHub.setHubNumber(Integer.parseInt(SamaGamesAPI.get().getServerName().split("_")[1]));
-        thisHub.setConnectedPlayers(Bukkit.getOnlinePlayers().size());
-        Bukkit.getOnlinePlayers().forEach(thisHub::addConnectedPlayer);
+        try{
+            JsonHub thisHub = new JsonHub();
+            thisHub.setHubNumber(Integer.parseInt(SamaGamesAPI.get().getServerName().split("_")[1]));
+            thisHub.setConnectedPlayers(Bukkit.getOnlinePlayers().size());
+            Bukkit.getOnlinePlayers().forEach(thisHub::addConnectedPlayer);
 
-        String thisHubJson = new Gson().toJson(thisHub);
-        jedis.hdel("hubs_connected", SamaGamesAPI.get().getServerName());
-        jedis.hset("hubs_connected", SamaGamesAPI.get().getServerName(), thisHubJson);
+            String thisHubJson = new Gson().toJson(thisHub);
+            jedis.hdel("hubs_connected", SamaGamesAPI.get().getServerName());
+            if(jedis.hexists("hubs_connected", SamaGamesAPI.get().getServerName()))
+            {
+                jedis.hset("hubs_connected", SamaGamesAPI.get().getServerName(), thisHubJson);
+            }
 
-        Map<String, String> redisHubs = jedis.hgetAll("hubs_connected");
-        HashMap<Integer, String> hubsList = new HashMap<>();
+            Map<String, String> redisHubs = jedis.hgetAll("hubs_connected");
+            HashMap<Integer, String> hubsList = new HashMap<>();
 
-        for (String hubServerName : redisHubs.keySet())
-            hubsList.put(Integer.parseInt(hubServerName.split("_")[1]), redisHubs.get(hubServerName));
+            for (String hubServerName : redisHubs.keySet())
+                hubsList.put(Integer.parseInt(hubServerName.split("_")[1]), redisHubs.get(hubServerName));
 
-        this.hubs.clear();
+            this.hubs.clear();
 
-        for (int hubNumber : hubsList.keySet())
+            for (int hubNumber : hubsList.keySet())
+            {
+                String jsonHubString = hubsList.get(hubNumber);
+                JsonHub jsonHub = new Gson().fromJson(jsonHubString, JsonHub.class);
+                this.hubs.add(jsonHub);
+            }
+        }catch(Exception e)
         {
-            String jsonHubString = hubsList.get(hubNumber);
-            JsonHub jsonHub = new Gson().fromJson(jsonHubString, JsonHub.class);
-            this.hubs.add(jsonHub);
+            e.printStackTrace();
+        }finally {
+            jedis.close();
         }
-
-        jedis.close();
 
         this.hub.getGuiManager().getPlayersGui().keySet().stream().filter(uuid -> this.hub.getGuiManager().getPlayersGui().get(uuid) instanceof GuiSwitchHub).forEach(uuid -> this.hub.getGuiManager().getPlayersGui().get(uuid).update(Bukkit.getPlayer(uuid)));
     }
