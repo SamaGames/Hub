@@ -146,7 +146,7 @@ public class PlayerListener implements Listener
         final Player player = event.getPlayer();
 
         player.setGameMode(GameMode.ADVENTURE);
-        player.setWalkSpeed(0.2F);
+        player.setWalkSpeed(0.3F);
         player.setFlySpeed(0.2F);
         InventoryUtils.cleanPlayer(player);
         Hub.getInstance().getPlayerManager().getStaticInventory().setInventoryToPlayer(player);
