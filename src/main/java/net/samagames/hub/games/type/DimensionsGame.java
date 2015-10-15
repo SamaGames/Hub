@@ -82,7 +82,7 @@ public class DimensionsGame extends AbstractGame
         ShopImprovableItem healOnStrikeItem = new ShopImprovableItem(this, "healAtStrike", "Soin au combat", new Potion(PotionType.INSTANT_HEAL).toItemStack(1), 15, new String[] {
                 "Pendant un combat, vous avez un certain",
                 "pourcentage de chance de regagner de la vie",
-                "suivant niveau de cette amélioration."
+                "suivant le niveau de cette amélioration."
         });
 
         healOnStrikeItem.addLevel(200, "2% de chance", "2");
@@ -112,7 +112,7 @@ public class DimensionsGame extends AbstractGame
         ShopImprovableItem swapCooldownItem = new ShopImprovableItem(this, "tpTime", "Espacement de Swap", new ItemStack(Material.EYE_OF_ENDER, 1), 32, new String[] {
                 "Pendant un combat, vous avez un certain",
                 "pourcentage de chance de regagner de la vie",
-                "suivant niveau de cette amélioration."
+                "suivant le niveau de cette amélioration."
         });
 
         swapCooldownItem.addDefault("17 secondes");

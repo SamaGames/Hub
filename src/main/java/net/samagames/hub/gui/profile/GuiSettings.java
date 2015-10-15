@@ -34,7 +34,7 @@ public class GuiSettings extends AbstractGui
         {
             this.drawSetting(player, "players", "Joueurs", new ItemStack(Material.SKULL_ITEM, 1, (short) SkullType.PLAYER.ordinal()), 10, new String[] {
                     ChatColor.GRAY + "Quand cette option est activée, vous verrez",
-                    ChatColor.GRAY + "les joueurs autour de vous dans le hub. Le cas",
+                    ChatColor.GRAY + "les joueurs autour de vous dans le hub. Dans le cas",
                     ChatColor.GRAY + "contraire, vous verrez seulement le " + ChatColor.GOLD + "Staff" + ChatColor.GRAY + ",",
                     ChatColor.GRAY + "les " + ChatColor.GOLD + "Coupaings" + ChatColor.GRAY + " et vos " + ChatColor.GOLD + "amis" + ChatColor.GRAY + "."
             });

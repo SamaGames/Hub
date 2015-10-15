@@ -88,7 +88,7 @@ public class UppervoidGame extends AbstractGame
         parentCategory.addContent(grenadesItem);
 
         ShopImprovableItem grapnelItem = new ShopImprovableItem(this, "grapins", "Grapin", new ItemStack(Material.LEASH, 1), 32, new String[] {
-                "Augmentez le nombre d'utilisation de votre",
+                "Augmentez le nombre d'utilisations de votre",
                 "grapin en augmentant cette amélioration.",
         });
 

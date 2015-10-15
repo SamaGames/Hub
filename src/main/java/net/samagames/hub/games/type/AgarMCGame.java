@@ -42,7 +42,7 @@ public class AgarMCGame extends AbstractGame
     {
         return new String[] {
                 "Comme le célèbre jeu en ligne, venez",
-                "avalez nos succulents Slimes. Il y en a pour",
+                "avaler nos succulents Slimes. Il y en a pour",
                 "tous les goûts : des petits comme des grands !"
         };
     }

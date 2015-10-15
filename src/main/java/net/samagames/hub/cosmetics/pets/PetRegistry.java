@@ -55,7 +55,7 @@ public class PetRegistry extends AbstractCosmeticRegistry<PetCosmetic>
 
         PetSlime slimePet = new PetSlime("slime", "Slime", new ItemStack(Material.MONSTER_EGG, 1, EntityType.SLIME.getTypeId()), new String[] {
                 "La monture gluante par excellence !",
-                "Approuvé par le comité officiel européen",
+                "Approuvée par le comité officiel européen",
                 "des Slimes (COES) !"
         });
         slimePet.permissionNeeded("pet.slime");
