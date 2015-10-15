@@ -60,7 +60,6 @@ public abstract class AbstractCosmetic
 
     public void buy(Player player)
     {
-        System.out.println(buyMethod);
         if (this.buyMethod == BuyMethod.FREE)
             return;
 
@@ -94,7 +93,6 @@ public abstract class AbstractCosmetic
             GuiConfirm confirm = new GuiConfirm(Hub.getInstance().getGuiManager().getPlayerGui(player), (parent) ->
             {
                 SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).withdrawStars(this.starsCost, (newAmount, difference, error) -> {
-                    System.out.println("Player UUID: " + player.getUniqueId() + "key:" + key + " type:" + category);
                     shopsManager.addOwnedLevel(player, category, key);
                     player.spigot().sendMessage(getBuyResponse());
                     Hub.getInstance().getScoreboardManager().update(player.getUniqueId(), true);
@@ -201,7 +199,6 @@ public abstract class AbstractCosmetic
         else if (this.buyMethod == BuyMethod.PERMISSION)
             return SamaGamesAPI.get().getPermissionsManager().hasPermission(player, this.permissionNeeded);
         List<String> owned = shopsManager.getOwnedLevels(player, category);
-        System.out.println(owned + " - " + key);
         return owned != null && owned.contains(key);
     }
 
@@ -215,5 +212,10 @@ public abstract class AbstractCosmetic
         TextComponent txt = new TextComponent("Vous possédez désormais " + this.displayName + " ! Re-cliquez pour l'utiliser.");
         txt.setColor(net.md_5.bungee.api.ChatColor.GREEN);
         return txt;
+    }
+
+    public AbstractShopsManager getShopsManager()
+    {
+        return shopsManager;
     }
 }

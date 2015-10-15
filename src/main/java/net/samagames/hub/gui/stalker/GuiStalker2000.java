@@ -72,7 +72,6 @@ public class GuiStalker2000 extends AbstractGui
 
             if(canSeeServer)
             {
-                System.out.println(server);
                 String formattedServer = server;
                 if (server.length() == 2)
                 {

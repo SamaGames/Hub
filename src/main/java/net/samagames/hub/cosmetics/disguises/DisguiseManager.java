@@ -17,7 +17,6 @@ public class DisguiseManager extends AbstractCosmeticManager<DisguiseCosmetic>
     @Override
     public void enableCosmetic(Player player, DisguiseCosmetic cosmetic)
     {
-        System.out.println("Type: " + cosmetic.getKey() + ": isOwned:" + cosmetic.isOwned(player) + ", price: " + cosmetic.getStarsCost());
         if (cosmetic.isOwned(player))
         {
             MobDisguise disguise = new MobDisguise(cosmetic.getDisguiseType());
