@@ -7,11 +7,13 @@ import net.samagames.hub.games.shop.ShopCategory;
 import net.samagames.hub.games.shop.ShopImprovableItem;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.SkullType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.Potion;
 import org.bukkit.potion.PotionType;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class DimensionsGame extends AbstractGame
 {
@@ -128,9 +130,11 @@ public class DimensionsGame extends AbstractGame
     }
 
     @Override
-    public ArrayList<DisplayedStat> getDisplayedStats()
+    public List<DisplayedStat> getDisplayedStats()
     {
-        return null;
+        List<DisplayedStat> result = super.getDisplayedStats();
+        result.add(new DisplayedStat("kills", "Joueurs tués", new ItemStack(Material.SKULL_ITEM, 1, (short) SkullType.PLAYER.ordinal())));
+        return result;
     }
 
     @Override
