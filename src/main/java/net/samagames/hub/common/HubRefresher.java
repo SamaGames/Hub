@@ -34,7 +34,11 @@ public class HubRefresher implements Runnable
             Bukkit.getOnlinePlayers().forEach(thisHub::addConnectedPlayer);
 
             String thisHubJson = new Gson().toJson(thisHub);
-            jedis.hdel("hubs_connected", SamaGamesAPI.get().getServerName());
+            try{
+                jedis.hdel("hubs_connected", SamaGamesAPI.get().getServerName());
+            }catch(Exception e)
+            { /* We don't care */}
+
             if(jedis.hexists("hubs_connected", SamaGamesAPI.get().getServerName()))
             {
                 jedis.hset("hubs_connected", SamaGamesAPI.get().getServerName(), thisHubJson);
