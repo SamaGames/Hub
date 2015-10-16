@@ -114,15 +114,12 @@ public class GuiSettings extends AbstractGui
                 return;
             }
 
-            Bukkit.getScheduler().runTaskAsynchronously(Hub.getInstance(), () ->
-            {
-                boolean enabled = SamaGamesAPI.get().getSettingsManager().isEnabled(player.getUniqueId(), action.split("_")[1], true);
+            boolean enabled = SamaGamesAPI.get().getSettingsManager().isEnabled(player.getUniqueId(), action.split("_")[1], true);
 
-                SamaGamesAPI.get().getSettingsManager().setSetting(player.getUniqueId(), action.split("_")[1], String.valueOf(!enabled), () ->
-                {
-                    Hub.getInstance().getPlayerManager().updateSettings(player, (action.equals("setting_jukebox")));
-                    this.update(player);
-                });
+            SamaGamesAPI.get().getSettingsManager().setSetting(player.getUniqueId(), action.split("_")[1], String.valueOf(!enabled), () ->
+            {
+                Hub.getInstance().getPlayerManager().updateSettings(player, (action.equals("setting_jukebox")), false);
+                this.update(player);
             });
         }
         else if(action.equals("page_back"))
