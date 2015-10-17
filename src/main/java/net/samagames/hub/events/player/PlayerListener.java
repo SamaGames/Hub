@@ -154,7 +154,7 @@ public class PlayerListener implements Listener
         Bukkit.getScheduler().runTaskLater(Hub.getInstance(), () -> Hub.getInstance().getCosmeticManager().handleLogin(player), 20L);
         Bukkit.getScheduler().runTaskAsynchronously(Hub.getInstance(), () ->
         {
-            new ServerStatus(SamaGamesAPI.get().getServerName(), "hub", "Map", Status.IN_GAME, Bukkit.getOnlinePlayers().size(), Bukkit.getMaxPlayers()).sendToHydro();
+            new ServerStatus(SamaGamesAPI.get().getServerName(), "Hub", "Map", Status.IN_GAME, Bukkit.getOnlinePlayers().size(), Bukkit.getMaxPlayers()).sendToHydro();
             Hub.getInstance().getPlayerManager().handleLogin(player);
             Hub.getInstance().getScoreboardManager().addScoreboardReceiver(player);
             Hub.getInstance().getHologramManager().addReceiver(player);
@@ -341,7 +341,7 @@ public class PlayerListener implements Listener
     {
         Bukkit.getScheduler().runTaskAsynchronously(Hub.getInstance(), () ->
         {
-            new ServerStatus(SamaGamesAPI.get().getServerName(), "hub", "Map", Status.IN_GAME, Bukkit.getOnlinePlayers().size(), Bukkit.getMaxPlayers()).sendToHydro();
+            new ServerStatus(SamaGamesAPI.get().getServerName(), "Hub", "Map", Status.IN_GAME, Bukkit.getOnlinePlayers().size(), Bukkit.getMaxPlayers()).sendToHydro();
             Hub.getInstance().getCosmeticManager().handleLogout(player);
             Hub.getInstance().getPlayerManager().handleLogout(player);
             Hub.getInstance().getChatManager().enableChatFor(player);
