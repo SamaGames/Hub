@@ -2,7 +2,7 @@ package net.samagames.hub.npcs;
 
 import net.samagames.hub.Hub;
 import net.samagames.hub.common.managers.AbstractManager;
-import net.samagames.tools.holograms.Hologram;
+/**import net.samagames.tools.holograms.Hologram;
 import net.techcable.npclib.HumanNPC;
 import net.techcable.npclib.NPC;
 import net.techcable.npclib.NPCLib;
@@ -15,28 +15,28 @@ import org.bukkit.metadata.FixedMetadataValue;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
-import java.util.logging.Level;
+import java.util.logging.Level;**/
 
 public class NPCManager extends AbstractManager
 {
-    private final NPCRegistry npcRegistry;
+    /**private final NPCRegistry npcRegistry;
     private final HashMap<UUID, NPCData> npcsDatas;
     private final HashMap<UUID, NPC> npcs;
-    private final ArrayList<UUID> talking;
+    private final ArrayList<UUID> talking;**/
 
     public NPCManager(Hub hub)
     {
         super(hub);
 
-        this.npcRegistry = NPCLib.getNPCRegistry(hub);
+        /**this.npcRegistry = NPCLib.getNPCRegistry(hub);
         this.npcsDatas = new HashMap<>();
         this.npcs = new HashMap<>();
         this.talking = new ArrayList<>();
 
-        this.reloadNPCS();
+        this.reloadNPCS();**/
     }
 
-    @Override
+    /**@Override
     public void onServerClose()
     {
         this.removeNPCS();
@@ -55,6 +55,7 @@ public class NPCManager extends AbstractManager
                 ChatColor.AQUA + "" + ChatColor.BOLD + "• Tutoriel de Bienvenu •"
         }, UUID.fromString("c59220b1-662f-4aa8-b9d9-72660eb97c10"), null, null, new Location(this.hub.getHubWorld(), -10.5D, 80.0D, -12.5D, -45.0F, 0.0F), "TestAction"));**/
 
+    /**
         this.placeNPCS();
     }
 
@@ -139,7 +140,7 @@ public class NPCManager extends AbstractManager
     public boolean hasNPC(UUID uuid)
     {
         return this.npcs.containsKey(uuid);
-    }
+    }**/
 
     @Override
     public String getName() { return "NPCManager"; }
