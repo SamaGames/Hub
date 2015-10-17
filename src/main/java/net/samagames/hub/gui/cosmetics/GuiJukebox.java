@@ -130,7 +130,7 @@ public class GuiJukebox extends AbstractGui
                             SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).withdrawStars(album.getCost(), (a, b, c) -> {
                                 for(JukeboxDiskCosmetic disk : album.getDisks())
                                 {
-                                    disk.buyCallback(player, true);
+                                    disk.getShopsManager().addOwnedLevel(player, disk.getCategory(), disk.getKey());
                                 }
 
                                 Hub.getInstance().getScoreboardManager().update(player.getUniqueId(), true);

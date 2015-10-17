@@ -38,7 +38,7 @@ public class ShopItem extends ShopIcon
         {
             player.sendMessage(ChatColor.RED + "Cet objet est déjà équipé.");
         }
-        else if(this.isOwned(player))
+        else if(this.isOwned(player) || this.isDefaultItem())
         {
             SamaGamesAPI.get().getShopsManager(this.game.getCodeName()).setCurrentLevel(player, this.type, this.getActionName());
             player.sendMessage(ChatColor.GREEN + "Vous avez équipé " + ChatColor.AQUA + this.getIcon().getItemMeta().getDisplayName());

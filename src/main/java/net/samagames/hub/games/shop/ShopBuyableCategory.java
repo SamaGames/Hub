@@ -48,9 +48,9 @@ public class ShopBuyableCategory extends ShopCategory
                     SamaGamesAPI.get().getShopsManager(this.game.getCodeName()).setCurrentLevel(player, this.getActionName(), "flag");
                     Hub.getInstance().getScoreboardManager().update(player.getUniqueId(), true);
                     player.sendMessage(ChatColor.GREEN + "Vous avez acheté et équipé " + ChatColor.AQUA + this.getIcon().getItemMeta().getDisplayName());
+                    Hub.getInstance().getGuiManager().getPlayerGui(player).update(player);
+                    Hub.getInstance().getGuiManager().openGui(player, parent);
                 });
-                Hub.getInstance().getGuiManager().getPlayerGui(player).update(player);
-                Hub.getInstance().getGuiManager().openGui(player, parent);
             });
 
             Hub.getInstance().getGuiManager().openGui(player, confirm);

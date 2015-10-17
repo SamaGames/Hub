@@ -30,11 +30,11 @@ public class GuiSettings extends AbstractGui
     @Override
     public void update(Player player)
     {
-        if (this.page == 1)
+        if (this.page == 0)
         {
             this.drawSetting(player, "players", "Joueurs", new ItemStack(Material.SKULL_ITEM, 1, (short) SkullType.PLAYER.ordinal()), 10, new String[] {
                     ChatColor.GRAY + "Quand cette option est activée, vous verrez",
-                    ChatColor.GRAY + "les joueurs autour de vous dans le hub. Le cas",
+                    ChatColor.GRAY + "les joueurs autour de vous dans le hub. Dans le cas",
                     ChatColor.GRAY + "contraire, vous verrez seulement le " + ChatColor.GOLD + "Staff" + ChatColor.GRAY + ",",
                     ChatColor.GRAY + "les " + ChatColor.GOLD + "Coupaings" + ChatColor.GRAY + " et vos " + ChatColor.GOLD + "amis" + ChatColor.GRAY + "."
             });
@@ -75,7 +75,7 @@ public class GuiSettings extends AbstractGui
                     ChatColor.GRAY + "les hubs."
             });
         }
-        else if (this.page == 2)
+        else if (this.page == 1)
         {
             this.drawSetting(player, "interactions", "Intéractions", new ItemStack(Material.COOKIE, 1), 10, new String[] {
                     ChatColor.GRAY + "Quand cette option est activée, les",
@@ -94,11 +94,11 @@ public class GuiSettings extends AbstractGui
             });
         }
 
-        if(this.page > 1)
-            this.setSlotData(ChatColor.YELLOW + "« Page " + (this.page - 1), Material.PAPER, this.inventory.getSize() - 9, null, "page_back");
+        if(this.page > 0)
+            this.setSlotData(ChatColor.YELLOW + "« Page " + (this.page - 1), Material.REDSTONE, this.inventory.getSize() - 9, null, "page_back");
 
-        if(this.page < 2)
-            this.setSlotData(ChatColor.YELLOW + "Page " + (this.page + 1) + " »", Material.PAPER, this.inventory.getSize() - 1, null, "page_next");
+        if(this.page < 1)
+            this.setSlotData(ChatColor.YELLOW + "Page " + (this.page + 1) + " »", Material.REDSTONE, this.inventory.getSize() - 1, null, "page_next");
 
         this.setSlotData(GuiUtils.getBackItem(), 40, "back");
     }
@@ -114,15 +114,12 @@ public class GuiSettings extends AbstractGui
                 return;
             }
 
-            Bukkit.getScheduler().runTaskAsynchronously(Hub.getInstance(), () ->
-            {
-                boolean enabled = SamaGamesAPI.get().getSettingsManager().isEnabled(player.getUniqueId(), action.split("_")[1], true);
+            boolean enabled = SamaGamesAPI.get().getSettingsManager().isEnabled(player.getUniqueId(), action.split("_")[1], true);
 
-                SamaGamesAPI.get().getSettingsManager().setSetting(player.getUniqueId(), action.split("_")[1], String.valueOf(!enabled), () ->
-                {
-                    Hub.getInstance().getPlayerManager().updateSettings(player, (action.equals("setting_jukebox")));
-                    this.update(player);
-                });
+            SamaGamesAPI.get().getSettingsManager().setSetting(player.getUniqueId(), action.split("_")[1], String.valueOf(!enabled), () ->
+            {
+                Hub.getInstance().getPlayerManager().updateSettings(player, (action.equals("setting_jukebox")), false);
+                this.update(player);
             });
         }
         else if(action.equals("page_back"))

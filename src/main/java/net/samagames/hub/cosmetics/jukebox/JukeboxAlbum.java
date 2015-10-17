@@ -21,11 +21,6 @@ public class JukeboxAlbum
         this.name = name;
         this.icon = icon;
         this.disks = new ArrayList<>();
-
-        for(JukeboxDiskCosmetic disk : disks)
-            this.cost += disk.getStarsCost();
-
-        this.cost -= (this.cost * 100 / 5);
     }
 
     public void addDisk(JukeboxDiskCosmetic disk)
@@ -36,7 +31,7 @@ public class JukeboxAlbum
         for(JukeboxDiskCosmetic d : disks)
             this.cost += d.getStarsCost();
         
-        this.cost -= (this.cost * 100 / 5);
+        this.cost -= (500 * ((float)5/100));
     }
 
     public String getIdentifier()

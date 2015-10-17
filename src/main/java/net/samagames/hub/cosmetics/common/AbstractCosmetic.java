@@ -74,7 +74,8 @@ public abstract class AbstractCosmetic
             GuiConfirm confirm = new GuiConfirm(Hub.getInstance().getGuiManager().getPlayerGui(player), (parent) ->
             {
                 SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).withdrawCoins(this.coinsCost, (newAmount, difference, error) -> {
-                    this.buyCallback(player, false);
+                    shopsManager.addOwnedLevel(player, category, key);
+                    player.spigot().sendMessage(getBuyResponse());
                     Hub.getInstance().getScoreboardManager().update(player.getUniqueId(), true);
                     Hub.getInstance().getGuiManager().openGui(player, parent);
                 });
@@ -92,7 +93,8 @@ public abstract class AbstractCosmetic
             GuiConfirm confirm = new GuiConfirm(Hub.getInstance().getGuiManager().getPlayerGui(player), (parent) ->
             {
                 SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).withdrawStars(this.starsCost, (newAmount, difference, error) -> {
-                    this.buyCallback(player, false);
+                    shopsManager.addOwnedLevel(player, category, key);
+                    player.spigot().sendMessage(getBuyResponse());
                     Hub.getInstance().getScoreboardManager().update(player.getUniqueId(), true);
                     Hub.getInstance().getGuiManager().openGui(player, parent);
                 });
@@ -105,8 +107,6 @@ public abstract class AbstractCosmetic
     public void buyCallback(Player player, boolean album)
     {
         shopsManager.addOwnedLevel(player, category, key);
-        Hub.getInstance().getGuiManager().getPlayerGui(player).update(player);
-
         if(!album)
             player.spigot().sendMessage(getBuyResponse());
     }
@@ -212,5 +212,10 @@ public abstract class AbstractCosmetic
         TextComponent txt = new TextComponent("Vous possédez désormais " + this.displayName + " ! Re-cliquez pour l'utiliser.");
         txt.setColor(net.md_5.bungee.api.ChatColor.GREEN);
         return txt;
+    }
+
+    public AbstractShopsManager getShopsManager()
+    {
+        return shopsManager;
     }
 }

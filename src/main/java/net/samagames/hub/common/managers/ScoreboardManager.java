@@ -13,12 +13,14 @@ import org.bukkit.scheduler.BukkitTask;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 
 public class ScoreboardManager extends AbstractManager
 {
-    private final HashMap<UUID, ObjectiveSign> playerObjectives;
+    private final Map<UUID, ObjectiveSign> playerObjectives;
     private final ArrayList<ChatColor> rainbowContent;
     private int rainbowIndex;
     private BukkitTask refreshTask;
@@ -27,7 +29,7 @@ public class ScoreboardManager extends AbstractManager
     {
         super(hub);
 
-        this.playerObjectives = new HashMap<>();
+        this.playerObjectives = new ConcurrentHashMap<>();
         this.rainbowContent = Rainbow.getRainbow();
         this.rainbowIndex = 0;
 

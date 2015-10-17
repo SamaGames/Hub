@@ -7,11 +7,13 @@ import net.samagames.hub.games.shop.ShopCategory;
 import net.samagames.hub.games.shop.ShopImprovableItem;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.SkullType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.Potion;
 import org.bukkit.potion.PotionType;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class DimensionsGame extends AbstractGame
 {
@@ -82,7 +84,7 @@ public class DimensionsGame extends AbstractGame
         ShopImprovableItem healOnStrikeItem = new ShopImprovableItem(this, "healAtStrike", "Soin au combat", new Potion(PotionType.INSTANT_HEAL).toItemStack(1), 15, new String[] {
                 "Pendant un combat, vous avez un certain",
                 "pourcentage de chance de regagner de la vie",
-                "suivant niveau de cette amélioration."
+                "suivant le niveau de cette amélioration."
         });
 
         healOnStrikeItem.addLevel(200, "2% de chance", "2");
@@ -112,7 +114,7 @@ public class DimensionsGame extends AbstractGame
         ShopImprovableItem swapCooldownItem = new ShopImprovableItem(this, "tpTime", "Espacement de Swap", new ItemStack(Material.EYE_OF_ENDER, 1), 32, new String[] {
                 "Pendant un combat, vous avez un certain",
                 "pourcentage de chance de regagner de la vie",
-                "suivant niveau de cette amélioration."
+                "suivant le niveau de cette amélioration."
         });
 
         swapCooldownItem.addDefault("17 secondes");
@@ -128,9 +130,11 @@ public class DimensionsGame extends AbstractGame
     }
 
     @Override
-    public ArrayList<DisplayedStat> getDisplayedStats()
+    public List<DisplayedStat> getDisplayedStats()
     {
-        return null;
+        List<DisplayedStat> result = super.getDisplayedStats();
+        result.add(new DisplayedStat("kills", "Joueurs tués", new ItemStack(Material.SKULL_ITEM, 1, (short) SkullType.PLAYER.ordinal())));
+        return result;
     }
 
     @Override

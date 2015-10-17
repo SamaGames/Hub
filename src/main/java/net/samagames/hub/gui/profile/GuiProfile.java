@@ -41,7 +41,7 @@ public class GuiProfile extends AbstractGui
         switch (action)
         {
             case "stats":
-                Hub.getInstance().getGuiManager().openGui(player, new GuiStats(player));
+                player.sendMessage(ChatColor.RED + "Prochainement...");
                 break;
             case "achievements":
                 //Hub.getInstance().getGuiManager().openGui(player, new GuiAchievements());
