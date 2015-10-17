@@ -50,6 +50,8 @@ public class GameManager extends AbstractManager
         this.registerGame(new BackEndGame("hangovergames", "HangoverGames", arcadeGame.getLobbySpawn()));
         this.registerGame(new AgarMCGame());
 
+        this.registerGame(new BackEndGame("event", "Événement", Hub.getInstance().getPlayerManager().getLobbySpawn()));
+
         hub.getHydroManager().getPacketReceiver().registerCallBack(new PacketCallBack<GameInfoToHubPacket>(GameInfoToHubPacket.class)
         {
             @Override
