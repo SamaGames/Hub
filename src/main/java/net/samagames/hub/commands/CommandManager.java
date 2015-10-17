@@ -35,7 +35,7 @@ public class CommandManager extends AbstractManager
         this.registerCommand("shutup", "hub.mod.shutup", CommandShutup.class);
 
         // Admin commands -----------------------------------------------
-        this.registerCommand("npc", "hub.admin.npc", CommandNPC.class);
+        //this.registerCommand("npc", "hub.admin.npc", CommandNPC.class);
         this.registerCommand("sign", "hub.admin.sign", CommandSign.class);
         this.registerCommand("anguille", "hub.anguille", CommandAnguille.class);
         this.registerCommand("nbs", "hub.jukebox.nbs", CommandNBS.class);
