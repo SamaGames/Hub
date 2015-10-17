@@ -109,11 +109,11 @@ public class PlayerListener implements Listener
                 event.setFormat(ChatColor.DARK_AQUA + "[" + ChatColor.AQUA + "DJ" + ChatColor.DARK_AQUA + "]" + event.getFormat());
         }
 
-        if(!Hub.getInstance().getNPCManager().canTalk(event.getPlayer()))
-            event.setCancelled(true);
+        //if(!Hub.getInstance().getNPCManager().canTalk(event.getPlayer()))
+        //    event.setCancelled(true);
 
-        if(!event.isCancelled())
-            Bukkit.getOnlinePlayers().stream().filter(player -> !Hub.getInstance().getNPCManager().canTalk(player) || Hub.getInstance().getChatManager().hasChatDisabled(player)).forEach(player -> event.getRecipients().remove(player));
+        //if(!event.isCancelled())
+        //    Bukkit.getOnlinePlayers().stream().filter(player -> !Hub.getInstance().getNPCManager().canTalk(player) || Hub.getInstance().getChatManager().hasChatDisabled(player)).forEach(player -> event.getRecipients().remove(player));
 
         Bukkit.getOnlinePlayers().stream().filter(player -> StringUtils.containsIgnoreCase(event.getMessage(), player.getName())).forEach(player -> {
             event.getRecipients().remove(player);
@@ -280,7 +280,7 @@ public class PlayerListener implements Listener
     @EventHandler
     public void onPlayerInteractEntityEvent(final PlayerInteractEntityEvent event)
     {
-        if(event.getRightClicked().hasMetadata("npc-id"))
+        /**if(event.getRightClicked().hasMetadata("npc-id"))
         {
             event.setCancelled(true);
 
@@ -290,7 +290,7 @@ public class PlayerListener implements Listener
                     if (Hub.getInstance().getNPCManager().canTalk(event.getPlayer()))
                         Hub.getInstance().getNPCManager().getNPCDataByID(UUID.fromString(event.getRightClicked().getMetadata("npc-id").get(0).asString())).getAction().execute(event.getPlayer());
             });
-        }
+        }**/
     }
 
     @EventHandler
@@ -338,7 +338,7 @@ public class PlayerListener implements Listener
             Hub.getInstance().getCosmeticManager().handleLogout(player);
             Hub.getInstance().getPlayerManager().handleLogout(player);
             Hub.getInstance().getChatManager().enableChatFor(player);
-            Hub.getInstance().getNPCManager().talkFinished(player);
+            //Hub.getInstance().getNPCManager().talkFinished(player);
             Hub.getInstance().getScoreboardManager().removeScoreboardReceiver(player);
             Hub.getInstance().getHologramManager().removeReceiver(player);
         });
