@@ -12,7 +12,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.Potion;
 import org.bukkit.potion.PotionType;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class DimensionsGame extends AbstractGame

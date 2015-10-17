@@ -1,7 +1,6 @@
 package net.samagames.hub.games.shop;
 
 import net.samagames.api.SamaGamesAPI;
-import net.samagames.api.player.IFinancialCallback;
 import net.samagames.hub.Hub;
 import net.samagames.hub.games.AbstractGame;
 import net.samagames.hub.gui.shop.GuiConfirm;

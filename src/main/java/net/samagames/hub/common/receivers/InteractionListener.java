@@ -2,7 +2,6 @@ package net.samagames.hub.common.receivers;
 
 import net.samagames.api.pubsub.IPacketsReceiver;
 import net.samagames.hub.Hub;
-import net.samagames.hub.gui.interactions.GuiFriends;
 import net.samagames.hub.gui.interactions.GuiParty;
 import org.bukkit.Bukkit;
 
