@@ -39,10 +39,7 @@ public class HubRefresher implements Runnable
             }catch(Exception e)
             { /* We don't care */}
 
-            if(jedis.hexists("hubs_connected", SamaGamesAPI.get().getServerName()))
-            {
-                jedis.hset("hubs_connected", SamaGamesAPI.get().getServerName(), thisHubJson);
-            }
+            jedis.hset("hubs_connected", SamaGamesAPI.get().getServerName(), thisHubJson);
 
             Map<String, String> redisHubs = jedis.hgetAll("hubs_connected");
             HashMap<Integer, String> hubsList = new HashMap<>();
