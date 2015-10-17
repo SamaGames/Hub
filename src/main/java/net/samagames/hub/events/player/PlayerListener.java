@@ -341,6 +341,7 @@ public class PlayerListener implements Listener
     {
         Bukkit.getScheduler().runTaskAsynchronously(Hub.getInstance(), () ->
         {
+            new ServerStatus(SamaGamesAPI.get().getServerName(), "hub", "Map", Status.IN_GAME, Bukkit.getOnlinePlayers().size(), Bukkit.getMaxPlayers()).sendToHydro();
             Hub.getInstance().getCosmeticManager().handleLogout(player);
             Hub.getInstance().getPlayerManager().handleLogout(player);
             Hub.getInstance().getChatManager().enableChatFor(player);
