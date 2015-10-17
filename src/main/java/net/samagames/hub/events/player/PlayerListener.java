@@ -1,6 +1,7 @@
 package net.samagames.hub.events.player;
 
 import net.samagames.api.SamaGamesAPI;
+import net.samagames.api.games.Status;
 import net.samagames.hub.Hub;
 import net.samagames.hub.cosmetics.gadgets.displayers.AbstractDisplayer;
 import net.samagames.hub.cosmetics.jukebox.JukeboxSong;
@@ -153,6 +154,7 @@ public class PlayerListener implements Listener
         Bukkit.getScheduler().runTaskLater(Hub.getInstance(), () -> Hub.getInstance().getCosmeticManager().handleLogin(player), 20L);
         Bukkit.getScheduler().runTaskAsynchronously(Hub.getInstance(), () ->
         {
+            new ServerStatus(SamaGamesAPI.get().getServerName(), "hub", "Map", Status.IN_GAME, Bukkit.getOnlinePlayers().size(), Bukkit.getMaxPlayers()).sendToHydro();
             Hub.getInstance().getPlayerManager().handleLogin(player);
             Hub.getInstance().getScoreboardManager().addScoreboardReceiver(player);
             Hub.getInstance().getHologramManager().addReceiver(player);
