@@ -97,7 +97,7 @@ public class GuiSettings extends AbstractGui
         if(this.page == 1)
             this.setSlotData(ChatColor.YELLOW + "« Page " + (this.page - 1), Material.REDSTONE, this.inventory.getSize() - 9, null, "page_back");
 
-        if(this.page == 0
+        if(this.page == 0)
             this.setSlotData(ChatColor.YELLOW + "Page " + (this.page + 1) + " »", Material.REDSTONE, this.inventory.getSize() - 1, null, "page_next");
 
         this.setSlotData(GuiUtils.getBackItem(), 40, "back");
