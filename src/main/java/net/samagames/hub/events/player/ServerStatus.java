@@ -95,6 +95,6 @@ public class ServerStatus
     public void sendToHydro()
     {
         String json = new Gson().toJson(this);
-        SamaGamesAPI.get().getPubSub().send("serverUpdateChannel", json);
+        SamaGamesAPI.get().getPubSub().send("hubUpdateChannel", json);
     }
 }
