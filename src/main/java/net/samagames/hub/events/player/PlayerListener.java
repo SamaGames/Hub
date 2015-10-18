@@ -153,7 +153,7 @@ public class PlayerListener implements Listener
         InventoryUtils.cleanPlayer(player);
         Hub.getInstance().getPlayerManager().getStaticInventory().setInventoryToPlayer(player);
         Bukkit.getScheduler().runTaskLater(Hub.getInstance(), () -> Hub.getInstance().getCosmeticManager().handleLogin(player), 20L);
-        Bukkit.getScheduler().runTaskAsynchronously(Hub.getInstance(), () ->
+        Hub.getInstance().getScheduledExecutorService().execute(() ->
         {
             Hub.getInstance().getPlayerManager().handleLogin(player);
             Hub.getInstance().getScoreboardManager().addScoreboardReceiver(player);
