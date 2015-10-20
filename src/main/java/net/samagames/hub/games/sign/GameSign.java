@@ -44,7 +44,7 @@ public class GameSign
         this.sign.setMetadata("game", new FixedMetadataValue(Hub.getInstance(), game.getCodeName()));
         this.sign.setMetadata("map", new FixedMetadataValue(Hub.getInstance(), map));
 
-        Hub.getInstance().getScheduledExecutorService().scheduleAtFixedRate(this::scrollMapName, 1000, 500, TimeUnit.MILLISECONDS);
+        Hub.getInstance().getScheduledExecutorService().scheduleAtFixedRate(this::scrollMapName, 500, 500, TimeUnit.MILLISECONDS);
 
         this.updateTask = Bukkit.getScheduler().runTaskTimerAsynchronously(Hub.getInstance(), this::update, 20L, 20L);
     }
@@ -85,7 +85,7 @@ public class GameSign
 
         PacketPlayOutUpdateSign packet = new PacketPlayOutUpdateSign(worldServer, new BlockPosition(this.sign.getX(), this.sign.getY(), this.sign.getZ()), lines);
 
-        this.sign.getWorld().getNearbyEntities(sign.getLocation(), 15, 15, 15).stream().filter(entity -> entity instanceof Player).forEach(entity -> ((CraftPlayer) entity).getHandle().playerConnection.sendPacket(packet));
+        this.sign.getWorld().getNearbyEntities(sign.getLocation(), 30, 30, 30).stream().filter(entity -> entity instanceof Player).forEach(entity -> ((CraftPlayer) entity).getHandle().playerConnection.sendPacket(packet));
     }
 
     public void updateMapName()
