@@ -63,7 +63,7 @@ public class GuiMain extends AbstractGui
         }
         else if(action.equals("switch_hub"))
         {
-            Hub.getInstance().getGuiManager().openGui(player, new GuiSwitchHub());
+            Hub.getInstance().getGuiManager().openGui(player, new GuiSwitchHub(1));
         }
         else if(action.equals("spawn"))
         {
