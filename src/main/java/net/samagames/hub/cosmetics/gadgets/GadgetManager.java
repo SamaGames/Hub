@@ -205,6 +205,11 @@ public class GadgetManager extends AbstractCosmeticManager<GadgetCosmetic>
                     this.loopsIds.remove(player.getUniqueId());
                 }
 
+                if(this.playersGadgets.containsKey(player.getUniqueId()))
+                {
+                    this.playersGadgets.remove(player.getUniqueId());
+                }
+
                 return true;
             }
             else
@@ -217,6 +222,11 @@ public class GadgetManager extends AbstractCosmeticManager<GadgetCosmetic>
                     {
                         this.loopsIds.get(player.getUniqueId()).cancel();
                         this.loopsIds.remove(player.getUniqueId());
+                    }
+
+                    if(this.playersGadgets.containsKey(player.getUniqueId()))
+                    {
+                        this.playersGadgets.remove(player.getUniqueId());
                     }
 
                     return true;

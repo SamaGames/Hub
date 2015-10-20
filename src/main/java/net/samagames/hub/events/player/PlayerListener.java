@@ -64,16 +64,19 @@ public class PlayerListener implements Listener
             {
                 event.setCancelled(true);
                 event.getPlayer().sendMessage(ChatColor.RED + "Le chat est désactivé.");
-            } else
+            }
+            else
             {
                 event.getPlayer().sendMessage(ChatColor.GOLD + "Attention : chat désactivé");
             }
-        } else if (Hub.getInstance().getChatManager().getActualSlowDuration() > 0 && !SamaGamesAPI.get().getPermissionsManager().hasPermission(event.getPlayer(), "hub.bypassmute"))
+        }
+        else if (Hub.getInstance().getChatManager().getActualSlowDuration() > 0 && !SamaGamesAPI.get().getPermissionsManager().hasPermission(event.getPlayer(), "hub.bypassmute"))
         {
             if (!Hub.getInstance().getChatManager().hasPlayerTalked(event.getPlayer()))
             {
                 Hub.getInstance().getChatManager().actualizePlayerLastMessage(event.getPlayer());
-            } else
+            }
+            else
             {
                 Date lastMessage = Hub.getInstance().getChatManager().getLastPlayerMessageDate(event.getPlayer());
                 Date actualMessage = new Date(lastMessage.getTime() + (Hub.getInstance().getChatManager().getActualSlowDuration() * 1000));
@@ -86,27 +89,25 @@ public class PlayerListener implements Listener
 
                     double whenNext = Math.floor((actualMessage.getTime() - current.getTime()) / 1000);
                     event.getPlayer().sendMessage(ChatColor.GOLD + "Prochain message autorisé dans : " + (int) whenNext + " secondes");
-                } else
+                }
+                else
                 {
                     Hub.getInstance().getChatManager().actualizePlayerLastMessage(event.getPlayer());
                 }
             }
-        } else if (StringUtils.containsIgnoreCase(event.getMessage(), "Minechat") || StringUtils.containsIgnoreCase(event.getMessage(), "minecraft connect"))
-        {
-            event.getPlayer().sendMessage(ChatColor.GOLD + "La publicité d'application de chat Minecraft est censurée.");
-            return;
         }
 
-        if (!event.isCancelled())
+        JukeboxSong current = Hub.getInstance().getCosmeticManager().getJukeboxManager().getCurrentSong();
+
+        if (current != null && current.getPlayedBy().equals(event.getPlayer().getName()))
+            event.setFormat(ChatColor.DARK_AQUA + "[" + ChatColor.AQUA + "DJ" + ChatColor.DARK_AQUA + "]" + event.getFormat());
+
+        event.getRecipients().stream().filter(player -> Hub.getInstance().getChatManager().hasChatDisabled(player)).forEach(player -> event.getRecipients().remove(player));
+
+        Bukkit.getOnlinePlayers().stream().filter(player -> StringUtils.containsIgnoreCase(event.getMessage(), player.getName())).forEach(player ->
         {
-            JukeboxSong current = Hub.getInstance().getCosmeticManager().getJukeboxManager().getCurrentSong();
-
-            if (current != null && current.getPlayedBy().equals(event.getPlayer().getName()))
-                event.setFormat(ChatColor.DARK_AQUA + "[" + ChatColor.AQUA + "DJ" + ChatColor.DARK_AQUA + "]" + event.getFormat());
-        }
-
-        Bukkit.getOnlinePlayers().stream().filter(player -> StringUtils.containsIgnoreCase(event.getMessage(), player.getName())).forEach(player -> {
             event.getRecipients().remove(player);
+
             if (SamaGamesAPI.get().getSettingsManager().isEnabled(player.getUniqueId(), "notifications", true))
                 player.playSound(player.getLocation(), Sound.NOTE_PIANO, 1.0F, 1.0F);
 
@@ -145,7 +146,7 @@ public class PlayerListener implements Listener
         player.setFlySpeed(0.2F);
         InventoryUtils.cleanPlayer(player);
         Hub.getInstance().getPlayerManager().getStaticInventory().setInventoryToPlayer(player);
-        //Bukkit.getScheduler().runTaskLater(Hub.getInstance(), () -> Hub.getInstance().getCosmeticManager().handleLogin(player), 20L);
+
         Hub.getInstance().getScheduledExecutorService().execute(() ->
         {
             Hub.getInstance().getPlayerManager().handleLogin(player);
