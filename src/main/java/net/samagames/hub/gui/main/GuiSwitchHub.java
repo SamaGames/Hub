@@ -55,7 +55,7 @@ public class GuiSwitchHub extends AbstractGui
                 i++;
                 continue;
             }
-            else if (i > (7 * (this.page - 1)))
+            else if (i > ((7 * (this.page - 1) + (baseSlots.length * 2))))
             {
                 more = true;
                 break;
