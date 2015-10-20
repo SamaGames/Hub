@@ -17,7 +17,6 @@ import java.util.List;
 public abstract class AbstractGame
 {
     private final HashMap<String, GameSign> signs;
-    private boolean isMaintenance;
 
     public AbstractGame()
     {
@@ -30,15 +29,6 @@ public abstract class AbstractGame
                 super.clear();
             }
         };
-
-        Jedis jedis = SamaGamesAPI.get().getBungeeResource();
-
-        if(jedis.exists("hub:maintenance:" + this.getCodeName()))
-            this.setMaintenance(Boolean.valueOf(jedis.get("hub:maintenance:" + this.getCodeName())));
-        else
-            this.setMaintenance(false);
-
-        jedis.close();
     }
 
     public abstract String getCodeName();
@@ -62,7 +52,16 @@ public abstract class AbstractGame
 
     public void addSignForMap(String map, Sign sign, String template, ChatColor color)
     {
-        this.signs.put(map, new GameSign(this, map, color, template, sign));
+        GameSign gameSign = new GameSign(this, map, color, template, sign);
+
+        Jedis jedis = SamaGamesAPI.get().getBungeeResource();
+
+        if(jedis.exists("hub:maintenance:" + this.getCodeName() + ":" + template))
+            gameSign.setMaintenance(Boolean.valueOf(jedis.get("hub:maintenance:" + this.getCodeName() + ":" + template)));
+
+        jedis.close();
+
+        this.signs.put(map, gameSign);
     }
 
     public void clearSigns()
@@ -89,6 +88,15 @@ public abstract class AbstractGame
             return null;
     }
 
+    public GameSign getGameSignByTemplate(String template)
+    {
+        for(GameSign sign : this.signs.values())
+            if(sign.getTemplate().equals(template))
+                return sign;
+
+        return null;
+    }
+
     public HashMap<String, GameSign> getSigns()
     {
         return this.signs;
@@ -98,16 +106,4 @@ public abstract class AbstractGame
     {
         return this.getShopConfiguration() != null;
     }
-
-    public boolean isMaintenance()
-    {
-        return this.isMaintenance;
-    }
-
-    public void setMaintenance(boolean flag)
-    {
-        this.isMaintenance = flag;
-        this.signs.values().forEach(net.samagames.hub.games.sign.GameSign::update);
-    }
-
 }

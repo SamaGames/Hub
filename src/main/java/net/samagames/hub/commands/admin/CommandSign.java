@@ -4,6 +4,7 @@ import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import net.samagames.hub.commands.AbstractCommand;
 import net.samagames.hub.games.AbstractGame;
+import net.samagames.hub.games.sign.GameSign;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.block.Sign;
@@ -81,13 +82,14 @@ public class CommandSign extends AbstractCommand
 
     private void maintenanceSigns(Player player, String[] args)
     {
-        if(args.length < 2)
+        if(args.length < 3)
         {
-            player.sendMessage(ChatColor.RED + "Usage: /sign maintenance <game>");
+            player.sendMessage(ChatColor.RED + "Usage: /sign maintenance <game> <template>");
             return;
         }
 
         String game = args[1];
+        String template = args[2];
 
         AbstractGame gameObject = Hub.getInstance().getGameManager().getGameByIdentifier(game);
 
@@ -97,10 +99,18 @@ public class CommandSign extends AbstractCommand
             return;
         }
 
+        GameSign gameSign = gameObject.getGameSignByTemplate(template);
+
+        if(gameSign == null)
+        {
+            player.sendMessage(ChatColor.RED + "Template non trouvé :(");
+            return;
+        }
+
         Jedis jedis = SamaGamesAPI.get().getBungeeResource();
-        jedis.set("hub:maintenance:" + game, String.valueOf(!gameObject.isMaintenance()));
+        jedis.set("hub:maintenance:" + game + ":" + template, String.valueOf(!gameSign.isMaintenance()));
         jedis.close();
-        SamaGamesAPI.get().getPubSub().send("maintenanceSignChannel", game + ":" + !gameObject.isMaintenance());
+        SamaGamesAPI.get().getPubSub().send("maintenanceSignChannel", game + ":" + !gameSign.isMaintenance());
     }
 
     private void listSigns(Player player)

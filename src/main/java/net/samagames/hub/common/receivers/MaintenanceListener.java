@@ -11,8 +11,9 @@ public class MaintenanceListener implements IPacketsReceiver
         String[] data = packet.split(":");
 
         String game = data[0];
-        boolean flag = Boolean.valueOf(data[1]);
+        String template = data[1];
+        boolean flag = Boolean.valueOf(data[2]);
 
-        Hub.getInstance().getGameManager().getGameByIdentifier(game).setMaintenance(flag);
+        Hub.getInstance().getGameManager().getGameByIdentifier(game).getGameSignByTemplate(template).setMaintenance(flag);
     }
 }
