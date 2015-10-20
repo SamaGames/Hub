@@ -1,6 +1,7 @@
 package net.samagames.hub.events.player;
 
 import net.samagames.api.SamaGamesAPI;
+import net.samagames.api.games.Status;
 import net.samagames.hub.Hub;
 import net.samagames.hub.cosmetics.gadgets.displayers.AbstractDisplayer;
 import net.samagames.hub.cosmetics.jukebox.JukeboxSong;
@@ -35,7 +36,7 @@ public class PlayerListener implements Listener
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event)
     {
-        if(event.getPlayer().getLocation().subtract(0.0D, 1.0D, 0.0D).getBlock().getType() == Material.SLIME_BLOCK)
+        if (event.getPlayer().getLocation().subtract(0.0D, 1.0D, 0.0D).getBlock().getType() == Material.SLIME_BLOCK)
             event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 100, 10));
     }
 
@@ -54,7 +55,7 @@ public class PlayerListener implements Listener
             event.setCancelled(true);
     }
 
-    @EventHandler (priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onAsyncChat(AsyncPlayerChatEvent event)
     {
         if (!Hub.getInstance().getChatManager().canChat())
@@ -63,19 +64,16 @@ public class PlayerListener implements Listener
             {
                 event.setCancelled(true);
                 event.getPlayer().sendMessage(ChatColor.RED + "Le chat est désactivé.");
-            }
-            else
+            } else
             {
                 event.getPlayer().sendMessage(ChatColor.GOLD + "Attention : chat désactivé");
             }
-        }
-        else if (Hub.getInstance().getChatManager().getActualSlowDuration() > 0 && !SamaGamesAPI.get().getPermissionsManager().hasPermission(event.getPlayer(), "hub.bypassmute"))
+        } else if (Hub.getInstance().getChatManager().getActualSlowDuration() > 0 && !SamaGamesAPI.get().getPermissionsManager().hasPermission(event.getPlayer(), "hub.bypassmute"))
         {
             if (!Hub.getInstance().getChatManager().hasPlayerTalked(event.getPlayer()))
             {
                 Hub.getInstance().getChatManager().actualizePlayerLastMessage(event.getPlayer());
-            }
-            else
+            } else
             {
                 Date lastMessage = Hub.getInstance().getChatManager().getLastPlayerMessageDate(event.getPlayer());
                 Date actualMessage = new Date(lastMessage.getTime() + (Hub.getInstance().getChatManager().getActualSlowDuration() * 1000));
@@ -88,14 +86,12 @@ public class PlayerListener implements Listener
 
                     double whenNext = Math.floor((actualMessage.getTime() - current.getTime()) / 1000);
                     event.getPlayer().sendMessage(ChatColor.GOLD + "Prochain message autorisé dans : " + (int) whenNext + " secondes");
-                }
-                else
+                } else
                 {
                     Hub.getInstance().getChatManager().actualizePlayerLastMessage(event.getPlayer());
                 }
             }
-        }
-        else if (StringUtils.containsIgnoreCase(event.getMessage(), "Minechat") || StringUtils.containsIgnoreCase(event.getMessage(), "minecraft connect"))
+        } else if (StringUtils.containsIgnoreCase(event.getMessage(), "Minechat") || StringUtils.containsIgnoreCase(event.getMessage(), "minecraft connect"))
         {
             event.getPlayer().sendMessage(ChatColor.GOLD + "La publicité d'application de chat Minecraft est censurée.");
             return;
@@ -109,16 +105,10 @@ public class PlayerListener implements Listener
                 event.setFormat(ChatColor.DARK_AQUA + "[" + ChatColor.AQUA + "DJ" + ChatColor.DARK_AQUA + "]" + event.getFormat());
         }
 
-        //if(!Hub.getInstance().getNPCManager().canTalk(event.getPlayer()))
-        //    event.setCancelled(true);
-
-        //if(!event.isCancelled())
-        //    Bukkit.getOnlinePlayers().stream().filter(player -> !Hub.getInstance().getNPCManager().canTalk(player) || Hub.getInstance().getChatManager().hasChatDisabled(player)).forEach(player -> event.getRecipients().remove(player));
-
         Bukkit.getOnlinePlayers().stream().filter(player -> StringUtils.containsIgnoreCase(event.getMessage(), player.getName())).forEach(player -> {
             event.getRecipients().remove(player);
             if (SamaGamesAPI.get().getSettingsManager().isEnabled(player.getUniqueId(), "notifications", true))
-            	player.playSound(player.getLocation(), Sound.NOTE_PIANO, 1.0F, 1.0F);
+                player.playSound(player.getLocation(), Sound.NOTE_PIANO, 1.0F, 1.0F);
 
             String suffixRaw = SamaGamesAPI.get().getPermissionsManager().getApi().getUser(event.getPlayer().getUniqueId()).getProperties().get("suffix");
             ChatColor suffix = ChatColor.getByChar(suffixRaw.charAt(1));
@@ -140,6 +130,12 @@ public class PlayerListener implements Listener
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
+    public void onPlayerJoin(final AsyncPlayerPreLoginEvent event)
+    {
+        new ServerStatus(SamaGamesAPI.get().getServerName(), "Hub", "Map", Status.IN_GAME, Bukkit.getOnlinePlayers().size(), Bukkit.getMaxPlayers()).sendToHydro();
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerJoin(final PlayerJoinEvent event)
     {
         final Player player = event.getPlayer();
@@ -149,8 +145,8 @@ public class PlayerListener implements Listener
         player.setFlySpeed(0.2F);
         InventoryUtils.cleanPlayer(player);
         Hub.getInstance().getPlayerManager().getStaticInventory().setInventoryToPlayer(player);
-        Bukkit.getScheduler().runTaskLater(Hub.getInstance(), () -> Hub.getInstance().getCosmeticManager().handleLogin(player), 20L);
-        Bukkit.getScheduler().runTaskAsynchronously(Hub.getInstance(), () ->
+        //Bukkit.getScheduler().runTaskLater(Hub.getInstance(), () -> Hub.getInstance().getCosmeticManager().handleLogin(player), 20L);
+        Hub.getInstance().getScheduledExecutorService().execute(() ->
         {
             Hub.getInstance().getPlayerManager().handleLogin(player);
             Hub.getInstance().getScoreboardManager().addScoreboardReceiver(player);
@@ -177,8 +173,7 @@ public class PlayerListener implements Listener
             {
                 Hub.getInstance().getCosmeticManager().getPetManager().disableCosmetic(player, false);
             }
-        }
-        else if (player.isInsideVehicle())
+        } else if (player.isInsideVehicle())
         {
             final Entity vehicle = player.getVehicle();
 
@@ -230,19 +225,18 @@ public class PlayerListener implements Listener
         {
             final Player player = (Player) event.getDamager();
 
-            if(Hub.getInstance().getCosmeticManager().getGadgetManager().hasGadget((Player) event.getDamager()))
+            if (Hub.getInstance().getCosmeticManager().getGadgetManager().hasGadget((Player) event.getDamager()))
             {
                 AbstractDisplayer displayer = Hub.getInstance().getCosmeticManager().getGadgetManager().getPlayerGadget((Player) event.getDamager());
 
-                if(displayer.isInteractionsEnabled() && !SamaGamesAPI.get().getSettingsManager().isEnabled(event.getEntity().getUniqueId(), "interactions", true))
+                if (displayer.isInteractionsEnabled() && !SamaGamesAPI.get().getSettingsManager().isEnabled(event.getEntity().getUniqueId(), "interactions", true))
                 {
                     event.getDamager().sendMessage(ChatColor.RED + "Ce joueur n'accepte pas les intéractions !");
                     return;
                 }
 
                 Hub.getInstance().getCosmeticManager().getGadgetManager().getPlayerGadget((Player) event.getDamager()).handleInteraction(event.getDamager(), event.getEntity());
-            }
-            else if(Hub.getInstance().getCosmeticManager().getGadgetManager().hasGadget((Player) event.getEntity()))
+            } else if (Hub.getInstance().getCosmeticManager().getGadgetManager().hasGadget((Player) event.getEntity()))
             {
                 Hub.getInstance().getCosmeticManager().getGadgetManager().getPlayerGadget((Player) event.getEntity()).handleInteraction(event.getDamager(), event.getEntity());
             }
@@ -251,7 +245,7 @@ public class PlayerListener implements Listener
             {
                 Player target = (Player) event.getEntity();
 
-                if(SamaGamesAPI.get().getSettingsManager().isEnabled(player.getUniqueId(), "clickme-punch", true))
+                if (SamaGamesAPI.get().getSettingsManager().isEnabled(player.getUniqueId(), "clickme-punch", true))
                 {
                     if (!SamaGamesAPI.get().getSettingsManager().isEnabled(target.getUniqueId(), "clickme", true))
                         return;
@@ -259,14 +253,13 @@ public class PlayerListener implements Listener
                     Hub.getInstance().getGuiManager().openGui(player, new GuiClickMe(target));
                 }
             });
-        }
-        else if(event.getDamager() instanceof Player && !(event.getEntity() instanceof Player))
+        } else if (event.getDamager() instanceof Player && !(event.getEntity() instanceof Player))
         {
-            if(event.getEntity().hasMetadata("owner-id"))
+            if (event.getEntity().hasMetadata("owner-id"))
             {
                 UUID uuid = UUID.fromString(event.getEntity().getMetadata("owner-id").get(0).asString());
 
-                if(Hub.getInstance().getCosmeticManager().getGadgetManager().hasGadget(uuid))
+                if (Hub.getInstance().getCosmeticManager().getGadgetManager().hasGadget(uuid))
                 {
                     Hub.getInstance().getCosmeticManager().getGadgetManager().getPlayerGadget(uuid).handleInteraction(event.getDamager(), event.getEntity());
                 }
@@ -275,28 +268,18 @@ public class PlayerListener implements Listener
     }
 
     @EventHandler
-    public void onPlayerPickupItem(PlayerPickupItemEvent event) { event.setCancelled(true); }
+    public void onPlayerPickupItem(PlayerPickupItemEvent event)
+    {
+        event.setCancelled(true);
+    }
 
     @EventHandler
-    public void onPlayerInteractEntityEvent(final PlayerInteractEntityEvent event)
-    {
-        /**if(event.getRightClicked().hasMetadata("npc-id"))
-        {
-            event.setCancelled(true);
-
-            Bukkit.getScheduler().runTaskAsynchronously(Hub.getInstance(), () ->
-            {
-                if (Hub.getInstance().getNPCManager().hasNPC(UUID.fromString(event.getRightClicked().getMetadata("npc-id").get(0).asString())))
-                    if (Hub.getInstance().getNPCManager().canTalk(event.getPlayer()))
-                        Hub.getInstance().getNPCManager().getNPCDataByID(UUID.fromString(event.getRightClicked().getMetadata("npc-id").get(0).asString())).getAction().execute(event.getPlayer());
-            });
-        }**/
-    }
+    public void onPlayerInteractEntityEvent(final PlayerInteractEntityEvent event) {}
 
     @EventHandler
     public void onPlayerInteractEvent(final PlayerInteractEvent event)
     {
-        if(event.getClickedBlock() != null)
+        if (event.getClickedBlock() != null)
         {
             Material material = event.getClickedBlock().getType();
 
@@ -309,9 +292,9 @@ public class PlayerListener implements Listener
                     AbstractGame game = Hub.getInstance().getGameManager().getGameByIdentifier(sign.getMetadata("game").get(0).asString());
                     GameSign gameSign = game.getGameSignByMap(sign.getMetadata("map").get(0).asString());
 
-                    if(SamaGamesAPI.get().getPermissionsManager().hasPermission(event.getPlayer(), "hub.debug.sign"))
+                    if (SamaGamesAPI.get().getPermissionsManager().hasPermission(event.getPlayer(), "hub.debug.sign"))
                     {
-                        if(event.getPlayer().isSneaking())
+                        if (event.getPlayer().isSneaking())
                         {
                             gameSign.developperClick(event.getPlayer());
                             return;
@@ -335,6 +318,7 @@ public class PlayerListener implements Listener
     {
         Bukkit.getScheduler().runTaskAsynchronously(Hub.getInstance(), () ->
         {
+            new ServerStatus(SamaGamesAPI.get().getServerName(), "Hub", "Map", Status.IN_GAME, Bukkit.getOnlinePlayers().size(), Bukkit.getMaxPlayers()).sendToHydro();
             Hub.getInstance().getCosmeticManager().handleLogout(player);
             Hub.getInstance().getPlayerManager().handleLogout(player);
             Hub.getInstance().getChatManager().enableChatFor(player);

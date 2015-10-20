@@ -1,3 +1,5 @@
+import java.util.Date;
+
 /**
  * This file is a part of the SamaGames Project CodeBase
  * This code is absolutely confidential.
@@ -11,6 +13,7 @@ public class Test
     {
         int stars = 500;
         stars -= (500 * ((float)5/100));
-        System.out.println(stars);
+        System.out.println(System.currentTimeMillis());
+
     }
 }

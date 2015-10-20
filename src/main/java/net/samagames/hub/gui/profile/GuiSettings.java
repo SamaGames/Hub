@@ -93,7 +93,7 @@ public class GuiSettings extends AbstractGui
                     ChatColor.GRAY + "clic-gauche sur ceux-ci."
             });
         }
-
+        
         if(this.page > 1)
             this.setSlotData(ChatColor.YELLOW + "« Page " + (this.page - 1), Material.PAPER, this.inventory.getSize() - 9, null, "page_back");
 

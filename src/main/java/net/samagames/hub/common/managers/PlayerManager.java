@@ -37,7 +37,7 @@ public class PlayerManager extends AbstractManager
     public void handleLogin(Player player)
     {
         this.updateSettings(player, true, true);
-        this.updateHiders(player);
+        this.hub.getServer().getScheduler().runTaskLaterAsynchronously(this.hub, () -> this.updateHiders(player), 20L);
     }
 
     public void handleLogout(Player player)

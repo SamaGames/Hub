@@ -2,6 +2,7 @@ package net.samagames.hub;
 
 import de.slikey.effectlib.EffectLib;
 import net.samagames.api.SamaGamesAPI;
+import net.samagames.api.games.Status;
 import net.samagames.hub.commands.CommandManager;
 import net.samagames.hub.common.HubRefresher;
 import net.samagames.hub.common.hydroconnect.HydroManager;
@@ -13,6 +14,7 @@ import net.samagames.hub.cosmetics.CosmeticManager;
 import net.samagames.hub.events.player.GuiListener;
 import net.samagames.hub.events.player.ParkourListener;
 import net.samagames.hub.events.player.PlayerListener;
+import net.samagames.hub.events.player.ServerStatus;
 import net.samagames.hub.events.protection.EntityEditionListener;
 import net.samagames.hub.events.protection.InventoryEditionListener;
 import net.samagames.hub.events.protection.PlayerEditionListener;
@@ -29,6 +31,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
 public class Hub extends JavaPlugin
@@ -112,7 +115,7 @@ public class Hub extends JavaPlugin
         this.hubRefresher = new HubRefresher(this);
         Bukkit.getScheduler().runTaskTimerAsynchronously(this, this.hubRefresher, 20L, 20L);
         this.log(Level.INFO, "Hubs list will be refreshed every seconds.");
-
+        this.getScheduledExecutorService().scheduleAtFixedRate(() -> new ServerStatus(SamaGamesAPI.get().getServerName(), "Hub", "Map", Status.IN_GAME, Bukkit.getOnlinePlayers().size(), Bukkit.getMaxPlayers()).sendToHydro(), 0,  1, TimeUnit.MINUTES);
         this.log(Level.INFO, "Hub ready!");
     }
 
