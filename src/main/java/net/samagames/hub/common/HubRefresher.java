@@ -36,12 +36,6 @@ public class HubRefresher implements Runnable
 
             String thisHubJson = new Gson().toJson(thisHub);
 
-            try
-            {
-                jedis.hdel("hubs_connected", SamaGamesAPI.get().getServerName());
-            }
-            catch(Exception e) {}
-
             jedis.hset("hubs_connected", SamaGamesAPI.get().getServerName(), thisHubJson);
 
             Map<String, String> redisHubs = jedis.hgetAll("hubs_connected");
