@@ -50,11 +50,7 @@ public abstract class AbstractGame
     public abstract ShopCategory getShopConfiguration();
     public abstract Location getLobbySpawn();
     public abstract boolean isLocked();
-
-    public String getGuiName()
-    {
-        return ChatColor.GOLD  + getName();
-    }
+    public abstract boolean isNew();
 
     public List<DisplayedStat> getDisplayedStats()
     {

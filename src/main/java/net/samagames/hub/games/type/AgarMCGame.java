@@ -26,12 +26,6 @@ public class AgarMCGame extends AbstractGame
     }
 
     @Override
-    public String getGuiName()
-    {
-        return "" + ChatColor.AQUA + ChatColor.BOLD + "[NEW] " + ChatColor.RED + ChatColor.BOLD + "[ALPHA] " + ChatColor.RESET + super.getGuiName();
-    }
-
-    @Override
     public ItemStack getIcon()
     {
         return new ItemStack(Material.SLIME_BLOCK, 1);
@@ -69,6 +63,12 @@ public class AgarMCGame extends AbstractGame
     }
 
     @Override
+    public List<DisplayedStat> getDisplayedStats()
+    {
+        return null;
+    }
+
+    @Override
     public Location getLobbySpawn()
     {
         return new Location(Hub.getInstance().getHubWorld(), 150.5D, 87.0D, 46.5D);
@@ -81,8 +81,8 @@ public class AgarMCGame extends AbstractGame
     }
 
     @Override
-    public List<DisplayedStat> getDisplayedStats()
+    public boolean isNew()
     {
-        return null;
+        return true;
     }
 }

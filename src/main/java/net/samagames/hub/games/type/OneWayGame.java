@@ -88,4 +88,10 @@ public class OneWayGame extends AbstractGame
     {
         return false;
     }
+
+    @Override
+    public boolean isNew()
+    {
+        return false;
+    }
 }
