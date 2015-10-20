@@ -36,7 +36,7 @@ public class PlayerManager extends AbstractManager
 
     public void handleLogin(Player player)
     {
-        this.updateSettings(player, true, true);
+        this.updateSettings(player, false, false, true, true);
         this.hub.getServer().getScheduler().runTaskLaterAsynchronously(this.hub, () -> this.updateHiders(player), 20L);
     }
 
@@ -46,7 +46,7 @@ public class PlayerManager extends AbstractManager
         this.removeHider(player);
     }
 
-    public void updateSettings(Player player, boolean jukeboxMessage, boolean isLogin)
+    public void updateSettings(Player player, boolean playersMessage, boolean chatMessage, boolean jukeboxMessage, boolean isLogin)
     {
         boolean playerOnSetting = SamaGamesAPI.get().getSettingsManager().isEnabled(player.getUniqueId(), "players", true);
         boolean chatOnSetting = SamaGamesAPI.get().getSettingsManager().isEnabled(player.getUniqueId(), "chat", true);
@@ -57,19 +57,22 @@ public class PlayerManager extends AbstractManager
             Bukkit.getServer().getScheduler().runTask(hub, () -> Bukkit.getOnlinePlayers().stream().filter(p -> !SamaGamesAPI.get().getPermissionsManager().hasPermission(p, "hub.announce") && !SamaGamesAPI.get().getFriendsManager().areFriends(player.getUniqueId(), p.getUniqueId())).forEach(player::hidePlayer));
 
             this.addHider(player);
-            if (!isLogin)
+
+            if (!isLogin || playersMessage)
                 player.sendMessage(ChatColor.GOLD + "Vous avez désactivé les joueurs. Vous ne verrez donc aucun joueur excepté les membres de l'équipe.");
         }
         else
         {
             Bukkit.getOnlinePlayers().forEach(player::showPlayer);
-            if (!isLogin)
-                player.sendMessage(ChatColor.GOLD + "Vous avez activer les joueurs. Vous ne verrez donc tout les joueurs.");
+
+            if (!isLogin || chatMessage)
+                player.sendMessage(ChatColor.GOLD + "Vous avez activé les joueurs. Vous verrez donc tout les joueurs.");
         }
 
         if (!chatOnSetting)
         {
             Hub.getInstance().getChatManager().disableChatFor(player);
+
             if (!isLogin)
                 player.sendMessage(ChatColor.GOLD + "Vous avez désactivé le chat. Vous ne verrez donc pas les messages des joueurs.");
         }

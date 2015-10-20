@@ -11,6 +11,8 @@ import org.bukkit.inventory.ItemStack;
 
 public class GuiSettings extends AbstractGui
 {
+    public enum Settings { PLAYERS, CHAT, NOTIFICATIONS}
+
     private final int page;
 
     public GuiSettings(int page)
@@ -118,7 +120,7 @@ public class GuiSettings extends AbstractGui
 
             SamaGamesAPI.get().getSettingsManager().setSetting(player.getUniqueId(), action.split("_")[1], String.valueOf(!enabled), () ->
             {
-                Hub.getInstance().getPlayerManager().updateSettings(player, (action.equals("setting_jukebox")), false);
+                Hub.getInstance().getPlayerManager().updateSettings(player, (action.equals("setting_players")), (action.equals("setting_chat")), (action.equals("setting_jukebox")), false);
                 this.update(player);
             });
         }
