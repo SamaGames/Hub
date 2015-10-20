@@ -103,7 +103,7 @@ public class GuiStalkerFriends2000 extends AbstractGui
         }
         else if(action.equals("back"))
         {
-            Hub.getInstance().getGuiManager().openGui(player, new GuiStalker2000());
+            Hub.getInstance().getGuiManager().openGui(player, new GuiStalker2000(1));
         }
     }
 }
