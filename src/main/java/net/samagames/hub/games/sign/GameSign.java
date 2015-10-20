@@ -29,6 +29,7 @@ public class GameSign
     private int scrollVector = +1;
     private String scrolledMapName;
 
+    private int playerPerGame;
     private int playerWaitFor;
     private int totalPlayerOnServers;
 
@@ -43,7 +44,7 @@ public class GameSign
         this.sign.setMetadata("game", new FixedMetadataValue(Hub.getInstance(), game.getCodeName()));
         this.sign.setMetadata("map", new FixedMetadataValue(Hub.getInstance(), map));
 
-        Hub.getInstance().getScheduledExecutorService().scheduleAtFixedRate(() -> scrollMapName(), 1000, 500, TimeUnit.MILLISECONDS);
+        Hub.getInstance().getScheduledExecutorService().scheduleAtFixedRate(this::scrollMapName, 1000, 500, TimeUnit.MILLISECONDS);
 
         this.updateTask = Bukkit.getScheduler().runTaskTimerAsynchronously(Hub.getInstance(), this::update, 20L, 20L);
     }
@@ -65,31 +66,26 @@ public class GameSign
 
         this.sign.setLine(0, this.game.getName());
         this.sign.setLine(1, mapLine);
-        this.sign.setLine(2, playerWaitFor + "" + ChatColor.RESET + " en attente");
-        this.sign.setLine(3, totalPlayerOnServers + "" + ChatColor.RESET + " en jeu");
+        this.sign.setLine(2, this.playerWaitFor + "" + ChatColor.RESET + " en attente");
+        this.sign.setLine(3, this.totalPlayerOnServers + "" + ChatColor.RESET + " en jeu");
 
         updateSign();
     }
 
     public void updateSign()
     {
-        WorldServer worldServer = ((CraftWorld) sign.getWorld()).getHandle();
+        WorldServer worldServer = ((CraftWorld) this.sign.getWorld()).getHandle();
 
-        IChatBaseComponent[] lines = new IChatBaseComponent[]
-                {
-                        new ChatMessage(sign.getLine(0)),
-                        new ChatMessage(sign.getLine(1)),
-                        new ChatMessage(sign.getLine(2)),
-                        new ChatMessage(sign.getLine(3))
-                };
-        PacketPlayOutUpdateSign packet = new PacketPlayOutUpdateSign(worldServer, new BlockPosition(sign.getX(), sign.getY(), sign.getZ()), lines);
+        IChatBaseComponent[] lines = new IChatBaseComponent[] {
+                new ChatMessage(this.sign.getLine(0)),
+                new ChatMessage(this.sign.getLine(1)),
+                new ChatMessage(this.sign.getLine(2)),
+                new ChatMessage(this.sign.getLine(3))
+        };
 
-        // FIXME: This method can be low
-        sign.getWorld().getNearbyEntities(sign.getLocation(), 15, 15, 15).stream().filter(entity -> entity instanceof Player).forEach(entity -> {
-            Player player = (Player) entity;
+        PacketPlayOutUpdateSign packet = new PacketPlayOutUpdateSign(worldServer, new BlockPosition(this.sign.getX(), this.sign.getY(), this.sign.getZ()), lines);
 
-            ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
-        });
+        this.sign.getWorld().getNearbyEntities(sign.getLocation(), 15, 15, 15).stream().filter(entity -> entity instanceof Player).forEach(entity -> ((CraftPlayer) entity).getHandle().playerConnection.sendPacket(packet));
     }
 
     public void updateMapName()
@@ -100,34 +96,35 @@ public class GameSign
 
     public void scrollMapName()
     {
-        if(game.isMaintenance())
+        if(this.game.isMaintenance())
             return;
 
-        if(map.length() <= 10)
+        if(this.map.length() <= 10)
         {
-            scrolledMapName = map;
+            this.scrolledMapName = this.map;
             return;
         }
 
-        int start = scrollIndex;
-        int end = scrollIndex+10;
+        int start = this.scrollIndex;
+        int end = this.scrollIndex + 10;
 
-        if(end > map.length())
+        if(end > this.map.length())
         {
-            scrollVector = -1;
-            scrollIndex = map.length()-10;
+            this.scrollVector = -1;
+            this.scrollIndex = this.map.length() - 10;
             return;
         }
         if(start < 0)
         {
-            scrollVector = 1;
-            scrollIndex = 0;
+            this.scrollVector = 1;
+            this.scrollIndex = 0;
             return;
         }
 
-        scrolledMapName = map.substring(start, end);
-        scrollIndex += scrollVector;
-        updateMapName();
+        this.scrolledMapName = this.map.substring(start, end);
+        this.scrollIndex += this.scrollVector;
+
+        this.updateMapName();
     }
 
     public void click(Player player)
@@ -160,11 +157,12 @@ public class GameSign
     {
         player.sendMessage(ChatColor.GOLD + "----------------------------------------");
         player.sendMessage(ChatColor.GOLD + "Informations du panneau de jeu :");
-        player.sendMessage(ChatColor.GOLD + "> " + ChatColor.AQUA + "Template : " + template);
+        player.sendMessage(ChatColor.GOLD + "> " + ChatColor.AQUA + "Template : " + this.template);
         player.sendMessage(ChatColor.GOLD + "> " + ChatColor.AQUA + "Jeu : " + ChatColor.GREEN + this.game.getCodeName());
         player.sendMessage(ChatColor.GOLD + "> " + ChatColor.AQUA + "Map : " + ChatColor.GREEN + this.map);
-        player.sendMessage(ChatColor.GOLD + "> " + ChatColor.AQUA + "Joueurs en attente : " + ChatColor.GREEN + playerWaitFor);
-        player.sendMessage(ChatColor.GOLD + "> " + ChatColor.AQUA + "Joueurs en jeu : " + ChatColor.GREEN + totalPlayerOnServers);
+        player.sendMessage(ChatColor.GOLD + "> " + ChatColor.AQUA + "Joueurs par jeu : " + ChatColor.GREEN + this.playerPerGame);
+        player.sendMessage(ChatColor.GOLD + "> " + ChatColor.AQUA + "Joueurs en attente : " + ChatColor.GREEN + this.playerWaitFor);
+        player.sendMessage(ChatColor.GOLD + "> " + ChatColor.AQUA + "Joueurs en jeu : " + ChatColor.GREEN + this.totalPlayerOnServers);
         player.sendMessage(ChatColor.GOLD + "----------------------------------------");
     }
 
@@ -181,6 +179,11 @@ public class GameSign
     public ChatColor getColor()
     {
         return color;
+    }
+
+    public void setPlayerPerGame(int playerPerGame)
+    {
+        this.playerPerGame = playerPerGame;
     }
 
     public void setPlayerWaitFor(int playerWaitFor)

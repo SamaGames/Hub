@@ -82,18 +82,21 @@ public class GadgetManager extends AbstractCosmeticManager<GadgetCosmetic>
                     displayer.display();
                     this.playersGadgets.put(player.getUniqueId(), displayer);
 
-                    this.loopsIds.put(player.getUniqueId(), Bukkit.getScheduler().runTaskTimerAsynchronously(this.hub, new Runnable() {
+                    this.loopsIds.put(player.getUniqueId(), Bukkit.getScheduler().runTaskTimerAsynchronously(this.hub, new Runnable()
+                    {
                         int timer = cosmetic.getCooldown();
 
                         @Override
-                        public void run() {
+                        public void run()
+                        {
                             if (!cooldowns.containsKey(player.getUniqueId()))
                                 cooldowns.put(player.getUniqueId(), timer);
 
                             timer--;
                             cooldowns.put(player.getUniqueId(), timer);
 
-                            if (timer == 0) {
+                            if (timer <= 0)
+                            {
                                 cooldowns.remove(player.getUniqueId());
                                 callbackLoop(player.getUniqueId());
                             }
@@ -195,6 +198,13 @@ public class GadgetManager extends AbstractCosmeticManager<GadgetCosmetic>
             if(SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "hub.gadgets.cooldownbypass"))
             {
                 this.cooldowns.remove(player.getUniqueId());
+
+                if(this.loopsIds.containsKey(player.getUniqueId()))
+                {
+                    this.loopsIds.get(player.getUniqueId()).cancel();
+                    this.loopsIds.remove(player.getUniqueId());
+                }
+
                 return true;
             }
             else
@@ -202,6 +212,13 @@ public class GadgetManager extends AbstractCosmeticManager<GadgetCosmetic>
                 if (this.cooldowns.get(player.getUniqueId()) <= 0)
                 {
                     this.cooldowns.remove(player.getUniqueId());
+
+                    if(this.loopsIds.containsKey(player.getUniqueId()))
+                    {
+                        this.loopsIds.get(player.getUniqueId()).cancel();
+                        this.loopsIds.remove(player.getUniqueId());
+                    }
+
                     return true;
                 }
                 else
@@ -209,6 +226,12 @@ public class GadgetManager extends AbstractCosmeticManager<GadgetCosmetic>
                     return false;
                 }
             }
+        }
+
+        if(this.loopsIds.containsKey(player.getUniqueId()))
+        {
+            this.loopsIds.get(player.getUniqueId()).cancel();
+            this.loopsIds.remove(player.getUniqueId());
         }
 
         return true;

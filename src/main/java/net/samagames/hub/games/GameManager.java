@@ -25,12 +25,7 @@ public class GameManager extends AbstractManager
 
         this.games = new HashMap<>();
 
-        /** Private zones **/
-
         this.registerGame(new OneWayGame("beta_vip", "VIP", Material.DIAMOND, new Location(this.hub.getHubWorld(), -221.5D, 203.0D, 31.5D, -90.0F, 0.0F)));
-
-
-        /** Games **/
 
         this.registerGame(new UppervoidGame());
         this.registerGame(new UHCGame());
@@ -38,9 +33,6 @@ public class GameManager extends AbstractManager
         this.registerGame(new QuakeGame());
         this.registerGame(new DimensionsGame());
         this.registerGame(new HeroBattleGame());
-
-
-        /** Arcade games **/
 
         ArcadeGame arcadeGame = new ArcadeGame();
 
@@ -61,6 +53,7 @@ public class GameManager extends AbstractManager
                 {
                     game.getSigns().values().stream().filter(sign -> sign.getTemplate().equalsIgnoreCase(packet.getTemplateID())).forEach(sign ->
                     {
+                        sign.setPlayerPerGame(packet.getPlayerMaxForMap());
                         sign.setPlayerWaitFor(packet.getPlayerWaitFor());
                         sign.setTotalPlayerOnServers(packet.getTotalPlayerOnServers());
                         sign.update();
@@ -87,7 +80,9 @@ public class GameManager extends AbstractManager
                     if(packet.getType().equals(QueueInfosUpdatePacket.Type.ADD))
                     {
                         player.sendMessage(ChatColor.GREEN + "Vous avez été ajouté à la queue du jeu " + ChatColor.GOLD + packet.getGame() +  ChatColor.GREEN + " sur la map " + ChatColor.GOLD + packet.getMap() + ChatColor.GREEN + " !");
-                    }else{
+                    }
+                    else
+                    {
                         player.sendMessage(ChatColor.GREEN + "Vous avez été retiré de la queue du jeu " + ChatColor.GOLD + packet.getGame() +  ChatColor.GREEN + " sur la map " + ChatColor.GOLD + packet.getMap() + ChatColor.GREEN + " !");
                     }
                 }
