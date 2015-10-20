@@ -19,7 +19,7 @@ import java.util.ArrayList;
 
 public class GuiSwitchHub extends AbstractGui
 {
-    private int page;
+    private final int page;
 
     public GuiSwitchHub(int page)
     {
@@ -29,7 +29,7 @@ public class GuiSwitchHub extends AbstractGui
     @Override
     public void display(Player player)
     {
-        this.inventory = Bukkit.createInventory(null, 45, "Changer de hub");
+        this.inventory = Bukkit.createInventory(null, 54, "Changer de hub (Page " + this.page + ")");
         this.update(player);
 
         player.openInventory(this.inventory);
@@ -55,7 +55,7 @@ public class GuiSwitchHub extends AbstractGui
                 i++;
                 continue;
             }
-            else if (i > ((7 * (this.page - 1) + (baseSlots.length * 2))))
+            else if (i > ((7 * (this.page - 1) + (baseSlots.length * 3))))
             {
                 more = true;
                 break;
