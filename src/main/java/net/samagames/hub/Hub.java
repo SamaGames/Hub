@@ -22,7 +22,6 @@ import net.samagames.hub.events.protection.WorldEditionListener;
 import net.samagames.hub.games.GameManager;
 import net.samagames.hub.games.sign.SignManager;
 import net.samagames.hub.gui.GuiManager;
-import net.samagames.hub.npcs.NPCManager;
 import net.samagames.hub.parkour.ParkourManager;
 import net.samagames.tools.LocationUtils;
 import org.bukkit.Bukkit;
@@ -47,7 +46,6 @@ public class Hub extends JavaPlugin
     private GuiManager guiManager;
     private HologramManager hologramManager;
     private EntityManager entityManager;
-    private NPCManager npcManager;
     private ScoreboardManager scoreboardManager;
     private GameManager gameManager;
     private SignManager signManager;
@@ -89,7 +87,6 @@ public class Hub extends JavaPlugin
         this.guiManager = new GuiManager(this);
         this.hologramManager = new HologramManager(this);
         this.entityManager = new EntityManager(this);
-        this.npcManager = new NPCManager(this);
         this.scoreboardManager = new ScoreboardManager(this);
         this.gameManager = new GameManager(this);
         this.signManager = new SignManager(this);
@@ -125,14 +122,14 @@ public class Hub extends JavaPlugin
     @Override
     public void onDisable()
     {
-        this.npcManager.onServerClose();
         this.hologramManager.onServerClose();
         this.scoreboardManager.onServerClose();
+
         if (this.hubRefresher != null)
             this.hubRefresher.removeFromList();
 
-        scheduledExecutorService.shutdown();
-        executorMonoThread.shutdown();
+        this.scheduledExecutorService.shutdown();
+        this.executorMonoThread.shutdown();
     }
 
     public void registerEvents()
@@ -156,7 +153,6 @@ public class Hub extends JavaPlugin
     public GuiManager getGuiManager() { return this.guiManager; }
     public HologramManager getHologramManager() { return this.hologramManager; }
     public EntityManager getEntityManager() { return this.entityManager; }
-    public NPCManager getNPCManager() { return this.npcManager; }
     public ScoreboardManager getScoreboardManager() { return this.scoreboardManager; }
     public GameManager getGameManager() { return this.gameManager; }
     public SignManager getSignManager() { return this.signManager; }
@@ -190,15 +186,14 @@ public class Hub extends JavaPlugin
     }
 
     public HydroManager getHydroManager() {
-        return hydroManager;
+        return this.hydroManager;
     }
 
     public ScheduledExecutorService getScheduledExecutorService() {
-        return scheduledExecutorService;
+        return this.scheduledExecutorService;
     }
 
     public ScheduledExecutorService getExecutorMonoThread() {
-        return executorMonoThread;
+        return this.executorMonoThread;
     }
-
 }

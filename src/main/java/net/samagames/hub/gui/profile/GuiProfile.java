@@ -47,7 +47,7 @@ public class GuiProfile extends AbstractGui
                 player.sendMessage(ChatColor.RED + "Prochainement...");
                 break;
             case "settings":
-                Hub.getInstance().getGuiManager().openGui(player, new GuiSettings(0));
+                Hub.getInstance().getGuiManager().openGui(player, new GuiSettings(1));
                 break;
             case "back":
                 Hub.getInstance().getGuiManager().closeGui(player);

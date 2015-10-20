@@ -15,7 +15,6 @@ import org.bukkit.*;
 import org.bukkit.block.Sign;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -105,12 +104,6 @@ public class PlayerListener implements Listener
             if (current != null && current.getPlayedBy().equals(event.getPlayer().getName()))
                 event.setFormat(ChatColor.DARK_AQUA + "[" + ChatColor.AQUA + "DJ" + ChatColor.DARK_AQUA + "]" + event.getFormat());
         }
-
-        if (!Hub.getInstance().getNPCManager().canTalk(event.getPlayer()))
-            event.setCancelled(true);
-
-        if (!event.isCancelled())
-            Bukkit.getOnlinePlayers().stream().filter(player -> !Hub.getInstance().getNPCManager().canTalk(player) || Hub.getInstance().getChatManager().hasChatDisabled(player)).forEach(player -> event.getRecipients().remove(player));
 
         Bukkit.getOnlinePlayers().stream().filter(player -> StringUtils.containsIgnoreCase(event.getMessage(), player.getName())).forEach(player -> {
             event.getRecipients().remove(player);
@@ -281,23 +274,7 @@ public class PlayerListener implements Listener
     }
 
     @EventHandler
-    public void onPlayerInteractEntityEvent(final PlayerInteractEntityEvent event)
-    {
-        if (event.getRightClicked().getType() == EntityType.VILLAGER)
-        {
-            if (event.getRightClicked().hasMetadata("npc-id"))
-            {
-                event.setCancelled(true);
-
-                Bukkit.getScheduler().runTaskAsynchronously(Hub.getInstance(), () ->
-                {
-                    if (Hub.getInstance().getNPCManager().hasNPC(UUID.fromString(event.getRightClicked().getMetadata("npc-id").get(0).asString())))
-                        if (Hub.getInstance().getNPCManager().canTalk(event.getPlayer()))
-                            Hub.getInstance().getNPCManager().getNPCByID(UUID.fromString(event.getRightClicked().getMetadata("npc-id").get(0).asString())).getAction().execute(event.getPlayer());
-                });
-            }
-        }
-    }
+    public void onPlayerInteractEntityEvent(final PlayerInteractEntityEvent event) {}
 
     @EventHandler
     public void onPlayerInteractEvent(final PlayerInteractEvent event)
@@ -345,7 +322,7 @@ public class PlayerListener implements Listener
             Hub.getInstance().getCosmeticManager().handleLogout(player);
             Hub.getInstance().getPlayerManager().handleLogout(player);
             Hub.getInstance().getChatManager().enableChatFor(player);
-            Hub.getInstance().getNPCManager().talkFinished(player);
+            //Hub.getInstance().getNPCManager().talkFinished(player);
             Hub.getInstance().getScoreboardManager().removeScoreboardReceiver(player);
             Hub.getInstance().getHologramManager().removeReceiver(player);
         });

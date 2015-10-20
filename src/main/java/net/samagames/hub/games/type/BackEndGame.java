@@ -79,4 +79,10 @@ public class BackEndGame extends AbstractGame
     {
         return false;
     }
+
+    @Override
+    public boolean isNew()
+    {
+        return false;
+    }
 }

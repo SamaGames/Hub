@@ -44,7 +44,7 @@ public class GuiMain extends AbstractGui
                     description.add(ChatColor.GOLD + "Développeur" + (developpers.length > 1 ? "s" : "") + " : " + ChatColor.GRAY + StringUtils.join(developpers, ", "));
                 }
 
-                this.setSlotData(ChatColor.GOLD + game.getGuiName(), game.getIcon(), game.getSlotInMainMenu(), this.getLores(description.toArray(new String[description.size()]), false, true), "game_" + gameIdentifier);
+                this.setSlotData((game.isNew() ? ChatColor.GREEN + "" + ChatColor.BOLD + "NOUVEAU ! " + ChatColor.RESET : "") + ChatColor.GOLD + game.getName(), game.getIcon(), game.getSlotInMainMenu(), this.getLores(description.toArray(new String[description.size()]), false, true), "game_" + gameIdentifier);
             }
         }
 
@@ -63,7 +63,7 @@ public class GuiMain extends AbstractGui
         }
         else if(action.equals("switch_hub"))
         {
-            Hub.getInstance().getGuiManager().openGui(player, new GuiSwitchHub());
+            Hub.getInstance().getGuiManager().openGui(player, new GuiSwitchHub(1));
         }
         else if(action.equals("spawn"))
         {

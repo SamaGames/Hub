@@ -19,27 +19,17 @@ import java.util.ArrayList;
 
 public class GuiSwitchHub extends AbstractGui
 {
+    private int page;
+
+    public GuiSwitchHub(int page)
+    {
+        this.page = page;
+    }
+
     @Override
     public void display(Player player)
     {
-        ArrayList<JsonHub> hubs = Hub.getInstance().getHubRefresher().getHubs();
-        int lines = 1;
-        int slot = 1;
-
-        for(JsonHub hub : hubs)
-        {
-            slot++;
-
-            if(slot == 7)
-            {
-                slot = 0;
-                lines++;
-            }
-        }
-
-        int slots = 9 + (9 * lines) + (9 * 2);
-
-        this.inventory = Bukkit.createInventory(null, slots, "Changer de hub");
+        this.inventory = Bukkit.createInventory(null, 45, "Changer de hub");
         this.update(player);
 
         player.openInventory(this.inventory);
@@ -55,17 +45,39 @@ public class GuiSwitchHub extends AbstractGui
 
         this.inventory.clear();
 
+        int i = 0;
+        boolean more = false;
+
         for(JsonHub hub : hubs)
         {
+            if (i < (7 * (this.page - 1)))
+            {
+                i++;
+                continue;
+            }
+            else if (i > (7 * (this.page - 1)))
+            {
+                more = true;
+                break;
+            }
+
             this.setSlotData(this.getHubItem(hub), baseSlots[slot] * line, "Hub_" + hub.getHubNumber());
             slot++;
 
-            if(slot == 6)
+            if(slot == baseSlots.length)
             {
                 slot = 0;
                 line++;
             }
+
+            i++;
         }
+
+        if(this.page > 1)
+            this.setSlotData(ChatColor.YELLOW + "« Page " + (this.page - 1), Material.PAPER, this.inventory.getSize() - 9, null, "page_back");
+
+        if(more)
+            this.setSlotData(ChatColor.YELLOW + "Page " + (this.page + 1) + " »", Material.PAPER, this.inventory.getSize() - 1, null, "page_next");
 
         this.setSlotData(GuiUtils.getBackItem(), this.inventory.getSize() - 5, "back");
     }
@@ -87,6 +99,14 @@ public class GuiSwitchHub extends AbstractGui
             }
 
             BungeeUtils.sendPlayerToServer(player, action);
+        }
+        else if(action.equals("page_back"))
+        {
+            Hub.getInstance().getGuiManager().openGui(player, new GuiSwitchHub((this.page - 1)));
+        }
+        else if(action.equals("page_next"))
+        {
+            Hub.getInstance().getGuiManager().openGui(player, new GuiSwitchHub((this.page + 1)));
         }
         else if(action.equals("back"))
         {

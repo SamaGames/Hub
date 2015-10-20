@@ -65,11 +65,13 @@ public class GuiClickMeSettings extends GuiSettings
     @Override
     public void onClick(Player player, ItemStack stack, String action, ClickType clickType)
     {
-        super.onClick(player, stack, action, clickType);
-
         if(action.equals("back"))
         {
-            Hub.getInstance().getGuiManager().openGui(player, new GuiSettings(0));
+            Hub.getInstance().getGuiManager().openGui(player, new GuiSettings(1));
+        }
+        else
+        {
+            super.onClick(player, stack, action, clickType);
         }
     }
 }

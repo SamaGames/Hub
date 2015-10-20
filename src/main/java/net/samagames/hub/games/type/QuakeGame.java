@@ -145,4 +145,10 @@ public class QuakeGame extends AbstractGame
     {
         return false;
     }
+
+    @Override
+    public boolean isNew()
+    {
+        return false;
+    }
 }

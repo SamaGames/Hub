@@ -30,7 +30,7 @@ public class GuiSettings extends AbstractGui
     @Override
     public void update(Player player)
     {
-        if (this.page == 0)
+        if (this.page == 1)
         {
             this.drawSetting(player, "players", "Joueurs", new ItemStack(Material.SKULL_ITEM, 1, (short) SkullType.PLAYER.ordinal()), 10, new String[] {
                     ChatColor.GRAY + "Quand cette option est activée, vous verrez",
@@ -75,7 +75,7 @@ public class GuiSettings extends AbstractGui
                     ChatColor.GRAY + "les hubs."
             });
         }
-        else if (this.page == 1)
+        else if (this.page == 2)
         {
             this.drawSetting(player, "interactions", "Intéractions", new ItemStack(Material.COOKIE, 1), 10, new String[] {
                     ChatColor.GRAY + "Quand cette option est activée, les",
@@ -93,12 +93,12 @@ public class GuiSettings extends AbstractGui
                     ChatColor.GRAY + "clic-gauche sur ceux-ci."
             });
         }
+        
+        if(this.page > 1)
+            this.setSlotData(ChatColor.YELLOW + "« Page " + (this.page - 1), Material.PAPER, this.inventory.getSize() - 9, null, "page_back");
 
-        if(this.page == 1)
-            this.setSlotData(ChatColor.YELLOW + "« Page " + (this.page - 1), Material.REDSTONE, this.inventory.getSize() - 9, null, "page_back");
-
-        if(this.page == 0)
-            this.setSlotData(ChatColor.YELLOW + "Page " + (this.page + 1) + " »", Material.REDSTONE, this.inventory.getSize() - 1, null, "page_next");
+        if(this.page < 2)
+            this.setSlotData(ChatColor.YELLOW + "Page " + (this.page + 1) + " »", Material.PAPER, this.inventory.getSize() - 1, null, "page_next");
 
         this.setSlotData(GuiUtils.getBackItem(), 40, "back");
     }

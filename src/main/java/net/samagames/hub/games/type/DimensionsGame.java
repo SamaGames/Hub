@@ -147,4 +147,10 @@ public class DimensionsGame extends AbstractGame
     {
         return false;
     }
+
+    @Override
+    public boolean isNew()
+    {
+        return false;
+    }
 }

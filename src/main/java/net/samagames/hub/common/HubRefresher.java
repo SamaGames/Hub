@@ -27,19 +27,23 @@ public class HubRefresher implements Runnable
     {
         Jedis jedis = SamaGamesAPI.get().getBungeeResource();
 
-        try{
+        try
+        {
             JsonHub thisHub = new JsonHub();
             thisHub.setHubNumber(Integer.parseInt(SamaGamesAPI.get().getServerName().split("_")[1]));
             thisHub.setConnectedPlayers(Bukkit.getOnlinePlayers().size());
             Bukkit.getOnlinePlayers().forEach(thisHub::addConnectedPlayer);
 
             String thisHubJson = new Gson().toJson(thisHub);
-            try{
-                jedis.hdel("hubs_connected", SamaGamesAPI.get().getServerName());
-            }catch(Exception e)
-            { /* We don't care */}
 
-            jedis.hset("hubs_connected", SamaGamesAPI.get().getServerName(), thisHubJson);
+            try
+            {
+                jedis.hdel("hubs_connected", SamaGamesAPI.get().getServerName());
+            }
+            catch(Exception e) {}
+
+            if(jedis.hexists("hubs_connected", SamaGamesAPI.get().getServerName()))
+                jedis.hset("hubs_connected", SamaGamesAPI.get().getServerName(), thisHubJson);
 
             Map<String, String> redisHubs = jedis.hgetAll("hubs_connected");
             HashMap<Integer, String> hubsList = new HashMap<>();
@@ -55,10 +59,13 @@ public class HubRefresher implements Runnable
                 JsonHub jsonHub = new Gson().fromJson(jsonHubString, JsonHub.class);
                 this.hubs.add(jsonHub);
             }
-        }catch(Exception e)
+        }
+        catch(Exception e)
         {
             e.printStackTrace();
-        }finally {
+        }
+        finally
+        {
             jedis.close();
         }
 

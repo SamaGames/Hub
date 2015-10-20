@@ -75,4 +75,10 @@ public class ArcadeGame extends AbstractGame
     {
         return false;
     }
+
+    @Override
+    public boolean isNew()
+    {
+        return true;
+    }
 }
