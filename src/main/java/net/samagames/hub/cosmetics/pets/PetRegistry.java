@@ -88,13 +88,13 @@ public class PetRegistry extends AbstractCosmeticRegistry<PetCosmetic>
                 "Restes de Findus, notre fidèle",
                 "destrier... RIP :'("
         });
-        brownHorsePet.permissionNeeded("pet.skeletonhorse");
+        skeletonHorsePet.permissionNeeded("pet.skeletonhorse");
 
         PetWhiteHorse whiteHorsePet = new PetWhiteHorse("whitehorse", "Cheval Blanc", new ItemStack(Material.MONSTER_EGG, 1, EntityType.HORSE.getTypeId()), new String[] {
                 "Plus blanc que blanc, notre fidèle",
                 "destrier tient à sa réputation !"
         });
-        brownHorsePet.buyableWithStars(2100);
+        whiteHorsePet.buyableWithStars(2100);
 
         PetZombieHorse zombieHorsePet = new PetZombieHorse("zombiehorse", "Cheval Zombie", new ItemStack(Material.MONSTER_EGG, 1, EntityType.HORSE.getTypeId()), new String[] {
                 "Notice d'utilisation :",
