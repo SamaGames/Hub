@@ -24,6 +24,7 @@ public class GameSign
     private final ChatColor color;
     private final String template;
     private final BukkitTask updateTask;
+    private boolean isMaintenance;
 
     private int scrollIndex = 0;
     private int scrollVector = +1;
@@ -49,9 +50,14 @@ public class GameSign
         this.updateTask = Bukkit.getScheduler().runTaskTimerAsynchronously(Hub.getInstance(), this::update, 20L, 20L);
     }
 
+    public void onDelete()
+    {
+        this.updateTask.cancel();
+    }
+
     public void update()
     {
-        if(this.game.isMaintenance())
+        if(this.isMaintenance)
         {
             this.sign.setLine(0, "");
             this.sign.setLine(1, ChatColor.DARK_RED + "Jeu en");
@@ -96,7 +102,7 @@ public class GameSign
 
     public void scrollMapName()
     {
-        if(this.game.isMaintenance())
+        if(this.isMaintenance)
             return;
 
         if(this.map.length() <= 10)
@@ -129,7 +135,7 @@ public class GameSign
 
     public void click(Player player)
     {
-        if(this.game.isMaintenance())
+        if(this.isMaintenance)
         {
             player.sendMessage(ChatColor.RED + "Ce jeu est actuellement en maintenance.");
             return;
@@ -166,21 +172,6 @@ public class GameSign
         player.sendMessage(ChatColor.GOLD + "----------------------------------------");
     }
 
-    public String getTemplate()
-    {
-        return template;
-    }
-
-    public String getMap()
-    {
-        return map;
-    }
-
-    public ChatColor getColor()
-    {
-        return color;
-    }
-
     public void setPlayerPerGame(int playerPerGame)
     {
         this.playerPerGame = playerPerGame;
@@ -196,8 +187,29 @@ public class GameSign
         this.totalPlayerOnServers = totalPlayerOnServers;
     }
 
-    public void onDelete()
+    public void setMaintenance(boolean isMaintenance)
     {
-        updateTask.cancel();
+        this.isMaintenance = isMaintenance;
+        this.update();
+    }
+
+    public String getTemplate()
+    {
+        return this.template;
+    }
+
+    public String getMap()
+    {
+        return this.map;
+    }
+
+    public ChatColor getColor()
+    {
+        return this.color;
+    }
+
+    public boolean isMaintenance()
+    {
+        return this.isMaintenance;
     }
 }

@@ -42,7 +42,7 @@ public class GuiStalker2000 extends AbstractGui
         boolean canSeeServer = SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "hub.stalker.view");
 
         int[] baseSlots = { 10, 11, 12, 13, 14, 15, 16 };
-        int line = 1;
+        int line = 0;
         int slot = 0;
 
         int i = 0;
@@ -106,7 +106,7 @@ public class GuiStalker2000 extends AbstractGui
             headMeta.setLore(lores);
             head.setItemMeta(headMeta);
 
-            this.setSlotData(head, baseSlots[slot] * line, "server:" + username);
+            this.setSlotData(head, baseSlots[slot] + (9 * line), "server:" + username);
             slot++;
 
             if (slot == baseSlots.length)

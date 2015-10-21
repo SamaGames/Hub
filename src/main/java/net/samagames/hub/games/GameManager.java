@@ -67,24 +67,28 @@ public class GameManager extends AbstractManager
             @Override
             public void call(QueueInfosUpdatePacket packet)
             {
-                Player player = Bukkit.getPlayer(packet.getPlayer().getUUID());
+                try{
+                    Player player = Bukkit.getPlayer(packet.getPlayer().getUUID());
 
-                if (!packet.isSuccess() && (packet.getErrorMessage() != null && !packet.getErrorMessage().isEmpty()))
-                {
-                    player.sendRawMessage(packet.getErrorMessage());
-                    return;
-                }
+                    if (!packet.isSuccess() && (packet.getErrorMessage() != null && !packet.getErrorMessage().isEmpty()))
+                    {
+                        player.sendRawMessage(packet.getErrorMessage());
+                        return;
+                    }
 
-                if(player != null)
+                    if(player != null)
+                    {
+                        if(packet.getType().equals(QueueInfosUpdatePacket.Type.ADD))
+                        {
+                            player.sendMessage(ChatColor.GOLD + "- " + ChatColor.GREEN + "Ajouté à la queue " + ChatColor.GOLD + packet.getGame() +  ChatColor.GREEN + " sur la map " + ChatColor.GOLD + packet.getMap() + ChatColor.GREEN + " !");
+                        }
+                        else
+                        {
+                            player.sendMessage(ChatColor.GOLD + "- " +  ChatColor.RED + "Retiré de la queue " + ChatColor.GOLD + packet.getGame() +  ChatColor.RED + " sur la map " + ChatColor.GOLD + packet.getMap() + ChatColor.GREEN + " !");
+                        }
+                    }
+                }catch(Exception e)
                 {
-                    if(packet.getType().equals(QueueInfosUpdatePacket.Type.ADD))
-                    {
-                        player.sendMessage(ChatColor.GREEN + "Vous avez été ajouté à la queue du jeu " + ChatColor.GOLD + packet.getGame() +  ChatColor.GREEN + " sur la map " + ChatColor.GOLD + packet.getMap() + ChatColor.GREEN + " !");
-                    }
-                    else
-                    {
-                        player.sendMessage(ChatColor.GREEN + "Vous avez été retiré de la queue du jeu " + ChatColor.GOLD + packet.getGame() +  ChatColor.GREEN + " sur la map " + ChatColor.GOLD + packet.getMap() + ChatColor.GREEN + " !");
-                    }
                 }
             }
         });
