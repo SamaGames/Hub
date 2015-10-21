@@ -6,10 +6,7 @@ import net.samagames.hub.common.hydroconnect.packets.queues.QueueInfosUpdatePack
 import net.samagames.hub.common.hydroconnect.utils.PacketCallBack;
 import net.samagames.hub.common.managers.AbstractManager;
 import net.samagames.hub.games.type.*;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -81,11 +78,19 @@ public class GameManager extends AbstractManager
                     {
                         if(packet.getType().equals(QueueInfosUpdatePacket.Type.ADD))
                         {
-                            player.sendMessage(ChatColor.GOLD + "- " + ChatColor.GREEN + "Ajouté à la queue " + ChatColor.GOLD + packet.getGame() +  ChatColor.GREEN + " sur la map " + ChatColor.GOLD + packet.getMap() + ChatColor.GREEN + " !");
+                            player.playSound(player.getLocation(), Sound.NOTE_PLING, 1.0F, 1.0F);
+
+                            player.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
+                            player.sendMessage(ChatColor.GREEN + "Ajouté à la queue " + ChatColor.GOLD + packet.getGame() +  ChatColor.GREEN + " sur la map " + ChatColor.GOLD + packet.getMap() + ChatColor.GREEN + " !");
+                            player.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
                         }
                         else
                         {
-                            player.sendMessage(ChatColor.GOLD + "- " +  ChatColor.RED + "Retiré de la queue " + ChatColor.GOLD + packet.getGame() +  ChatColor.RED + " sur la map " + ChatColor.GOLD + packet.getMap() + ChatColor.GREEN + " !");
+                            player.playSound(player.getLocation(), Sound.NOTE_PLING, 1.0F, 1.0F);
+
+                            player.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
+                            player.sendMessage(ChatColor.RED + "Retiré de la queue " + ChatColor.GOLD + packet.getGame() + ChatColor.RED + " sur la map " + ChatColor.GOLD + packet.getMap() + ChatColor.GREEN + " !");
+                            player.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
                         }
                     }
                 }
