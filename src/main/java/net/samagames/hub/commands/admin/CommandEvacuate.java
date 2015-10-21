@@ -30,7 +30,7 @@ public class CommandEvacuate extends AbstractCommand
             @Override
             public void run()
             {
-                if (this.timer == 60 || this.timer == 30 || (this.timer <= 10 && this.timer > 0))
+                if (this.timer == 60 || this.timer == 30 || this.timer == 10 || (this.timer <= 5 && this.timer > 0))
                     Bukkit.broadcastMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "Votre hub va redémarrer dans " + ChatColor.AQUA + ChatColor.BOLD + this.timer + " seconde" + (this.timer > 1 ? "s" : ""));
 
                 Bukkit.getOnlinePlayers().stream().filter(p -> this.timer > 0).forEach(p ->

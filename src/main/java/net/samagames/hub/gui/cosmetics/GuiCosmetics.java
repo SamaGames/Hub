@@ -1,5 +1,6 @@
 package net.samagames.hub.gui.cosmetics;
 
+import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import net.samagames.hub.gui.AbstractGui;
 import net.samagames.hub.utils.GuiUtils;
@@ -75,7 +76,13 @@ public class GuiCosmetics extends AbstractGui
                 Hub.getInstance().getGuiManager().openGui(player, new GuiCosmeticsCategory<>("Gadgets", Hub.getInstance().getCosmeticManager().getGadgetManager(), false));
                 break;
             case "jukebox":
-                Hub.getInstance().getGuiManager().openGui(player, new GuiJukebox());
+                Bukkit.getScheduler().runTaskAsynchronously(Hub.getInstance(), () ->
+                {
+                    if(SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "netjoin.vip"))
+                        Hub.getInstance().getGuiManager().openGui(player, new GuiJukebox());
+                    else
+                        player.sendMessage(ChatColor.RED + "Vous devez être " + ChatColor.GREEN + "VIP" + ChatColor.RED + " pour utiliser le Jukebox !");
+                });
                 break;
             case "back":
                 Hub.getInstance().getGuiManager().closeGui(player);
