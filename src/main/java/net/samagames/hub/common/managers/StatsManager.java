@@ -20,7 +20,7 @@ public class StatsManager extends AbstractManager
         super(hub);
         this.leaderboards = new HashMap<>();
 
-        hub.getScheduledExecutorService().scheduleAtFixedRate(this::reloadStats, 0L, 60 * 3, TimeUnit.SECONDS);
+        //hub.getScheduledExecutorService().scheduleAtFixedRate(this::reloadStats, 0L, 60 * 3, TimeUnit.SECONDS);
     }
 
     public void reloadStats()
