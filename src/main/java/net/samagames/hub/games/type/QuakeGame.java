@@ -111,12 +111,12 @@ public class QuakeGame extends AbstractGame
                 "Lancez des grenades explosives !"
         });
 
-        grenadeItem.addDefault("1 Grenade");
-        grenadeItem.addLevel(600, "2 Grenades", "fragrenade-1");
-        grenadeItem.addLevel(2000, "3 Grenades", "fragrenade-2");
-        grenadeItem.addLevel(5000, "4 Grenades", "fragrenade-3");
-        grenadeItem.addLevel(10000, "5 Grenades", "fragrenade-4");
-        grenadeItem.addLevel(20000, "5 Grenades", "fragrenade-5");
+        grenadeItem.addDefault("0 Grenade");
+        grenadeItem.addLevel(800, "1 Grenades", "fragrenade-1");
+        grenadeItem.addLevel(4000, "2 Grenades", "fragrenade-2");
+        grenadeItem.addLevel(8000, "3 Grenades", "fragrenade-3");
+        grenadeItem.addLevel(20000, "4 Grenades", "fragrenade-4");
+        grenadeItem.addLevel(35000, "5 Grenades", "fragrenade-5");
 
         parentCategory.addContent(grenadeItem);
 

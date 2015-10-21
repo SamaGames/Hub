@@ -53,7 +53,7 @@ public class DisguiseRegistry extends AbstractCosmeticRegistry<DisguiseCosmetic>
                 "Terrée dans les mineshafts, vous terrorisez les ",
                 "joueurs par la menace de votre morsure..."
         }, DisguiseType.CAVE_SPIDER);
-        caveSpiderDisguise.buyableWithStars(350);
+        caveSpiderDisguise.buyableWithStars(1100);
 
         DisguiseCosmetic rabbitDisguise = new DisguiseCosmetic("rabbit", "Lapin", new ItemStack(Material.MONSTER_EGG, 1, EntityType.RABBIT.getTypeId()), new String[] {
                 "Devenez un petit lapin trop mignon !"
@@ -81,7 +81,7 @@ public class DisguiseRegistry extends AbstractCosmeticRegistry<DisguiseCosmetic>
                 "Vous connaissez le dicton :",
                 "\"Tout est bon dans le cochon !\""
         }, DisguiseType.PIG);
-        pigDisguise.buyableWithStars(1500);
+        pigDisguise.buyableWithCoins(50000);
 
         DisguiseCosmetic sheepDisguise = new DisguiseCosmetic("sheep", "Mouton", new ItemStack(Material.MONSTER_EGG, 1, EntityType.SHEEP.getTypeId()), new String[] {
                 "Faites attention à ceux qui",

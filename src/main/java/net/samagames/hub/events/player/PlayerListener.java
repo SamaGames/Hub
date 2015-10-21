@@ -36,8 +36,11 @@ public class PlayerListener implements Listener
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event)
     {
-        if (event.getPlayer().getLocation().subtract(0.0D, 1.0D, 0.0D).getBlock().getType() == Material.SLIME_BLOCK)
-            event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 100, 10));
+        if(event.getFrom().getBlockX() != event.getTo().getBlockX() && event.getFrom().getBlockY() != event.getTo().getBlockY() && event.getFrom().getBlockZ() != event.getTo().getBlockZ())
+        {
+            if (event.getPlayer().getLocation().subtract(0.0D, 1.0D, 0.0D).getBlock().getType() == Material.SLIME_BLOCK)
+                event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 100, 10));
+        }
     }
 
     @EventHandler

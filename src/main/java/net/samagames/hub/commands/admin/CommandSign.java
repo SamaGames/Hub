@@ -82,9 +82,9 @@ public class CommandSign extends AbstractCommand
 
     private void maintenanceSigns(Player player, String[] args)
     {
-        if(args.length < 3)
+        if(args.length < 4)
         {
-            player.sendMessage(ChatColor.RED + "Usage: /sign maintenance <game> <template>");
+            player.sendMessage(ChatColor.RED + "Usage: /sign maintenance <game> <template> <true/false>");
             return;
         }
 
@@ -107,12 +107,12 @@ public class CommandSign extends AbstractCommand
             return;
         }
 
-        Jedis jedis = SamaGamesAPI.get().getBungeeResource();
-        jedis.set("hub:maintenance:" + game + ":" + template, String.valueOf(!gameSign.isMaintenance()));
-        jedis.close();
+        boolean flag = Boolean.valueOf(args[3]);
 
-        gameSign.setMaintenance(!gameSign.isMaintenance());
-        SamaGamesAPI.get().getPubSub().send("maintenanceSignChannel", game + ":" + template + ":" + !gameSign.isMaintenance());
+        Jedis jedis = SamaGamesAPI.get().getBungeeResource();
+        jedis.set("hub:maintenance:" + game + ":" + template, String.valueOf(flag));
+        jedis.publish("maintenanceSignChannel", game + ":" + template + ":" + String.valueOf(flag));
+        jedis.close();
     }
 
     private void listSigns(Player player)

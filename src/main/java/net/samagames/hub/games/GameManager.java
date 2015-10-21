@@ -89,7 +89,7 @@ public class GameManager extends AbstractManager
                         }
                     }
                 }
-                catch(Exception e) {}
+                catch(Exception ignored) {}
             }
         });
     }
