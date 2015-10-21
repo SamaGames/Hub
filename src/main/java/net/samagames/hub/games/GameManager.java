@@ -79,11 +79,11 @@ public class GameManager extends AbstractManager
                 {
                     if(packet.getType().equals(QueueInfosUpdatePacket.Type.ADD))
                     {
-                        player.sendMessage(ChatColor.GREEN + "Vous avez été ajouté à la queue du jeu " + ChatColor.GOLD + packet.getGame() +  ChatColor.GREEN + " sur la map " + ChatColor.GOLD + packet.getMap() + ChatColor.GREEN + " !");
+                        player.sendMessage(ChatColor.GOLD + "- " + ChatColor.GREEN + "Ajouté à la queue " + ChatColor.GOLD + packet.getGame() +  ChatColor.GREEN + " sur la map " + ChatColor.GOLD + packet.getMap() + ChatColor.GREEN + " !");
                     }
                     else
                     {
-                        player.sendMessage(ChatColor.GREEN + "Vous avez été retiré de la queue du jeu " + ChatColor.GOLD + packet.getGame() +  ChatColor.GREEN + " sur la map " + ChatColor.GOLD + packet.getMap() + ChatColor.GREEN + " !");
+                        player.sendMessage(ChatColor.GOLD + "- " +  ChatColor.RED + "Retiré de la queue " + ChatColor.GOLD + packet.getGame() +  ChatColor.RED + " sur la map " + ChatColor.GOLD + packet.getMap() + ChatColor.GREEN + " !");
                     }
                 }
             }
