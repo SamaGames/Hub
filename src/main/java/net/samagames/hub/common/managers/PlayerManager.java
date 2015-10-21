@@ -36,7 +36,7 @@ public class PlayerManager extends AbstractManager
 
     public void handleLogin(Player player)
     {
-        this.updateSettings(player, false, false, true, true);
+        this.updateSettings(player, true, true, true, true);
         this.hub.getServer().getScheduler().runTaskLaterAsynchronously(this.hub, () -> this.updateHiders(player), 20L);
     }
 
@@ -52,24 +52,24 @@ public class PlayerManager extends AbstractManager
         boolean chatOnSetting = SamaGamesAPI.get().getSettingsManager().isEnabled(player.getUniqueId(), "chat", true);
         boolean jukeboxSetting = SamaGamesAPI.get().getSettingsManager().isEnabled(player.getUniqueId(), "jukebox", true);
 
-        if (!playerOnSetting)
+        if (!playerOnSetting && playersMessage)
         {
             Bukkit.getServer().getScheduler().runTask(hub, () -> Bukkit.getOnlinePlayers().stream().filter(p -> !SamaGamesAPI.get().getPermissionsManager().hasPermission(p, "hub.announce") && !SamaGamesAPI.get().getFriendsManager().areFriends(player.getUniqueId(), p.getUniqueId())).forEach(player::hidePlayer));
 
             this.addHider(player);
 
-            if (!isLogin || playersMessage)
+            if (!isLogin)
                 player.sendMessage(ChatColor.GOLD + "Vous avez désactivé les joueurs. Vous ne verrez donc aucun joueur excepté les membres de l'équipe.");
         }
-        else
+        else if (playersMessage)
         {
             Bukkit.getOnlinePlayers().forEach(player::showPlayer);
 
-            if (!isLogin || chatMessage)
+            if (!isLogin)
                 player.sendMessage(ChatColor.GOLD + "Vous avez activé les joueurs. Vous verrez donc tout les joueurs.");
         }
 
-        if (!chatOnSetting)
+        if (!chatOnSetting && chatMessage)
         {
             Hub.getInstance().getChatManager().disableChatFor(player);
 
@@ -94,7 +94,11 @@ public class PlayerManager extends AbstractManager
 
     public void updateHiders(Player newConnected)
     {
-        this.hiders.stream().filter(hider -> !hider.equals(newConnected.getUniqueId())).filter(hider -> !SamaGamesAPI.get().getPermissionsManager().hasPermission(newConnected, "hub.announce") && !SamaGamesAPI.get().getFriendsManager().areFriends(newConnected.getUniqueId(), hider)).forEach(hider -> Bukkit.getScheduler().runTask(Hub.getInstance(), () -> Bukkit.getPlayer(hider).hidePlayer(newConnected)));
+        try
+        {
+            this.hiders.stream().filter(hider -> !hider.equals(newConnected.getUniqueId())).filter(hider -> !SamaGamesAPI.get().getPermissionsManager().hasPermission(newConnected, "hub.announce") && !SamaGamesAPI.get().getFriendsManager().areFriends(newConnected.getUniqueId(), hider)).forEach(hider -> Bukkit.getScheduler().runTask(Hub.getInstance(), () -> Bukkit.getPlayer(hider).hidePlayer(newConnected)));
+        }
+        catch (Exception ignored) {}
     }
 
     public void removeSelection(Player player)

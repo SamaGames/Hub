@@ -2,6 +2,8 @@ package net.samagames.hub.common.receivers;
 
 import net.samagames.api.pubsub.IPacketsReceiver;
 import net.samagames.hub.Hub;
+import net.samagames.hub.games.AbstractGame;
+import net.samagames.hub.games.sign.GameSign;
 
 public class MaintenanceListener implements IPacketsReceiver
 {
@@ -14,6 +16,16 @@ public class MaintenanceListener implements IPacketsReceiver
         String template = data[1];
         boolean flag = Boolean.valueOf(data[2]);
 
-        Hub.getInstance().getGameManager().getGameByIdentifier(game).getGameSignByTemplate(template).setMaintenance(flag);
+        AbstractGame gameObject = Hub.getInstance().getGameManager().getGameByIdentifier(game);
+
+        if(gameObject == null)
+            return;
+
+        GameSign sign = gameObject.getGameSignByTemplate(template);
+
+        if(sign == null)
+            return;
+
+        sign.setMaintenance(flag);
     }
 }

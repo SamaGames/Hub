@@ -64,7 +64,7 @@ public class GameSign
             this.sign.setLine(2, ChatColor.DARK_RED + "maintenance !");
             this.sign.setLine(3, "");
 
-            updateSign();
+            this.updateSign();
             return;
         }
 
@@ -75,7 +75,7 @@ public class GameSign
         this.sign.setLine(2, this.playerWaitFor + "" + ChatColor.RESET + " en attente");
         this.sign.setLine(3, this.totalPlayerOnServers + "" + ChatColor.RESET + " en jeu");
 
-        updateSign();
+        this.updateSign();
     }
 
     public void updateSign()
@@ -97,7 +97,7 @@ public class GameSign
     public void updateMapName()
     {
         this.sign.setLine(1, this.color + "» " + ChatColor.BOLD + this.scrolledMapName + ChatColor.RESET + this.color + " «");
-        updateSign();
+        this.updateSign();
     }
 
     public void scrollMapName()

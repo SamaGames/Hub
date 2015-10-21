@@ -29,7 +29,12 @@ public class GuiManager extends AbstractManager
 
     public void closeGui(Player player)
     {
-        player.closeInventory();
+        try
+        {
+            player.closeInventory();
+        }
+        catch (Exception ignored) {}
+
         this.removeClosedGui(player);
     }
 
