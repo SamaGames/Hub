@@ -67,7 +67,8 @@ public class GameManager extends AbstractManager
             @Override
             public void call(QueueInfosUpdatePacket packet)
             {
-                try{
+                try
+                {
                     Player player = Bukkit.getPlayer(packet.getPlayer().getUUID());
 
                     if (!packet.isSuccess() && (packet.getErrorMessage() != null && !packet.getErrorMessage().isEmpty()))
@@ -87,9 +88,8 @@ public class GameManager extends AbstractManager
                             player.sendMessage(ChatColor.GOLD + "- " +  ChatColor.RED + "Retiré de la queue " + ChatColor.GOLD + packet.getGame() +  ChatColor.RED + " sur la map " + ChatColor.GOLD + packet.getMap() + ChatColor.GREEN + " !");
                         }
                     }
-                }catch(Exception e)
-                {
                 }
+                catch(Exception e) {}
             }
         });
     }

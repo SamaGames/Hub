@@ -163,7 +163,7 @@ public class GameSign
     {
         player.sendMessage(ChatColor.GOLD + "----------------------------------------");
         player.sendMessage(ChatColor.GOLD + "Informations du panneau de jeu :");
-        player.sendMessage(ChatColor.GOLD + "> " + ChatColor.AQUA + "Template : " + this.template);
+        player.sendMessage(ChatColor.GOLD + "> " + ChatColor.AQUA + "Template : " + ChatColor.GREEN + this.template);
         player.sendMessage(ChatColor.GOLD + "> " + ChatColor.AQUA + "Jeu : " + ChatColor.GREEN + this.game.getCodeName());
         player.sendMessage(ChatColor.GOLD + "> " + ChatColor.AQUA + "Map : " + ChatColor.GREEN + this.map);
         player.sendMessage(ChatColor.GOLD + "> " + ChatColor.AQUA + "Joueurs par jeu : " + ChatColor.GREEN + this.playerPerGame);
