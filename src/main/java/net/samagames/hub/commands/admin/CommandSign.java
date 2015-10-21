@@ -110,6 +110,8 @@ public class CommandSign extends AbstractCommand
         Jedis jedis = SamaGamesAPI.get().getBungeeResource();
         jedis.set("hub:maintenance:" + game + ":" + template, String.valueOf(!gameSign.isMaintenance()));
         jedis.close();
+
+        gameSign.setMaintenance(!gameSign.isMaintenance());
         SamaGamesAPI.get().getPubSub().send("maintenanceSignChannel", game + ":" + !gameSign.isMaintenance());
     }
 

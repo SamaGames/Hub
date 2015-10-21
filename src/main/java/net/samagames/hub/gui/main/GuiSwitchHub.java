@@ -40,7 +40,7 @@ public class GuiSwitchHub extends AbstractGui
     {
         ArrayList<JsonHub> hubs = Hub.getInstance().getHubRefresher().getHubs();
         int[] baseSlots = { 10, 11, 12, 13, 14, 15, 16 };
-        int line = 1;
+        int line = 0;
         int slot = 0;
 
         this.inventory.clear();
@@ -61,7 +61,7 @@ public class GuiSwitchHub extends AbstractGui
                 break;
             }
 
-            this.setSlotData(this.getHubItem(hub), baseSlots[slot] * line, "Hub_" + hub.getHubNumber());
+            this.setSlotData(this.getHubItem(hub), baseSlots[slot] + (9 * line), "Hub_" + hub.getHubNumber());
             slot++;
 
             if(slot == baseSlots.length)
