@@ -86,7 +86,7 @@ public class PetManager extends AbstractCosmeticManager<PetCosmetic>
         if (!logout)
         {
             cosmeticManager.resetLevel(player, "pet");
-            SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).set("settings.cosmetics.pet.current", "");
+            Bukkit.getScheduler().runTaskAsynchronously(hub, () -> SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).set("settings.cosmetics.pet.current", ""));
             player.sendMessage(ChatColor.GREEN + "Votre animal disparait dans l'ombre...");
         }
     }

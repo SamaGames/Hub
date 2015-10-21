@@ -103,14 +103,13 @@ public class PlayerManager extends AbstractManager
 
     public void updateHiders(Player newConnected)
     {
-        try
+        Bukkit.getScheduler().runTaskAsynchronously(this.hub, () ->
         {
             for (UUID uuid : this.hiders)
                 if(!uuid.equals(newConnected))
                     if (!SamaGamesAPI.get().getPermissionsManager().hasPermission(newConnected, "hub.announce") && !SamaGamesAPI.get().getFriendsManager().areFriends(newConnected.getUniqueId(), uuid))
                         Bukkit.getScheduler().runTask(this.hub, () -> Bukkit.getPlayer(uuid).hidePlayer(newConnected));
-        }
-        catch (Exception ignored) {}
+        });
     }
 
     public void removeSelection(Player player)
