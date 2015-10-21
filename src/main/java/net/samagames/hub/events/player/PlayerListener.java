@@ -177,7 +177,8 @@ public class PlayerListener implements Listener
             {
                 Hub.getInstance().getCosmeticManager().getPetManager().disableCosmetic(player, false);
             }
-        } else if (player.isInsideVehicle())
+        }
+        else if (player.isInsideVehicle())
         {
             final Entity vehicle = player.getVehicle();
 
@@ -240,7 +241,8 @@ public class PlayerListener implements Listener
                 }
 
                 Hub.getInstance().getCosmeticManager().getGadgetManager().getPlayerGadget((Player) event.getDamager()).handleInteraction(event.getDamager(), event.getEntity());
-            } else if (Hub.getInstance().getCosmeticManager().getGadgetManager().hasGadget((Player) event.getEntity()))
+            }
+            else if (Hub.getInstance().getCosmeticManager().getGadgetManager().hasGadget((Player) event.getEntity()))
             {
                 Hub.getInstance().getCosmeticManager().getGadgetManager().getPlayerGadget((Player) event.getEntity()).handleInteraction(event.getDamager(), event.getEntity());
             }
@@ -257,7 +259,8 @@ public class PlayerListener implements Listener
                     Hub.getInstance().getGuiManager().openGui(player, new GuiClickMe(target));
                 }
             });
-        } else if (event.getDamager() instanceof Player && !(event.getEntity() instanceof Player))
+        }
+        else if (event.getDamager() instanceof Player && !(event.getEntity() instanceof Player))
         {
             if (event.getEntity().hasMetadata("owner-id"))
             {
