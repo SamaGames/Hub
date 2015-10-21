@@ -44,7 +44,7 @@ public class JukeboxRegistry extends AbstractCosmeticRegistry<JukeboxDiskCosmeti
         JukeboxAlbum zeldaAlbum = new JukeboxAlbum("zelda", ChatColor.GREEN + "Zelda", new ItemStack(Material.STAINED_GLASS, 1, (short) 13));
 
         JukeboxDiskCosmetic gerudoValleyDisk = new JukeboxDiskCosmetic(zeldaAlbum, "gerudovalley", ChatColor.GREEN, zeldaAlbum.getSimpleIcon(), NBSDecoder.parse("GerudoValley"));
-        guilesThemeDisk.buyableWithStars(500);
+        gerudoValleyDisk.buyableWithStars(500);
 
         JukeboxDiskCosmetic windmillDisk = new JukeboxDiskCosmetic(zeldaAlbum, "windmill", ChatColor.GREEN, zeldaAlbum.getSimpleIcon(), NBSDecoder.parse("Windmill"));
         windmillDisk.buyableWithStars(500);

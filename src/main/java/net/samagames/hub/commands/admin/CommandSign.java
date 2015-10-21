@@ -112,7 +112,7 @@ public class CommandSign extends AbstractCommand
         jedis.close();
 
         gameSign.setMaintenance(!gameSign.isMaintenance());
-        SamaGamesAPI.get().getPubSub().send("maintenanceSignChannel", game + ":" + !gameSign.isMaintenance());
+        SamaGamesAPI.get().getPubSub().send("maintenanceSignChannel", game + ":" + template + ":" + !gameSign.isMaintenance());
     }
 
     private void listSigns(Player player)
