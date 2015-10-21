@@ -99,20 +99,37 @@ public class CommandSign extends AbstractCommand
             return;
         }
 
-        GameSign gameSign = gameObject.getGameSignByTemplate(template);
-
-        if(gameSign == null)
+        if (!template.equals("*"))
         {
-            player.sendMessage(ChatColor.RED + "Template non trouvé :(");
-            return;
+            GameSign gameSign = gameObject.getGameSignByTemplate(template);
+
+            if(gameSign == null)
+            {
+                player.sendMessage(ChatColor.RED + "Template non trouvé :(");
+                return;
+            }
+
+            boolean flag = Boolean.valueOf(args[3]);
+
+            Jedis jedis = SamaGamesAPI.get().getBungeeResource();
+            jedis.set("hub:maintenance:" + game + ":" + template, String.valueOf(flag));
+            jedis.publish("maintenanceSignChannel", game + ":" + template + ":" + String.valueOf(flag));
+            jedis.close();
         }
+        else
+        {
+            boolean flag = Boolean.valueOf(args[3]);
 
-        boolean flag = Boolean.valueOf(args[3]);
+            Jedis jedis = SamaGamesAPI.get().getBungeeResource();
 
-        Jedis jedis = SamaGamesAPI.get().getBungeeResource();
-        jedis.set("hub:maintenance:" + game + ":" + template, String.valueOf(flag));
-        jedis.publish("maintenanceSignChannel", game + ":" + template + ":" + String.valueOf(flag));
-        jedis.close();
+            for (GameSign gameSign : gameObject.getSigns().values())
+            {
+                jedis.set("hub:maintenance:" + game + ":" + gameSign.getTemplate(), String.valueOf(flag));
+                jedis.publish("maintenanceSignChannel", game + ":" + gameSign.getTemplate() + ":" + String.valueOf(flag));
+            }
+
+            jedis.close();
+        }
     }
 
     private void listSigns(Player player)
