@@ -68,8 +68,8 @@ public class UppervoidGame extends AbstractGame
         });
 
         tntStick.addDefault("Basic (2s)");
-        tntStick.addLevel(1500, "ChaosGrabber (1.7s)", "chaosgrabber");
-        tntStick.addLevel(7000, "BladeSpinner (1.5s)", "bladespinner");
+        tntStick.addLevel(30000, "ChaosGrabber (1.7s)", "chaosgrabber");
+        tntStick.addLevel(80000, "BladeSpinner (1.5s)", "bladespinner");
 
         parentCategory.addContent(tntStick);
 

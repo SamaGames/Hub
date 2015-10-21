@@ -37,7 +37,7 @@ public class GadgetRegistry extends AbstractCosmeticRegistry<GadgetCosmetic>
                 "de faire des bonds sur des",
                 "restes de slimes compactés."
         }, TrampoSlimeDisplayer.class, 60);
-        trampoSlimeGadget.buyableWithStars(2500);
+        trampoSlimeGadget.buyableWithStars(3500);
 
         GadgetCosmetic nukeGadget = new GadgetCosmetic("nuke", "Bombe atomique", new ItemStack(Material.TNT, 1), new String[] {
                 ChatColor.MAGIC + "L'avenir du monde" + ChatColor.RESET + ChatColor.GRAY + " meow " + ChatColor.MAGIC + "entre",
@@ -65,7 +65,7 @@ public class GadgetRegistry extends AbstractCosmeticRegistry<GadgetCosmetic>
                 "A vous de prendre le risque !",
                 "Inutile donc Indispensable !"
         }, EnderSwapDisplayer.class, 60);
-        trampoSlimeGadget.buyableWithStars(2500);
+        trampoSlimeGadget.buyableWithStars(2000);
 
         GadgetCosmetic stargateGadget = new GadgetCosmetic("stargate-staff", "Stargate", new ItemStack(Material.ENDER_PORTAL_FRAME, 1), new String[] {
                 "Ce gadget créera une faille spacio-temporelle",
@@ -82,14 +82,14 @@ public class GadgetRegistry extends AbstractCosmeticRegistry<GadgetCosmetic>
         		"Nos chercheurs n'ont jamais réussis à déterminer",
         		"le contenu de ce coffre. Saurez-vous nous aider ?"
         }, AnimalChestDisplayer.class, 60);
-        animalChestGadget.buyableWithStars(3000);
+        animalChestGadget.buyableWithStars(2500);
 
         GadgetCosmetic holyCreeper = new GadgetCosmetic("holycreeper", "Mon ami le Creeper", new ItemStack(Material.SULPHUR, 1), new String[] {
                 "Mais qu'il est mignon ce Creeper !",
                 "Avec un peu de chance vous arriverez à l'apprivoiser...",
                 "Enfin, on espère pour vous !"
         }, HolyCreeperDisplayer.class, 40);
-        holyCreeper.buyableWithStars(1200);
+        holyCreeper.buyableWithStars(1500);
         
         this.registerElement(discoBombGadget);
         this.registerElement(moutMout2000Gadget);
