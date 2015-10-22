@@ -36,11 +36,8 @@ public class PlayerListener implements Listener
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event)
     {
-        if(event.getFrom().getBlockX() != event.getTo().getBlockX() && event.getFrom().getBlockY() != event.getTo().getBlockY() && event.getFrom().getBlockZ() != event.getTo().getBlockZ())
-        {
-            if (event.getPlayer().getLocation().subtract(0.0D, 1.0D, 0.0D).getBlock().getType() == Material.SLIME_BLOCK)
-                event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 100, 10));
-        }
+        if (event.getPlayer().getLocation().subtract(0.0D, 1.0D, 0.0D).getBlock().getType() == Material.SLIME_BLOCK)
+            event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 100, 10));
     }
 
     @EventHandler
@@ -132,7 +129,6 @@ public class PlayerListener implements Listener
     {
         this.onPlayerLeave(event.getPlayer());
     }
-
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerJoin(final PlayerJoinEvent event)
@@ -238,10 +234,12 @@ public class PlayerListener implements Listener
                 }
 
                 Hub.getInstance().getCosmeticManager().getGadgetManager().getPlayerGadget((Player) event.getDamager()).handleInteraction(event.getDamager(), event.getEntity());
+                return;
             }
             else if (Hub.getInstance().getCosmeticManager().getGadgetManager().hasGadget((Player) event.getEntity()))
             {
                 Hub.getInstance().getCosmeticManager().getGadgetManager().getPlayerGadget((Player) event.getEntity()).handleInteraction(event.getDamager(), event.getEntity());
+                return;
             }
 
             Bukkit.getScheduler().runTaskAsynchronously(Hub.getInstance(), () ->
