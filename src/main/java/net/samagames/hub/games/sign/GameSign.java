@@ -141,22 +141,24 @@ public class GameSign
             return;
         }
 
-        UUID partyUUID = SamaGamesAPI.get().getPartiesManager().getPlayerParty(player.getUniqueId());
+        Bukkit.getScheduler().runTaskAsynchronously(Hub.getInstance(), () -> {
+            UUID partyUUID = SamaGamesAPI.get().getPartiesManager().getPlayerParty(player.getUniqueId());
 
-        if(partyUUID == null)
-        {
-            Hub.getInstance().getHydroManager().addPlayerToQueue(player.getUniqueId(), this.template);
-        }
-        else
-        {
-            if(!SamaGamesAPI.get().getPartiesManager().getLeader(partyUUID).equals(player.getUniqueId()))
+            if(partyUUID == null)
             {
-                player.sendMessage(ChatColor.RED + "Vous n'êtes pas le leader, vous ne pouvez pas ajouter votre partie dans une queue.");
-                return;
+                Hub.getInstance().getHydroManager().addPlayerToQueue(player.getUniqueId(), template);
             }
+            else
+            {
+                if(!SamaGamesAPI.get().getPartiesManager().getLeader(partyUUID).equals(player.getUniqueId()))
+                {
+                    player.sendMessage(ChatColor.RED + "Vous n'êtes pas le leader, vous ne pouvez pas ajouter votre partie dans une queue.");
+                    return;
+                }
 
-            Hub.getInstance().getHydroManager().addPartyToQueue(player.getUniqueId(), partyUUID, this.template);
-        }
+                Hub.getInstance().getHydroManager().addPartyToQueue(player.getUniqueId(), partyUUID, template);
+            }
+        });
     }
 
     public void developperClick(Player player)
