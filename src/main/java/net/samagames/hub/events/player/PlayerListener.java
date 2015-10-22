@@ -152,7 +152,7 @@ public class PlayerListener implements Listener
             player.teleport(Hub.getInstance().getPlayerManager().getLobbySpawn());
 
             if (SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "hub.fly"))
-                Bukkit.getScheduler().runTaskAsynchronously(Hub.getInstance(), () -> player.setAllowFlight(true));
+                Bukkit.getScheduler().runTask(Hub.getInstance(), () -> player.setAllowFlight(true));
 
             if (SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "hub.announce"))
                 Bukkit.broadcastMessage(PlayerUtils.getFullyFormattedPlayerName(player) + ChatColor.YELLOW + " a rejoint le hub !");
@@ -313,7 +313,7 @@ public class PlayerListener implements Listener
     public void onPlayerGameModeChangeEvent(PlayerGameModeChangeEvent event)
     {
         if (SamaGamesAPI.get().getPermissionsManager().hasPermission(event.getPlayer(), "hub.fly"))
-            Bukkit.getScheduler().runTaskAsynchronously(Hub.getInstance(), () -> event.getPlayer().setAllowFlight(true));
+            Bukkit.getScheduler().runTask(Hub.getInstance(), () -> event.getPlayer().setAllowFlight(true));
     }
 
     private void onPlayerLeave(final Player player)
