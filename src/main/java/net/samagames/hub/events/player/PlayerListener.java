@@ -133,11 +133,6 @@ public class PlayerListener implements Listener
         this.onPlayerLeave(event.getPlayer());
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
-    public void onPlayerJoin(final AsyncPlayerPreLoginEvent event)
-    {
-        new ServerStatus(SamaGamesAPI.get().getServerName(), "Hub", "Map", Status.IN_GAME, Bukkit.getOnlinePlayers().size(), Bukkit.getMaxPlayers()).sendToHydro();
-    }
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerJoin(final PlayerJoinEvent event)
@@ -149,6 +144,8 @@ public class PlayerListener implements Listener
         player.setFlySpeed(0.2F);
         InventoryUtils.cleanPlayer(player);
         Hub.getInstance().getPlayerManager().getStaticInventory().setInventoryToPlayer(player);
+
+        new ServerStatus(SamaGamesAPI.get().getServerName(), "Hub", "Map", Status.IN_GAME, Bukkit.getOnlinePlayers().size(), Bukkit.getMaxPlayers()).sendToHydro();
 
         Hub.getInstance().getScheduledExecutorService().execute(() ->
         {

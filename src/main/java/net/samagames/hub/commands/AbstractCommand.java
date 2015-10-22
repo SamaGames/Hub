@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 
 public abstract class AbstractCommand implements CommandExecutor
 {
-    private String permission;
+    protected String permission;
 
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] args)
