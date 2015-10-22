@@ -14,9 +14,21 @@ import org.bukkit.entity.Player;
 
 public class CommandEvacuate extends AbstractCommand
 {
+    private boolean lock;
+
+    public CommandEvacuate()
+    {
+        this.lock = false;
+    }
+
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args)
     {
+        if(this.lock)
+            return true;
+
+        this.lock = true;
+
         if(args.length != 1)
         {
             sender.sendMessage(ChatColor.RED + "Usage: /evacuate <Destination>");
