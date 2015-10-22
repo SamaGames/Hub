@@ -193,6 +193,11 @@ public class GameSign
         this.update();
     }
 
+    public Sign getSign()
+    {
+        return this.sign;
+    }
+
     public String getTemplate()
     {
         return this.template;

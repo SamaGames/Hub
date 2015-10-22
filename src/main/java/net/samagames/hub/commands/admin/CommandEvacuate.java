@@ -58,7 +58,7 @@ public class CommandEvacuate extends AbstractCommand
                 {
                     if (this.timer <= 5)
                         p.playSound(p.getLocation(), Sound.BLAZE_DEATH, 0.8F, 1.8F);
-                    else if (this.timer > 10 && this.timer <= 30)
+                    else if (this.timer > 5 && this.timer <= 30)
                         p.playSound(p.getLocation(), Sound.NOTE_PLING, 0.8F, 1.0F);
 
                     if (sender instanceof Player)
