@@ -59,7 +59,8 @@ public class PlayerManager extends AbstractManager
                 @Override
                 public void run() {
                     for (Player p : Bukkit.getOnlinePlayers()) {
-                        if (!SamaGamesAPI.get().getPermissionsManager().hasPermission(p, "hub.announce") && !SamaGamesAPI.get().getFriendsManager().areFriends(player.getUniqueId(), p.getUniqueId())) {
+                        if (!SamaGamesAPI.get().getPermissionsManager().hasPermission(p, "hub.announce")
+                                && !SamaGamesAPI.get().getFriendsManager().areFriends(player.getUniqueId(), p.getUniqueId())) {
                             Bukkit.getScheduler().runTask(hub, () -> player.hidePlayer(p));
                         }
                     }
@@ -73,8 +74,9 @@ public class PlayerManager extends AbstractManager
         }
         else if (playersMessage)
         {
-            Bukkit.getOnlinePlayers().forEach(player::showPlayer);
+            Bukkit.getScheduler().runTask(hub, () -> Bukkit.getOnlinePlayers().forEach(player::showPlayer));
 
+            this.removeHider(player);
             if (!isLogin)
                 player.sendMessage(ChatColor.GOLD + "Vous avez activé les joueurs. Vous verrez donc tout les joueurs.");
         }

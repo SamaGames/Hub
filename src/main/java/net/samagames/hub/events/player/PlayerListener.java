@@ -28,7 +28,9 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.spigotmc.event.entity.EntityDismountEvent;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 public class PlayerListener implements Listener
@@ -102,7 +104,11 @@ public class PlayerListener implements Listener
         if (current != null && current.getPlayedBy().equals(event.getPlayer().getName()))
             event.setFormat(ChatColor.DARK_AQUA + "[" + ChatColor.AQUA + "DJ" + ChatColor.DARK_AQUA + "]" + event.getFormat());
 
-        event.getRecipients().stream().filter(player -> Hub.getInstance().getChatManager().hasChatDisabled(player)).forEach(player -> event.getRecipients().remove(player));
+        List<Player> receivers = new ArrayList<>();
+        receivers.addAll(event.getRecipients());
+        receivers.stream().filter(player -> Hub.getInstance().getChatManager().hasChatDisabled(player)).forEach(player -> {
+            event.getRecipients().remove(player);
+        });
 
         Bukkit.getOnlinePlayers().stream().filter(player -> StringUtils.containsIgnoreCase(event.getMessage(), player.getName())).forEach(player ->
         {
