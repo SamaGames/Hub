@@ -24,8 +24,7 @@ public class CommandEvacuate extends AbstractCommand
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args)
     {
-
-        if(this.permission != null)
+        if(sender instanceof Player)
         {
             if(!hasPermission((Player) sender))
             {
