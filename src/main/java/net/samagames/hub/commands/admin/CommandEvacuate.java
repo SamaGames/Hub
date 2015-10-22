@@ -35,7 +35,7 @@ public class CommandEvacuate extends AbstractCommand
 
                 Bukkit.getOnlinePlayers().stream().filter(p -> this.timer > 0).forEach(p ->
                 {
-                    if (this.timer <= 10)
+                    if (this.timer <= 5)
                         p.playSound(p.getLocation(), Sound.BLAZE_DEATH, 0.8F, 1.8F);
                     else if (this.timer > 10 && this.timer <= 30)
                         p.playSound(p.getLocation(), Sound.NOTE_PLING, 0.8F, 1.0F);
