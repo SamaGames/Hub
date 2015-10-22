@@ -127,6 +127,8 @@ public class GameManager extends AbstractManager
                     pPlayer.hidePlayer(player);
             }
 
+            this.playerHided.addAll(toHide);
+
             for (UUID playerUUID : this.playerHided)
             {
                 Player player = Bukkit.getPlayer(playerUUID);
