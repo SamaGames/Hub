@@ -15,19 +15,20 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Level;
 
 public class GameManager extends AbstractManager
 {
     private final HashMap<String, AbstractGame> games;
-    private final ArrayList<UUID> playerHided;
+    private final CopyOnWriteArrayList<UUID> playerHided;
 
     public GameManager(Hub hub)
     {
         super(hub);
 
         this.games = new HashMap<>();
-        this.playerHided = new ArrayList<>();
+        this.playerHided = new CopyOnWriteArrayList<>();
 
         this.registerGame(new OneWayGame("beta_vip", "VIP", Material.DIAMOND, new Location(this.hub.getHubWorld(), -221.5D, 203.0D, 31.5D, -90.0F, 0.0F)));
 
@@ -110,11 +111,21 @@ public class GameManager extends AbstractManager
             ArrayList<UUID> toHide = new ArrayList<>();
 
             for (AbstractGame game : this.getGames().values())
+            {
                 for (GameSign sign : game.getSigns().values())
+                {
                     for (Entity entity : this.hub.getHubWorld().getNearbyEntities(sign.getSign().getLocation(), 2.0D, 2.0D, 2.0D))
-                        if (entity.getType() == EntityType.PLAYER)
+                    {
+                        if (entity instanceof Player)
+                        {
                             if (!toHide.contains(entity.getUniqueId()))
+                            {
                                 toHide.add(entity.getUniqueId());
+                            }
+                        }
+                    }
+                }
+            }
 
             for (UUID playerUUID : toHide)
             {
@@ -123,8 +134,10 @@ public class GameManager extends AbstractManager
                 if (player == null)
                     continue;
 
-                for (Player pPlayer : Bukkit.getOnlinePlayers())
-                    pPlayer.hidePlayer(player);
+                for (final Player pPlayer : Bukkit.getOnlinePlayers())
+                {
+                    Bukkit.getScheduler().runTask(hub, () -> pPlayer.hidePlayer(player));
+                }
             }
 
             this.playerHided.addAll(toHide);
@@ -143,8 +156,10 @@ public class GameManager extends AbstractManager
                 {
                     this.playerHided.remove(playerUUID);
 
-                    for (Player pPlayer : Bukkit.getOnlinePlayers())
-                        pPlayer.showPlayer(player);
+                    for (final Player pPlayer : Bukkit.getOnlinePlayers())
+                    {
+                        Bukkit.getScheduler().runTask(hub, () -> pPlayer.showPlayer(player));
+                    }
                 }
             }
         }, 20L * 2, 20L * 2);

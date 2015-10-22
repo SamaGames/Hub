@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
 public class PlayerManager extends AbstractManager
@@ -105,10 +106,20 @@ public class PlayerManager extends AbstractManager
     {
         Bukkit.getScheduler().runTaskAsynchronously(this.hub, () ->
         {
-            for (UUID uuid : this.hiders)
-                if(!uuid.equals(newConnected))
-                    if (!SamaGamesAPI.get().getPermissionsManager().hasPermission(newConnected, "hub.announce") && !SamaGamesAPI.get().getFriendsManager().areFriends(newConnected.getUniqueId(), uuid))
-                        Bukkit.getScheduler().runTask(this.hub, () -> Bukkit.getPlayer(uuid).hidePlayer(newConnected));
+            List<UUID> uuidList = new ArrayList<>();
+            uuidList.addAll(this.hiders);
+            for (UUID uuid : uuidList)
+            {
+                Player player = Bukkit.getPlayer(uuid);
+                if(player != null && !player.equals(newConnected))
+                {
+                    if (!SamaGamesAPI.get().getPermissionsManager().hasPermission(newConnected, "hub.announce")
+                            && !SamaGamesAPI.get().getFriendsManager().areFriends(newConnected.getUniqueId(), uuid))
+                    {
+                        Bukkit.getScheduler().runTask(this.hub, () -> player.hidePlayer(newConnected));
+                    }
+                }
+            }
         });
     }
 

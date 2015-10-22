@@ -38,19 +38,22 @@ public class HubRefresher implements Runnable
 
             jedis.hset("hubs_connected", SamaGamesAPI.get().getServerName(), thisHubJson);
 
-            Map<String, String> redisHubs = jedis.hgetAll("hubs_connected");
-            HashMap<Integer, String> hubsList = new HashMap<>();
-
-            for (String hubServerName : redisHubs.keySet())
-                hubsList.put(Integer.parseInt(hubServerName.split("_")[1]), redisHubs.get(hubServerName));
-
-            this.hubs.clear();
-
-            for (int hubNumber : hubsList.keySet())
+            if(jedis.exists("hubs_connected"))
             {
-                String jsonHubString = hubsList.get(hubNumber);
-                JsonHub jsonHub = new Gson().fromJson(jsonHubString, JsonHub.class);
-                this.hubs.add(jsonHub);
+                Map<String, String> redisHubs = jedis.hgetAll("hubs_connected");
+                HashMap<Integer, String> hubsList = new HashMap<>();
+
+                for (String hubServerName : redisHubs.keySet())
+                    hubsList.put(Integer.parseInt(hubServerName.split("_")[1]), redisHubs.get(hubServerName));
+
+                this.hubs.clear();
+
+                for (int hubNumber : hubsList.keySet())
+                {
+                    String jsonHubString = hubsList.get(hubNumber);
+                    JsonHub jsonHub = new Gson().fromJson(jsonHubString, JsonHub.class);
+                    this.hubs.add(jsonHub);
+                }
             }
         }
         catch(Exception e)
