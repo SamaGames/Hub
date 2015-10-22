@@ -14,9 +14,21 @@ import org.bukkit.entity.Player;
 
 public class CommandEvacuate extends AbstractCommand
 {
+    private boolean lock;
+
+    public CommandEvacuate()
+    {
+        this.lock = false;
+    }
+
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args)
     {
+        if(this.lock)
+            return true;
+
+        this.lock = true;
+
         if(args.length != 1)
         {
             sender.sendMessage(ChatColor.RED + "Usage: /evacuate <Destination>");
@@ -30,12 +42,12 @@ public class CommandEvacuate extends AbstractCommand
             @Override
             public void run()
             {
-                if (this.timer == 60 || this.timer == 30 || (this.timer <= 10 && this.timer > 0))
+                if (this.timer == 60 || this.timer == 30 || this.timer == 10 || (this.timer <= 5 && this.timer > 0))
                     Bukkit.broadcastMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "Votre hub va redémarrer dans " + ChatColor.AQUA + ChatColor.BOLD + this.timer + " seconde" + (this.timer > 1 ? "s" : ""));
 
                 Bukkit.getOnlinePlayers().stream().filter(p -> this.timer > 0).forEach(p ->
                 {
-                    if (this.timer <= 10)
+                    if (this.timer <= 5)
                         p.playSound(p.getLocation(), Sound.BLAZE_DEATH, 0.8F, 1.8F);
                     else if (this.timer > 10 && this.timer <= 30)
                         p.playSound(p.getLocation(), Sound.NOTE_PLING, 0.8F, 1.0F);

@@ -28,10 +28,10 @@ public class JukeboxAlbum
         this.disks.add(disk);
         this.cost = 0;
         
-        for(JukeboxDiskCosmetic d : disks)
+        for(JukeboxDiskCosmetic d : this.disks)
             this.cost += d.getStarsCost();
         
-        this.cost -= (500 * ((float)5/100));
+        this.cost -= (500 * ((float) 5 / 100));
     }
 
     public String getIdentifier()
@@ -58,7 +58,15 @@ public class JukeboxAlbum
 
         lores.add("");
         lores.add(ChatColor.AQUA + "▶ Clic gauche pour parcourir l'album");
-        lores.add(ChatColor.GREEN + "▶ Clic droit pour acheter l'album (-5%)");
+
+        int price = 0;
+
+        for(JukeboxDiskCosmetic d : this.disks)
+            price += d.getStarsCost();
+
+        price -= (500 * ((float) 5 / 100));
+
+        lores.add(ChatColor.GREEN + "▶ Clic droit pour acheter l'album pour " + price + " étoiles (-5%)");
 
         stackMeta.setLore(lores);
         stack.setItemMeta(stackMeta);
