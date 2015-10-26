@@ -89,7 +89,7 @@ public class QuakeGame extends AbstractGame
         }, 5000, ironHoe);
         hoes.addContent(goldHoe);
 
-        ShopDependsItem diamondHoe = new ShopDependsItem(this, "hoe", "dimaondhoe", ChatColor.BLUE + "PortalGun", new ItemStack(Material.DIAMOND_HOE, 1), 23, new String[]{
+        ShopDependsItem diamondHoe = new ShopDependsItem(this, "hoe", "diamondhoe", ChatColor.BLUE + "PortalGun", new ItemStack(Material.DIAMOND_HOE, 1), 23, new String[]{
                 ChatColor.DARK_GRAY + "Recharge en " + ChatColor.GOLD + "1.4" + ChatColor.DARK_GRAY + " secondes."
         }, 20000, goldHoe);
         hoes.addContent(diamondHoe);
