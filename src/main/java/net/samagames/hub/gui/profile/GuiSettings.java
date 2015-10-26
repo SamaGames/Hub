@@ -23,17 +23,14 @@ public class GuiSettings extends AbstractGui
     @Override
     public void display(Player player)
     {
-    	Thread t = new Thread(){
-    		@Override
-			public void run()
-			{
-				inventory = Bukkit.createInventory(null, 45, "Paramètres (Page " + page + ")");
-				update(player);
 
-				player.openInventory(inventory);
-			}
-		};
-		t.start();
+        //I don't like that
+        Bukkit.getScheduler().runTaskAsynchronously(Hub.getInstance(), () -> {
+            inventory = Bukkit.createInventory(null, 45, "Paramètres (Page " + page + ")");
+            update(player);
+
+            player.openInventory(inventory);
+        });
     }
 
     @Override
