@@ -24,12 +24,12 @@ public class GuiSettings extends AbstractGui
     public void display(Player player)
     {
 
+        inventory = Bukkit.createInventory(null, 45, "Paramètres (Page " + page + ")");
         //I don't like that
         Bukkit.getScheduler().runTaskAsynchronously(Hub.getInstance(), () -> {
-            inventory = Bukkit.createInventory(null, 45, "Paramètres (Page " + page + ")");
             update(player);
 
-            player.openInventory(inventory);
+            Bukkit.getScheduler().runTask(Hub.getInstance(), () -> player.openInventory(inventory));
         });
     }
 

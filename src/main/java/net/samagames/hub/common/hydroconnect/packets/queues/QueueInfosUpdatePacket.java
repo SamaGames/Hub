@@ -17,6 +17,8 @@ public class QueueInfosUpdatePacket extends AbstractPacket
     private boolean success;
     private String errorMessage;
 
+    private String message;
+
     private String game;
     private String map;
 
@@ -72,9 +74,16 @@ public class QueueInfosUpdatePacket extends AbstractPacket
         return player;
     }
 
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
     public enum Type
     {
-        ADD, REMOVE
+        ADD, REMOVE, INFO
     }
 }
