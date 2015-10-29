@@ -1,5 +1,6 @@
 package net.samagames.hub.games;
 
+import net.md_5.bungee.api.*;
 import net.samagames.hub.Hub;
 import net.samagames.hub.common.hydroconnect.packets.hubinfo.GameInfoToHubPacket;
 import net.samagames.hub.common.hydroconnect.packets.queues.QueueInfosUpdatePacket;
@@ -8,6 +9,7 @@ import net.samagames.hub.common.managers.AbstractManager;
 import net.samagames.hub.games.sign.GameSign;
 import net.samagames.hub.games.type.*;
 import org.bukkit.*;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -104,7 +106,10 @@ public class GameManager extends AbstractManager
                             player.playSound(player.getLocation(), Sound.VILLAGER_HAGGLE, 10.0F, 2.0F);
 
                             player.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
-                            player.sendMessage(ChatColor.YELLOW + packet.getMessage());
+                            for(String message : packet.getMessage())
+                            {
+                                player.sendMessage(ChatColor.YELLOW + message.replaceAll("<RESET>", String.valueOf(ChatColor.YELLOW)));
+                            }
                             player.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
                         }
                     }

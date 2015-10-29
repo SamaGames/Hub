@@ -3,6 +3,8 @@ package net.samagames.hub.common.hydroconnect.packets.queues;
 import net.samagames.hub.common.hydroconnect.connection.AbstractPacket;
 import net.samagames.hub.common.hydroconnect.queue.QPlayer;
 
+import java.util.List;
+
 /**
  * This file is a part of the SamaGames Project CodeBase
  * This code is absolutely confidential.
@@ -17,7 +19,7 @@ public class QueueInfosUpdatePacket extends AbstractPacket
     private boolean success;
     private String errorMessage;
 
-    private String message;
+    private List<String> message;
 
     private String game;
     private String map;
@@ -74,11 +76,11 @@ public class QueueInfosUpdatePacket extends AbstractPacket
         return player;
     }
 
-    public String getMessage() {
+    public List<String> getMessage() {
         return message;
     }
 
-    public void setMessage(String message) {
+    public void setMessage(List<String> message) {
         this.message = message;
     }
 
