@@ -64,7 +64,7 @@ public class QuakeGame extends AbstractGame
         ShopCategory parentCategory = new ShopCategory(this, null, null, null, -1, null);
 
         ShopCategory hoes = new ShopCategory(this, "hoeMenu", "Houes", new ItemStack(Material.DIAMOND_HOE, 1), 21, new String[] {
-                "Améliorez votre hoe !",
+                "Améliorez votre houe !",
                 "Ne ratez plus vos adversaires par manque de temps.",
         });
 
