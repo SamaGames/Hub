@@ -75,6 +75,8 @@ public class NBSDecoder
                     l.setVolume(dis.readByte());
                 }
             }
+            dis.close();
+            inputStream.close();
             return new Song(speed, layerHashMap, songHeight, length, title, author, description, decodeFile);
         } catch (IOException e) {
             e.printStackTrace();

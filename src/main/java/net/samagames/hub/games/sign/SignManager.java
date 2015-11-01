@@ -33,10 +33,12 @@ public class SignManager extends AbstractManager
             {
                 config.createNewFile();
 
-                OutputStreamWriter fw = new OutputStreamWriter(new FileOutputStream(config), Charset.forName("UTF-8"));
+                FileOutputStream fileOutputStream = new FileOutputStream(config);
+                OutputStreamWriter fw = new OutputStreamWriter(fileOutputStream, Charset.forName("UTF-8"));
                 BufferedWriter bw = new BufferedWriter(fw);
                 bw.write("{\"zones\":[]}");
                 bw.close();
+                fileOutputStream.close();
             }
             catch (IOException e)
             {
