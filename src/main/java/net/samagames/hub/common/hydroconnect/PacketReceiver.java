@@ -40,6 +40,6 @@ public class PacketReceiver {
 
     public void callPacket(AbstractPacket packet)
     {
-        callbacks.stream().filter(callBack -> callBack.getPacketClass().getName().equals(packet.getClass().getName())).forEach(callBack -> Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> callBack.call(packet)));
+        callbacks.stream().filter(callBack -> callBack.getPacketClass().getName().equals(packet.getClass().getName())).forEach(callBack -> plugin.getScheduledExecutorService().execute(() -> callBack.call(packet)));
     }
 }
