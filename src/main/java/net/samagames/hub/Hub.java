@@ -117,8 +117,6 @@ public class Hub extends JavaPlugin
         this.log(Level.INFO, "Hubs list will be refreshed every seconds.");
         this.getScheduledExecutorService().scheduleAtFixedRate(() -> new ServerStatus(SamaGamesAPI.get().getServerName(), "Hub", "Map", Status.IN_GAME, Bukkit.getOnlinePlayers().size(), Bukkit.getMaxPlayers()).sendToHydro(), 0, 1, TimeUnit.MINUTES);
         this.log(Level.INFO, "Hub ready!");
-
-        getScheduledExecutorService().scheduleAtFixedRate(() -> System.gc(), 10, 30, TimeUnit.SECONDS);
     }
 
     @Override
