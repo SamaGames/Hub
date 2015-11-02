@@ -60,10 +60,7 @@ public class HubRefresher implements Runnable
         {
             e.printStackTrace();
         }
-        finally
-        {
-            jedis.close();
-        }
+        jedis.close();
 
         this.hub.getGuiManager().getPlayersGui().keySet().stream().filter(uuid -> this.hub.getGuiManager().getPlayersGui().get(uuid) instanceof GuiSwitchHub).forEach(uuid -> this.hub.getGuiManager().getPlayersGui().get(uuid).update(Bukkit.getPlayer(uuid)));
     }
