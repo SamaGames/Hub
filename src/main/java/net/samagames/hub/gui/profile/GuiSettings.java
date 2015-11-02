@@ -90,6 +90,12 @@ public class GuiSettings extends AbstractGui
                     ChatColor.GRAY + "gadgets. Seuls vos " + ChatColor.GOLD + "amis" + ChatColor.GRAY + " pourront tout de même",
                     ChatColor.GRAY + "intéragir avec vous."
             });
+            
+            this.drawSetting(player, "queuenotifications", "Notifications de file d'attente", new ItemStack(Material.SIGN, 1), 11, new String[] {
+                ChatColor.GRAY + "Quand cette option est activée, vous",
+                ChatColor.GRAY + "recevrez des informations sur votre",
+                ChatColor.GRAY + "statut dans les files d'attente."
+            });
 
             this.drawSetting(player, "clickme", "ClickMe", new ItemStack(Material.WOOD_BUTTON, 1), 16, new String[]{
                     ChatColor.GRAY + "En cliquant, vous accéderez à un menu",
