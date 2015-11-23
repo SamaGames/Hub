@@ -100,7 +100,7 @@ public class ShopImprovableItem extends ShopIcon
             currentLevel = this.getLevel(currentItemName);
 
             if (currentLevel == 0)
-                next = this.levels.get(0);
+                next = this.levels.get(1);
             else
                 next = this.getNextItem(currentItemName);
         }

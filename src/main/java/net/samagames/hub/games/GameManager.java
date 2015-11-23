@@ -1,5 +1,7 @@
 package net.samagames.hub.games;
 
+import net.md_5.bungee.api.*;
+import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import net.samagames.hub.common.hydroconnect.packets.hubinfo.GameInfoToHubPacket;
 import net.samagames.hub.common.hydroconnect.packets.queues.QueueInfosUpdatePacket;
@@ -7,7 +9,9 @@ import net.samagames.hub.common.hydroconnect.utils.PacketCallBack;
 import net.samagames.hub.common.managers.AbstractManager;
 import net.samagames.hub.games.sign.GameSign;
 import net.samagames.hub.games.type.*;
+
 import org.bukkit.*;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -15,21 +19,23 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Level;
 
 public class GameManager extends AbstractManager
 {
     private final HashMap<String, AbstractGame> games;
-    private final ArrayList<UUID> playerHided;
+    private final CopyOnWriteArrayList<UUID> playerHided;
 
     public GameManager(Hub hub)
     {
         super(hub);
 
         this.games = new HashMap<>();
-        this.playerHided = new ArrayList<>();
+        this.playerHided = new CopyOnWriteArrayList<>();
 
         this.registerGame(new OneWayGame("beta_vip", "VIP", Material.DIAMOND, new Location(this.hub.getHubWorld(), -221.5D, 203.0D, 31.5D, -90.0F, 0.0F)));
+        this.registerGame(new OneWayGame("beta_staff", "Staff", Material.COOKIE, new Location(this.hub.getHubWorld(), -243.5D, 194.0D, 18.5D, 128.0F, 10.0F)));
 
         this.registerGame(new UppervoidGame());
         this.registerGame(new UHCGame());
@@ -85,18 +91,32 @@ public class GameManager extends AbstractManager
                     {
                         if(packet.getType().equals(QueueInfosUpdatePacket.Type.ADD))
                         {
-                            player.playSound(player.getLocation(), Sound.NOTE_PLING, 1.0F, 1.0F);
+                            player.playSound(player.getLocation(), Sound.NOTE_PLING, 1.0F, 1.5F);
 
                             player.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
-                            player.sendMessage(ChatColor.GREEN + "Ajouté à la queue " + ChatColor.GOLD + packet.getGame() +  ChatColor.GREEN + " sur la map " + ChatColor.GOLD + packet.getMap() + ChatColor.GREEN + " !");
+                            player.sendMessage(ChatColor.GREEN + "Ajouté à la file d'attente de " + ChatColor.GOLD + packet.getGame() +  ChatColor.GREEN + " sur la map " + ChatColor.GOLD + packet.getMap() + ChatColor.GREEN + " !");
                             player.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
                         }
-                        else
+                        else if(packet.getType().equals(QueueInfosUpdatePacket.Type.REMOVE))
                         {
-                            player.playSound(player.getLocation(), Sound.NOTE_PLING, 1.0F, 1.0F);
+                            player.playSound(player.getLocation(), Sound.NOTE_PLING, 1.0F, 0.8F);
 
                             player.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
-                            player.sendMessage(ChatColor.RED + "Retiré de la queue " + ChatColor.GOLD + packet.getGame() + ChatColor.RED + " sur la map " + ChatColor.GOLD + packet.getMap() + ChatColor.RED + " !");
+                            player.sendMessage(ChatColor.RED + "Retiré de la file d'attente de " + ChatColor.GOLD + packet.getGame() + ChatColor.RED + " sur la map " + ChatColor.GOLD + packet.getMap() + ChatColor.RED + " !");
+                            player.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
+                        }
+                        else if(packet.getType().equals(QueueInfosUpdatePacket.Type.INFO) && packet.getMessage() != null)
+                        {
+                        	if (!SamaGamesAPI.get().getSettingsManager().isEnabled(player.getUniqueId(), "queuenotifications", true))
+                        		return;
+
+                            player.playSound(player.getLocation(), Sound.VILLAGER_HAGGLE, 10.0F, 2.0F);
+
+                            player.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
+
+                            for(String message : packet.getMessage())
+                                player.sendMessage(ChatColor.YELLOW + message.replaceAll("<RESET>", String.valueOf(ChatColor.YELLOW)));
+
                             player.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
                         }
                     }
@@ -110,11 +130,21 @@ public class GameManager extends AbstractManager
             ArrayList<UUID> toHide = new ArrayList<>();
 
             for (AbstractGame game : this.getGames().values())
+            {
                 for (GameSign sign : game.getSigns().values())
+                {
                     for (Entity entity : this.hub.getHubWorld().getNearbyEntities(sign.getSign().getLocation(), 2.0D, 2.0D, 2.0D))
-                        if (entity.getType() == EntityType.PLAYER)
+                    {
+                        if (entity instanceof Player)
+                        {
                             if (!toHide.contains(entity.getUniqueId()))
+                            {
                                 toHide.add(entity.getUniqueId());
+                            }
+                        }
+                    }
+                }
+            }
 
             for (UUID playerUUID : toHide)
             {
@@ -123,8 +153,10 @@ public class GameManager extends AbstractManager
                 if (player == null)
                     continue;
 
-                for (Player pPlayer : Bukkit.getOnlinePlayers())
-                    pPlayer.hidePlayer(player);
+                for (final Player pPlayer : Bukkit.getOnlinePlayers())
+                {
+                    Bukkit.getScheduler().runTask(hub, () -> pPlayer.hidePlayer(player));
+                }
             }
 
             this.playerHided.addAll(toHide);
@@ -143,8 +175,10 @@ public class GameManager extends AbstractManager
                 {
                     this.playerHided.remove(playerUUID);
 
-                    for (Player pPlayer : Bukkit.getOnlinePlayers())
-                        pPlayer.showPlayer(player);
+                    for (final Player pPlayer : Bukkit.getOnlinePlayers())
+                    {
+                        Bukkit.getScheduler().runTask(hub, () -> pPlayer.showPlayer(player));
+                    }
                 }
             }
         }, 20L * 2, 20L * 2);

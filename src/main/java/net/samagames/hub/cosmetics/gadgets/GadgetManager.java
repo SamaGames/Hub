@@ -115,7 +115,7 @@ public class GadgetManager extends AbstractCosmeticManager<GadgetCosmetic>
 
             if (!this.canUse(player))
             {
-                player.sendMessage(ChatColor.RED + "Vous pourrez utiliser un gadget que dans " + this.getCooldown(player) + " secondes.");
+                player.sendMessage(ChatColor.RED + "Vous devez attendre " + this.getCooldown(player) + " secondes avant de pouvoir ré-utiliser un gadget.");
             }
             else if (!hasRightToUse)
             {

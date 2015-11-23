@@ -28,7 +28,9 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.spigotmc.event.entity.EntityDismountEvent;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 public class PlayerListener implements Listener
@@ -55,7 +57,7 @@ public class PlayerListener implements Listener
             event.setCancelled(true);
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onAsyncChat(AsyncPlayerChatEvent event)
     {
         if (!Hub.getInstance().getChatManager().canChat())
@@ -102,7 +104,11 @@ public class PlayerListener implements Listener
         if (current != null && current.getPlayedBy().equals(event.getPlayer().getName()))
             event.setFormat(ChatColor.DARK_AQUA + "[" + ChatColor.AQUA + "DJ" + ChatColor.DARK_AQUA + "]" + event.getFormat());
 
-        event.getRecipients().stream().filter(player -> Hub.getInstance().getChatManager().hasChatDisabled(player)).forEach(player -> event.getRecipients().remove(player));
+        List<Player> receivers = new ArrayList<>();
+        receivers.addAll(event.getRecipients());
+        receivers.stream().filter(player -> Hub.getInstance().getChatManager().hasChatDisabled(player)).forEach(player -> {
+            event.getRecipients().remove(player);
+        });
 
         Bukkit.getOnlinePlayers().stream().filter(player -> StringUtils.containsIgnoreCase(event.getMessage(), player.getName())).forEach(player ->
         {
@@ -152,7 +158,7 @@ public class PlayerListener implements Listener
             player.teleport(Hub.getInstance().getPlayerManager().getLobbySpawn());
 
             if (SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "hub.fly"))
-                Bukkit.getScheduler().runTaskAsynchronously(Hub.getInstance(), () -> player.setAllowFlight(true));
+                Bukkit.getScheduler().runTask(Hub.getInstance(), () -> player.setAllowFlight(true));
 
             if (SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "hub.announce"))
                 Bukkit.broadcastMessage(PlayerUtils.getFullyFormattedPlayerName(player) + ChatColor.YELLOW + " a rejoint le hub !");
@@ -313,7 +319,7 @@ public class PlayerListener implements Listener
     public void onPlayerGameModeChangeEvent(PlayerGameModeChangeEvent event)
     {
         if (SamaGamesAPI.get().getPermissionsManager().hasPermission(event.getPlayer(), "hub.fly"))
-            Bukkit.getScheduler().runTaskAsynchronously(Hub.getInstance(), () -> event.getPlayer().setAllowFlight(true));
+            Bukkit.getScheduler().runTask(Hub.getInstance(), () -> event.getPlayer().setAllowFlight(true));
     }
 
     private void onPlayerLeave(final Player player)

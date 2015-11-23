@@ -151,7 +151,7 @@ public class GuiSwitchHub extends AbstractGui
         for(String group : hub.getPlayersDetails().keySet())
         {
             int value = hub.getPlayersDetails().get(group);
-            String finalGroup = (value <= 1 ? group : group.substring(0, group.length() - 1) + "s");
+            String finalGroup = (value <= 1 ? group : group.substring(0, group.length() - 1));
 
             lores.add(finalGroup.replace("[", "").replace("]", "") + ": " + value);
         }

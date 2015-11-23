@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
 public class PlayerManager extends AbstractManager
@@ -58,7 +59,8 @@ public class PlayerManager extends AbstractManager
                 @Override
                 public void run() {
                     for (Player p : Bukkit.getOnlinePlayers()) {
-                        if (!SamaGamesAPI.get().getPermissionsManager().hasPermission(p, "hub.announce") && !SamaGamesAPI.get().getFriendsManager().areFriends(player.getUniqueId(), p.getUniqueId())) {
+                        if (!SamaGamesAPI.get().getPermissionsManager().hasPermission(p, "hub.announce")
+                                && !SamaGamesAPI.get().getFriendsManager().areFriends(player.getUniqueId(), p.getUniqueId())) {
                             Bukkit.getScheduler().runTask(hub, () -> player.hidePlayer(p));
                         }
                     }
@@ -72,8 +74,9 @@ public class PlayerManager extends AbstractManager
         }
         else if (playersMessage)
         {
-            Bukkit.getOnlinePlayers().forEach(player::showPlayer);
+            Bukkit.getScheduler().runTask(hub, () -> Bukkit.getOnlinePlayers().forEach(player::showPlayer));
 
+            this.removeHider(player);
             if (!isLogin)
                 player.sendMessage(ChatColor.GOLD + "Vous avez activé les joueurs. Vous verrez donc tout les joueurs.");
         }
@@ -105,10 +108,20 @@ public class PlayerManager extends AbstractManager
     {
         Bukkit.getScheduler().runTaskAsynchronously(this.hub, () ->
         {
-            for (UUID uuid : this.hiders)
-                if(!uuid.equals(newConnected))
-                    if (!SamaGamesAPI.get().getPermissionsManager().hasPermission(newConnected, "hub.announce") && !SamaGamesAPI.get().getFriendsManager().areFriends(newConnected.getUniqueId(), uuid))
-                        Bukkit.getScheduler().runTask(this.hub, () -> Bukkit.getPlayer(uuid).hidePlayer(newConnected));
+            List<UUID> uuidList = new ArrayList<>();
+            uuidList.addAll(this.hiders);
+            for (UUID uuid : uuidList)
+            {
+                Player player = Bukkit.getPlayer(uuid);
+                if(player != null && !player.equals(newConnected))
+                {
+                    if (!SamaGamesAPI.get().getPermissionsManager().hasPermission(newConnected, "hub.announce")
+                            && !SamaGamesAPI.get().getFriendsManager().areFriends(newConnected.getUniqueId(), uuid))
+                    {
+                        Bukkit.getScheduler().runTask(this.hub, () -> player.hidePlayer(newConnected));
+                    }
+                }
+            }
         });
     }
 

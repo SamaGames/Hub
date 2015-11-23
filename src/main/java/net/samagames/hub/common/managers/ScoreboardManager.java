@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
 public class ScoreboardManager extends AbstractManager
@@ -22,7 +24,7 @@ public class ScoreboardManager extends AbstractManager
     private final Map<UUID, ObjectiveSign> playerObjectives;
     private final ArrayList<ChatColor> rainbowContent;
     private int rainbowIndex;
-    private BukkitTask refreshTask;
+    private ScheduledFuture<?> refreshTask;
 
     public ScoreboardManager(Hub hub)
     {
@@ -32,7 +34,7 @@ public class ScoreboardManager extends AbstractManager
         this.rainbowContent = Rainbow.getRainbow();
         this.rainbowIndex = 0;
 
-        refreshTask = hub.getServer().getScheduler().runTaskTimerAsynchronously(this.hub, this::update, 20L, 20L);
+        refreshTask = hub.getScheduledExecutorService().scheduleAtFixedRate(this::update, 1, 1, TimeUnit.SECONDS);
     }
 
     public void addScoreboardReceiver(Player player)
@@ -65,7 +67,7 @@ public class ScoreboardManager extends AbstractManager
             if(Hub.getInstance().isDebugEnabled())
                 Hub.getInstance().log(this, Level.INFO, "Added scoreboard receiver (" + player.getUniqueId() + ")");
 
-            this.update(player.getUniqueId());
+            //this.update(player.getUniqueId());
         }
     }
 
@@ -73,6 +75,7 @@ public class ScoreboardManager extends AbstractManager
     {
         if(this.playerObjectives.containsKey(player.getUniqueId()))
         {
+            this.playerObjectives.get(player.getUniqueId()).removeReceiver(player);
             this.playerObjectives.remove(player.getUniqueId());
 
             if(Hub.getInstance().isDebugEnabled())
@@ -82,7 +85,9 @@ public class ScoreboardManager extends AbstractManager
 
     public void update()
     {
-        this.playerObjectives.keySet().forEach(this::update);
+        ArrayList<UUID> uuids = new ArrayList<>();
+        uuids.addAll(this.playerObjectives.keySet());
+        uuids.forEach(this::update);
 
         this.rainbowIndex++;
 
@@ -114,7 +119,7 @@ public class ScoreboardManager extends AbstractManager
     @Override
     public void onServerClose()
     {
-        this.refreshTask.cancel();
+        this.refreshTask.cancel(true);
         for(UUID uuid : this.playerObjectives.keySet())
         {
             this.playerObjectives.get(uuid).removeReceiver(Bukkit.getOfflinePlayer(uuid));

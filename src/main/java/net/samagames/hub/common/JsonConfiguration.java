@@ -30,7 +30,9 @@ public class JsonConfiguration
             if(!this.configurationFile.exists())
                 return null;
 
-            BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(this.configurationFile), "utf-8"));
+            FileInputStream fileInputStream = new FileInputStream(this.configurationFile);
+            InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream, "utf-8");
+            BufferedReader br = new BufferedReader(inputStreamReader);
             StringBuilder builder = new StringBuilder();
             String currentLine;
 
@@ -40,6 +42,8 @@ public class JsonConfiguration
             }
 
             br.close();
+            inputStreamReader.close();
+            fileInputStream.close();
 
             return new JsonParser().parse(builder.toString()).getAsJsonObject();
         }
@@ -63,9 +67,11 @@ public class JsonConfiguration
                 this.configurationFile.createNewFile();
             }
 
-            OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(this.configurationFile), Charset.forName("UTF-8"));
+            FileOutputStream fileOutputStream = new FileOutputStream(this.configurationFile);
+            OutputStreamWriter writer = new OutputStreamWriter(fileOutputStream, Charset.forName("UTF-8"));
             writer.write(gson.toJson(object));
             writer.close();
+            fileOutputStream.close();
         }
         catch (IOException e)
         {
