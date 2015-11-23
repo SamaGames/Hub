@@ -33,7 +33,7 @@ public class GuiMain extends AbstractGui
         {
             AbstractGame game = Hub.getInstance().getGameManager().getGameByIdentifier(gameIdentifier);
 
-            if(game.getSlotInMainMenu() != -1)
+            if(game.getSlotInMainMenu() >= 0)
             {
                 ArrayList<String> description = new ArrayList<>(Arrays.asList(game.getDescription()));
                 String[] developpers = game.getDeveloppers();

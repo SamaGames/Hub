@@ -57,7 +57,7 @@ public class PlayerListener implements Listener
             event.setCancelled(true);
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onAsyncChat(AsyncPlayerChatEvent event)
     {
         if (!Hub.getInstance().getChatManager().canChat())

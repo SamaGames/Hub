@@ -71,6 +71,8 @@ public class HolyCreeperDisplayer extends AbstractDisplayer
         heartEffect.particle = de.slikey.effectlib.util.ParticleEffect.HEART;
         heartEffect.setLocation(flowerSpawnLocation.clone().add(0.0D, 1.5D, 0.0D));
         heartEffect.start();
+        
+        end();
     }
 
     @Override

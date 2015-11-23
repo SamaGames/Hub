@@ -115,7 +115,7 @@ public class Hub extends JavaPlugin
         this.hubRefresher = new HubRefresher(this);
         Bukkit.getScheduler().runTaskTimerAsynchronously(this, this.hubRefresher, 20L, 20L);
         this.log(Level.INFO, "Hubs list will be refreshed every seconds.");
-        this.getScheduledExecutorService().scheduleAtFixedRate(() -> new ServerStatus(SamaGamesAPI.get().getServerName(), "Hub", "Map", Status.IN_GAME, Bukkit.getOnlinePlayers().size(), Bukkit.getMaxPlayers()).sendToHydro(), 0,  1, TimeUnit.MINUTES);
+        this.getScheduledExecutorService().scheduleAtFixedRate(() -> new ServerStatus(SamaGamesAPI.get().getServerName(), "Hub", "Map", Status.IN_GAME, Bukkit.getOnlinePlayers().size(), Bukkit.getMaxPlayers()).sendToHydro(), 0, 1, TimeUnit.MINUTES);
         this.log(Level.INFO, "Hub ready!");
     }
 

@@ -23,10 +23,14 @@ public class GuiSettings extends AbstractGui
     @Override
     public void display(Player player)
     {
-        this.inventory = Bukkit.createInventory(null, 45, "Paramètres (Page " + this.page + ")");
-        this.update(player);
 
-        player.openInventory(this.inventory);
+        inventory = Bukkit.createInventory(null, 45, "Paramètres (Page " + page + ")");
+        //I don't like that
+        Bukkit.getScheduler().runTaskAsynchronously(Hub.getInstance(), () -> {
+            update(player);
+
+            Bukkit.getScheduler().runTask(Hub.getInstance(), () -> player.openInventory(inventory));
+        });
     }
 
     @Override
@@ -85,6 +89,12 @@ public class GuiSettings extends AbstractGui
                     ChatColor.GRAY + "joueur, comme par exemple celles avec les",
                     ChatColor.GRAY + "gadgets. Seuls vos " + ChatColor.GOLD + "amis" + ChatColor.GRAY + " pourront tout de même",
                     ChatColor.GRAY + "intéragir avec vous."
+            });
+            
+            this.drawSetting(player, "queuenotifications", "Notifications de file d'attente", new ItemStack(Material.SIGN, 1), 11, new String[] {
+                ChatColor.GRAY + "Quand cette option est activée, vous",
+                ChatColor.GRAY + "recevrez des informations sur votre",
+                ChatColor.GRAY + "statut dans les files d'attente."
             });
 
             this.drawSetting(player, "clickme", "ClickMe", new ItemStack(Material.WOOD_BUTTON, 1), 16, new String[]{

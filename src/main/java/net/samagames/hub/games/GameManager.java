@@ -1,5 +1,7 @@
 package net.samagames.hub.games;
 
+import net.md_5.bungee.api.*;
+import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import net.samagames.hub.common.hydroconnect.packets.hubinfo.GameInfoToHubPacket;
 import net.samagames.hub.common.hydroconnect.packets.queues.QueueInfosUpdatePacket;
@@ -7,7 +9,9 @@ import net.samagames.hub.common.hydroconnect.utils.PacketCallBack;
 import net.samagames.hub.common.managers.AbstractManager;
 import net.samagames.hub.games.sign.GameSign;
 import net.samagames.hub.games.type.*;
+
 import org.bukkit.*;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -87,18 +91,30 @@ public class GameManager extends AbstractManager
                     {
                         if(packet.getType().equals(QueueInfosUpdatePacket.Type.ADD))
                         {
-                            player.playSound(player.getLocation(), Sound.NOTE_PLING, 1.0F, 1.0F);
+                            player.playSound(player.getLocation(), Sound.NOTE_PLING, 1.0F, 1.5F);
 
                             player.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
-                            player.sendMessage(ChatColor.GREEN + "Ajouté à la queue " + ChatColor.GOLD + packet.getGame() +  ChatColor.GREEN + " sur la map " + ChatColor.GOLD + packet.getMap() + ChatColor.GREEN + " !");
+                            player.sendMessage(ChatColor.GREEN + "Ajouté à la file d'attente de " + ChatColor.GOLD + packet.getGame() +  ChatColor.GREEN + " sur la map " + ChatColor.GOLD + packet.getMap() + ChatColor.GREEN + " !");
                             player.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
                         }
-                        else
+                        else if(packet.getType().equals(QueueInfosUpdatePacket.Type.REMOVE))
                         {
-                            player.playSound(player.getLocation(), Sound.NOTE_PLING, 1.0F, 1.0F);
+                            player.playSound(player.getLocation(), Sound.NOTE_PLING, 1.0F, 0.8F);
 
                             player.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
-                            player.sendMessage(ChatColor.RED + "Retiré de la queue " + ChatColor.GOLD + packet.getGame() + ChatColor.RED + " sur la map " + ChatColor.GOLD + packet.getMap() + ChatColor.RED + " !");
+                            player.sendMessage(ChatColor.RED + "Retiré de la file d'attente de " + ChatColor.GOLD + packet.getGame() + ChatColor.RED + " sur la map " + ChatColor.GOLD + packet.getMap() + ChatColor.RED + " !");
+                            player.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
+                        }else if(packet.getType().equals(QueueInfosUpdatePacket.Type.INFO) && packet.getMessage() != null)
+                        {
+                        	if (!SamaGamesAPI.get().getSettingsManager().isEnabled(player.getUniqueId(), "queuenotifications", true))
+                        		return ;
+                            player.playSound(player.getLocation(), Sound.VILLAGER_HAGGLE, 10.0F, 2.0F);
+
+                            player.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
+                            for(String message : packet.getMessage())
+                            {
+                                player.sendMessage(ChatColor.YELLOW + message.replaceAll("<RESET>", String.valueOf(ChatColor.YELLOW)));
+                            }
                             player.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
                         }
                     }
