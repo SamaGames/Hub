@@ -31,6 +31,7 @@ public class GameManager extends AbstractManager
         this.playerHided = new CopyOnWriteArrayList<>();
 
         this.registerGame(new OneWayGame("beta_vip", "VIP", Material.DIAMOND, new Location(this.hub.getHubWorld(), -221.5D, 203.0D, 31.5D, -90.0F, 0.0F)));
+        this.registerGame(new OneWayGame("beta_staff", "Staff", Material.COOKIE, new Location(this.hub.getHubWorld(), -243.5D, 194.0D, 18.5D, 128.0F, 10.0F)));
 
         this.registerGame(new UppervoidGame());
         this.registerGame(new UHCGame());
