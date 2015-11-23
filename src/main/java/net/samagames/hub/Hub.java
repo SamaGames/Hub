@@ -10,6 +10,7 @@ import net.samagames.hub.common.managers.*;
 import net.samagames.hub.common.receivers.InteractionListener;
 import net.samagames.hub.common.receivers.MaintenanceListener;
 import net.samagames.hub.common.receivers.SamaritanListener;
+import net.samagames.hub.common.receivers.SignReloadListener;
 import net.samagames.hub.cosmetics.CosmeticManager;
 import net.samagames.hub.events.player.GuiListener;
 import net.samagames.hub.events.player.ParkourListener;
@@ -23,6 +24,7 @@ import net.samagames.hub.games.GameManager;
 import net.samagames.hub.games.sign.SignManager;
 import net.samagames.hub.gui.GuiManager;
 import net.samagames.hub.parkour.ParkourManager;
+import net.samagames.hub.utils.MySQLAgent;
 import net.samagames.tools.LocationUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -39,6 +41,7 @@ public class Hub extends JavaPlugin
     private static Hub instance;
 
     private World hubWorld;
+    private MySQLAgent mySQLAgent;
     private boolean debug;
 
     private PlayerManager playerManager;
@@ -73,6 +76,7 @@ public class Hub extends JavaPlugin
         this.hubWorld = Bukkit.getWorlds().get(0);
 
         this.saveDefaultConfig();
+        this.mySQLAgent = new MySQLAgent(this);
         this.debug = this.getConfig().getBoolean("debug", false);
 
         this.scheduledExecutorService = Executors.newScheduledThreadPool(16);
@@ -100,6 +104,7 @@ public class Hub extends JavaPlugin
         this.log(Level.INFO, "Registering packets packets...");
         SamaGamesAPI.get().getPubSub().subscribe("cheat", new SamaritanListener());
         SamaGamesAPI.get().getPubSub().subscribe("maintenanceSignChannel", new MaintenanceListener());
+        SamaGamesAPI.get().getPubSub().subscribe("signReload", new SignReloadListener());
         SamaGamesAPI.get().getPubSub().subscribe("interaction." + SamaGamesAPI.get().getServerName(), new InteractionListener());
         this.log(Level.INFO, "Packets packets registered with success.");
 
@@ -147,6 +152,11 @@ public class Hub extends JavaPlugin
     public void log(AbstractManager manager, Level level, String message)  { this.getLogger().log(level, "[" + manager.getName() + "] " + message); }
 
     public void log(Level level, String message) { this.getLogger().log(level, "[Core] " + message); }
+
+    public MySQLAgent getMySQLAgent()
+    {
+        return this.mySQLAgent;
+    }
 
     public PlayerManager getPlayerManager() { return this.playerManager; }
     public ChatManager getChatManager() { return this.chatManager; }

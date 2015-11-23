@@ -1,2 +1,6 @@
 debug: false
-spawn: ""
+
+sql-host: "",
+sql-database: "",
+sql-username: "",
+sql-password: ""
