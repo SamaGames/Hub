@@ -58,8 +58,12 @@ public class GuiMain extends AbstractGui
         {
             if(SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "hub.beta.vip"))
             {
-                player.teleport(Hub.getInstance().getGameManager().getGameByIdentifier("beta_vip").getLobbySpawn());
+                if(SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "hub.beta.staff"))
+                    Hub.getInstance().getGuiManager().openGui(player, new GuiSelectZone());
+                else
+                    player.teleport(Hub.getInstance().getGameManager().getGameByIdentifier("beta_vip").getLobbySpawn());
             }
+
         }
         else if(action.equals("switch_hub"))
         {

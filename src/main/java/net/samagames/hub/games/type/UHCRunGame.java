@@ -49,7 +49,8 @@ public class UHCRunGame extends AbstractGame
     public String[] getDeveloppers()
     {
         return new String[] {
-                "Thog"
+                "Thog",
+                "IamBlueSlime"
         };
     }
 
