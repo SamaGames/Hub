@@ -15,6 +15,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,20 +39,35 @@ public class GameManager extends AbstractManager
         this.registerGame(new OneWayGame("beta_staff", "Staff", Material.COOKIE, new Location(this.hub.getHubWorld(), -243.5D, 194.0D, 18.5D, 128.0F, 10.0F)));
 
         this.registerGame(new UppervoidGame());
-        this.registerGame(new UHCGame());
-        this.registerGame(new UHCRunGame());
         this.registerGame(new QuakeGame());
         this.registerGame(new DimensionsGame());
         this.registerGame(new HeroBattleGame());
 
+        // -----
+
+        UHCZoneGame uhcZoneGame = new UHCZoneGame();
+
+        DisplayedStat killsStat = new DisplayedStat("kills", "Joueurs tués", new ItemStack(Material.SKULL_ITEM, 1, (short) SkullType.PLAYER.ordinal()));
+        DisplayedStat deathsStat = new DisplayedStat("deaths", "Morts", Material.BONE);
+
+        this.registerGame(uhcZoneGame);
+        this.registerGame(new BackEndGame("uhc", "UHC", uhcZoneGame.getLobbySpawn(), killsStat, deathsStat));
+        this.registerGame(new BackEndGame("uhcrun", "UHCRun", uhcZoneGame.getLobbySpawn(), killsStat, deathsStat));
+        this.registerGame(new BackEndGame("switchrun", "SwitchRun", uhcZoneGame.getLobbySpawn(), killsStat, deathsStat));
+        this.registerGame(new BackEndGame("doublerunner", "DoubleRunner", uhcZoneGame.getLobbySpawn(), killsStat, deathsStat));
+
+        // -----
+
         ArcadeGame arcadeGame = new ArcadeGame();
 
-        this.registerGame(new ArcadeGame());
+        this.registerGame(arcadeGame);
         this.registerGame(new BackEndGame("craftmything", "CraftMyThing", arcadeGame.getLobbySpawn()));
         this.registerGame(new BackEndGame("witherparty", "WitherParty", arcadeGame.getLobbySpawn()));
         this.registerGame(new BackEndGame("hangovergames", "HangoverGames", arcadeGame.getLobbySpawn()));
-        this.registerGame(new AgarMCGame());
 
+        // -----
+
+        this.registerGame(new AgarMCGame());
         this.registerGame(new BackEndGame("event", "Événement", Hub.getInstance().getPlayerManager().getLobbySpawn()));
 
         hub.getHydroManager().getPacketReceiver().registerCallBack(new PacketCallBack<GameInfoToHubPacket>(GameInfoToHubPacket.class)

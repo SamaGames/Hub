@@ -1,6 +1,5 @@
 package net.samagames.hub.games.type;
 
-import net.md_5.bungee.api.ChatColor;
 import net.samagames.hub.Hub;
 import net.samagames.hub.games.AbstractGame;
 import net.samagames.hub.games.DisplayedStat;
@@ -11,33 +10,32 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
 
-public class AgarMCGame extends AbstractGame
+public class UHCZoneGame extends AbstractGame
 {
     @Override
     public String getCodeName()
     {
-        return "agarmc";
+        return "uhczone";
     }
 
     @Override
     public String getName()
     {
-        return "AgarMC";
+        return "Zone UHC";
     }
 
     @Override
     public ItemStack getIcon()
     {
-        return new ItemStack(Material.SLIME_BLOCK, 1);
+        return new ItemStack(Material.GOLDEN_APPLE, 1);
     }
 
     @Override
     public String[] getDescription()
     {
         return new String[] {
-                "Comme le célèbre jeu en ligne, venez",
-                "avaler nos succulents Slimes. Il y en a pour",
-                "tous les goûts : des petits comme des grands !"
+                "La Zone où tous nos jeux Ultra Hard",
+                "Core sont réunis !"
         };
     }
 
@@ -45,15 +43,14 @@ public class AgarMCGame extends AbstractGame
     public String[] getDeveloppers()
     {
         return new String[] {
-                "Rigner",
-                "6infinity8"
+                "IamBlueSlime"
         };
     }
 
     @Override
     public int getSlotInMainMenu()
     {
-        return 31;
+        return 13;
     }
 
     @Override
@@ -71,7 +68,7 @@ public class AgarMCGame extends AbstractGame
     @Override
     public Location getLobbySpawn()
     {
-        return new Location(Hub.getInstance().getHubWorld(), 150.5D, 87.0D, 46.5D);
+        return new Location(Hub.getInstance().getHubWorld(), -1.5D, 81.0D, -152.5D, 180.0F, 0.0F);
     }
 
     @Override

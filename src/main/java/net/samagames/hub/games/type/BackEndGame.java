@@ -7,18 +7,33 @@ import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 
 public class BackEndGame extends AbstractGame
 {
     private final String codeName;
     private final String publicName;
     private final Location spawn;
+    private final ArrayList<DisplayedStat> stats;
 
     public BackEndGame(String codeName, String publicName, Location spawn)
     {
         this.codeName = codeName;
         this.publicName = publicName;
         this.spawn = spawn;
+        this.stats = null;
+    }
+
+    public BackEndGame(String codeName, String publicName, Location spawn, DisplayedStat... stats)
+    {
+        this.codeName = codeName;
+        this.publicName = publicName;
+        this.spawn = spawn;
+
+        this.stats = new ArrayList<>();
+        this.stats.addAll(Arrays.asList(stats));
+        this.stats.addAll(super.getDisplayedStats());
     }
 
     @Override
@@ -65,7 +80,7 @@ public class BackEndGame extends AbstractGame
     @Override
     public ArrayList<DisplayedStat> getDisplayedStats()
     {
-        return null;
+        return this.stats;
     }
 
     @Override
