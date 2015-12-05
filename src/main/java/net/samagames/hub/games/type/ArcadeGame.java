@@ -49,7 +49,7 @@ public class ArcadeGame extends AbstractGame
     @Override
     public int getSlotInMainMenu()
     {
-        return 21;
+        return 22;
     }
 
     @Override
