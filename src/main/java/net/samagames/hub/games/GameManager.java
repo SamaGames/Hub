@@ -1,6 +1,5 @@
 package net.samagames.hub.games;
 
-import net.md_5.bungee.api.*;
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import net.samagames.hub.common.hydroconnect.packets.hubinfo.GameInfoToHubPacket;
@@ -13,7 +12,6 @@ import net.samagames.hub.games.type.*;
 import org.bukkit.*;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
