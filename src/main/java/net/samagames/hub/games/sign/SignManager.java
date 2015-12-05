@@ -1,6 +1,9 @@
 package net.samagames.hub.games.sign;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import net.samagames.hub.Hub;
+import net.samagames.hub.common.JsonConfiguration;
 import net.samagames.hub.common.managers.AbstractManager;
 import net.samagames.hub.games.AbstractGame;
 import net.samagames.tools.LocationUtils;
@@ -8,19 +11,42 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
+import org.bukkit.entity.Player;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.io.*;
+import java.nio.charset.Charset;
 import java.util.logging.Level;
 
 public class SignManager extends AbstractManager
 {
+    private final JsonConfiguration jsonConfig;
+
     public SignManager(Hub hub)
     {
         super(hub);
 
+        File config = new File(this.hub.getDataFolder(), "signs.json");
+
+        if(!config.exists())
+        {
+            try
+            {
+                config.createNewFile();
+
+                FileOutputStream fileOutputStream = new FileOutputStream(config);
+                OutputStreamWriter fw = new OutputStreamWriter(fileOutputStream, Charset.forName("UTF-8"));
+                BufferedWriter bw = new BufferedWriter(fw);
+                bw.write("{\"zones\":[]}");
+                bw.close();
+                fileOutputStream.close();
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+        }
+
+        this.jsonConfig = new JsonConfiguration(config);
         this.reloadList();
     }
 
@@ -30,14 +56,23 @@ public class SignManager extends AbstractManager
 
         this.hub.getGameManager().getGames().values().forEach(net.samagames.hub.games.AbstractGame::clearSigns);
 
-        try (Connection sql = this.hub.getMySQLAgent().openMinecraftServerConnection())
-        {
-            PreparedStatement pStatement = sql.prepareStatement("SELECT * FROM sg_signs");
-            ResultSet result = pStatement.executeQuery();
+        JsonArray signZonesArray = this.jsonConfig.load().getAsJsonArray("zones");
 
-            while(result.next())
+        for(int i = 0; i < signZonesArray.size(); i++)
+        {
+            JsonObject signZoneObject = signZonesArray.get(i).getAsJsonObject();
+
+            String game = signZoneObject.get("game").getAsString();
+
+            JsonArray maps = signZoneObject.get("maps").getAsJsonArray();
+
+            for(int j = 0; j < maps.size(); j++)
             {
-                String game = result.getString("game");
+                JsonObject mapObject = maps.get(j).getAsJsonObject();
+                String map = mapObject.get("map").getAsString();
+                String template = mapObject.get("template").getAsString();
+                ChatColor color = ChatColor.valueOf(mapObject.get("color").getAsString());
+                Location sign = LocationUtils.str2loc(mapObject.get("sign").getAsString());
 
                 AbstractGame gameObject = this.hub.getGameManager().getGameByIdentifier(game);
 
@@ -47,13 +82,7 @@ public class SignManager extends AbstractManager
                     continue;
                 }
 
-                String map = result.getString("map");
-                ChatColor color = ChatColor.valueOf(result.getString("color"));
-                String template = result.getString("template");
-                Location location = LocationUtils.str2loc(result.getString("location"));
-                boolean maintenance = result.getBoolean("maintenance");
-
-                Block block = Hub.getInstance().getHubWorld().getBlockAt(location);
+                Block block = Hub.getInstance().getHubWorld().getBlockAt(sign);
 
                 if(!(block.getState() instanceof Sign))
                 {
@@ -62,19 +91,65 @@ public class SignManager extends AbstractManager
                 }
 
                 gameObject.addSignForMap(map.replace("_", " "), (Sign) block.getState(), template, color);
-                gameObject.getGameSignByTemplate(template).setMaintenance(maintenance);
 
                 this.hub.log(this, Level.INFO, "Registered sign zone for the game '" + game + "' and the map '" + map + "'!");
             }
-
-            sql.close();
-        }
-        catch (SQLException e)
-        {
-            e.printStackTrace();
         }
 
         this.hub.log(this, Level.INFO, "Reloaded game sign list.");
+    }
+
+    public void setSignForMap(Player player, String game, String map, ChatColor color, String template, Sign sign)
+    {
+        JsonObject root = this.jsonConfig.load();
+        JsonArray signZonesArray = root.getAsJsonArray("zones");
+
+        player.sendMessage(ChatColor.GREEN + "Starting job...");
+
+        for(int i = 0; i < signZonesArray.size(); i++)
+        {
+            JsonObject signZoneObject = signZonesArray.get(i).getAsJsonObject();
+
+            if(signZoneObject.get("game").getAsString().equals(game))
+            {
+                player.sendMessage(ChatColor.GREEN + "Game existing.");
+
+                JsonArray maps = signZoneObject.get("maps").getAsJsonArray();
+
+                JsonObject mapObject = new JsonObject();
+                mapObject.addProperty("map", map);
+                mapObject.addProperty("template", template);
+                mapObject.addProperty("color", color.name());
+                mapObject.addProperty("sign", LocationUtils.loc2str(sign.getLocation()));
+                maps.add(mapObject);
+
+                player.sendMessage(ChatColor.GREEN + "Job finished.");
+                this.jsonConfig.save(root);
+                this.reloadList();
+                return;
+            }
+        }
+
+        player.sendMessage(ChatColor.RED + "Game don't exist!");
+
+        JsonObject signZoneObject = new JsonObject();
+        signZoneObject.addProperty("game", game);
+
+        JsonArray maps = new JsonArray();
+
+        JsonObject mapObject = new JsonObject();
+        mapObject.addProperty("map", map);
+        mapObject.addProperty("template", template);
+        mapObject.addProperty("color", color.name());
+        mapObject.addProperty("sign", LocationUtils.loc2str(sign.getLocation()));
+        maps.add(mapObject);
+
+        signZoneObject.add("maps", maps);
+        signZonesArray.add(signZoneObject);
+
+        player.sendMessage(ChatColor.GREEN + "Job finished.");
+        this.jsonConfig.save(root);
+        this.reloadList();
     }
 
     @Override
