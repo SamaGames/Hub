@@ -55,7 +55,7 @@ public class HeroBattleGame extends AbstractGame
     @Override
     public int getSlotInMainMenu()
     {
-        return 30;
+        return 21;
     }
 
     @Override
