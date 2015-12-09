@@ -67,7 +67,7 @@ public class DimensionsGame extends AbstractGame
         ShopImprovableItem strenghtOnKill = new ShopImprovableItem(this, "strengthAtKill", "Force au meurtre", new Potion(PotionType.STRENGTH).toItemStack(1), 11, new String[] {
                 "Quand vous causerez un meurtre,",
                 "vous aurez un bonus de force pendant un",
-                "certain temps suivant niveau de cette",
+                "certain temps suivant le niveau de cette",
                 "amélioration."
         });
 
@@ -111,8 +111,7 @@ public class DimensionsGame extends AbstractGame
         parentCategory.addContent(healOnKillItem);
 
         ShopImprovableItem swapCooldownItem = new ShopImprovableItem(this, "tpTime", "Espacement de Swap", new ItemStack(Material.EYE_OF_ENDER, 1), 32, new String[] {
-                "Pendant un combat, vous avez un certain",
-                "pourcentage de chance de regagner de la vie",
+                "Le délai entre deux téléportations diminue",
                 "suivant le niveau de cette amélioration."
         });
 
