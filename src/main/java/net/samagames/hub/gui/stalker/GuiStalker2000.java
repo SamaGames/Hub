@@ -4,7 +4,6 @@ import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import net.samagames.hub.gui.AbstractGui;
 import net.samagames.hub.utils.GuiUtils;
-import net.samagames.tools.BungeeUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -175,7 +174,7 @@ public class GuiStalker2000 extends AbstractGui
 
             if(this.teleportEnabled)
             {
-                BungeeUtils.sendPlayerToServer(player, server);
+                SamaGamesAPI.get().getProxyDataManager().getProxiedPlayer(player.getUniqueId()).connect(server);
             }
             else
             {

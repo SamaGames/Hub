@@ -5,7 +5,6 @@ import net.samagames.api.network.IProxiedPlayer;
 import net.samagames.hub.Hub;
 import net.samagames.hub.gui.AbstractGui;
 import net.samagames.hub.utils.GuiUtils;
-import net.samagames.tools.BungeeUtils;
 import net.samagames.tools.PlayerUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -99,7 +98,7 @@ public class GuiStalkerFriends2000 extends AbstractGui
         if(action.startsWith("server:"))
         {
             String server = action.split(":")[1];
-            BungeeUtils.sendPlayerToServer(player, server);
+            SamaGamesAPI.get().getProxyDataManager().getProxiedPlayer(player.getUniqueId()).connect(server);
         }
         else if(action.equals("back"))
         {

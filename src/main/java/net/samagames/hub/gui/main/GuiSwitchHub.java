@@ -5,7 +5,6 @@ import net.samagames.hub.Hub;
 import net.samagames.hub.common.JsonHub;
 import net.samagames.hub.gui.AbstractGui;
 import net.samagames.hub.utils.GuiUtils;
-import net.samagames.tools.BungeeUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
@@ -98,7 +97,7 @@ public class GuiSwitchHub extends AbstractGui
                 return;
             }
 
-            BungeeUtils.sendPlayerToServer(player, action);
+            SamaGamesAPI.get().getProxyDataManager().getProxiedPlayer(player.getUniqueId()).connect(action);
         }
         else if(action.equals("page_back"))
         {
