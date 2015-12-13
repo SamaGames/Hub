@@ -1,8 +1,8 @@
 package net.samagames.hub.gui.profile.stats;
 
 import net.samagames.api.SamaGamesAPI;
-import net.samagames.api.stats.AbstractStatsManager;
 import net.samagames.api.stats.IPlayerStat;
+import net.samagames.api.stats.IStatsManager;
 import net.samagames.api.stats.Leaderboard;
 import net.samagames.hub.Hub;
 import net.samagames.hub.games.AbstractGame;
@@ -26,7 +26,7 @@ public class GuiGameStat extends AbstractGui
     private final UUID uuid;
     private final AbstractGame game;
     private final String stat;
-    private final AbstractStatsManager statManager;
+    private final IStatsManager statManager;
 
     public GuiGameStat(String name, UUID uuid, AbstractGame game, String stat)
     {

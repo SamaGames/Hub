@@ -52,7 +52,7 @@ public class GuiAchievements extends AbstractGui
         }
         else if(action.startsWith("category_"))
         {
-            Hub.getInstance().getGuiManager().openGui(player, new GuiAchievements(SamaGamesAPI.get().getAchievementManager().getAchievementCategoryByName(action.split("_")[1])));
+            Hub.getInstance().getGuiManager().openGui(player, new GuiAchievements(SamaGamesAPI.get().getAchievementManager().getAchievementCategoryByID(action.split("_")[1])));
         }
     }
 
