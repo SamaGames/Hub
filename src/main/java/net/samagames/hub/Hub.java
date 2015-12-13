@@ -74,6 +74,8 @@ public class Hub extends JavaPlugin
         instance = this;
 
         this.hubWorld = Bukkit.getWorlds().get(0);
+        this.hubWorld.setGameRuleValue("randomTickSpeed", "0");
+        this.hubWorld.setTime(18000L);
 
         this.saveDefaultConfig();
         this.mySQLAgent = new MySQLAgent(this);
