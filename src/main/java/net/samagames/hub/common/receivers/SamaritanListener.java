@@ -17,7 +17,8 @@ public class SamaritanListener implements IPacketsReceiver
 
         World world = Hub.getInstance().getHubWorld();
 
-        world.setTime(18000);
+        //world.setTime(18000L);
+        world.setTime(6000L);
 
         for(Player p : Bukkit.getOnlinePlayers())
         {
@@ -32,7 +33,7 @@ public class SamaritanListener implements IPacketsReceiver
         String samaritanTag = ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "[" + ChatColor.LIGHT_PURPLE + ChatColor.BOLD + "Samaritan" + ChatColor.DARK_PURPLE + ChatColor.BOLD + "] " + ChatColor.RESET;
         Bukkit.broadcastMessage(samaritanTag + ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "Le joueur " + ChatColor.LIGHT_PURPLE + ChatColor.BOLD + player + ChatColor.DARK_PURPLE + ChatColor.BOLD + " à été banni pour la raison " + ChatColor.LIGHT_PURPLE + ChatColor.BOLD + reason);
 
-        Bukkit.getScheduler().runTaskLaterAsynchronously(Hub.getInstance(), () ->
-                world.setTime(6000), 20L * 3);
+        //Bukkit.getScheduler().runTaskLaterAsynchronously(Hub.getInstance(), () -> world.setTime(6000L), 20L * 3);
+        Bukkit.getScheduler().runTaskLaterAsynchronously(Hub.getInstance(), () -> world.setTime(18000L), 20L * 3);
     }
 }
