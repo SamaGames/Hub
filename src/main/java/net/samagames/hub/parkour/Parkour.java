@@ -159,12 +159,8 @@ public class Parkour
         this.parkouring.remove(playerId);
 
         if(this.achievementName != null)
-        {
             if(!SamaGamesAPI.get().getAchievementManager().isUnlocked(player, this.achievementName))
-            {
-                SamaGamesAPI.get().getAchievementManager().getAchievementByName(this.achievementName).unlock(player);
-            }
-        }
+                SamaGamesAPI.get().getAchievementManager().getAchievementByID(this.achievementName).unlock(player);
 
         player.setFlySpeed(0.3F);
         player.setWalkSpeed(0.3F);
