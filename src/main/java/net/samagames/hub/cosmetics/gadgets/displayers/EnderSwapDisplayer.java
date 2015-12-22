@@ -31,7 +31,7 @@ public class EnderSwapDisplayer extends AbstractDisplayer
         for(int i = 0; i < 10; i++)
         {
             Location randomizedLocation = last.clone().add(random.nextInt(80) - 40, 0, random.nextInt(80) - 40);
-            randomizedLocation.setY(256);
+            randomizedLocation.setY(250);
 
             while(randomizedLocation.getBlock().getRelative(BlockFace.DOWN).getType() == Material.AIR)
             {
@@ -39,7 +39,7 @@ public class EnderSwapDisplayer extends AbstractDisplayer
 
                 if(randomizedLocation.getBlockY() < 10)
                 {
-                    randomizedLocation.setY(256);
+                    randomizedLocation.setY(250);
                     break;
                 }
             }
