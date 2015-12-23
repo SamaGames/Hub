@@ -38,7 +38,8 @@ public class StargateDisplayer extends AbstractDisplayer
         this.addBlocksToUse(this.portals);
 
         Random random = new Random();
-        this.exitPortalLocation = this.baseLocation.add(random.nextInt(120) - 60, 250, random.nextInt(120) - 60);
+        this.exitPortalLocation = this.baseLocation.add(random.nextInt(120) - 60, 0, random.nextInt(120) - 60);
+        this.exitPortalLocation.setY(250);
         this.addBlocksToUse(this.createPortalFrame(this.exitPortalLocation, true));
     }
 
