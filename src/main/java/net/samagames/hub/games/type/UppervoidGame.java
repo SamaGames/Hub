@@ -68,8 +68,8 @@ public class UppervoidGame extends AbstractGame
         });
 
         tntStick.addDefault("Basic (2s)");
-        tntStick.addLevel(30000, "ChaosGrabber (1.7s)", "chaosgrabber");
-        tntStick.addLevel(80000, "BladeSpinner (1.5s)", "bladespinner");
+        tntStick.addLevel(10000, "ChaosGrabber (1.7s)", "chaosgrabber");
+        tntStick.addLevel(50000, "BladeSpinner (1.5s)", "bladespinner");
 
         parentCategory.addContent(tntStick);
 
@@ -93,10 +93,10 @@ public class UppervoidGame extends AbstractGame
         });
 
         grapnelItem.addDefault("1 utilisation");
-        grapnelItem.addLevel(1500, "2 utilisations", "grapin-1");
-        grapnelItem.addLevel(7000, "3 utilisations", "grapin-2");
-        grapnelItem.addLevel(24000, "4 utilisations", "grapin-3");
-        grapnelItem.addLevel(60000, "5 utilisations", "grapin-4");
+        grapnelItem.addLevel(550, "2 utilisations", "grapin-1");
+        grapnelItem.addLevel(2100, "3 utilisations", "grapin-2");
+        grapnelItem.addLevel(53000, "4 utilisations", "grapin-3");
+        grapnelItem.addLevel(19800, "5 utilisations", "grapin-4");
 
         parentCategory.addContent(grapnelItem);
 
