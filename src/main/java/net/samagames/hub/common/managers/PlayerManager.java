@@ -55,17 +55,9 @@ public class PlayerManager extends AbstractManager
 
         if (!playerOnSetting && playersMessage)
         {
-            Bukkit.getScheduler().runTaskAsynchronously(hub, new Runnable() {
-                @Override
-                public void run() {
-                    for (Player p : Bukkit.getOnlinePlayers()) {
-                        if (!SamaGamesAPI.get().getPermissionsManager().hasPermission(p, "hub.announce")
-                                && !SamaGamesAPI.get().getFriendsManager().areFriends(player.getUniqueId(), p.getUniqueId())) {
-                            Bukkit.getScheduler().runTask(hub, () -> player.hidePlayer(p));
-                        }
-                    }
-                }
-            });
+            Bukkit.getScheduler().runTaskAsynchronously(this.hub, () ->
+                    Bukkit.getOnlinePlayers().stream().filter(p -> !SamaGamesAPI.get().getPermissionsManager().hasPermission(p, "hub.announce") && !SamaGamesAPI.get().getFriendsManager().areFriends(player.getUniqueId(), p.getUniqueId())).forEach(p ->
+                        Bukkit.getScheduler().runTask(this.hub, () -> player.hidePlayer(p))));
 
             this.addHider(player);
 
@@ -74,9 +66,10 @@ public class PlayerManager extends AbstractManager
         }
         else if (playersMessage)
         {
-            Bukkit.getScheduler().runTask(hub, () -> Bukkit.getOnlinePlayers().forEach(player::showPlayer));
+            Bukkit.getScheduler().runTask(this.hub, () -> Bukkit.getOnlinePlayers().forEach(player::showPlayer));
 
             this.removeHider(player);
+
             if (!isLogin)
                 player.sendMessage(ChatColor.GOLD + "Vous avez activé les joueurs. Vous verrez donc tout les joueurs.");
         }
@@ -87,6 +80,13 @@ public class PlayerManager extends AbstractManager
 
             if (!isLogin)
                 player.sendMessage(ChatColor.GOLD + "Vous avez désactivé le chat. Vous ne verrez donc pas les messages des joueurs.");
+        }
+        else if (chatMessage)
+        {
+            Hub.getInstance().getChatManager().enableChatFor(player);
+
+            if (!isLogin)
+                player.sendMessage(ChatColor.GOLD + "Vous avez activé le chat. Vous verrez donc les messages des joueurs.");
         }
 
         if (jukeboxSetting)

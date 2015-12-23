@@ -138,6 +138,7 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
         }
 
         boolean hasLimitStaff = SamaGamesAPI.get().getPermissionsManager().hasPermission(playedBy, "hub.jukebox.limitstaff");
+
         if (hasLimitStaff)
             this.recentDJs.put(playedBy.getUniqueId(), 300);
         else
@@ -145,7 +146,8 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
 
         BukkitTask task = Bukkit.getScheduler().runTaskTimerAsynchronously(this.hub, () ->
         {
-            if (this.recentDJs.containsKey(playedBy.getUniqueId())) {
+            if (this.recentDJs.containsKey(playedBy.getUniqueId()))
+            {
                 int now = this.recentDJs.get(playedBy.getUniqueId()) - 1;
                 this.recentDJs.put(playedBy.getUniqueId(), now);
             }
@@ -166,7 +168,8 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
     {
         this.lockFlag = true;
 
-        try{
+        try
+        {
             if (this.currentPlaylist != null)
             {
                 this.recentsPlaylists.addLast(this.currentPlaylist);
@@ -176,6 +179,7 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
 
                 int woots = this.currentPlaylist.getWoots();
                 int mehs = this.currentPlaylist.getMehs();
+
                 Bukkit.broadcastMessage(this.jukeboxTag + ChatColor.GOLD + this.currentPlaylist.getPlayedBy() + ChatColor.YELLOW + " a reçu " + ChatColor.GREEN + woots + " Woot" + ChatColor.YELLOW + " et " + ChatColor.RED + mehs + " Meh" + ChatColor.YELLOW + ".");
 
                 UUID playerUUID = SamaGamesAPI.get().getUUIDTranslator().getUUID(this.currentPlaylist.getPlayedBy());
@@ -205,10 +209,10 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
             if (nextSong != null)
             {
                 SongPlayer player = nextSong.getPlayer();
+                player.setAutoDestroy(true);
                 player.setPlaying(true);
 
                 this.currentPlaylist = nextSong;
-                this.currentPlaylist.getPlayer().setPlaying(true);
 
                 Bukkit.getOnlinePlayers().stream().filter(p -> !this.mutedPlayers.contains(p.getUniqueId())).forEach(p -> this.currentPlaylist.getPlayer().addPlayer(p.getUniqueId()));
 
@@ -219,8 +223,8 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
                 {
                     this.barTask = Bukkit.getScheduler().runTaskTimerAsynchronously(Hub.getInstance(), new Runnable()
                     {
-                        ChatColor[] colors = {ChatColor.RED, ChatColor.GOLD, ChatColor.YELLOW, ChatColor.DARK_RED, ChatColor.DARK_PURPLE, ChatColor.DARK_AQUA};
-                        int i = 0;
+                        private ChatColor[] colors = {ChatColor.RED, ChatColor.GOLD, ChatColor.YELLOW, ChatColor.DARK_RED, ChatColor.DARK_PURPLE, ChatColor.DARK_AQUA};
+                        private int i = 0;
 
                         @Override
                         public void run()
@@ -255,12 +259,16 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
 
             this.lockFlag = false;
 
-        }catch (Exception e)
+        }
+        catch (Exception e)
         {
             e.printStackTrace();
-        }finally {
-            lockFlag = false;
         }
+        finally
+        {
+            this.lockFlag = false;
+        }
+
         return false;
     }
 

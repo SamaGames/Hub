@@ -3,9 +3,7 @@ package com.xxmicloxx.NoteBlockAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import java.util.HashMap;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 public abstract class SongPlayer {
 
@@ -94,15 +92,20 @@ public abstract class SongPlayer {
                             }
                         }
 
+                        List<UUID> toRemove = new ArrayList<>();
+
                         for (UUID p : playerList.keySet()) {
                             if (p == null || Bukkit.getPlayer(p) == null) {
+                                toRemove.add(p);
                                 continue;
                             }
 
                             //Hub.getInstance().getExecutor().schedule(() -> playTick(p, tick), difference, TimeUnit.MILLISECONDS);
                             playTick(p, tick);
-
                         }
+
+                        toRemove.forEach(uuid -> playerList.remove(uuid));
+                        toRemove.clear();
                     }
 
                 long duration = System.currentTimeMillis() - startTime;
