@@ -24,7 +24,6 @@ import net.samagames.hub.games.GameManager;
 import net.samagames.hub.games.sign.SignManager;
 import net.samagames.hub.gui.GuiManager;
 import net.samagames.hub.parkour.ParkourManager;
-import net.samagames.hub.utils.MySQLAgent;
 import net.samagames.tools.LocationUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -41,7 +40,6 @@ public class Hub extends JavaPlugin
     private static Hub instance;
 
     private World hubWorld;
-    private MySQLAgent mySQLAgent;
     private boolean debug;
 
     private PlayerManager playerManager;
@@ -78,7 +76,6 @@ public class Hub extends JavaPlugin
         this.hubWorld.setTime(18000L);
 
         this.saveDefaultConfig();
-        this.mySQLAgent = new MySQLAgent(this);
         this.debug = this.getConfig().getBoolean("debug", false);
 
         this.scheduledExecutorService = Executors.newScheduledThreadPool(16);
@@ -154,11 +151,6 @@ public class Hub extends JavaPlugin
     public void log(AbstractManager manager, Level level, String message)  { this.getLogger().log(level, "[" + manager.getName() + "] " + message); }
 
     public void log(Level level, String message) { this.getLogger().log(level, "[Core] " + message); }
-
-    public MySQLAgent getMySQLAgent()
-    {
-        return this.mySQLAgent;
-    }
 
     public PlayerManager getPlayerManager() { return this.playerManager; }
     public ChatManager getChatManager() { return this.chatManager; }

@@ -1,6 +1,1 @@
 debug: false
-
-sql-host: "",
-sql-database: "",
-sql-username: "",
-sql-password: ""
