@@ -17,8 +17,8 @@ public class SamaritanListener implements IPacketsReceiver
 
         World world = Hub.getInstance().getHubWorld();
 
-        //world.setTime(18000L);
-        world.setTime(6000L);
+        world.setTime(18000L);
+        //world.setTime(6000L);
 
         for(Player p : Bukkit.getOnlinePlayers())
         {
