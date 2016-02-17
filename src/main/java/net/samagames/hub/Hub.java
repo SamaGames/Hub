@@ -73,7 +73,7 @@ public class Hub extends JavaPlugin
 
         this.hubWorld = Bukkit.getWorlds().get(0);
         this.hubWorld.setGameRuleValue("randomTickSpeed", "0");
-        this.hubWorld.setTime(18000L);
+        this.hubWorld.setTime(6000L);
 
         this.saveDefaultConfig();
         this.debug = this.getConfig().getBoolean("debug", false);
