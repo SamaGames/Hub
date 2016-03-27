@@ -1,0 +1,9 @@
+# World time (in ticks)
+time: 6000
+
+# Disable hub integration in the switch GUI
+disconnected: false
+
+# Special config
+spawn: world, 0.0, 0.0, 0.0, 0.0, 0.0
+vip-zone: world, 0.0, 0.0, 0.0, 0.0, 0.0
