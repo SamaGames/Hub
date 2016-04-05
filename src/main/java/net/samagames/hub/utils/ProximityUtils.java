@@ -53,11 +53,12 @@ public class ProximityUtils
             entity.getNearbyEntities(offsetX, offsetY, offsetZ).stream().forEach(found ->
             {
                 if (filter == null || filter.isAssignableFrom(found.getClass()))
-                    callback.run((ENTITY) found);
+                    hub.getServer().getScheduler().runTaskAsynchronously(hub, () -> callback.run((ENTITY) found));
             });
         }, 2L, 2L);
     }
 
+    @FunctionalInterface
     public interface ProximityCallback<ENTITY extends Entity>
     {
         void run(ENTITY entity);

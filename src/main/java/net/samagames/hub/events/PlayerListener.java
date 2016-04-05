@@ -1,20 +1,21 @@
 package net.samagames.hub.events;
 
 import net.samagames.api.SamaGamesAPI;
+import net.samagames.api.games.Status;
 import net.samagames.hub.Hub;
 import net.samagames.hub.games.AbstractGame;
 import net.samagames.hub.games.signs.GameSign;
+import net.samagames.hub.utils.ServerStatus;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Sign;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.inventory.InventoryInteractEvent;
-import org.bukkit.event.player.PlayerGameModeChangeEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 
 public class PlayerListener implements Listener
@@ -30,12 +31,20 @@ public class PlayerListener implements Listener
     public void onPlayerLogin(PlayerJoinEvent event)
     {
         this.hub.getEventBus().onLogin(event.getPlayer());
+        new ServerStatus(SamaGamesAPI.get().getServerName(), "Hub", "Map", Status.IN_GAME, this.hub.getServer().getOnlinePlayers().size(), this.hub.getServer().getMaxPlayers()).sendToHydro();
     }
 
     @EventHandler
     public void onPlayerLogout(PlayerQuitEvent event)
     {
         this.hub.getEventBus().onLogout(event.getPlayer());
+        new ServerStatus(SamaGamesAPI.get().getServerName(), "Hub", "Map", Status.IN_GAME, this.hub.getServer().getOnlinePlayers().size(), this.hub.getServer().getMaxPlayers()).sendToHydro();
+    }
+
+    @EventHandler
+    public void onAsyncPlayerChat(AsyncPlayerChatEvent event)
+    {
+        this.hub.getChatManager().onAsyncPlayerChat(event);
     }
 
     @EventHandler
@@ -43,8 +52,16 @@ public class PlayerListener implements Listener
     {
         event.setCancelled(true);
 
+        if (event.getEntity().getType() != EntityType.PLAYER)
+            return;
+
         if (event.getCause() == EntityDamageEvent.DamageCause.VOID)
-            event.getEntity().teleport(this.hub.getPlayerManager().getSpawn());
+        {
+            if (this.hub.getParkourManager().getPlayerParkour(event.getEntity().getUniqueId()) != null)
+                this.hub.getParkourManager().getPlayerParkour(event.getEntity().getUniqueId()).failPlayer((Player) event.getEntity());
+            else
+                event.getEntity().teleport(this.hub.getPlayerManager().getSpawn());
+        }
     }
 
     @EventHandler

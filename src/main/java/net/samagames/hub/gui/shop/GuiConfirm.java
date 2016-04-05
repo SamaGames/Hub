@@ -1,6 +1,7 @@
 package net.samagames.hub.gui.shop;
 
 import net.samagames.hub.Hub;
+import net.samagames.hub.common.players.PlayerManager;
 import net.samagames.hub.gui.AbstractGui;
 import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
@@ -37,8 +38,14 @@ public class GuiConfirm extends AbstractGui
     @Override
     public void onClick(Player player, ItemStack stack, String action)
     {
-        if(action.equals("confirm") && !this.isInProgress)
+        if(action.equals("confirm"))
         {
+            if (this.isInProgress)
+            {
+                player.sendMessage(PlayerManager.SHOPPING_TAG + ChatColor.RED + "Merci de patienter pendant le traitement de votre commande...");
+                return;
+            }
+
             this.hub.getExecutorMonoThread().execute(() ->
             {
                 this.isInProgress = true;
@@ -47,6 +54,12 @@ public class GuiConfirm extends AbstractGui
         }
         else
         {
+            if (this.isInProgress)
+            {
+                player.sendMessage(PlayerManager.SHOPPING_TAG + ChatColor.RED + "Merci de patienter pendant le traitement de votre commande...");
+                return;
+            }
+
             this.hub.getGuiManager().openGui(player, this.parent);
         }
     }

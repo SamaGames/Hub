@@ -42,7 +42,7 @@ public class ParkourListener implements Listener
             Parkour parkour = this.hub.getParkourManager().getPlayerParkour(event.getPlayer().getUniqueId());
 
             if (parkour != null)
-                parkour.removePlayer(event.getPlayer().getUniqueId());
+                parkour.removePlayer(event.getPlayer());
         });
     }
 

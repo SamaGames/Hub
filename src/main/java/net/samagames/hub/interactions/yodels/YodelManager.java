@@ -6,6 +6,7 @@ import net.minecraft.server.v1_9_R1.EntityFireball;
 import net.minecraft.server.v1_9_R1.EntitySmallFireball;
 import net.samagames.hub.Hub;
 import net.samagames.hub.common.managers.AbstractManager;
+import net.samagames.hub.interactions.AbstractInteractionManager;
 import net.samagames.tools.JsonConfiguration;
 import net.samagames.tools.LocationUtils;
 import org.bukkit.Location;
@@ -18,70 +19,40 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 
-public class YodelManager extends AbstractManager
+public class YodelManager extends AbstractInteractionManager<Yodel>
 {
-    private final List<Yodel> yodels;
-
     public YodelManager(Hub hub)
     {
-        super(hub);
+        super(hub, "yodels");
 
-        this.yodels = new ArrayList<>();
         this.hub.getEntityManager().registerEntity("Yodel", 13, EntitySmallFireball.class, EntityYodel.class);
+    }
 
-        File yodelsConfigurationFile = new File(hub.getDataFolder(), "interactions" + File.separator + "yodels.json");
-
-        if(!yodelsConfigurationFile.exists())
+    @Override
+    public void loadConfiguration(JsonArray rootJson)
+    {
+        for (int i = 0; i < rootJson.size(); i++)
         {
-            try
-            {
-                yodelsConfigurationFile.createNewFile();
-
-                PrintWriter writer = new PrintWriter(yodelsConfigurationFile);
-                writer.println("{ \"yodels\": [] }");
-                writer.close();
-            }
-            catch (IOException e)
-            {
-                e.printStackTrace();
-            }
-        }
-
-        JsonConfiguration yodelsConfiguration = new JsonConfiguration(yodelsConfigurationFile);
-        JsonObject jsonRoot = yodelsConfiguration.load();
-
-        if(jsonRoot == null)
-            return;
-
-        JsonArray jsonYodels = jsonRoot.getAsJsonArray("yodels");
-
-        for (int i = 0; i < jsonYodels.size(); i++)
-        {
-            JsonObject jsonYodel = jsonYodels.get(i).getAsJsonObject();
+            JsonObject jsonYodel = rootJson.get(i).getAsJsonObject();
 
             String startRails = jsonYodel.get("start-rails").getAsString();
             String endRails = jsonYodel.get("end-rails").getAsString();
             Location startPlatform = LocationUtils.str2loc(jsonYodel.get("start-platform").getAsString());
             Location endPlatform = LocationUtils.str2loc(jsonYodel.get("end-platform").getAsString());
 
-            this.yodels.add(new Yodel(this.hub, startRails, endRails, startPlatform, endPlatform));
+            Yodel yodel = null;
 
-            this.log(Level.INFO, "Registered yodel at '" + jsonYodel.get("start-platform").getAsString());
+            try
+            {
+                yodel = new Yodel(this.hub, startRails, endRails, startPlatform, endPlatform);
+            }
+            catch (NullPointerException ignored) {}
+
+            if (yodel != null)
+            {
+                this.interactions.add(yodel);
+                this.log(Level.INFO, "Registered yodel at '" + jsonYodel.get("start-platform").getAsString());
+            }
         }
-    }
-
-    @Override
-    public void onDisable()
-    {
-        this.yodels.stream().forEach(Yodel::onDisable);
-    }
-
-    @Override
-    public void onLogin(Player player) { /** Not Needed **/ }
-
-    @Override
-    public void onLogout(Player player)
-    {
-        this.yodels.stream().filter(yodel -> yodel.hasPlayer(player)).forEach(yodel -> yodel.stop(player));
     }
 }

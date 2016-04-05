@@ -4,3 +4,64 @@ version: 2.0
 
 author: BlueSlime
 website: http://blueslime.fr
+
+commands:
+  # Player commands ----------------------------
+  click:
+    description: Commande relative au ClickMe
+    usage: /click <Joueur>
+    aliases: clickme
+  meh:
+    description: Commande relative au Jukebox
+    usage: /meh
+  woot:
+    description: Commande relative au Jukebox
+    usage: /woot
+  jukebox:
+    description: Commande relative au Jukebox
+    usage: /jukebox
+  join:
+    description: Commande relative au join des file d'attente
+    usage: /join
+  internal:
+    description: Commmande executée en interne pour un joueur
+    usage: /internal
+
+  # Moderating commands ------------------------
+  pllock:
+    description: Commande relative au Jukebox
+    usage: /pllock
+  plnext:
+    description: Commande relative au Jukebox
+    usage: /plnext
+  plclear:
+    description: Commande relative au Jukebox
+    usage: /plclear
+  slow:
+    description: Commande relative au chat
+    usage: /slow
+  shutup:
+    description: Commande relative au chat
+    usage: /shutup
+
+  # Admin commands -----------------------------
+  npc:
+    description: Commandes relatives aux NPC's
+    usage: /npc
+  sign:
+    description: Commandes relatives aux panneaux
+    usage: /sign
+    aliases: /area
+  anguille:
+    description: Commande relative aux Anguilles de Maite
+    usage: /anguille
+    aliases: [jeanpierrecoffe, frontnational, boblebricoleur]
+  nbs:
+    description: Commande relative au Jukebox
+    usage: /nbs
+  evacuate:
+    description: Commande d'évacuation
+    usage: /evacuate
+    aliases: [bagdad]
+
+  # Easter Eggs --------------------------------

@@ -1,6 +1,7 @@
 package net.samagames.hub.parkours;
 
 import net.samagames.hub.Hub;
+import net.samagames.hub.parkours.types.WhitelistBasedParkour;
 import net.samagames.hub.utils.ProximityUtils;
 import net.samagames.tools.ParticleEffect;
 import org.bukkit.ChatColor;
@@ -15,18 +16,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class ParkourBackend
+class ParkourBackend
 {
     private BukkitTask checkingTask;
     private BukkitTask nearingTask;
 
-    public ParkourBackend(Hub hub, Parkour parkour)
+    ParkourBackend(Hub hub, Parkour parkour)
     {
         this.startCheckingTask(hub, parkour);
         this.startNearingTask(hub, parkour);
     }
 
-    public void stop()
+    void stop()
     {
         this.checkingTask.cancel();
         this.nearingTask.cancel();
@@ -42,13 +43,13 @@ public class ParkourBackend
 
                 if (player == null || !player.isOnline())
                 {
-                    parkour.removePlayer(uuid);
+                    parkour.removePlayer(player);
                 }
                 else
                 {
                     Block block = player.getLocation().getBlock().getRelative(BlockFace.DOWN);
 
-                    if (!parkour.isWhitelisted(block.getType()) && block.getType().isSolid())
+                    if (parkour instanceof WhitelistBasedParkour && !((WhitelistBasedParkour) parkour).isWhitelisted(block.getType()) && block.getType().isSolid())
                         parkour.failPlayer(player);
                 }
             }
@@ -66,13 +67,13 @@ public class ParkourBackend
             {
                 parkour.getStartTooltip().getNearbyEntities(0.5D, 0.5D, 0.5D).stream().filter(entity -> entity.getType() == EntityType.PLAYER).forEach(player ->
                 {
-                    if (!parkour.isParkouring(player.getUniqueId()))
+                    if (!parkour.isParkouring(player.getUniqueId()) && !hub.getPlayerManager().isBusy((Player) player))
                         parkour.addPlayer((Player) player);
                 });
 
                 parkour.getStartTooltip().getNearbyEntities(8.0D, 8.0D, 8.0D).stream().filter(entity -> entity.getType() == EntityType.PLAYER).filter(player -> !parkour.isParkouring(player.getUniqueId())).filter(player -> !this.playersCooldown.contains(player.getUniqueId())).forEach(player ->
                 {
-                    player.sendMessage(parkour.getTag() + ChatColor.WHITE + "Vous approchez du " + ChatColor.AQUA + parkour.getParkourName() + ChatColor.WHITE + "...");
+                    player.sendMessage(parkour.getTag() + ChatColor.WHITE + "Vous approchez " + parkour.getPrefix() + " " + ChatColor.AQUA + parkour.getParkourName() + ChatColor.WHITE + "...");
                     player.sendMessage(parkour.getTag() + ChatColor.WHITE + "Difficulté : " + parkour.getStars());
 
                     this.playersCooldown.add(player.getUniqueId());

@@ -79,7 +79,7 @@ public class GuiSwitchHub extends AbstractGui
         if(more)
             this.setSlotData(ChatColor.YELLOW + "Page " + (this.page + 1) + " »", Material.PAPER, this.inventory.getSize() - 1, null, "page_next");
 
-        this.setSlotData(this.getBackIcon(), this.inventory.getSize() - 5, "back");
+        this.setSlotData(getBackIcon(), this.inventory.getSize() - 5, "back");
     }
 
     @Override

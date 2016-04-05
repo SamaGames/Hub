@@ -4,8 +4,11 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import net.samagames.hub.Hub;
 import net.samagames.hub.common.managers.AbstractManager;
+import net.samagames.hub.parkours.types.DeveloperRoomParkour;
+import net.samagames.hub.parkours.types.WhitelistBasedParkour;
 import net.samagames.tools.JsonConfiguration;
 import net.samagames.tools.LocationUtils;
+import org.apache.commons.lang3.tuple.Pair;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -13,9 +16,7 @@ import org.bukkit.entity.Player;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.logging.Level;
 
 public class ParkourManager extends AbstractManager
@@ -42,13 +43,27 @@ public class ParkourManager extends AbstractManager
     @Override
     public void onLogout(Player player) { /** Not needed **/ }
 
-    public void reloadConfig()
+    public Parkour getPlayerParkour(UUID player)
+    {
+        for (Parkour parkour : this.parkours)
+            if (parkour.isParkouring(player))
+                return parkour;
+
+        return null;
+    }
+
+    public List<Parkour> getParkours()
+    {
+        return this.parkours;
+    }
+
+    private void reloadConfig()
     {
         this.parkours.clear();
         this.loadConfig();
     }
 
-    public void loadConfig()
+    private void loadConfig()
     {
         File configuration = new File(this.hub.getDataFolder(), "parkours.json");
 
@@ -81,6 +96,8 @@ public class ParkourManager extends AbstractManager
             JsonObject jsonParkour = jsonParkours.get(i).getAsJsonObject();
 
             String name = jsonParkour.get("name").getAsString();
+            String prefix = jsonParkour.get("prefix").getAsString();
+            String winPrefix = jsonParkour.get("win-prefix").getAsString();
             int difficulty = jsonParkour.get("difficulty").getAsInt();
             Location begin = LocationUtils.str2loc(jsonParkour.get("begin").getAsString());
             Location end = LocationUtils.str2loc(jsonParkour.get("end").getAsString());
@@ -108,31 +125,38 @@ public class ParkourManager extends AbstractManager
 
             String achievementName = jsonParkour.has("achievement") ? jsonParkour.get("achievement").getAsString() : null;
 
-            this.registerParkour(name, begin, end, fail, minimalHeight, checkpoints, whitelist, difficulty, achievementName);
+            this.registerWhitelistBasedParkour(name, prefix, winPrefix, begin, end, fail, minimalHeight, checkpoints, whitelist, difficulty, achievementName);
+        }
+
+        // -------------------
+
+        if (jsonRoot.has("developpers-parkour"))
+        {
+            JsonObject jsonParkour = jsonRoot.getAsJsonObject("developpers-parkour");
+
+            Location begin = LocationUtils.str2loc(jsonParkour.get("begin").getAsString());
+            Location end = LocationUtils.str2loc(jsonParkour.get("end").getAsString());
+            Location fail = LocationUtils.str2loc(jsonParkour.get("fail").getAsString());
+            Location minusFloor = LocationUtils.str2loc(jsonParkour.get("minus-floor").getAsString());
+            String resourcePack = jsonParkour.get("resource-pack").getAsString();
+
+            JsonObject jsonPortals = jsonParkour.getAsJsonObject("portals");
+            Pair<Location, Location> portals = Pair.of(LocationUtils.str2loc(jsonPortals.get("one").getAsString()), LocationUtils.str2loc(jsonPortals.get("two").getAsString()));
+
+            this.registerParkour(new DeveloperRoomParkour(this.hub, begin, end, fail, portals, minusFloor, resourcePack));
         }
     }
 
-    public void registerParkour(String name, Location begin, Location end, Location fail, int minimalHeight, List<Location> checkpoints, List<Material> whitelist, int difficulty, String achievementName)
+    private void registerWhitelistBasedParkour(String name, String prefix, String winPrefix, Location begin, Location end, Location fail, int minimalHeight, List<Location> checkpoints, List<Material> whitelist, int difficulty, String achievementName)
     {
-        Parkour parkour = new Parkour(this.hub, name, begin, end, fail, minimalHeight, checkpoints, whitelist, difficulty, achievementName);
+        this.registerParkour(new WhitelistBasedParkour(this.hub, name, prefix, winPrefix, begin, end, fail, minimalHeight, checkpoints, whitelist, difficulty, achievementName));
+    }
 
+    private void registerParkour(Parkour parkour)
+    {
         if (!this.parkours.contains(parkour))
             this.parkours.add(parkour);
 
-        this.log(Level.INFO, "Registered parkour '" + name + "'!");
-    }
-
-    public Parkour getPlayerParkour(UUID player)
-    {
-        for (Parkour parkour : this.parkours)
-            if (parkour.isParkouring(player))
-                return parkour;
-
-        return null;
-    }
-
-    public List<Parkour> getParkours()
-    {
-        return this.parkours;
+        this.log(Level.INFO, "Registered parkour '" + parkour.getParkourName() + "'!");
     }
 }

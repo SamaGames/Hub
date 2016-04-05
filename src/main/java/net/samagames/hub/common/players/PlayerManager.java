@@ -14,17 +14,20 @@ import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.entity.Player;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.logging.Level;
 
 public class PlayerManager extends AbstractManager
 {
+    public static final String SETTINGS_TAG = ChatColor.DARK_AQUA + "[" + ChatColor.AQUA + "Paramêtres" + ChatColor.DARK_AQUA + "] " + ChatColor.RESET;
+    public static final String MODERATING_TAG = ChatColor.DARK_AQUA + "[" + ChatColor.AQUA + "Modération" + ChatColor.DARK_AQUA + "] " + ChatColor.RESET;
+    public static final String SHOPPING_TAG = ChatColor.DARK_AQUA + "[" + ChatColor.AQUA + "Boutique" + ChatColor.DARK_AQUA + "] " + ChatColor.RESET;
+
     public static final float WALK_SPEED = 0.3F;
     public static final float FLY_SPEED = 0.3F;
 
     private final Map<UUID, Location> selections;
+    private final List<UUID> hiders;
     private final StaticInventory staticInventory;
     private final Location spawn;
 
@@ -35,6 +38,7 @@ public class PlayerManager extends AbstractManager
         super(hub);
 
         this.selections = new HashMap<>();
+        this.hiders = new ArrayList<>();
         this.staticInventory = new StaticInventory(hub);
         this.spawn = LocationUtils.str2loc(hub.getConfig().getString("spawn"));
         this.canBuild = false;
@@ -45,7 +49,8 @@ public class PlayerManager extends AbstractManager
     @Override
     public void onDisable()
     {
-
+        this.selections.clear();
+        this.hiders.clear();
     }
 
     @Override
@@ -67,6 +72,7 @@ public class PlayerManager extends AbstractManager
                 InventoryUtils.cleanPlayer(player);
 
                 this.staticInventory.setInventoryToPlayer(player);
+                this.updateHiders(player);
 
                 if (SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "hub.fly"))
                     this.hub.getServer().getScheduler().runTask(this.hub, () -> player.setAllowFlight(true));
@@ -82,8 +88,29 @@ public class PlayerManager extends AbstractManager
     {
         this.log(Level.INFO, "Handling logout from '" + player.getUniqueId() + "'...");
 
-        if (this.selections.containsKey(player.getUniqueId()))
-            this.selections.remove(player.getUniqueId());
+        this.hub.getScheduledExecutorService().execute(() ->
+        {
+            if (this.selections.containsKey(player.getUniqueId()))
+                this.selections.remove(player.getUniqueId());
+        });
+    }
+
+    private void updateHiders(Player newConnected)
+    {
+        this.hub.getScheduledExecutorService().execute(() ->
+        {
+            List<UUID> uuidList = new ArrayList<>();
+            uuidList.addAll(this.hiders);
+
+            for (UUID uuid : uuidList)
+            {
+                Player player = this.hub.getServer().getPlayer(uuid);
+
+                if(player != null && !player.equals(newConnected))
+                    if (!SamaGamesAPI.get().getPermissionsManager().hasPermission(newConnected, "hub.announce") && !SamaGamesAPI.get().getFriendsManager().areFriends(newConnected.getUniqueId(), uuid))
+                        this.hub.getServer().getScheduler().runTask(this.hub, () -> player.hidePlayer(newConnected));
+            }
+        });
     }
 
     public void setSelection(Player player, Location selection)
@@ -116,6 +143,12 @@ public class PlayerManager extends AbstractManager
         boolean busy = false;
 
         if (this.hub.getGuiManager().getPlayerGui(player.getUniqueId()) != null)
+            busy = true;
+
+        if (this.hub.getParkourManager().getPlayerParkour(player.getUniqueId()) != null)
+            busy = true;
+
+        if (this.hub.getInteractionManager().isInteracting(player))
             busy = true;
 
         // TODO: Complete

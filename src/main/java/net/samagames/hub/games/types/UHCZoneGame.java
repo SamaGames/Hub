@@ -56,7 +56,8 @@ public class UHCZoneGame extends AbstractGame
     public String[] getDeveloppers()
     {
         return new String[] {
-                "IamBlueSlime"
+                "IamBlueSlime",
+                "Thog"
         };
     }
 

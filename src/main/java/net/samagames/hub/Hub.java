@@ -1,11 +1,14 @@
 package net.samagames.hub;
 
+import net.samagames.hub.commands.CommandManager;
 import net.samagames.hub.common.HubRefresher;
 import net.samagames.hub.common.hydroangeas.HydroangeasManager;
 import net.samagames.hub.common.managers.EntityManager;
 import net.samagames.hub.common.managers.EventBus;
+import net.samagames.hub.common.players.ChatManager;
 import net.samagames.hub.common.players.PlayerManager;
 import net.samagames.hub.common.tasks.TaskManager;
+import net.samagames.hub.events.DoubleJumpListener;
 import net.samagames.hub.events.GuiListener;
 import net.samagames.hub.events.ParkourListener;
 import net.samagames.hub.events.PlayerListener;
@@ -40,22 +43,19 @@ public class Hub extends JavaPlugin
     private TaskManager taskManager;
     private EntityManager entityManager;
     private PlayerManager playerManager;
+    private ChatManager chatManager;
     private GameManager gameManager;
     private SignManager signManager;
     private ScoreboardManager scoreboardManager;
     private GuiManager guiManager;
     private ParkourManager parkourManager;
     private InteractionManager interactionManager;
+    private CommandManager commandManager;
 
     @Override
     public void onEnable()
     {
         this.saveDefaultConfig();
-
-        File interactionsDirectory = new File(this.getDataFolder(), "interactions");
-
-        if (!interactionsDirectory.exists())
-            interactionsDirectory.mkdir();
 
         this.world = this.getServer().getWorlds().get(0);
         this.world.setGameRuleValue("randomTickSpeed", "0");
@@ -73,16 +73,19 @@ public class Hub extends JavaPlugin
         this.taskManager = new TaskManager(this);
         this.entityManager = new EntityManager(this);
         this.playerManager = new PlayerManager(this);
+        this.chatManager = new ChatManager(this);
         this.gameManager = new GameManager(this);
         this.signManager = new SignManager(this);
         this.scoreboardManager = new ScoreboardManager(this);
         this.guiManager = new GuiManager(this);
         this.parkourManager = new ParkourManager(this);
         this.interactionManager = new InteractionManager(this);
+        this.commandManager = new CommandManager(this);
 
         this.getServer().getPluginManager().registerEvents(new PlayerListener(this), this);
         this.getServer().getPluginManager().registerEvents(new ParkourListener(this), this);
         this.getServer().getPluginManager().registerEvents(new GuiListener(this), this);
+        this.getServer().getPluginManager().registerEvents(new DoubleJumpListener(), this);
         this.getServer().getPluginManager().registerEvents(new EntityEditionListener(this), this);
         this.getServer().getPluginManager().registerEvents(new InventoryEditionListener(this), this);
         this.getServer().getPluginManager().registerEvents(new PlayerProtectionListener(this), this);
@@ -127,10 +130,12 @@ public class Hub extends JavaPlugin
     public TaskManager getTaskManager() { return this.taskManager; }
     public EntityManager getEntityManager() { return this.entityManager; }
     public PlayerManager getPlayerManager() { return this.playerManager; }
+    public ChatManager getChatManager() { return this.chatManager; }
     public GameManager getGameManager() { return this.gameManager; }
     public SignManager getSignManager() { return this.signManager; }
     public ScoreboardManager getScoreboardManager() { return this.scoreboardManager; }
     public GuiManager getGuiManager() { return this.guiManager; }
     public ParkourManager getParkourManager() { return this.parkourManager; }
     public InteractionManager getInteractionManager() { return this.interactionManager; }
+    public CommandManager getCommandManager() { return this.commandManager; }
 }
