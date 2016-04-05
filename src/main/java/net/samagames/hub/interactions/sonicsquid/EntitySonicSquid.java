@@ -1,9 +1,8 @@
 package net.samagames.hub.interactions.sonicsquid;
 
 import net.minecraft.server.v1_9_R1.*;
-import net.minecraft.server.v1_9_R1.World;
 import net.samagames.hub.Hub;
-import org.bukkit.*;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.v1_9_R1.util.UnsafeList;
@@ -78,10 +77,13 @@ class EntitySonicSquid extends EntitySquid
                 return;
             }
         }
-
-        this.getBukkitEntity().setVelocity(((Player) entityliving.getBukkitEntity()).getEyeLocation().getDirection().multiply(1.025F));
+        /*Location location = new Location(entityliving.getBukkitEntity().getWorld(),
+                0, 0, 0, entityliving.yaw, 0);*/
+        //this.getBukkitEntity().setVelocity(location.getDirection().multiply(1.025F).normalize());
+        //this.getBukkitEntity().setVelocity(((Player) entityliving.getBukkitEntity()).getEyeLocation().getDirection().multiply(1.025F));
         this.setYawPitch(entityliving.yaw, 0.0F);
-
+        this.motX = Math.cos(entityliving.yaw) * 1.025F;
+        this.motZ = Math.sin(entityliving.yaw) * 1.025F;
         this.motY = 0;
     }
 
