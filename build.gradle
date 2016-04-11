@@ -40,6 +40,8 @@ dependencies {
     compile(group: 'org.spigotmc', name: 'spigot', version: '1.9-R0.1-SNAPSHOT', changing: true) {
         transitive = false
     }
+
+    compile group: 'LibsDisguises', name: 'LibsDisguises', version: '9.0.3'
 }
 
 sonarRunner {

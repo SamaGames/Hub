@@ -1,5 +1,6 @@
 package net.samagames.hub.interactions.sonicsquid;
 
+import com.google.common.collect.Sets;
 import net.minecraft.server.v1_9_R1.*;
 import net.samagames.hub.Hub;
 import org.bukkit.Location;
@@ -32,14 +33,14 @@ class EntitySonicSquid extends EntitySquid
             Field cField = PathfinderGoalSelector.class.getDeclaredField("c");
             cField.setAccessible(true);
 
-            bField.set(this.goalSelector, new UnsafeList<PathfinderGoalSelector>());
-            bField.set(this.targetSelector, new UnsafeList<PathfinderGoalSelector>());
-            cField.set(this.goalSelector, new UnsafeList<PathfinderGoalSelector>());
-            cField.set(this.targetSelector, new UnsafeList<PathfinderGoalSelector>());
+            bField.set(this.goalSelector, Sets.newLinkedHashSet());
+            bField.set(this.targetSelector, Sets.newLinkedHashSet());
+            cField.set(this.goalSelector, Sets.newLinkedHashSet());
+            cField.set(this.targetSelector, Sets.newLinkedHashSet());
 
             ((Navigation) getNavigation()).a(true);
         }
-        catch (Exception ignored) {}
+        catch (ReflectiveOperationException ignored) {}
 
         Location copy = player.getLocation().clone();
 
@@ -77,14 +78,16 @@ class EntitySonicSquid extends EntitySquid
                 return;
             }
         }
-        /*Location location = new Location(entityliving.getBukkitEntity().getWorld(),
-                0, 0, 0, entityliving.yaw, 0);*/
-        //this.getBukkitEntity().setVelocity(location.getDirection().multiply(1.025F).normalize());
-        //this.getBukkitEntity().setVelocity(((Player) entityliving.getBukkitEntity()).getEyeLocation().getDirection().multiply(1.025F));
+        /**Location location = new Location(entityliving.getBukkitEntity().getWorld(), 0, 0, 0, entityliving.yaw, 0);
+        this.getBukkitEntity().setVelocity(location.getDirection().multiply(1.025F).normalize());
+        this.getBukkitEntity().setVelocity(((Player) entityliving.getBukkitEntity()).getEyeLocation().getDirection().multiply(1.025F));**/
         this.setYawPitch(entityliving.yaw, 0.0F);
         this.motX = Math.cos(entityliving.yaw) * 1.025F;
-        this.motZ = Math.sin(entityliving.yaw) * 1.025F;
         this.motY = 0;
+        this.motZ = Math.sin(entityliving.yaw) * 1.025F;
+        this.positionChanged = true;
+
+        // TODO: A working shit
     }
 
     @Override

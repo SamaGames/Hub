@@ -1,6 +1,7 @@
 package net.samagames.hub.common.players;
 
 import net.samagames.hub.Hub;
+import net.samagames.hub.gui.cosmetics.GuiCosmetics;
 import net.samagames.hub.gui.main.GuiMain;
 import net.samagames.hub.gui.profile.GuiProfile;
 import net.samagames.hub.gui.shop.GuiShop;
@@ -36,8 +37,8 @@ public class StaticInventory
             this.hub.getGuiManager().openGui(player, new GuiMain(this.hub));
         else if(stack.getType() == Material.SKULL_ITEM)
             this.hub.getGuiManager().openGui(player, new GuiProfile(this.hub));
-        /**else if(stack.getType() == Material.ENDER_CHEST)
-            this.hub.getGuiManager().openGui(player, new GuiCosmetics(this.hub));**/
+        else if(stack.getType() == Material.ENDER_CHEST)
+            this.hub.getGuiManager().openGui(player, new GuiCosmetics(this.hub));
         else if(stack.getType() == Material.GOLD_INGOT)
             this.hub.getGuiManager().openGui(player, new GuiShop(this.hub));
         else if (stack.getType() == Material.BARRIER && this.hub.getParkourManager().getPlayerParkour(player.getUniqueId()) != null)
@@ -46,7 +47,10 @@ public class StaticInventory
 
     public void setInventoryToPlayer(Player player)
     {
-        for(int slot : this.items.keySet())
+        for (int i = 0; i < 9; i++)
+            player.getInventory().setItem(i, null);
+
+        for (int slot : this.items.keySet())
         {
             if(this.items.get(slot).getType() == Material.SKULL_ITEM)
             {

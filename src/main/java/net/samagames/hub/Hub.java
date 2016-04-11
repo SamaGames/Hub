@@ -8,6 +8,7 @@ import net.samagames.hub.common.managers.EventBus;
 import net.samagames.hub.common.players.ChatManager;
 import net.samagames.hub.common.players.PlayerManager;
 import net.samagames.hub.common.tasks.TaskManager;
+import net.samagames.hub.cosmetics.CosmeticManager;
 import net.samagames.hub.events.DoubleJumpListener;
 import net.samagames.hub.events.GuiListener;
 import net.samagames.hub.events.ParkourListener;
@@ -50,6 +51,7 @@ public class Hub extends JavaPlugin
     private GuiManager guiManager;
     private ParkourManager parkourManager;
     private InteractionManager interactionManager;
+    private CosmeticManager cosmeticManager;
     private CommandManager commandManager;
 
     @Override
@@ -80,6 +82,7 @@ public class Hub extends JavaPlugin
         this.guiManager = new GuiManager(this);
         this.parkourManager = new ParkourManager(this);
         this.interactionManager = new InteractionManager(this);
+        this.cosmeticManager = new CosmeticManager(this);
         this.commandManager = new CommandManager(this);
 
         this.getServer().getPluginManager().registerEvents(new PlayerListener(this), this);
@@ -137,5 +140,6 @@ public class Hub extends JavaPlugin
     public GuiManager getGuiManager() { return this.guiManager; }
     public ParkourManager getParkourManager() { return this.parkourManager; }
     public InteractionManager getInteractionManager() { return this.interactionManager; }
+    public CosmeticManager getCosmeticManager() { return this.cosmeticManager; }
     public CommandManager getCommandManager() { return this.commandManager; }
 }

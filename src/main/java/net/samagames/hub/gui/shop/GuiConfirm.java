@@ -64,6 +64,7 @@ public class GuiConfirm extends AbstractGui
         }
     }
 
+    @FunctionalInterface
     public interface ConfirmCallback
     {
         void run(AbstractGui parent);

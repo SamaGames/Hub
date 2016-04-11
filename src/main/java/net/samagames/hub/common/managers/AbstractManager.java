@@ -17,7 +17,7 @@ public abstract class AbstractManager implements EntryPoints
             this.hub.getEventBus().registerManager(this);
     }
 
-    protected void log(Level level, String message)
+    public void log(Level level, String message)
     {
         this.hub.getLogger().log(level, "[" + this.getClass().getSimpleName() + "] " + message);
     }
