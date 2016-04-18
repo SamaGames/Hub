@@ -1,5 +1,6 @@
 package net.samagames.hub;
 
+import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.commands.CommandManager;
 import net.samagames.hub.common.HubRefresher;
 import net.samagames.hub.common.hydroangeas.HydroangeasManager;
@@ -9,10 +10,7 @@ import net.samagames.hub.common.players.ChatManager;
 import net.samagames.hub.common.players.PlayerManager;
 import net.samagames.hub.common.tasks.TaskManager;
 import net.samagames.hub.cosmetics.CosmeticManager;
-import net.samagames.hub.events.DoubleJumpListener;
-import net.samagames.hub.events.GuiListener;
-import net.samagames.hub.events.ParkourListener;
-import net.samagames.hub.events.PlayerListener;
+import net.samagames.hub.events.*;
 import net.samagames.hub.events.protection.EntityEditionListener;
 import net.samagames.hub.events.protection.InventoryEditionListener;
 import net.samagames.hub.events.protection.PlayerProtectionListener;
@@ -23,10 +21,15 @@ import net.samagames.hub.gui.GuiManager;
 import net.samagames.hub.interactions.InteractionManager;
 import net.samagames.hub.parkours.ParkourManager;
 import net.samagames.hub.scoreboards.ScoreboardManager;
+import net.samagames.tools.Reflection;
+import org.bukkit.Bukkit;
 import org.bukkit.World;
+import org.bukkit.command.SimpleCommandMap;
+import org.bukkit.craftbukkit.v1_9_R1.CraftServer;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
@@ -89,10 +92,43 @@ public class Hub extends JavaPlugin
         this.getServer().getPluginManager().registerEvents(new ParkourListener(this), this);
         this.getServer().getPluginManager().registerEvents(new GuiListener(this), this);
         this.getServer().getPluginManager().registerEvents(new DoubleJumpListener(), this);
+        this.getServer().getPluginManager().registerEvents(new PetListener(), this);
+
         this.getServer().getPluginManager().registerEvents(new EntityEditionListener(this), this);
         this.getServer().getPluginManager().registerEvents(new InventoryEditionListener(this), this);
         this.getServer().getPluginManager().registerEvents(new PlayerProtectionListener(this), this);
         this.getServer().getPluginManager().registerEvents(new WorldEditionListener(this), this);
+
+        try
+        {
+            // ProtocolLib
+            this.removeCommand("protocol");
+            this.removeCommand("packet");
+            this.removeCommand("filter");
+
+            // SonarPet
+            this.removeCommand("pet");
+            this.removeCommand("petadmin");
+            this.removeCommand("ecupdate");
+            this.removeCommand("echopet");
+
+            // LibsDisguise
+            this.removeCommand("libsdisguises");
+            this.removeCommand("disguise", "d", "dis");
+            this.removeCommand("disguiseentity", "dentity", "disentity");
+            this.removeCommand("disguisehelp", "dhelp", "dishelp");
+            this.removeCommand("disguiseplayer", "dplayer", "displayer");
+            this.removeCommand("disguiseradius", "disradius", "dradius");
+            this.removeCommand("undisguise", "u", "und", "undis");
+            this.removeCommand("undisguiseplayer", "undisplayer", "undplayer");
+            this.removeCommand("undisguiseradius", "undisradius", "undradius");
+            this.removeCommand("disguiseclone", "disguisec", "disc", "disclone", "dclone", "clonedisguise", "clonedis", "cdisguise", "cdis");
+            this.removeCommand("disguiseviewself", "dviewself", "dvs", "disguisevs", "disvs", "vsd", "viewselfdisguise", "viewselfd");
+        }
+        catch (NoSuchFieldException | IllegalAccessException e)
+        {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -102,6 +138,15 @@ public class Hub extends JavaPlugin
             this.hubRefresher.removeFromList();
 
         this.eventBus.onDisable();
+    }
+
+    private void removeCommand(String... str) throws NoSuchFieldException, IllegalAccessException
+    {
+        SimpleCommandMap scm = ((CraftServer) Bukkit.getServer()).getCommandMap();
+        Map knownCommands = (Map) Reflection.getValue(scm, true, "knownCommands");
+
+        for (String cmd : str)
+            knownCommands.remove(cmd);
     }
 
     public World getWorld()

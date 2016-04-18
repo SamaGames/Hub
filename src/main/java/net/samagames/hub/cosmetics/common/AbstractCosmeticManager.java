@@ -43,7 +43,7 @@ public abstract class AbstractCosmeticManager<COSMETIC extends AbstractCosmetic>
         {
             if (cosmetic.getAccessibility().canAccess(player))
             {
-                if (this.equipped.containsKey(player.getUniqueId()) && this.equipped.get(player.getUniqueId()).compareTo(cosmetic) == 1)
+                if (this.equipped.containsKey(player.getUniqueId()) && this.equipped.get(player.getUniqueId()).compareTo(cosmetic) > 0)
                 {
                     player.sendMessage(PlayerManager.COSMETICS_TAG + ChatColor.RED + "Vous utilisez déjà cette cosmétique.");
                 }

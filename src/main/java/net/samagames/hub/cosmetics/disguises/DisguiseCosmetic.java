@@ -22,16 +22,4 @@ class DisguiseCosmetic extends AbstractCosmetic
     {
         return this.disguiseType;
     }
-
-    @Override
-    public int compareTo(AbstractCosmetic cosmetic)
-    {
-        if (!(cosmetic instanceof DisguiseCosmetic))
-            return 0;
-
-        if (cosmetic.getKey().equals(this.getKey()))
-            return 1;
-        else
-            return 0;
-    }
 }

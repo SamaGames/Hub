@@ -23,10 +23,10 @@ public class PetManager extends AbstractCosmeticManager<PetCosmetic>
     public void enableCosmetic(Player player, PetCosmetic cosmetic, NullType useless)
     {
         IPet pet = EchoPetAPI.getAPI().givePet(player, cosmetic.getPetType(), false);
-        pet.setPetName(null, false);
+        pet.setPetName(player.getName(), false);
 
         cosmetic.applyCustomization(pet);
-        
+
         this.cosmeticManager.setCurrentLevel(player, KEY, cosmetic.getKey());
         player.sendMessage(PlayerManager.COSMETICS_TAG + ChatColor.GREEN + "Votre animal vient de sortir de l'écurie !");
     }
