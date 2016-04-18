@@ -39,18 +39,6 @@ class JukeboxDiskCosmetic extends AbstractCosmetic
         return this.seconds;
     }
 
-    @Override
-    public int compareTo(AbstractCosmetic cosmetic)
-    {
-        if (!(cosmetic instanceof JukeboxDiskCosmetic))
-            return 0;
-
-        if (cosmetic.getKey().equals(this.getKey()))
-            return 1;
-        else
-            return 0;
-    }
-
     private static ItemStack getRandomDisk()
     {
         return new ItemStack(RECORDS[new Random().nextInt(RECORDS.length)], 1);

@@ -171,4 +171,13 @@ public abstract class AbstractCosmetic implements Comparable<AbstractCosmetic>
         List<String> owned = this.shopsManager.getOwnedLevels(player, this.category);
         return owned != null && owned.contains(this.key);
     }
+
+    @Override
+    public int compareTo(AbstractCosmetic cosmetic)
+    {
+        if (cosmetic.getCategory().equals(this.category) && cosmetic.getKey().equals(this.key))
+            return 1;
+        else
+            return -1;
+    }
 }
