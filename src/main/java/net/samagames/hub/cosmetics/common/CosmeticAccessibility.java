@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
 public enum CosmeticAccessibility
 {
     ALL(null, null),
-    VIP(ChatColor.GREEN + "VIP","network.vip"),
+    VIP(ChatColor.GREEN + "VIP", "network.vip"),
     VIPPLUS(ChatColor.AQUA + "VIP" + ChatColor.LIGHT_PURPLE + "+", "network.vipplus"),
     STAFF(ChatColor.RED + "Staff", "network.staff")
     ;

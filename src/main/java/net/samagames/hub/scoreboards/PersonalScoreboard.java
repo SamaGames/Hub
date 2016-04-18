@@ -11,7 +11,7 @@ import org.bukkit.entity.Player;
 
 import java.util.UUID;
 
-public class PersonalScoreboard
+class PersonalScoreboard
 {
     private final Hub hub;
     private final UUID player;
@@ -21,7 +21,7 @@ public class PersonalScoreboard
     private long coins;
     private long stars;
 
-    public PersonalScoreboard(Hub hub, Player player)
+    PersonalScoreboard(Hub hub, Player player)
     {
         this.hub = hub;
         this.player = player.getUniqueId();

@@ -151,9 +151,9 @@ public class GuiSettings extends AbstractGui
 
     protected void drawSetting(Player player, String name, String displayName, ItemStack icon, int slot, String[] description)
     {
-        boolean enabled = SamaGamesAPI.get().getSettingsManager().isEnabled(player.getUniqueId(), name, true);
-        ChatColor titleColor = (enabled ? ChatColor.GREEN : ChatColor.RED);
-        ItemStack glassBlock = new ItemStack(Material.STAINED_GLASS, 1, (enabled ? DyeColor.GREEN.getData() : DyeColor.RED.getData()));
+        boolean enabled = PlayerSettings.valueOf(name.toUpperCase()).isEnabled(player);
+        ChatColor titleColor = enabled ? ChatColor.GREEN : ChatColor.RED;
+        ItemStack glassBlock = new ItemStack(Material.STAINED_GLASS, 1, enabled ? DyeColor.GREEN.getData() : DyeColor.RED.getData());
 
         this.setSlotData(titleColor + displayName, icon, slot, description, "setting_" + name);
         this.setSlotData(titleColor + (enabled ? "Activé" : "Désactivé"), glassBlock, slot + 9, null, "setting_" + name);

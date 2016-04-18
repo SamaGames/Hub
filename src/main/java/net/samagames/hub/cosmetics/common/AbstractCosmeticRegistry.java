@@ -19,7 +19,7 @@ public abstract class AbstractCosmeticRegistry<COSMETIC extends AbstractCosmetic
 
     public abstract void register();
 
-    public void registerElement(COSMETIC element)
+    protected void registerElement(COSMETIC element)
     {
         if(this.elements.containsKey(element.getKey()))
         {

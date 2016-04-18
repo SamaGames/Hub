@@ -106,6 +106,10 @@ public abstract class AbstractCosmetic implements Comparable<AbstractCosmetic>
         ItemMeta meta = cloned.getItemMeta();
 
         List<String> lore = meta.getLore();
+
+        if (lore == null)
+            lore = new ArrayList<>();
+
         lore.add("");
 
         if (!this.isOwned(player))

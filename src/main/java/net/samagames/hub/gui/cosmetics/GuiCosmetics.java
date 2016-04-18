@@ -1,5 +1,6 @@
 package net.samagames.hub.gui.cosmetics;
 
+import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import net.samagames.hub.gui.AbstractGui;
 import org.bukkit.ChatColor;
@@ -70,25 +71,19 @@ public class GuiCosmetics extends AbstractGui
         {
             /**case "particles":
                 this.hub.getGuiManager().openGui(player, new GuiCosmeticsCategory<>("Particules", this.hub.getCosmeticManager().getParticleManager(), true));
-                break;
-            case "pets":
-                this.hub.getGuiManager().openGui(player, new GuiCosmeticsCategory<>("Montures", this.hub.getCosmeticManager().getPetManager(), true));
                 break;**/
+            case "pets":
+                this.hub.getGuiManager().openGui(player, new GuiCosmeticsCategory<>(this.hub, "Montures", this.hub.getCosmeticManager().getPetManager(), true));
+                break;
             case "disguises":
                 this.hub.getGuiManager().openGui(player, new GuiCosmeticsCategory<>(this.hub, "Déguisements", this.hub.getCosmeticManager().getDisguiseManager(), true));
                 break;
             /**case "gadgets":
                 this.hub.getGuiManager().openGui(player, new GuiCosmeticsCategory<>("Gadgets", this.hub.getCosmeticManager().getGadgetManager(), false));
-                break;
-            case "jukebox":
-                Bukkit.getScheduler().runTaskAsynchronously(Hub.getInstance(), () ->
-                {
-                    if(SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "netjoin.vip"))
-                        Hub.getInstance().getGuiManager().openGui(player, new GuiJukebox());
-                    else
-                        player.sendMessage(ChatColor.RED + "Vous devez être " + ChatColor.GREEN + "VIP" + ChatColor.RED + " pour utiliser le Jukebox !");
-                });
                 break;**/
+            case "jukebox":
+                this.hub.getGuiManager().openGui(player, new GuiCosmeticsCategory<>(this.hub, "Jukebox", this.hub.getCosmeticManager().getJukeboxManager(), false));
+                break;
             case "back":
                 this.hub.getGuiManager().closeGui(player);
                 break;

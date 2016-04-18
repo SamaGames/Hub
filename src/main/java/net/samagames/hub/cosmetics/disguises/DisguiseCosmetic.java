@@ -29,7 +29,7 @@ class DisguiseCosmetic extends AbstractCosmetic
         if (!(cosmetic instanceof DisguiseCosmetic))
             return 0;
 
-        if (((DisguiseCosmetic) cosmetic).getDisguiseType().equals(this.disguiseType))
+        if (cosmetic.getKey().equals(this.getKey()))
             return 1;
         else
             return 0;

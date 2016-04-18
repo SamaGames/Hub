@@ -5,6 +5,8 @@ version: 2.0
 author: BlueSlime
 website: http://blueslime.fr
 
+depend: [SamaGamesAPI, ProtocolLib, LibsDisguises, SonarPet]
+
 commands:
   # Player commands ----------------------------
   click:

@@ -42,6 +42,7 @@ dependencies {
     }
 
     compile group: 'LibsDisguises', name: 'LibsDisguises', version: '9.0.3'
+    compile group: 'net.techcable', name: 'SonarPet', version: '1.0.1'
 }
 
 sonarRunner {

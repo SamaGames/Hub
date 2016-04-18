@@ -19,6 +19,8 @@ import java.util.logging.Level;
 
 public class PlayerManager extends AbstractManager
 {
+    static Hub HUB;
+
     public static final String SETTINGS_TAG = ChatColor.DARK_AQUA + "[" + ChatColor.AQUA + "Paramêtres" + ChatColor.DARK_AQUA + "] " + ChatColor.RESET;
     public static final String MODERATING_TAG = ChatColor.DARK_AQUA + "[" + ChatColor.AQUA + "Modération" + ChatColor.DARK_AQUA + "] " + ChatColor.RESET;
     public static final String SHOPPING_TAG = ChatColor.DARK_AQUA + "[" + ChatColor.AQUA + "Boutique" + ChatColor.DARK_AQUA + "] " + ChatColor.RESET;
@@ -37,6 +39,8 @@ public class PlayerManager extends AbstractManager
     public PlayerManager(Hub hub)
     {
         super(hub);
+
+        HUB = hub;
 
         this.selections = new HashMap<>();
         this.hiders = new ArrayList<>();
@@ -94,6 +98,23 @@ public class PlayerManager extends AbstractManager
             if (this.selections.containsKey(player.getUniqueId()))
                 this.selections.remove(player.getUniqueId());
         });
+    }
+
+    public void addHider(Player player)
+    {
+        this.hiders.add(player.getUniqueId());
+
+        this.hub.getServer().getScheduler().runTaskAsynchronously(this.hub, () ->
+                this.hub.getServer().getOnlinePlayers().stream().filter(p -> !SamaGamesAPI.get().getPermissionsManager().hasPermission(p, "hub.announce") && !SamaGamesAPI.get().getFriendsManager().areFriends(player.getUniqueId(), p.getUniqueId())).forEach(p ->
+                        this.hub.getServer().getScheduler().runTask(this.hub, () -> player.hidePlayer(p))));
+    }
+
+    public void removeHider(Player player)
+    {
+        if(this.hiders.contains(player.getUniqueId()))
+            this.hiders.remove(player.getUniqueId());
+
+        this.hub.getServer().getScheduler().runTask(this.hub, () -> this.hub.getServer().getOnlinePlayers().forEach(player::showPlayer));
     }
 
     private void updateHiders(Player newConnected)
