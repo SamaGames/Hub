@@ -163,14 +163,12 @@ public class PlayerManager extends AbstractManager
 
         if (this.hub.getGuiManager().getPlayerGui(player.getUniqueId()) != null)
             busy = true;
-
-        if (this.hub.getParkourManager().getPlayerParkour(player.getUniqueId()) != null)
+        else if (this.hub.getParkourManager().getPlayerParkour(player.getUniqueId()) != null)
             busy = true;
-
-        if (this.hub.getInteractionManager().isInteracting(player))
+        else if (this.hub.getInteractionManager().isInteracting(player))
             busy = true;
-
-        // TODO: Complete
+        else if (this.hub.getCosmeticManager().getGadgetManager().hasGadget(player))
+            busy = true;
 
         return busy;
     }

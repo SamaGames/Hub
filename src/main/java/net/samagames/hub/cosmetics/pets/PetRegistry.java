@@ -75,7 +75,7 @@ class PetRegistry extends AbstractCosmeticRegistry<PetCosmetic>
                 "magnifiques !"
         }, PetType.RABBIT);
 
-        PetCosmetic ironGolemPet = new PetCosmetic(this.hub, "golem", "Golem de fer", GlowEffect.addGlow(EggUtils.getMonsterEgg(EntityType.GHAST)), 1500, CosmeticRarity.LEGENDARY, CosmeticAccessibility.ALL, new String[] {
+        PetCosmetic ironGolemPet = new PetCosmetic(this.hub, "golem", "Golem de fer", EggUtils.getMonsterEgg(EntityType.GHAST), 1500, CosmeticRarity.LEGENDARY, CosmeticAccessibility.ALL, new String[] {
                 "Ceci est une description des plus",
                 "magnifiques !"
         }, PetType.IRONGOLEM);

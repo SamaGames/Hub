@@ -21,32 +21,38 @@ public class PlayerProtectionListener implements Listener
     }
 
     @EventHandler
-    public void onPlayerAchievementAwardedEvent(PlayerAchievementAwardedEvent event)
+    public void onPlayerAchievementAwarded(PlayerAchievementAwardedEvent event)
     {
         event.setCancelled(true);
     }
 
     @EventHandler
-    public void onPlayerBucketFillEvent(PlayerBucketFillEvent event)
+    public void onPlayerBucketFill(PlayerBucketFillEvent event)
     {
         event.setCancelled(true);
     }
 
     @EventHandler
-    public void onPlayerDropItemEvent(PlayerDropItemEvent event)
+    public void onPlayerDropItem(PlayerDropItemEvent event)
     {
         event.setCancelled(true);
     }
 
     @EventHandler
-    public void onPlayerInteractEntityEvent(PlayerInteractEntityEvent event)
+    public void onPlayerPickupItem(PlayerPickupItemEvent event)
+    {
+        event.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onPlayerInteractEntity(PlayerInteractEntityEvent event)
     {
         if (!this.canDoAction(event.getPlayer()))
             event.setCancelled(true);
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void onPlayerInteractEvent(final PlayerInteractEvent event)
+    public void onPlayerInteract(final PlayerInteractEvent event)
     {
         if (!this.canDoAction(event.getPlayer()))
             event.setCancelled(true);

@@ -153,7 +153,7 @@ public class GameManager extends AbstractManager
             for (AbstractGame game : this.getGames().values())
                 for (List<GameSign> list : game.getSigns().values())
                     for (GameSign sign : list)
-                        this.hub.getWorld().getNearbyEntities(sign.getSign().getLocation(), 2.0D, 2.0D, 2.0D).stream().filter(entity -> entity instanceof Player && !toHide.contains(entity.getUniqueId())).forEach(entity -> toHide.add(entity.getUniqueId()));
+                        this.hub.getWorld().getNearbyEntities(sign.getSign().getLocation(), 1.0D, 1.0D, 1.0D).stream().filter(entity -> entity instanceof Player && !toHide.contains(entity.getUniqueId())).forEach(entity -> toHide.add(entity.getUniqueId()));
 
             for (UUID playerUUID : toHide)
             {

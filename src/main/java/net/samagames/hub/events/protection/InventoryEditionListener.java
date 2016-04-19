@@ -17,33 +17,33 @@ public class InventoryEditionListener implements Listener
     }
 
     @EventHandler
-    public void onCraftItemEvent(CraftItemEvent event)
+    public void onCraftItem(CraftItemEvent event)
     {
         if (!(event.getWhoClicked() instanceof Player) || !canDoAction((Player) event.getWhoClicked()))
             event.setCancelled(true);
     }
 
     @EventHandler
-    public void onFurnaceBurnEvent(FurnaceBurnEvent event)
+    public void onFurnaceBurn(FurnaceBurnEvent event)
     {
         event.setCancelled(true);
     }
 
     @EventHandler
-    public void onFurnaceSmeltEvent(FurnaceSmeltEvent event)
+    public void onFurnaceSmelt(FurnaceSmeltEvent event)
     {
         event.setCancelled(true);
     }
 
     @EventHandler
-    public void onInventoryClickEvent(InventoryClickEvent event)
+    public void onInventoryClick(InventoryClickEvent event)
     {
         if (!(event.getWhoClicked() instanceof Player) || !canDoAction((Player) event.getWhoClicked()))
             event.setCancelled(true);
     }
 
     @EventHandler
-    public void onInventoryInteractEvent(InventoryInteractEvent event)
+    public void onInventoryInteract(InventoryInteractEvent event)
     {
         if (!(event.getWhoClicked() instanceof Player) || !canDoAction((Player) event.getWhoClicked()))
             event.setCancelled(true);
