@@ -83,8 +83,7 @@ public class GameSign
     {
         WorldServer worldServer = ((CraftWorld) this.sign.getWorld()).getHandle();
 
-        IChatBaseComponent[] lines = new IChatBaseComponent[]
-                {
+        IChatBaseComponent[] lines = new IChatBaseComponent[] {
                 new ChatMessage(this.sign.getLine(0)),
                 new ChatMessage(this.sign.getLine(1)),
                 new ChatMessage(this.sign.getLine(2)),
@@ -93,7 +92,7 @@ public class GameSign
 
         PacketPlayOutUpdateSign packet = new PacketPlayOutUpdateSign(worldServer, new BlockPosition(this.sign.getX(), this.sign.getY(), this.sign.getZ()), lines);
 
-        this.sign.getWorld().getNearbyEntities(sign.getLocation(), 30, 30, 30).stream().filter(entity -> entity instanceof Player).forEach(entity -> ((CraftPlayer) entity).getHandle().playerConnection.sendPacket(packet));
+        this.sign.getWorld().getNearbyEntities(this.sign.getLocation(), 30, 30, 30).stream().filter(entity -> entity instanceof Player).forEach(entity -> ((CraftPlayer) entity).getHandle().playerConnection.sendPacket(packet));
     }
 
     public void updateMapName()
@@ -143,7 +142,8 @@ public class GameSign
             return;
         }
 
-        this.hub.getServer().getScheduler().runTaskAsynchronously(this.hub, () -> {
+        this.hub.getServer().getScheduler().runTaskAsynchronously(this.hub, () ->
+        {
             UUID partyUUID = SamaGamesAPI.get().getPartiesManager().getPlayerParty(player.getUniqueId());
 
             if(partyUUID == null)
