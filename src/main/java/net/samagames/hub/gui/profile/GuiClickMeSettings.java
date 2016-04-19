@@ -1,5 +1,6 @@
 package net.samagames.hub.gui.profile;
 
+import net.samagames.api.settings.IPlayerSettings;
 import net.samagames.hub.Hub;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -26,35 +27,85 @@ class GuiClickMeSettings extends GuiSettings
     @Override
     public void update(Player player)
     {
-        this.drawSetting(player, "clickme", "ClickMe", new ItemStack(Material.WOOD_BUTTON, 1), 10, new String[] {
+        this.drawSetting(player, "ClickMe", new ItemStack(Material.WOOD_BUTTON, 1), 10, new String[]{
                 ChatColor.GRAY + "Quand cette option est activée, votre ClickMe",
                 ChatColor.GRAY + "sera activé. Les joueurs pourront y accéder en",
                 ChatColor.GRAY + "cliquant sur vous dans les hubs ou via la",
                 ChatColor.GRAY + "commande " + ChatColor.GOLD + "/click <pseudo>" + ChatColor.GRAY + "."
+        }, new GuiSettingsCallback() {
+            @Override
+            public boolean get(IPlayerSettings setting) {
+                return setting.isClickOnMeActivation();
+            }
+
+            @Override
+            public void invert(IPlayerSettings setting) {
+                setting.setClickOnMeActivation(!get(setting));
+            }
         });
 
-        this.drawSetting(player, "clickme_stats", "Vue des statistiques", new ItemStack(Material.ENCHANTED_BOOK, 1), 11, new String[] {
+        this.drawSetting(player, "Vue des statistiques", new ItemStack(Material.ENCHANTED_BOOK, 1), 11, new String[]{
                 ChatColor.GRAY + "Quand cette option est activée, les joueurs",
                 ChatColor.GRAY + "pourront voir vos statistiques des jeux dans",
                 ChatColor.GRAY + "votre ClickMe."
+        }, new GuiSettingsCallback() {
+            @Override
+            public boolean get(IPlayerSettings setting) {
+                return setting.isAllowStatisticOnClick();
+            }
+
+            @Override
+            public void invert(IPlayerSettings setting) {
+                setting.setAllowStatisticOnClick(!get(setting));
+            }
         });
 
-        this.drawSetting(player, "clickme_coins", "Vue des pièces", new ItemStack(Material.GOLD_INGOT, 1), 12, new String[] {
+        this.drawSetting(player, "Vue des pièces", new ItemStack(Material.GOLD_INGOT, 1), 12, new String[]{
                 ChatColor.GRAY + "Quand cette option est activée, les joueurs",
                 ChatColor.GRAY + "pourront voir votre nombre de pièces dans",
                 ChatColor.GRAY + "votre ClickMe."
+        }, new GuiSettingsCallback() {
+            @Override
+            public boolean get(IPlayerSettings setting) {
+                return setting.isAllowCoinsOnClick();
+            }
+
+            @Override
+            public void invert(IPlayerSettings setting) {
+                setting.setAllowCoinsOnClick(!get(setting));
+            }
         });
 
-        this.drawSetting(player, "clickme_stars", "Vue des étoiles", new ItemStack(Material.NETHER_STAR, 1), 13, new String[] {
+        this.drawSetting(player, "Vue des étoiles", new ItemStack(Material.NETHER_STAR, 1), 13, new String[]{
                 ChatColor.GRAY + "Quand cette option est activée, les joueurs",
                 ChatColor.GRAY + "pourront voir votre nombre d'étoiles dans",
                 ChatColor.GRAY + "votre ClickMe."
+        }, new GuiSettingsCallback() {
+            @Override
+            public boolean get(IPlayerSettings setting) {
+                return setting.isAllowStarsOnclick();
+            }
+
+            @Override
+            public void invert(IPlayerSettings setting) {
+                setting.setAllowStarsOnclick(!get(setting));
+            }
         });
 
-        this.drawSetting(player, "clickme_punch", "Clic gauche", new ItemStack(Material.IRON_SWORD, 1), 16, new String[]{
+        this.drawSetting(player, "Clic gauche", new ItemStack(Material.IRON_SWORD, 1), 16, new String[]{
                 ChatColor.GRAY + "Quand cette option est activée, vous",
                 ChatColor.GRAY + "accéderez au ClickMe des joueurs en faisant",
                 ChatColor.GRAY + "un clic gauche dessus."
+        }, new GuiSettingsCallback() {
+            @Override
+            public boolean get(IPlayerSettings setting) {
+                return setting.isAllowClickOnOther();
+            }
+
+            @Override
+            public void invert(IPlayerSettings setting) {
+                setting.setAllowClickOnOther(!get(setting));
+            }
         });
 
         this.setSlotData(getBackIcon(), 40, "back");

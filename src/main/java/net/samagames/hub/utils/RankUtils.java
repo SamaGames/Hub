@@ -9,8 +9,8 @@ public class RankUtils
 {
     public static String getFormattedRank(UUID uuid)
     {
-        String prefix = SamaGamesAPI.get().getPermissionsManager().getPrefix(SamaGamesAPI.get().getPermissionsManager().getApi().getUser(uuid));
-        String display = SamaGamesAPI.get().getPermissionsManager().getDisplay(SamaGamesAPI.get().getPermissionsManager().getApi().getUser(uuid)).replace("[", "").replace("]", "");
+        String prefix = SamaGamesAPI.get().getPermissionsManager().getPrefix(SamaGamesAPI.get().getPermissionsManager().getPlayer(uuid));
+        String display = SamaGamesAPI.get().getPermissionsManager().getDisplay(SamaGamesAPI.get().getPermissionsManager().getPlayer(uuid)).replace("[", "").replace("]", "");
 
         if(ChatColor.stripColor(display).isEmpty())
             display = ChatColor.GRAY + "Joueur";

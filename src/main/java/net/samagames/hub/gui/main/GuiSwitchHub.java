@@ -98,7 +98,7 @@ public class GuiSwitchHub extends AbstractGui
                 return;
             }
 
-            SamaGamesAPI.get().getProxyDataManager().getProxiedPlayer(player.getUniqueId()).connect(action);
+            SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).connectToServer(action);
         }
         else if(action.equals("page_back"))
         {

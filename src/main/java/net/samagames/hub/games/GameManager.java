@@ -128,7 +128,7 @@ public class GameManager extends AbstractManager
                         }
                         else if(packet.getType().equals(QueueInfosUpdatePacket.Type.INFO) && packet.getMessage() != null)
                         {
-                            if (!SamaGamesAPI.get().getSettingsManager().isEnabled(player.getUniqueId(), "queuenotifications", true))
+                            if (!SamaGamesAPI.get().getSettingsManager().getSettings(player.getUniqueId()).isNotificationReceive())
                                 return;
 
                             player.playSound(player.getLocation(), Sound.ENTITY_VILLAGER_AMBIENT, 10.0F, 2.0F);

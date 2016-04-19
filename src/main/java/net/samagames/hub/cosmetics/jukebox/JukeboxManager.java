@@ -3,15 +3,12 @@ package net.samagames.hub.cosmetics.jukebox;
 import com.xxmicloxx.NoteBlockAPI.Song;
 import com.xxmicloxx.NoteBlockAPI.SongPlayer;
 import net.samagames.api.SamaGamesAPI;
+import net.samagames.api.settings.IPlayerSettings;
 import net.samagames.hub.Hub;
-import net.samagames.hub.common.players.PlayerSettings;
 import net.samagames.hub.cosmetics.common.AbstractCosmeticManager;
 import net.samagames.tools.ParticleEffect;
-import net.samagames.tools.bossbar.BossBarAPI;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.boss.BarColor;
-import org.bukkit.boss.BarStyle;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
@@ -101,7 +98,8 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
 
     public void onLogin(Player player)
     {
-        if(!PlayerSettings.JUKEBOX.isEnabled(player))
+        IPlayerSettings settings = SamaGamesAPI.get().getSettingsManager().getSettings(player.getUniqueId());
+        if(!settings.isJukeboxListen())
             this.mutedPlayers.add(player.getUniqueId());
         else
             this.addPlayer(player);
@@ -202,11 +200,11 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
 
                 UUID playerUUID = SamaGamesAPI.get().getUUIDTranslator().getUUID(this.currentPlaylist.getPlayedBy());
 
-                if (playerUUID != null)
+                /*if (playerUUID != null)
                 {
                     SamaGamesAPI.get().getStatsManager("hub").increase(playerUUID, "woots", woots);
                     SamaGamesAPI.get().getStatsManager("hub").increase(playerUUID, "mehs", mehs);
-                }
+                }*/
 
                 this.currentPlaylist = null;
 
@@ -215,7 +213,7 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
                     this.barTask.cancel();
                     this.barTask = null;
 
-                    BossBarAPI.flushBars();
+                    //BossBarAPI.flushBars();
                 }
 
                 if (this.hub.getServer().getPlayer(playerUUID) != null)
@@ -254,12 +252,12 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
 
                             hub.getServer().getOnlinePlayers().stream().filter(barPlayer -> !mutedPlayers.contains(barPlayer.getUniqueId())).forEach(barPlayer ->
                             {
-                                BossBarAPI.removeBar(barPlayer);
+                                /*BossBarAPI.removeBar(barPlayer);
 
                                 if (this.i <= 4)
                                     BossBarAPI.setBar(barPlayer, randomizedColor + "♫" + ChatColor.YELLOW + " " + ChatColor.GOLD + currentPlaylist.getSong().getTitle() + ChatColor.YELLOW + " jouée par " + ChatColor.GOLD + currentPlaylist.getPlayedBy() + " " + randomizedColor + "♪", BarColor.YELLOW, BarStyle.SOLID, currentPlaylist.getFormattedSecondsRemaining());
                                 else
-                                    BossBarAPI.setBar(barPlayer, randomizedColor + "♫" + ChatColor.GREEN + " " + currentPlaylist.getWoots() + " Woot" + (currentPlaylist.getWoots() > 1 ? "s" : "") + ChatColor.YELLOW + " et " + ChatColor.RED + currentPlaylist.getMehs() + " Meh" + (currentPlaylist.getMehs() > 1 ? "s" : "") + " " + randomizedColor + "♪", BarColor.YELLOW, BarStyle.SOLID, currentPlaylist.getFormattedSecondsRemaining());
+                                    BossBarAPI.setBar(barPlayer, randomizedColor + "♫" + ChatColor.GREEN + " " + currentPlaylist.getWoots() + " Woot" + (currentPlaylist.getWoots() > 1 ? "s" : "") + ChatColor.YELLOW + " et " + ChatColor.RED + currentPlaylist.getMehs() + " Meh" + (currentPlaylist.getMehs() > 1 ? "s" : "") + " " + randomizedColor + "♪", BarColor.YELLOW, BarStyle.SOLID, currentPlaylist.getFormattedSecondsRemaining());*/
                             });
 
                             this.i++;

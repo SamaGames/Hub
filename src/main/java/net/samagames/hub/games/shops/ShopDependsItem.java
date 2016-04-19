@@ -33,7 +33,7 @@ public class ShopDependsItem extends ShopItem
         }
         else if (isOwned(player) || this.isDefaultItem())
         {
-            SamaGamesAPI.get().getShopsManager(this.game.getCodeName()).setCurrentLevel(player.getUniqueId(), this.type, this.getActionName());
+            SamaGamesAPI.get().getShopsManager().setCurrentLevel(player.getUniqueId(), this.type, this.getActionName());
             player.sendMessage(ChatColor.GREEN + "Vous avez équipé " + ChatColor.AQUA + this.getIcon().getItemMeta().getDisplayName());
         }
         else if (this.dependsOn != null && !hasDepend(player))
@@ -48,13 +48,13 @@ public class ShopDependsItem extends ShopItem
         {
             GuiConfirm confirm = new GuiConfirm(this.hub, (AbstractGui) this.hub.getGuiManager().getPlayerGui(player), (parent) ->
             {
-                if(SamaGamesAPI.get().getShopsManager(this.game.getCodeName()).getItemLevelForPlayer(player, this.type).equals(this.getActionName()))
+                if(SamaGamesAPI.get().getShopsManager().getItemLevelForPlayer(player, this.type).equals(this.getActionName()))
                     return;
 
                 SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).withdrawCoins(this.cost, (newAmount, difference, error) ->
                 {
-                    SamaGamesAPI.get().getShopsManager(this.game.getCodeName()).addOwnedLevel(player.getUniqueId(), this.type, this.getActionName());
-                    SamaGamesAPI.get().getShopsManager(this.game.getCodeName()).setCurrentLevel(player.getUniqueId(), this.type, this.getActionName());
+                    SamaGamesAPI.get().getShopsManager().addOwnedLevel(player.getUniqueId(), this.type, this.getActionName());
+                    SamaGamesAPI.get().getShopsManager().setCurrentLevel(player.getUniqueId(), this.type, this.getActionName());
 
                     player.sendMessage(ChatColor.GREEN + "Vous avez acheté et équipé " + ChatColor.AQUA + this.getIcon().getItemMeta().getDisplayName());
 
@@ -105,7 +105,7 @@ public class ShopDependsItem extends ShopItem
         if(this.dependsOn.isDefaultItem())
             return true;
 
-        List<String> own = SamaGamesAPI.get().getShopsManager(this.game.getCodeName()).getOwnedLevels(player, this.type);
+        List<String> own = SamaGamesAPI.get().getShopsManager().getOwnedLevels(player, this.type);
         return (own != null && this.dependsOn != null && own.contains(this.dependsOn.getActionName()));
     }
 }

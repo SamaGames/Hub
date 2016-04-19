@@ -77,9 +77,9 @@ public class HydroangeasManager extends AbstractManager
 
     public void addPartyToQueue(UUID leader, UUID party, String game, String map)
     {
-        Map<UUID, String> playersInParty = SamaGamesAPI.get().getPartiesManager().getPlayersInParty(party);
+        List<UUID> playersInParty = SamaGamesAPI.get().getPartiesManager().getPlayersInParty(party);
 
-        List<QPlayer> players = playersInParty.keySet().stream().map(player -> new QPlayer(player, getPriority(player))).collect(Collectors.toList());
+        List<QPlayer> players = playersInParty.stream().map(player -> new QPlayer(player, getPriority(player))).collect(Collectors.toList());
         QPlayer qPlayer = new QPlayer(leader, getPriority(leader));
 
         addPlayerToQueue(leader, game, map);
@@ -89,9 +89,9 @@ public class HydroangeasManager extends AbstractManager
 
     public void addPartyToQueue(UUID leader, UUID party, String templateID)
     {
-        Map<UUID, String> playersInParty = SamaGamesAPI.get().getPartiesManager().getPlayersInParty(party);
+        List<UUID> playersInParty = SamaGamesAPI.get().getPartiesManager().getPlayersInParty(party);
 
-        List<QPlayer> players = playersInParty.keySet().stream().map(player -> new QPlayer(player, getPriority(player))).collect(Collectors.toList());
+        List<QPlayer> players = playersInParty.stream().map(player -> new QPlayer(player, getPriority(player))).collect(Collectors.toList());
         QPlayer qPlayer = new QPlayer(leader, getPriority(leader));
 
         addPlayerToQueue(leader, templateID);
@@ -101,7 +101,7 @@ public class HydroangeasManager extends AbstractManager
 
     public int getPriority(UUID uuid)
     {
-        return SamaGamesAPI.get().getPermissionsManager().getApi().getUser(uuid).getParents().first().getLadder();
+        return SamaGamesAPI.get().getPermissionsManager().getPlayer(uuid).getRank();
     }
 
     public PacketReceiver getPacketReceiver()

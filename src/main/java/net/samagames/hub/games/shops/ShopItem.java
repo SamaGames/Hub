@@ -41,7 +41,7 @@ public class ShopItem extends ShopIcon
         }
         else if(this.isOwned(player) || this.isDefaultItem())
         {
-            SamaGamesAPI.get().getShopsManager(this.game.getCodeName()).setCurrentLevel(player, this.type, this.getActionName());
+            SamaGamesAPI.get().getShopsManager().setCurrentLevel(player, this.type, this.getActionName());
             player.sendMessage(ChatColor.GREEN + "Vous avez équipé " + ChatColor.AQUA + this.getIcon().getItemMeta().getDisplayName());
         }
         else if(!SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).hasEnoughCoins(this.cost))
@@ -52,13 +52,13 @@ public class ShopItem extends ShopIcon
         {
             GuiConfirm confirm = new GuiConfirm(this.hub, (AbstractGui) this.hub.getGuiManager().getPlayerGui(player), (parent) ->
             {
-                if(SamaGamesAPI.get().getShopsManager(this.game.getCodeName()).getItemLevelForPlayer(player, this.type).equals(this.getActionName()))
+                if(SamaGamesAPI.get().getShopsManager().getItemLevelForPlayer(player, this.type).equals(this.getActionName()))
                     return;
 
                 SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).withdrawCoins(this.cost, (newAmount, difference, error) ->
                 {
-                    SamaGamesAPI.get().getShopsManager(this.game.getCodeName()).addOwnedLevel(player, this.type, this.getActionName());
-                    SamaGamesAPI.get().getShopsManager(this.game.getCodeName()).setCurrentLevel(player, this.type, this.getActionName());
+                    SamaGamesAPI.get().getShopsManager().addOwnedLevel(player, this.type, this.getActionName());
+                    SamaGamesAPI.get().getShopsManager().setCurrentLevel(player, this.type, this.getActionName());
 
                     player.sendMessage(ChatColor.GREEN + "Vous avez acheté et équipé " + ChatColor.AQUA + this.getIcon().getItemMeta().getDisplayName());
 
@@ -113,13 +113,13 @@ public class ShopItem extends ShopIcon
 
     public boolean isOwned(Player player)
     {
-        List<String> own = SamaGamesAPI.get().getShopsManager(this.game.getCodeName()).getOwnedLevels(player, this.type);
+        List<String> own = SamaGamesAPI.get().getShopsManager().getOwnedLevels(player, this.type);
         return (own != null) && own.contains(this.getActionName());
     }
 
     public boolean isActive(Player player)
     {
-        String active = SamaGamesAPI.get().getShopsManager(this.game.getCodeName()).getItemLevelForPlayer(player, this.type);
+        String active = SamaGamesAPI.get().getShopsManager().getItemLevelForPlayer(player, this.type);
         return (active == null && isDefaultItem()) || (active != null && active.equals(this.getActionName()));
     }
 }

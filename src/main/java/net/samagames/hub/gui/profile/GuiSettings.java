@@ -1,8 +1,9 @@
 package net.samagames.hub.gui.profile;
 
 import net.samagames.api.SamaGamesAPI;
+import net.samagames.api.settings.IPlayerSettings;
 import net.samagames.hub.Hub;
-import net.samagames.hub.common.players.PlayerSettings;
+import net.samagames.hub.common.players.PlayerManager;
 import net.samagames.hub.gui.AbstractGui;
 import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
@@ -12,17 +13,24 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class GuiSettings extends AbstractGui
 {
     public enum Settings { PLAYERS, CHAT, NOTIFICATIONS}
 
+    private final List<GuiSettingsCallback> callbackList;
     private final int page;
+    private int index;
 
     public GuiSettings(Hub hub, int page)
     {
         super(hub);
 
+        this.callbackList = new ArrayList<>();
         this.page = page;
+        this.index = 0;
     }
 
     @Override
@@ -40,73 +48,190 @@ public class GuiSettings extends AbstractGui
     @Override
     public void update(Player player)
     {
+        this.index = 0;
+        this.callbackList.clear();
         if (this.page == 1)
         {
-            this.drawSetting(player, "players", "Joueurs", new ItemStack(Material.SKULL_ITEM, 1, (short) SkullType.PLAYER.ordinal()), 10, new String[] {
+            this.drawSetting(player, "Joueurs", new ItemStack(Material.SKULL_ITEM, 1, (short) SkullType.PLAYER.ordinal()), 10, new String[]{
                     ChatColor.GRAY + "Quand cette option est activée, vous verrez",
                     ChatColor.GRAY + "les joueurs autour de vous dans le hub. Dans le cas",
                     ChatColor.GRAY + "contraire, vous verrez seulement le " + ChatColor.GOLD + "Staff" + ChatColor.GRAY + ",",
                     ChatColor.GRAY + "les " + ChatColor.GOLD + "Coupaings" + ChatColor.GRAY + " et vos " + ChatColor.GOLD + "amis" + ChatColor.GRAY + "."
+            }, new GuiSettingsCallback() {
+                @Override
+                public boolean get(IPlayerSettings setting) {
+                    return setting.isPlayerVisible();
+                }
+
+                @Override
+                public void invert(IPlayerSettings setting) {
+                    boolean value = !get(setting);
+                    setting.setPlayerVisible(value);
+                    if (value)
+                        GuiSettings.this.hub.getPlayerManager().removeHider(player);
+                    else
+                        GuiSettings.this.hub.getPlayerManager().addHider(player);
+                }
             });
 
-            this.drawSetting(player, "chat", "Chat", new ItemStack(Material.BOOK_AND_QUILL, 1), 11, new String[] {
+            this.drawSetting(player, "Chat", new ItemStack(Material.BOOK_AND_QUILL, 1), 11, new String[] {
                     ChatColor.GRAY + "Quand cette option est activée, vous pourrez",
                     ChatColor.GRAY + "voir les messages des joueurs dans le chat."
+            }, new GuiSettingsCallback() {
+                @Override
+                public boolean get(IPlayerSettings setting) {
+                    return setting.isChatVisible();
+                }
+
+                @Override
+                public void invert(IPlayerSettings setting) {
+                    boolean value = !get(setting);
+                    setting.setChatVisible(value);
+                    if (value)
+                        GuiSettings.this.hub.getChatManager().enableChatFor(player);
+                    else
+                        GuiSettings.this.hub.getChatManager().disableChatFor(player);
+                }
             });
 
-            this.drawSetting(player, "private_messages", "Messages privés", new ItemStack(Material.PAPER, 1), 12, new String[] {
+            this.drawSetting(player, "Messages privés", new ItemStack(Material.PAPER, 1), 12, new String[] {
                     ChatColor.GRAY + "Quand cette option est activée, vous pourrez",
                     ChatColor.GRAY + "recevoir des messages privés de la part des",
                     ChatColor.GRAY + "joueurs. Vos amis pourront quand même vous",
                     ChatColor.GRAY + "envoyer des messages."
+            }, new GuiSettingsCallback() {
+                @Override
+                public boolean get(IPlayerSettings setting) {
+                    return setting.isPrivateMessageReceive();
+                }
+
+                @Override
+                public void invert(IPlayerSettings setting) {
+                    setting.setPrivateMessageReceive(!get(setting));
+                }
             });
 
-            this.drawSetting(player, "notifications", "Notifications", new ItemStack(Material.MAP, 1), 13, new String[] {
+            this.drawSetting(player, "Notifications", new ItemStack(Material.MAP, 1), 13, new String[] {
                     ChatColor.GRAY + "Quand cette option est activée, vous pourrez",
                     ChatColor.GRAY + "recevoir un signal sonore lorsqu'un joueur",
                     ChatColor.GRAY + "écrit votre nom dans le chat.",
+            }, new GuiSettingsCallback() {
+                @Override
+                public boolean get(IPlayerSettings setting) {
+                    return setting.isNotificationReceive();
+                }
+
+                @Override
+                public void invert(IPlayerSettings setting) {
+                    setting.setNotificationReceive(!get(setting));
+                }
             });
 
-            this.drawSetting(player, "friend_requests", "Demandes d'amis", new ItemStack(Material.RAW_FISH, 1, (short) 3), 14, new String[] {
+            this.drawSetting(player, "Demandes d'amis", new ItemStack(Material.RAW_FISH, 1, (short) 3), 14, new String[] {
                     ChatColor.GRAY + "Quand cette option est activée, les joueurs",
                     ChatColor.GRAY + "pourront vous envoyer des demandes d'amis."
+            }, new GuiSettingsCallback() {
+                @Override
+                public boolean get(IPlayerSettings setting) {
+                    return setting.isFriendshipDemandReceive();
+                }
+
+                @Override
+                public void invert(IPlayerSettings setting) {
+                    setting.setFriendshipDemandReceive(!get(setting));
+                }
             });
 
-            this.drawSetting(player, "party_requests", "Demandes de groupe", new ItemStack(Material.LEASH, 1), 15, new String[] {
+            this.drawSetting(player, "Demandes de groupe", new ItemStack(Material.LEASH, 1), 15, new String[] {
                     ChatColor.GRAY + "Quand cette option est activée, les joueurs",
                     ChatColor.GRAY + "pourront vous envoyer des demandes de groupe.",
                     ChatColor.GRAY + "Vos amis pourront quand même vous inviter",
                     ChatColor.GRAY + "dans un groupe."
+            }, new GuiSettingsCallback() {
+                @Override
+                public boolean get(IPlayerSettings setting) {
+                    return setting.isGroupDemandReceive();
+                }
+
+                @Override
+                public void invert(IPlayerSettings setting) {
+                    setting.setGroupDemandReceive(!get(setting));
+                }
             });
 
-            this.drawSetting(player, "jukebox", "Jukebox", new ItemStack(Material.JUKEBOX, 1), 16, new String[] {
+            this.drawSetting(player, "Jukebox", new ItemStack(Material.JUKEBOX, 1), 16, new String[] {
                     ChatColor.GRAY + "Quand cette option est activée, vous",
                     ChatColor.GRAY + "entenderez la musique du Jukebox dans",
                     ChatColor.GRAY + "les hubs."
+            }, new GuiSettingsCallback() {
+                @Override
+                public boolean get(IPlayerSettings setting) {
+                    return setting.isJukeboxListen();
+                }
+
+                @Override
+                public void invert(IPlayerSettings setting) {
+                    boolean value = !get(setting);
+                    setting.setJukeboxListen(value);
+                    if (value)
+                        GuiSettings.this.hub.getCosmeticManager().getJukeboxManager().addPlayer(player);
+                    else
+                        GuiSettings.this.hub.getCosmeticManager().getJukeboxManager().removePlayer(player);
+                }
             });
         }
         else if (this.page == 2)
         {
-            this.drawSetting(player, "interactions", "Intéractions", new ItemStack(Material.COOKIE, 1), 10, new String[] {
+            this.drawSetting(player, "Intéractions", new ItemStack(Material.COOKIE, 1), 10, new String[] {
                     ChatColor.GRAY + "Quand cette option est activée, les",
                     ChatColor.GRAY + "intéractions seront possibles avec votre",
                     ChatColor.GRAY + "joueur, comme par exemple celles avec les",
                     ChatColor.GRAY + "gadgets. Seuls vos " + ChatColor.GOLD + "amis" + ChatColor.GRAY + " pourront tout de même",
                     ChatColor.GRAY + "intéragir avec vous."
+            }, new GuiSettingsCallback() {
+                @Override
+                public boolean get(IPlayerSettings setting) {
+                    return setting.isNotificationReceive();
+                }
+
+                @Override
+                public void invert(IPlayerSettings setting) {
+                    setting.setNotificationReceive(!get(setting));
+                }
             });
 
-            this.drawSetting(player, "queue_notifications", "Notifications de file d'attente", new ItemStack(Material.SIGN, 1), 11, new String[] {
+            this.drawSetting(player, "Notifications de file d'attente", new ItemStack(Material.SIGN, 1), 11, new String[] {
                     ChatColor.GRAY + "Quand cette option est activée, vous",
                     ChatColor.GRAY + "recevrez des informations sur votre",
                     ChatColor.GRAY + "statut dans les files d'attente."
+            }, new GuiSettingsCallback() {
+                @Override
+                public boolean get(IPlayerSettings setting) {
+                    return setting.isWaitingLineNotification();
+                }
+
+                @Override
+                public void invert(IPlayerSettings setting) {
+                    setting.setWaitingLineNotification(!get(setting));
+                }
             });
 
-            this.drawSetting(player, "clickme", "ClickMe", new ItemStack(Material.WOOD_BUTTON, 1), 16, new String[]{
+            this.drawSetting(player, "ClickMe", new ItemStack(Material.WOOD_BUTTON, 1), 16, new String[]{
                     ChatColor.GRAY + "En cliquant, vous accéderez à un menu",
                     ChatColor.GRAY + "avec les différents paramètres du ClickMe.",
                     ChatColor.GRAY + "Avec celui-ci vous pourrez accéder aux",
                     ChatColor.GRAY + "statistiques des joueurs en faisant un",
                     ChatColor.GRAY + "clic-gauche sur ceux-ci."
+            }, new GuiSettingsCallback() {
+                @Override
+                public boolean get(IPlayerSettings setting) {
+                    return setting.isClickOnMeActivation();
+                }
+
+                @Override
+                public void invert(IPlayerSettings setting) {
+                    setting.setClickOnMeActivation(!get(setting));
+                }
             });
         }
 
@@ -130,10 +255,11 @@ public class GuiSettings extends AbstractGui
                 return;
             }
 
-            PlayerSettings setting = PlayerSettings.valueOf(action.replace("setting_", "").toUpperCase());
-
-            if (setting != null)
-                setting.updateFor(player, !setting.isEnabled(player), () -> this.update(player));
+            GuiSettingsCallback callback = this.callbackList.get(Integer.parseInt(action.replace("setting_", "").toUpperCase()));
+            IPlayerSettings settings = SamaGamesAPI.get().getSettingsManager().getSettings(player.getUniqueId());
+            if (callback != null)
+                callback.invert(settings);
+            this.update(player);
         }
         else if(action.equals("page_back"))
         {
@@ -149,13 +275,22 @@ public class GuiSettings extends AbstractGui
         }
     }
 
-    protected void drawSetting(Player player, String name, String displayName, ItemStack icon, int slot, String[] description)
+    protected void drawSetting(Player player, String displayName, ItemStack icon, int slot, String[] description, GuiSettingsCallback callback)
     {
-        boolean enabled = PlayerSettings.valueOf(name.toUpperCase()).isEnabled(player);
+        IPlayerSettings settings = SamaGamesAPI.get().getSettingsManager().getSettings(player.getUniqueId());
+        boolean enabled = callback.get(settings);
         ChatColor titleColor = enabled ? ChatColor.GREEN : ChatColor.RED;
         ItemStack glassBlock = new ItemStack(Material.STAINED_GLASS, 1, enabled ? DyeColor.GREEN.getData() : DyeColor.RED.getData());
 
-        this.setSlotData(titleColor + displayName, icon, slot, description, "setting_" + name);
-        this.setSlotData(titleColor + (enabled ? "Activé" : "Désactivé"), glassBlock, slot + 9, null, "setting_" + name);
+        this.setSlotData(titleColor + displayName, icon, slot, description, "setting_" + this.index);
+        this.setSlotData(titleColor + (enabled ? "Activé" : "Désactivé"), glassBlock, slot + 9, null, "setting_" + this.index);
+        this.callbackList.add(callback);
+        this.index++;
+    }
+
+    public interface GuiSettingsCallback
+    {
+        boolean get(IPlayerSettings setting);
+        void invert(IPlayerSettings setting);
     }
 }

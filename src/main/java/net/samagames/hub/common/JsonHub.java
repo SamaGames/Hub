@@ -1,7 +1,7 @@
 package net.samagames.hub.common;
 
 import net.samagames.api.SamaGamesAPI;
-import net.samagames.api.permissions.permissions.PermissionUser;
+import net.samagames.api.permissions.IPermissionsEntity;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -26,7 +26,7 @@ public class JsonHub
 
     public void addConnectedPlayer(Player player)
     {
-        PermissionUser user = SamaGamesAPI.get().getPermissionsManager().getApi().getUser(player.getUniqueId());
+        IPermissionsEntity user = SamaGamesAPI.get().getPermissionsManager().getPlayer(player.getUniqueId());
         String display = SamaGamesAPI.get().getPermissionsManager().getDisplay(user);
 
         if (display.length() < 5)

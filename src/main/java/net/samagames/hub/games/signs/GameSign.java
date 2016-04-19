@@ -2,6 +2,7 @@ package net.samagames.hub.games.signs;
 
 import net.minecraft.server.v1_9_R1.*;
 import net.samagames.api.SamaGamesAPI;
+import net.samagames.api.parties.IParty;
 import net.samagames.hub.Hub;
 import net.samagames.hub.games.AbstractGame;
 import org.bukkit.ChatColor;
@@ -144,21 +145,21 @@ public class GameSign
         }
 
         this.hub.getServer().getScheduler().runTaskAsynchronously(this.hub, () -> {
-            UUID partyUUID = SamaGamesAPI.get().getPartiesManager().getPlayerParty(player.getUniqueId());
+            IParty party = SamaGamesAPI.get().getPartiesManager().getPartyForPlayer(player.getUniqueId());
 
-            if(partyUUID == null)
+            if(party == null)
             {
                 this.hub.getHydroangeasManager().addPlayerToQueue(player.getUniqueId(), template);
             }
             else
             {
-                if(!SamaGamesAPI.get().getPartiesManager().getLeader(partyUUID).equals(player.getUniqueId()))
+                if(!party.getLeader().equals(player.getUniqueId()))
                 {
                     player.sendMessage(ChatColor.RED + "Vous n'êtes pas le leader de votre partie, vous ne pouvez donc pas l'ajouter dans une file d'attente.");
                     return;
                 }
 
-                this.hub.getHydroangeasManager().addPartyToQueue(player.getUniqueId(), partyUUID, template);
+                this.hub.getHydroangeasManager().addPartyToQueue(player.getUniqueId(), party.getParty(), template);
             }
         });
     }

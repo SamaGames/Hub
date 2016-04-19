@@ -91,10 +91,10 @@ public class ChatManager extends AbstractManager
         {
             event.getRecipients().remove(player);
 
-            if (SamaGamesAPI.get().getSettingsManager().isEnabled(player.getUniqueId(), "notifications", true))
+            if (SamaGamesAPI.get().getSettingsManager().getSettings(player.getUniqueId()).isNotificationReceive())
                 player.playSound(player.getLocation(), Sound.BLOCK_NOTE_HARP, 1.0F, 1.0F);
 
-            String suffixRaw = SamaGamesAPI.get().getPermissionsManager().getApi().getUser(event.getPlayer().getUniqueId()).getProperties().get("suffix");
+            String suffixRaw = SamaGamesAPI.get().getPermissionsManager().getSuffix(SamaGamesAPI.get().getPermissionsManager().getPlayer(event.getPlayer().getUniqueId()));
             ChatColor suffix = ChatColor.getByChar(suffixRaw.charAt(1));
 
             player.sendMessage(PlayerUtils.getFullyFormattedPlayerName(event.getPlayer()) + suffix + ": " + event.getMessage().replaceAll("(?i)" + player.getName(), ChatColor.GOLD + player.getName() + suffix));
@@ -111,7 +111,7 @@ public class ChatManager extends AbstractManager
     @Override
     public void onLogin(Player player)
     {
-        boolean chatOnSetting = SamaGamesAPI.get().getSettingsManager().isEnabled(player.getUniqueId(), "chat", true);
+        boolean chatOnSetting = SamaGamesAPI.get().getSettingsManager().getSettings(player.getUniqueId()).isChatVisible();
 
         if (!chatOnSetting)
         {

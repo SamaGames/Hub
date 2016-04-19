@@ -93,7 +93,7 @@ public class GuiClickMe extends AbstractGui
 
     private String getCoinsItemTitle()
     {
-        if(SamaGamesAPI.get().getSettingsManager().isEnabled(this.uuid, "clickme-coins", true))
+        if(SamaGamesAPI.get().getSettingsManager().getSettings(this.uuid).isAllowCoinsOnClick())
             return ChatColor.GOLD + String.valueOf(SamaGamesAPI.get().getPlayerManager().getPlayerData(this.uuid).getCoins()) + " pièces";
         else
             return ChatColor.RED + "Cette information est privée !";
@@ -101,7 +101,7 @@ public class GuiClickMe extends AbstractGui
 
     private String getStarsItemTitle()
     {
-        if(SamaGamesAPI.get().getSettingsManager().isEnabled(this.uuid, "clickme-stars", true))
+        if(SamaGamesAPI.get().getSettingsManager().getSettings(this.uuid).isAllowStarsOnclick())
             return ChatColor.AQUA + String.valueOf(SamaGamesAPI.get().getPlayerManager().getPlayerData(this.uuid).getStars()) + " étoiles";
         else
             return ChatColor.RED + "Cette information est privée !";

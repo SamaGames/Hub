@@ -6,12 +6,9 @@ import net.samagames.hub.common.managers.AbstractManager;
 import net.samagames.tools.InventoryUtils;
 import net.samagames.tools.LocationUtils;
 import net.samagames.tools.PlayerUtils;
-import net.samagames.tools.bossbar.BossBarAPI;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
-import org.bukkit.boss.BarColor;
-import org.bukkit.boss.BarStyle;
 import org.bukkit.entity.Player;
 
 import java.util.*;

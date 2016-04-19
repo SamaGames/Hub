@@ -63,13 +63,13 @@ public class ShopImprovableItem extends ShopIcon
 
             GuiConfirm confirm = new GuiConfirm(this.hub, (AbstractGui) this.hub.getGuiManager().getPlayerGui(player), (parent) ->
             {
-                if(SamaGamesAPI.get().getShopsManager(this.game.getCodeName()).getItemLevelForPlayer(player, this.getActionName()).equals(finalLevel.getDatabaseStorageName()))
+                if(SamaGamesAPI.get().getShopsManager().getItemLevelForPlayer(player, this.getActionName()).equals(finalLevel.getDatabaseStorageName()))
                     return;
 
                 SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).withdrawCoins(finalLevel.getCost(), (newAmount, difference, error) ->
                 {
-                    SamaGamesAPI.get().getShopsManager(this.game.getCodeName()).addOwnedLevel(player, this.getActionName(), finalLevel.getDatabaseStorageName());
-                    SamaGamesAPI.get().getShopsManager(this.game.getCodeName()).setCurrentLevel(player, this.getActionName(), finalLevel.getDatabaseStorageName());
+                    SamaGamesAPI.get().getShopsManager().addOwnedLevel(player, this.getActionName(), finalLevel.getDatabaseStorageName());
+                    SamaGamesAPI.get().getShopsManager().setCurrentLevel(player, this.getActionName(), finalLevel.getDatabaseStorageName());
 
                     player.sendMessage(ChatColor.GREEN + "Vous avez débloqué le niveau supérieur pour cette amélioration.");
 
@@ -153,7 +153,7 @@ public class ShopImprovableItem extends ShopIcon
 
     public String getCurrentValue(Player player)
     {
-        return SamaGamesAPI.get().getShopsManager(this.game.getCodeName()).getItemLevelForPlayer(player, this.getActionName());
+        return SamaGamesAPI.get().getShopsManager().getItemLevelForPlayer(player, this.getActionName());
     }
 
     public ItemLevel getItemLevel(int level)
