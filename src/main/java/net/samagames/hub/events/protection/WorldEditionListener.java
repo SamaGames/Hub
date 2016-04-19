@@ -20,96 +20,96 @@ public class WorldEditionListener implements Listener
     }
 
     @EventHandler
-    public void onBlockBreakEvent(BlockBreakEvent event)
+    public void onBlockBreak(BlockBreakEvent event)
     {
         if (!this.canDoAction(event.getPlayer()))
             event.setCancelled(true);
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void onBlockBurnEvent(BlockBurnEvent event)
+    public void onBlockBurn(BlockBurnEvent event)
     {
         event.setCancelled(true);
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void onBlockDamageEvent(BlockDamageEvent event)
+    public void onBlockDamage(BlockDamageEvent event)
     {
         event.setCancelled(true);
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void onBlockFadeEvent(BlockFadeEvent event)
+    public void onBlockFade(BlockFadeEvent event)
     {
         event.setCancelled(true);
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void onBlockFormEvent(BlockFormEvent event)
+    public void onBlockForm(BlockFormEvent event)
     {
         event.setCancelled(true);
     }
 
     @EventHandler
-    public void onBlockFromToEvent(BlockFromToEvent event)
+    public void onBlockFromTo(BlockFromToEvent event)
     {
         event.setCancelled(true);
     }
 
     @EventHandler
-    public void onBlockGrowEvent(BlockGrowEvent event)
+    public void onBlockGrow(BlockGrowEvent event)
     {
         event.setCancelled(true);
     }
 
     @EventHandler
-    public void onBlockIgniteEvent(BlockIgniteEvent event)
+    public void onBlockIgnite(BlockIgniteEvent event)
     {
         if (!this.canDoAction(event.getPlayer()))
             event.setCancelled(true);
     }
 
     @EventHandler
-    public void onBlockMultiPlaceEvent(BlockMultiPlaceEvent event)
+    public void onBlockMultiPlace(BlockMultiPlaceEvent event)
     {
         if (!this.canDoAction(event.getPlayer()))
             event.setCancelled(true);
     }
 
     @EventHandler
-    public void onBlockPhysicsEvent(BlockPhysicsEvent event)
+    public void onBlockPhysics(BlockPhysicsEvent event)
     {
         event.setCancelled(true);
     }
 
     @EventHandler
-    public void onBlockPlaceEvent(BlockPlaceEvent event)
+    public void onBlockPlace(BlockPlaceEvent event)
     {
         if (!this.canDoAction(event.getPlayer()))
             event.setCancelled(true);
     }
 
     @EventHandler
-    public void onBlockSpreadEvent(BlockSpreadEvent event)
+    public void onBlockSpread(BlockSpreadEvent event)
     {
         event.setCancelled(true);
     }
 
     @EventHandler
-    public void onEntityBlockFormEvent(EntityBlockFormEvent event)
+    public void onEntityBlockForm(EntityBlockFormEvent event)
     {
         if (event.getEntity().getType() != EntityType.PLAYER || !this.canDoAction((Player) event.getEntity()))
             event.setCancelled(true);
     }
 
     @EventHandler
-    public void onLeavesDecayEvent(LeavesDecayEvent event)
+    public void onLeavesDecay(LeavesDecayEvent event)
     {
         event.setCancelled(true);
     }
 
     @EventHandler
-    public void onWeatherChangeEvent(WeatherChangeEvent event)
+    public void onWeatherChange(WeatherChangeEvent event)
     {
         event.setCancelled(true);
     }

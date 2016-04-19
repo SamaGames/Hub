@@ -43,6 +43,8 @@ public class StaticInventory
             this.hub.getGuiManager().openGui(player, new GuiShop(this.hub));
         else if (stack.getType() == Material.BARRIER && this.hub.getParkourManager().getPlayerParkour(player.getUniqueId()) != null)
             this.hub.getParkourManager().getPlayerParkour(player.getUniqueId()).quitPlayer(player);
+        else if (player.getInventory().getHeldItemSlot() == 6)
+            this.hub.getCosmeticManager().getGadgetManager().useSelectedCosmetic(player, stack);
     }
 
     public void setInventoryToPlayer(Player player)

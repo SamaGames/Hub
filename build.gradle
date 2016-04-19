@@ -55,13 +55,3 @@ sonarRunner {
         property "sonar.password", sonarpass
     }
 }
-
-task apiJar(type: Jar, dependsOn: classes) {
-    from sourceSets.main.output
-    include 'net/samagames/hub/api/**'
-    classifier = 'API'
-}
-
-artifacts {
-    archives apiJar
-}

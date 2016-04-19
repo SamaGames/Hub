@@ -129,6 +129,12 @@ public class Parkour
 
     public void addPlayer(Player player)
     {
+        if (this.hub.getPlayerManager().isBusy(player))
+        {
+            player.sendMessage(TAG + ChatColor.RED + "Vous êtes actuellement occupé, veuillez réessayer plus tard. Ce message survient lors de l'utilisation d'un gadget ou d'une action à caractère prioritaire.");
+            return;
+        }
+
         List<Location> playerCheckpoints = new ArrayList<>();
         playerCheckpoints.add(this.spawn);
 
@@ -149,8 +155,8 @@ public class Parkour
             player.getInventory().setHeldItemSlot(4);
         });
 
-        // TODO: Check if a player has a pet and delete it
-        // TODO: Check if a player is in a gadget, prevent fly setting
+        if (this.hub.getCosmeticManager().getPetManager().getEquippedCosmetic(player) != null)
+            this.hub.getCosmeticManager().getPetManager().disableCosmetic(player, false);
     }
 
     public void winPlayer(Player player)

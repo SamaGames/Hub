@@ -19,58 +19,58 @@ public class EntityEditionListener implements Listener
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void onCreatureSpawnEvent(CreatureSpawnEvent event)
+    public void onCreatureSpawn(CreatureSpawnEvent event)
     {
         if (event.getSpawnReason() != CreatureSpawnEvent.SpawnReason.CUSTOM)
             event.setCancelled(true);
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void onEntityCombustByBlockEvent(EntityCombustByBlockEvent event)
+    public void onEntityCombustByBlock(EntityCombustByBlockEvent event)
     {
         event.setCancelled(true);
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void onEntityDamageEvent(EntityDamageEvent event)
+    public void onEntityDamage(EntityDamageEvent event)
     {
         event.setCancelled(true);
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void onEntityDeathEvent(EntityDeathEvent event)
+    public void onEntityDeath(EntityDeathEvent event)
     {
         event.setDroppedExp(0);
         event.getDrops().clear();
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void onEntityExplodeEvent(EntityExplodeEvent event)
+    public void onEntityExplode(EntityExplodeEvent event)
     {
         event.setCancelled(true);
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void onEntityInteractEvent(EntityInteractEvent event)
+    public void onEntityInteract(EntityInteractEvent event)
     {
         if (event.getEntity().getType() != EntityType.PLAYER || !this.canDoAction((Player) event.getEntity()))
             event.setCancelled(true);
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void onEntityTameEvent(EntityTameEvent event)
+    public void onEntityTame(EntityTameEvent event)
     {
         event.setCancelled(true);
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void onEntityTargetEvent(EntityTargetEvent event)
+    public void onEntityTarget(EntityTargetEvent event)
     {
         event.setCancelled(true);
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void onExplosionPrimeEvent(ExplosionPrimeEvent event)
+    public void onExplosionPrime(ExplosionPrimeEvent event)
     {
         event.setCancelled(true);
     }
@@ -83,13 +83,13 @@ public class EntityEditionListener implements Listener
     }
 
     @EventHandler
-    public void onSlimeSplitEvent(SlimeSplitEvent event)
+    public void onSlimeSplit(SlimeSplitEvent event)
     {
         event.setCancelled(true);
     }
 
     @EventHandler
-    public void onHangingBreakEvent(HangingBreakEvent event)
+    public void onHangingBreak(HangingBreakEvent event)
     {
         event.setCancelled(true);
     }
