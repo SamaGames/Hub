@@ -9,7 +9,8 @@ public enum CosmeticAccessibility
     ALL(null, null),
     VIP(ChatColor.GREEN + "VIP", "network.vip"),
     VIPPLUS(ChatColor.AQUA + "VIP" + ChatColor.LIGHT_PURPLE + "+", "network.vipplus"),
-    STAFF(ChatColor.RED + "Staff", "network.staff")
+    STAFF(ChatColor.RED + "Staff", "network.staff"),
+    ADMIN(ChatColor.RED + "Administrateur", "network.admin"),
     ;
 
     private final String display;

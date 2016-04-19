@@ -8,18 +8,19 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ProximityUtils
 {
-    public static ArrayList<Entity> getNearbyEntities(Location center, double radius)
+    public static List<Entity> getNearbyEntities(Location center, double radius)
     {
         return getNearbyEntities(center, radius, null);
     }
 
-    public static ArrayList<Entity> getNearbyEntities(Location center, double radius, EntityType filter)
+    public static List<Entity> getNearbyEntities(Location center, double radius, EntityType filter)
     {
         double chunkRadius = radius < 16 ? 1 : (radius - (radius % 16)) / 16;
-        ArrayList<Entity> entities = new ArrayList<>();
+        List<Entity> entities = new ArrayList<>();
 
         for (double chX = 0 - chunkRadius; chX <= chunkRadius; chX++)
         {

@@ -9,6 +9,7 @@ public enum CosmeticRarity
     EPIC("Epic", ChatColor.DARK_PURPLE),
     LEGENDARY("Légendaire", ChatColor.GOLD),
     STAFF("Réservé à l'équipe", ChatColor.RED),
+    ADMIN("Réservé aux administrateurs", ChatColor.RED),
     ;
 
     private final String name;

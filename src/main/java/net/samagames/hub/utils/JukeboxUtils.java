@@ -13,7 +13,7 @@ import java.util.Random;
 
 public class JukeboxUtils
 {
-    private static final Random random;
+    private static final Random RANDOM;
 
     public static Material randomMusic()
     {
@@ -23,7 +23,7 @@ public class JukeboxUtils
             if(material.isRecord())
                 records.add(material);
 
-        return records.get(random.nextInt(records.size()));
+        return records.get(RANDOM.nextInt(records.size()));
     }
 
     public static void playRecord(Location loc, Material record)
@@ -40,6 +40,6 @@ public class JukeboxUtils
 
     static
     {
-        random = new Random();
+        RANDOM = new Random();
     }
 }

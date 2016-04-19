@@ -18,12 +18,12 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import javax.lang.model.type.NullType;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import java.util.logging.Level;
 
 public class GadgetManager extends AbstractCosmeticManager
 {
+    public static final Random RANDOM = new Random();
     public static final Field AGE_FIELD;
 
     private final Map<UUID, Integer> cooldowns;
