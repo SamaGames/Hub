@@ -7,6 +7,7 @@ import net.samagames.tools.Titles;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.craftbukkit.v1_9_R1.entity.CraftPlayer;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
@@ -55,6 +56,7 @@ public class Bumper extends AbstractInteraction implements Listener
         player.setVelocity(this.bumperLocation.getDirection().multiply(15D));
         this.flyTasks.put(player.getUniqueId(), this.hub.getServer().getScheduler().runTaskLater(this.hub, () -> {
             player.getInventory().setChestplate(new ItemStack(Material.ELYTRA));
+            ((CraftPlayer)player).getHandle().setFlag(7, true);
             Titles.sendTitle(player, 10, 40, 10, "", ChatColor.GOLD + "Bon vol !");
             this.stop(player);
         }, 40L));

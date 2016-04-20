@@ -51,7 +51,7 @@ public abstract class AbstractCosmetic implements Comparable<AbstractCosmetic>
         this.stars = stars;
         this.rarity = rarity;
         this.accessibility = accessibility;
-        this.shopsManager = SamaGamesAPI.get().getShopsManager();
+        this.shopsManager = null;//SamaGamesAPI.get().getShopsManager();
         this.permissionNeededToView = null;
     }
 
