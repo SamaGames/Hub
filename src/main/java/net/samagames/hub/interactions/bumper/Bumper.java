@@ -12,6 +12,7 @@ import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
 
@@ -53,9 +54,13 @@ public class Bumper extends AbstractInteraction implements Listener
         if (this.flyingPlayers.contains(player.getUniqueId()))
             return ;
         this.flyingPlayers.add(player.getUniqueId());
-        player.setVelocity(this.bumperLocation.getDirection().multiply(15D));
+        player.setVelocity(this.bumperLocation.getDirection().multiply(45D));
         this.flyTasks.put(player.getUniqueId(), this.hub.getServer().getScheduler().runTaskLater(this.hub, () -> {
-            player.getInventory().setChestplate(new ItemStack(Material.ELYTRA));
+            ItemStack stack = new ItemStack(Material.ELYTRA);
+            ItemMeta meta = stack.getItemMeta();
+            meta.spigot().setUnbreakable(true);
+            stack.setItemMeta(meta);
+            player.getInventory().setChestplate(stack);
             ((CraftPlayer)player).getHandle().setFlag(7, true);
             Titles.sendTitle(player, 10, 40, 10, "", ChatColor.GOLD + "Bon vol !");
             this.stop(player);
