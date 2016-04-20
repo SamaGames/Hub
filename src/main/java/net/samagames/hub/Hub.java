@@ -1,5 +1,6 @@
 package net.samagames.hub;
 
+import de.slikey.effectlib.EffectLib;
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.commands.CommandManager;
 import net.samagames.hub.common.HubRefresher;
@@ -26,6 +27,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.command.SimpleCommandMap;
 import org.bukkit.craftbukkit.v1_9_R1.CraftServer;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -187,4 +189,14 @@ public class Hub extends JavaPlugin
     public InteractionManager getInteractionManager() { return this.interactionManager; }
     public CosmeticManager getCosmeticManager() { return this.cosmeticManager; }
     public CommandManager getCommandManager() { return this.commandManager; }
+
+    public EffectLib getEffectLib()
+    {
+        Plugin effectLib = Bukkit.getPluginManager().getPlugin("EffectLib");
+
+        if (effectLib == null || !(effectLib instanceof EffectLib))
+            return null;
+
+        return (EffectLib) effectLib;
+    }
 }

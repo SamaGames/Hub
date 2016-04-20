@@ -41,6 +41,7 @@ dependencies {
         transitive = false
     }
 
+    compile group: 'de.slikey', name: 'EffectLib', version: '4.3-SNAPSHOT'
     compile group: 'LibsDisguises', name: 'LibsDisguises', version: '9.0.3'
     compile group: 'net.techcable', name: 'SonarPet', version: '1.0.1'
 }

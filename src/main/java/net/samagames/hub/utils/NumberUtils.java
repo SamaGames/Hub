@@ -5,21 +5,21 @@ import java.text.DecimalFormatSymbols;
 
 public class NumberUtils
 {
-    private static final DecimalFormat decimalFormat;
+    private static final DecimalFormat DECIMAL_FORMAT;
+
+    public static String format(long number)
+    {
+        return DECIMAL_FORMAT.format(number);
+    }
 
     static
     {
         DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols();
         decimalFormatSymbols.setGroupingSeparator(' ');
 
-        decimalFormat = new DecimalFormat();
-        decimalFormat.setDecimalFormatSymbols(decimalFormatSymbols);
-        decimalFormat.setGroupingSize(3);
-        decimalFormat.setMaximumFractionDigits(64);
-    }
-
-    public static String format(long number)
-    {
-        return decimalFormat.format(number);
+        DECIMAL_FORMAT = new DecimalFormat();
+        DECIMAL_FORMAT.setDecimalFormatSymbols(decimalFormatSymbols);
+        DECIMAL_FORMAT.setGroupingSize(3);
+        DECIMAL_FORMAT.setMaximumFractionDigits(64);
     }
 }

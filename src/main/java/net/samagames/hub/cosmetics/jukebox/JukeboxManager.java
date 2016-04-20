@@ -7,8 +7,11 @@ import net.samagames.api.settings.IPlayerSettings;
 import net.samagames.hub.Hub;
 import net.samagames.hub.cosmetics.common.AbstractCosmeticManager;
 import net.samagames.tools.ParticleEffect;
+import net.samagames.tools.bossbar.BossBarAPI;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.boss.BarColor;
+import org.bukkit.boss.BarStyle;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
@@ -252,12 +255,12 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
 
                             hub.getServer().getOnlinePlayers().stream().filter(barPlayer -> !mutedPlayers.contains(barPlayer.getUniqueId())).forEach(barPlayer ->
                             {
-                                /*BossBarAPI.removeBar(barPlayer);
+                                BossBarAPI.removeBar(barPlayer);
 
                                 if (this.i <= 4)
                                     BossBarAPI.setBar(barPlayer, randomizedColor + "♫" + ChatColor.YELLOW + " " + ChatColor.GOLD + currentPlaylist.getSong().getTitle() + ChatColor.YELLOW + " jouée par " + ChatColor.GOLD + currentPlaylist.getPlayedBy() + " " + randomizedColor + "♪", BarColor.YELLOW, BarStyle.SOLID, currentPlaylist.getFormattedSecondsRemaining());
                                 else
-                                    BossBarAPI.setBar(barPlayer, randomizedColor + "♫" + ChatColor.GREEN + " " + currentPlaylist.getWoots() + " Woot" + (currentPlaylist.getWoots() > 1 ? "s" : "") + ChatColor.YELLOW + " et " + ChatColor.RED + currentPlaylist.getMehs() + " Meh" + (currentPlaylist.getMehs() > 1 ? "s" : "") + " " + randomizedColor + "♪", BarColor.YELLOW, BarStyle.SOLID, currentPlaylist.getFormattedSecondsRemaining());*/
+                                    BossBarAPI.setBar(barPlayer, randomizedColor + "♫" + ChatColor.GREEN + " " + currentPlaylist.getWoots() + " Woot" + (currentPlaylist.getWoots() > 1 ? "s" : "") + ChatColor.YELLOW + " et " + ChatColor.RED + currentPlaylist.getMehs() + " Meh" + (currentPlaylist.getMehs() > 1 ? "s" : "") + " " + randomizedColor + "♪", BarColor.YELLOW, BarStyle.SOLID, currentPlaylist.getFormattedSecondsRemaining());
                             });
 
                             this.i++;

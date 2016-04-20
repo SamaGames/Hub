@@ -16,17 +16,17 @@ public abstract class AbstractDisplayer
 
     protected final Hub hub;
     protected final Player player;
-    protected final Location baseLocation;
     protected final Map<Location, SimpleBlock> blocksUsed;
     protected final Map<Location, SimpleBlock> blocksBefore;
+    protected Location baseLocation;
 
     public AbstractDisplayer(Hub hub, Player player)
     {
         this.hub = hub;
         this.player = player;
-        this.baseLocation = player.getLocation();
         this.blocksUsed = new HashMap<>();
         this.blocksBefore = new HashMap<>();
+        this.baseLocation = player.getLocation();
     }
 
     public abstract void display();
@@ -40,7 +40,7 @@ public abstract class AbstractDisplayer
         this.blocksBefore.put(new Location(location.getWorld(), location.getBlockX(), location.getBlockY(), location.getBlockZ()), new SimpleBlock(location.getBlock()));
     }
 
-    public void addBlocksToUse(HashMap<Location, SimpleBlock> blocks)
+    public void addBlocksToUse(Map<Location, SimpleBlock> blocks)
     {
         for (Location block : blocks.keySet())
         {
