@@ -4,6 +4,7 @@ import net.samagames.hub.Hub;
 import net.samagames.hub.interactions.AbstractInteraction;
 import net.samagames.hub.utils.ProximityUtils;
 import net.samagames.tools.Titles;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -28,16 +29,20 @@ public class Bumper extends AbstractInteraction implements Listener
     private final ArmorStand startBeacon;
     private final Map<UUID, BukkitTask> flyTasks;
     private final List<UUID> flyingPlayers;
+    private final double power;
 
-    Bumper(Hub hub, Location location)
+    Bumper(Hub hub, String location)
     {
         super(hub);
 
-        this.bumperLocation = location;
+        String[] args = location.split(" ");
+
+        this.bumperLocation = new Location(Bukkit.getWorld(args[0]), Double.parseDouble(args[1]), Double.parseDouble(args[2]), Double.parseDouble(args[3]), Float.parseFloat(args[4]), Float.parseFloat(args[5]));
+        this.power = Double.parseDouble(args[6]);
         this.flyTasks = new HashMap<>();
         this.flyingPlayers = new ArrayList<>();
 
-        this.startBeacon = location.getWorld().spawn(this.bumperLocation.clone().add(new Vector(
+        this.startBeacon = this.bumperLocation.getWorld().spawn(this.bumperLocation.clone().add(new Vector(
                 Math.cos(this.bumperLocation.getYaw() * Math.PI * 2D / 180D),
                 Math.cos(this.bumperLocation.getPitch() * Math.PI * 2D / 180D),
                 Math.sin(this.bumperLocation.getYaw() * Math.PI * 2D / 180D)
@@ -54,7 +59,7 @@ public class Bumper extends AbstractInteraction implements Listener
         if (this.flyingPlayers.contains(player.getUniqueId()))
             return ;
         this.flyingPlayers.add(player.getUniqueId());
-        player.setVelocity(this.bumperLocation.getDirection().multiply(45D));
+        player.setVelocity(this.bumperLocation.getDirection().multiply(this.power));
         this.flyTasks.put(player.getUniqueId(), this.hub.getServer().getScheduler().runTaskLater(this.hub, () -> {
             ItemStack stack = new ItemStack(Material.ELYTRA);
             ItemMeta meta = stack.getItemMeta();
