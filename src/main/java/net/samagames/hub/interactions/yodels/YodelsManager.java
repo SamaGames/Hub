@@ -39,6 +39,8 @@ public class YodelsManager extends AbstractInteractionManager<Yodel>
                 if (startArmorStand == null || endArmorStand == null)
                 {
                     this.log(Level.WARNING, "Can't find one of the two ends of yodel at " + jsonYodel.get("start-platform").getAsString());
+                    this.log(Level.WARNING, "More info : start-rails = " + startRails + " | end-rails = " + endRails + " | end-platform = " + jsonYodel.get("start-platform").getAsString()
+                        + (startArmorStand == null ? " NULL" : " NOTNULL" ) + (endArmorStand == null ? " NULL" : " NOTNULL"));
                     continue;
                 }
 
