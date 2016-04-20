@@ -6,8 +6,11 @@ import net.samagames.hub.cosmetics.common.AbstractCosmeticRegistry;
 import net.samagames.hub.cosmetics.common.CosmeticAccessibility;
 import net.samagames.hub.cosmetics.common.CosmeticRarity;
 import net.samagames.hub.cosmetics.gadgets.displayers.*;
+import net.samagames.hub.utils.EggUtils;
+import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
+import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 
 class GadgetRegistry extends AbstractCosmeticRegistry<GadgetCosmetic>
@@ -67,6 +70,17 @@ class GadgetRegistry extends AbstractCosmeticRegistry<GadgetCosmetic>
                 "Saurez-vous nous aider ?"
         }, AnimalChestDisplayer.class, 60);
 
+        GadgetCosmetic perchedCatGadget = new GadgetCosmetic(this.hub, "catrun", "Chat perché !", EggUtils.getMonsterEgg(EntityType.OCELOT), 1100, CosmeticRarity.LEGENDARY, CosmeticAccessibility.VIPPLUS, new String[] {
+                "Défiez en duel un joueur et faites",
+                "en sorte d'échapper à son imparable",
+                "poing qui vous ferait perdre le duel !"
+        }, PerchedCatDisplayer.class, 240);
+
+        GadgetCosmetic nukeGadget = new GadgetCosmetic(this.hub, "nuke", "Bombe atomique", new ItemStack(Material.TNT, 1), 42000, CosmeticRarity.ADMIN, CosmeticAccessibility.ADMIN, new String[] {
+                ChatColor.MAGIC + "L'avenir du monde" + ChatColor.RESET + ChatColor.GRAY + " meow " + ChatColor.MAGIC + "entre",
+                ChatColor.MAGIC + "vos mains !"
+        }, NukeDisplayer.class, 60);
+
         this.registerElement(expressBotaniaGadget);
         this.registerElement(holyCreeperGadget);
         this.registerElement(magicCakeGadget);
@@ -75,6 +89,8 @@ class GadgetRegistry extends AbstractCosmeticRegistry<GadgetCosmetic>
         this.registerElement(discoBombGadget);
         this.registerElement(enderSwapGadget);
         this.registerElement(animalChestGadget);
+        this.registerElement(perchedCatGadget);
+        this.registerElement(nukeGadget);
 
         this.hub.getEntityManager().registerEntity("MoutMout2000", 91, EntitySheep.class, MoutMout2000Displayer.MoutMout2000Sheep.class);
     }
