@@ -37,7 +37,10 @@ public class YodelsManager extends AbstractInteractionManager<Yodel>
                 ArmorStand endArmorStand = (ArmorStand) endPlatform.getWorld().getNearbyEntities(endPlatform, 8.0D, 8.0D, 8.0D).stream().filter(entity -> entity instanceof ArmorStand).filter(entity -> entity.getCustomName().equals(endRails)).findFirst().orElse(null);
 
                 if (startArmorStand == null || endArmorStand == null)
-                    continue ;
+                {
+                    this.log(Level.WARNING, "Can't find one of the two ends of yodel at " + jsonYodel.get("start-platform").getAsString());
+                    continue;
+                }
 
                 Location startRailsLoc = startArmorStand.getLocation().clone().subtract(0.0D, 1.8D, 0.0D);
                 Location endRailsLoc = endArmorStand.getLocation().clone().subtract(0.0D, 1.8D, 0.0D);
