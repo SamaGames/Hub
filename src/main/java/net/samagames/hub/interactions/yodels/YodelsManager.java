@@ -39,15 +39,20 @@ public class YodelsManager extends AbstractInteractionManager<Yodel>
                 if (startArmorStand == null || endArmorStand == null)
                 {
                     this.log(Level.WARNING, "Can't find one of the two ends of yodel at " + jsonYodel.get("start-platform").getAsString());
-                    this.log(Level.WARNING, "More info : start-rails = " + startRails + " | end-rails = " + endRails + " | end-platform = " + jsonYodel.get("start-platform").getAsString()
-                        + (startArmorStand == null ? " NULL" : " NOTNULL" ) + (endArmorStand == null ? " NULL" : " NOTNULL"));
+                    this.log(Level.WARNING, "More info : ");
+                    this.log(Level.WARNING, "start-rails = " + startRails);
+                    this.log(Level.WARNING, "end-rails = " + endRails);
+                    this.log(Level.WARNING, "end-platform = " + jsonYodel.get("start-platform").getAsString());
+                    this.log(Level.WARNING, "start-armorstand = " + (startArmorStand == null ? "NULL" : "NOTNULL" ));
+                    this.log(Level.WARNING, "end-armorstand = " + (endArmorStand == null ? "NULL" : "NOTNULL"));
+                    this.log(Level.WARNING, "--------------------------------------------");
                     continue;
                 }
 
                 Location startRailsLoc = startArmorStand.getLocation().clone().subtract(0.0D, 1.8D, 0.0D);
                 Location endRailsLoc = endArmorStand.getLocation().clone().subtract(0.0D, 1.8D, 0.0D);
 
-                Yodel yodel = new Yodel(this.hub, startRailsLoc, endRailsLoc, startPlatform, endPlatform);
+                Yodel yodel = new Yodel(this.hub, startPlatform, startRailsLoc, endPlatform, endRailsLoc);
                 this.interactions.add(yodel);
                 this.log(Level.INFO, "Registered yodel at '" + jsonYodel.get("start-platform").getAsString());
 
