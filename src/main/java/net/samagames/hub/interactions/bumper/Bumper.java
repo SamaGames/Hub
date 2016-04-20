@@ -59,7 +59,10 @@ public class Bumper extends AbstractInteraction implements Listener
         if (this.flyingPlayers.contains(player.getUniqueId()))
             return ;
         this.flyingPlayers.add(player.getUniqueId());
-        player.setVelocity(this.bumperLocation.getDirection().multiply(this.power));
+        Vector vec = this.bumperLocation.getDirection().multiply(this.power);
+        ((CraftPlayer)player).getHandle().motX = vec.getX();
+        ((CraftPlayer)player).getHandle().motY = vec.getY();
+        ((CraftPlayer)player).getHandle().motZ = vec.getZ();
         this.flyTasks.put(player.getUniqueId(), this.hub.getServer().getScheduler().runTaskLater(this.hub, () -> {
             ItemStack stack = new ItemStack(Material.ELYTRA);
             ItemMeta meta = stack.getItemMeta();
