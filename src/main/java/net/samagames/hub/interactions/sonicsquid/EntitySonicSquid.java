@@ -82,9 +82,9 @@ class EntitySonicSquid extends EntitySquid
         this.getBukkitEntity().setVelocity(location.getDirection().multiply(1.025F).normalize());
         this.getBukkitEntity().setVelocity(((Player) entityliving.getBukkitEntity()).getEyeLocation().getDirection().multiply(1.025F));**/
         this.setYawPitch(entityliving.yaw, 0.0F);
-        this.motX = Math.cos(entityliving.yaw * Math.PI / 180) * 1.025F;
+        this.motX = -Math.sin(entityliving.yaw * Math.PI / 180) * 1.025F;
         this.motY = 0;
-        this.motZ = Math.sin(entityliving.yaw * Math.PI / 180) * 1.025F;
+        this.motZ = Math.cos(entityliving.yaw * Math.PI / 180) * 1.025F;
         this.positionChanged = true;
 
         // TODO: A working shit

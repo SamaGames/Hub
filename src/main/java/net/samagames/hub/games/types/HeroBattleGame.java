@@ -121,7 +121,7 @@ public class HeroBattleGame extends AbstractGame
     @Override
     public Location getLobbySpawn()
     {
-        return new Location(this.hub.getWorld(), 92.5D, 103.0D, -121.5D, 180.0F, 0.0F);
+        return new Location(this.hub.getWorld(), -53D, 114.0D, 35D, 0.0F, 0.0F);
     }
 
     @Override

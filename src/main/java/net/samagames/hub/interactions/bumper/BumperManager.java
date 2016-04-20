@@ -1,6 +1,7 @@
 package net.samagames.hub.interactions.bumper;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.samagames.hub.Hub;
 import net.samagames.hub.interactions.AbstractInteractionManager;
@@ -24,15 +25,13 @@ public class BumperManager extends AbstractInteractionManager<Bumper>
     {
         for (int i = 0; i < rootJson.size(); i++)
         {
-            JsonObject jsonBumber = rootJson.get(i).getAsJsonObject();
-
-            Location location = LocationUtils.str2loc(jsonBumber.getAsString());
+            JsonElement jsonBumber = rootJson.get(i);
 
             Bumper bumper = null;
 
             try
             {
-                bumper = new Bumper(hub, location);
+                bumper = new Bumper(hub, jsonBumber.getAsString());
             } catch (NullPointerException ignored) {}
 
             if (bumper != null)

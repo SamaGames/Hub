@@ -73,7 +73,7 @@ public class AgarMCGame extends AbstractGame
     @Override
     public Location getLobbySpawn()
     {
-        return new Location(this.hub.getWorld(), 150.5D, 87.0D, 46.5D);
+        return new Location(this.hub.getWorld(), -69.5D, 104.0D, -44.5D, 124F, 0F);
     }
 
     @Override
