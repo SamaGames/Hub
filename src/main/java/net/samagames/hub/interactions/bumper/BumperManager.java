@@ -27,13 +27,11 @@ public class BumperManager extends AbstractInteractionManager<Bumper>
         {
             JsonElement jsonBumber = rootJson.get(i);
 
-            Location location = LocationUtils.str2loc(jsonBumber.getAsString());
-
             Bumper bumper = null;
 
             try
             {
-                bumper = new Bumper(hub, location);
+                bumper = new Bumper(hub, jsonBumber.getAsString());
             } catch (NullPointerException ignored) {}
 
             if (bumper != null)
