@@ -2,6 +2,7 @@ package net.samagames.hub.events;
 
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.api.games.Status;
+import net.samagames.api.permissions.IPermissionsEntity;
 import net.samagames.hub.Hub;
 import net.samagames.hub.games.AbstractGame;
 import net.samagames.hub.games.signs.GameSign;
@@ -116,5 +117,17 @@ public class PlayerListener implements Listener
     {
         if (SamaGamesAPI.get().getPermissionsManager().hasPermission(event.getPlayer(), "hub.fly"))
             this.hub.getServer().getScheduler().runTask(this.hub, () -> event.getPlayer().setAllowFlight(true));
+    }
+
+    @SuppressWarnings("deprecation")
+    @EventHandler
+    public void onPlayerMove(PlayerMoveEvent event)
+    {
+        if (event.getPlayer().isOnGround() && event.getPlayer().getInventory().getChestplate().getType() == Material.ELYTRA)
+        {
+            IPermissionsEntity permissionsEntity = SamaGamesAPI.get().getPermissionsManager().getPlayer(event.getPlayer().getUniqueId());
+            if (permissionsEntity.getGroupId() < 3)
+                event.getPlayer().getInventory().setChestplate(new ItemStack(Material.AIR));
+        }
     }
 }
