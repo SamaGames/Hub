@@ -89,7 +89,19 @@ public class StaticInventory
 
         IPermissionsEntity permissionsEntity = SamaGamesAPI.get().getPermissionsManager().getPlayer(player.getUniqueId());
         if (permissionsEntity.getGroupId() > 2)
-            player.getInventory().setItem(4, buildItemStack(Material.ELYTRA, 1, 0, createTitle("Aîles"), null));
+        {
+            ItemStack itemStack = buildItemStack(Material.ELYTRA, 1, 0, createTitle("Aîles"), null);
+            //if (SamaGamesAPI.get().getSettingsManager().getSettings(player.getUniqueId()).isElytraEnabled())
+            {
+                ItemStack elytra = new ItemStack(Material.ELYTRA);
+                ItemMeta meta = elytra.getItemMeta();
+                meta.spigot().setUnbreakable(true);
+                elytra.setItemMeta(meta);
+                itemStack.addEnchantment(Enchantment.DURABILITY, 1);
+                player.getInventory().setChestplate(elytra);
+            }
+            player.getInventory().setItem(4, itemStack);
+        }
 
         player.getInventory().setHeldItemSlot(0);
     }
