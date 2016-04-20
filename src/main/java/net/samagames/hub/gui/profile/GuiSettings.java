@@ -283,7 +283,7 @@ public class GuiSettings extends AbstractGui
     {
         if(action.startsWith("setting_"))
         {
-            if(action.equals("setting_clickme") && this.getSlot(action) == 16)
+            if(action.equals("setting_9") && this.getSlot(action) == 16)
             {
                 this.hub.getGuiManager().openGui(player, new GuiClickMeSettings(this.hub));
                 return;
