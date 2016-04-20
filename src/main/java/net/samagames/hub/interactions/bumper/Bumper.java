@@ -35,7 +35,7 @@ public class Bumper extends AbstractInteraction implements Listener
     {
         super(hub);
 
-        String[] args = location.split(" ");
+        String[] args = location.split(", ");
 
         this.bumperLocation = new Location(Bukkit.getWorld(args[0]), Double.parseDouble(args[1]), Double.parseDouble(args[2]), Double.parseDouble(args[3]), Float.parseFloat(args[4]), Float.parseFloat(args[5]));
         this.power = Double.parseDouble(args[6]);
