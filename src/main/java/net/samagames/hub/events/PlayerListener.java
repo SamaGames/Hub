@@ -157,4 +157,11 @@ public class PlayerListener implements Listener
                 ((Player) event.getEntity()).getInventory().setItem(3, new ItemStack(Material.AIR));
         }
     }
+
+    @EventHandler
+    public void onPlayerToggleFlight(PlayerToggleFlightEvent event)
+    {
+        if (!event.isFlying())
+            onPlayerGlide(new EntityToggleGlideEvent(event.getPlayer(), false));
+    }
 }

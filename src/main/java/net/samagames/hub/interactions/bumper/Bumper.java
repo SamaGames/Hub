@@ -12,6 +12,7 @@ import org.bukkit.craftbukkit.v1_9_R1.entity.CraftPlayer;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityToggleGlideEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitTask;
@@ -71,6 +72,7 @@ public class Bumper extends AbstractInteraction implements Listener
             stack.setItemMeta(meta);
             player.getInventory().setChestplate(stack);
             ((CraftPlayer)player).getHandle().setFlag(7, true);
+            this.hub.getServer().getPluginManager().callEvent(new EntityToggleGlideEvent(player, true));
             Titles.sendTitle(player, 10, 40, 10, "", ChatColor.GOLD + "Bon vol !");
             this.stop(player);
         }, 40L));
