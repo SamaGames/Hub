@@ -69,7 +69,7 @@ public class StaticInventory
         }
         else if (stack.getType() == Material.FEATHER && player.isGliding() && player.getVelocity().lengthSquared() != 0)
         {
-            player.setVelocity(player.getVelocity().add(player.getVelocity().normalize().multiply(2)));
+            player.setVelocity(player.getVelocity().add(player.getLocation().getDirection().normalize().multiply(1.5D)));
             player.getWorld().playSound(player.getLocation(), Sound.ENTITY_ENDERDRAGON_FLAP, 2F, 2F);
         }
     }
