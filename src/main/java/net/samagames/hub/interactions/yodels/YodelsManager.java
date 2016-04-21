@@ -58,7 +58,7 @@ public class YodelsManager extends AbstractInteractionManager<Yodel>
                 Location startRailsLoc = startArmorStand.getLocation().clone().subtract(0.0D, 1.8D, 0.0D);
                 Location endRailsLoc = endArmorStand.getLocation().clone().subtract(0.0D, 1.8D, 0.0D);
 
-                Yodel yodel = new Yodel(this.hub, startPlatform, startRailsLoc, endPlatform, endRailsLoc, reverse != null && reverse.getAsBoolean());
+                Yodel yodel = new Yodel(this.hub, startPlatform, startRailsLoc, endRailsLoc, endPlatform, reverse != null && reverse.getAsBoolean());
                 this.interactions.add(yodel);
                 this.log(Level.INFO, "Registered yodel at '" + jsonYodel.get("start-platform").getAsString());
 
