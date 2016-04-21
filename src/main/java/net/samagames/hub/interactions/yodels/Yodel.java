@@ -79,24 +79,24 @@ public class Yodel extends AbstractInteraction
     @Override
     public void play(Player player)
     {
-        if (this.runnerList.containsKey(player.getUniqueId()))
+        if (runnerList.containsKey(player.getUniqueId()))
             return ;
 
         YodelRunner runner = new YodelRunner(this.hub, this, player, this.reverse);
-        this.runnerList.put(player.getUniqueId(), runner);
+        runnerList.put(player.getUniqueId(), runner);
         runner.start();
     }
 
     @Override
     public boolean hasPlayer(Player player)
     {
-        return this.runnerList.containsKey(player.getUniqueId());
+        return runnerList.containsKey(player.getUniqueId());
     }
 
     @Override
     public void onDisable()
     {
-        this.runnerList.values().forEach(YodelRunner::stop);
+        runnerList.values().forEach(YodelRunner::stop);
         this.startTask.cancel();
         this.startBeacon.remove();
     }
@@ -104,12 +104,12 @@ public class Yodel extends AbstractInteraction
     @Override
     public void stop(Player player)
     {
-        YodelRunner runner = this.runnerList.get(player.getUniqueId());
+        YodelRunner runner = runnerList.get(player.getUniqueId());
 
         if (runner != null)
         {
             runner.stop();
-            this.hub.getServer().getScheduler().runTaskLater(this.hub, () -> this.runnerList.remove(player.getUniqueId()), 60);
+            this.hub.getServer().getScheduler().runTaskLater(this.hub, () -> runnerList.remove(player.getUniqueId()), 60);
         }
     }
 }
