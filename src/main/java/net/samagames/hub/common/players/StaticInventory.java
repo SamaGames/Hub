@@ -58,7 +58,7 @@ public class StaticInventory
                 meta.spigot().setUnbreakable(true);
                 elytra.setItemMeta(meta);
                 player.getInventory().setChestplate(elytra);
-                stack.addEnchantment(Enchantment.DURABILITY, 1);
+                stack.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
             }
             else
             {
