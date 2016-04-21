@@ -41,6 +41,7 @@ public class YodelRunner extends BukkitRunnable
         wasFlying = player.isFlying();
 
         player.teleport(getStart().setDirection(yodel.getAngleVector().multiply(reverse ? -1 : 1)));
+        player.teleport(player.getLocation().add(0, 0.3, 0));
 
         player.getInventory().setChestplate(new ItemStack(Material.ELYTRA));
 
