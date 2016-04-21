@@ -157,7 +157,6 @@ public class PlayerListener implements Listener
     @EventHandler
     public void onPlayerToggleFlight(PlayerToggleFlightEvent event)
     {
-        if (!event.isFlying())
-            onPlayerGlide(new EntityToggleGlideEvent(event.getPlayer(), false));
+        onPlayerGlide(new EntityToggleGlideEvent(event.getPlayer(), false));
     }
 }

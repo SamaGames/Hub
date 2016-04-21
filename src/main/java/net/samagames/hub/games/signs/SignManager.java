@@ -47,15 +47,6 @@ public class SignManager extends AbstractManager
             }
         }
 
-        try {
-            Scanner sc = new Scanner(new FileInputStream(config));
-            while (sc.hasNextLine())
-                System.out.println(sc.nextLine());
-            sc.close();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-
         this.jsonConfig = new JsonConfiguration(config);
         this.reloadList();
     }
