@@ -150,7 +150,7 @@ public class PlayerListener implements Listener
                 ItemMeta meta = stack.getItemMeta();
                 meta.setDisplayName(ChatColor.GOLD + "" + ChatColor.BOLD + "Booster");
                 stack.setItemMeta(meta);
-                stack.addEnchantment(Enchantment.DURABILITY, 1);
+                stack.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
                 ((Player) event.getEntity()).getInventory().setItem(3, stack);
             }
             else
