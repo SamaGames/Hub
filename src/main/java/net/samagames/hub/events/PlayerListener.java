@@ -145,27 +145,22 @@ public class PlayerListener implements Listener
     {
         if (!(event.getEntity() instanceof Player))
             return ;
-        IPermissionsEntity permissionsEntity = SamaGamesAPI.get().getPermissionsManager().getPlayer(event.getEntity().getUniqueId());
-        if (permissionsEntity.getGroupId() > 1)
+        if (event.isGliding())
         {
-            if (event.isGliding())
-            {
-                ItemStack stack = new ItemStack(Material.FEATHER);
-                ItemMeta meta = stack.getItemMeta();
-                meta.setDisplayName(ChatColor.GOLD + "" + ChatColor.BOLD + "Booster");
-                stack.setItemMeta(meta);
-                stack.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
-                ((Player) event.getEntity()).getInventory().setItem(3, stack);
-            }
-            else
-                ((Player) event.getEntity()).getInventory().setItem(3, new ItemStack(Material.AIR));
+            ItemStack stack = new ItemStack(Material.FEATHER);
+            ItemMeta meta = stack.getItemMeta();
+            meta.setDisplayName(ChatColor.GOLD + "" + ChatColor.BOLD + "Booster");
+            stack.setItemMeta(meta);
+            stack.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
+            ((Player) event.getEntity()).getInventory().setItem(3, stack);
         }
+        else
+            ((Player) event.getEntity()).getInventory().setItem(3, new ItemStack(Material.AIR));
     }
 
     @EventHandler
     public void onPlayerToggleFlight(PlayerToggleFlightEvent event)
     {
-        if (!event.isFlying())
-            onPlayerGlide(new EntityToggleGlideEvent(event.getPlayer(), false));
+        onPlayerGlide(new EntityToggleGlideEvent(event.getPlayer(), false));
     }
 }

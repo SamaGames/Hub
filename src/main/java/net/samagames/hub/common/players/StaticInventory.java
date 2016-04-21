@@ -68,7 +68,16 @@ public class StaticInventory
             player.playSound(player.getLocation(), Sound.ENTITY_HORSE_SADDLE, 1F, 1F);
         }
         else if (stack.getType() == Material.FEATHER && player.isGliding() && player.getVelocity().lengthSquared() != 0)
-            player.setVelocity(player.getVelocity().add(player.getVelocity().normalize().multiply(2)));
+        {
+            IPermissionsEntity permissionsEntity = SamaGamesAPI.get().getPermissionsManager().getPlayer(player.getUniqueId());
+            if (permissionsEntity.getGroupId() == 1)
+            {
+                player.sendMessage(ChatColor.RED + "Devenez VIP pour utiliser le booster.");
+                return ;
+            }
+            player.setVelocity(player.getVelocity().add(player.getLocation().getDirection().normalize().multiply(1.5D)));
+            player.getWorld().playSound(player.getLocation(), Sound.ENTITY_ENDERDRAGON_FLAP, 2F, 2F);
+        }
     }
 
     public void setInventoryToPlayer(Player player)

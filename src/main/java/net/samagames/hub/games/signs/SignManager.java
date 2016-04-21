@@ -15,6 +15,7 @@ import org.bukkit.entity.Player;
 
 import java.io.*;
 import java.nio.charset.Charset;
+import java.util.Scanner;
 import java.util.logging.Level;
 
 public class SignManager extends AbstractManager
