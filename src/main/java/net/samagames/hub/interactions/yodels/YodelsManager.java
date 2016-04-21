@@ -34,8 +34,8 @@ public class YodelsManager extends AbstractInteractionManager<Yodel>
                 Location startPlatform = LocationUtils.str2loc(jsonYodel.get("start-platform").getAsString());
                 Location endPlatform = LocationUtils.str2loc(jsonYodel.get("end-platform").getAsString());
 
-                ArmorStand startArmorStand = (ArmorStand) startPlatform.getWorld().getNearbyEntities(startPlatform, 3.0D, 3.0D, 3.0D).stream().filter(entity -> entity instanceof ArmorStand).filter(entity -> entity.getCustomName().equals(startRails)).findFirst().orElse(null);
-                ArmorStand endArmorStand = (ArmorStand) endPlatform.getWorld().getNearbyEntities(endPlatform, 3.0D, 3.0D, 3.0D).stream().filter(entity -> entity instanceof ArmorStand).filter(entity -> entity.getCustomName().equals(endRails)).findFirst().orElse(null);
+                ArmorStand startArmorStand = (ArmorStand) startPlatform.getWorld().getNearbyEntities(startPlatform, 4.0D, 4.0D, 4.0D).stream().filter(entity -> entity instanceof ArmorStand).filter(entity -> entity.getCustomName().equals(startRails)).findFirst().orElse(null);
+                ArmorStand endArmorStand = (ArmorStand) endPlatform.getWorld().getNearbyEntities(endPlatform, 4.0D, 4.0D, 4.0D).stream().filter(entity -> entity instanceof ArmorStand).filter(entity -> entity.getCustomName().equals(endRails)).findFirst().orElse(null);
 
                 JsonElement reverse = jsonYodel.get("reverse");
 
