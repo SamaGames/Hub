@@ -15,6 +15,7 @@ import org.bukkit.entity.Player;
 
 import java.io.*;
 import java.nio.charset.Charset;
+import java.util.Scanner;
 import java.util.logging.Level;
 
 public class SignManager extends AbstractManager
@@ -44,6 +45,15 @@ public class SignManager extends AbstractManager
             {
                 e.printStackTrace();
             }
+        }
+
+        try {
+            Scanner sc = new Scanner(new FileInputStream(config));
+            while (sc.hasNextLine())
+                System.out.println(sc.nextLine());
+            sc.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
 
         this.jsonConfig = new JsonConfiguration(config);
