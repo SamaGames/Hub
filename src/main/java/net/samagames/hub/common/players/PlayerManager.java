@@ -10,6 +10,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import redis.clients.jedis.Jedis;
 
 import java.util.*;
 import java.util.logging.Level;
@@ -70,8 +71,27 @@ public class PlayerManager extends AbstractManager
                 player.setAllowFlight(false);
                 player.setFoodLevel(20);
                 player.setHealth(20.0D);
-                player.teleport(this.spawn);
                 InventoryUtils.cleanPlayer(player);
+
+                Jedis jedis = SamaGamesAPI.get().getBungeeResource();
+                String key = "lastgame." + player.getUniqueId().toString();
+
+                if (jedis.exists(key))
+                {
+                    String lastGame = jedis.get(key);
+                    jedis.del(key);
+
+                    if (this.hub.getGameManager().getGameByIdentifier(lastGame) != null)
+                        player.teleport(this.hub.getGameManager().getGameByIdentifier(lastGame).getLobbySpawn());
+                    else
+                        player.teleport(this.spawn);
+                }
+                else
+                {
+                    player.teleport(this.spawn);
+                }
+                
+                jedis.close();
 
                 this.staticInventory.setInventoryToPlayer(player);
                 this.updateHiders(player);
