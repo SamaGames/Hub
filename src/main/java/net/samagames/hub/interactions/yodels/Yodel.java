@@ -107,7 +107,7 @@ public class Yodel extends AbstractInteraction
         if (runner != null)
         {
             runner.stop();
-            this.runnerList.remove(player.getUniqueId());
+            this.hub.getServer().getScheduler().runTaskLater(this.hub, () -> this.runnerList.remove(player.getUniqueId()), 60);
         }
     }
 }
