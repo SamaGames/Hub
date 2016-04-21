@@ -102,6 +102,7 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
     public void onLogin(Player player)
     {
         IPlayerSettings settings = SamaGamesAPI.get().getSettingsManager().getSettings(player.getUniqueId());
+
         if(!settings.isJukeboxListen())
             this.mutedPlayers.add(player.getUniqueId());
         else
