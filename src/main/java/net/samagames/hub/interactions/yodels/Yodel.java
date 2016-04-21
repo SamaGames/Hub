@@ -39,11 +39,11 @@ public class Yodel extends AbstractInteraction
         this.length = start.distanceSquared(end);
         this.runnerList = new HashMap<>();
 
-        this.startBeacon = boarding.getWorld().spawn(boarding, ArmorStand.class);
+        this.startBeacon = boarding.getWorld().spawn(reverse ? landing : boarding, ArmorStand.class);
         this.startBeacon.setVisible(false);
         this.startBeacon.setGravity(false);
 
-        this.hub.getTaskManager().getCirclesTask().addCircleAt(boarding);
+        this.hub.getTaskManager().getCirclesTask().addCircleAt(reverse ? landing : boarding);
         this.startTask = ProximityUtils.onNearbyOf(this.hub, this.startBeacon, 0.5D, 0.5D, 0.5D, Player.class, this::play);
     }
 
