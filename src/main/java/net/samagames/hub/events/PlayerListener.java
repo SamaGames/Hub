@@ -123,7 +123,9 @@ public class PlayerListener implements Listener
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event)
     {
-        if (event.getPlayer().isOnGround() && event.getPlayer().getInventory().getChestplate().getType() == Material.ELYTRA)
+        if (event.getPlayer().isOnGround()
+            && event.getPlayer().getInventory().getChestplate() != null
+            && event.getPlayer().getInventory().getChestplate().getType() == Material.ELYTRA)
         {
             IPermissionsEntity permissionsEntity = SamaGamesAPI.get().getPermissionsManager().getPlayer(event.getPlayer().getUniqueId());
             if (permissionsEntity.getGroupId() < 3)
