@@ -103,7 +103,7 @@ class MagicChest extends AbstractInteraction
                 if(i >= 54 && i < 58)
                 {
                     double speed = 0.5;
-                    
+
                     for(int k = 0; k < 5; k++)
                         ParticleEffect.FIREWORKS_SPARK.display(new Vector((0.5 - this.random.nextDouble()) * speed, (0.5 - this.random.nextDouble()) * speed, (0.5 - this.random.nextDouble()) * speed), 1F, this.location.clone().add((0.5 - this.random.nextDouble()) * 2 + 0.5, (0.5 - this.random.nextDouble()) * 2 + 0.5, (0.5 - this.random.nextDouble()) * 2 + 0.5), 40);
                 }
