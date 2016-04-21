@@ -1,7 +1,9 @@
 package net.samagames.hub.interactions.yodels;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 import net.samagames.hub.Hub;
 import net.samagames.hub.interactions.AbstractInteractionManager;
 import net.samagames.tools.LocationUtils;
@@ -36,6 +38,8 @@ public class YodelsManager extends AbstractInteractionManager<Yodel>
                 ArmorStand startArmorStand = (ArmorStand) startPlatform.getWorld().getNearbyEntities(startPlatform, 8.0D, 8.0D, 8.0D).stream().filter(entity -> entity instanceof ArmorStand).filter(entity -> entity.getCustomName().equals(startRails)).findFirst().orElse(null);
                 ArmorStand endArmorStand = (ArmorStand) endPlatform.getWorld().getNearbyEntities(endPlatform, 8.0D, 8.0D, 8.0D).stream().filter(entity -> entity instanceof ArmorStand).filter(entity -> entity.getCustomName().equals(endRails)).findFirst().orElse(null);
 
+                JsonElement reverse = jsonYodel.get("reverse");
+
                 if (startArmorStand == null || endArmorStand == null)
                 {
                     this.log(Level.WARNING, "Can't find one of the two ends of yodel");
@@ -46,6 +50,7 @@ public class YodelsManager extends AbstractInteractionManager<Yodel>
                     this.log(Level.WARNING, "end-platform = " + jsonYodel.get("end-platform").getAsString());
                     this.log(Level.WARNING, "start-armorstand = " + (startArmorStand == null ? "NULL" : "NOTNULL" ));
                     this.log(Level.WARNING, "end-armorstand = " + (endArmorStand == null ? "NULL" : "NOTNULL"));
+                    this.log(Level.WARNING, "reverse = " + (reverse == null ? "false" : reverse.getAsBoolean()));
                     this.log(Level.WARNING, "--------------------------------------------");
                     continue;
                 }
@@ -53,7 +58,7 @@ public class YodelsManager extends AbstractInteractionManager<Yodel>
                 Location startRailsLoc = startArmorStand.getLocation().clone().subtract(0.0D, 1.8D, 0.0D);
                 Location endRailsLoc = endArmorStand.getLocation().clone().subtract(0.0D, 1.8D, 0.0D);
 
-                Yodel yodel = new Yodel(this.hub, startPlatform, startRailsLoc, endPlatform, endRailsLoc);
+                Yodel yodel = new Yodel(this.hub, startPlatform, startRailsLoc, endPlatform, endRailsLoc, reverse != null && reverse.getAsBoolean());
                 this.interactions.add(yodel);
                 this.log(Level.INFO, "Registered yodel at '" + jsonYodel.get("start-platform").getAsString());
 

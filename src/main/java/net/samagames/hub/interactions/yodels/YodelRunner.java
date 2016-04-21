@@ -93,6 +93,7 @@ public class YodelRunner extends BukkitRunnable
         // Updates the velocity
 
         player.setVelocity(velocityStep);
+        player.setFallDistance(0);
 
 
         // Checks if the line is finished (either we are on the finish zone, or out of the path if for some

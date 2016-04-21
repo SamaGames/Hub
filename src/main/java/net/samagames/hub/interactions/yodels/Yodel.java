@@ -19,6 +19,7 @@ public class Yodel extends AbstractInteraction
     private Location start;
     private Location end;
     private Location landing;
+    private boolean reverse;
 
     private double length;
 
@@ -26,13 +27,14 @@ public class Yodel extends AbstractInteraction
     private final ArmorStand startBeacon;
     private final Map<UUID, YodelRunner> runnerList;
 
-    public Yodel(Hub hub, Location boarding, Location start, Location end, Location landing)
+    public Yodel(Hub hub, Location boarding, Location start, Location end, Location landing, boolean reverse)
     {
         super(hub);
         this.boarding = boarding.clone();
         this.start    = start.clone();
         this.end      = end.clone();
         this.landing  = landing.clone();
+        this.reverse = reverse;
 
         this.length = start.distanceSquared(end);
         this.runnerList = new HashMap<>();
@@ -78,7 +80,7 @@ public class Yodel extends AbstractInteraction
     @Override
     public void play(Player player)
     {
-        YodelRunner runner = new YodelRunner(this.hub, this, player, false);
+        YodelRunner runner = new YodelRunner(this.hub, this, player, this.reverse);
         this.runnerList.put(player.getUniqueId(), runner);
         runner.start();
     }
