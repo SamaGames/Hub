@@ -80,6 +80,9 @@ public class Yodel extends AbstractInteraction
     @Override
     public void play(Player player)
     {
+        if (this.runnerList.containsKey(player.getUniqueId()))
+            return ;
+
         YodelRunner runner = new YodelRunner(this.hub, this, player, this.reverse);
         this.runnerList.put(player.getUniqueId(), runner);
         runner.start();
