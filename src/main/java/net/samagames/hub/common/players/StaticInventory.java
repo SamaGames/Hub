@@ -67,6 +67,8 @@ public class StaticInventory
             }
             player.playSound(player.getLocation(), Sound.ENTITY_HORSE_SADDLE, 1F, 1F);
         }
+        else if (stack.getType() == Material.FEATHER && player.isGliding() && player.getVelocity().lengthSquared() != 0)
+            player.setVelocity(player.getVelocity().add(player.getVelocity().normalize().multiply(2)));
     }
 
     public void setInventoryToPlayer(Player player)

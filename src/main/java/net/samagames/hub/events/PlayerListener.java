@@ -10,14 +10,17 @@ import net.samagames.hub.utils.ServerStatus;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Sign;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityToggleGlideEvent;
 import org.bukkit.event.inventory.InventoryInteractEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 public class PlayerListener implements Listener
 {
@@ -130,6 +133,28 @@ public class PlayerListener implements Listener
             IPermissionsEntity permissionsEntity = SamaGamesAPI.get().getPermissionsManager().getPlayer(event.getPlayer().getUniqueId());
             if (permissionsEntity.getGroupId() < 3)
                 event.getPlayer().getInventory().setChestplate(new ItemStack(Material.AIR));
+        }
+    }
+
+    @EventHandler
+    public void onPlayerGlide(EntityToggleGlideEvent event)
+    {
+        if (!(event.getEntity() instanceof Player))
+            return ;
+        IPermissionsEntity permissionsEntity = SamaGamesAPI.get().getPermissionsManager().getPlayer(event.getEntity().getUniqueId());
+        if (permissionsEntity.getGroupId() > 1)
+        {
+            if (event.isGliding())
+            {
+                ItemStack stack = new ItemStack(Material.FEATHER);
+                ItemMeta meta = stack.getItemMeta();
+                meta.setDisplayName(ChatColor.GOLD + "" + ChatColor.BOLD + "Booster");
+                stack.setItemMeta(meta);
+                stack.addEnchantment(Enchantment.DURABILITY, 1);
+                ((Player) event.getEntity()).getInventory().setItem(3, stack);
+            }
+            else
+                ((Player) event.getEntity()).getInventory().setItem(3, new ItemStack(Material.AIR));
         }
     }
 }
