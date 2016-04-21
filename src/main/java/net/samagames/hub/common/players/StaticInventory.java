@@ -1,5 +1,7 @@
 package net.samagames.hub.common.players;
 
+import net.samagames.api.SamaGamesAPI;
+import net.samagames.api.permissions.IPermissionsEntity;
 import net.samagames.hub.Hub;
 import net.samagames.hub.gui.cosmetics.GuiCosmetics;
 import net.samagames.hub.gui.main.GuiMain;
@@ -7,6 +9,8 @@ import net.samagames.hub.gui.profile.GuiProfile;
 import net.samagames.hub.gui.shop.GuiShop;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.Sound;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -45,6 +49,26 @@ public class StaticInventory
             this.hub.getParkourManager().getPlayerParkour(player.getUniqueId()).quitPlayer(player);
         else if (player.getInventory().getHeldItemSlot() == 6)
             this.hub.getCosmeticManager().getGadgetManager().useSelectedCosmetic(player, stack);
+        else if (stack.getType() == Material.ELYTRA)
+        {
+            if (stack.getEnchantments().isEmpty())
+            {
+                ItemStack elytra = new ItemStack(Material.ELYTRA);
+                ItemMeta meta = elytra.getItemMeta();
+                meta.spigot().setUnbreakable(true);
+                elytra.setItemMeta(meta);
+                player.getInventory().setChestplate(elytra);
+                stack.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
+            }
+            else
+            {
+                player.getInventory().setChestplate(new ItemStack(Material.AIR));
+                stack.removeEnchantment(Enchantment.DURABILITY);
+            }
+            player.playSound(player.getLocation(), Sound.ENTITY_HORSE_SADDLE, 1F, 1F);
+        }
+        else if (stack.getType() == Material.FEATHER && player.isGliding() && player.getVelocity().lengthSquared() != 0)
+            player.setVelocity(player.getVelocity().add(player.getVelocity().normalize().multiply(2)));
     }
 
     public void setInventoryToPlayer(Player player)
@@ -63,6 +87,22 @@ public class StaticInventory
             }
 
             player.getInventory().setItem(slot, this.items.get(slot));
+        }
+
+        IPermissionsEntity permissionsEntity = SamaGamesAPI.get().getPermissionsManager().getPlayer(player.getUniqueId());
+        if (permissionsEntity.getGroupId() > 2)
+        {
+            ItemStack itemStack = buildItemStack(Material.ELYTRA, 1, 0, createTitle("Aîles"), null);
+            //if (SamaGamesAPI.get().getSettingsManager().getSettings(player.getUniqueId()).isElytraEnabled())
+            {
+                ItemStack elytra = new ItemStack(Material.ELYTRA);
+                ItemMeta meta = elytra.getItemMeta();
+                meta.spigot().setUnbreakable(true);
+                elytra.setItemMeta(meta);
+                itemStack.addEnchantment(Enchantment.DURABILITY, 1);
+                player.getInventory().setChestplate(elytra);
+            }
+            player.getInventory().setItem(4, itemStack);
         }
 
         player.getInventory().setHeldItemSlot(0);

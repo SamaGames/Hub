@@ -5,14 +5,14 @@ import net.samagames.hub.common.managers.AbstractManager;
 import net.samagames.hub.interactions.bumper.BumperManager;
 import net.samagames.hub.interactions.magicchests.MagicChestManager;
 import net.samagames.hub.interactions.sonicsquid.SonicSquidManager;
-import net.samagames.hub.interactions.yodels.YodelManager;
+import net.samagames.hub.interactions.yodels.YodelsManager;
 import org.bukkit.entity.Player;
 
 import java.io.File;
 
 public class InteractionManager extends AbstractManager
 {
-    private final YodelManager yodelManager;
+    private final YodelsManager yodelManager;
     private final SonicSquidManager sonicSquidManager;
     private final BumperManager bumperManager;
     private final MagicChestManager magicChestManager;
@@ -26,7 +26,7 @@ public class InteractionManager extends AbstractManager
         if (!interactionsDirectory.exists())
             interactionsDirectory.mkdir();
 
-        this.yodelManager = new YodelManager(hub);
+        this.yodelManager = new YodelsManager(hub);
         this.sonicSquidManager = new SonicSquidManager(hub);
         this.bumperManager = new BumperManager(hub);
         this.magicChestManager = new MagicChestManager(hub);
