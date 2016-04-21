@@ -25,7 +25,7 @@ public class Yodel extends AbstractInteraction
 
     private final BukkitTask startTask;
     private final ArmorStand startBeacon;
-    private final Map<UUID, YodelRunner> runnerList;
+    private static final Map<UUID, YodelRunner> runnerList = new HashMap<>();
 
     public Yodel(Hub hub, Location boarding, Location start, Location end, Location landing, boolean reverse)
     {
@@ -37,7 +37,6 @@ public class Yodel extends AbstractInteraction
         this.reverse = reverse;
 
         this.length = start.distanceSquared(end);
-        this.runnerList = new HashMap<>();
 
         this.startBeacon = boarding.getWorld().spawn(reverse ? landing : boarding, ArmorStand.class);
         this.startBeacon.setVisible(false);
