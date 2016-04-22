@@ -10,6 +10,7 @@ import org.bukkit.craftbukkit.v1_9_R1.util.UnsafeList;
 import org.bukkit.entity.Player;
 
 import java.lang.reflect.Field;
+import java.util.Iterator;
 import java.util.UUID;
 
 class EntitySonicSquid extends EntitySquid
@@ -87,8 +88,6 @@ class EntitySonicSquid extends EntitySquid
         this.motZ = Math.cos(entityliving.yaw * Math.PI / 180) * 1.025F;
         this.velocityChanged = true;
         this.move(this.motX, this.motY, this.motZ);
-
-        // TODO: A working shit
     }
 
     @Override
@@ -96,17 +95,10 @@ class EntitySonicSquid extends EntitySquid
     {
         super.move(d0, d1, d2);
 
-        Block block = this.getFacingBlock();
-
-        if (block != null && !block.isLiquid())
-        {
-            this.getBukkitEntity().eject();
-
-            if (this.hub.getServer().getPlayer(this.uuid).isOnline())
-                this.hub.getServer().getPlayer(this.uuid).teleport(block.getLocation().add(0.0D, 1.0D, 0.0D));
-
-            this.die();
-        }
+        for (int x = -1; x <= 1; ++x)
+            for (int z = -1; z <= 1; ++z)
+                if (this.checkBlock(this.locX + (double) x, this.locY, this.locZ + (double) z))
+                    return ;
     }
 
     @Override
@@ -130,34 +122,22 @@ class EntitySonicSquid extends EntitySquid
     @Override
     public void e(NBTTagCompound nbttagcompound) {}
 
-    private Block getFacingBlock()
+    private boolean checkBlock(double x, double y, double z)
     {
-        double rotation = (this.getBukkitEntity().getLocation().getYaw() - 90) % 360;
+        net.minecraft.server.v1_9_R1.Material m = this.getWorld().getType(new BlockPosition(x, y, z)).getMaterial();
 
-        if (rotation < 0)
-            rotation += 360.0;
+        if (m != net.minecraft.server.v1_9_R1.Material.AIR && m != net.minecraft.server.v1_9_R1.Material.WATER)
+        {
+            this.die();
 
-        Block block = null;
+            this.passengers.forEach(passenger -> {
+                passenger.getBukkitEntity().eject();
+                passenger.setLocation(x + 0.5D, y, z + 0.5D, passenger.yaw, passenger.pitch);
+            });
 
-        if (0 <= rotation && rotation < 22.5)
-            block = this.getBukkitEntity().getLocation().add(0.0D, 0.0D, -1.0D).getBlock();
-        else if (22.5 <= rotation && rotation < 67.5)
-            block = this.getBukkitEntity().getLocation().add(1.0D, 0.0D, -1.0D).getBlock();
-        else if (67.5 <= rotation && rotation < 112.5)
-            block = this.getBukkitEntity().getLocation().add(1.0D, 0.0D, 0.0D).getBlock();
-        else if (112.5 <= rotation && rotation < 157.5)
-            block = this.getBukkitEntity().getLocation().add(1.0D, 0.0D, 1.0D).getBlock();
-        else if (157.5 <= rotation && rotation < 202.5)
-            block = this.getBukkitEntity().getLocation().add(0.0D, 0.0D, 1.0D).getBlock();
-        else if (202.5 <= rotation && rotation < 247.5)
-            block = this.getBukkitEntity().getLocation().add(-1.0D, 0.0D, 1.0D).getBlock();
-        else if (247.5 <= rotation && rotation < 292.5)
-            block = this.getBukkitEntity().getLocation().add(-1.0D, 0.0D, 0.0D).getBlock();
-        else if (292.5 <= rotation && rotation < 337.5)
-            block = this.getBukkitEntity().getLocation().add(-1.0D, 0.0D, -1.0D).getBlock();
-        else if (337.5 <= rotation && rotation < 360.0)
-            block = this.getBukkitEntity().getLocation().add(0.0D, 0.0D, -1.0D).getBlock();
-
-        return block;
+            return true;
+        }
+        else
+            return false;
     }
 }
