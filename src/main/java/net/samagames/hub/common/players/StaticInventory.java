@@ -10,11 +10,13 @@ import net.samagames.hub.gui.shop.GuiShop;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.craftbukkit.v1_9_R1.entity.CraftPlayer;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.util.Vector;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -75,7 +77,11 @@ public class StaticInventory
                 player.sendMessage(ChatColor.RED + "Devenez VIP pour utiliser le booster.");
                 return ;
             }
-            player.setVelocity(player.getVelocity().add(player.getLocation().getDirection().normalize().multiply(1.5D)));
+            Vector velocity = player.getVelocity().add(player.getLocation().getDirection().normalize().multiply(1.5D));
+            ((CraftPlayer)player).getHandle().motX = velocity.getX();
+            ((CraftPlayer)player).getHandle().motY = velocity.getY();
+            ((CraftPlayer)player).getHandle().motZ = velocity.getZ();
+            ((CraftPlayer)player).getHandle().velocityChanged = true;
             player.getWorld().playSound(player.getLocation(), Sound.ENTITY_ENDERDRAGON_FLAP, 2F, 2F);
         }
     }
