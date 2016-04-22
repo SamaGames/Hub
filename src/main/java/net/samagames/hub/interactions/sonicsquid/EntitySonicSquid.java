@@ -86,6 +86,7 @@ class EntitySonicSquid extends EntitySquid
         this.motY = 0;
         this.motZ = Math.cos(entityliving.yaw * Math.PI / 180) * 1.025F;
         this.velocityChanged = true;
+        this.move(this.motX, this.motY, this.motZ);
 
         // TODO: A working shit
     }
