@@ -26,7 +26,8 @@ public class AnimalChestDisplayer extends AbstractDisplayer
             EntityType.GUARDIAN, EntityType.IRON_GOLEM, EntityType.MAGMA_CUBE, EntityType.OCELOT, EntityType.PIG,
             EntityType.PIG_ZOMBIE, EntityType.RABBIT, EntityType.SHEEP, EntityType.SILVERFISH, EntityType.SKELETON,
             EntityType.SLIME, EntityType.SNOWMAN, EntityType.SPIDER, EntityType.SQUID, EntityType.VILLAGER,
-            EntityType.WITCH, EntityType.WOLF, EntityType.ZOMBIE
+            EntityType.WITCH, EntityType.WOLF, EntityType.ZOMBIE, EntityType.HORSE, EntityType.MUSHROOM_COW,
+            EntityType.SHULKER, EntityType.WITHER_SKULL
     };
 
     private final Location centerLoc;
