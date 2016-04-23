@@ -69,7 +69,7 @@ class GadgetRegistry extends AbstractCosmeticRegistry<GadgetCosmetic>
                 "Saurez-vous nous aider ?"
         }, AnimalChestDisplayer.class, 60);
 
-        GadgetCosmetic perchedCatGadget = new GadgetCosmetic(this.hub, "catrun", "Chat perché !", EggUtils.getMonsterEgg(EntityType.OCELOT), 1100, CosmeticRarity.LEGENDARY, CosmeticAccessibility.VIPPLUS, new String[] {
+        GadgetCosmetic perchedCatGadget = new GadgetCosmetic(this.hub, "catrun", "Chat perché !", MojangShitUtils.getMonsterEgg(EntityType.OCELOT), 1100, CosmeticRarity.LEGENDARY, CosmeticAccessibility.VIPPLUS, new String[] {
                 "Défiez en duel un joueur et faites",
                 "en sorte d'échapper à son imparable",
                 "poing qui vous ferait perdre le duel !"
