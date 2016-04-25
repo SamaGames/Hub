@@ -40,7 +40,7 @@ class Meow extends AbstractInteraction
         this.holograms = new HashMap<>();
 
         this.ocelot = location.getWorld().spawn(location, Ocelot.class);
-        this.ocelot.setCatType(Ocelot.Type.SIAMESE_CAT);
+        this.ocelot.setCatType(Ocelot.Type.RED_CAT);
         this.ocelot.teleport(location);
         this.ocelot.setSitting(true);
 
@@ -70,7 +70,7 @@ class Meow extends AbstractInteraction
         else
             hologram = new Hologram(MEOW_NAME);
 
-        hologram.generateLines(this.ocelot.getLocation().clone().add(0.0D, 1.5D, 0.0D));
+        hologram.generateLines(this.ocelot.getLocation().clone().add(0.0D, 0.75D, 0.0D));
         hologram.addReceiver(player);
 
         this.holograms.put(player.getUniqueId(), hologram);
