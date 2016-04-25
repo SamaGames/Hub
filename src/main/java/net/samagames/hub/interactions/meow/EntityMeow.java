@@ -31,6 +31,7 @@ class EntityMeow extends EntityOcelot
         this.setCatType(2);
         this.setSitting(true);
 
+        this.setPosition(location.getX(), location.getY(), location.getZ());
         this.setYawPitch(location.getYaw(), location.getPitch());
     }
 
