@@ -45,6 +45,7 @@ class Meow extends AbstractInteraction
 
         this.meowEntity = new EntityMeow(world, location);
         world.addEntity(this.meowEntity, CreatureSpawnEvent.SpawnReason.CUSTOM);
+        this.meowEntity.setYawPitch(location.getYaw(), location.getPitch());
 
         this.random = new Random();
         this.thankYouTask = null;

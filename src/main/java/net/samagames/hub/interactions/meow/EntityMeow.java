@@ -32,7 +32,11 @@ class EntityMeow extends EntityOcelot
         this.setSitting(true);
 
         this.setPosition(location.getX(), location.getY(), location.getZ());
-        this.setYawPitch(location.getYaw(), location.getPitch());
+    }
+
+    public void setYawPitch(float var1, float var2)
+    {
+        this.setYawPitch(var1, var2);
     }
 
     @Override

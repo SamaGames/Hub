@@ -20,6 +20,7 @@ public class MeowManager extends AbstractInteractionManager<Meow> implements Lis
     {
         super(hub, "meow");
 
+        this.hub.getServer().getPluginManager().registerEvents(this, this.hub);
         this.hub.getEntityManager().registerEntity("Meow", 98, EntityOcelot.class, EntityMeow.class);
     }
 
