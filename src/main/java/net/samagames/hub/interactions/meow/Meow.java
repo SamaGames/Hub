@@ -1,5 +1,6 @@
 package net.samagames.hub.interactions.meow;
 
+import net.minecraft.server.v1_9_R1.WorldServer;
 import net.samagames.hub.Hub;
 import net.samagames.hub.cosmetics.gadgets.GadgetManager;
 import net.samagames.hub.interactions.AbstractInteraction;
@@ -8,10 +9,11 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.craftbukkit.v1_9_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_9_R1.entity.CraftItem;
 import org.bukkit.entity.Item;
-import org.bukkit.entity.Ocelot;
 import org.bukkit.entity.Player;
+import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
@@ -28,7 +30,7 @@ class Meow extends AbstractInteraction
     private static final String MEOW_NAME = ChatColor.GOLD + "" + ChatColor.BOLD + "Meow";
 
     private final Map<UUID, Hologram> holograms;
-    private final Ocelot ocelot;
+    private final EntityMeow meowEntity;
     private final Random random;
     private BukkitTask thankYouTask;
     private boolean lock;
@@ -39,10 +41,10 @@ class Meow extends AbstractInteraction
 
         this.holograms = new HashMap<>();
 
-        this.ocelot = location.getWorld().spawn(location, Ocelot.class);
-        this.ocelot.setCatType(Ocelot.Type.RED_CAT);
-        this.ocelot.teleport(location);
-        this.ocelot.setSitting(true);
+        WorldServer world = ((CraftWorld) location.getWorld()).getHandle();
+
+        this.meowEntity = new EntityMeow(world, location);
+        world.addEntity(this.meowEntity, CreatureSpawnEvent.SpawnReason.CUSTOM);
 
         this.random = new Random();
         this.thankYouTask = null;
@@ -53,7 +55,7 @@ class Meow extends AbstractInteraction
     public void onDisable()
     {
         this.thankYouTask.cancel();
-        this.ocelot.remove();
+        this.meowEntity.die();
     }
 
     public void onLogin(Player player)
@@ -70,7 +72,7 @@ class Meow extends AbstractInteraction
         else
             hologram = new Hologram(MEOW_NAME);
 
-        hologram.generateLines(this.ocelot.getLocation().clone().add(0.0D, 0.75D, 0.0D));
+        hologram.generateLines(this.meowEntity.getBukkitEntity().getLocation().clone().add(0.0D, 0.75D, 0.0D));
         hologram.addReceiver(player);
 
         this.holograms.put(player.getUniqueId(), hologram);
@@ -78,7 +80,7 @@ class Meow extends AbstractInteraction
         if (fishes > 0)
         {
             player.sendMessage(TAG + ChatColor.YELLOW + "Vous avez " + ChatColor.GOLD + fishes + ChatColor.YELLOW + " poisson" + (fishes > 1 ? "s" : "") + " à récupérer ! Venez me voir :)");
-            player.playSound(ocelot.getLocation(), Sound.ENTITY_CAT_AMBIENT, 1.0F, 1.5F);
+            player.playSound(this.meowEntity.getBukkitEntity().getLocation(), Sound.ENTITY_CAT_AMBIENT, 1.0F, 1.5F);
         }
     }
 
@@ -120,7 +122,7 @@ class Meow extends AbstractInteraction
         if (this.lock)
             return;
 
-        this.ocelot.getWorld().playSound(ocelot.getLocation(), Sound.ENTITY_CAT_AMBIENT, 1.0F, 1.5F);
+        this.meowEntity.getBukkitEntity().getWorld().playSound(this.meowEntity.getBukkitEntity().getLocation(), Sound.ENTITY_CAT_AMBIENT, 1.0F, 1.5F);
 
         this.thankYouTask = new BukkitRunnable()
         {
@@ -129,7 +131,7 @@ class Meow extends AbstractInteraction
             @Override
             public void run()
             {
-                Item fish = ocelot.getWorld().dropItem(ocelot.getLocation(), new ItemStack(Material.RAW_FISH, 1));
+                Item fish = meowEntity.getBukkitEntity().getWorld().dropItem(meowEntity.getBukkitEntity().getLocation(), new ItemStack(Material.RAW_FISH, 1));
                 fish.setVelocity(new Vector(random.nextFloat() * 2 - 1, 1.5F, random.nextFloat() * 2 - 1));
 
                 try
@@ -141,7 +143,7 @@ class Meow extends AbstractInteraction
                     e.printStackTrace();
                 }
 
-                ocelot.getWorld().playSound(ocelot.getLocation(), Sound.BLOCK_DISPENSER_DISPENSE, 1.0F, 2.0F);
+                meowEntity.getBukkitEntity().getWorld().playSound(meowEntity.getBukkitEntity().getLocation(), Sound.BLOCK_DISPENSER_DISPENSE, 1.0F, 2.0F);
 
                 this.times++;
 

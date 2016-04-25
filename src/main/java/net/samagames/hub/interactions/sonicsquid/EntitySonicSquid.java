@@ -25,11 +25,9 @@ class EntitySonicSquid extends EntitySquid
         this.hub = hub;
         this.uuid = player.getUniqueId();
 
-        Field bField;
-
         try
         {
-            bField = PathfinderGoalSelector.class.getDeclaredField("b");
+            Field bField = PathfinderGoalSelector.class.getDeclaredField("b");
             bField.setAccessible(true);
             Field cField = PathfinderGoalSelector.class.getDeclaredField("c");
             cField.setAccessible(true);

@@ -1,6 +1,7 @@
 package net.samagames.hub.interactions.meow;
 
 import com.google.gson.JsonArray;
+import net.minecraft.server.v1_9_R1.EntityOcelot;
 import net.samagames.hub.Hub;
 import net.samagames.hub.interactions.AbstractInteractionManager;
 import net.samagames.tools.LocationUtils;
@@ -14,6 +15,8 @@ public class MeowManager extends AbstractInteractionManager<Meow>
     public MeowManager(Hub hub)
     {
         super(hub, "meow");
+
+        this.hub.getEntityManager().registerEntity("Meow", 98, EntityOcelot.class, EntityMeow.class);
     }
 
     @Override
