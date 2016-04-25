@@ -44,7 +44,7 @@ class EntityMeow extends EntityOcelot
     /**@Override
     public void g(float var1, float var2)
     {
-        /** Disable moving **/
+        
     }**/
 
     @Override
