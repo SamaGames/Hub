@@ -29,7 +29,7 @@ public class AgarMCGame extends AbstractGame
     @Override
     public String getCategory()
     {
-        return "";
+        return "Seul contre tous";
     }
 
     @Override

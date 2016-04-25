@@ -46,7 +46,9 @@ public class ChunkWarsGame extends AbstractGame
     @Override
     public String[] getDeveloppers()
     {
-        return new String[0];
+        return new String[] {
+                "IamBlueSlime"
+        };
     }
 
     @Override
@@ -76,6 +78,6 @@ public class ChunkWarsGame extends AbstractGame
     @Override
     public boolean isNew()
     {
-        return false;
+        return true;
     }
 }

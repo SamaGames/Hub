@@ -30,7 +30,7 @@ public class UppervoidGame extends AbstractGame
     @Override
     public String getCategory()
     {
-        return "";
+        return "Seul contre tous";
     }
 
     @Override

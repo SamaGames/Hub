@@ -63,6 +63,7 @@ class GuiMeow extends AbstractGui
         else if (action.equals("back"))
         {
             this.hub.getGuiManager().closeGui(player);
+            this.parent.stop(player);
         }
     }
 
