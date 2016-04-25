@@ -36,7 +36,7 @@ class EntityMeow extends EntityOcelot
 
     public void setYawPitch(float var1, float var2)
     {
-        this.setYawPitch(var1, var2);
+        super.setYawPitch(var1, var2);
     }
 
     @Override
