@@ -156,6 +156,11 @@ class Meow extends AbstractInteraction
         }.runTaskTimer(this.hub, 10L, 10L);
     }
 
+    public EntityMeow getMeowEntity()
+    {
+        return this.meowEntity;
+    }
+
     @Override
     public boolean hasPlayer(Player player)
     {

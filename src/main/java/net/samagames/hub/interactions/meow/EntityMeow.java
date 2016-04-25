@@ -41,17 +41,11 @@ class EntityMeow extends EntityOcelot
         /** Disable AI **/
     }
 
-    @Override
+    /**@Override
     public void g(float var1, float var2)
     {
         /** Disable moving **/
-    }
-
-    @Override
-    public void e(float var1, float var2)
-    {
-        /** Disable moving **/
-    }
+    }**/
 
     @Override
     public void move(double d0, double d1, double d2)

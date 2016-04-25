@@ -80,6 +80,7 @@ class EntitySonicSquid extends EntitySquid
         /**Location location = new Location(entityliving.getBukkitEntity().getWorld(), 0, 0, 0, entityliving.yaw, 0);
         this.getBukkitEntity().setVelocity(location.getDirection().multiply(1.025F).normalize());
         this.getBukkitEntity().setVelocity(((Player) entityliving.getBukkitEntity()).getEyeLocation().getDirection().multiply(1.025F));**/
+
         this.setYawPitch(entityliving.yaw, 0.0F);
         this.motX = -Math.sin(entityliving.yaw * Math.PI / 180) * 1.025F;
         this.motY = 0;
@@ -122,13 +123,14 @@ class EntitySonicSquid extends EntitySquid
 
     private boolean checkBlock(double x, double y, double z)
     {
-        net.minecraft.server.v1_9_R1.Material m = this.getWorld().getType(new BlockPosition(x, y, z)).getMaterial();
+        net.minecraft.server.v1_9_R1.Material material = this.getWorld().getType(new BlockPosition(x, y, z)).getMaterial();
 
-        if (m != net.minecraft.server.v1_9_R1.Material.AIR && m != net.minecraft.server.v1_9_R1.Material.WATER)
+        if (material != net.minecraft.server.v1_9_R1.Material.AIR && material != net.minecraft.server.v1_9_R1.Material.WATER)
         {
             this.die();
 
-            this.passengers.forEach(passenger -> {
+            this.passengers.forEach(passenger ->
+            {
                 passenger.getBukkitEntity().eject();
                 passenger.setLocation(x + 0.5D, y, z + 0.5D, passenger.yaw, passenger.pitch);
             });
@@ -136,6 +138,8 @@ class EntitySonicSquid extends EntitySquid
             return true;
         }
         else
+        {
             return false;
+        }
     }
 }

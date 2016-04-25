@@ -6,11 +6,15 @@ import net.samagames.hub.Hub;
 import net.samagames.hub.interactions.AbstractInteractionManager;
 import net.samagames.tools.LocationUtils;
 import org.bukkit.Location;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 import java.util.logging.Level;
 
-public class MeowManager extends AbstractInteractionManager<Meow>
+public class MeowManager extends AbstractInteractionManager<Meow> implements Listener
 {
     public MeowManager(Hub hub)
     {
@@ -38,6 +42,22 @@ public class MeowManager extends AbstractInteractionManager<Meow>
     public void update(Player player)
     {
         this.interactions.forEach(meow -> meow.update(player));
+    }
+
+    @EventHandler
+    public void onEntityDamageByEntityEvent(EntityDamageByEntityEvent event)
+    {
+        if (event.getDamager().getType() == EntityType.PLAYER && event.getEntity().getType() == EntityType.OCELOT)
+        {
+            for (Meow meow : this.interactions)
+            {
+                if (meow.getMeowEntity().getBukkitEntity().getUniqueId().equals(event.getEntity().getUniqueId()))
+                {
+                    meow.play((Player) event.getDamager());
+                    break;
+                }
+            }
+        }
     }
 
     @Override
