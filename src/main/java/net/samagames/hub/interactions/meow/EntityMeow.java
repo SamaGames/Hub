@@ -36,24 +36,6 @@ class EntityMeow extends EntityOcelot
     }
 
     @Override
-    protected void r()
-    {
-        /** Disable AI **/
-    }
-
-    /**@Override
-    public void g(float var1, float var2)
-    {
-        
-    }**/
-
-    @Override
-    public void move(double d0, double d1, double d2)
-    {
-        /** Disable moving **/
-    }
-
-    @Override
     public void b(NBTTagCompound nbttagcompound) {}
 
     @Override

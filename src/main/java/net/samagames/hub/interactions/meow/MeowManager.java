@@ -10,7 +10,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
 
 import java.util.logging.Level;
 
@@ -45,15 +45,15 @@ public class MeowManager extends AbstractInteractionManager<Meow> implements Lis
     }
 
     @EventHandler
-    public void onEntityDamageByEntityEvent(EntityDamageByEntityEvent event)
+    public void onPlayerInteractEntity(PlayerInteractEntityEvent event)
     {
-        if (event.getDamager().getType() == EntityType.PLAYER && event.getEntity().getType() == EntityType.OCELOT)
+        if (event.getRightClicked().getType() == EntityType.OCELOT)
         {
             for (Meow meow : this.interactions)
             {
-                if (meow.getMeowEntity().getBukkitEntity().getUniqueId().equals(event.getEntity().getUniqueId()))
+                if (meow.getMeowEntity().getBukkitEntity().getUniqueId().equals(event.getRightClicked().getUniqueId()))
                 {
-                    meow.play((Player) event.getDamager());
+                    meow.play(event.getPlayer());
                     break;
                 }
             }
