@@ -75,15 +75,19 @@ public class GuiCosmetics extends AbstractGui
             case "pets":
                 this.hub.getGuiManager().openGui(player, new GuiCosmeticsCategory<>(this.hub, "Montures", this.hub.getCosmeticManager().getPetManager(), true));
                 break;
+
             case "disguises":
                 this.hub.getGuiManager().openGui(player, new GuiCosmeticsCategory<>(this.hub, "Déguisements", this.hub.getCosmeticManager().getDisguiseManager(), true));
                 break;
+
             case "gadgets":
                 this.hub.getGuiManager().openGui(player, new GuiCosmeticsCategory<>(this.hub, "Gadgets", this.hub.getCosmeticManager().getGadgetManager(), true));
                 break;
+
             case "jukebox":
                 this.hub.getGuiManager().openGui(player, new GuiCosmeticsCategory<>(this.hub, "Jukebox", this.hub.getCosmeticManager().getJukeboxManager(), false));
                 break;
+
             case "back":
                 this.hub.getGuiManager().closeGui(player);
                 break;

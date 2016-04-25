@@ -16,7 +16,7 @@ import org.bukkit.inventory.ItemStack;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GuiSettings extends AbstractGui
+class GuiSettings extends AbstractGui
 {
     public enum Settings { PLAYERS, CHAT, NOTIFICATIONS}
 
@@ -24,7 +24,7 @@ public class GuiSettings extends AbstractGui
     private final int page;
     private int index;
 
-    public GuiSettings(Hub hub, int page)
+    GuiSettings(Hub hub, int page)
     {
         super(hub);
 

@@ -46,12 +46,15 @@ public class GuiProfile extends AbstractGui
             case "stats":
                 player.sendMessage(ChatColor.RED + "Prochainement...");
                 break;
+
             case "achievements":
                 player.sendMessage(ChatColor.RED + "Prochainement...");
                 break;
+
             case "settings":
                 this.hub.getGuiManager().openGui(player, new GuiSettings(this.hub, 1));
                 break;
+
             case "back":
                 this.hub.getGuiManager().closeGui(player);
                 break;
