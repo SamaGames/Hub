@@ -62,6 +62,10 @@ public class GameManager extends AbstractManager
         this.registerGame(new BackEndGame(hub, "burnthatchicken", "BurnThatChicken", arcadeGame.getLobbySpawn()));
         this.registerGame(new BackEndGame(hub, "timberman", "Timberman", arcadeGame.getLobbySpawn()));
         this.registerGame(new BackEndGame(hub, "bomberman", "Bomberman", arcadeGame.getLobbySpawn()));
+        this.registerGame(new BackEndGame(hub, "flyring", "FlyRing", arcadeGame.getLobbySpawn()));
+        this.registerGame(new BackEndGame(hub, "partygames", "PartyGames", arcadeGame.getLobbySpawn()));
+        this.registerGame(new BackEndGame(hub, "casino", "Casino", arcadeGame.getLobbySpawn()));
+        this.registerGame(new BackEndGame(hub, "samabox", "SamaBox", arcadeGame.getLobbySpawn()));
         this.registerGame(new AgarMCGame(hub));
 
         // -----
