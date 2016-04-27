@@ -79,10 +79,9 @@ public class GameManager extends AbstractManager
             {
                 for (AbstractGame game : games.values())
                 {
-
-                    for (List<GameSign> l : game.getSigns().values())
+                    for (List<GameSign> list : game.getSigns().values())
                     {
-                        for (GameSign sign : l)
+                        for (GameSign sign : list)
                         {
                             if (sign.getTemplate().equalsIgnoreCase(packet.getTemplateID()))
                             {

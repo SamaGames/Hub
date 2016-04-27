@@ -3,9 +3,12 @@ package net.samagames.hub.games.types;
 import net.samagames.hub.Hub;
 import net.samagames.hub.games.AbstractGame;
 import net.samagames.hub.games.shops.ShopCategory;
+import net.samagames.hub.games.signs.GameSign;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.List;
 
 public class UHCZoneGame extends AbstractGame
 {
@@ -77,6 +80,20 @@ public class UHCZoneGame extends AbstractGame
     public Location getLobbySpawn()
     {
         return new Location(this.hub.getWorld(), 28.5D, 105.0D, 35.5D, -90.0F, 0.0F);
+    }
+
+    @Override
+    public int getOnlinePlayers()
+    {
+        int players = 0;
+
+        players += this.hub.getGameManager().getGameByIdentifier("uhc").getOnlinePlayers();
+        players += this.hub.getGameManager().getGameByIdentifier("uhcrun").getOnlinePlayers();
+        players += this.hub.getGameManager().getGameByIdentifier("switchrun").getOnlinePlayers();
+        players += this.hub.getGameManager().getGameByIdentifier("doublerunner").getOnlinePlayers();
+        players += this.hub.getGameManager().getGameByIdentifier("uhcrandom").getOnlinePlayers();
+
+        return players;
     }
 
     @Override
