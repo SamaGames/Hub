@@ -32,11 +32,11 @@ public class GuiMain extends AbstractGui
         this.setSlotData(ChatColor.GOLD + "Informations", Material.EMPTY_MAP, 27, getInformationLore(), "none");
         this.setSlotData(ChatColor.GOLD + "Changer de hub", Material.ENDER_CHEST, 35, makeButtonLore(new String[] { "Clique pour ouvrir l'interface" }, true, false), "switch_hub");
 
-        for(String gameIdentifier : this.hub.getGameManager().getGames().keySet())
+        for (String gameIdentifier : this.hub.getGameManager().getGames().keySet())
         {
             AbstractGame game = this.hub.getGameManager().getGameByIdentifier(gameIdentifier);
 
-            if(game.getSlotInMainMenu() >= 0)
+            if (game.getSlotInMainMenu() >= 0)
                 this.setSlotData(game.isLocked() ? ChatColor.GOLD + "" + ChatColor.MAGIC + "aaaaaaaa" : (game.isNew() ? ChatColor.GREEN + "" + ChatColor.BOLD + "NOUVEAU ! " + ChatColor.RESET : "") + ChatColor.GOLD + game.getName(), game.isLocked() ? new ItemStack(Material.IRON_FENCE, 1) : game.getIcon(), game.getSlotInMainMenu(), makeGameLore(game), "game_" + gameIdentifier);
         }
 
@@ -46,31 +46,37 @@ public class GuiMain extends AbstractGui
     @Override
     public void onClick(Player player, ItemStack stack, String action, ClickType clickType)
     {
-        if(action.equals("beta_vip") && SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "hub.beta.vip"))
+        if (action.equals("beta_vip") && SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "hub.beta.vip"))
         {
             player.teleport(this.hub.getGameManager().getGameByIdentifier("beta_vip").getLobbySpawn());
         }
-        else if(action.equals("switch_hub"))
+        else if (action.equals("switch_hub"))
         {
             this.hub.getGuiManager().openGui(player, new GuiSwitchHub(this.hub, 1));
         }
-        else if(action.equals("spawn"))
+        else if (action.equals("spawn"))
         {
             player.teleport(this.hub.getPlayerManager().getSpawn());
         }
-        else if(action.equals("parkour"))
+        else if (action.equals("parkour"))
         {
             player.teleport(this.hub.getParkourManager().getParkours().get(0).getFail());
         }
-        else if(action.startsWith("game"))
+        else if (action.startsWith("game"))
         {
             String[] actions = action.split("_");
             AbstractGame game = this.hub.getGameManager().getGameByIdentifier(actions[1]);
 
-            if(!game.isLocked())
-                player.teleport(game.getLobbySpawn());
-            else
+            if (game.isLocked())
+            {
                 player.sendMessage(ChatColor.RED + "Ce jeu n'est pas disponible.");
+                return;
+            }
+
+            if (clickType == ClickType.LEFT)
+                player.teleport(game.getLobbySpawn());
+            else if (clickType == ClickType.RIGHT)
+                this.hub.getGuiManager().openGui(player, new GuiRulesBooks(this.hub, game));
         }
     }
 
@@ -79,7 +85,7 @@ public class GuiMain extends AbstractGui
         List<String> lore = new ArrayList<>();
         String[] loreArray = new String[] {};
 
-        if(description != null)
+        if (description != null)
         {
             for (String string : description)
                 lore.add(ChatColor.GRAY + string);
@@ -88,10 +94,10 @@ public class GuiMain extends AbstractGui
                 lore.add("");
         }
 
-        if(clickOpen)
+        if (clickOpen)
             lore.add(ChatColor.DARK_GRAY + "\u25B6 Clique pour ouvrir le menu");
 
-        if(clickTeleport)
+        if (clickTeleport)
             lore.add(ChatColor.DARK_GRAY + "\u25B6 Clique pour être téléporté");
 
         return lore.toArray(loreArray);
