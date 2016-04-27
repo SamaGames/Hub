@@ -30,7 +30,7 @@ public class GuiClickMe extends AbstractGui
 
     public GuiClickMe(Hub hub, Player who)
     {
-        this(hub, who.getName(), who.getUniqueId());
+        this(hub, SamaGamesAPI.get().getPlayerManager().getPlayerData(who.getUniqueId()).getDisplayeName(), who.getUniqueId());
     }
 
     @Override
@@ -39,7 +39,7 @@ public class GuiClickMe extends AbstractGui
         this.inventory = this.hub.getServer().createInventory(null, 54, "ClickMe de " + this.name);
 
         this.setSlotData(ChatColor.GOLD + this.name, this.getPlayerHead(), 13, new String[] {
-                ChatColor.GRAY + "Rang : " + RankUtils.getFormattedRank(this.uuid),
+                ChatColor.GRAY + "Rang : " + RankUtils.getFormattedRank(this.uuid, false),
                 ""
         }, "none");
 
