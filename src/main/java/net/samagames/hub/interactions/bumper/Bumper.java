@@ -64,7 +64,7 @@ public class Bumper extends AbstractInteraction implements Listener
         this.flyingPlayers.add(player.getUniqueId());
         Vector vec = this.bumperLocation.getDirection().multiply(this.power);
         long flyTime = (long) (vec.getY() / g);
-        System.out.print(flyTime);
+        System.out.print(vec.getY());
         ((CraftPlayer)player).getHandle().motX = vec.getX();
         ((CraftPlayer)player).getHandle().motY = vec.getY();
         ((CraftPlayer)player).getHandle().motZ = vec.getZ();
