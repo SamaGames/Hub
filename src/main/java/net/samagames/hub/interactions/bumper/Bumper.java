@@ -64,7 +64,7 @@ public class Bumper extends AbstractInteraction implements Listener
             return ;
         this.flyingPlayers.add(player.getUniqueId());
         Vector vec = this.bumperLocation.getDirection().multiply(this.power);
-        long flyTime = (long) (vec.getY() / g * 20.0);
+        long flyTime = (long) (((vec.getY()*10) / g )* 20.0);
         BukkitTask run = new BukkitRunnable() {
 
             double x = vec.getX();
