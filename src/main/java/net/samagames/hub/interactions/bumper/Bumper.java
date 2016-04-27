@@ -67,9 +67,9 @@ public class Bumper extends AbstractInteraction implements Listener
         long flyTime = (long) (((vec.getY()*10) / g )* 20.0);
         BukkitTask run = new BukkitRunnable() {
 
-            double x = vec.getX() / 10;
-            double y = vec.getY() / 10;
-            double z = vec.getZ() / 10;
+            double x = vec.getX() / 2;
+            double y = vec.getY() / 2;
+            double z = vec.getZ() / 2;
 
             @Override
             public void run() {
@@ -78,7 +78,7 @@ public class Bumper extends AbstractInteraction implements Listener
                 ((CraftPlayer)player).getHandle().motZ = z;
                 ((CraftPlayer)player).getHandle().velocityChanged = true;
             }
-        }.runTaskTimer(this.hub, 0L, flyTime/10L);
+        }.runTaskTimer(this.hub, 0L, flyTime/2L);
 
         this.flyTasks.put(player.getUniqueId(), this.hub.getServer().getScheduler().runTaskLater(this.hub, () -> {
             ItemStack stack = new ItemStack(Material.ELYTRA);
