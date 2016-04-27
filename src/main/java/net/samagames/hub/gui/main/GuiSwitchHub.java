@@ -1,5 +1,7 @@
 package net.samagames.hub.gui.main;
 
+import com.google.common.io.ByteArrayDataOutput;
+import com.google.common.io.ByteStreams;
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import net.samagames.hub.common.JsonHub;
@@ -98,7 +100,13 @@ public class GuiSwitchHub extends AbstractGui
                 return;
             }
 
-            SamaGamesAPI.get().getPlayerManager().connectToServer(player.getUniqueId(), action);
+            ByteArrayDataOutput out = ByteStreams.newDataOutput();
+            out.writeUTF("Connect");
+            out.writeUTF(action);
+            player.sendPluginMessage(this.hub, "BungeeCord", out.toByteArray());
+
+            // TODO: Use API
+            // SamaGamesAPI.get().getPlayerManager().connectToServer(player.getUniqueId(), action);
         }
         else if(action.equals("page_back"))
         {

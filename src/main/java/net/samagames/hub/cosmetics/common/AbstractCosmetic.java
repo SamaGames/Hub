@@ -1,7 +1,7 @@
 package net.samagames.hub.cosmetics.common;
 
 import net.samagames.api.SamaGamesAPI;
-import net.samagames.core.api.shops.ShopsManager;
+import net.samagames.api.shops.IShopsManager;
 import net.samagames.hub.Hub;
 import net.samagames.hub.common.players.PlayerManager;
 import net.samagames.hub.gui.AbstractGui;
@@ -26,7 +26,7 @@ public abstract class AbstractCosmetic implements Comparable<AbstractCosmetic>
     private final int stars;
     private final CosmeticRarity rarity;
     private final CosmeticAccessibility accessibility;
-    private final ShopsManager shopsManager;
+    private final IShopsManager shopsManager;
     private String permissionNeededToView;
 
     public AbstractCosmetic(Hub hub, String category, String key, String displayName, ItemStack icon, int stars, CosmeticRarity rarity, CosmeticAccessibility accessibility, String[] description)
@@ -51,7 +51,7 @@ public abstract class AbstractCosmetic implements Comparable<AbstractCosmetic>
         this.stars = stars;
         this.rarity = rarity;
         this.accessibility = accessibility;
-        this.shopsManager = null;//SamaGamesAPI.get().getShopsManager();
+        this.shopsManager = SamaGamesAPI.get().getShopsManager();
         this.permissionNeededToView = null;
     }
 
