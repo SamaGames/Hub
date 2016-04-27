@@ -72,6 +72,8 @@ public class Hub extends JavaPlugin
         this.scheduledExecutorService = Executors.newScheduledThreadPool(16);
         this.executorMonoThread = Executors.newScheduledThreadPool(1);
 
+        this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
+
         if (!this.getConfig().getBoolean("disconnected", false))
             this.hubRefresher = new HubRefresher(this);
 
