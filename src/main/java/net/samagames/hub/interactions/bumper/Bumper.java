@@ -79,7 +79,8 @@ public class Bumper extends AbstractInteraction implements Listener
             this.hub.getServer().getPluginManager().callEvent(new EntityToggleGlideEvent(player, true));
             Titles.sendTitle(player, 10, 40, 10, "", ChatColor.GOLD + "Bon vol !");
             this.stop(player);
-        }, 40L));
+       // }, 40L)); old
+        }, flyTime * 20L));
     }
 
     @Override
