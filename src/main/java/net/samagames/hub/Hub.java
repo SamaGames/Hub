@@ -42,10 +42,6 @@ import java.util.concurrent.TimeUnit;
 
 public class Hub extends JavaPlugin
 {
-    private static final String PROTOCOLLIB_PREFIX = "protocollib";
-    private static final String SONARPET_PREFIX = "sonarpet";
-    private static final String LIBSDISGUISES_PREFIX = "libsdisguises";
-
     private World world;
 
     private ScheduledExecutorService executorMonoThread;
@@ -117,38 +113,6 @@ public class Hub extends JavaPlugin
         this.getServer().getPluginManager().registerEvents(new InventoryEditionListener(this), this);
         this.getServer().getPluginManager().registerEvents(new PlayerProtectionListener(this), this);
         this.getServer().getPluginManager().registerEvents(new WorldEditionListener(this), this);
-
-        try
-        {
-            // ProtocolLib
-            this.removeCommand(PROTOCOLLIB_PREFIX, "protocol");
-            this.removeCommand(PROTOCOLLIB_PREFIX, "packet");
-            this.removeCommand(PROTOCOLLIB_PREFIX, "filter");
-
-            // SonarPet
-            this.removeCommand(SONARPET_PREFIX, "pet");
-            this.removeCommand(SONARPET_PREFIX, "petadmin");
-            this.removeCommand(SONARPET_PREFIX, "ecupdate");
-            this.removeCommand(SONARPET_PREFIX, "echopet");
-
-            // LibsDisguises
-            this.removeCommand(LIBSDISGUISES_PREFIX, "libsdisguises");
-            this.removeCommand(LIBSDISGUISES_PREFIX, "disguise", "d", "dis");
-            this.removeCommand(LIBSDISGUISES_PREFIX, "disguiseentity", "dentity", "disentity");
-            this.removeCommand(LIBSDISGUISES_PREFIX, "disguisehelp", "dhelp", "dishelp");
-            this.removeCommand(LIBSDISGUISES_PREFIX, "disguiseplayer", "dplayer", "displayer");
-            this.removeCommand(LIBSDISGUISES_PREFIX, "disguiseradius", "disradius", "dradius");
-            this.removeCommand(LIBSDISGUISES_PREFIX, "undisguise", "u", "und", "undis");
-            this.removeCommand(LIBSDISGUISES_PREFIX, "undisguiseplayer", "undisplayer", "undplayer");
-            this.removeCommand(LIBSDISGUISES_PREFIX, "undisguiseentity", "undisentity", "undentity");
-            this.removeCommand(LIBSDISGUISES_PREFIX, "undisguiseradius", "undisradius", "undradius");
-            this.removeCommand(LIBSDISGUISES_PREFIX, "disguiseclone", "disguisec", "disc", "disclone", "dclone", "clonedisguise", "clonedis", "cdisguise", "cdis");
-            this.removeCommand(LIBSDISGUISES_PREFIX, "disguiseviewself", "dviewself", "dvs", "disguisevs", "disvs", "vsd", "viewselfdisguise", "viewselfd");
-        }
-        catch (NoSuchFieldException | IllegalAccessException e)
-        {
-            e.printStackTrace();
-        }
 
         this.hydroangeasSynchronization = this.getScheduledExecutorService().scheduleAtFixedRate(() -> new ServerStatus(SamaGamesAPI.get().getServerName(), "Hub", "Map", Status.IN_GAME, Bukkit.getOnlinePlayers().size(), Bukkit.getMaxPlayers()).sendToHydro(), 0, 1, TimeUnit.MINUTES);
     }

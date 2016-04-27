@@ -53,17 +53,14 @@ commands:
   sign:
     description: Commandes relatives aux panneaux
     usage: /sign
-    aliases: /area
   anguille:
     description: Commande relative aux Anguilles de Maite
     usage: /anguille
-    aliases: [jeanpierrecoffe, frontnational, boblebricoleur]
   nbs:
     description: Commande relative au Jukebox
     usage: /nbs
   evacuate:
     description: Commande d'évacuation
     usage: /evacuate
-    aliases: [bagdad]
 
   # Easter Eggs --------------------------------
