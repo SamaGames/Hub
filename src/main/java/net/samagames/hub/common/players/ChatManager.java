@@ -1,6 +1,7 @@
 package net.samagames.hub.common.players;
 
 import net.samagames.api.SamaGamesAPI;
+import net.samagames.hub.cosmetics.jukebox.JukeboxSong;
 import net.samagames.hub.Hub;
 import net.samagames.hub.common.managers.AbstractManager;
 import net.samagames.tools.PlayerUtils;
@@ -76,12 +77,10 @@ public class ChatManager extends AbstractManager
             }
         }
 
-        // TODO: Jukebox
-
-        /**JukeboxSong current = Hub.getInstance().getCosmeticManager().getJukeboxManager().getCurrentSong();
+        JukeboxSong current = this.hub.getCosmeticManager().getJukeboxManager().getCurrentSong();
 
         if (current != null && current.getPlayedBy().equals(event.getPlayer().getName()))
-            event.setFormat(ChatColor.DARK_AQUA + "[" + ChatColor.AQUA + "DJ" + ChatColor.DARK_AQUA + "]" + event.getFormat());**/
+            event.setFormat(ChatColor.DARK_AQUA + "[" + ChatColor.AQUA + "DJ" + ChatColor.DARK_AQUA + "]" + event.getFormat());
 
         List<Player> receivers = new ArrayList<>();
         receivers.addAll(event.getRecipients());

@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.List;
 
-class JukeboxSong
+public class JukeboxSong
 {
     private final Hub hub;
     private final JukeboxDiskCosmetic disk;

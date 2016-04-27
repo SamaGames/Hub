@@ -135,6 +135,7 @@ public class PlayerListener implements Listener
             && event.getPlayer().getInventory().getChestplate().getType() == Material.ELYTRA)
         {
             IPermissionsEntity permissionsEntity = SamaGamesAPI.get().getPermissionsManager().getPlayer(event.getPlayer().getUniqueId());
+
             if (permissionsEntity.getGroupId() < 3)
                 event.getPlayer().getInventory().setChestplate(new ItemStack(Material.AIR));
         }
@@ -144,12 +145,13 @@ public class PlayerListener implements Listener
     public void onPlayerGlide(EntityToggleGlideEvent event)
     {
         if (!(event.getEntity() instanceof Player))
-            return ;
+            return;
+
         if (event.isGliding())
         {
             ItemStack stack = new ItemStack(Material.FEATHER);
             ItemMeta meta = stack.getItemMeta();
-            meta.setDisplayName(ChatColor.GOLD + "" + ChatColor.BOLD + "Booster");
+            meta.setDisplayName(ChatColor.GOLD + "" + ChatColor.BOLD + "Ventilateur" + ChatColor.RESET + "" + ChatColor.GRAY + " (Clic-droit)");
             stack.setItemMeta(meta);
             stack.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
             ((Player) event.getEntity()).getInventory().setItem(3, stack);
