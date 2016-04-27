@@ -3,6 +3,7 @@ package net.samagames.hub.games.types;
 import net.samagames.hub.Hub;
 import net.samagames.hub.games.AbstractGame;
 import net.samagames.hub.games.shops.ShopCategory;
+import net.samagames.tools.RulesBook;
 import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
 
@@ -53,6 +54,12 @@ public class BackEndGame extends AbstractGame
 
     @Override
     public String[] getDeveloppers()
+    {
+        return null;
+    }
+
+    @Override
+    public RulesBook[] getRulesBooks()
     {
         return null;
     }

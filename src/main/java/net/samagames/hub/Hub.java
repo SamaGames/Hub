@@ -131,18 +131,6 @@ public class Hub extends JavaPlugin
         this.eventBus.onDisable();
     }
 
-    private void removeCommand(String prefix, String... str) throws NoSuchFieldException, IllegalAccessException
-    {
-        SimpleCommandMap scm = ((CraftServer) Bukkit.getServer()).getCommandMap();
-        Map knownCommands = (Map) Reflection.getValue(scm, true, "knownCommands");
-
-        for (String cmd : str)
-        {
-            knownCommands.remove(cmd);
-            knownCommands.remove(prefix + ":" + cmd);
-        }
-    }
-
     public World getWorld()
     {
         return this.world;

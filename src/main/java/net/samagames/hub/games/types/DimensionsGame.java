@@ -4,6 +4,7 @@ import net.samagames.hub.Hub;
 import net.samagames.hub.games.AbstractGame;
 import net.samagames.hub.games.shops.ShopCategory;
 import net.samagames.hub.games.shops.ShopImprovableItem;
+import net.samagames.tools.RulesBook;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -59,6 +60,12 @@ public class DimensionsGame extends AbstractGame
                 "Silvanosky",
                 "zyuiop"
         };
+    }
+
+    @Override
+    public RulesBook[] getRulesBooks()
+    {
+        return null;
     }
 
     @Override

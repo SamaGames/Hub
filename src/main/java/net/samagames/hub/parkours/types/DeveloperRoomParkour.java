@@ -2,19 +2,21 @@ package net.samagames.hub.parkours.types;
 
 import net.samagames.hub.Hub;
 import net.samagames.hub.parkours.Parkour;
+import net.samagames.hub.utils.ProximityUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerPortalEvent;
 import org.bukkit.event.player.PlayerResourcePackStatusEvent;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +26,8 @@ public class DeveloperRoomParkour extends Parkour implements Listener
 {
     private static final long MUSIC_LENGTH = 20L * 175;
 
-    private final Pair<Location, Location> portals;
+    private final ArmorStand portalArmorStand;
+    private final BukkitTask portalTask;
     private final List<UUID> expected;
     private final Location minusFloor;
     private final String resourcePack;
@@ -35,23 +38,25 @@ public class DeveloperRoomParkour extends Parkour implements Listener
 
         this.expected = new ArrayList<>();
 
-        this.portals = portals;
         this.minusFloor = minusFloor;
         this.resourcePack = resourcePack;
+
+        this.portalArmorStand = spawn.getWorld().spawn(portals.getKey(), ArmorStand.class);
+        this.portalArmorStand.setGravity(false);
+        this.portalArmorStand.setVisible(false);
+
+        this.portalTask = ProximityUtils.onNearbyOf(hub, this.portalArmorStand, 2.0D, 2.0D, 2.0D, Player.class, (player) -> player.teleport(portals.getValue().clone().subtract(0.0D, 1.0D, 0.0D)));
 
         hub.getServer().getPluginManager().registerEvents(this, hub);
     }
 
-    @EventHandler
-    public void onPlayerPortal(PlayerPortalEvent event)
+    @Override
+    public void onDisable()
     {
-        if (!this.isParkouring(event.getPlayer().getUniqueId()))
-            return;
+        super.onDisable();
 
-        if (event.getFrom().distanceSquared(this.portals.getKey()) < 16)
-            event.getPlayer().teleport(this.portals.getValue().clone().subtract(0.0D, 1.0D, 0.0D));
-        else if (event.getFrom().distanceSquared(this.portals.getValue()) < 16)
-            event.getPlayer().teleport(this.portals.getKey().clone().subtract(0.0D, 1.0D, 0.0D));
+        this.portalTask.cancel();
+        this.portalArmorStand.remove();
     }
 
     @EventHandler

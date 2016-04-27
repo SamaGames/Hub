@@ -6,6 +6,7 @@ import net.samagames.hub.games.shops.ShopCategory;
 import net.samagames.hub.games.shops.ShopDependsItem;
 import net.samagames.hub.games.shops.ShopImprovableItem;
 import net.samagames.tools.GlowEffect;
+import net.samagames.tools.RulesBook;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -58,6 +59,12 @@ public class QuakeGame extends AbstractGame
         return new String[] {
                 "Silvanosky"
         };
+    }
+
+    @Override
+    public RulesBook[] getRulesBooks()
+    {
+        return null;
     }
 
     @Override

@@ -4,6 +4,7 @@ import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import net.samagames.hub.games.shops.ShopCategory;
 import net.samagames.hub.games.signs.GameSign;
+import net.samagames.tools.RulesBook;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.block.Sign;
@@ -45,6 +46,7 @@ public abstract class AbstractGame
     public abstract ItemStack getIcon();
     public abstract String[] getDescription();
     public abstract String[] getDeveloppers();
+    public abstract RulesBook[] getRulesBooks();
     public abstract int getSlotInMainMenu();
     public abstract ShopCategory getShopConfiguration();
     public abstract Location getLobbySpawn();

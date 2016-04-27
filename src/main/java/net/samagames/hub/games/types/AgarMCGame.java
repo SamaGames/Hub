@@ -3,6 +3,7 @@ package net.samagames.hub.games.types;
 import net.samagames.hub.Hub;
 import net.samagames.hub.games.AbstractGame;
 import net.samagames.hub.games.shops.ShopCategory;
+import net.samagames.tools.RulesBook;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -56,6 +57,12 @@ public class AgarMCGame extends AbstractGame
                 "Rigner",
                 "6infinity8"
         };
+    }
+
+    @Override
+    public RulesBook[] getRulesBooks()
+    {
+        return null;
     }
 
     @Override
