@@ -32,6 +32,8 @@ public class Bumper extends AbstractInteraction implements Listener
     private final List<UUID> flyingPlayers;
     private final double power;
 
+    private static final double g = 9.8;
+
     Bumper(Hub hub, String location)
     {
         super(hub);
@@ -61,6 +63,8 @@ public class Bumper extends AbstractInteraction implements Listener
             return ;
         this.flyingPlayers.add(player.getUniqueId());
         Vector vec = this.bumperLocation.getDirection().multiply(this.power);
+        long flyTime = (long) (vec.getY() / g);
+        System.out.print(flyTime);
         ((CraftPlayer)player).getHandle().motX = vec.getX();
         ((CraftPlayer)player).getHandle().motY = vec.getY();
         ((CraftPlayer)player).getHandle().motZ = vec.getZ();
