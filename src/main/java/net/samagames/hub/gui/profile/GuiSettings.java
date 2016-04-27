@@ -211,8 +211,8 @@ class GuiSettings extends AbstractGui
                     ChatColor.GRAY + "Quand cette option est activée, les",
                     ChatColor.GRAY + "intéractions seront possibles avec votre",
                     ChatColor.GRAY + "joueur, comme par exemple celles avec les",
-                    ChatColor.GRAY + "gadgets. Seuls vos " + ChatColor.GOLD + "amis" + ChatColor.GRAY + " pourront tout de même",
-                    ChatColor.GRAY + "intéragir avec vous."
+                    ChatColor.GRAY + "gadgets. Seuls vos " + ChatColor.GOLD + "amis" + ChatColor.GRAY + " pourront tout",
+                    ChatColor.GRAY + "de même intéragir avec vous."
             }, new GuiSettingsCallback()
             {
                 @Override
@@ -283,7 +283,7 @@ class GuiSettings extends AbstractGui
     {
         if(action.startsWith("setting_"))
         {
-            if(action.equals("setting_9") && this.getSlot(action) == 16)
+            if(this.getClass().equals(GuiSettings.class) && (this.getSlot(action) == 16 || this.getSlot(action) == 25))
             {
                 this.hub.getGuiManager().openGui(player, new GuiClickMeSettings(this.hub));
                 return;
