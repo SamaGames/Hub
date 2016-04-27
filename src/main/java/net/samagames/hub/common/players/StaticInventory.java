@@ -107,7 +107,7 @@ public class StaticInventory
 
         if (SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "network.vipplus"))
         {
-            ItemStack itemStack = buildItemStack(Material.ELYTRA, 1, 0, createTitle("Aîles"), null);
+            ItemStack itemStack = buildItemStack(Material.ELYTRA, 1, 0, createTitle("Ailes"), null);
 
             if (SamaGamesAPI.get().getSettingsManager().getSettings(player.getUniqueId()).isElytraActivated())
             {

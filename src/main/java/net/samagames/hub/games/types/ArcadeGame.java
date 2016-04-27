@@ -51,7 +51,8 @@ public class ArcadeGame extends AbstractGame
                 "\u2B29 BurnThatChicken",
                 "\u2B29 PacMan",
                 "\u2B29 Timberman",
-                "\u2B29 Bomberman"
+                "\u2B29 Bomberman",
+                "\u2B29 FlyRing"
         };
     }
 
@@ -83,6 +84,12 @@ public class ArcadeGame extends AbstractGame
     public Location getLobbySpawn()
     {
         return new Location(this.hub.getWorld(), -79.5D, 102.0D, -2.5D, 90.0F, 0.0F);
+    }
+
+    @Override
+    public boolean isGroup()
+    {
+        return true;
     }
 
     @Override

@@ -30,11 +30,7 @@ public abstract class AbstractGame
             @Override
             public void clear()
             {
-                for (List<GameSign> list : this.values())
-                {
-                    list.forEach(GameSign::onDelete);
-                }
-
+                this.values().forEach(list -> list.forEach(GameSign::onDelete));
                 super.clear();
             }
         };
@@ -50,6 +46,7 @@ public abstract class AbstractGame
     public abstract int getSlotInMainMenu();
     public abstract ShopCategory getShopConfiguration();
     public abstract Location getLobbySpawn();
+    public abstract boolean isGroup();
     public abstract boolean isLocked();
     public abstract boolean isNew();
 

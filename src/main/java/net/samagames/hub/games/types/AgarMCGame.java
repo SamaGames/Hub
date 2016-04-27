@@ -84,6 +84,12 @@ public class AgarMCGame extends AbstractGame
     }
 
     @Override
+    public boolean isGroup()
+    {
+        return false;
+    }
+
+    @Override
     public boolean isLocked()
     {
         return false;

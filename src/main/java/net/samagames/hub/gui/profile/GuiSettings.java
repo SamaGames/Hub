@@ -247,10 +247,10 @@ class GuiSettings extends AbstractGui
                 }
             });
 
-            this.drawSetting(player, "Aîles", new ItemStack(Material.ELYTRA, 1), 12, new String[] {
+            this.drawSetting(player, "Ailes", new ItemStack(Material.ELYTRA, 1), 12, new String[] {
                     ChatColor.GRAY + "Quand cette option est activée, vous",
                     ChatColor.GRAY + "serez équipé par défaut d'une paire",
-                    ChatColor.GRAY + "d'aîles quand vous entrerez dans un",
+                    ChatColor.GRAY + "d'ailes quand vous entrerez dans un",
                     ChatColor.GRAY + "Hub."
             }, new GuiSettingsCallback()
             {
