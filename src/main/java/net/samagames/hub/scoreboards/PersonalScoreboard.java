@@ -41,7 +41,7 @@ class PersonalScoreboard
     {
         AbstractPlayerData playerData = SamaGamesAPI.get().getPlayerManager().getPlayerData(this.player);
 
-        this.formattedRank = RankUtils.getFormattedRank(this.player);
+        this.formattedRank = RankUtils.getFormattedRank(this.player, true);
         this.coins = playerData.getCoins();
         this.stars = playerData.getStars();
 

@@ -2,15 +2,18 @@ package net.samagames.hub.utils;
 
 import net.md_5.bungee.api.ChatColor;
 import net.samagames.api.SamaGamesAPI;
+import net.samagames.api.permissions.IPermissionsEntity;
 
 import java.util.UUID;
 
 public class RankUtils
 {
-    public static String getFormattedRank(UUID uuid)
+    public static String getFormattedRank(UUID uuid, boolean overrideNickname)
     {
-        String prefix = SamaGamesAPI.get().getPermissionsManager().getPrefix(SamaGamesAPI.get().getPermissionsManager().getPlayer(uuid));
-        String display = SamaGamesAPI.get().getPermissionsManager().getDisplay(SamaGamesAPI.get().getPermissionsManager().getPlayer(uuid)).replace("[", "").replace("]", "");
+        IPermissionsEntity permissionsEntity = SamaGamesAPI.get().getPermissionsManager().getPlayer(uuid);
+
+        String prefix = overrideNickname ? permissionsEntity.getPrefix() : permissionsEntity.getDisplayPrefix();
+        String display = (overrideNickname ? permissionsEntity.getTag() : permissionsEntity.getDisplayTag()).replace("[", "").replace("]", "");
 
         if(ChatColor.stripColor(display).isEmpty())
             display = ChatColor.GRAY + "Joueur";
