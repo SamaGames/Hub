@@ -15,6 +15,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityToggleGlideEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
 
@@ -63,12 +64,22 @@ public class Bumper extends AbstractInteraction implements Listener
             return ;
         this.flyingPlayers.add(player.getUniqueId());
         Vector vec = this.bumperLocation.getDirection().multiply(this.power);
-        long flyTime = (long) (vec.getY() / g);
-        System.out.print(vec.getY());
-        ((CraftPlayer)player).getHandle().motX = vec.getX();
-        ((CraftPlayer)player).getHandle().motY = vec.getY();
-        ((CraftPlayer)player).getHandle().motZ = vec.getZ();
-        ((CraftPlayer)player).getHandle().velocityChanged = true;
+        long flyTime = (long) (vec.getY() / g * 20.0);
+        BukkitTask run = new BukkitRunnable() {
+
+            double x = vec.getX();
+            double y = vec.getY();
+            double z = vec.getZ();
+
+            @Override
+            public void run() {
+                ((CraftPlayer)player).getHandle().motX = x / (flyTime /2);
+                ((CraftPlayer)player).getHandle().motY = y / (flyTime /2);
+                ((CraftPlayer)player).getHandle().motZ = z / (flyTime /2);
+                ((CraftPlayer)player).getHandle().velocityChanged = true;
+            }
+        }.runTaskTimer(this.hub, 0L, 2L);
+
         this.flyTasks.put(player.getUniqueId(), this.hub.getServer().getScheduler().runTaskLater(this.hub, () -> {
             ItemStack stack = new ItemStack(Material.ELYTRA);
             ItemMeta meta = stack.getItemMeta();
@@ -79,8 +90,9 @@ public class Bumper extends AbstractInteraction implements Listener
             this.hub.getServer().getPluginManager().callEvent(new EntityToggleGlideEvent(player, true));
             Titles.sendTitle(player, 10, 40, 10, "", ChatColor.GOLD + "Bon vol !");
             this.stop(player);
+            run.cancel();
        // }, 40L)); old
-        }, flyTime * 20L));
+        }, flyTime));
     }
 
     @Override
