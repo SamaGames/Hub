@@ -28,7 +28,7 @@ public class GuiMain extends AbstractGui
 
         this.setSlotData(ChatColor.GOLD + "Zone " + ChatColor.GREEN + "VIP", Material.DIAMOND, 9, makeButtonLore(new String[] { "Testez les jeux avant tout le monde !" }, false, true), "beta_vip");
         this.setSlotData(ChatColor.GOLD + "Spawn", Material.BED, 18, makeButtonLore(new String[] { "Retourner au spawn grace à la magie", "de la téléportation céleste !" }, false, true), "spawn");
-        this.setSlotData(ChatColor.GOLD + "Parcours du ciel", Material.PACKED_ICE, 26, makeButtonLore(new String[] { "En espérant que vous atteignez le", "paradis..."}, false, true), "parkours");
+        this.setSlotData(ChatColor.GOLD + "Parcours du ciel", Material.PACKED_ICE, 26, makeButtonLore(new String[] { "En espérant que vous atteignez le", "paradis..."}, false, true), "parkour");
         this.setSlotData(ChatColor.GOLD + "Informations", Material.EMPTY_MAP, 27, getInformationLore(), "none");
         this.setSlotData(ChatColor.GOLD + "Changer de hub", Material.ENDER_CHEST, 35, makeButtonLore(new String[] { "Clique pour ouvrir l'interface" }, true, false), "switch_hub");
 
