@@ -15,6 +15,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityToggleGlideEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
 
@@ -31,6 +32,8 @@ public class Bumper extends AbstractInteraction implements Listener
     private final Map<UUID, BukkitTask> flyTasks;
     private final List<UUID> flyingPlayers;
     private final double power;
+
+    private static final double g = 18; //Minecraft constant for gravity (9.8 for earth)
 
     Bumper(Hub hub, String location)
     {
@@ -61,10 +64,22 @@ public class Bumper extends AbstractInteraction implements Listener
             return ;
         this.flyingPlayers.add(player.getUniqueId());
         Vector vec = this.bumperLocation.getDirection().multiply(this.power);
-        ((CraftPlayer)player).getHandle().motX = vec.getX();
-        ((CraftPlayer)player).getHandle().motY = vec.getY();
-        ((CraftPlayer)player).getHandle().motZ = vec.getZ();
-        ((CraftPlayer)player).getHandle().velocityChanged = true;
+        long flyTime = (long) (((vec.getY()) / g )* 20.0);
+        BukkitTask run = new BukkitRunnable() {
+
+            double x = vec.getX() / 2;
+            double y = vec.getY() / 2;
+            double z = vec.getZ() / 2;
+
+            @Override
+            public void run() {
+                ((CraftPlayer)player).getHandle().motX = x;
+                ((CraftPlayer)player).getHandle().motY = y;
+                ((CraftPlayer)player).getHandle().motZ = z;
+                ((CraftPlayer)player).getHandle().velocityChanged = true;
+            }
+        }.runTaskTimer(this.hub, 0L, flyTime/2L);
+
         this.flyTasks.put(player.getUniqueId(), this.hub.getServer().getScheduler().runTaskLater(this.hub, () -> {
             ItemStack stack = new ItemStack(Material.ELYTRA);
             ItemMeta meta = stack.getItemMeta();
@@ -75,7 +90,9 @@ public class Bumper extends AbstractInteraction implements Listener
             this.hub.getServer().getPluginManager().callEvent(new EntityToggleGlideEvent(player, true));
             Titles.sendTitle(player, 10, 40, 10, "", ChatColor.GOLD + "Bon vol !");
             this.stop(player);
-        }, 40L));
+            run.cancel();
+       // }, 40L)); old
+        }, flyTime));
     }
 
     @Override
