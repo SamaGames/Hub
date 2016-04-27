@@ -73,12 +73,12 @@ public class Bumper extends AbstractInteraction implements Listener
 
             @Override
             public void run() {
-                ((CraftPlayer)player).getHandle().motX = x / (flyTime /2);
-                ((CraftPlayer)player).getHandle().motY = y / (flyTime /2);
-                ((CraftPlayer)player).getHandle().motZ = z / (flyTime /2);
+                ((CraftPlayer)player).getHandle().motX = x / flyTime;
+                ((CraftPlayer)player).getHandle().motY = y / flyTime;
+                ((CraftPlayer)player).getHandle().motZ = z / flyTime;
                 ((CraftPlayer)player).getHandle().velocityChanged = true;
             }
-        }.runTaskTimer(this.hub, 0L, 2L);
+        }.runTaskTimer(this.hub, 0L, 1L);
 
         this.flyTasks.put(player.getUniqueId(), this.hub.getServer().getScheduler().runTaskLater(this.hub, () -> {
             ItemStack stack = new ItemStack(Material.ELYTRA);
