@@ -42,6 +42,10 @@ import java.util.concurrent.TimeUnit;
 
 public class Hub extends JavaPlugin
 {
+    private static final String PROTOCOLLIB_PREFIX = "protocollib";
+    private static final String SONARPET_PREFIX = "sonarpet";
+    private static final String LIBSDISGUISES_PREFIX = "libsdisguises";
+
     private World world;
 
     private ScheduledExecutorService executorMonoThread;
@@ -117,28 +121,29 @@ public class Hub extends JavaPlugin
         try
         {
             // ProtocolLib
-            this.removeCommand("protocollib", "protocol");
-            this.removeCommand("protocollib", "packet");
-            this.removeCommand("protocollib", "filter");
+            this.removeCommand(PROTOCOLLIB_PREFIX, "protocol");
+            this.removeCommand(PROTOCOLLIB_PREFIX, "packet");
+            this.removeCommand(PROTOCOLLIB_PREFIX, "filter");
 
             // SonarPet
-            this.removeCommand("sonarpet", "pet");
-            this.removeCommand("sonarpet", "petadmin");
-            this.removeCommand("sonarpet", "ecupdate");
-            this.removeCommand("sonarpet", "echopet");
+            this.removeCommand(SONARPET_PREFIX, "pet");
+            this.removeCommand(SONARPET_PREFIX, "petadmin");
+            this.removeCommand(SONARPET_PREFIX, "ecupdate");
+            this.removeCommand(SONARPET_PREFIX, "echopet");
 
             // LibsDisguises
-            this.removeCommand("libsdisguises", "libsdisguises");
-            this.removeCommand("libsdisguises", "disguise", "d", "dis");
-            this.removeCommand("libsdisguises", "disguiseentity", "dentity", "disentity");
-            this.removeCommand("libsdisguises", "disguisehelp", "dhelp", "dishelp");
-            this.removeCommand("libsdisguises", "disguiseplayer", "dplayer", "displayer");
-            this.removeCommand("libsdisguises", "disguiseradius", "disradius", "dradius");
-            this.removeCommand("libsdisguises", "undisguise", "u", "und", "undis");
-            this.removeCommand("libsdisguises", "undisguiseplayer", "undisplayer", "undplayer");
-            this.removeCommand("libsdisguises", "undisguiseradius", "undisradius", "undradius");
-            this.removeCommand("libsdisguises", "disguiseclone", "disguisec", "disc", "disclone", "dclone", "clonedisguise", "clonedis", "cdisguise", "cdis");
-            this.removeCommand("libsdisguises", "disguiseviewself", "dviewself", "dvs", "disguisevs", "disvs", "vsd", "viewselfdisguise", "viewselfd");
+            this.removeCommand(LIBSDISGUISES_PREFIX, "libsdisguises");
+            this.removeCommand(LIBSDISGUISES_PREFIX, "disguise", "d", "dis");
+            this.removeCommand(LIBSDISGUISES_PREFIX, "disguiseentity", "dentity", "disentity");
+            this.removeCommand(LIBSDISGUISES_PREFIX, "disguisehelp", "dhelp", "dishelp");
+            this.removeCommand(LIBSDISGUISES_PREFIX, "disguiseplayer", "dplayer", "displayer");
+            this.removeCommand(LIBSDISGUISES_PREFIX, "disguiseradius", "disradius", "dradius");
+            this.removeCommand(LIBSDISGUISES_PREFIX, "undisguise", "u", "und", "undis");
+            this.removeCommand(LIBSDISGUISES_PREFIX, "undisguiseplayer", "undisplayer", "undplayer");
+            this.removeCommand(LIBSDISGUISES_PREFIX, "undisguiseentity", "undisentity", "undentity");
+            this.removeCommand(LIBSDISGUISES_PREFIX, "undisguiseradius", "undisradius", "undradius");
+            this.removeCommand(LIBSDISGUISES_PREFIX, "disguiseclone", "disguisec", "disc", "disclone", "dclone", "clonedisguise", "clonedis", "cdisguise", "cdis");
+            this.removeCommand(LIBSDISGUISES_PREFIX, "disguiseviewself", "dviewself", "dvs", "disguisevs", "disvs", "vsd", "viewselfdisguise", "viewselfd");
         }
         catch (NoSuchFieldException | IllegalAccessException e)
         {

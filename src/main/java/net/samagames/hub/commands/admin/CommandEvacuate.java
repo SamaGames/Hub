@@ -5,7 +5,6 @@ import com.google.common.io.ByteStreams;
 import net.samagames.hub.Hub;
 import net.samagames.hub.commands.AbstractCommand;
 import net.samagames.tools.Titles;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
@@ -53,7 +52,7 @@ public class CommandEvacuate extends AbstractCommand
             if (this.timer == 60 || this.timer == 30 || this.timer == 10 || (this.timer <= 5 && this.timer > 0))
                 this.hub.getServer().broadcastMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "Votre hub va redémarrer dans " + ChatColor.AQUA + ChatColor.BOLD + this.timer + " seconde" + (this.timer > 1 ? "s" : ""));
 
-            Bukkit.getOnlinePlayers().stream().filter(p -> this.timer > 0).forEach(p ->
+            this.hub.getServer().getOnlinePlayers().stream().filter(p -> this.timer > 0).forEach(p ->
             {
                 if (this.timer <= 5)
                     p.playSound(p.getLocation(), Sound.ENTITY_BLAZE_DEATH, 0.8F, 1.8F);
@@ -65,16 +64,14 @@ public class CommandEvacuate extends AbstractCommand
 
             if (this.timer == 0)
             {
-                Bukkit.broadcastMessage(ChatColor.AQUA + "" + ChatColor.BOLD + "Fermeture du hub...");
+                this.hub.getServer().broadcastMessage(ChatColor.AQUA + "" + ChatColor.BOLD + "Fermeture du hub...");
 
-                for (Player p : Bukkit.getOnlinePlayers())
-                {
+                for (Player p : this.hub.getServer().getOnlinePlayers())
                     p.playSound(p.getLocation(), Sound.ENTITY_WITHER_SPAWN, 0.9F, 1.0F);
-                }
             }
             else if (this.timer == -1)
             {
-                for (Player p : Bukkit.getOnlinePlayers())
+                for (Player p : this.hub.getServer().getOnlinePlayers())
                 {
                     ByteArrayDataOutput out = ByteStreams.newDataOutput();
                     out.writeUTF("Connect");
@@ -82,7 +79,7 @@ public class CommandEvacuate extends AbstractCommand
                     p.sendPluginMessage(this.hub, "BungeeCord", out.toByteArray());
                 }
 
-                Bukkit.getScheduler().runTaskLaterAsynchronously(this.hub, () -> Bukkit.getServer().shutdown(), 3 * 20L);
+                this.hub.getServer().getScheduler().runTaskLaterAsynchronously(this.hub, () -> this.hub.getServer().shutdown(), 3 * 20L);
             }
 
             this.timer--;
