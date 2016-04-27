@@ -32,7 +32,7 @@ public class Bumper extends AbstractInteraction implements Listener
     private final List<UUID> flyingPlayers;
     private final double power;
 
-    private static final double g = 9.8;
+    private static final double g = 18; //Minecraft constant for gravity (9.8 for earth)
 
     Bumper(Hub hub, String location)
     {
