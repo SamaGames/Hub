@@ -2,6 +2,7 @@ package net.samagames.hub.games.shops;
 
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
+import net.samagames.hub.common.players.PlayerManager;
 import net.samagames.hub.games.AbstractGame;
 import net.samagames.hub.gui.AbstractGui;
 import net.samagames.hub.gui.shop.GuiConfirm;
@@ -29,26 +30,26 @@ public class ShopDependsItem extends ShopItem
     {
         if(this.isActive(player))
         {
-            player.sendMessage(ChatColor.RED + "Cet objet est déjà équipé.");
+            player.sendMessage(PlayerManager.SHOPPING_TAG + ChatColor.RED + "Cet objet est déjà équipé.");
         }
         else if (isOwned(player) || this.isDefaultItem())
         {
             SamaGamesAPI.get().getShopsManager().setCurrentLevel(player.getUniqueId(), this.type, this.getActionName());
-            player.sendMessage(ChatColor.GREEN + "Vous avez équipé " + ChatColor.AQUA + this.getIcon().getItemMeta().getDisplayName());
+            player.sendMessage(PlayerManager.SHOPPING_TAG + ChatColor.GREEN + "Vous avez équipé " + ChatColor.AQUA + this.getIcon().getItemMeta().getDisplayName());
         }
         else if (this.dependsOn != null && !hasDepend(player))
         {
-            player.sendMessage(ChatColor.RED + "Il est nécessaire de posséder " + ChatColor.AQUA + this.dependsOn.getIcon().getItemMeta().getDisplayName() + ChatColor.RED + " pour acheter cela.");
+            player.sendMessage(PlayerManager.SHOPPING_TAG + ChatColor.RED + "Il est nécessaire de posséder " + ChatColor.AQUA + this.dependsOn.getIcon().getItemMeta().getDisplayName() + ChatColor.RED + " pour acheter cela.");
         }
         else if (!SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).hasEnoughCoins(this.cost))
         {
-            player.sendMessage(ChatColor.RED + "Vous n'avez pas assez de pièces pour acheter cela.");
+            player.sendMessage(PlayerManager.SHOPPING_TAG + ChatColor.RED + "Vous n'avez pas assez de pièces pour acheter cela.");
         }
         else
         {
             GuiConfirm confirm = new GuiConfirm(this.hub, (AbstractGui) this.hub.getGuiManager().getPlayerGui(player), (parent) ->
             {
-                if(SamaGamesAPI.get().getShopsManager().getItemLevelForPlayer(player, this.type).equals(this.getActionName()))
+                if(SamaGamesAPI.get().getShopsManager().getItemLevelForPlayer(player.getUniqueId(), this.type).equals(this.getActionName()))
                     return;
 
                 SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).withdrawCoins(this.cost, (newAmount, difference, error) ->
@@ -56,7 +57,7 @@ public class ShopDependsItem extends ShopItem
                     SamaGamesAPI.get().getShopsManager().addOwnedLevel(player.getUniqueId(), this.type, this.getActionName());
                     SamaGamesAPI.get().getShopsManager().setCurrentLevel(player.getUniqueId(), this.type, this.getActionName());
 
-                    player.sendMessage(ChatColor.GREEN + "Vous avez acheté et équipé " + ChatColor.AQUA + this.getIcon().getItemMeta().getDisplayName());
+                    player.sendMessage(PlayerManager.SHOPPING_TAG + ChatColor.GREEN + "Vous avez acheté et équipé " + ChatColor.AQUA + this.getIcon().getItemMeta().getDisplayName());
 
                     this.hub.getScoreboardManager().update(player);
                 });
@@ -105,7 +106,7 @@ public class ShopDependsItem extends ShopItem
         if(this.dependsOn.isDefaultItem())
             return true;
 
-        List<String> own = SamaGamesAPI.get().getShopsManager().getOwnedLevels(player, this.type);
+        List<String> own = SamaGamesAPI.get().getShopsManager().getOwnedLevels(player.getUniqueId(), this.type);
         return (own != null && this.dependsOn != null && own.contains(this.dependsOn.getActionName()));
     }
 }

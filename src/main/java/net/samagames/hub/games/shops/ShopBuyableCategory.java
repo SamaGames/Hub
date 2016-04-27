@@ -2,6 +2,7 @@ package net.samagames.hub.games.shops;
 
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
+import net.samagames.hub.common.players.PlayerManager;
 import net.samagames.hub.games.AbstractGame;
 import net.samagames.hub.gui.AbstractGui;
 import net.samagames.hub.gui.shop.GuiConfirm;
@@ -34,21 +35,21 @@ public class ShopBuyableCategory extends ShopCategory
         }
         else if(!SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).hasEnoughCoins(this.cost))
         {
-            player.sendMessage(ChatColor.RED + "Vous n'avez pas assez de pièces pour acheter cet objet.");
+            player.sendMessage(PlayerManager.SHOPPING_TAG + ChatColor.RED + "Vous n'avez pas assez de pièces pour acheter cet objet.");
         }
         else
         {
             GuiConfirm confirm = new GuiConfirm(this.hub, (AbstractGui) this.hub.getGuiManager().getPlayerGui(player), (parent) ->
             {
-                if(SamaGamesAPI.get().getShopsManager().getItemLevelForPlayer(player, this.getActionName()).equals("flag"))
+                if(SamaGamesAPI.get().getShopsManager().getItemLevelForPlayer(player.getUniqueId(), this.getActionName()).equals("flag"))
                     return;
 
                 SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).withdrawCoins(this.cost, (newAmount, difference, error) ->
                 {
-                    SamaGamesAPI.get().getShopsManager().addOwnedLevel(player, this.getActionName(), "flag");
-                    SamaGamesAPI.get().getShopsManager().setCurrentLevel(player, this.getActionName(), "flag");
+                    SamaGamesAPI.get().getShopsManager().addOwnedLevel(player.getUniqueId(), this.getActionName(), "flag");
+                    SamaGamesAPI.get().getShopsManager().setCurrentLevel(player.getUniqueId(), this.getActionName(), "flag");
 
-                    player.sendMessage(ChatColor.GREEN + "Vous avez acheté et équipé " + ChatColor.AQUA + this.getIcon().getItemMeta().getDisplayName());
+                    player.sendMessage(PlayerManager.SHOPPING_TAG + ChatColor.GREEN + "Vous avez acheté et équipé " + ChatColor.AQUA + this.getIcon().getItemMeta().getDisplayName());
 
                     this.hub.getScoreboardManager().update(player);
                     this.hub.getGuiManager().openGui(player, parent);
@@ -90,7 +91,7 @@ public class ShopBuyableCategory extends ShopCategory
         if(this.cost == 0)
             return true;
 
-        List<String> own = SamaGamesAPI.get().getShopsManager().getOwnedLevels(player, this.getActionName());
+        List<String> own = SamaGamesAPI.get().getShopsManager().getOwnedLevels(player.getUniqueId(), this.getActionName());
         return (own != null) && own.contains("flag");
     }
 }

@@ -28,7 +28,7 @@ public class DisguiseManager extends AbstractCosmeticManager<DisguiseCosmetic>
 
         DisguiseAPI.disguiseToAll(player, disguise);
 
-        this.cosmeticManager.setCurrentLevel(player, KEY, cosmetic.getKey());
+        this.cosmeticManager.setCurrentLevel(player.getUniqueId(), KEY, cosmetic.getKey());
         player.sendMessage(PlayerManager.COSMETICS_TAG + ChatColor.GREEN + "Vous êtes maintenant déguisé !");
     }
 
@@ -40,7 +40,7 @@ public class DisguiseManager extends AbstractCosmeticManager<DisguiseCosmetic>
 
         if (!logout)
         {
-            this.cosmeticManager.resetLevel(player, KEY);
+            this.cosmeticManager.resetLevel(player.getUniqueId(), KEY);
             player.sendMessage(PlayerManager.COSMETICS_TAG + ChatColor.GREEN + "Votre déguisement disparait dans l'ombre...");
         }
     }
@@ -48,7 +48,7 @@ public class DisguiseManager extends AbstractCosmeticManager<DisguiseCosmetic>
     @Override
     public void restoreCosmetic(Player player)
     {
-        String value = this.cosmeticManager.getItemLevelForPlayer(player, KEY);
+        String value = this.cosmeticManager.getItemLevelForPlayer(player.getUniqueId(), KEY);
 
         if(value != null && !value.isEmpty())
             this.enableCosmetic(player, this.getRegistry().getElementByStorageName(value));

@@ -27,7 +27,7 @@ public class PetManager extends AbstractCosmeticManager<PetCosmetic>
 
         cosmetic.applyCustomization(pet);
 
-        this.cosmeticManager.setCurrentLevel(player, KEY, cosmetic.getKey());
+        this.cosmeticManager.setCurrentLevel(player.getUniqueId(), KEY, cosmetic.getKey());
         player.sendMessage(PlayerManager.COSMETICS_TAG + ChatColor.GREEN + "Votre animal vient de sortir de l'écurie !");
     }
 
@@ -40,7 +40,7 @@ public class PetManager extends AbstractCosmeticManager<PetCosmetic>
 
             if (!logout)
             {
-                this.cosmeticManager.resetLevel(player, KEY);
+                this.cosmeticManager.resetLevel(player.getUniqueId(), KEY);
                 player.sendMessage(PlayerManager.COSMETICS_TAG + ChatColor.GREEN + "Votre animal disparait dans l'ombre...");
             }
         }
@@ -49,7 +49,7 @@ public class PetManager extends AbstractCosmeticManager<PetCosmetic>
     @Override
     public void restoreCosmetic(Player player)
     {
-        String value = this.cosmeticManager.getItemLevelForPlayer(player, KEY);
+        String value = this.cosmeticManager.getItemLevelForPlayer(player.getUniqueId(), KEY);
 
         if(value != null && !value.isEmpty())
             this.enableCosmetic(player, this.getRegistry().getElementByStorageName(value));

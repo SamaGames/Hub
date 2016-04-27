@@ -26,6 +26,8 @@ public class GadgetManager extends AbstractCosmeticManager
     public static final Random RANDOM = new Random();
     public static final Field AGE_FIELD;
 
+    private static final String KEY = "gadget";
+
     private final Map<UUID, Integer> cooldowns;
     private final Map<UUID, AbstractDisplayer> playersGadgets;
     private final List<Location> blocksUsed;
@@ -44,6 +46,8 @@ public class GadgetManager extends AbstractCosmeticManager
     public void enableCosmetic(Player player, AbstractCosmetic cosmetic, NullType useless)
     {
         player.getInventory().setItem(6, cosmetic.getIcon(player));
+
+        this.cosmeticManager.setCurrentLevel(player.getUniqueId(), KEY, cosmetic.getKey());
         player.sendMessage(PlayerManager.COSMETICS_TAG + ChatColor.GREEN + "Votre gadget a été équipé dans votre barre d'action.");
     }
 
@@ -53,12 +57,20 @@ public class GadgetManager extends AbstractCosmeticManager
         if (!logout)
         {
             player.getInventory().setItem(6, null);
+
+            this.cosmeticManager.resetLevel(player.getUniqueId(), KEY);
             player.sendMessage(PlayerManager.COSMETICS_TAG + ChatColor.GREEN + "Votre gadget a été déséquipé.");
         }
     }
 
     @Override
-    public void restoreCosmetic(Player player) {}
+    public void restoreCosmetic(Player player)
+    {
+        String value = this.cosmeticManager.getItemLevelForPlayer(player.getUniqueId(), KEY);
+
+        if(value != null && !value.isEmpty())
+            this.enableCosmetic(player, this.getRegistry().getElementByStorageName(value));
+    }
 
     @Override
     public void update() {}

@@ -99,7 +99,7 @@ public class PlayerManager extends AbstractManager
                 if (SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "hub.fly"))
                     this.hub.getServer().getScheduler().runTask(this.hub, () -> player.setAllowFlight(true));
 
-                if (SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "hub.announce") && !SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).has())
+                if (SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "hub.announce") && !SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).hasNickname())
                     this.hub.getServer().broadcastMessage(PlayerUtils.getFullyFormattedPlayerName(player) + ChatColor.YELLOW + " a rejoint le hub !");
             });
         });

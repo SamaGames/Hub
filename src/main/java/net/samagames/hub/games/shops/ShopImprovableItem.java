@@ -2,6 +2,7 @@ package net.samagames.hub.games.shops;
 
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
+import net.samagames.hub.common.players.PlayerManager;
 import net.samagames.hub.games.AbstractGame;
 import net.samagames.hub.gui.AbstractGui;
 import net.samagames.hub.gui.shop.GuiConfirm;
@@ -51,11 +52,11 @@ public class ShopImprovableItem extends ShopIcon
 
         if (next == null)
         {
-            player.sendMessage(ChatColor.RED + "Vous avez déjà débloqué le niveau maximum de cette amélioration.");
+            player.sendMessage(PlayerManager.SHOPPING_TAG + ChatColor.RED + "Vous avez déjà débloqué le niveau maximum de cette amélioration.");
         }
         else if (!SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).hasEnoughCoins(next.getCost()))
         {
-            player.sendMessage(ChatColor.RED + "Vous n'avez pas assez de pièces pour acheter cette amélioration.");
+            player.sendMessage(PlayerManager.SHOPPING_TAG + ChatColor.RED + "Vous n'avez pas assez de pièces pour acheter cette amélioration.");
         }
         else
         {
@@ -63,15 +64,15 @@ public class ShopImprovableItem extends ShopIcon
 
             GuiConfirm confirm = new GuiConfirm(this.hub, (AbstractGui) this.hub.getGuiManager().getPlayerGui(player), (parent) ->
             {
-                if(SamaGamesAPI.get().getShopsManager().getItemLevelForPlayer(player, this.getActionName()).equals(finalLevel.getDatabaseStorageName()))
+                if(SamaGamesAPI.get().getShopsManager().getItemLevelForPlayer(player.getUniqueId(), this.getActionName()).equals(finalLevel.getDatabaseStorageName()))
                     return;
 
                 SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).withdrawCoins(finalLevel.getCost(), (newAmount, difference, error) ->
                 {
-                    SamaGamesAPI.get().getShopsManager().addOwnedLevel(player, this.getActionName(), finalLevel.getDatabaseStorageName());
-                    SamaGamesAPI.get().getShopsManager().setCurrentLevel(player, this.getActionName(), finalLevel.getDatabaseStorageName());
+                    SamaGamesAPI.get().getShopsManager().addOwnedLevel(player.getUniqueId(), this.getActionName(), finalLevel.getDatabaseStorageName());
+                    SamaGamesAPI.get().getShopsManager().setCurrentLevel(player.getUniqueId(), this.getActionName(), finalLevel.getDatabaseStorageName());
 
-                    player.sendMessage(ChatColor.GREEN + "Vous avez débloqué le niveau supérieur pour cette amélioration.");
+                    player.sendMessage(PlayerManager.SHOPPING_TAG + ChatColor.GREEN + "Vous avez débloqué le niveau supérieur pour cette amélioration.");
 
                     this.hub.getScoreboardManager().update(player);
                     this.hub.getGuiManager().openGui(player, parent);
@@ -153,7 +154,7 @@ public class ShopImprovableItem extends ShopIcon
 
     public String getCurrentValue(Player player)
     {
-        return SamaGamesAPI.get().getShopsManager().getItemLevelForPlayer(player, this.getActionName());
+        return SamaGamesAPI.get().getShopsManager().getItemLevelForPlayer(player.getUniqueId(), this.getActionName());
     }
 
     public ItemLevel getItemLevel(int level)

@@ -1,7 +1,7 @@
 package net.samagames.hub.cosmetics.common;
 
 import net.samagames.api.SamaGamesAPI;
-import net.samagames.api.shops.AbstractShopsManager;
+import net.samagames.core.api.shops.ShopsManager;
 import net.samagames.hub.Hub;
 import net.samagames.hub.common.players.PlayerManager;
 import net.samagames.hub.gui.AbstractGui;
@@ -26,7 +26,7 @@ public abstract class AbstractCosmetic implements Comparable<AbstractCosmetic>
     private final int stars;
     private final CosmeticRarity rarity;
     private final CosmeticAccessibility accessibility;
-    private final AbstractShopsManager shopsManager;
+    private final ShopsManager shopsManager;
     private String permissionNeededToView;
 
     public AbstractCosmetic(Hub hub, String category, String key, String displayName, ItemStack icon, int stars, CosmeticRarity rarity, CosmeticAccessibility accessibility, String[] description)
@@ -59,7 +59,7 @@ public abstract class AbstractCosmetic implements Comparable<AbstractCosmetic>
     {
         if (magicChest)
         {
-            this.shopsManager.addOwnedLevel(player, this.category, this.key);
+            this.shopsManager.addOwnedLevel(player.getUniqueId(), this.category, this.key);
         }
         else
         {
@@ -73,7 +73,7 @@ public abstract class AbstractCosmetic implements Comparable<AbstractCosmetic>
             {
                 SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).withdrawStars(this.stars, (newAmount, difference, error) ->
                 {
-                    this.shopsManager.addOwnedLevel(player, this.category, this.key);
+                    this.shopsManager.addOwnedLevel(player.getUniqueId(), this.category, this.key);
                     this.hub.getScoreboardManager().update(player);
                     this.hub.getGuiManager().openGui(player, parent);
 
@@ -130,8 +130,6 @@ public abstract class AbstractCosmetic implements Comparable<AbstractCosmetic>
         else
         {
             lore.add(ChatColor.GREEN + "Cliquez pour utiliser");
-
-
         }
 
         meta.setLore(lore);
@@ -168,7 +166,7 @@ public abstract class AbstractCosmetic implements Comparable<AbstractCosmetic>
         if (this.permissionNeededToView != null && this.canView(player))
             return true;
 
-        List<String> owned = this.shopsManager.getOwnedLevels(player, this.category);
+        List<String> owned = this.shopsManager.getOwnedLevels(player.getUniqueId(), this.category);
         return owned != null && owned.contains(this.key);
     }
 

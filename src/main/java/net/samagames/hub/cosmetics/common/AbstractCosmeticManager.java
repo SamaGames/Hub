@@ -1,7 +1,6 @@
 package net.samagames.hub.cosmetics.common;
 
-import net.samagames.api.SamaGamesAPI;
-import net.samagames.api.shops.AbstractShopsManager;
+import net.samagames.core.api.shops.ShopsManager;
 import net.samagames.hub.Hub;
 import net.samagames.hub.common.players.PlayerManager;
 import net.samagames.hub.gui.AbstractGui;
@@ -16,7 +15,7 @@ import java.util.UUID;
 public abstract class AbstractCosmeticManager<COSMETIC extends AbstractCosmetic>
 {
     protected final Hub hub;
-    protected final AbstractShopsManager cosmeticManager;
+    protected final ShopsManager cosmeticManager;
     private AbstractCosmeticRegistry<COSMETIC> registry;
     private Map<UUID, COSMETIC> equipped;
 
