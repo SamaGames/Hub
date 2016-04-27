@@ -24,8 +24,8 @@ public class PlayerManager extends AbstractManager
     public static final String SHOPPING_TAG = ChatColor.DARK_AQUA + "[" + ChatColor.AQUA + "Boutique" + ChatColor.DARK_AQUA + "] " + ChatColor.RESET;
     public static final String COSMETICS_TAG = ChatColor.DARK_AQUA + "[" + ChatColor.AQUA + "Cosmétique" + ChatColor.DARK_AQUA + "] " + ChatColor.RESET;
 
-    public static final float WALK_SPEED = 0.3F;
-    public static final float FLY_SPEED = 0.3F;
+    public static final float WALK_SPEED = 0.15F;
+    public static final float FLY_SPEED = 0.15F;
 
     private final Map<UUID, Location> selections;
     private final List<UUID> hiders;
@@ -99,7 +99,7 @@ public class PlayerManager extends AbstractManager
                 if (SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "hub.fly"))
                     this.hub.getServer().getScheduler().runTask(this.hub, () -> player.setAllowFlight(true));
 
-                if (SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "hub.announce"))
+                if (SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "hub.announce") && !SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).has())
                     this.hub.getServer().broadcastMessage(PlayerUtils.getFullyFormattedPlayerName(player) + ChatColor.YELLOW + " a rejoint le hub !");
             });
         });
