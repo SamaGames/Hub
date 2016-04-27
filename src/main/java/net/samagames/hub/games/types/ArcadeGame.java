@@ -65,7 +65,37 @@ public class ArcadeGame extends AbstractGame
     @Override
     public RulesBook[] getRulesBooks()
     {
-        return null;
+        RulesBook[] books = new RulesBook[1];
+
+        books[0] = new RulesBook("PacMan").addOwner("Azuxul")
+                .addPage("But du jeu", new String[] {
+                        "Vous devez récupérer",
+                        "le plus de gommes",
+                        "possible avant la",
+                        "fin de la partie.",
+                        "(Plus de gommes ou",
+                        "temps écoulé)"
+                }, true)
+                .addPage("PvP ?", new String[] {
+                        "Vous pouvez taper",
+                        "vos adversaires",
+                        "pour leur faire",
+                        "perdre des gommes !",
+                        "Quand un joueur",
+                        "meurt, il lâche",
+                        "20% de ses gommes."
+                }, true)
+                .addPage("Bonus", new String[] {
+                        "Durant la partie,",
+                        "certains bonus",
+                        "pourront apparaître !",
+                        "Attrapez-les tous et",
+                        "découvrez leurs",
+                        "effets ;)"
+                }, true)
+        ;
+
+        return books;
     }
 
     @Override
