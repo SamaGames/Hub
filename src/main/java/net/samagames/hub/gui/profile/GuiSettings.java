@@ -247,6 +247,25 @@ class GuiSettings extends AbstractGui
                 }
             });
 
+            this.drawSetting(player, "Aîles", new ItemStack(Material.ELYTRA, 1), 12, new String[] {
+                    ChatColor.GRAY + "Quand cette option est activée, vous",
+                    ChatColor.GRAY + "serez équipé par défaut d'une paire",
+                    ChatColor.GRAY + "d'aîles quand vous entrerez dans un Hub."
+            }, new GuiSettingsCallback()
+            {
+                @Override
+                public boolean get(IPlayerSettings setting)
+                {
+                    return setting.isElytraActivated();
+                }
+
+                @Override
+                public void invert(IPlayerSettings setting)
+                {
+                    setting.setElytraActivated(!this.get(setting));
+                }
+            });
+
             this.drawSetting(player, "ClickMe", new ItemStack(Material.WOOD_BUTTON, 1), 16, new String[]{
                     ChatColor.GRAY + "En cliquant, vous accéderez à un menu",
                     ChatColor.GRAY + "avec les différents paramètres du ClickMe.",

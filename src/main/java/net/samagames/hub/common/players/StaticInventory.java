@@ -1,7 +1,6 @@
 package net.samagames.hub.common.players;
 
 import net.samagames.api.SamaGamesAPI;
-import net.samagames.api.permissions.IPermissionsEntity;
 import net.samagames.hub.Hub;
 import net.samagames.hub.gui.cosmetics.GuiCosmetics;
 import net.samagames.hub.gui.main.GuiMain;
@@ -59,6 +58,7 @@ public class StaticInventory
                 ItemMeta meta = elytra.getItemMeta();
                 meta.spigot().setUnbreakable(true);
                 elytra.setItemMeta(meta);
+
                 player.getInventory().setChestplate(elytra);
                 stack.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
             }
@@ -67,16 +67,17 @@ public class StaticInventory
                 player.getInventory().setChestplate(new ItemStack(Material.AIR));
                 stack.removeEnchantment(Enchantment.DURABILITY);
             }
+
             player.playSound(player.getLocation(), Sound.ENTITY_HORSE_SADDLE, 1F, 1F);
         }
         else if (stack.getType() == Material.FEATHER && player.isGliding() && player.getVelocity().lengthSquared() != 0)
         {
-            IPermissionsEntity permissionsEntity = SamaGamesAPI.get().getPermissionsManager().getPlayer(player.getUniqueId());
-            if (permissionsEntity.getGroupId() == 1)
+            if (!SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "network.vip"))
             {
                 player.sendMessage(ChatColor.RED + "Devenez VIP pour utiliser le booster.");
                 return ;
             }
+
             Vector velocity = player.getVelocity().add(player.getLocation().getDirection().normalize().multiply(1.5D));
             ((CraftPlayer)player).getHandle().motX = velocity.getX();
             ((CraftPlayer)player).getHandle().motY = velocity.getY();
@@ -104,19 +105,21 @@ public class StaticInventory
             player.getInventory().setItem(slot, this.items.get(slot));
         }
 
-        IPermissionsEntity permissionsEntity = SamaGamesAPI.get().getPermissionsManager().getPlayer(player.getUniqueId());
-        if (permissionsEntity.getGroupId() > 2)
+        if (SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "network.vipplus"))
         {
             ItemStack itemStack = buildItemStack(Material.ELYTRA, 1, 0, createTitle("Aîles"), null);
-            //if (SamaGamesAPI.get().getSettingsManager().getSettings(player.getUniqueId()).isElytraEnabled())
+
+            if (SamaGamesAPI.get().getSettingsManager().getSettings(player.getUniqueId()).isElytraActivated())
             {
                 ItemStack elytra = new ItemStack(Material.ELYTRA);
                 ItemMeta meta = elytra.getItemMeta();
                 meta.spigot().setUnbreakable(true);
                 elytra.setItemMeta(meta);
+
                 itemStack.addEnchantment(Enchantment.DURABILITY, 1);
                 player.getInventory().setChestplate(elytra);
             }
+
             player.getInventory().setItem(4, itemStack);
         }
 
