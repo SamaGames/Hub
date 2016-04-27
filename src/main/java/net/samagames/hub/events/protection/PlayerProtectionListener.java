@@ -52,8 +52,11 @@ public class PlayerProtectionListener implements Listener
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void onPlayerInteract(final PlayerInteractEvent event)
+    public void onPlayerInteract(PlayerInteractEvent event)
     {
+        if (event.getItem().getType() == Material.WRITTEN_BOOK)
+            return;
+        
         if (!this.canDoAction(event.getPlayer()))
             event.setCancelled(true);
 

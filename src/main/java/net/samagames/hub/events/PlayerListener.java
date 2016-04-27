@@ -38,8 +38,6 @@ public class PlayerListener implements Listener
 
         this.hub.getEventBus().onLogin(event.getPlayer());
         new ServerStatus(SamaGamesAPI.get().getServerName(), "Hub", "Map", Status.IN_GAME, this.hub.getServer().getOnlinePlayers().size(), this.hub.getServer().getMaxPlayers()).sendToHydro();
-
-        System.err.println("Time: " + (System.currentTimeMillis() - startTime) + "ms");
     }
 
     @EventHandler
