@@ -2,6 +2,7 @@ package net.samagames.hub;
 
 import de.slikey.effectlib.EffectLib;
 import net.samagames.api.SamaGamesAPI;
+import net.samagames.api.games.Status;
 import net.samagames.hub.commands.CommandManager;
 import net.samagames.hub.common.HubRefresher;
 import net.samagames.hub.common.hydroangeas.HydroangeasManager;
@@ -22,6 +23,7 @@ import net.samagames.hub.gui.GuiManager;
 import net.samagames.hub.interactions.InteractionManager;
 import net.samagames.hub.parkours.ParkourManager;
 import net.samagames.hub.scoreboards.ScoreboardManager;
+import net.samagames.hub.utils.ServerStatus;
 import net.samagames.tools.Reflection;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -29,11 +31,14 @@ import org.bukkit.command.SimpleCommandMap;
 import org.bukkit.craftbukkit.v1_9_R1.CraftServer;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.io.File;
 import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 
 public class Hub extends JavaPlugin
 {
@@ -43,6 +48,7 @@ public class Hub extends JavaPlugin
     private ScheduledExecutorService scheduledExecutorService;
 
     private HubRefresher hubRefresher;
+    private BukkitTask hubRefresherTask;
 
     private EventBus eventBus;
     private HydroangeasManager hydroangeasManager;
@@ -59,6 +65,8 @@ public class Hub extends JavaPlugin
     private CosmeticManager cosmeticManager;
     private CommandManager commandManager;
 
+    private ScheduledFuture hydroangeasSynchronization;
+
     @Override
     public void onEnable()
     {
@@ -73,7 +81,10 @@ public class Hub extends JavaPlugin
         this.executorMonoThread = Executors.newScheduledThreadPool(1);
 
         if (!this.getConfig().getBoolean("disconnected", false))
+        {
             this.hubRefresher = new HubRefresher(this);
+            this.hubRefresherTask = this.getServer().getScheduler().runTaskTimerAsynchronously(this, this.hubRefresher, 20L, 20L);
+        }
 
         this.eventBus = new EventBus();
         this.hydroangeasManager = new HydroangeasManager(this);
@@ -104,51 +115,61 @@ public class Hub extends JavaPlugin
         try
         {
             // ProtocolLib
-            this.removeCommand("protocol");
-            this.removeCommand("packet");
-            this.removeCommand("filter");
+            this.removeCommand("protocollib", "protocol");
+            this.removeCommand("protocollib", "packet");
+            this.removeCommand("protocollib", "filter");
 
             // SonarPet
-            this.removeCommand("pet");
-            this.removeCommand("petadmin");
-            this.removeCommand("ecupdate");
-            this.removeCommand("echopet");
+            this.removeCommand("sonarpet", "pet");
+            this.removeCommand("sonarpet", "petadmin");
+            this.removeCommand("sonarpet", "ecupdate");
+            this.removeCommand("sonarpet", "echopet");
 
-            // LibsDisguise
-            this.removeCommand("libsdisguises");
-            this.removeCommand("disguise", "d", "dis");
-            this.removeCommand("disguiseentity", "dentity", "disentity");
-            this.removeCommand("disguisehelp", "dhelp", "dishelp");
-            this.removeCommand("disguiseplayer", "dplayer", "displayer");
-            this.removeCommand("disguiseradius", "disradius", "dradius");
-            this.removeCommand("undisguise", "u", "und", "undis");
-            this.removeCommand("undisguiseplayer", "undisplayer", "undplayer");
-            this.removeCommand("undisguiseradius", "undisradius", "undradius");
-            this.removeCommand("disguiseclone", "disguisec", "disc", "disclone", "dclone", "clonedisguise", "clonedis", "cdisguise", "cdis");
-            this.removeCommand("disguiseviewself", "dviewself", "dvs", "disguisevs", "disvs", "vsd", "viewselfdisguise", "viewselfd");
+            // LibsDisguises
+            this.removeCommand("libsdisguises", "libsdisguises");
+            this.removeCommand("libsdisguises", "disguise", "d", "dis");
+            this.removeCommand("libsdisguises", "disguiseentity", "dentity", "disentity");
+            this.removeCommand("libsdisguises", "disguisehelp", "dhelp", "dishelp");
+            this.removeCommand("libsdisguises", "disguiseplayer", "dplayer", "displayer");
+            this.removeCommand("libsdisguises", "disguiseradius", "disradius", "dradius");
+            this.removeCommand("libsdisguises", "undisguise", "u", "und", "undis");
+            this.removeCommand("libsdisguises", "undisguiseplayer", "undisplayer", "undplayer");
+            this.removeCommand("libsdisguises", "undisguiseradius", "undisradius", "undradius");
+            this.removeCommand("libsdisguises", "disguiseclone", "disguisec", "disc", "disclone", "dclone", "clonedisguise", "clonedis", "cdisguise", "cdis");
+            this.removeCommand("libsdisguises", "disguiseviewself", "dviewself", "dvs", "disguisevs", "disvs", "vsd", "viewselfdisguise", "viewselfd");
         }
         catch (NoSuchFieldException | IllegalAccessException e)
         {
             e.printStackTrace();
         }
+
+        this.hydroangeasSynchronization = this.getScheduledExecutorService().scheduleAtFixedRate(() -> new ServerStatus(SamaGamesAPI.get().getServerName(), "Hub", "Map", Status.IN_GAME, Bukkit.getOnlinePlayers().size(), Bukkit.getMaxPlayers()).sendToHydro(), 0, 1, TimeUnit.MINUTES);
     }
 
     @Override
     public void onDisable()
     {
         if (this.hubRefresher != null)
+        {
+            this.hubRefresherTask.cancel();
             this.hubRefresher.removeFromList();
+        }
 
+        this.hydroangeasSynchronization.cancel(true);
+        
         this.eventBus.onDisable();
     }
 
-    private void removeCommand(String... str) throws NoSuchFieldException, IllegalAccessException
+    private void removeCommand(String prefix, String... str) throws NoSuchFieldException, IllegalAccessException
     {
         SimpleCommandMap scm = ((CraftServer) Bukkit.getServer()).getCommandMap();
         Map knownCommands = (Map) Reflection.getValue(scm, true, "knownCommands");
 
         for (String cmd : str)
+        {
             knownCommands.remove(cmd);
+            knownCommands.remove(prefix + ":" + cmd);
+        }
     }
 
     public World getWorld()
