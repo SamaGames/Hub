@@ -65,7 +65,7 @@ public class ArcadeGame extends AbstractGame
     @Override
     public RulesBook[] getRulesBooks()
     {
-        RulesBook[] books = new RulesBook[1];
+        RulesBook[] books = new RulesBook[2];
 
         books[0] = new RulesBook("PacMan").addOwner("Azuxul")
                 .addPage("But du jeu", new String[] {
