@@ -143,7 +143,7 @@ class EntitySonicSquid extends EntitySquid
         for (int x = -1; x <= 1; x++)
             for (int y = -1; y <= 1; y++)
                 for (int z = -1; z <= 1; z++)
-                    noWater = noWater && (this.getWorld().getType(new BlockPosition(x, y, z)).getMaterial() != net.minecraft.server.v1_9_R1.Material.WATER);
+                    noWater = noWater && (this.getWorld().getType(new BlockPosition(x + this.locX, y + this.locY, z + this.locZ)).getMaterial() != net.minecraft.server.v1_9_R1.Material.WATER);
         if (noWater)
             this.destroySquid(this.locX, this.locY, this.locZ);
         return noWater;
