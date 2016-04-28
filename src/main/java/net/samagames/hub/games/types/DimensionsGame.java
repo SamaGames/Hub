@@ -54,7 +54,7 @@ public class DimensionsGame extends AbstractGame
     }
 
     @Override
-    public String[] getDeveloppers()
+    public String[] getDevelopers()
     {
         return new String[] {
                 "Silvanosky",

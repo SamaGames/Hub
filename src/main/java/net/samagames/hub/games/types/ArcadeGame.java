@@ -57,7 +57,7 @@ public class ArcadeGame extends AbstractGame
     }
 
     @Override
-    public String[] getDeveloppers()
+    public String[] getDevelopers()
     {
         return null;
     }
@@ -71,10 +71,10 @@ public class ArcadeGame extends AbstractGame
                 .addPage("But du jeu", new String[] {
                         "Vous devez récupérer",
                         "le plus de gommes",
-                        "possible avant la",
-                        "fin de la partie.",
-                        "(Plus de gommes ou",
-                        "temps écoulé)"
+                        "possible avant la fin",
+                        "de la partie. (Plus",
+                        "de gommes ou temps",
+                        "écoulé)"
                 }, true)
                 .addPage("PvP ?", new String[] {
                         "Vous pouvez taper",
@@ -93,6 +93,51 @@ public class ArcadeGame extends AbstractGame
                         "découvrez leurs",
                         "effets ;)"
                 }, true)
+        ;
+
+        books[1] = new RulesBook("BomberMan").addOwner("Azuxul").addContributor("LordFinn")
+                .addPage("But du jeu", new String[] {
+                        "Vous devez faire",
+                        "exploser les autres",
+                        "joueurs et d'être le",
+                        "dernier à être en",
+                        "vie ! La partie se",
+                        "termine quand il ne",
+                        "reste qu'un seul",
+                        "joueur ou quand le",
+                        "compte à rebours",
+                        "arrive à 0."
+                }, true)
+                .addPage("Bombes", new String[] {
+                        "Vous commencez tous",
+                        "avec une seule bombe.",
+                        "Mais vous pouvez en",
+                        "récupérer via des",
+                        "bonus pour l'",
+                        "augmenter tout",
+                        "comme la force de",
+                        "l'explosion. Les",
+                        "bombes cassent le",
+                        "premier bloc qu'elles",
+                        "rencontrent et",
+                        "explosent en chaine !"
+                }, true)
+                .addPage("Bonus", new String[] {
+                        "Durant la partie",
+                        "certains bonus",
+                        "pourront apparaître :",
+                        "positifs comme",
+                        "négatifs. Il est",
+                        "infini jusqu'à que",
+                        "vous en preniez un",
+                        "autre."
+                }, true)
+                .addPage("Bonus", new String[] {
+                        "Attention néanmoins,",
+                        "vous ne pouvez",
+                        "récupérer des bonus",
+                        "en étant en sneak."
+                }, false)
         ;
 
         return books;

@@ -53,7 +53,7 @@ public class BackEndGame extends AbstractGame
     }
 
     @Override
-    public String[] getDeveloppers()
+    public String[] getDevelopers()
     {
         return null;
     }

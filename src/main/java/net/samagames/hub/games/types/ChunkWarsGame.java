@@ -45,7 +45,7 @@ public class ChunkWarsGame extends AbstractGame
     }
 
     @Override
-    public String[] getDeveloppers()
+    public String[] getDevelopers()
     {
         return new String[] {
                 "IamBlueSlime"

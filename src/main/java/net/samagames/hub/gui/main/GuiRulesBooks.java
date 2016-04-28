@@ -79,6 +79,7 @@ public class GuiRulesBooks extends AbstractGui
             player.getInventory().setItem(2, rulesBook);
 
             player.sendMessage(PlayerManager.RULES_TAG + "Le livre des règles a été ajouté à votre inventaire. Il y sera supprimé dans 15 secondes.");
+            this.hub.getGuiManager().closeGui(player);
 
             this.hub.getPlayerManager().setRulesBookTask(player, this.hub.getServer().getScheduler().runTaskLater(this.hub, () ->
             {

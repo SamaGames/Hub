@@ -121,10 +121,10 @@ public class GuiMain extends AbstractGui
                 lore.add("");
             }
 
-            if (game.getDeveloppers() != null)
+            if (game.getDevelopers() != null)
             {
-                lore.add(ChatColor.GOLD + "Développeur" + (game.getDeveloppers().length > 1 ? "s" : "") + " : ");
-                lore.add(ChatColor.GRAY + StringUtils.join(game.getDeveloppers(), ", "));
+                lore.add(ChatColor.GOLD + "Développeur" + (game.getDevelopers().length > 1 ? "s" : "") + " : ");
+                lore.add(ChatColor.GRAY + StringUtils.join(game.getDevelopers(), ", "));
                 lore.add("");
             }
 

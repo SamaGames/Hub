@@ -56,7 +56,7 @@ public class PlayerProtectionListener implements Listener
     {
         if (event.getItem().getType() == Material.WRITTEN_BOOK)
             return;
-        
+
         if (!this.canDoAction(event.getPlayer()))
             event.setCancelled(true);
 

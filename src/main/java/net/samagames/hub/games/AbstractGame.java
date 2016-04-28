@@ -41,7 +41,7 @@ public abstract class AbstractGame
     public abstract String getCategory();
     public abstract ItemStack getIcon();
     public abstract String[] getDescription();
-    public abstract String[] getDeveloppers();
+    public abstract String[] getDevelopers();
     public abstract RulesBook[] getRulesBooks();
     public abstract int getSlotInMainMenu();
     public abstract ShopCategory getShopConfiguration();
