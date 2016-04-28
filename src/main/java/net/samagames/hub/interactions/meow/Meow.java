@@ -63,7 +63,7 @@ class Meow extends AbstractInteraction
         if (this.holograms.containsKey(player.getUniqueId()))
             this.onLogout(player);
 
-        int fishes = 1;
+        int fishes = 0;
 
         Hologram hologram;
 
@@ -99,7 +99,9 @@ class Meow extends AbstractInteraction
     @Override
     public void play(Player player)
     {
-        this.hub.getGuiManager().openGui(player, new GuiMeow(this.hub, this));
+        // TODO: this.hub.getGuiManager().openGui(player, new GuiMeow(this.hub, this));
+        player.sendMessage(TAG + "Je suis en train d'emménager, je serais disponible bientôt :)");
+        player.playSound(player.getLocation(), Sound.ENTITY_CAT_AMBIENT, 1.0F, 1.0F);
     }
 
     @Override
@@ -107,7 +109,7 @@ class Meow extends AbstractInteraction
 
     public void update(Player player)
     {
-        int fishes = 1;
+        int fishes = 0;
 
         Hologram hologram = this.holograms.get(player.getUniqueId());
 

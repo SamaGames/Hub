@@ -28,10 +28,10 @@ class EntityMeow extends EntityOcelot
         }
         catch (ReflectiveOperationException ignored) {}
 
+        this.setPositionRotation(location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
+
         this.setCatType(2);
         this.setSitting(true);
-
-        this.setPositionRotation(location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
     }
 
     @Override
