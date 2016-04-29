@@ -5,6 +5,7 @@ import net.minecraft.server.v1_9_R1.*;
 import net.samagames.hub.Hub;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 import java.lang.reflect.Field;
@@ -157,6 +158,7 @@ class EntitySonicSquid extends EntitySquid
         {
             passenger.getBukkitEntity().eject();
             this.findBetterLandingLocation(passenger, x + 0.5D, y, z + 0.5D, passenger.yaw, passenger.pitch);
+            passenger.getBukkitEntity().getWorld().playSound(passenger.getBukkitEntity().getLocation(), Sound.ENTITY_PLAYER_SPLASH, 1F, 1F);
         });
     }
 
