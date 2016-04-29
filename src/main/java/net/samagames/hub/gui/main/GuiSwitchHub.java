@@ -165,7 +165,7 @@ public class GuiSwitchHub extends AbstractGui
         }
 
         lore.add("");
-        lore.add(ChatColor.DARK_GRAY + "▶ Clique pour être téléporté");
+        lore.add(ChatColor.DARK_GRAY + "▶ Cliquez pour être téléporté");
 
         meta.setLore(lore);
         glass.setItemMeta(meta);
