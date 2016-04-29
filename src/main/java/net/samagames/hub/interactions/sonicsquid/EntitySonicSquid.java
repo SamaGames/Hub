@@ -129,7 +129,7 @@ class EntitySonicSquid extends EntitySquid
 
         if (material != net.minecraft.server.v1_9_R1.Material.AIR && material != net.minecraft.server.v1_9_R1.Material.WATER)
         {
-            this.destroySquid(x, y, z);
+            this.destroySquid(x + 0.5, y, z + 0.5D);
             return true;
         }
         else
@@ -157,7 +157,7 @@ class EntitySonicSquid extends EntitySquid
         this.passengers.forEach(passenger ->
         {
             passenger.getBukkitEntity().eject();
-            this.findBetterLandingLocation(passenger, x + 0.5D, y, z + 0.5D, passenger.yaw, passenger.pitch);
+            this.findBetterLandingLocation(passenger, x, y, z, passenger.yaw, passenger.pitch);
             passenger.getBukkitEntity().getWorld().playSound(passenger.getBukkitEntity().getLocation(), Sound.ENTITY_PLAYER_SPLASH, 1F, 1F);
         });
     }
