@@ -96,11 +96,11 @@ class EntitySonicSquid extends EntitySquid
         super.move(d0, d1, d2);
 
         if (this.checkWater()
-                || (this.locX - (long)locX > 0.7D && this.checkBlock(this.locX + 0.3D, this.locY, this.locZ))
-                || (this.locX - (long)locX < 0.3D && this.checkBlock(this.locX - 0.3D, this.locY, this.locZ))
-                || (this.locZ - (long)locZ > 0.7D && this.checkBlock(this.locX, this.locY, this.locZ + 0.3D)))
+                || (Math.abs(this.locX % 1) > 0.5D && this.checkBlock(this.locX + 0.5D, this.locY, this.locZ))
+                || (Math.abs(this.locX % 1) < 0.5D && this.checkBlock(this.locX - 0.5D, this.locY, this.locZ))
+                || (Math.abs(this.locZ % 1) > 0.5D && this.checkBlock(this.locX, this.locY, this.locZ + 0.5D)))
             return ;
-        if (this.locZ - (long)locZ < 0.3D)
+        if (Math.abs(this.locZ % 1) < 0.5D)
             this.checkBlock(this.locX, this.locY, this.locZ - 0.3D);
     }
 
