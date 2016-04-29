@@ -44,7 +44,7 @@ class EntitySonicSquid extends EntitySquid
         while (copy.getBlock().getType() == Material.WATER || copy.getBlock().getType() == Material.STATIONARY_WATER)
             copy.add(0.0D, 1.0D, 0.0D);
 
-        this.setPosition(player.getLocation().getX(), copy.getY() - 0.85D, player.getLocation().getZ());
+        this.setPosition(player.getLocation().getX(), copy.getY() - 1.35D, player.getLocation().getZ());
     }
 
     @Override
