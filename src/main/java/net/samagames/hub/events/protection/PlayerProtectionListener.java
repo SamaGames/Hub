@@ -54,7 +54,7 @@ public class PlayerProtectionListener implements Listener
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerInteract(PlayerInteractEvent event)
     {
-        if (event.getItem().getType() == Material.WRITTEN_BOOK)
+        if (event.getItem() != null && event.getItem().getType() == Material.WRITTEN_BOOK)
             return;
 
         if (!this.canDoAction(event.getPlayer()))
