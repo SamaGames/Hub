@@ -45,15 +45,10 @@ class Meow extends AbstractInteraction
 
         this.meowEntity = new EntityMeow(world);
         this.meowEntity.setPosition(location.getX(), location.getY(), location.getZ());
-        this.meowEntity.setYawPitch(location.getYaw(), location.getPitch());
         world.addEntity(this.meowEntity, CreatureSpawnEvent.SpawnReason.CUSTOM);
         location.getChunk().load(true);
 
-        hub.getServer().getScheduler().runTaskLater(hub, () ->
-        {
-            this.meowEntity.getBukkitEntity().getLocation().setYaw(location.getYaw());
-            this.meowEntity.getBukkitEntity().getLocation().setPitch(location.getPitch());
-        }, 20L);
+        hub.getServer().getScheduler().runTaskLater(hub, () -> this.meowEntity.postInit(location.getYaw(), location.getPitch()), 20L);
 
         this.random = new Random();
         this.thankYouTask = null;
