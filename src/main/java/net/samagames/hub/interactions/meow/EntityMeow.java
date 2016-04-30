@@ -28,10 +28,12 @@ class EntityMeow extends EntityOcelot
         }
         catch (ReflectiveOperationException ignored) {}
 
-        this.setPositionRotation(location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
+        this.setPosition(location.getX(), location.getY(), location.getZ());
+        this.setYawPitch(location.getYaw(), location.getPitch());
+
+        this.positionChanged = true;
 
         this.setCatType(2);
-        this.setSitting(true);
 
         world.getChunkAt(location.getBlockX(), location.getBlockZ()).bukkitChunk.load(true);
     }
