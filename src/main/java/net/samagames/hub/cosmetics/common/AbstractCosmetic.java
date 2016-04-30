@@ -8,7 +8,6 @@ import net.samagames.hub.gui.AbstractGui;
 import net.samagames.hub.gui.shop.GuiConfirm;
 import net.samagames.hub.utils.NumberUtils;
 import net.samagames.tools.GlowEffect;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -114,9 +113,6 @@ public abstract class AbstractCosmetic implements Comparable<AbstractCosmetic>
 
     public ItemStack getIcon(Player player)
     {
-        if (this.key.equals("secretchest"))
-            Bukkit.broadcastMessage("Getting icon");
-
         ItemStack cloned = this.icon.clone();
         ItemMeta meta = cloned.getItemMeta();
 
@@ -129,9 +125,6 @@ public abstract class AbstractCosmetic implements Comparable<AbstractCosmetic>
 
         if (!this.isOwned(player))
         {
-            if (this.key.equals("secretchest"))
-                Bukkit.broadcastMessage("Not owned");
-
             cloned.setType(Material.INK_SACK);
             cloned.setDurability((short) 8);
 
@@ -152,9 +145,6 @@ public abstract class AbstractCosmetic implements Comparable<AbstractCosmetic>
         }
         else
         {
-            if (this.key.equals("secretchest"))
-                Bukkit.broadcastMessage("Owned");
-
             lore.add(ChatColor.GREEN + "Cliquez pour utiliser");
         }
 
@@ -196,6 +186,7 @@ public abstract class AbstractCosmetic implements Comparable<AbstractCosmetic>
             return true;
         else if (this.accessibility == CosmeticAccessibility.ADMIN && SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "network.admin"))
             return true;
+
         List<String> owned = this.shopsManager.getOwnedLevels(player.getUniqueId(), this.category);
         return owned != null && owned.contains(this.key);
     }

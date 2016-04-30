@@ -6,7 +6,6 @@ import net.samagames.hub.cosmetics.common.AbstractCosmetic;
 import net.samagames.hub.cosmetics.common.CosmeticAccessibility;
 import net.samagames.hub.cosmetics.common.CosmeticRarity;
 import net.samagames.hub.cosmetics.gadgets.displayers.AbstractDisplayer;
-import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_9_R1.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -30,9 +29,6 @@ class GadgetCosmetic extends AbstractCosmetic
         ItemStack stack = super.getIcon(player);
         net.minecraft.server.v1_9_R1.ItemStack craftStack = CraftItemStack.asNMSCopy(stack);
 
-        if (this.getKey().equals("secretchest"))
-            Bukkit.broadcastMessage("Applying nbt");
-
         NBTTagCompound tagCompound = craftStack.getTag();
 
         if (tagCompound == null)
@@ -41,9 +37,6 @@ class GadgetCosmetic extends AbstractCosmetic
         tagCompound.setString("gadget-key", this.getKey());
 
         craftStack.setTag(tagCompound);
-
-        if (this.getKey().equals("secretchest"))
-            Bukkit.broadcastMessage("Return");
 
         return CraftItemStack.asBukkitCopy(craftStack);
     }
