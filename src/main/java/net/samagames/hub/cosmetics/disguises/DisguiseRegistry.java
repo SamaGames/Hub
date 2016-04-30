@@ -88,7 +88,7 @@ class DisguiseRegistry extends AbstractCosmeticRegistry<DisguiseCosmetic>
                 "magnifiques !"
         }, DisguiseType.BLAZE);
 
-        DisguiseCosmetic witherSkeletonDisguise = new DisguiseCosmetic(this.hub, "wither-skeleton", "Wither Squelette", MojangShitUtils.getMonsterEgg(EntityType.ENDERMAN), 1500, CosmeticRarity.LEGENDARY, CosmeticAccessibility.ALL, new String[] {
+        DisguiseCosmetic witherSkeletonDisguise = new DisguiseCosmetic(this.hub, "wither-skeleton", "Wither Squelette", MojangShitUtils.getMonsterEgg(EntityType.ENDERMAN), 2000, CosmeticRarity.LEGENDARY, CosmeticAccessibility.ALL, new String[] {
                 "Ceci est une description des plus",
                 "magnifiques !"
         }, DisguiseType.WITHER_SKELETON);

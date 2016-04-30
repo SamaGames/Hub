@@ -5,6 +5,7 @@ import net.minecraft.server.v1_9_R1.EntityOcelot;
 import net.samagames.hub.Hub;
 import net.samagames.hub.interactions.AbstractInteractionManager;
 import net.samagames.tools.LocationUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -48,12 +49,18 @@ public class MeowManager extends AbstractInteractionManager<Meow> implements Lis
     @EventHandler
     public void onPlayerInteractEntity(PlayerInteractEntityEvent event)
     {
+        Bukkit.broadcastMessage("event");
+
         if (event.getRightClicked().getType() == EntityType.OCELOT)
         {
             for (Meow meow : this.interactions)
             {
+                Bukkit.broadcastMessage("loop");
+
                 if (meow.getMeowEntity().getBukkitEntity().getUniqueId().equals(event.getRightClicked().getUniqueId()))
                 {
+                    Bukkit.broadcastMessage("play");
+
                     meow.play(event.getPlayer());
                     break;
                 }

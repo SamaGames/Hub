@@ -49,7 +49,7 @@ class PetRegistry extends AbstractCosmeticRegistry<PetCosmetic>
                 "magnifiques !"
         }, PetType.WOLF);
 
-        PetCosmetic brownHorsePet = new PetCosmetic(this.hub, "brown-horse", "Chaval marron", MojangShitUtils.getMonsterEgg(EntityType.HORSE), 500, CosmeticRarity.COMMON, CosmeticAccessibility.ALL, new String[] {
+        PetCosmetic brownHorsePet = new PetCosmetic(this.hub, "brown-horse", "Cheval marron", MojangShitUtils.getMonsterEgg(EntityType.HORSE), 500, CosmeticRarity.COMMON, CosmeticAccessibility.ALL, new String[] {
                 "Ceci est une description des plus",
                 "magnifiques !"
         }, PetType.HORSE, PetData.BROWN);
@@ -64,7 +64,7 @@ class PetRegistry extends AbstractCosmeticRegistry<PetCosmetic>
                 "magnifiques !"
         }, PetType.PIG);
 
-        PetCosmetic whiteHorsePet = new PetCosmetic(this.hub, "white-horse", "Cheval blanc", MojangShitUtils.getMonsterEgg(EntityType.HORSE), 1000, CosmeticRarity.EPIC, CosmeticAccessibility.ALL, new String[] {
+        PetCosmetic whiteHorsePet = new PetCosmetic(this.hub, "white-horse", "Cheval blanc", MojangShitUtils.getMonsterEgg(EntityType.HORSE), 900, CosmeticRarity.EPIC, CosmeticAccessibility.ALL, new String[] {
                 "Ceci est une description des plus",
                 "magnifiques !"
         }, PetType.HORSE, PetData.WHITE);
