@@ -53,7 +53,6 @@ class Meow extends AbstractInteraction
         {
             this.meowEntity.getBukkitEntity().getLocation().setYaw(location.getYaw());
             this.meowEntity.getBukkitEntity().getLocation().setPitch(location.getPitch());
-            this.meowEntity.getGoalSit().c();
         }, 20L);
 
         this.random = new Random();

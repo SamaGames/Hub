@@ -36,10 +36,7 @@ class EntityMeow extends EntityOcelot
     }
 
     @Override
-    protected void r()
-    {
-        this.goalSelector.a(2, this.goalSit = new PathfinderGoalSit(this));
-    }
+    protected void r() {}
 
     @Override
     public void b(NBTTagCompound nbttagcompound) {}
