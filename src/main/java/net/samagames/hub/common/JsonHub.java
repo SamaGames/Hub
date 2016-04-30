@@ -27,7 +27,7 @@ public class JsonHub
     public void addConnectedPlayer(Player player)
     {
         IPermissionsEntity user = SamaGamesAPI.get().getPermissionsManager().getPlayer(player.getUniqueId());
-        String display = SamaGamesAPI.get().getPermissionsManager().getDisplay(user);
+        String display = user.getDisplayTag();
 
         if (display.length() < 5)
             display += "Joueurs";
