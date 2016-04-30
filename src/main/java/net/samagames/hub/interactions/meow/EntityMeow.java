@@ -29,7 +29,6 @@ class EntityMeow extends EntityOcelot
         catch (ReflectiveOperationException ignored) {}
 
         this.setPosition(location.getX(), location.getY(), location.getZ());
-        this.getControllerLook().a(location.getBlockX(), location.getBlockY(), location.getBlockZ(), (float) this.cE(), (float) this.N());
         this.setCatType(2);
 
         world.getChunkAt(location.getBlockX(), location.getBlockZ()).bukkitChunk.load(true);
