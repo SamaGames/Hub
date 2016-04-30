@@ -32,6 +32,8 @@ class EntityMeow extends EntityOcelot
 
         this.setCatType(2);
         this.setSitting(true);
+
+        world.getChunkAt(location.getBlockX(), location.getBlockZ()).bukkitChunk.load(true);
     }
 
     @Override
