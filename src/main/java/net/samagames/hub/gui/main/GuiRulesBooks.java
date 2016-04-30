@@ -71,7 +71,7 @@ public class GuiRulesBooks extends AbstractGui
     {
         if(action.equals("back"))
         {
-            this.hub.getGuiManager().closeGui(player);
+            this.hub.getGuiManager().openGui(player, new GuiMain(this.hub));
         }
         else if(action.startsWith("rule_"))
         {
