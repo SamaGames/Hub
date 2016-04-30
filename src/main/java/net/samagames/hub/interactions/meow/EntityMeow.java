@@ -2,13 +2,12 @@ package net.samagames.hub.interactions.meow;
 
 import com.google.common.collect.Sets;
 import net.minecraft.server.v1_9_R1.*;
-import org.bukkit.Location;
 
 import java.lang.reflect.Field;
 
 class EntityMeow extends EntityOcelot
 {
-    EntityMeow(World world, Location location)
+    EntityMeow(World world)
     {
         super(world);
 
@@ -28,14 +27,19 @@ class EntityMeow extends EntityOcelot
         }
         catch (ReflectiveOperationException ignored) {}
 
-        this.setPosition(location.getX(), location.getY(), location.getZ());
         this.setCatType(2);
+    }
 
-        world.getChunkAt(location.getBlockX(), location.getBlockZ()).bukkitChunk.load(true);
+    public void setYawPitch(float yaw, float pitch)
+    {
+        super.setYawPitch(yaw, pitch);
     }
 
     @Override
-    protected void r() {}
+    protected void r()
+    {
+        this.goalSelector.a(2, this.goalSit = new PathfinderGoalSit(this));
+    }
 
     @Override
     public void b(NBTTagCompound nbttagcompound) {}

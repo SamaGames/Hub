@@ -43,16 +43,18 @@ class Meow extends AbstractInteraction
 
         WorldServer world = ((CraftWorld) location.getWorld()).getHandle();
 
-        this.meowEntity = new EntityMeow(world, location);
+        this.meowEntity = new EntityMeow(world);
+        this.meowEntity.setPosition(location.getX(), location.getY(), location.getZ());
+        this.meowEntity.setYawPitch(location.getYaw(), location.getPitch());
         world.addEntity(this.meowEntity, CreatureSpawnEvent.SpawnReason.CUSTOM);
+        location.getChunk().load(true);
 
         hub.getServer().getScheduler().runTaskLater(hub, () ->
         {
             this.meowEntity.getBukkitEntity().getLocation().setYaw(location.getYaw());
             this.meowEntity.getBukkitEntity().getLocation().setPitch(location.getPitch());
+            this.meowEntity.getGoalSit().c();
         }, 20L);
-        
-        hub.getServer().getScheduler().runTaskLater(hub, () -> this.meowEntity.setSitting(true), 20L * 2);
 
         this.random = new Random();
         this.thankYouTask = null;
@@ -109,7 +111,7 @@ class Meow extends AbstractInteraction
     public void play(Player player)
     {
         // TODO: this.hub.getGuiManager().openGui(player, new GuiMeow(this.hub, this));
-        player.sendMessage(TAG + "Je suis en train d'emménager, je serais disponible bientôt :)");
+        player.sendMessage(TAG + "Je suis en train d'emménager, je serai disponible bientôt :)");
         player.playSound(player.getLocation(), Sound.ENTITY_CAT_AMBIENT, 1.0F, 1.0F);
     }
 
