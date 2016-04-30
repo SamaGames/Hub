@@ -54,7 +54,8 @@ class Meow extends AbstractInteraction
     @Override
     public void onDisable()
     {
-        this.thankYouTask.cancel();
+        if (this.thankYouTask != null)
+            this.thankYouTask.cancel();
         this.meowEntity.die();
     }
 

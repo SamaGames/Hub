@@ -5,12 +5,10 @@ import net.minecraft.server.v1_9_R1.*;
 import net.samagames.hub.Hub;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
-import org.bukkit.craftbukkit.v1_9_R1.util.UnsafeList;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 import java.lang.reflect.Field;
-import java.util.Iterator;
 import java.util.UUID;
 
 class EntitySonicSquid extends EntitySquid
@@ -46,7 +44,7 @@ class EntitySonicSquid extends EntitySquid
         while (copy.getBlock().getType() == Material.WATER || copy.getBlock().getType() == Material.STATIONARY_WATER)
             copy.add(0.0D, 1.0D, 0.0D);
 
-        this.setPosition(player.getLocation().getX(), copy.getY() - 0.85D, player.getLocation().getZ());
+        this.setPosition(player.getLocation().getX(), copy.getY() - 1.35D, player.getLocation().getZ());
     }
 
     @Override
@@ -82,10 +80,13 @@ class EntitySonicSquid extends EntitySquid
         this.getBukkitEntity().setVelocity(((Player) entityliving.getBukkitEntity()).getEyeLocation().getDirection().multiply(1.025F));**/
 
         this.setYawPitch(entityliving.yaw, 0.0F);
-        this.motX = -Math.sin(entityliving.yaw * Math.PI / 180) * 1.025F;
+        this.motX = -Math.sin(entityliving.yaw * Math.PI / 180) * 0.7F;
+
         this.motY = 0;
-        this.motZ = Math.cos(entityliving.yaw * Math.PI / 180) * 1.025F;
+        this.motZ = Math.cos(entityliving.yaw * Math.PI / 180) * 0.7F;
         this.velocityChanged = true;
+        this.yaw = entityliving.yaw;
+        this.positionChanged = true;
         this.move(this.motX, this.motY, this.motZ);
     }
 
@@ -94,10 +95,13 @@ class EntitySonicSquid extends EntitySquid
     {
         super.move(d0, d1, d2);
 
-        for (int x = -1; x <= 1; ++x)
-            for (int z = -1; z <= 1; ++z)
-                if (this.checkBlock(this.locX + (double) x, this.locY, this.locZ + (double) z))
-                    return ;
+        if (this.checkWater()
+                || (Math.abs(this.locX) % 1 > 0.5D && this.checkBlock(this.locX > 0 ? this.locX + 0.5D : this.locX - 0.5D, this.locY, this.locZ))
+                || (Math.abs(this.locX) % 1 < 0.5D && this.checkBlock(this.locX > 0 ? this.locX - 0.5D : this.locX + 0.5D, this.locY, this.locZ))
+                || (Math.abs(this.locZ) % 1 > 0.5D && this.checkBlock(this.locX, this.locY, this.locZ > 0 ? this.locZ + 0.5D : this.locZ - 0.5D)))
+            return ;
+        if (Math.abs(this.locZ) % 1 < 0.5D)
+            this.checkBlock(this.locX, this.locY, this.locZ > 0 ? this.locZ - 0.5D : this.locZ + 0.5D);
     }
 
     @Override
@@ -127,19 +131,50 @@ class EntitySonicSquid extends EntitySquid
 
         if (material != net.minecraft.server.v1_9_R1.Material.AIR && material != net.minecraft.server.v1_9_R1.Material.WATER)
         {
-            this.die();
-
-            this.passengers.forEach(passenger ->
-            {
-                passenger.getBukkitEntity().eject();
-                passenger.setLocation(x + 0.5D, y, z + 0.5D, passenger.yaw, passenger.pitch);
-            });
-
+            Location blockLocation = new Location(this.getWorld().getWorld(), x, y, z);
+            this.destroySquid(blockLocation.getBlockX() + 0.5, y, blockLocation.getBlockZ() + 0.5D);
             return true;
         }
         else
         {
             return false;
+        }
+    }
+
+    private boolean checkWater()
+    {
+        boolean noWater = true;
+        for (int x = -1; x <= 1; x++)
+            for (int y = -1; y <= 1; y++)
+                for (int z = -1; z <= 1; z++)
+                    noWater = noWater && (this.getWorld().getType(new BlockPosition(x + this.locX, y + this.locY, z + this.locZ)).getMaterial() != net.minecraft.server.v1_9_R1.Material.WATER);
+        if (noWater)
+            this.destroySquid(this.locX, this.locY, this.locZ);
+        return noWater;
+    }
+
+    private void destroySquid(double x, double y, double z)
+    {
+        this.die();
+
+        this.passengers.forEach(passenger ->
+        {
+            passenger.getBukkitEntity().eject();
+            this.findBetterLandingLocation(passenger, x, y, z, passenger.yaw, passenger.pitch);
+            passenger.getBukkitEntity().getWorld().playSound(passenger.getBukkitEntity().getLocation(), Sound.ENTITY_PLAYER_SPLASH, 1F, 1F);
+        });
+    }
+
+    private void findBetterLandingLocation(Entity passenger, double x, double y, double z, float yaw, float pitch)
+    {
+        while (y < 256)
+        {
+            if (this.getWorld().getType(new BlockPosition(x, y, z)).getMaterial() == net.minecraft.server.v1_9_R1.Material.AIR)
+            {
+                passenger.setLocation(x, y, z, yaw, pitch);
+                return ;
+            }
+            y++;
         }
     }
 }

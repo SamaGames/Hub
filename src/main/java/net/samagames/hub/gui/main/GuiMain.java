@@ -95,10 +95,10 @@ public class GuiMain extends AbstractGui
         }
 
         if (clickOpen)
-            lore.add(ChatColor.DARK_GRAY + "\u25B6 Clique pour ouvrir le menu");
+            lore.add(ChatColor.DARK_GRAY + "\u25B6 Cliquez pour ouvrir le menu");
 
         if (clickTeleport)
-            lore.add(ChatColor.DARK_GRAY + "\u25B6 Clique pour être téléporté");
+            lore.add(ChatColor.DARK_GRAY + "\u25B6 Cliquez pour être téléporté");
 
         return lore.toArray(loreArray);
     }
@@ -130,10 +130,10 @@ public class GuiMain extends AbstractGui
 
             int players = game.getOnlinePlayers();
 
-            lore.add(ChatColor.DARK_GRAY + "\u25B6 Clique gauche pour être téléporté");
+            lore.add(ChatColor.DARK_GRAY + "\u25B6 Clic gauche pour être téléporté");
 
             if (game.getRulesBooks() != null)
-                lore.add(ChatColor.DARK_GRAY + "\u25B6 Clique droit pour lire les règles");
+                lore.add(ChatColor.DARK_GRAY + "\u25B6 Clic droit pour lire les règles");
 
             lore.add("");
             lore.add(ChatColor.GRAY + "Il y a actuellement " + ChatColor.GOLD + players + ChatColor.GRAY + " joueur" + (players > 1 ? "s" : ""));
