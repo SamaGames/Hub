@@ -63,6 +63,17 @@ public abstract class AbstractCosmetic implements Comparable<AbstractCosmetic>
         }
         else
         {
+            if (this.accessibility == CosmeticAccessibility.STAFF && !SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "network.staff"))
+            {
+                player.sendMessage(PlayerManager.COSMETICS_TAG + ChatColor.RED + "Vous n'êtes pas un membre de l'équipe.");
+                return;
+            }
+            else if (this.accessibility == CosmeticAccessibility.ADMIN && !SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "network.admin"))
+            {
+                player.sendMessage(PlayerManager.COSMETICS_TAG + ChatColor.RED + "Vous n'êtes pas un membre de le l'administration.");
+                return;
+            }
+
             if (!SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).hasEnoughStars(this.stars))
             {
                 player.sendMessage(PlayerManager.COSMETICS_TAG + ChatColor.RED + "Vous n'avez pas assez d'étoiles pour acheter cela.");
@@ -123,9 +134,12 @@ public abstract class AbstractCosmetic implements Comparable<AbstractCosmetic>
                 lore.add("");
             }
 
-            lore.add(ChatColor.WHITE + "Débloquez cet objet dans le " + ChatColor.RED + "coffre");
-            lore.add(ChatColor.RED + "magique" + ChatColor.WHITE + " ou achetez le pour " + ChatColor.AQUA + NumberUtils.format(this.stars));
-            lore.add(ChatColor.AQUA + "étoiles" + ChatColor.WHITE + " !");
+            if (this.accessibility != CosmeticAccessibility.STAFF && this.accessibility != CosmeticAccessibility.ADMIN)
+            {
+                lore.add(ChatColor.WHITE + "Débloquez cet objet dans le " + ChatColor.RED + "coffre");
+                lore.add(ChatColor.RED + "magique" + ChatColor.WHITE + " ou achetez le pour " + ChatColor.AQUA + NumberUtils.format(this.stars));
+                lore.add(ChatColor.AQUA + "étoiles" + ChatColor.WHITE + " !");
+            }
         }
         else
         {
