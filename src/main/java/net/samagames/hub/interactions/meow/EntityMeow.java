@@ -22,6 +22,7 @@ class EntityMeow extends EntityOcelot
         this.setTamed(true);
         this.setOwnerUUID(OWNER_UUID);
         this.goalSit.setSitting(true);
+        this.persistent = true;
     }
 
     @Override
