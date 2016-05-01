@@ -8,6 +8,7 @@ import net.samagames.hub.cosmetics.gadgets.GadgetManager;
 import net.samagames.hub.cosmetics.jukebox.JukeboxManager;
 import net.samagames.hub.cosmetics.particles.ParticleManager;
 import net.samagames.hub.cosmetics.pets.PetManager;
+import net.samagames.hub.cosmetics.suits.SuitManager;
 import org.bukkit.entity.Player;
 
 public class CosmeticManager extends AbstractManager
@@ -17,6 +18,7 @@ public class CosmeticManager extends AbstractManager
     private final PetManager petManager;
     private final GadgetManager gadgetManager;
     private final ParticleManager particleManager;
+    private final SuitManager suitManager;
 
     public CosmeticManager(Hub hub)
     {
@@ -27,6 +29,7 @@ public class CosmeticManager extends AbstractManager
         this.petManager = new PetManager(hub);
         this.gadgetManager = new GadgetManager(hub);
         this.particleManager = new ParticleManager(hub);
+        this.suitManager = new SuitManager(hub);
     }
 
     @Override
@@ -48,6 +51,7 @@ public class CosmeticManager extends AbstractManager
         this.petManager.disableCosmetic(player, true);
         this.gadgetManager.disableCosmetic(player, true);
         this.particleManager.disableCosmetic(player, true);
+        this.suitManager.disableCosmetic(player, true);
     }
 
     public DisguiseManager getDisguiseManager()
@@ -75,6 +79,10 @@ public class CosmeticManager extends AbstractManager
         return this.particleManager;
     }
 
+    public SuitManager getSuitManager() {
+        return suitManager;
+    }
+
     public boolean isEquipped(Player player, AbstractCosmetic cosmetic)
     {
         boolean equipped = false;
@@ -86,6 +94,8 @@ public class CosmeticManager extends AbstractManager
         else if (this.gadgetManager.getEquippedCosmetic(player) != null && cosmetic.compareTo(this.gadgetManager.getEquippedCosmetic(player)) > 0)
             equipped = true;
         else if (this.particleManager.getEquippedCosmetic(player) != null && cosmetic.compareTo(this.particleManager.getEquippedCosmetic(player)) > 0)
+            equipped = true;
+        else if (this.suitManager.getEquippedCosmetic(player) != null && cosmetic.compareTo(this.suitManager.getEquippedCosmetic(player)) > 0)
             equipped = true;
 
         return equipped;
