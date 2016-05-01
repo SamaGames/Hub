@@ -69,9 +69,9 @@ public class GuiCosmetics extends AbstractGui
     {
         switch (action)
         {
-            /**case "particles":
-                this.hub.getGuiManager().openGui(player, new GuiCosmeticsCategory<>("Particules", this.hub.getCosmeticManager().getParticleManager(), true));
-                break;**/
+            case "particles":
+                this.hub.getGuiManager().openGui(player, new GuiCosmeticsCategory<>(this.hub, "Particules", this.hub.getCosmeticManager().getParticleManager(), true));
+                break;
             case "pets":
                 this.hub.getGuiManager().openGui(player, new GuiCosmeticsCategory<>(this.hub, "Montures", this.hub.getCosmeticManager().getPetManager(), true));
                 break;
