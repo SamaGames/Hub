@@ -65,7 +65,7 @@ class GadgetRegistry extends AbstractCosmeticRegistry<GadgetCosmetic>
         }, EnderSwapDisplayer.class, 60);
 
         GadgetCosmetic animalChestGadget = new GadgetCosmetic(this.hub, "secretchest", "Coffre super secret", new ItemStack(Material.CHEST, 1), 500, CosmeticRarity.COMMON, CosmeticAccessibility.VIPPLUS, new String[] {
-                "Nos chercheurs n'ont jamais réussis à",
+                "Nos chercheurs n'ont jamais réussi à",
                 "déterminer le contenu de ce coffre.",
                 "Saurez-vous nous aider ?"
         }, AnimalChestDisplayer.class, 60);

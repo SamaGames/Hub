@@ -49,7 +49,7 @@ public class StaticInventory
         else if (stack.getType() == Material.BARRIER && this.hub.getParkourManager().getPlayerParkour(player.getUniqueId()) != null)
             this.hub.getParkourManager().getPlayerParkour(player.getUniqueId()).quitPlayer(player);
         else if (player.getInventory().getHeldItemSlot() == 6)
-            this.hub.getCosmeticManager().getGadgetManager().useSelectedCosmetic(player, stack);
+            this.hub.getServer().getScheduler().runTask(this.hub, () -> this.hub.getCosmeticManager().getGadgetManager().useSelectedCosmetic(player, stack));
         else if (stack.getType() == Material.ELYTRA)
         {
             if (stack.getEnchantments().isEmpty())
