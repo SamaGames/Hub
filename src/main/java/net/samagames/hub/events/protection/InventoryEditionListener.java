@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.*;
+import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 
 public class InventoryEditionListener implements Listener
 {
@@ -46,6 +47,13 @@ public class InventoryEditionListener implements Listener
     public void onInventoryInteract(InventoryInteractEvent event)
     {
         if (!(event.getWhoClicked() instanceof Player) || !canDoAction((Player) event.getWhoClicked()))
+            event.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onSecondHandItemSwap(PlayerSwapHandItemsEvent event)
+    {
+        if (!canDoAction(event.getPlayer()))
             event.setCancelled(true);
     }
 
