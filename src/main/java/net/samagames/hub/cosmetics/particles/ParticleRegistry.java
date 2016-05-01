@@ -55,9 +55,49 @@ class ParticleRegistry extends AbstractCosmeticRegistry<ParticleCosmetic>
                     ChatColor.YELLOW + "Particules d'empreintes"
                 }, StepEffect.class);
 
+        ParticleCosmetic loverParticle = new ParticleCosmetic(this.hub, "lover", "Amoureux",
+                new ItemStack(Material.RED_ROSE),
+                900, CosmeticRarity.EPIC, CosmeticAccessibility.VIPPLUS,
+                new String[]{
+                    "Montrez votre amour !",
+                    "",
+                    ChatColor.YELLOW + "Particules de coeurs"
+                }, LoverEffect.class);
+
+        ParticleCosmetic nervousParticle = new ParticleCosmetic(this.hub, "nervous", "Nerveux",
+                new ItemStack(Material.BLAZE_POWDER),
+                500, CosmeticRarity.COMMON, CosmeticAccessibility.VIP,
+                new String[]{
+                    "Montrez votre frustration !",
+                    "",
+                    ChatColor.YELLOW + "Particules d'éclairs"
+                }, NervousEffect.class);
+
+        ParticleCosmetic noteParticle = new ParticleCosmetic(this.hub, "note", "Musical",
+                new ItemStack(Material.JUKEBOX),
+                500, CosmeticRarity.COMMON, CosmeticAccessibility.VIP,
+                new String[]{
+                    "Ecoutez votre musique !",
+                    "",
+                    ChatColor.YELLOW + "Particules de notes de musique"
+                }, MusicEffect.class);
+
+        ParticleCosmetic enchantParticle = new ParticleCosmetic(this.hub, "enchant", "Enchanté",
+                new ItemStack(Material.ENCHANTMENT_TABLE),
+                700, CosmeticRarity.RARE, CosmeticAccessibility.VIP,
+                new String[]{
+                    "Votre culture vous envahit !",
+                    "",
+                    ChatColor.YELLOW + "Particules de table d'enchantement"
+                }, MusicEffect.class);
+
         this.registerElement(fireParticle);
         this.registerElement(rainParticle);
         this.registerElement(snowParticle);
         this.registerElement(stepParticle);
+        this.registerElement(loverParticle);
+        this.registerElement(nervousParticle);
+        this.registerElement(noteParticle);
+        this.registerElement(enchantParticle);
     }
 }
