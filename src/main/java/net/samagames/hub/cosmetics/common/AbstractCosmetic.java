@@ -70,7 +70,7 @@ public abstract class AbstractCosmetic implements Comparable<AbstractCosmetic>
             }
             else if (this.accessibility == CosmeticAccessibility.ADMIN && !SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "network.admin"))
             {
-                player.sendMessage(PlayerManager.COSMETICS_TAG + ChatColor.RED + "Vous n'êtes pas un membre de le l'administration.");
+                player.sendMessage(PlayerManager.COSMETICS_TAG + ChatColor.RED + "Vous n'êtes pas un membre de l'administration.");
                 return;
             }
 
