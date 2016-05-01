@@ -2,7 +2,6 @@ package net.samagames.hub.gui.cosmetics;
 
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
-import net.samagames.hub.cosmetics.suits.SuitInventory;
 import net.samagames.hub.gui.AbstractGui;
 import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
@@ -44,10 +43,6 @@ public class GuiCosmetics extends AbstractGui
                 ChatColor.GRAY + "où que vous soyez."
         }, DyeColor.GREEN, "pets");
 
-        this.randomIcon(3, ChatColor.DARK_GREEN + "▼" + ChatColor.GREEN + " Habits " + ChatColor.DARK_GREEN + "▼", Material.SADDLE, new String[]{
-                ChatColor.GRAY + "Habillez vous comme vous le souhaitez !"
-        }, DyeColor.GREEN, "suits");
-
         this.randomIcon(6, ChatColor.DARK_RED + "◼" + ChatColor.RED + " Déguisements " + ChatColor.DARK_RED + "◼", Material.SKULL_ITEM, new String[]{
                 ChatColor.GRAY + "Entrez dans la peau d'un autre",
                 ChatColor.GRAY + "personnage !"
@@ -58,10 +53,10 @@ public class GuiCosmetics extends AbstractGui
                 ChatColor.GRAY + "nombreux gadgets venant du futur !"
         }, DyeColor.YELLOW, "gadgets");
 
-        this.setSlotData(ChatColor.DARK_PURPLE + "◢" + ChatColor.LIGHT_PURPLE + " Jukebox " + ChatColor.DARK_PURPLE + "◣", Material.JUKEBOX, 32, new String[]{
+        this.setSlotData(ChatColor.DARK_PURPLE + "◢" + ChatColor.LIGHT_PURPLE + " Jukebox " + ChatColor.DARK_PURPLE + "◣", Material.JUKEBOX, 31, new String[]{
                 ChatColor.GRAY + "Devenez un véritable SamaDJ !"
         }, "jukebox");
-        this.drawLineOfGlass(32, DyeColor.PURPLE, "jukebox");
+        this.drawLineOfGlass(31, DyeColor.PURPLE, "jukebox");
 
         this.setSlotData(getBackIcon(), this.inventory.getSize() - 5, "back");
 
@@ -93,10 +88,6 @@ public class GuiCosmetics extends AbstractGui
             case "jukebox":
                 this.hub.getGuiManager().openGui(player, new GuiCosmeticsCategory<>(this.hub, "Jukebox", this.hub.getCosmeticManager().getJukeboxManager(), false));
                 break;
-
-            case "suits":
-                this.hub.getGuiManager().openGui(player, new SuitInventory(this.hub, this.hub.getCosmeticManager().getSuitManager()));
-                break ;
 
             case "back":
                 this.hub.getGuiManager().closeGui(player);
