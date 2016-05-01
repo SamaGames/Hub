@@ -27,7 +27,6 @@ class ParticleRegistry extends AbstractCosmeticRegistry<ParticleCosmetic>
                     "",
                     ChatColor.YELLOW + "Particules de feu"
                 }, FireEffect.class);
-        fireParticle.permissionNeededToView("particle.fire");
 
         ParticleCosmetic rainParticle = new ParticleCosmetic(this.hub, "rain", "Pluvieux",
                 new ItemStack(Material.SPONGE, 1, (byte)1),
@@ -37,7 +36,6 @@ class ParticleRegistry extends AbstractCosmeticRegistry<ParticleCosmetic>
                     "",
                     ChatColor.YELLOW + "Particules de pluie"
                 }, RainyEffect.class);
-        rainParticle.permissionNeededToView("particle.rain");
 
         ParticleCosmetic snowParticle = new ParticleCosmetic(this.hub, "snow", "Neigeux",
                 new ItemStack(Material.SNOW_BLOCK, 1),
@@ -47,7 +45,6 @@ class ParticleRegistry extends AbstractCosmeticRegistry<ParticleCosmetic>
                     "",
                     ChatColor.YELLOW + "Particules de neige"
                 }, SnowyEffect.class);
-        snowParticle.permissionNeededToView("particle.snow");
 
         ParticleCosmetic stepParticle = new ParticleCosmetic(this.hub, "step", "Empreintes",
                 new ItemStack(Material.STONE, 1),
@@ -57,7 +54,6 @@ class ParticleRegistry extends AbstractCosmeticRegistry<ParticleCosmetic>
                     "",
                     ChatColor.YELLOW + "Particules d'empreintes"
                 }, StepEffect.class);
-        stepParticle.permissionNeededToView("particle.step");
 
         this.registerElement(fireParticle);
         this.registerElement(rainParticle);
