@@ -8,7 +8,7 @@ import java.util.logging.Level;
 
 public abstract class AbstractCosmeticRegistry<COSMETIC extends AbstractCosmetic>
 {
-    public static final long TODO_SHOP = 0;
+    public static long TODO_SHOP = -1;
 
     protected final Hub hub;
     private final Map<Long, COSMETIC> elements;
@@ -43,5 +43,10 @@ public abstract class AbstractCosmeticRegistry<COSMETIC extends AbstractCosmetic
     public Map<Long, COSMETIC> getElements()
     {
         return this.elements;
+    }
+
+    public static long getTodoShop()
+    {
+        return TODO_SHOP++;
     }
 }

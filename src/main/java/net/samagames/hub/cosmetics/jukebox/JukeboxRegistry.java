@@ -15,15 +15,15 @@ class JukeboxRegistry extends AbstractCosmeticRegistry<JukeboxDiskCosmetic>
     @Override
     public void register()
     {
-        JukeboxDiskCosmetic guilesThemeDisk = new JukeboxDiskCosmetic(this.hub, TODO_SHOP, 300, CosmeticRarity.COMMON, NBSDecoder.parse("GuilesTheme"), 141);
-        JukeboxDiskCosmetic ryusThemeDisk = new JukeboxDiskCosmetic(this.hub, TODO_SHOP, 300, CosmeticRarity.COMMON, NBSDecoder.parse("RyusTheme"), 114);
-        JukeboxDiskCosmetic kensThemeDisk = new JukeboxDiskCosmetic(this.hub, TODO_SHOP, 300, CosmeticRarity.COMMON, NBSDecoder.parse("KensTheme"), 147);
-        JukeboxDiskCosmetic routeOneDisk = new JukeboxDiskCosmetic(this.hub, TODO_SHOP, 400, CosmeticRarity.RARE, NBSDecoder.parse("RouteOne"), 56);
-        JukeboxDiskCosmetic centerTheme = new JukeboxDiskCosmetic(this.hub, TODO_SHOP, 500, CosmeticRarity.EPIC, NBSDecoder.parse("PokemonCenterTheme"), 191);
-        JukeboxDiskCosmetic gymBattle = new JukeboxDiskCosmetic(this.hub, TODO_SHOP, 400, CosmeticRarity.RARE, NBSDecoder.parse("GymBattle"), 277);
-        JukeboxDiskCosmetic gerudoValleyDisk = new JukeboxDiskCosmetic(this.hub, TODO_SHOP, 400, CosmeticRarity.RARE, NBSDecoder.parse("GerudoValley"), 153);
-        JukeboxDiskCosmetic windmillDisk = new JukeboxDiskCosmetic(this.hub, TODO_SHOP, 400, CosmeticRarity.RARE, NBSDecoder.parse("Windmill"), 88);
-        JukeboxDiskCosmetic lostWoodsDisk = new JukeboxDiskCosmetic(this.hub, TODO_SHOP, 400, CosmeticRarity.RARE, NBSDecoder.parse("LostWoods"), 58);
+        JukeboxDiskCosmetic guilesThemeDisk = new JukeboxDiskCosmetic(this.hub, getTodoShop(), 300, CosmeticRarity.COMMON, NBSDecoder.parse("GuilesTheme"), 141);
+        JukeboxDiskCosmetic ryusThemeDisk = new JukeboxDiskCosmetic(this.hub, getTodoShop(), 300, CosmeticRarity.COMMON, NBSDecoder.parse("RyusTheme"), 114);
+        JukeboxDiskCosmetic kensThemeDisk = new JukeboxDiskCosmetic(this.hub, getTodoShop(), 300, CosmeticRarity.COMMON, NBSDecoder.parse("KensTheme"), 147);
+        JukeboxDiskCosmetic routeOneDisk = new JukeboxDiskCosmetic(this.hub, getTodoShop(), 400, CosmeticRarity.RARE, NBSDecoder.parse("RouteOne"), 56);
+        JukeboxDiskCosmetic centerTheme = new JukeboxDiskCosmetic(this.hub, getTodoShop(), 500, CosmeticRarity.EPIC, NBSDecoder.parse("PokemonCenterTheme"), 191);
+        JukeboxDiskCosmetic gymBattle = new JukeboxDiskCosmetic(this.hub, getTodoShop(), 400, CosmeticRarity.RARE, NBSDecoder.parse("GymBattle"), 277);
+        JukeboxDiskCosmetic gerudoValleyDisk = new JukeboxDiskCosmetic(this.hub, getTodoShop(), 400, CosmeticRarity.RARE, NBSDecoder.parse("GerudoValley"), 153);
+        JukeboxDiskCosmetic windmillDisk = new JukeboxDiskCosmetic(this.hub, getTodoShop(), 400, CosmeticRarity.RARE, NBSDecoder.parse("Windmill"), 88);
+        JukeboxDiskCosmetic lostWoodsDisk = new JukeboxDiskCosmetic(this.hub, getTodoShop(), 400, CosmeticRarity.RARE, NBSDecoder.parse("LostWoods"), 58);
 
         this.registerElement(guilesThemeDisk);
         this.registerElement(ryusThemeDisk);
