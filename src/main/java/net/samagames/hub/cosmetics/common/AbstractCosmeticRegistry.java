@@ -8,8 +8,10 @@ import java.util.logging.Level;
 
 public abstract class AbstractCosmeticRegistry<COSMETIC extends AbstractCosmetic>
 {
+    public static final long TODO_SHOP = 0;
+
     protected final Hub hub;
-    private final Map<String, COSMETIC> elements;
+    private final Map<Long, COSMETIC> elements;
 
     public AbstractCosmeticRegistry(Hub hub)
     {
@@ -21,24 +23,24 @@ public abstract class AbstractCosmeticRegistry<COSMETIC extends AbstractCosmetic
 
     protected void registerElement(COSMETIC element)
     {
-        if(this.elements.containsKey(element.getKey()))
+        if(this.elements.containsKey(element.getStorageId()))
         {
-            this.hub.getCosmeticManager().log(Level.SEVERE, "Cosmetic already registered with the database name '" + element.getKey() + "'!");
+            this.hub.getCosmeticManager().log(Level.SEVERE, "Cosmetic already registered with the storage id '" + element.getStorageId() + "'!");
             return;
         }
 
-        this.elements.put(element.getKey(), element);
+        this.elements.put(element.getStorageId(), element);
     }
 
-    public COSMETIC getElementByStorageName(String databaseName)
+    public COSMETIC getElementByStorageId(long storageId)
     {
-        if(this.elements.containsKey(databaseName))
-            return this.elements.get(databaseName);
+        if(this.elements.containsKey(storageId))
+            return this.elements.get(storageId);
         else
             return null;
     }
 
-    public Map<String, COSMETIC> getElements()
+    public Map<Long, COSMETIC> getElements()
     {
         return this.elements;
     }

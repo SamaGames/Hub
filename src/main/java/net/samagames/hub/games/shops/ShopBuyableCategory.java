@@ -19,9 +19,9 @@ public class ShopBuyableCategory extends ShopCategory
 {
     private final int cost;
 
-    public ShopBuyableCategory(Hub hub, AbstractGame game, String actionName, String displayName, ItemStack icon, int slot, String[] description, int cost)
+    public ShopBuyableCategory(Hub hub, AbstractGame game, long storageId, String displayName, ItemStack icon, int slot, String[] description, int cost)
     {
-        super(hub, game, actionName, displayName, icon, slot, description);
+        super(hub, game, storageId, displayName, icon, slot, description);
 
         this.cost = cost;
     }
@@ -41,13 +41,13 @@ public class ShopBuyableCategory extends ShopCategory
         {
             GuiConfirm confirm = new GuiConfirm(this.hub, (AbstractGui) this.hub.getGuiManager().getPlayerGui(player), (parent) ->
             {
-                if(SamaGamesAPI.get().getShopsManager().getItemLevelForPlayer(player.getUniqueId(), this.getActionName()).equals("flag"))
+                if(this.isOwned(player))
                     return;
 
                 SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).withdrawCoins(this.cost, (newAmount, difference, error) ->
                 {
-                    SamaGamesAPI.get().getShopsManager().addOwnedLevel(player.getUniqueId(), this.getActionName(), "flag");
-                    SamaGamesAPI.get().getShopsManager().setCurrentLevel(player.getUniqueId(), this.getActionName(), "flag");
+                    // TODO: Add the item to the player
+                    SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).getTransactionSelectedByID((int) this.storageId).setSelected(true);
 
                     player.sendMessage(PlayerManager.SHOPPING_TAG + ChatColor.GREEN + "Vous avez acheté et équipé " + ChatColor.AQUA + this.getIcon().getItemMeta().getDisplayName());
 
@@ -91,7 +91,6 @@ public class ShopBuyableCategory extends ShopCategory
         if(this.cost == 0)
             return true;
 
-        List<String> own = SamaGamesAPI.get().getShopsManager().getOwnedLevels(player.getUniqueId(), this.getActionName());
-        return (own != null) && own.contains("flag");
+        return SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).getTransactionSelectedByID((int) this.storageId) != null;
     }
 }

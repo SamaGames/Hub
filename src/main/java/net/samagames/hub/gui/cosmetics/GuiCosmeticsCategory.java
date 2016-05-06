@@ -64,7 +64,7 @@ class GuiCosmeticsCategory<COSMETIC extends AbstractCosmetic> extends AbstractGu
             if(!cosmetic.canView(player))
                 continue;
 
-            this.setSlotData(cosmetic.getIcon(player), (baseSlots[slot] + (lines * 9)), "cosmetic_" + cosmetic.getKey());
+            this.setSlotData(cosmetic.getIcon(player), (baseSlots[slot] + (lines * 9)), "cosmetic_" + cosmetic.getStorageId());
 
             slot++;
 
@@ -93,8 +93,8 @@ class GuiCosmeticsCategory<COSMETIC extends AbstractCosmetic> extends AbstractGu
     {
         if(action.startsWith("cosmetic_"))
         {
-            String cosmetic = action.split("_")[1];
-            this.manager.enableCosmetic(player, this.manager.getRegistry().getElementByStorageName(cosmetic));
+            long cosmetic = Long.parseLong(action.split("_")[1]);
+            this.manager.enableCosmetic(player, this.manager.getRegistry().getElementByStorageId(cosmetic));
         }
         else if(action.equals("delete"))
         {

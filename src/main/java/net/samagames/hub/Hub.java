@@ -3,6 +3,7 @@ package net.samagames.hub;
 import de.slikey.effectlib.EffectLib;
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.api.games.Status;
+import net.samagames.api.stats.IStatsManager;
 import net.samagames.hub.commands.CommandManager;
 import net.samagames.hub.common.HubRefresher;
 import net.samagames.hub.common.hydroangeas.HydroangeasManager;
@@ -81,6 +82,12 @@ public class Hub extends JavaPlugin
         this.executorMonoThread = Executors.newScheduledThreadPool(1);
 
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
+
+        for (IStatsManager.StatsNames statName : IStatsManager.StatsNames.values())
+        {
+            SamaGamesAPI.get().getShopsManager().setShopToLoad(statName, true);
+            SamaGamesAPI.get().getStatsManager().setStatsToLoad(statName, true);
+        }
 
         if (!this.getConfig().getBoolean("disconnected", false))
         {

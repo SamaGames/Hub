@@ -19,9 +19,9 @@ public class ShopCategory extends ShopIcon
     protected final String[] description;
     protected final List<ShopIcon> contents;
 
-    public ShopCategory(Hub hub, AbstractGame game, String actionName, String displayName, ItemStack icon, int slot, String[] description)
+    public ShopCategory(Hub hub, AbstractGame game, long storageId, String displayName, ItemStack icon, int slot, String[] description)
     {
-        super(hub, actionName, displayName, icon, slot);
+        super(hub, storageId, displayName, icon, slot);
 
         this.game = game;
         this.description = description;
@@ -58,7 +58,7 @@ public class ShopCategory extends ShopIcon
     public ShopIcon getIconByAction(String action)
     {
         for(ShopIcon icon : this.contents)
-            if(icon.getActionName().equals(action))
+            if(icon.getStorageId() == Long.parseLong(action))
                 return icon;
 
         return null;

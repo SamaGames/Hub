@@ -3,7 +3,6 @@ package net.samagames.hub.games.shops;
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import net.samagames.hub.common.players.PlayerManager;
-import net.samagames.hub.games.AbstractGame;
 import net.samagames.hub.gui.AbstractGui;
 import net.samagames.hub.gui.shop.GuiConfirm;
 import org.bukkit.ChatColor;
@@ -19,11 +18,13 @@ public class ShopDependsItem extends ShopItem
 {
     protected ShopItem dependsOn;
 
-    public ShopDependsItem(Hub hub, AbstractGame game, String type, String databaseName, String displayName, ItemStack icon, int slot, String[] description, int cost, ShopItem dependsOn)
+    public ShopDependsItem(Hub hub, long storageId, String displayName, ItemStack icon, int slot, String[] description, int cost, ShopItem dependsOn)
     {
-        super(hub, game, type, databaseName, displayName, icon, slot, description, cost);
+        super(hub, storageId, displayName, icon, slot, description, cost);
         this.dependsOn = dependsOn;
     }
+
+    public void resetCurrents(Player player) {}
 
     @Override
     public void execute(Player player, ClickType clickType)
@@ -32,9 +33,11 @@ public class ShopDependsItem extends ShopItem
         {
             player.sendMessage(PlayerManager.SHOPPING_TAG + ChatColor.RED + "Cet objet est déjà équipé.");
         }
-        else if (isOwned(player) || this.isDefaultItem())
+        else if (this.isOwned(player) || this.isDefaultItem())
         {
-            SamaGamesAPI.get().getShopsManager().setCurrentLevel(player.getUniqueId(), this.type, this.getActionName());
+            this.resetCurrents(player);
+            SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).getTransactionSelectedByID((int) this.storageId).setSelected(true);
+
             player.sendMessage(PlayerManager.SHOPPING_TAG + ChatColor.GREEN + "Vous avez équipé " + ChatColor.AQUA + this.getIcon().getItemMeta().getDisplayName());
         }
         else if (this.dependsOn != null && !hasDepend(player))
@@ -49,13 +52,15 @@ public class ShopDependsItem extends ShopItem
         {
             GuiConfirm confirm = new GuiConfirm(this.hub, (AbstractGui) this.hub.getGuiManager().getPlayerGui(player), (parent) ->
             {
-                if(SamaGamesAPI.get().getShopsManager().getItemLevelForPlayer(player.getUniqueId(), this.type).equals(this.getActionName()))
+                if(this.isActive(player))
                     return;
 
                 SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).withdrawCoins(this.cost, (newAmount, difference, error) ->
                 {
-                    SamaGamesAPI.get().getShopsManager().addOwnedLevel(player.getUniqueId(), this.type, this.getActionName());
-                    SamaGamesAPI.get().getShopsManager().setCurrentLevel(player.getUniqueId(), this.type, this.getActionName());
+                    this.resetCurrents(player);
+
+                    // TODO: Add the item to the player
+                    SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).getTransactionSelectedByID((int) this.storageId).setSelected(true);
 
                     player.sendMessage(PlayerManager.SHOPPING_TAG + ChatColor.GREEN + "Vous avez acheté et équipé " + ChatColor.AQUA + this.getIcon().getItemMeta().getDisplayName());
 
@@ -103,10 +108,6 @@ public class ShopDependsItem extends ShopItem
 
     public boolean hasDepend(Player player)
     {
-        if(this.dependsOn.isDefaultItem())
-            return true;
-
-        List<String> own = SamaGamesAPI.get().getShopsManager().getOwnedLevels(player.getUniqueId(), this.type);
-        return (own != null && this.dependsOn != null && own.contains(this.dependsOn.getActionName()));
+        return this.dependsOn.isDefaultItem() || SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).getTransactionSelectedByID((int) this.dependsOn.getStorageId()) != null;
     }
 }

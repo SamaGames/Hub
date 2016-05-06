@@ -17,21 +17,23 @@ import java.util.List;
 
 public class ShopItem extends ShopIcon
 {
-    protected final AbstractGame game;
-    protected final String type;
     protected final String[] description;
     protected final int cost;
     protected boolean defaultItem;
 
-    public ShopItem(Hub hub, AbstractGame game, String type, String databaseName, String displayName, ItemStack icon, int slot, String[] description, int cost)
+    public ShopItem(Hub hub, long storageId, String displayName, ItemStack icon, int slot, String[] description, int cost)
     {
-        super(hub, databaseName, displayName, icon, slot);
+        super(hub, storageId, displayName, icon, slot);
 
-        this.game = game;
-        this.type = type;
         this.description = description;
         this.cost = cost;
     }
+
+    /**
+     * Edit this method to unselect all the items related to
+     * this one
+     */
+    public void resetCurrents(Player player) {}
 
     @Override
     public void execute(Player player, ClickType clickType)
@@ -42,7 +44,9 @@ public class ShopItem extends ShopIcon
         }
         else if(this.isOwned(player) || this.isDefaultItem())
         {
-            SamaGamesAPI.get().getShopsManager().setCurrentLevel(player.getUniqueId(), this.type, this.getActionName());
+            this.resetCurrents(player);
+            SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).getTransactionSelectedByID((int) this.storageId).setSelected(true);
+
             player.sendMessage(PlayerManager.SHOPPING_TAG + ChatColor.GREEN + "Vous avez équipé " + ChatColor.AQUA + this.getIcon().getItemMeta().getDisplayName());
         }
         else if(!SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).hasEnoughCoins(this.cost))
@@ -53,13 +57,15 @@ public class ShopItem extends ShopIcon
         {
             GuiConfirm confirm = new GuiConfirm(this.hub, (AbstractGui) this.hub.getGuiManager().getPlayerGui(player), (parent) ->
             {
-                if(SamaGamesAPI.get().getShopsManager().getItemLevelForPlayer(player.getUniqueId(), this.type).equals(this.getActionName()))
+                if(this.isOwned(player))
                     return;
 
                 SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).withdrawCoins(this.cost, (newAmount, difference, error) ->
                 {
-                    SamaGamesAPI.get().getShopsManager().addOwnedLevel(player.getUniqueId(), this.type, this.getActionName());
-                    SamaGamesAPI.get().getShopsManager().setCurrentLevel(player.getUniqueId(), this.type, this.getActionName());
+                    this.resetCurrents(player);
+
+                    // TODO: Add the item to the player
+                    SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).getTransactionSelectedByID((int) this.storageId).setSelected(true);
 
                     player.sendMessage(PlayerManager.SHOPPING_TAG + ChatColor.GREEN + "Vous avez acheté et équipé " + ChatColor.AQUA + this.getIcon().getItemMeta().getDisplayName());
 
@@ -114,13 +120,11 @@ public class ShopItem extends ShopIcon
 
     public boolean isOwned(Player player)
     {
-        List<String> own = SamaGamesAPI.get().getShopsManager().getOwnedLevels(player.getUniqueId(), this.type);
-        return (own != null) && own.contains(this.getActionName());
+        return SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).getTransactionSelectedByID((int) this.storageId) != null;
     }
 
     public boolean isActive(Player player)
     {
-        String active = SamaGamesAPI.get().getShopsManager().getItemLevelForPlayer(player.getUniqueId(), this.type);
-        return (active == null && isDefaultItem()) || (active != null && active.equals(this.getActionName()));
+        return this.isOwned(player) && SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).getTransactionSelectedByID((int) this.storageId).isSelected();
     }
 }

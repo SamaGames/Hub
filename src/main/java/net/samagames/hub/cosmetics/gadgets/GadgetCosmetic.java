@@ -15,9 +15,9 @@ class GadgetCosmetic extends AbstractCosmetic
     private final Class<? extends AbstractDisplayer> clazz;
     private final int cooldown;
 
-    GadgetCosmetic(Hub hub, String key, String displayName, ItemStack icon, int stars, CosmeticRarity rarity, CosmeticAccessibility accessibility, String[] description, Class<? extends AbstractDisplayer> clazz, int cooldown)
+    GadgetCosmetic(Hub hub, long storageId, String displayName, ItemStack icon, int stars, CosmeticRarity rarity, CosmeticAccessibility accessibility, String[] description, Class<? extends AbstractDisplayer> clazz, int cooldown)
     {
-        super(hub, "gadget", key, displayName, icon, stars, rarity, accessibility, description);
+        super(hub, storageId, displayName, icon, stars, rarity, accessibility, description);
 
         this.clazz = clazz;
         this.cooldown = cooldown;
@@ -34,7 +34,7 @@ class GadgetCosmetic extends AbstractCosmetic
         if (tagCompound == null)
             tagCompound = new NBTTagCompound();
 
-        tagCompound.setString("gadget-key", this.getKey());
+        tagCompound.setLong("gadget-key", this.getStorageId());
 
         craftStack.setTag(tagCompound);
 

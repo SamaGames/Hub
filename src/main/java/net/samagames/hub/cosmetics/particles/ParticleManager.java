@@ -42,7 +42,6 @@ public class ParticleManager extends AbstractCosmeticManager<ParticleCosmetic>
             particleEffectObject.start();
 
             this.playersParticleEffect.put(player.getUniqueId(), particleEffectObject);
-            this.cosmeticManager.setCurrentLevel(player.getUniqueId(), KEY, cosmetic.getKey());
             player.sendMessage(ChatColor.GREEN + "Vous voilà noyé sous les particules...");
         }
         catch (ReflectiveOperationException e)
@@ -57,19 +56,7 @@ public class ParticleManager extends AbstractCosmeticManager<ParticleCosmetic>
         this.clearEffect(player.getUniqueId());
 
         if (!logout)
-        {
-            this.cosmeticManager.resetLevel(player.getUniqueId(), KEY);
             player.sendMessage(PlayerManager.COSMETICS_TAG + ChatColor.GREEN + "Votre effet disparait dans l'ombre...");
-        }
-    }
-
-    @Override
-    public void restoreCosmetic(Player player)
-    {
-        String value = this.cosmeticManager.getItemLevelForPlayer(player.getUniqueId(), KEY);
-
-        if(value != null && !value.isEmpty())
-            this.enableCosmetic(player, this.getRegistry().getElementByStorageName(value));
     }
 
     @Override

@@ -21,9 +21,9 @@ class JukeboxDiskCosmetic extends AbstractCosmetic
     private final Song song;
     private final int seconds;
 
-    JukeboxDiskCosmetic(Hub hub, String key, int stars, CosmeticRarity rarity, Song song, int seconds)
+    JukeboxDiskCosmetic(Hub hub, long storageId, int stars, CosmeticRarity rarity, Song song, int seconds)
     {
-        super(hub, "jukebox", key, song.getTitle(), getRandomDisk(), stars, rarity, CosmeticAccessibility.VIP, null);
+        super(hub, storageId, song.getTitle(), getRandomDisk(), stars, rarity, CosmeticAccessibility.VIP, null);
 
         this.song = song;
         this.seconds = seconds;

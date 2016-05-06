@@ -46,8 +46,6 @@ public class GadgetManager extends AbstractCosmeticManager
     public void enableCosmetic(Player player, AbstractCosmetic cosmetic, NullType useless)
     {
         player.getInventory().setItem(6, cosmetic.getIcon(player));
-
-        this.cosmeticManager.setCurrentLevel(player.getUniqueId(), KEY, cosmetic.getKey());
         player.sendMessage(PlayerManager.COSMETICS_TAG + ChatColor.GREEN + "Votre gadget a été équipé dans votre barre d'action.");
     }
 
@@ -57,19 +55,8 @@ public class GadgetManager extends AbstractCosmeticManager
         if (!logout)
         {
             player.getInventory().setItem(6, null);
-
-            this.cosmeticManager.resetLevel(player.getUniqueId(), KEY);
             player.sendMessage(PlayerManager.COSMETICS_TAG + ChatColor.GREEN + "Votre gadget a été déséquipé.");
         }
-    }
-
-    @Override
-    public void restoreCosmetic(Player player)
-    {
-        String value = this.cosmeticManager.getItemLevelForPlayer(player.getUniqueId(), KEY);
-
-        if(value != null && !value.isEmpty())
-            this.enableCosmetic(player, this.getRegistry().getElementByStorageName(value));
     }
 
     @Override
@@ -87,11 +74,11 @@ public class GadgetManager extends AbstractCosmeticManager
 
         net.minecraft.server.v1_9_R1.ItemStack craftStack = CraftItemStack.asNMSCopy(cosmeticIcon);
         NBTTagCompound tagCompound = craftStack.getTag();
-        String gadgetKey = tagCompound.getString("gadget-key");
+        long gadgetKey = tagCompound.getLong("gadget-key");
 
         try
         {
-            GadgetCosmetic gadget = (GadgetCosmetic) this.getRegistry().getElementByStorageName(gadgetKey);
+            GadgetCosmetic gadget = (GadgetCosmetic) this.getRegistry().getElementByStorageId(gadgetKey);
             AbstractDisplayer displayer = gadget.getDisplayerClass().getDeclaredConstructor(Hub.class, Player.class).newInstance(this.hub, player);
 
             if (!displayer.canUse())

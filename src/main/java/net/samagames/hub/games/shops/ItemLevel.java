@@ -4,13 +4,13 @@ public class ItemLevel
 {
     private final int cost;
     private final String description;
-    private final String databaseStorageName;
+    private final long storageId;
 
-    public ItemLevel(int cost, String description, String databaseStorageName)
+    public ItemLevel(int cost, String description, long storageId)
     {
         this.cost = cost;
         this.description = description;
-        this.databaseStorageName = databaseStorageName;
+        this.storageId = storageId;
     }
 
     public int getCost()
@@ -23,8 +23,8 @@ public class ItemLevel
         return this.description;
     }
 
-    public String getDatabaseStorageName()
+    public long getStorageId()
     {
-        return this.databaseStorageName;
+        return this.storageId;
     }
 }

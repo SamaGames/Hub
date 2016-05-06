@@ -1,6 +1,6 @@
 package net.samagames.hub.cosmetics.common;
 
-import net.samagames.core.api.shops.ShopsManager;
+import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import net.samagames.hub.common.players.PlayerManager;
 import net.samagames.hub.gui.AbstractGui;
@@ -15,14 +15,12 @@ import java.util.UUID;
 public abstract class AbstractCosmeticManager<COSMETIC extends AbstractCosmetic>
 {
     protected final Hub hub;
-    protected final ShopsManager cosmeticManager;
     private AbstractCosmeticRegistry<COSMETIC> registry;
     private Map<UUID, COSMETIC> equipped;
 
     public AbstractCosmeticManager(Hub hub, AbstractCosmeticRegistry<COSMETIC> registry)
     {
         this.hub = hub;
-        this.cosmeticManager = null;//SamaGamesAPI.get().getShopsManager();
 
         this.registry = registry;
         this.registry.register();
@@ -32,7 +30,6 @@ public abstract class AbstractCosmeticManager<COSMETIC extends AbstractCosmetic>
 
     public abstract void enableCosmetic(Player player, COSMETIC cosmetic, NullType useless);
     public abstract void disableCosmetic(Player player, boolean logout, NullType useless);
-    public abstract void restoreCosmetic(Player player);
 
     public abstract void update();
 
@@ -50,6 +47,8 @@ public abstract class AbstractCosmeticManager<COSMETIC extends AbstractCosmetic>
                 {
                     this.enableCosmetic(player, cosmetic, null);
                     this.equipped.put(player.getUniqueId(), cosmetic);
+
+                    SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).getTransactionSelectedByID((int) cosmetic.getStorageId()).setSelected(true);
 
                     AbstractGui gui = (AbstractGui) this.hub.getGuiManager().getPlayerGui(player);
 
@@ -72,17 +71,43 @@ public abstract class AbstractCosmeticManager<COSMETIC extends AbstractCosmetic>
     {
         if (this.equipped.containsKey(player.getUniqueId()))
         {
+            AbstractCosmetic cosmetic = this.getEquippedCosmetic(player);
+
             this.disableCosmetic(player, logout, null);
             this.equipped.remove(player.getUniqueId());
 
             if (!logout)
             {
+                SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).getTransactionSelectedByID((int) cosmetic.getStorageId()).setSelected(false);
+
                 AbstractGui gui = (AbstractGui) this.hub.getGuiManager().getPlayerGui(player);
 
                 if (gui != null)
                     gui.update(player);
             }
         }
+    }
+
+    public void restoreCosmetic(Player player)
+    {
+        for (long storageId : this.registry.getElements().keySet())
+        {
+            if (SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).getTransactionSelectedByID((int) storageId) != null)
+            {
+                if (SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).getTransactionSelectedByID((int) storageId).isSelected());
+                {
+                    this.enableCosmetic(player, this.getRegistry().getElementByStorageId(storageId));
+                    break;
+                }
+            }
+        }
+    }
+
+    public void resetCurrents(Player player)
+    {
+        for (long storageId : this.registry.getElements().keySet())
+            if (SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).getTransactionSelectedByID((int) storageId) != null)
+                SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).getTransactionSelectedByID((int) storageId).setSelected(false);
     }
 
     public COSMETIC getEquippedCosmetic(Player player)

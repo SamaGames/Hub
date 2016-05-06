@@ -10,14 +10,14 @@ import org.bukkit.inventory.meta.ItemMeta;
 public abstract class ShopIcon
 {
     protected final Hub hub;
-    private final String actionName;
-    private final ItemStack icon;
-    private final int slot;
+    protected final long storageId;
+    protected final ItemStack icon;
+    protected final int slot;
 
-    public ShopIcon(Hub hub, String actionName, String displayName, ItemStack icon, int slot)
+    ShopIcon(Hub hub, long storageId, String displayName, ItemStack icon, int slot)
     {
         this.hub = hub;
-        this.actionName = actionName;
+        this.storageId = storageId;
         this.icon = icon;
         this.slot = slot;
 
@@ -32,9 +32,9 @@ public abstract class ShopIcon
     public abstract void execute(Player player, ClickType clickType);
     public abstract ItemStack getFormattedIcon(Player player);
 
-    public String getActionName()
+    public long getStorageId()
     {
-        return this.actionName;
+        return this.storageId;
     }
 
     public ItemStack getIcon()

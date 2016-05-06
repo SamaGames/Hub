@@ -204,11 +204,11 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
 
                 UUID playerUUID = SamaGamesAPI.get().getUUIDTranslator().getUUID(this.currentPlaylist.getPlayedBy());
 
-                /*if (playerUUID != null)
+                if (playerUUID != null)
                 {
-                    SamaGamesAPI.get().getStatsManager("hub").increase(playerUUID, "woots", woots);
-                    SamaGamesAPI.get().getStatsManager("hub").increase(playerUUID, "mehs", mehs);
-                }*/
+                    SamaGamesAPI.get().getStatsManager().getPlayerStats(playerUUID).getJukeBoxStatistics().incrByWoots(woots);
+                    SamaGamesAPI.get().getStatsManager().getPlayerStats(playerUUID).getJukeBoxStatistics().incrByMehs(mehs);
+                }
 
                 this.currentPlaylist = null;
 

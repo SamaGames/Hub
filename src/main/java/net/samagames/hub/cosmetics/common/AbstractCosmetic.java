@@ -20,8 +20,7 @@ import java.util.List;
 public abstract class AbstractCosmetic implements Comparable<AbstractCosmetic>
 {
     private final Hub hub;
-    private final String category;
-    private final String key;
+    private final long storageId;
     private final ItemStack icon;
     private final int stars;
     private final CosmeticRarity rarity;
@@ -29,11 +28,10 @@ public abstract class AbstractCosmetic implements Comparable<AbstractCosmetic>
     private final IShopsManager shopsManager;
     private String permissionNeededToView;
 
-    public AbstractCosmetic(Hub hub, String category, String key, String displayName, ItemStack icon, int stars, CosmeticRarity rarity, CosmeticAccessibility accessibility, String[] description)
+    public AbstractCosmetic(Hub hub, long storageId, String displayName, ItemStack icon, int stars, CosmeticRarity rarity, CosmeticAccessibility accessibility, String[] description)
     {
         this.hub = hub;
-        this.category = category;
-        this.key = key;
+        this.storageId = storageId;
         this.icon = icon;
 
         ItemMeta meta = this.icon.getItemMeta();
@@ -59,7 +57,7 @@ public abstract class AbstractCosmetic implements Comparable<AbstractCosmetic>
     {
         if (magicChest)
         {
-            this.shopsManager.addOwnedLevel(player.getUniqueId(), this.category, this.key);
+            // TODO: Add the item to the player
         }
         else
         {
@@ -84,7 +82,8 @@ public abstract class AbstractCosmetic implements Comparable<AbstractCosmetic>
             {
                 SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).withdrawStars(this.stars, (newAmount, difference, error) ->
                 {
-                    this.shopsManager.addOwnedLevel(player.getUniqueId(), this.category, this.key);
+                    // TODO: Add the item to the player
+
                     this.hub.getScoreboardManager().update(player);
                     this.hub.getGuiManager().openGui(player, parent);
 
@@ -99,11 +98,6 @@ public abstract class AbstractCosmetic implements Comparable<AbstractCosmetic>
     public void permissionNeededToView(String permissionNeededToView)
     {
         this.permissionNeededToView = permissionNeededToView;
-    }
-
-    public String getCategory()
-    {
-        return this.category;
     }
 
     public ItemStack getIcon()
@@ -157,9 +151,9 @@ public abstract class AbstractCosmetic implements Comparable<AbstractCosmetic>
         return cloned;
     }
 
-    public String getKey()
+    public long getStorageId()
     {
-        return this.key;
+        return this.storageId;
     }
 
     public CosmeticRarity getRarity()
@@ -187,14 +181,13 @@ public abstract class AbstractCosmetic implements Comparable<AbstractCosmetic>
         else if (this.accessibility == CosmeticAccessibility.ADMIN && SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "network.admin"))
             return true;
 
-        List<String> owned = this.shopsManager.getOwnedLevels(player.getUniqueId(), this.category);
-        return owned != null && owned.contains(this.key);
+        return SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).getTransactionSelectedByID((int) this.storageId) != null;
     }
 
     @Override
     public int compareTo(AbstractCosmetic cosmetic)
     {
-        if (cosmetic.getCategory().equals(this.category) && cosmetic.getKey().equals(this.key))
+        if (cosmetic.getStorageId() == this.storageId)
             return 1;
         else
             return -1;

@@ -47,11 +47,11 @@ public class GuiShopCategory extends AbstractGui
         {
             if(item.getSlot() != -1)
             {
-                this.setSlotData(item.getFormattedIcon(player), item.getSlot(), "item_" + item.getActionName());
+                this.setSlotData(item.getFormattedIcon(player), item.getSlot(), "item_" + item.getStorageId());
             }
             else
             {
-                this.setSlotData(item.getFormattedIcon(player), slot, "item_" + item.getActionName());
+                this.setSlotData(item.getFormattedIcon(player), slot, "item_" + item.getStorageId());
                 slot++;
             }
         }
