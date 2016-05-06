@@ -3,7 +3,6 @@ package net.samagames.hub;
 import de.slikey.effectlib.EffectLib;
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.api.games.Status;
-import net.samagames.api.stats.IStatsManager;
 import net.samagames.hub.commands.CommandManager;
 import net.samagames.hub.common.HubRefresher;
 import net.samagames.hub.common.hydroangeas.HydroangeasManager;
@@ -26,17 +25,12 @@ import net.samagames.hub.npcs.NPCManager;
 import net.samagames.hub.parkours.ParkourManager;
 import net.samagames.hub.scoreboards.ScoreboardManager;
 import net.samagames.hub.utils.ServerStatus;
-import net.samagames.tools.Reflection;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
-import org.bukkit.command.SimpleCommandMap;
-import org.bukkit.craftbukkit.v1_9_R1.CraftServer;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 
-import java.io.File;
-import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
@@ -84,12 +78,6 @@ public class Hub extends JavaPlugin
         this.executorMonoThread = Executors.newScheduledThreadPool(1);
 
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
-
-        for (IStatsManager.StatsNames statName : IStatsManager.StatsNames.values())
-        {
-            SamaGamesAPI.get().getShopsManager().setShopToLoad(statName, true);
-            SamaGamesAPI.get().getStatsManager().setStatsToLoad(statName, true);
-        }
 
         if (!this.getConfig().getBoolean("disconnected", false))
         {
