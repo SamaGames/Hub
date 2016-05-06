@@ -22,6 +22,7 @@ import net.samagames.hub.games.GameManager;
 import net.samagames.hub.games.signs.SignManager;
 import net.samagames.hub.gui.GuiManager;
 import net.samagames.hub.interactions.InteractionManager;
+import net.samagames.hub.npcs.NPCManager;
 import net.samagames.hub.parkours.ParkourManager;
 import net.samagames.hub.scoreboards.ScoreboardManager;
 import net.samagames.hub.utils.ServerStatus;
@@ -64,6 +65,7 @@ public class Hub extends JavaPlugin
     private ParkourManager parkourManager;
     private InteractionManager interactionManager;
     private CosmeticManager cosmeticManager;
+    private NPCManager npcManager;
     private CommandManager commandManager;
 
     private ScheduledFuture hydroangeasSynchronization;
@@ -108,6 +110,7 @@ public class Hub extends JavaPlugin
         this.parkourManager = new ParkourManager(this);
         this.interactionManager = new InteractionManager(this);
         this.cosmeticManager = new CosmeticManager(this);
+        this.npcManager = new NPCManager(this);
         this.commandManager = new CommandManager(this);
 
         this.getServer().getPluginManager().registerEvents(new PlayerListener(this), this);
@@ -175,6 +178,7 @@ public class Hub extends JavaPlugin
     public ParkourManager getParkourManager() { return this.parkourManager; }
     public InteractionManager getInteractionManager() { return this.interactionManager; }
     public CosmeticManager getCosmeticManager() { return this.cosmeticManager; }
+    public NPCManager getNPCManager() { return this.npcManager; }
     public CommandManager getCommandManager() { return this.commandManager; }
 
     public EffectLib getEffectLib()
