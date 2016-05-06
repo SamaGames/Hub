@@ -15,6 +15,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.logging.Level;
 
 public class NPCManager extends AbstractManager
 {
@@ -40,6 +41,7 @@ public class NPCManager extends AbstractManager
         welcomeTutorialNPC.setCallback(new WelcomeTutorialNPCAction(hub));
 
         this.npcs.add(welcomeTutorialNPC);
+        this.log(Level.INFO, "Registered 'Welcome tutorial' NPC!");
     }
 
     @Override
