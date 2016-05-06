@@ -12,21 +12,17 @@ import org.bukkit.entity.Player;
 
 public class CosmeticManager extends AbstractManager
 {
-    private final DisguiseManager disguiseManager;
-    private final JukeboxManager jukeboxManager;
-    private final PetManager petManager;
-    private final GadgetManager gadgetManager;
-    private final ParticleManager particleManager;
+    private DisguiseManager disguiseManager;
+    private JukeboxManager jukeboxManager;
+    private PetManager petManager;
+    private GadgetManager gadgetManager;
+    private ParticleManager particleManager;
 
     public CosmeticManager(Hub hub)
     {
         super(hub);
 
-        this.disguiseManager = new DisguiseManager(hub);
-        this.jukeboxManager = new JukeboxManager(hub);
-        this.petManager = new PetManager(hub);
-        this.gadgetManager = new GadgetManager(hub);
-        this.particleManager = new ParticleManager(hub);
+        this.init(hub);
     }
 
     @Override
@@ -89,5 +85,14 @@ public class CosmeticManager extends AbstractManager
             equipped = true;
 
         return equipped;
+    }
+
+    private void init(Hub hub)
+    {
+        this.disguiseManager = new DisguiseManager(hub);
+        this.jukeboxManager = new JukeboxManager(hub);
+        this.petManager = new PetManager(hub);
+        this.gadgetManager = new GadgetManager(hub);
+        this.particleManager = new ParticleManager(hub);
     }
 }
