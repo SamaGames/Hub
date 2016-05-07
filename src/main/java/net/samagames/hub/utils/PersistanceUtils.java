@@ -22,12 +22,11 @@ public class PersistanceUtils
      * - P: Potion
      * - E: Monster Egg
      *
-     * Because of there are multiple way to create
-     * the different ItemStack, we needed to set the
-     * first character as a type.
+     * Because of there are multiple way to create the different ItemStack,
+     * we needed to set the first character as a type.
      *
-     * To create a simple dirt block, this has to be
-     * stored like that: B:DIRT:1:0
+     * To create a simple dirt block, this has to be stored like that:
+     * B:DIRT:1:0
      *
      * For a strength potion: P:strength:false:false
      *
@@ -77,8 +76,17 @@ public class PersistanceUtils
         List<String> lore = new ArrayList<>();
 
         if (itemDescription.getItemDesc() != null)
-            for (String str : itemDescription.getItemDesc().split("\\n+"))
-                lore.add(ChatColor.GRAY + ChatColor.translateAlternateColorCodes('&', str));
+        {
+            String[] lines = itemDescription.getItemDesc().split("\\n+");
+
+            hub.getLogger().warning("[PersistanceUtils] Description lines:");
+
+            for (String line : lines)
+            {
+                lore.add(ChatColor.GRAY + ChatColor.translateAlternateColorCodes('&', line));
+                hub.getLogger().warning("[PersistanceUtils] - " + line);
+            }
+        }
 
         meta.setLore(lore);
         stack.setItemMeta(meta);
