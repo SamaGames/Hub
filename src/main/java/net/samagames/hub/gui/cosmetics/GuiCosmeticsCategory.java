@@ -93,7 +93,7 @@ class GuiCosmeticsCategory<COSMETIC extends AbstractCosmetic> extends AbstractGu
     {
         if(action.startsWith("cosmetic_"))
         {
-            long cosmetic = Long.parseLong(action.split("_")[1]);
+            int cosmetic = Integer.parseInt(action.split("_")[1]);
             this.manager.enableCosmetic(player, this.manager.getRegistry().getElementByStorageId(cosmetic));
         }
         else if(action.equals("delete"))

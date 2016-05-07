@@ -3,10 +3,6 @@ package net.samagames.hub.cosmetics.disguises;
 import me.libraryaddict.disguise.disguisetypes.DisguiseType;
 import net.samagames.hub.Hub;
 import net.samagames.hub.cosmetics.common.AbstractCosmeticRegistry;
-import net.samagames.hub.cosmetics.common.CosmeticAccessibility;
-import net.samagames.hub.cosmetics.common.CosmeticRarity;
-import net.samagames.tools.MojangShitUtils;
-import org.bukkit.entity.EntityType;
 
 class DisguiseRegistry extends AbstractCosmeticRegistry<DisguiseCosmetic>
 {
@@ -16,87 +12,24 @@ class DisguiseRegistry extends AbstractCosmeticRegistry<DisguiseCosmetic>
     }
 
     @Override
-    public void register()
+    public void register() throws Exception
     {
-        DisguiseCosmetic zombieDisguise = new DisguiseCosmetic(this.hub, getTodoShop(), "Zombie", MojangShitUtils.getMonsterEgg(EntityType.ZOMBIE), 600, CosmeticRarity.COMMON, CosmeticAccessibility.VIP, new String[] {
-                "Ceci est une description des plus",
-                "magnifiques !"
-        }, DisguiseType.ZOMBIE);
-
-        DisguiseCosmetic giantDisguise = new DisguiseCosmetic(this.hub, getTodoShop(), "Géant", MojangShitUtils.getMonsterEgg(EntityType.ZOMBIE), 2000, CosmeticRarity.LEGENDARY, CosmeticAccessibility.VIPPLUS, new String[] {
-                "Ceci est une description des plus",
-                "magnifiques !"
-        }, DisguiseType.GIANT);
-
-        DisguiseCosmetic zombiePigmanDisguise = new DisguiseCosmetic(this.hub, getTodoShop(), "Zombie cochon", MojangShitUtils.getMonsterEgg(EntityType.PIG_ZOMBIE), 800, CosmeticRarity.RARE, CosmeticAccessibility.VIP, new String[] {
-                "Ceci est une description des plus",
-                "magnifiques !"
-        }, DisguiseType.PIG_ZOMBIE);
-
-        DisguiseCosmetic creeperDisguise = new DisguiseCosmetic(this.hub, getTodoShop(), "Creeper", MojangShitUtils.getMonsterEgg(EntityType.CREEPER), 600, CosmeticRarity.COMMON, CosmeticAccessibility.VIP, new String[] {
-                "Ceci est une description des plus",
-                "magnifiques !"
-        }, DisguiseType.CREEPER);
-
-        DisguiseCosmetic chickenDisguise = new DisguiseCosmetic(this.hub, getTodoShop(), "Poulet", MojangShitUtils.getMonsterEgg(EntityType.CHICKEN), 1000, CosmeticRarity.EPIC, CosmeticAccessibility.ALL, new String[] {
-                "Ceci est une description des plus",
-                "magnifiques !"
-        }, DisguiseType.CHICKEN);
-
-        DisguiseCosmetic villagerDisguise = new DisguiseCosmetic(this.hub, getTodoShop(), "Villageois", MojangShitUtils.getMonsterEgg(EntityType.VILLAGER), 800, CosmeticRarity.RARE, CosmeticAccessibility.ALL, new String[] {
-                "Ceci est une description des plus",
-                "magnifiques !"
-        }, DisguiseType.VILLAGER);
-
-        DisguiseCosmetic pigDisguise = new DisguiseCosmetic(this.hub, getTodoShop(), "Cochon", MojangShitUtils.getMonsterEgg(EntityType.PIG), 600, CosmeticRarity.COMMON, CosmeticAccessibility.ALL, new String[] {
-                "Ceci est une description des plus",
-                "magnifiques !"
-        }, DisguiseType.PIG);
-
-        DisguiseCosmetic ironGolemDisguise = new DisguiseCosmetic(this.hub, getTodoShop(), "Golem de fer", MojangShitUtils.getMonsterEgg(EntityType.GHAST), 2000, CosmeticRarity.LEGENDARY, CosmeticAccessibility.ALL, new String[] {
-                "Ceci est une description des plus",
-                "magnifiques !"
-        }, DisguiseType.IRON_GOLEM);
-
-        DisguiseCosmetic rabbitDisguise = new DisguiseCosmetic(this.hub, getTodoShop(), "Lapin", MojangShitUtils.getMonsterEgg(EntityType.RABBIT), 1000, CosmeticRarity.EPIC, CosmeticAccessibility.ALL, new String[] {
-                "Ceci est une description des plus",
-                "magnifiques !"
-        }, DisguiseType.RABBIT);
-
-        DisguiseCosmetic witchDisguise = new DisguiseCosmetic(this.hub, getTodoShop(), "Sorcière", MojangShitUtils.getMonsterEgg(EntityType.WITCH), 600, CosmeticRarity.COMMON, CosmeticAccessibility.ALL, new String[] {
-                "Ceci est une description des plus",
-                "magnifiques !"
-        }, DisguiseType.WITCH);
-
-        DisguiseCosmetic squidDisguise = new DisguiseCosmetic(this.hub, getTodoShop(), "Poulpe", MojangShitUtils.getMonsterEgg(EntityType.SQUID), 1000, CosmeticRarity.EPIC, CosmeticAccessibility.ALL, new String[] {
-                "Ceci est une description des plus",
-                "magnifiques !"
-        }, DisguiseType.SQUID);
-
-        DisguiseCosmetic sheepDisguise = new DisguiseCosmetic(this.hub, getTodoShop(), "Mouton", MojangShitUtils.getMonsterEgg(EntityType.SHEEP), 800, CosmeticRarity.RARE, CosmeticAccessibility.ALL, new String[] {
-                "Ceci est une description des plus",
-                "magnifiques !"
-        }, DisguiseType.SHEEP);
-
-        DisguiseCosmetic caveSpiderDisguise = new DisguiseCosmetic(this.hub, getTodoShop(), "Araignée bleue", MojangShitUtils.getMonsterEgg(EntityType.CAVE_SPIDER), 600, CosmeticRarity.COMMON, CosmeticAccessibility.ALL, new String[] {
-                "Ceci est une description des plus",
-                "magnifiques !"
-        }, DisguiseType.CAVE_SPIDER);
-
-        DisguiseCosmetic blazeDisguise = new DisguiseCosmetic(this.hub, getTodoShop(), "Blaze", MojangShitUtils.getMonsterEgg(EntityType.BLAZE), 1000, CosmeticRarity.EPIC, CosmeticAccessibility.ALL, new String[] {
-                "Ceci est une description des plus",
-                "magnifiques !"
-        }, DisguiseType.BLAZE);
-
-        DisguiseCosmetic witherSkeletonDisguise = new DisguiseCosmetic(this.hub, getTodoShop(), "Wither Squelette", MojangShitUtils.getMonsterEgg(EntityType.ENDERMAN), 2000, CosmeticRarity.LEGENDARY, CosmeticAccessibility.ALL, new String[] {
-                "Ceci est une description des plus",
-                "magnifiques !"
-        }, DisguiseType.WITHER_SKELETON);
-
-        DisguiseCosmetic batDisguise = new DisguiseCosmetic(this.hub, getTodoShop(), "Chauve-souris", MojangShitUtils.getMonsterEgg(EntityType.BAT), 800, CosmeticRarity.RARE, CosmeticAccessibility.ALL, new String[] {
-                "Ceci est une description des plus",
-                "magnifiques !"
-        }, DisguiseType.BAT);
+        DisguiseCosmetic zombieDisguise = new DisguiseCosmetic(this.hub, 19, DisguiseType.ZOMBIE);
+        DisguiseCosmetic giantDisguise = new DisguiseCosmetic(this.hub, 20, DisguiseType.GIANT);
+        DisguiseCosmetic zombiePigmanDisguise = new DisguiseCosmetic(this.hub, 21, DisguiseType.PIG_ZOMBIE);
+        DisguiseCosmetic creeperDisguise = new DisguiseCosmetic(this.hub, 22, DisguiseType.CREEPER);
+        DisguiseCosmetic chickenDisguise = new DisguiseCosmetic(this.hub, 23, DisguiseType.CHICKEN);
+        DisguiseCosmetic villagerDisguise = new DisguiseCosmetic(this.hub, 24, DisguiseType.VILLAGER);
+        DisguiseCosmetic pigDisguise = new DisguiseCosmetic(this.hub, 25, DisguiseType.PIG);
+        DisguiseCosmetic ironGolemDisguise = new DisguiseCosmetic(this.hub, 26, DisguiseType.IRON_GOLEM);
+        DisguiseCosmetic rabbitDisguise = new DisguiseCosmetic(this.hub, 27, DisguiseType.RABBIT);
+        DisguiseCosmetic witchDisguise = new DisguiseCosmetic(this.hub, 28, DisguiseType.WITCH);
+        DisguiseCosmetic squidDisguise = new DisguiseCosmetic(this.hub, 29, DisguiseType.SQUID);
+        DisguiseCosmetic sheepDisguise = new DisguiseCosmetic(this.hub, 30, DisguiseType.SHEEP);
+        DisguiseCosmetic caveSpiderDisguise = new DisguiseCosmetic(this.hub, 31, DisguiseType.CAVE_SPIDER);
+        DisguiseCosmetic blazeDisguise = new DisguiseCosmetic(this.hub, 32, DisguiseType.BLAZE);
+        DisguiseCosmetic witherSkeletonDisguise = new DisguiseCosmetic(this.hub, 33, DisguiseType.WITHER_SKELETON);
+        DisguiseCosmetic batDisguise = new DisguiseCosmetic(this.hub, 34, DisguiseType.BAT);
 
         this.registerElement(zombieDisguise);
         this.registerElement(giantDisguise);

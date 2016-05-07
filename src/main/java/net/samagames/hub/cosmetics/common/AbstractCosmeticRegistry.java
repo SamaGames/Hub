@@ -8,10 +8,8 @@ import java.util.logging.Level;
 
 public abstract class AbstractCosmeticRegistry<COSMETIC extends AbstractCosmetic>
 {
-    public static long TODO_SHOP = -1;
-
     protected final Hub hub;
-    private final Map<Long, COSMETIC> elements;
+    private final Map<Integer, COSMETIC> elements;
 
     public AbstractCosmeticRegistry(Hub hub)
     {
@@ -19,7 +17,7 @@ public abstract class AbstractCosmeticRegistry<COSMETIC extends AbstractCosmetic
         this.elements = new HashMap<>();
     }
 
-    public abstract void register();
+    public abstract void register() throws Exception;
 
     protected void registerElement(COSMETIC element)
     {
@@ -32,7 +30,7 @@ public abstract class AbstractCosmeticRegistry<COSMETIC extends AbstractCosmetic
         this.elements.put(element.getStorageId(), element);
     }
 
-    public COSMETIC getElementByStorageId(long storageId)
+    public COSMETIC getElementByStorageId(int storageId)
     {
         if(this.elements.containsKey(storageId))
             return this.elements.get(storageId);
@@ -40,13 +38,8 @@ public abstract class AbstractCosmeticRegistry<COSMETIC extends AbstractCosmetic
             return null;
     }
 
-    public Map<Long, COSMETIC> getElements()
+    public Map<Integer, COSMETIC> getElements()
     {
         return this.elements;
-    }
-
-    public static long getTodoShop()
-    {
-        return TODO_SHOP++;
     }
 }

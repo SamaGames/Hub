@@ -11,14 +11,14 @@ class DisguiseCosmetic extends AbstractCosmetic
 {
     private final DisguiseType disguiseType;
 
-    DisguiseCosmetic(Hub hub, long storageId, String displayName, ItemStack icon, int stars, CosmeticRarity rarity, CosmeticAccessibility accessibility, String[] description, DisguiseType disguiseType)
+    DisguiseCosmetic(Hub hub, int storageId, DisguiseType disguiseType) throws Exception
     {
-        super(hub, storageId, displayName, icon, stars, rarity, accessibility, description);
+        super(hub, storageId);
 
         this.disguiseType = disguiseType;
     }
 
-    DisguiseType getDisguiseType()
+    public DisguiseType getDisguiseType()
     {
         return this.disguiseType;
     }

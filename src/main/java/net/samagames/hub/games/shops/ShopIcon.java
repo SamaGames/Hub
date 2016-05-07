@@ -1,38 +1,56 @@
 package net.samagames.hub.games.shops;
 
+import net.samagames.api.SamaGamesAPI;
+import net.samagames.api.shops.IItemDescription;
 import net.samagames.hub.Hub;
+import net.samagames.hub.utils.PersistanceUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.logging.Level;
+
 public abstract class ShopIcon
 {
     protected final Hub hub;
-    protected final long storageId;
-    protected final ItemStack icon;
+    protected final int storageId;
     protected final int slot;
+    protected final int[] resetIds;
+    protected final IItemDescription itemDescription;
+    protected final ItemStack icon;
 
-    ShopIcon(Hub hub, long storageId, String displayName, ItemStack icon, int slot)
+    ShopIcon(Hub hub, int storageId, int slot, int[] resetIds) throws Exception
     {
         this.hub = hub;
         this.storageId = storageId;
-        this.icon = icon;
         this.slot = slot;
+        this.resetIds = resetIds;
 
-        if(icon != null)
-        {
-            ItemMeta meta = this.icon.getItemMeta();
-            meta.setDisplayName(ChatColor.RESET + "" + ChatColor.GOLD + displayName);
-            this.icon.setItemMeta(meta);
-        }
+        hub.getGameManager().log(Level.INFO, "Fetching shop icon data for the id: " + storageId);
+
+        this.itemDescription = SamaGamesAPI.get().getShopsManager().getItemDescription(storageId);
+        this.icon = PersistanceUtils.makeStack(itemDescription);
     }
 
     public abstract void execute(Player player, ClickType clickType);
     public abstract ItemStack getFormattedIcon(Player player);
 
-    public long getStorageId()
+    public void resetCurrents(Player player)
+    {
+        try
+        {
+            for (int resetId : this.resetIds)
+                SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).setSelectedItem(resetId, false);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    public int getStorageId()
     {
         return this.storageId;
     }
@@ -45,5 +63,28 @@ public abstract class ShopIcon
     public int getSlot()
     {
         return this.slot;
+    }
+
+    public boolean isOwned(Player player)
+    {
+        return this.isOwned(player, this.storageId);
+    }
+
+    public boolean isOwned(Player player, int storageId)
+    {
+        return SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).getTransactionsByID(storageId) != null;
+    }
+
+    public boolean isActive(Player player)
+    {
+        try
+        {
+            return this.isOwned(player) && SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).isSelectedItem(this.storageId);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

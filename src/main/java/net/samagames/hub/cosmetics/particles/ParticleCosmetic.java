@@ -11,9 +11,9 @@ class ParticleCosmetic extends AbstractCosmetic
 {
     private final Class<? extends Effect> particleEffect;
 
-    ParticleCosmetic(Hub hub, long storageId, String displayName, ItemStack icon, int stars, CosmeticRarity rarity, CosmeticAccessibility accessibility, String[] description, Class<? extends Effect> particleEffect)
+    ParticleCosmetic(Hub hub, int storageId, Class<? extends Effect> particleEffect) throws Exception
     {
-        super(hub, storageId, displayName, icon, stars, rarity, accessibility, description);
+        super(hub, storageId);
 
         this.particleEffect = particleEffect;
     }

@@ -74,7 +74,7 @@ public class GadgetManager extends AbstractCosmeticManager
 
         net.minecraft.server.v1_9_R1.ItemStack craftStack = CraftItemStack.asNMSCopy(cosmeticIcon);
         NBTTagCompound tagCompound = craftStack.getTag();
-        long gadgetKey = tagCompound.getLong("gadget-key");
+        int gadgetKey = tagCompound.getInt("gadget-key");
 
         try
         {

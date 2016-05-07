@@ -103,8 +103,7 @@ public abstract class AbstractGame
         int players = 0;
 
         for (List<GameSign> list : this.signs.values())
-            for (GameSign sign : list)
-                players += sign.getTotalPlayerOnServers();
+            players += list.get(0).getTotalPlayerOnServers();
 
         return players;
     }

@@ -12,18 +12,12 @@ import java.util.Random;
 
 class JukeboxDiskCosmetic extends AbstractCosmetic
 {
-    private static final Material[] RECORDS = {
-            Material.GOLD_RECORD, Material.GREEN_RECORD, Material.RECORD_3, Material.RECORD_4,
-            Material.RECORD_5, Material.RECORD_6, Material.RECORD_7, Material.RECORD_8,
-            Material.RECORD_9, Material.RECORD_10, Material.RECORD_11, Material.RECORD_12
-    };
-
     private final Song song;
     private final int seconds;
 
-    JukeboxDiskCosmetic(Hub hub, long storageId, int stars, CosmeticRarity rarity, Song song, int seconds)
+    JukeboxDiskCosmetic(Hub hub, int storageId, Song song, int seconds) throws Exception
     {
-        super(hub, storageId, song.getTitle(), getRandomDisk(), stars, rarity, CosmeticAccessibility.VIP, null);
+        super(hub, storageId);
 
         this.song = song;
         this.seconds = seconds;
@@ -37,10 +31,5 @@ class JukeboxDiskCosmetic extends AbstractCosmetic
     public int getSeconds()
     {
         return this.seconds;
-    }
-
-    private static ItemStack getRandomDisk()
-    {
-        return new ItemStack(RECORDS[new Random().nextInt(RECORDS.length)], 1);
     }
 }

@@ -6,6 +6,7 @@ import net.samagames.hub.common.players.PlayerManager;
 import net.samagames.hub.games.AbstractGame;
 import net.samagames.hub.gui.AbstractGui;
 import net.samagames.hub.gui.shop.GuiConfirm;
+import net.samagames.tools.CallBack;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
@@ -17,23 +18,12 @@ import java.util.List;
 
 public class ShopItem extends ShopIcon
 {
-    protected final String[] description;
-    protected final int cost;
     protected boolean defaultItem;
 
-    public ShopItem(Hub hub, long storageId, String displayName, ItemStack icon, int slot, String[] description, int cost)
+    public ShopItem(Hub hub, int storageId, int slot, int[] resetIds) throws Exception
     {
-        super(hub, storageId, displayName, icon, slot);
-
-        this.description = description;
-        this.cost = cost;
+        super(hub, storageId, slot, resetIds);
     }
-
-    /**
-     * Edit this method to unselect all the items related to
-     * this one
-     */
-    public void resetCurrents(Player player) {}
 
     @Override
     public void execute(Player player, ClickType clickType)
@@ -45,11 +35,21 @@ public class ShopItem extends ShopIcon
         else if(this.isOwned(player) || this.isDefaultItem())
         {
             this.resetCurrents(player);
-            SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).getTransactionSelectedByID((int) this.storageId).setSelected(true);
 
-            player.sendMessage(PlayerManager.SHOPPING_TAG + ChatColor.GREEN + "Vous avez équipé " + ChatColor.AQUA + this.getIcon().getItemMeta().getDisplayName());
+            try
+            {
+                SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).setSelectedItem(this.storageId, true);
+                player.sendMessage(PlayerManager.SHOPPING_TAG + ChatColor.GREEN + "Vous avez équipé " + ChatColor.AQUA + this.getIcon().getItemMeta().getDisplayName());
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+                player.sendMessage(PlayerManager.SHOPPING_TAG + ChatColor.RED + "Une erreur s'est produite. Veuillez réessayer ultérieurement.");
+
+                return;
+            }
         }
-        else if(!SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).hasEnoughCoins(this.cost))
+        else if(!SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).hasEnoughCoins(this.itemDescription.getPriceCoins()))
         {
             player.sendMessage(PlayerManager.SHOPPING_TAG + ChatColor.RED + "Vous n'avez pas assez de pièces pour acheter cet objet.");
         }
@@ -60,17 +60,17 @@ public class ShopItem extends ShopIcon
                 if(this.isOwned(player))
                     return;
 
-                SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).withdrawCoins(this.cost, (newAmount, difference, error) ->
+                SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).withdrawCoins(this.itemDescription.getPriceCoins(), (newAmount, difference, error) ->
                 {
                     this.resetCurrents(player);
 
-                    // TODO: Add the item to the player
-                    SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).getTransactionSelectedByID((int) this.storageId).setSelected(true);
+                    SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).addItem(this.storageId, this.itemDescription.getPriceCoins(), 0, true, (aBoolean, throwable) ->
+                    {
+                        player.sendMessage(PlayerManager.SHOPPING_TAG + ChatColor.GREEN + "Vous avez acheté et équipé " + ChatColor.AQUA + this.getIcon().getItemMeta().getDisplayName());
 
-                    player.sendMessage(PlayerManager.SHOPPING_TAG + ChatColor.GREEN + "Vous avez acheté et équipé " + ChatColor.AQUA + this.getIcon().getItemMeta().getDisplayName());
-
-                    this.hub.getScoreboardManager().update(player);
-                    this.hub.getGuiManager().openGui(player, parent);
+                        this.hub.getScoreboardManager().update(player);
+                        this.hub.getGuiManager().openGui(player, parent);
+                    });
                 });
 
                 this.hub.getGuiManager().getPlayerGui(player).update(player);
@@ -88,19 +88,14 @@ public class ShopItem extends ShopIcon
     {
         ItemStack stack = getIcon().clone();
         ItemMeta meta = stack.getItemMeta();
-        List<String> lore = new ArrayList<>();
-
-        for(String str : this.description)
-            lore.add(ChatColor.GRAY + str);
-
-        lore.add(ChatColor.GRAY + "");
+        List<String> lore = meta.getLore() != null ? meta.getLore() : new ArrayList<>();
 
         if(this.isActive(player))
             lore.add(ChatColor.GREEN + "Objet actif");
         else if(isDefaultItem() || isOwned(player))
             lore.add(ChatColor.GREEN + "Objet possédé");
         else
-            lore.add(ChatColor.GRAY + "Prix : " + ChatColor.GOLD + this.cost + " pièces");
+            lore.add(ChatColor.GRAY + "Prix : " + ChatColor.GOLD + this.itemDescription.getPriceCoins() + " pièces");
 
         meta.setLore(lore);
         stack.setItemMeta(meta);
@@ -116,15 +111,5 @@ public class ShopItem extends ShopIcon
     public boolean isDefaultItem()
     {
         return this.defaultItem;
-    }
-
-    public boolean isOwned(Player player)
-    {
-        return SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).getTransactionSelectedByID((int) this.storageId) != null;
-    }
-
-    public boolean isActive(Player player)
-    {
-        return this.isOwned(player) && SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).getTransactionSelectedByID((int) this.storageId).isSelected();
     }
 }

@@ -4,10 +4,6 @@ import com.dsh105.echopet.compat.api.entity.PetData;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import net.samagames.hub.Hub;
 import net.samagames.hub.cosmetics.common.AbstractCosmeticRegistry;
-import net.samagames.hub.cosmetics.common.CosmeticAccessibility;
-import net.samagames.hub.cosmetics.common.CosmeticRarity;
-import net.samagames.tools.MojangShitUtils;
-import org.bukkit.entity.EntityType;
 
 class PetRegistry extends AbstractCosmeticRegistry<PetCosmetic>
 {
@@ -17,122 +13,31 @@ class PetRegistry extends AbstractCosmeticRegistry<PetCosmetic>
     }
 
     @Override
-    public void register()
+    public void register() throws Exception
     {
-        PetCosmetic skeletonHorsePet = new PetCosmetic(this.hub, getTodoShop(), "Cheval Squelette", MojangShitUtils.getMonsterEgg(EntityType.HORSE), 700, CosmeticRarity.RARE, CosmeticAccessibility.VIPPLUS, new String[] {
-                "Ceci est une description des plus",
-                "magnifiques !"
-        }, PetType.HORSE, PetData.SKELETON);
-
-        PetCosmetic magmaCubePet = new PetCosmetic(this.hub, getTodoShop(), "Cube de magma", MojangShitUtils.getMonsterEgg(EntityType.MAGMA_CUBE), 500, CosmeticRarity.COMMON, CosmeticAccessibility.VIPPLUS, new String[] {
-                "Ceci est une description des plus",
-                "magnifiques !"
-        }, PetType.MAGMACUBE, PetData.MEDIUM);
-
-        PetCosmetic slimePet = new PetCosmetic(this.hub, getTodoShop(), "Slime", MojangShitUtils.getMonsterEgg(EntityType.SLIME), 500, CosmeticRarity.COMMON, CosmeticAccessibility.VIP, new String[] {
-                "Ceci est une description des plus",
-                "magnifiques !"
-        }, PetType.SLIME, PetData.MEDIUM);
-
-        PetCosmetic zombieHorsePet = new PetCosmetic(this.hub, getTodoShop(), "Cheval zombie", MojangShitUtils.getMonsterEgg(EntityType.HORSE), 700, CosmeticRarity.RARE, CosmeticAccessibility.VIP, new String[] {
-                "Ceci est une description des plus",
-                "magnifiques !"
-        }, PetType.HORSE, PetData.ZOMBIE);
-
-        PetCosmetic chickenPet = new PetCosmetic(this.hub, getTodoShop(), "Poulet", MojangShitUtils.getMonsterEgg(EntityType.CHICKEN), 1500, CosmeticRarity.LEGENDARY, CosmeticAccessibility.ALL, new String[] {
-                "Ceci est une description des plus",
-                "magnifiques !"
-        }, PetType.CHICKEN);
-
-        PetCosmetic wolfPet = new PetCosmetic(this.hub, getTodoShop(), "Wolf", MojangShitUtils.getMonsterEgg(EntityType.WOLF), 700, CosmeticRarity.RARE, CosmeticAccessibility.ALL, new String[] {
-                "Ceci est une description des plus",
-                "magnifiques !"
-        }, PetType.WOLF);
-
-        PetCosmetic brownHorsePet = new PetCosmetic(this.hub, getTodoShop(), "Cheval marron", MojangShitUtils.getMonsterEgg(EntityType.HORSE), 500, CosmeticRarity.COMMON, CosmeticAccessibility.ALL, new String[] {
-                "Ceci est une description des plus",
-                "magnifiques !"
-        }, PetType.HORSE, PetData.BROWN);
-
-        PetCosmetic cowPet = new PetCosmetic(this.hub, getTodoShop(), "Vache", MojangShitUtils.getMonsterEgg(EntityType.COW), 500, CosmeticRarity.COMMON, CosmeticAccessibility.ALL, new String[] {
-                "Ceci est une description des plus",
-                "magnifiques !"
-        }, PetType.COW);
-
-        PetCosmetic pigPet = new PetCosmetic(this.hub, getTodoShop(), "Cochon", MojangShitUtils.getMonsterEgg(EntityType.PIG), 500, CosmeticRarity.COMMON, CosmeticAccessibility.ALL, new String[] {
-                "Ceci est une description des plus",
-                "magnifiques !"
-        }, PetType.PIG);
-
-        PetCosmetic whiteHorsePet = new PetCosmetic(this.hub, getTodoShop(), "Cheval blanc", MojangShitUtils.getMonsterEgg(EntityType.HORSE), 900, CosmeticRarity.EPIC, CosmeticAccessibility.ALL, new String[] {
-                "Ceci est une description des plus",
-                "magnifiques !"
-        }, PetType.HORSE, PetData.WHITE);
-
-        PetCosmetic rabbitPet = new PetCosmetic(this.hub, getTodoShop(), "Lapin", MojangShitUtils.getMonsterEgg(EntityType.RABBIT), 1500, CosmeticRarity.LEGENDARY, CosmeticAccessibility.ALL, new String[] {
-                "Ceci est une description des plus",
-                "magnifiques !"
-        }, PetType.RABBIT);
-
-        PetCosmetic ironGolemPet = new PetCosmetic(this.hub, getTodoShop(), "Golem de fer", MojangShitUtils.getMonsterEgg(EntityType.GHAST), 1500, CosmeticRarity.LEGENDARY, CosmeticAccessibility.ALL, new String[] {
-                "Ceci est une description des plus",
-                "magnifiques !"
-        }, PetType.IRONGOLEM);
-
-        PetCosmetic endermanPet = new PetCosmetic(this.hub, getTodoShop(), "Enderman", MojangShitUtils.getMonsterEgg(EntityType.ENDERMAN), 1500, CosmeticRarity.LEGENDARY, CosmeticAccessibility.ALL, new String[] {
-                "Ceci est une description des plus",
-                "magnifiques !"
-        }, PetType.ENDERMAN);
-
-        PetCosmetic whiteSheepPet = new PetCosmetic(this.hub, getTodoShop(), "Mouton blanc", MojangShitUtils.getMonsterEgg(EntityType.SHEEP), 500, CosmeticRarity.COMMON, CosmeticAccessibility.ALL, new String[] {
-                "Ceci est une description des plus",
-                "magnifiques !"
-        }, PetType.SHEEP, PetData.WHITE);
-
-        PetCosmetic orangeSheepPet = new PetCosmetic(this.hub, getTodoShop(), "Mouton orange", MojangShitUtils.getMonsterEgg(EntityType.SHEEP), 700, CosmeticRarity.RARE, CosmeticAccessibility.ALL, new String[] {
-                "Ceci est une description des plus",
-                "magnifiques !"
-        }, PetType.SHEEP, PetData.ORANGE);
-
-        PetCosmetic purpleSheepPet = new PetCosmetic(this.hub, getTodoShop(), "Mouton violet", MojangShitUtils.getMonsterEgg(EntityType.SHEEP), 900, CosmeticRarity.EPIC, CosmeticAccessibility.ALL, new String[] {
-                "Ceci est une description des plus",
-                "magnifiques !"
-        }, PetType.SHEEP, PetData.PURPLE);
-
-        PetCosmetic pinkSheepPet = new PetCosmetic(this.hub, getTodoShop(), "Mouton rose", MojangShitUtils.getMonsterEgg(EntityType.SHEEP), 1500, CosmeticRarity.LEGENDARY, CosmeticAccessibility.ALL, new String[] {
-                "Ceci est une description des plus",
-                "magnifiques !"
-        }, PetType.SHEEP, PetData.PINK);
-
-        PetCosmetic redSheepPet = new PetCosmetic(this.hub, getTodoShop(), "Mouton rouge", MojangShitUtils.getMonsterEgg(EntityType.SHEEP), 900, CosmeticRarity.EPIC, CosmeticAccessibility.ALL, new String[] {
-                "Ceci est une description des plus",
-                "magnifiques !"
-        }, PetType.SHEEP, PetData.RED);
-
-        PetCosmetic blackSheepPet = new PetCosmetic(this.hub, getTodoShop(), "Mouton noir", MojangShitUtils.getMonsterEgg(EntityType.SHEEP), 500, CosmeticRarity.COMMON, CosmeticAccessibility.ALL, new String[] {
-                "Ceci est une description des plus",
-                "magnifiques !"
-        }, PetType.SHEEP, PetData.BLACK);
-
-        PetCosmetic yellowSheepPet = new PetCosmetic(this.hub, getTodoShop(), "Mouton jaune", MojangShitUtils.getMonsterEgg(EntityType.SHEEP), 700, CosmeticRarity.RARE, CosmeticAccessibility.ALL, new String[] {
-                "Ceci est une description des plus",
-                "magnifiques !"
-        }, PetType.SHEEP, PetData.YELLOW);
-
-        PetCosmetic mushroomCowPet = new PetCosmetic(this.hub, getTodoShop(), "Vache champignon", MojangShitUtils.getMonsterEgg(EntityType.MUSHROOM_COW), 500, CosmeticRarity.COMMON, CosmeticAccessibility.ALL, new String[] {
-                "Ceci est une description des plus",
-                "magnifiques !"
-        }, PetType.MUSHROOMCOW);
-
-        PetCosmetic donkeyPet = new PetCosmetic(this.hub, getTodoShop(), "Âne", MojangShitUtils.getMonsterEgg(EntityType.HORSE), 500, CosmeticRarity.COMMON, CosmeticAccessibility.ALL, new String[] {
-                "Ceci est une description des plus",
-                "magnifiques !"
-        }, PetType.HORSE, PetData.DONKEY);
-
-        PetCosmetic slavePet = new PetCosmetic(this.hub, getTodoShop(), "Esclave", MojangShitUtils.getMonsterEgg(EntityType.VILLAGER), 1500, CosmeticRarity.LEGENDARY, CosmeticAccessibility.ALL, new String[] {
-                "Ceci est une description des plus",
-                "magnifiques !"
-        }, PetType.VILLAGER);
+        PetCosmetic skeletonHorsePet = new PetCosmetic(this.hub, 43, PetType.HORSE, PetData.SKELETON);
+        PetCosmetic magmaCubePet = new PetCosmetic(this.hub, 44, PetType.MAGMACUBE, PetData.MEDIUM);
+        PetCosmetic slimePet = new PetCosmetic(this.hub, 45, PetType.SLIME, PetData.MEDIUM);
+        PetCosmetic zombieHorsePet = new PetCosmetic(this.hub, 46, PetType.HORSE, PetData.ZOMBIE);
+        PetCosmetic chickenPet = new PetCosmetic(this.hub, 47, PetType.CHICKEN);
+        PetCosmetic wolfPet = new PetCosmetic(this.hub, 48, PetType.WOLF);
+        PetCosmetic brownHorsePet = new PetCosmetic(this.hub, 49, PetType.HORSE, PetData.BROWN);
+        PetCosmetic cowPet = new PetCosmetic(this.hub, 50, PetType.COW);
+        PetCosmetic pigPet = new PetCosmetic(this.hub, 51, PetType.PIG);
+        PetCosmetic whiteHorsePet = new PetCosmetic(this.hub, 52, PetType.HORSE, PetData.WHITE);
+        PetCosmetic rabbitPet = new PetCosmetic(this.hub, 53, PetType.RABBIT);
+        PetCosmetic ironGolemPet = new PetCosmetic(this.hub, 54, PetType.IRONGOLEM);
+        PetCosmetic endermanPet = new PetCosmetic(this.hub, 55, PetType.ENDERMAN);
+        PetCosmetic whiteSheepPet = new PetCosmetic(this.hub, 56, PetType.SHEEP, PetData.WHITE);
+        PetCosmetic orangeSheepPet = new PetCosmetic(this.hub, 57, PetType.SHEEP, PetData.ORANGE);
+        PetCosmetic purpleSheepPet = new PetCosmetic(this.hub, 58, PetType.SHEEP, PetData.PURPLE);
+        PetCosmetic pinkSheepPet = new PetCosmetic(this.hub, 59, PetType.SHEEP, PetData.PINK);
+        PetCosmetic redSheepPet = new PetCosmetic(this.hub, 60, PetType.SHEEP, PetData.RED);
+        PetCosmetic blackSheepPet = new PetCosmetic(this.hub, 61, PetType.SHEEP, PetData.BLACK);
+        PetCosmetic yellowSheepPet = new PetCosmetic(this.hub, 62, PetType.SHEEP, PetData.YELLOW);
+        PetCosmetic mushroomCowPet = new PetCosmetic(this.hub, 63, PetType.MUSHROOMCOW);
+        PetCosmetic donkeyPet = new PetCosmetic(this.hub, 64, PetType.HORSE, PetData.DONKEY);
+        PetCosmetic slavePet = new PetCosmetic(this.hub, 65, PetType.VILLAGER);
 
         this.registerElement(skeletonHorsePet);
         this.registerElement(magmaCubePet);

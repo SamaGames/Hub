@@ -125,7 +125,6 @@ public class Hub extends JavaPlugin
         }
 
         this.hydroangeasSynchronization.cancel(true);
-        
         this.eventBus.onDisable();
     }
 

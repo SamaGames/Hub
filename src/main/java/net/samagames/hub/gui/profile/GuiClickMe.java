@@ -30,7 +30,7 @@ public class GuiClickMe extends AbstractGui
 
     public GuiClickMe(Hub hub, Player who)
     {
-        this(hub, SamaGamesAPI.get().getPlayerManager().getPlayerData(who.getUniqueId()).getDisplayeName(), who.getUniqueId());
+        this(hub, SamaGamesAPI.get().getPlayerManager().getPlayerData(who.getUniqueId()).getDisplayName(), who.getUniqueId());
     }
 
     @Override

@@ -16,15 +16,13 @@ import java.util.List;
 public class ShopCategory extends ShopIcon
 {
     protected final AbstractGame game;
-    protected final String[] description;
     protected final List<ShopIcon> contents;
 
-    public ShopCategory(Hub hub, AbstractGame game, long storageId, String displayName, ItemStack icon, int slot, String[] description)
+    public ShopCategory(Hub hub, AbstractGame game, int storageId, int slot) throws Exception
     {
-        super(hub, storageId, displayName, icon, slot);
+        super(hub, storageId, slot, new int[0]);
 
         this.game = game;
-        this.description = description;
         this.contents = new ArrayList<>();
     }
 
@@ -42,17 +40,7 @@ public class ShopCategory extends ShopIcon
     @Override
     public ItemStack getFormattedIcon(Player player)
     {
-        ItemStack icon = this.getIcon().clone();
-        ItemMeta meta =  icon.getItemMeta();
-        ArrayList<String> lore = new ArrayList<>();
-
-        for(String str : this.description)
-            lore.add(ChatColor.GRAY + str);
-
-        meta.setLore(lore);
-        icon.setItemMeta(meta);
-
-        return icon;
+        return this.getIcon().clone();
     }
 
     public ShopIcon getIconByAction(String action)

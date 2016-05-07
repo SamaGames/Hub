@@ -11,6 +11,7 @@ import javax.lang.model.type.NullType;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.logging.Level;
 
 public abstract class AbstractCosmeticManager<COSMETIC extends AbstractCosmetic>
 {
@@ -23,7 +24,16 @@ public abstract class AbstractCosmeticManager<COSMETIC extends AbstractCosmetic>
         this.hub = hub;
 
         this.registry = registry;
-        this.registry.register();
+
+        try
+        {
+            this.registry.register();
+        }
+        catch (Exception e)
+        {
+            hub.getCosmeticManager().log(Level.SEVERE, "Failed to load the registry (" + this.getClass().getSimpleName() + ")!");
+            e.printStackTrace();
+        }
 
         this.equipped = new HashMap<>();
     }
@@ -48,7 +58,14 @@ public abstract class AbstractCosmeticManager<COSMETIC extends AbstractCosmetic>
                     this.enableCosmetic(player, cosmetic, null);
                     this.equipped.put(player.getUniqueId(), cosmetic);
 
-                    SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).getTransactionSelectedByID((int) cosmetic.getStorageId()).setSelected(true);
+                    try
+                    {
+                        SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).setSelectedItem(cosmetic.getStorageId(), true);
+                    }
+                    catch (Exception e)
+                    {
+                        e.printStackTrace();
+                    }
 
                     AbstractGui gui = (AbstractGui) this.hub.getGuiManager().getPlayerGui(player);
 
@@ -78,7 +95,14 @@ public abstract class AbstractCosmeticManager<COSMETIC extends AbstractCosmetic>
 
             if (!logout)
             {
-                SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).getTransactionSelectedByID((int) cosmetic.getStorageId()).setSelected(false);
+                try
+                {
+                    SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).setSelectedItem(cosmetic.getStorageId(), false);
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
 
                 AbstractGui gui = (AbstractGui) this.hub.getGuiManager().getPlayerGui(player);
 
@@ -90,14 +114,21 @@ public abstract class AbstractCosmeticManager<COSMETIC extends AbstractCosmetic>
 
     public void restoreCosmetic(Player player)
     {
-        for (long storageId : this.registry.getElements().keySet())
+        for (int storageId : this.registry.getElements().keySet())
         {
-            if (SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).getTransactionSelectedByID((int) storageId) != null)
+            if (SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).getTransactionsByID(storageId) != null)
             {
-                if (SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).getTransactionSelectedByID((int) storageId).isSelected());
+                try
                 {
-                    this.enableCosmetic(player, this.getRegistry().getElementByStorageId(storageId));
-                    break;
+                    if (SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).isSelectedItem(storageId))
+                    {
+                        this.enableCosmetic(player, this.getRegistry().getElementByStorageId(storageId));
+                        break;
+                    }
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
                 }
             }
         }
@@ -105,9 +136,20 @@ public abstract class AbstractCosmeticManager<COSMETIC extends AbstractCosmetic>
 
     public void resetCurrents(Player player)
     {
-        for (long storageId : this.registry.getElements().keySet())
-            if (SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).getTransactionSelectedByID((int) storageId) != null)
-                SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).getTransactionSelectedByID((int) storageId).setSelected(false);
+        for (int storageId : this.registry.getElements().keySet())
+        {
+            if (SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).getTransactionsByID(storageId) != null)
+            {
+                try
+                {
+                    SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).setSelectedItem(storageId, false);
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     public COSMETIC getEquippedCosmetic(Player player)

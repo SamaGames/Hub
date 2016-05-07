@@ -1,21 +1,21 @@
 package net.samagames.hub.games.shops;
 
-public class ItemLevel
+class ItemLevel
 {
-    private final int cost;
+    private final int storageId;
     private final String description;
-    private final long storageId;
+    private final int cost;
 
-    public ItemLevel(int cost, String description, long storageId)
+    ItemLevel(int storageId, String description, int cost)
     {
-        this.cost = cost;
-        this.description = description;
         this.storageId = storageId;
+        this.description = description;
+        this.cost = cost;
     }
 
-    public int getCost()
+    public int getStorageId()
     {
-        return this.cost;
+        return this.storageId;
     }
 
     public String getDescription()
@@ -23,8 +23,8 @@ public class ItemLevel
         return this.description;
     }
 
-    public long getStorageId()
+    public int getCost()
     {
-        return this.storageId;
+        return this.cost;
     }
 }

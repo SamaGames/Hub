@@ -1,13 +1,17 @@
 package net.samagames.hub.cosmetics.common;
 
 import net.samagames.api.SamaGamesAPI;
+import net.samagames.api.shops.IItemDescription;
 import net.samagames.api.shops.IShopsManager;
 import net.samagames.hub.Hub;
 import net.samagames.hub.common.players.PlayerManager;
 import net.samagames.hub.gui.AbstractGui;
 import net.samagames.hub.gui.shop.GuiConfirm;
 import net.samagames.hub.utils.NumberUtils;
+import net.samagames.hub.utils.PersistanceUtils;
+import net.samagames.tools.CallBack;
 import net.samagames.tools.GlowEffect;
+import net.samagames.tools.ItemUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -16,48 +20,44 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 
 public abstract class AbstractCosmetic implements Comparable<AbstractCosmetic>
 {
     private final Hub hub;
-    private final long storageId;
+    private final int storageId;
     private final ItemStack icon;
-    private final int stars;
     private final CosmeticRarity rarity;
     private final CosmeticAccessibility accessibility;
-    private final IShopsManager shopsManager;
+    private final int stars;
     private String permissionNeededToView;
 
-    public AbstractCosmetic(Hub hub, long storageId, String displayName, ItemStack icon, int stars, CosmeticRarity rarity, CosmeticAccessibility accessibility, String[] description)
+    public AbstractCosmetic(Hub hub, int storageId) throws Exception
     {
         this.hub = hub;
         this.storageId = storageId;
-        this.icon = icon;
+        this.permissionNeededToView = null;
+
+        hub.getCosmeticManager().log(Level.INFO, "Fetching cosmetic data for the id: " + storageId);
+
+        IItemDescription itemDescription = SamaGamesAPI.get().getShopsManager().getItemDescription(storageId);
+
+        this.icon = PersistanceUtils.makeStack(itemDescription);
+        this.rarity = CosmeticRarity.valueOf(itemDescription.getItemRarity().toUpperCase());
+        this.accessibility = CosmeticAccessibility.valueOf(itemDescription.getRankAccessibility().toUpperCase());
+        this.stars = itemDescription.getPriceStars();
 
         ItemMeta meta = this.icon.getItemMeta();
-        meta.setDisplayName(ChatColor.RESET + "" + rarity.getColor() + displayName);
-
-        List<String> lore = new ArrayList<>();
-
-        if (description != null)
-            for (String str : description)
-                lore.add(ChatColor.GRAY + str);
-
-        meta.setLore(lore);
+        meta.setDisplayName(ChatColor.RESET + "" + this.rarity.getColor() + itemDescription.getItemName());
 
         this.icon.setItemMeta(meta);
-        this.stars = stars;
-        this.rarity = rarity;
-        this.accessibility = accessibility;
-        this.shopsManager = SamaGamesAPI.get().getShopsManager();
-        this.permissionNeededToView = null;
     }
 
     public void buy(Player player, boolean magicChest)
     {
         if (magicChest)
         {
-            // TODO: Add the item to the player
+            SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).addItem(this.storageId, 0, 0, false);
         }
         else
         {
@@ -82,12 +82,20 @@ public abstract class AbstractCosmetic implements Comparable<AbstractCosmetic>
             {
                 SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).withdrawStars(this.stars, (newAmount, difference, error) ->
                 {
-                    // TODO: Add the item to the player
+                    SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).addItem(this.storageId, 0, 0, false, (success, throwable) ->
+                    {
+                        if (success)
+                        {
+                            this.hub.getScoreboardManager().update(player);
+                            this.hub.getGuiManager().openGui(player, parent);
 
-                    this.hub.getScoreboardManager().update(player);
-                    this.hub.getGuiManager().openGui(player, parent);
-
-                    player.sendMessage(PlayerManager.COSMETICS_TAG + ChatColor.GREEN + "Votre achat a bien été effectué, vous pouvez maintenant utiliser votre cosmétique.");
+                            player.sendMessage(PlayerManager.COSMETICS_TAG + ChatColor.GREEN + "Votre achat a bien été effectué, vous pouvez maintenant utiliser votre cosmétique.");
+                        }
+                        else
+                        {
+                            throwable.printStackTrace();
+                        }
+                    });
                 });
             });
 
@@ -151,7 +159,7 @@ public abstract class AbstractCosmetic implements Comparable<AbstractCosmetic>
         return cloned;
     }
 
-    public long getStorageId()
+    public int getStorageId()
     {
         return this.storageId;
     }
@@ -181,7 +189,7 @@ public abstract class AbstractCosmetic implements Comparable<AbstractCosmetic>
         else if (this.accessibility == CosmeticAccessibility.ADMIN && SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "network.admin"))
             return true;
 
-        return SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).getTransactionSelectedByID((int) this.storageId) != null;
+        return SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).getTransactionsByID(this.storageId) != null;
     }
 
     @Override

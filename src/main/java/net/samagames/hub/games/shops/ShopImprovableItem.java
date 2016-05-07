@@ -5,7 +5,6 @@ import net.samagames.api.shops.IItemDescription;
 import net.samagames.api.shops.ITransaction;
 import net.samagames.hub.Hub;
 import net.samagames.hub.common.players.PlayerManager;
-import net.samagames.hub.games.AbstractGame;
 import net.samagames.hub.gui.AbstractGui;
 import net.samagames.hub.gui.shop.GuiConfirm;
 import org.bukkit.ChatColor;
@@ -19,21 +18,37 @@ import java.util.List;
 
 public class ShopImprovableItem extends ShopIcon
 {
-    private final String[] description;
     private final List<ItemLevel> levels;
-    private ItemLevel defaultLevel;
+    private final String defaultDescription;
 
-    public ShopImprovableItem(Hub hub, long storageId, String displayName, ItemStack icon, int slot, String[] description)
+    public ShopImprovableItem(Hub hub, int storageId, int slot, Integer defaultStorageId) throws Exception
     {
-        super(hub, storageId, displayName, icon, slot);
+        super(hub, storageId, slot, new int[0]);
 
-        this.description = description;
         this.levels = new ArrayList<>();
 
+        if (defaultStorageId != null)
+        {
+            IItemDescription defaultItemDescription = SamaGamesAPI.get().getShopsManager().getItemDescription(defaultStorageId);
+            this.defaultDescription = defaultItemDescription.getItemDesc();
+        }
+        else
+        {
+            this.defaultDescription = null;
+        }
+    }
+
+    @Override
+    public void resetCurrents(Player player)
+    {
         try
         {
-            IItemDescription itemDescription = SamaGamesAPI.get().getShopsManager().getItemDescription((int) this.storageId);
-            this.defaultLevel = new ItemLevel(itemDescription.getPriceCoins(), itemDescription.getItemDesc(), this.storageId);
+            if (SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).getTransactionsByID(this.storageId) != null)
+                SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).setSelectedItem(this.storageId, false);
+
+            for (ItemLevel level : this.levels)
+                if (SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).getTransactionsByID(level.getStorageId()) != null)
+                    SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).setSelectedItem((int) level.getStorageId(), false);
         }
         catch (Exception e)
         {
@@ -41,22 +56,12 @@ public class ShopImprovableItem extends ShopIcon
         }
     }
 
-    public void resetCurrents(Player player)
-    {
-        if (SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).getTransactionSelectedByID((int) this.defaultLevel.getStorageId()) != null)
-            SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).getTransactionSelectedByID((int) this.defaultLevel.getStorageId()).setSelected(false);
-
-        for (ItemLevel level : this.levels)
-            if (SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).getTransactionSelectedByID((int) level.getStorageId()) != null)
-                SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).getTransactionSelectedByID((int) level.getStorageId()).setSelected(false);
-    }
-
-    public void addLevel(long storageId)
+    public void addLevel(int storageId)
     {
         try
         {
-            IItemDescription itemDescription = SamaGamesAPI.get().getShopsManager().getItemDescription((int) storageId);
-            this.levels.add(new ItemLevel(itemDescription.getPriceCoins(), itemDescription.getItemDesc(), storageId));
+            IItemDescription itemDescription = SamaGamesAPI.get().getShopsManager().getItemDescription(storageId);
+            this.levels.add(new ItemLevel(storageId, itemDescription.getItemDesc(), itemDescription.getPriceCoins()));
         }
         catch (Exception e)
         {
@@ -92,13 +97,13 @@ public class ShopImprovableItem extends ShopIcon
                 {
                     this.resetCurrents(player);
 
-                    // TODO: Add the item to the player
-                    SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).getTransactionSelectedByID((int) finalLevel.getStorageId()).setSelected(true);
+                    SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).addItem(this.storageId, this.itemDescription.getPriceCoins(), 0, true, (aBoolean, throwable) ->
+                    {
+                        player.sendMessage(PlayerManager.SHOPPING_TAG + ChatColor.GREEN + "Vous avez débloqué le niveau supérieur pour cette amélioration.");
 
-                    player.sendMessage(PlayerManager.SHOPPING_TAG + ChatColor.GREEN + "Vous avez débloqué le niveau supérieur pour cette amélioration.");
-
-                    this.hub.getScoreboardManager().update(player);
-                    this.hub.getGuiManager().openGui(player, parent);
+                        this.hub.getScoreboardManager().update(player);
+                        this.hub.getGuiManager().openGui(player, parent);
+                    });
                 });
 
                 this.hub.getGuiManager().getPlayerGui(player).update(player);
@@ -117,7 +122,7 @@ public class ShopImprovableItem extends ShopIcon
         int currentLevel = -1;
         ItemLevel next;
 
-        if (SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).getTransactionSelectedByID((int) this.levels.get(0).getStorageId()) == null)
+        if (SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).getTransactionsByID(this.levels.get(0).getStorageId()) == null)
         {
             next = this.levels.get(0);
         }
@@ -131,16 +136,13 @@ public class ShopImprovableItem extends ShopIcon
                 next = this.getNextItem(player);
         }
 
-        List<String> lore = new ArrayList<>();
+        ItemStack icon = this.getIcon();
+        ItemMeta meta = icon.getItemMeta();
+        List<String> lore = meta.getLore() != null ? meta.getLore() : new ArrayList<>();
 
-        for(String str : this.description)
-            lore.add(ChatColor.GRAY + str);
-
-        lore.add("");
-
-        if(this.defaultLevel != null)
+        if (this.defaultDescription != null)
         {
-            lore.add(ChatColor.GREEN + "Par défaut : " + this.defaultLevel.getDescription());
+            lore.add(ChatColor.GREEN + "Par défaut : " + this.defaultDescription);
             lore.add("");
         }
 
@@ -166,31 +168,19 @@ public class ShopImprovableItem extends ShopIcon
         else
             lore.add(ChatColor.GRAY + "Prix : " + ChatColor.GOLD + next.getCost() + " pièces");
 
-        ItemStack icon = this.getIcon();
-        ItemMeta meta = icon.getItemMeta();
         meta.setLore(lore);
         icon.setItemMeta(meta);
 
         return icon;
     }
 
-    public ItemLevel getItemLevel(int level)
-    {
-        if (level == -1)
-            return null;
-        else if (level >= this.levels.size())
-            return null;
-        else
-            return this.levels.get(level);
-    }
-
-    public int getLevel(Player player)
+    private int getLevel(Player player)
     {
         int level = 0;
 
         for (ItemLevel itemLevel : this.levels)
         {
-            ITransaction transaction = SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).getTransactionSelectedByID((int) itemLevel.getStorageId());
+            ITransaction transaction = SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).getTransactionsByID(itemLevel.getStorageId());
 
             if (transaction != null && transaction.isSelected())
                 return level;
@@ -201,7 +191,7 @@ public class ShopImprovableItem extends ShopIcon
         return level;
     }
 
-    public ItemLevel getNextItem(Player player)
+    private ItemLevel getNextItem(Player player)
     {
         int level = this.getLevel(player);
         level++;
@@ -210,15 +200,5 @@ public class ShopImprovableItem extends ShopIcon
             return null;
 
         return this.levels.get(level);
-    }
-
-    public boolean isOwned(Player player, long storageId)
-    {
-        return SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).getTransactionSelectedByID((int) storageId) != null;
-    }
-
-    public boolean isActive(Player player, long storageId)
-    {
-        return this.isOwned(player, storageId) && SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).getTransactionSelectedByID((int) storageId).isSelected();
     }
 }

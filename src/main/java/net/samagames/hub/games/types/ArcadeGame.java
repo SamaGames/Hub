@@ -162,6 +162,26 @@ public class ArcadeGame extends AbstractGame
     }
 
     @Override
+    public int getOnlinePlayers()
+    {
+        int players = 0;
+
+        players += this.hub.getGameManager().getGameByIdentifier("craftmything").getOnlinePlayers();
+        players += this.hub.getGameManager().getGameByIdentifier("witherparty").getOnlinePlayers();
+        players += this.hub.getGameManager().getGameByIdentifier("hangovergames").getOnlinePlayers();
+        players += this.hub.getGameManager().getGameByIdentifier("pacman").getOnlinePlayers();
+        players += this.hub.getGameManager().getGameByIdentifier("burnthatchicken").getOnlinePlayers();
+        players += this.hub.getGameManager().getGameByIdentifier("timberman").getOnlinePlayers();
+        players += this.hub.getGameManager().getGameByIdentifier("bomberman").getOnlinePlayers();
+        players += this.hub.getGameManager().getGameByIdentifier("flyring").getOnlinePlayers();
+        players += this.hub.getGameManager().getGameByIdentifier("partygames").getOnlinePlayers();
+        players += this.hub.getGameManager().getGameByIdentifier("casino").getOnlinePlayers();
+        players += this.hub.getGameManager().getGameByIdentifier("samabox").getOnlinePlayers();
+
+        return players;
+    }
+
+    @Override
     public boolean isGroup()
     {
         return true;

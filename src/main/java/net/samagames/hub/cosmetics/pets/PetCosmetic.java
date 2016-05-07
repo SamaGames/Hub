@@ -15,9 +15,9 @@ class PetCosmetic extends AbstractCosmetic
     private final PetType petType;
     private final PetData[] petDatas;
 
-    PetCosmetic(Hub hub, long storageId, String displayName, ItemStack icon, int stars, CosmeticRarity rarity, CosmeticAccessibility accessibility, String[] description, PetType petType, PetData... petDatas)
+    PetCosmetic(Hub hub, int storageId, PetType petType, PetData... petDatas) throws Exception
     {
-        super(hub, storageId, displayName, icon, stars, rarity, accessibility, description);
+        super(hub, storageId);
 
         this.petType = petType;
         this.petDatas = petDatas;
