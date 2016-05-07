@@ -85,14 +85,12 @@ public class CosmeticManager extends AbstractManager
         return equipped;
     }
 
-    public CosmeticManager init()
+    public void init()
     {
         this.disguiseManager = new DisguiseManager(this.hub);
         this.jukeboxManager = new JukeboxManager(this.hub);
         this.petManager = new PetManager(this.hub);
         this.gadgetManager = new GadgetManager(this.hub);
         this.particleManager = new ParticleManager(this.hub);
-
-        return this;
     }
 }

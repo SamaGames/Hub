@@ -58,9 +58,9 @@ public class Hub extends JavaPlugin
     private GuiManager guiManager;
     private ParkourManager parkourManager;
     private InteractionManager interactionManager;
-    private CosmeticManager cosmeticManager;
     private NPCManager npcManager;
     private CommandManager commandManager;
+    private CosmeticManager cosmeticManager;
 
     private ScheduledFuture hydroangeasSynchronization;
 
@@ -97,9 +97,11 @@ public class Hub extends JavaPlugin
         this.guiManager = new GuiManager(this);
         this.parkourManager = new ParkourManager(this);
         this.interactionManager = new InteractionManager(this);
-        this.cosmeticManager = new CosmeticManager(this).init();
         this.npcManager = new NPCManager(this);
         this.commandManager = new CommandManager(this);
+
+        this.cosmeticManager = new CosmeticManager(this);
+        this.cosmeticManager.init();
 
         this.getServer().getPluginManager().registerEvents(new PlayerListener(this), this);
         this.getServer().getPluginManager().registerEvents(new ParkourListener(this), this);
@@ -164,9 +166,9 @@ public class Hub extends JavaPlugin
     public GuiManager getGuiManager() { return this.guiManager; }
     public ParkourManager getParkourManager() { return this.parkourManager; }
     public InteractionManager getInteractionManager() { return this.interactionManager; }
-    public CosmeticManager getCosmeticManager() { return this.cosmeticManager; }
     public NPCManager getNPCManager() { return this.npcManager; }
     public CommandManager getCommandManager() { return this.commandManager; }
+    public CosmeticManager getCosmeticManager() { return this.cosmeticManager; }
 
     public EffectLib getEffectLib()
     {
