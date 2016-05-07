@@ -39,7 +39,7 @@ public class PersistanceUtils
      */
     public static ItemStack makeStack(Hub hub, IItemDescription itemDescription)
     {
-        String[] itemData = itemDescription.getItemDesc().split(":");
+        String[] itemData = itemDescription.getItemMinecraftId().split(":");
         ItemStack stack;
 
         if (itemData[0].equalsIgnoreCase("B"))
