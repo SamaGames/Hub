@@ -50,7 +50,7 @@ public class PersistanceUtils
 
             stack = new ItemStack(material, size, durability);
         }
-        if (itemData[0].equalsIgnoreCase("P"))
+        else if (itemData[0].equalsIgnoreCase("P"))
         {
             String nmsPotionName = itemData[1].toLowerCase();
             boolean isSplash = Boolean.parseBoolean(itemData[2]);
