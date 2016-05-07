@@ -21,8 +21,6 @@ public class CosmeticManager extends AbstractManager
     public CosmeticManager(Hub hub)
     {
         super(hub);
-
-        this.init(hub);
     }
 
     @Override
@@ -87,12 +85,14 @@ public class CosmeticManager extends AbstractManager
         return equipped;
     }
 
-    private void init(Hub hub)
+    public CosmeticManager init()
     {
-        this.disguiseManager = new DisguiseManager(hub);
-        this.jukeboxManager = new JukeboxManager(hub);
-        this.petManager = new PetManager(hub);
-        this.gadgetManager = new GadgetManager(hub);
-        this.particleManager = new ParticleManager(hub);
+        this.disguiseManager = new DisguiseManager(this.hub);
+        this.jukeboxManager = new JukeboxManager(this.hub);
+        this.petManager = new PetManager(this.hub);
+        this.gadgetManager = new GadgetManager(this.hub);
+        this.particleManager = new ParticleManager(this.hub);
+
+        return this;
     }
 }

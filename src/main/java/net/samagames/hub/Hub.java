@@ -97,7 +97,7 @@ public class Hub extends JavaPlugin
         this.guiManager = new GuiManager(this);
         this.parkourManager = new ParkourManager(this);
         this.interactionManager = new InteractionManager(this);
-        this.cosmeticManager = new CosmeticManager(this);
+        this.cosmeticManager = new CosmeticManager(this).init();
         this.npcManager = new NPCManager(this);
         this.commandManager = new CommandManager(this);
 
