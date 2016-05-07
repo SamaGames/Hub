@@ -77,7 +77,7 @@ public class PersistanceUtils
         List<String> lore = new ArrayList<>();
 
         if (itemDescription.getItemDesc() != null)
-            for (String str : itemDescription.getItemDesc().split("\\n"))
+            for (String str : itemDescription.getItemDesc().split("[\\r\\n]+"))
                 lore.add(ChatColor.GRAY + ChatColor.translateAlternateColorCodes('&', str));
 
         meta.setLore(lore);
