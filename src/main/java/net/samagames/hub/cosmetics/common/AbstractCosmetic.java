@@ -82,10 +82,12 @@ public abstract class AbstractCosmetic implements Comparable<AbstractCosmetic>
             {
                 SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).withdrawStars(this.stars, (newAmount, difference, error) ->
                 {
-                    SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).addItem(this.storageId, 0, 0, false, (success, throwable) ->
+                    SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).addItem(this.storageId, 0, this.stars, false, (success, throwable) ->
                     {
                         if (success)
                         {
+                            SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).refresh();
+
                             this.hub.getScoreboardManager().update(player);
                             this.hub.getGuiManager().openGui(player, parent);
 
@@ -182,11 +184,6 @@ public abstract class AbstractCosmetic implements Comparable<AbstractCosmetic>
     public boolean isOwned(Player player)
     {
         if (this.permissionNeededToView != null && this.canView(player))
-            return true;
-
-        if (this.accessibility == CosmeticAccessibility.STAFF && SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "network.staff"))
-            return true;
-        else if (this.accessibility == CosmeticAccessibility.ADMIN && SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "network.admin"))
             return true;
 
         return SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).getTransactionsByID(this.storageId) != null;

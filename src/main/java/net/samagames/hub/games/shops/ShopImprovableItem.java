@@ -99,6 +99,8 @@ public class ShopImprovableItem extends ShopIcon
 
                     SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).addItem(this.storageId, this.itemDescription.getPriceCoins(), 0, true, (aBoolean, throwable) ->
                     {
+                        SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).refresh();
+
                         player.sendMessage(PlayerManager.SHOPPING_TAG + ChatColor.GREEN + "Vous avez débloqué le niveau supérieur pour cette amélioration.");
 
                         this.hub.getScoreboardManager().update(player);
