@@ -42,7 +42,7 @@ public abstract class AbstractCosmetic implements Comparable<AbstractCosmetic>
 
         IItemDescription itemDescription = SamaGamesAPI.get().getShopsManager().getItemDescription(storageId);
 
-        this.icon = PersistanceUtils.makeStack(itemDescription);
+        this.icon = PersistanceUtils.makeStack(hub, itemDescription);
         this.rarity = CosmeticRarity.valueOf(itemDescription.getItemRarity().toUpperCase());
         this.accessibility = CosmeticAccessibility.valueOf(itemDescription.getRankAccessibility().toUpperCase());
         this.stars = itemDescription.getPriceStars();

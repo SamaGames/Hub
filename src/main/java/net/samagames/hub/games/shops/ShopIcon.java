@@ -31,7 +31,7 @@ public abstract class ShopIcon
         hub.getGameManager().log(Level.INFO, "Fetching shop icon data for the id: " + storageId);
 
         this.itemDescription = SamaGamesAPI.get().getShopsManager().getItemDescription(storageId);
-        this.icon = PersistanceUtils.makeStack(itemDescription);
+        this.icon = PersistanceUtils.makeStack(hub, this.itemDescription);
     }
 
     public abstract void execute(Player player, ClickType clickType);

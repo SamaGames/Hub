@@ -1,6 +1,7 @@
 package net.samagames.hub.utils;
 
 import net.samagames.api.shops.IItemDescription;
+import net.samagames.hub.Hub;
 import net.samagames.tools.MojangShitUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -36,11 +37,19 @@ public class PersistanceUtils
      *
      * @return An ItemStack
      */
-    public static ItemStack makeStack(IItemDescription itemDescription)
+    public static ItemStack makeStack(Hub hub, IItemDescription itemDescription)
     {
         String[] itemData = itemDescription.getItemDesc().split(":");
         ItemStack stack;
 
+        if (itemData[0].equalsIgnoreCase("B"))
+        {
+            Material material = Material.valueOf(itemData[1].toUpperCase());
+            int size = Integer.parseInt(itemData[2]);
+            byte durability = Byte.parseByte(itemData[3]);
+
+            stack = new ItemStack(material, size, durability);
+        }
         if (itemData[0].equalsIgnoreCase("P"))
         {
             String nmsPotionName = itemData[1].toLowerCase();
@@ -57,11 +66,9 @@ public class PersistanceUtils
         }
         else
         {
-            Material material = Material.valueOf(itemData[1].toUpperCase());
-            int size = Integer.parseInt(itemData[2]);
-            byte durability = Byte.parseByte(itemData[3]);
+            hub.getLogger().warning("[PersistanceUtils] Failed to recover the correct item type! (" + String.join(", ", itemData) + ")");
 
-            stack = new ItemStack(material, size, durability);
+            stack = new ItemStack(Material.DEAD_BUSH, 1);
         }
 
         ItemMeta meta = stack.getItemMeta();
