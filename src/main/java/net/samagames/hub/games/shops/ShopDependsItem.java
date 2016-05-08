@@ -70,8 +70,6 @@ public class ShopDependsItem extends ShopItem
 
                     SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).addItem(this.storageId, this.itemDescription.getPriceCoins(), 0, true, (aBoolean, throwable) ->
                     {
-                        SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).refresh();
-
                         player.sendMessage(PlayerManager.SHOPPING_TAG + ChatColor.GREEN + "Vous avez acheté et équipé " + ChatColor.AQUA + this.getIcon().getItemMeta().getDisplayName());
 
                         this.hub.getScoreboardManager().update(player);

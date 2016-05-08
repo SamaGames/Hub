@@ -78,7 +78,7 @@ public class PersistanceUtils
         if (itemDescription.getItemDesc() != null)
         {
             hub.getLogger().warning("[PersistanceUtils] Description: " + itemDescription.getItemDesc());
-            
+
             String[] lines = itemDescription.getItemDesc().split("\n");
 
             hub.getLogger().warning("[PersistanceUtils] Description lines:");

@@ -86,8 +86,6 @@ public abstract class AbstractCosmetic implements Comparable<AbstractCosmetic>
                     {
                         if (success)
                         {
-                            SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).refresh();
-
                             this.hub.getScoreboardManager().update(player);
                             this.hub.getGuiManager().openGui(player, parent);
 
