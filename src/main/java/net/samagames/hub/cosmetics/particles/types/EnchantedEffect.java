@@ -19,9 +19,9 @@ public class EnchantedEffect extends Effect {
 
     @Override
     public void onRun() {
-        double dx = this.random.nextDouble() % 3F - 1.5F;
-        double dy = this.random.nextDouble() % 2F;
-        double dz = this.random.nextDouble() % 3F - 1.5F;
+        double dx = this.random.nextDouble() % 3D - 1.5D;
+        double dy = this.random.nextDouble() % 2D;
+        double dz = this.random.nextDouble() % 3D - 1.5D;
         display(ParticleEffect.ENCHANTMENT_TABLE, this.getEntity().getLocation().add(dx, dy, dz));
     }
 }
