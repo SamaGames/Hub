@@ -2,6 +2,7 @@ package net.samagames.hub;
 
 import de.slikey.effectlib.EffectLib;
 import net.samagames.api.SamaGamesAPI;
+import net.samagames.api.games.GamesNames;
 import net.samagames.api.games.Status;
 import net.samagames.hub.commands.CommandManager;
 import net.samagames.hub.common.HubRefresher;
@@ -115,6 +116,8 @@ public class Hub extends JavaPlugin
         this.getServer().getPluginManager().registerEvents(new WorldEditionListener(this), this);
 
         this.hydroangeasSynchronization = this.getScheduledExecutorService().scheduleAtFixedRate(() -> new ServerStatus(SamaGamesAPI.get().getServerName(), "Hub", "Map", Status.IN_GAME, Bukkit.getOnlinePlayers().size(), Bukkit.getMaxPlayers()).sendToHydro(), 0, 1, TimeUnit.MINUTES);
+
+        SamaGamesAPI.get().getStatsManager().setStatsToLoad(GamesNames.GLOBAL, true);
     }
 
     @Override
