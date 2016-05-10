@@ -24,6 +24,6 @@ public class LoverEffect extends Effect {
     public void onRun() {
         double dx = this.random.nextDouble() % 0.2F;
         double dz = this.random.nextDouble() % 0.2F;
-        display(ParticleEffect.HEART, this.getEntity().getLocation().add(dx, 1.5D, dz));
+        display(ParticleEffect.HEART, this.getEntity().getLocation().add(dx, 2D, dz));
     }
 }

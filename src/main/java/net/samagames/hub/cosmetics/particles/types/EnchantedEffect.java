@@ -12,16 +12,16 @@ public class EnchantedEffect extends Effect {
 
     public EnchantedEffect(EffectManager effectManager) {
         super(effectManager);
-        this.period = 3;
-        this.iterations = 4;
+        this.period = 2;
+        this.iterations = 5;
         this.random = new Random();
     }
 
     @Override
     public void onRun() {
-        double dx = this.random.nextDouble() % 1.5F;
+        double dx = this.random.nextDouble() % 3F - 1.5F;
         double dy = this.random.nextDouble() % 2F;
-        double dz = this.random.nextDouble() % 1.5F;
+        double dz = this.random.nextDouble() % 3F - 1.5F;
         display(ParticleEffect.ENCHANTMENT_TABLE, this.getEntity().getLocation().add(dx, dy, dz));
     }
 }

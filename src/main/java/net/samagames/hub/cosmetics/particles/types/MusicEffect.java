@@ -21,10 +21,11 @@ public class MusicEffect extends Effect {
         this.random = new Random();
     }
 
+    @SuppressWarnings("deprecated")
     @Override
     public void onRun() {
         double dx = this.random.nextDouble() % 0.2F;
         double dz = this.random.nextDouble() % 0.2F;
-        display(ParticleEffect.NOTE, this.getEntity().getLocation().add(dx, 1.5D, dz), Color.fromRGB(this.random.nextInt()));
+        ParticleEffect.NOTE.display(this.getEntity().getLocation().add(dx, 2D, dz), visibleRange, 0, 0, 0, .5F, 1);
     }
 }
