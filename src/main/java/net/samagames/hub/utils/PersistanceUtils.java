@@ -77,17 +77,10 @@ public class PersistanceUtils
 
         if (itemDescription.getItemDesc() != null)
         {
-            hub.getLogger().warning("[PersistanceUtils] Description: " + itemDescription.getItemDesc());
-
             String[] lines = itemDescription.getItemDesc().split("/n");
 
-            hub.getLogger().warning("[PersistanceUtils] Description lines:");
-
             for (String line : lines)
-            {
                 lore.add(ChatColor.GRAY + ChatColor.translateAlternateColorCodes('&', line));
-                hub.getLogger().warning("[PersistanceUtils] - " + line);
-            }
         }
 
         meta.setLore(lore);
