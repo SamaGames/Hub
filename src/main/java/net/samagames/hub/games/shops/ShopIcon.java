@@ -42,7 +42,8 @@ public abstract class ShopIcon
         try
         {
             for (int resetId : this.resetIds)
-                SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).setSelectedItem(resetId, false);
+                if (SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).getTransactionsByID(resetId) != null)
+                    SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).setSelectedItem(resetId, false);
         }
         catch (Exception e)
         {

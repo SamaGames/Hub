@@ -73,6 +73,14 @@ public class ShopImprovableItem extends ShopIcon
     {
         ItemLevel next = this.levels.get(0);
 
+        if (SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).getTransactionsByID(this.levels.get(0).getStorageId()) != null)
+        {
+            if (this.getLevel(player) == 0)
+                next = this.levels.get(1);
+            else
+                next = this.getNextItem(player);
+        }
+
         if (this.getLevel(player) != 0)
             next = this.getNextItem(player);
 
