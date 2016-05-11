@@ -4,6 +4,7 @@ import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.craftbukkit.v1_9_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -81,5 +82,22 @@ public class PlayerProtectionListener implements Listener
     private boolean canDoAction(Player player)
     {
         return this.hub.getPlayerManager().canBuild() && player.isOp();
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void onPlayerMove(PlayerMoveEvent event)
+    {
+        if (event.getTo().getX() > 250 || event.getTo().getX() < -350 || event.getTo().getZ() > 620 || event.getTo().getZ() < -350)
+        {
+            event.getPlayer().sendMessage(ChatColor.RED + "Vous ou allez vous comme ça ?");
+            event.setCancelled(true);
+            this.hub.getServer().getScheduler().runTaskLater(this.hub, () -> {
+                event.getPlayer().teleport(this.hub.getPlayerManager().getSpawn());
+                if (event.getPlayer().isFlying())
+                    event.getPlayer().setFlying(false);
+                if (event.getPlayer().isGliding())
+                    ((CraftPlayer)event.getPlayer()).getHandle().setFlag(7, false);
+            }, 1);
+        }
     }
 }
