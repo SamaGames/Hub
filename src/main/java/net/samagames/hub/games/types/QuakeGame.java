@@ -81,26 +81,26 @@ public class QuakeGame extends AbstractGame
             ShopCategory shopCategory = new ShopCategory(this.hub, this, 80, 12);
             ShopCategory hoesCategory = new ShopCategory(this.hub, this, 88, 21);
 
-            ShopDependsItem woodenHoe = new ShopDependsItem(this.hub, 81, 0, new int[]{ 82, 83, 84, 85, 86, 87 }, null);
+            ShopDependsItem woodenHoe = new ShopDependsItem(this.hub, 81, 31, new int[]{ 82, 83, 84, 85, 86, 87 }, null);
             woodenHoe.setDefaultItem(true);
             hoesCategory.addContent(woodenHoe);
 
-            ShopDependsItem stoneHoe = new ShopDependsItem(this.hub, 82, 0, new int[]{ 81, 83, 84, 85, 86, 87 }, null);
+            ShopDependsItem stoneHoe = new ShopDependsItem(this.hub, 82, 20, new int[]{ 81, 83, 84, 85, 86, 87 }, woodenHoe);
             hoesCategory.addContent(stoneHoe);
 
-            ShopDependsItem ironHoe = new ShopDependsItem(this.hub, 83, 0, new int[]{ 81, 82, 84, 85, 86, 87 }, null);
+            ShopDependsItem ironHoe = new ShopDependsItem(this.hub, 83, 21, new int[]{ 81, 82, 84, 85, 86, 87 }, stoneHoe);
             hoesCategory.addContent(ironHoe);
 
-            ShopDependsItem goldHoe = new ShopDependsItem(this.hub, 84, 0, new int[]{ 81, 82, 83, 85, 86, 87 }, null);
+            ShopDependsItem goldHoe = new ShopDependsItem(this.hub, 84, 22, new int[]{ 81, 82, 83, 85, 86, 87 }, ironHoe);
             hoesCategory.addContent(goldHoe);
 
-            ShopDependsItem diamondHoe = new ShopDependsItem(this.hub, 85, 0, new int[]{ 81, 82, 83, 84, 86, 87 }, null);
+            ShopDependsItem diamondHoe = new ShopDependsItem(this.hub, 85, 23, new int[]{ 81, 82, 83, 84, 86, 87 }, goldHoe);
             hoesCategory.addContent(diamondHoe);
 
-            ShopDependsItem diamondHoe2 = new ShopDependsItem(this.hub, 86, 0, new int[]{ 81, 82, 83, 84, 85, 87 }, null);
+            ShopDependsItem diamondHoe2 = new ShopDependsItem(this.hub, 86, 24, new int[]{ 81, 82, 83, 84, 85, 87 }, diamondHoe);
             hoesCategory.addContent(diamondHoe2);
 
-            ShopDependsItem blaster = new ShopDependsItem(this.hub, 87, 0, new int[]{ 81, 82, 83, 84, 85, 86 }, null);
+            ShopDependsItem blaster = new ShopDependsItem(this.hub, 87, 13, new int[]{ 81, 82, 83, 84, 85, 86 }, diamondHoe2);
             hoesCategory.addContent(blaster);
 
             shopCategory.addContent(hoesCategory);

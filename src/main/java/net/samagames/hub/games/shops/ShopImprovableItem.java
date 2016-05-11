@@ -188,7 +188,7 @@ public class ShopImprovableItem extends ShopIcon
             level++;
         }
 
-        return level;
+        return 0;
     }
 
     private ItemLevel getNextItem(Player player)
