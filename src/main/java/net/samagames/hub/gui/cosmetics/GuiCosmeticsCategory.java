@@ -10,13 +10,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 
-class GuiCosmeticsCategory<COSMETIC extends AbstractCosmetic> extends AbstractGui
+public class GuiCosmeticsCategory<COSMETIC extends AbstractCosmetic> extends AbstractGui
 {
     private final String title;
     private final AbstractCosmeticManager<COSMETIC> manager;
     private final boolean canBeRemoved;
 
-    GuiCosmeticsCategory(Hub hub, String title, AbstractCosmeticManager<COSMETIC> manager, boolean canBeRemoved)
+    public GuiCosmeticsCategory(Hub hub, String title, AbstractCosmeticManager<COSMETIC> manager, boolean canBeRemoved)
     {
         super(hub);
 

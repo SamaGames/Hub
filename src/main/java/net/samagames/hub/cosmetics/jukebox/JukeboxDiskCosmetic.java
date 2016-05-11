@@ -10,12 +10,12 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.Random;
 
-class JukeboxDiskCosmetic extends AbstractCosmetic
+public class JukeboxDiskCosmetic extends AbstractCosmetic
 {
     private final Song song;
     private final int seconds;
 
-    JukeboxDiskCosmetic(Hub hub, int storageId, Song song, int seconds) throws Exception
+    public JukeboxDiskCosmetic(Hub hub, int storageId, Song song, int seconds) throws Exception
     {
         super(hub, storageId);
 

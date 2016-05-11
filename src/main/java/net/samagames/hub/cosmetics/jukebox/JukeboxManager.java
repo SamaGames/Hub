@@ -22,7 +22,7 @@ import java.util.concurrent.TimeUnit;
 
 public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
 {
-    private static final String JUKEBOX_TAG = ChatColor.DARK_AQUA + "[" + ChatColor.AQUA + "Jukebox" + ChatColor.DARK_AQUA + "] " + ChatColor.RESET;
+    public static final String JUKEBOX_TAG = ChatColor.DARK_AQUA + "[" + ChatColor.AQUA + "Jukebox" + ChatColor.DARK_AQUA + "] " + ChatColor.RESET;
     private static final ParticleEffect WOOT_EFFECT = ParticleEffect.NOTE;
     private static final ParticleEffect MEH_EFFECT = ParticleEffect.VILLAGER_ANGRY;
 
@@ -222,7 +222,7 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
                     this.barTask.cancel();
                     this.barTask = null;
 
-                    //BossBarAPI.flushBars();
+                    BossBarAPI.flushBars();
                 }
 
                 if (this.hub.getServer().getPlayer(playerUUID) != null)

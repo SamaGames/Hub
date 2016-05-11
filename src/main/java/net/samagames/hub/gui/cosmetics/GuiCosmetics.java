@@ -1,6 +1,5 @@
 package net.samagames.hub.gui.cosmetics;
 
-import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import net.samagames.hub.gui.AbstractGui;
 import org.bukkit.ChatColor;

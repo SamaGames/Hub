@@ -30,16 +30,16 @@ public class CommandManager extends AbstractManager
     private void registerCommands()
     {
         // Player commands ----------------------------------------------
-        //this.registerCommand("click", null, CommandClickMe.class);
-        //this.registerCommand("meh", null, CommandMeh.class);
-        //this.registerCommand("woot", null, CommandWoot.class);
-        //this.registerCommand("jukebox", null, CommandJukebox.class);
+        this.registerCommand("click", null, CommandClickme.class);
+        this.registerCommand("meh", null, CommandMeh.class);
+        this.registerCommand("woot", null, CommandWoot.class);
+        this.registerCommand("jukebox", null, CommandJukebox.class);
         this.registerCommand("join", null, CommandJoin.class);
 
         // Moderating commands ------------------------------------------
-        //this.registerCommand("pllock", "hub.jukebox.lock", CommandPlaylistLock.class);
-        //this.registerCommand("plnext", "hub.jukebox.next", CommandPlaylistNext.class);
-        //this.registerCommand("plclear", "hub.jukebox.clear", CommandPlaylistClear.class);
+        this.registerCommand("pllock", "hub.jukebox.lock", CommandPlaylistLock.class);
+        this.registerCommand("plnext", "hub.jukebox.next", CommandPlaylistNext.class);
+        this.registerCommand("plclear", "hub.jukebox.clear", CommandPlaylistClear.class);
         this.registerCommand("slow", "hub.mod.slow", CommandSlow.class);
         this.registerCommand("shutup", "hub.mod.shutup", CommandShutup.class);
 
@@ -47,7 +47,7 @@ public class CommandManager extends AbstractManager
         //this.registerCommand("npc", "hub.admin.npc", CommandNPC.class);
         this.registerCommand("sign", "hub.admin.sign", CommandSign.class);
         this.registerCommand("anguille", "hub.anguille", CommandAnguille.class);
-        //this.registerCommand("nbs", "hub.jukebox.nbs", CommandNBS.class);
+        this.registerCommand("nbs", "hub.jukebox.nbs", CommandNBS.class);
         this.registerCommand("evacuate", "hub.admin.evacuate", CommandEvacuate.class);
 
         // Easter Eggs commands -----------------------------------------
