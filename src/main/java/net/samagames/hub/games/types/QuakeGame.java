@@ -76,6 +76,47 @@ public class QuakeGame extends AbstractGame
     @Override
     public ShopCategory getShopConfiguration()
     {
+        try
+        {
+            ShopCategory shopCategory = new ShopCategory(this.hub, this, 80, 12);
+            ShopCategory hoesCategory = new ShopCategory(this.hub, this, 88, 21);
+
+            ShopDependsItem woodenHoe = new ShopDependsItem(this.hub, 81, 0, new int[]{ 82, 83, 84, 85, 86, 87 }, null);
+            woodenHoe.setDefaultItem(true);
+            hoesCategory.addContent(woodenHoe);
+
+            ShopDependsItem stoneHoe = new ShopDependsItem(this.hub, 82, 0, new int[]{ 81, 83, 84, 85, 86, 87 }, null);
+            hoesCategory.addContent(stoneHoe);
+
+            ShopDependsItem ironHoe = new ShopDependsItem(this.hub, 83, 0, new int[]{ 81, 82, 84, 85, 86, 87 }, null);
+            hoesCategory.addContent(ironHoe);
+
+            ShopDependsItem goldHoe = new ShopDependsItem(this.hub, 84, 0, new int[]{ 81, 82, 83, 85, 86, 87 }, null);
+            hoesCategory.addContent(goldHoe);
+
+            ShopDependsItem diamondHoe = new ShopDependsItem(this.hub, 85, 0, new int[]{ 81, 82, 83, 84, 86, 87 }, null);
+            hoesCategory.addContent(diamondHoe);
+
+            ShopDependsItem diamondHoe2 = new ShopDependsItem(this.hub, 86, 0, new int[]{ 81, 82, 83, 84, 85, 87 }, null);
+            hoesCategory.addContent(diamondHoe2);
+
+            ShopDependsItem blaster = new ShopDependsItem(this.hub, 87, 0, new int[]{ 81, 82, 83, 84, 85, 86 }, null);
+            hoesCategory.addContent(blaster);
+
+            shopCategory.addContent(hoesCategory);
+
+            ShopImprovableItem shopImprovableItem = new ShopImprovableItem(this.hub, 89, 23, 90);
+            for (int i = 91; i <= 95; i++)
+                shopImprovableItem.addLevel(i);
+
+            shopCategory.addContent(shopImprovableItem);
+
+            return shopCategory;
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+        }
         return null;
     }
 
