@@ -2,6 +2,7 @@ package net.samagames.hub.cosmetics;
 
 import net.samagames.hub.Hub;
 import net.samagames.hub.common.managers.AbstractManager;
+import net.samagames.hub.cosmetics.balloons.BalloonManager;
 import net.samagames.hub.cosmetics.common.AbstractCosmetic;
 import net.samagames.hub.cosmetics.disguises.DisguiseManager;
 import net.samagames.hub.cosmetics.gadgets.GadgetManager;
@@ -17,6 +18,7 @@ public class CosmeticManager extends AbstractManager
     private PetManager petManager;
     private GadgetManager gadgetManager;
     private ParticleManager particleManager;
+    private BalloonManager balloonManager;
 
     public CosmeticManager(Hub hub)
     {
@@ -42,6 +44,7 @@ public class CosmeticManager extends AbstractManager
         this.petManager.disableCosmetic(player, true);
         this.gadgetManager.disableCosmetic(player, true);
         this.particleManager.disableCosmetic(player, true);
+        this.balloonManager.disableCosmetic(player, true);
     }
 
     public DisguiseManager getDisguiseManager()
@@ -69,6 +72,11 @@ public class CosmeticManager extends AbstractManager
         return this.particleManager;
     }
 
+    public BalloonManager getBalloonManager()
+    {
+        return balloonManager;
+    }
+
     public boolean isEquipped(Player player, AbstractCosmetic cosmetic)
     {
         boolean equipped = false;
@@ -81,6 +89,8 @@ public class CosmeticManager extends AbstractManager
             equipped = true;
         else if (this.particleManager.getEquippedCosmetic(player) != null && cosmetic.compareTo(this.particleManager.getEquippedCosmetic(player)) > 0)
             equipped = true;
+        else if (this.balloonManager.getEquippedCosmetic(player) != null && cosmetic.compareTo(this.balloonManager.getEquippedCosmetic(player)) > 0)
+            equipped = true;
 
         return equipped;
     }
@@ -92,5 +102,6 @@ public class CosmeticManager extends AbstractManager
         this.petManager = new PetManager(this.hub);
         this.gadgetManager = new GadgetManager(this.hub);
         this.particleManager = new ParticleManager(this.hub);
+        this.balloonManager = new BalloonManager(this.hub);
     }
 }

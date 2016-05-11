@@ -52,6 +52,10 @@ public class GuiCosmetics extends AbstractGui
                 ChatColor.GRAY + "nombreux gadgets venant du futur !"
         }, DyeColor.YELLOW, "gadgets");
 
+        this.randomIcon(8, ChatColor.DARK_BLUE + "" + ChatColor.BLUE + "Ballons" + ChatColor.DARK_BLUE + "", Material.CLAY_BALL, new String[]{
+                ChatColor.GRAY + "Des petits ballons au dessus de votre tête !"
+        }, DyeColor.BLUE, "balloons");
+
         this.setSlotData(ChatColor.DARK_PURPLE + "◢" + ChatColor.LIGHT_PURPLE + " Jukebox " + ChatColor.DARK_PURPLE + "◣", Material.JUKEBOX, 31, new String[]{
                 ChatColor.GRAY + "Devenez un véritable SamaDJ !"
         }, "jukebox");
@@ -86,6 +90,10 @@ public class GuiCosmetics extends AbstractGui
 
             case "jukebox":
                 this.hub.getGuiManager().openGui(player, new GuiCosmeticsCategory<>(this.hub, "Jukebox", this.hub.getCosmeticManager().getJukeboxManager(), false));
+                break;
+
+            case "balloons":
+                this.hub.getGuiManager().openGui(player, new GuiCosmeticsCategory<>(this.hub, "Ballons", this.hub.getCosmeticManager().getBalloonManager(), true));
                 break;
 
             case "back":
