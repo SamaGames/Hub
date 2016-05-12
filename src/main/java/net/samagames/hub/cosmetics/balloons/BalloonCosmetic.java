@@ -1,14 +1,21 @@
 package net.samagames.hub.cosmetics.balloons;
 
+import com.google.common.collect.Sets;
+import net.minecraft.server.v1_9_R1.EntityInsentient;
+import net.minecraft.server.v1_9_R1.Navigation;
+import net.minecraft.server.v1_9_R1.PathfinderGoalSelector;
 import net.samagames.hub.Hub;
 import net.samagames.hub.cosmetics.common.AbstractCosmetic;
+import org.bukkit.craftbukkit.v1_9_R1.entity.CraftEntity;
 import org.bukkit.craftbukkit.v1_9_R1.entity.CraftLivingEntity;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitTask;
 
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -45,6 +52,7 @@ class BalloonCosmetic extends AbstractCosmetic
             livingEntities[i].addPotionEffect(PotionEffectType.LEVITATION.createEffect(Integer.MAX_VALUE, 2));
             livingEntities[i].setLeashHolder(player);
             ((CraftLivingEntity)livingEntities[i]).getHandle().h(true);
+            freeze(livingEntities[i]);
         }
         this.destroyTasks.put(player.getUniqueId(), this.hub.getServer().getScheduler().runTaskTimer(this.hub, () -> this.autoCheck(player), 2L, 2L));
         this.balloons.put(player.getUniqueId(), livingEntities);
@@ -75,5 +83,32 @@ class BalloonCosmetic extends AbstractCosmetic
                 this.hub.getCosmeticManager().getBalloonManager().disableCosmetic(player, false);
                 break ;
             }
+    }
+
+    private void freeze(Entity e)
+    {
+        net.minecraft.server.v1_9_R1.Entity entity = ((CraftEntity)e).getHandle();
+
+        if (!(entity instanceof EntityInsentient))
+            return ;
+
+        EntityInsentient ce = (EntityInsentient) entity;
+        Field bField;
+
+        try
+        {
+            bField = PathfinderGoalSelector.class.getDeclaredField("b");
+            bField.setAccessible(true);
+            Field cField = PathfinderGoalSelector.class.getDeclaredField("c");
+            cField.setAccessible(true);
+
+            bField.set(ce.goalSelector, Sets.newLinkedHashSet());
+            bField.set(ce.targetSelector, Sets.newLinkedHashSet());
+            cField.set(ce.goalSelector, Sets.newLinkedHashSet());
+            cField.set(ce.targetSelector, Sets.newLinkedHashSet());
+
+            ((Navigation) ce.getNavigation()).a(true);
+        }
+        catch (ReflectiveOperationException ignored) {}
     }
 }
