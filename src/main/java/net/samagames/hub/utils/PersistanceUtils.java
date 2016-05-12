@@ -2,6 +2,7 @@ package net.samagames.hub.utils;
 
 import net.samagames.api.shops.IItemDescription;
 import net.samagames.hub.Hub;
+import net.samagames.tools.GlowEffect;
 import net.samagames.tools.MojangShitUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -48,6 +49,9 @@ public class PersistanceUtils
             byte durability = Byte.parseByte(itemData[3]);
 
             stack = new ItemStack(material, size, durability);
+
+            if (itemData.length == 5 && itemData[4].equalsIgnoreCase("GLOW"))
+                GlowEffect.addGlow(stack);
         }
         else if (itemData[0].equalsIgnoreCase("P"))
         {
@@ -56,12 +60,18 @@ public class PersistanceUtils
             boolean isLingering = Boolean.parseBoolean(itemData[3]);
 
             stack = MojangShitUtils.getPotion(nmsPotionName, isSplash, isLingering);
+
+            if (itemData.length == 5 && itemData[4].equalsIgnoreCase("GLOW"))
+                GlowEffect.addGlow(stack);
         }
         else if (itemData[0].equalsIgnoreCase("E"))
         {
             EntityType entityType = EntityType.valueOf(itemData[1].toUpperCase());
 
             stack = MojangShitUtils.getMonsterEgg(entityType);
+
+            if (itemData.length == 3 && itemData[2].equalsIgnoreCase("GLOW"))
+                GlowEffect.addGlow(stack);
         }
         else
         {
