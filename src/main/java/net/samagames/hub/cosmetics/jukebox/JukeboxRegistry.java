@@ -34,6 +34,7 @@ class JukeboxRegistry extends AbstractCosmeticRegistry<JukeboxDiskCosmetic>
         JukeboxDiskCosmetic nyanCatDisk = new JukeboxDiskCosmetic(this.hub, 112, NBSDecoder.parse("NyanCat"), 76);
         JukeboxDiskCosmetic superMarioDisk = new JukeboxDiskCosmetic(this.hub, 113, NBSDecoder.parse("SuperMarioBrosMainTheme"), 77);
         JukeboxDiskCosmetic theLostOneWeepingDisk = new JukeboxDiskCosmetic(this.hub, 114, NBSDecoder.parse("TheLostOneWeeping"), 212);
+        JukeboxDiskCosmetic amenoDisk = new JukeboxDiskCosmetic(this.hub, 141, NBSDecoder.parse("AmenoEra"), 232);
 
         this.registerElement(guilesThemeDisk);
         this.registerElement(ryusThemeDisk);
@@ -55,5 +56,6 @@ class JukeboxRegistry extends AbstractCosmeticRegistry<JukeboxDiskCosmetic>
         this.registerElement(nyanCatDisk);
         this.registerElement(superMarioDisk);
         this.registerElement(theLostOneWeepingDisk);
+        this.registerElement(amenoDisk);
     }
 }
