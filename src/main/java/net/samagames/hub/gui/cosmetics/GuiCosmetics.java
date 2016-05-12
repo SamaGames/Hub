@@ -36,7 +36,7 @@ public class GuiCosmetics extends AbstractGui
         this.setSlotData(ChatColor.DARK_GRAY + "¿" + ChatColor.GRAY + ChatColor.MAGIC + "Mystère" + ChatColor.DARK_GRAY + "?", Material.IRON_FENCE, 27, new String[]{
                 ChatColor.RED + "Prochainement !"
         }, "none");
-        this.drawLineOfGlass(27, DyeColor.BLUE, "none");
+        this.drawLineOfGlass(27, DyeColor.GRAY, "none");
 
         this.randomIcon(1, ChatColor.DARK_AQUA + "●" + ChatColor.AQUA + " Humeurs " + ChatColor.DARK_AQUA + "●", Material.BLAZE_POWDER, new String[]{
                 ChatColor.GRAY + "Montrez-nous comment vous vous sentez :)"
