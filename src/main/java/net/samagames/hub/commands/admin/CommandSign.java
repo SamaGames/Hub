@@ -40,6 +40,10 @@ public class CommandSign extends AbstractCommand
                 this.maintenanceSigns(player, args);
                 break;
 
+            case "soon":
+                this.soonSigns(player, args);
+                break;
+
             case "reload":
                 this.hub.getSignManager().reloadList();
                 break;
@@ -147,6 +151,59 @@ public class CommandSign extends AbstractCommand
         for(AbstractGame game : this.hub.getGameManager().getGames().values())
         {
             player.sendMessage(ChatColor.GREEN + "-> " + ChatColor.AQUA + game.getCodeName() + ChatColor.GREEN + " (" + ChatColor.AQUA + game.getSigns().values().size() + " panneaux" + ChatColor.GREEN + ")");
+        }
+    }
+
+    private void soonSigns(Player player, String[] args)
+    {
+        if(args.length < 4)
+        {
+            player.sendMessage(ChatColor.RED + "Usage: /sign soon <game> <template> <true/false>");
+            return;
+        }
+
+        String game = args[1];
+        String template = args[2];
+
+        AbstractGame gameObject = this.hub.getGameManager().getGameByIdentifier(game);
+
+        if(gameObject == null)
+        {
+            player.sendMessage(ChatColor.RED + "Jeu non trouvé :(");
+            return;
+        }
+
+        if (!template.equals("*"))
+        {
+            List<GameSign> gameSign = gameObject.getGameSignsByTemplate(template);
+
+            if(gameSign == null)
+            {
+                player.sendMessage(ChatColor.RED + "Template non trouvé :(");
+                return;
+            }
+
+            boolean flag = Boolean.valueOf(args[3]);
+
+            Jedis jedis = SamaGamesAPI.get().getBungeeResource();
+            jedis.set("hub:soon:" + game + ":" + template, String.valueOf(flag));
+            jedis.publish("maintenanceSignChannel", game + ":" + template + ":" + String.valueOf(flag));
+            jedis.close();
+        }
+        else
+        {
+            boolean flag = Boolean.valueOf(args[3]);
+
+            Jedis jedis = SamaGamesAPI.get().getBungeeResource();
+
+            for (List<GameSign> l : gameObject.getSigns().values())
+            {
+                GameSign gameSign = l.get(0);
+                jedis.set("hub:soon:" + game + ":" + gameSign.getTemplate(), String.valueOf(flag));
+                jedis.publish("maintenanceSignChannel", game + ":" + gameSign.getTemplate() + ":" + String.valueOf(flag));
+            }
+
+            jedis.close();
         }
     }
 }

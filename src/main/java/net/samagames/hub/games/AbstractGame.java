@@ -60,6 +60,8 @@ public abstract class AbstractGame
 
         if (jedis.exists("hub:maintenance:" + this.getCodeName() + ":" + template))
             gameSign.setMaintenance(Boolean.valueOf(jedis.get("hub:maintenance:" + this.getCodeName() + ":" + template)));
+        if (jedis.exists("hub:soon:" + this.getCodeName() + ":" + template))
+            gameSign.setMaintenance(Boolean.valueOf(jedis.get("hub:soon:" + this.getCodeName() + ":" + template)));
 
         jedis.close();
 

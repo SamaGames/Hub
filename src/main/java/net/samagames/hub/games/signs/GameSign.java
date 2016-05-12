@@ -26,6 +26,7 @@ public class GameSign
     private final Sign sign;
     private final BukkitTask updateTask;
     private boolean isMaintenance;
+    private boolean isSoon;
 
     private int scrollIndex = 0;
     private int scrollVector = +1;
@@ -59,6 +60,17 @@ public class GameSign
 
     public void update()
     {
+        if(this.isSoon)
+        {
+            this.sign.setLine(0, "");
+            this.sign.setLine(1, ChatColor.GREEN + "* Prochainement *");
+            this.sign.setLine(2, "");
+            this.sign.setLine(3, "");
+
+            this.updateSign();
+            return;
+        }
+
         if(this.isMaintenance)
         {
             this.sign.setLine(0, "");
@@ -137,6 +149,11 @@ public class GameSign
 
     public void click(Player player)
     {
+        if(this.isSoon)
+        {
+            player.sendMessage(ChatColor.RED + "Ce jeu n'est pas encore disponible.");
+            return;
+        }
         if(this.isMaintenance)
         {
             player.sendMessage(ChatColor.RED + "Ce jeu est actuellement en maintenance.");
@@ -225,5 +242,11 @@ public class GameSign
     public boolean isMaintenance()
     {
         return this.isMaintenance;
+    }
+
+    public void setSoon(boolean isSoon)
+    {
+        this.isSoon = isSoon;
+        this.update();
     }
 }
