@@ -21,7 +21,7 @@ class ParticleRegistry extends AbstractCosmeticRegistry<ParticleCosmetic>
         ParticleCosmetic loverParticle = new ParticleCosmetic(this.hub, 39, LoverEffect.class);
         ParticleCosmetic nervousParticle = new ParticleCosmetic(this.hub, 40, NervousEffect.class);
         ParticleCosmetic noteParticle = new ParticleCosmetic(this.hub, 41, MusicEffect.class);
-        ParticleCosmetic enchantParticle = new ParticleCosmetic(this.hub, 42, EnchantedEffect.class);
+        //ParticleCosmetic enchantParticle = new ParticleCosmetic(this.hub, 42, EnchantedEffect.class);
 
         this.registerElement(fireParticle);
         this.registerElement(rainParticle);
@@ -30,6 +30,6 @@ class ParticleRegistry extends AbstractCosmeticRegistry<ParticleCosmetic>
         this.registerElement(loverParticle);
         this.registerElement(nervousParticle);
         this.registerElement(noteParticle);
-        this.registerElement(enchantParticle);
+        //this.registerElement(enchantParticle);
     }
 }

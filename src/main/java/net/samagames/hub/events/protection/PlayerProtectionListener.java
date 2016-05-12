@@ -89,7 +89,7 @@ public class PlayerProtectionListener implements Listener
     {
         if (event.getTo().getX() > 250 || event.getTo().getX() < -350 || event.getTo().getZ() > 620 || event.getTo().getZ() < -350)
         {
-            event.getPlayer().sendMessage(ChatColor.RED + "Mais ou allez vous comme ça ?");
+            event.getPlayer().sendMessage(ChatColor.RED + "Mais où allez-vous comme ça ?");
             event.setCancelled(true);
             this.hub.getServer().getScheduler().runTaskLater(this.hub, () -> {
                 event.getPlayer().teleport(this.hub.getPlayerManager().getSpawn());

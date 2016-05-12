@@ -303,7 +303,7 @@ class GuiSettings extends AbstractGui
     {
         if(action.startsWith("setting_"))
         {
-            if(this.getClass().equals(GuiSettings.class) && (this.getSlot(action) == 16 || this.getSlot(action) == 25))
+            if(this.getClass().equals(GuiSettings.class) && (this.getSlot(action) == 16 || this.getSlot(action) == 25) && stack.getType() == Material.WOOD_BUTTON)
             {
                 this.hub.getGuiManager().openGui(player, new GuiClickMeSettings(this.hub));
                 return;

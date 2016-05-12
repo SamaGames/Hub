@@ -33,7 +33,7 @@ public class GuiCosmetics extends AbstractGui
     {
         this.inventory = this.hub.getServer().createInventory(null, 54, "Caverne aux trésors");
 
-        this.setSlotData(ChatColor.DARK_GRAY + "¿" + ChatColor.GRAY + ChatColor.MAGIC + "Mystère" + ChatColor.DARK_GRAY + "?", Material.IRON_FENCE, 27, new String[]{
+        this.setSlotData(ChatColor.DARK_GRAY + "¿" + ChatColor.GRAY + ChatColor.MAGIC + " Mystère " + ChatColor.DARK_GRAY + "?", Material.IRON_FENCE, 27, new String[]{
                 ChatColor.RED + "Prochainement !"
         }, "none");
         this.drawLineOfGlass(27, DyeColor.GRAY, "none");
@@ -57,7 +57,7 @@ public class GuiCosmetics extends AbstractGui
                 ChatColor.GRAY + "nombreux gadgets venant du futur !"
         }, DyeColor.YELLOW, "gadgets");
 
-        this.setSlotData(ChatColor.DARK_BLUE + "▼" + ChatColor.BLUE + "Ballons" + ChatColor.DARK_BLUE + "▼", Material.CLAY_BALL, 35, new String[]{
+        this.setSlotData(ChatColor.DARK_BLUE + "▼" + ChatColor.BLUE + " Ballons " + ChatColor.DARK_BLUE + "▼", Material.CLAY_BALL, 35, new String[]{
                 ChatColor.GRAY + "Des petits ballons au dessus de votre tête !"
         }, "balloons");
         this.drawLineOfGlass(35, DyeColor.BLUE, "balloons");
