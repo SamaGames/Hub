@@ -4,8 +4,10 @@ import net.samagames.api.SamaGamesAPI;
 import net.samagames.api.games.Status;
 import net.samagames.api.permissions.IPermissionsEntity;
 import net.samagames.hub.Hub;
+import net.samagames.hub.cosmetics.gadgets.displayers.AbstractDisplayer;
 import net.samagames.hub.games.AbstractGame;
 import net.samagames.hub.games.signs.GameSign;
+import net.samagames.hub.gui.profile.GuiClickMe;
 import net.samagames.hub.utils.ServerStatus;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -15,12 +17,15 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityToggleGlideEvent;
 import org.bukkit.event.inventory.InventoryInteractEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.UUID;
 
 public class PlayerListener implements Listener
 {
@@ -162,5 +167,60 @@ public class PlayerListener implements Listener
     public void onPlayerToggleFlight(PlayerToggleFlightEvent event)
     {
         onPlayerGlide(new EntityToggleGlideEvent(event.getPlayer(), false));
+    }
+
+    @EventHandler
+    public void onPlayerDamaged(final EntityDamageByEntityEvent event)
+    {
+        event.setCancelled(true);
+
+        if (event.getDamager() instanceof Player && event.getEntity() instanceof Player)
+        {
+            final Player player = (Player) event.getDamager();
+
+            if (this.hub.getCosmeticManager().getGadgetManager().hasGadget((Player) event.getDamager()))
+            {
+                AbstractDisplayer displayer = this.hub.getCosmeticManager().getGadgetManager().getPlayerGadget((Player) event.getDamager());
+
+                if (displayer.isInteractionsEnabled() && !SamaGamesAPI.get().getSettingsManager().getSettings(event.getEntity().getUniqueId()).isOtherPlayerInteraction())
+                {
+                    event.getDamager().sendMessage(ChatColor.RED + "Ce joueur n'accepte pas les intéractions !");
+                    return;
+                }
+
+                this.hub.getCosmeticManager().getGadgetManager().getPlayerGadget((Player) event.getDamager()).handleInteraction(event.getDamager(), event.getEntity());
+                return;
+            }
+            else if (this.hub.getCosmeticManager().getGadgetManager().hasGadget((Player) event.getEntity()))
+            {
+                this.hub.getCosmeticManager().getGadgetManager().getPlayerGadget((Player) event.getEntity()).handleInteraction(event.getDamager(), event.getEntity());
+                return;
+            }
+
+            this.hub.getServer().getScheduler().runTaskAsynchronously(this.hub, () ->
+            {
+                Player target = (Player) event.getEntity();
+
+                if (SamaGamesAPI.get().getSettingsManager().getSettings(player.getUniqueId()).isAllowClickOnOther())
+                {
+                    if (!SamaGamesAPI.get().getSettingsManager().getSettings(target.getUniqueId()).isClickOnMeActivation())
+                        return;
+
+                    this.hub.getGuiManager().openGui(player, new GuiClickMe(this.hub, target));
+                }
+            });
+        }
+        else if (event.getDamager() instanceof Player && !(event.getEntity() instanceof Player))
+        {
+            if (event.getEntity().hasMetadata("owner-id"))
+            {
+                UUID uuid = UUID.fromString(event.getEntity().getMetadata("owner-id").get(0).asString());
+
+                if (this.hub.getCosmeticManager().getGadgetManager().hasGadget(uuid))
+                {
+                    this.hub.getCosmeticManager().getGadgetManager().getPlayerGadget(uuid).handleInteraction(event.getDamager(), event.getEntity());
+                }
+            }
+        }
     }
 }
