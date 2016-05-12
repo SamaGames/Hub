@@ -52,9 +52,10 @@ public class GuiCosmetics extends AbstractGui
                 ChatColor.GRAY + "nombreux gadgets venant du futur !"
         }, DyeColor.YELLOW, "gadgets");
 
-        this.randomIcon(8, ChatColor.DARK_BLUE + "" + ChatColor.BLUE + "Ballons" + ChatColor.DARK_BLUE + "", Material.CLAY_BALL, new String[]{
+        this.setSlotData(ChatColor.DARK_BLUE + "" + ChatColor.BLUE + "Ballons" + ChatColor.DARK_BLUE + "", Material.CLAY_BALL, 35, new String[]{
                 ChatColor.GRAY + "Des petits ballons au dessus de votre tête !"
-        }, DyeColor.BLUE, "balloons");
+        }, "balloons");
+        this.drawLineOfGlass(35, DyeColor.BLUE, "balloons");
 
         this.setSlotData(ChatColor.DARK_PURPLE + "◢" + ChatColor.LIGHT_PURPLE + " Jukebox " + ChatColor.DARK_PURPLE + "◣", Material.JUKEBOX, 31, new String[]{
                 ChatColor.GRAY + "Devenez un véritable SamaDJ !"
