@@ -50,9 +50,9 @@ class BalloonCosmetic extends AbstractCosmetic
         {
             livingEntities[i] = (LivingEntity)player.getWorld().spawnEntity(player.getLocation().add(random.nextDouble() % 2 - 1, 2.5D, random.nextDouble() % 2 - 1), this.entityType);
             livingEntities[i].addPotionEffect(PotionEffectType.LEVITATION.createEffect(Integer.MAX_VALUE, 2));
-            livingEntities[i].setLeashHolder(player);
             ((CraftLivingEntity)livingEntities[i]).getHandle().h(true);
             freeze(livingEntities[i]);
+            livingEntities[i].setLeashHolder(player);
         }
         this.destroyTasks.put(player.getUniqueId(), this.hub.getServer().getScheduler().runTaskTimer(this.hub, () -> this.autoCheck(player), 2L, 2L));
         this.balloons.put(player.getUniqueId(), livingEntities);
@@ -78,14 +78,10 @@ class BalloonCosmetic extends AbstractCosmetic
         if (livingEntities == null)
             return ;
         for (LivingEntity livingEntity : livingEntities)
-            try {
-                if (livingEntity.isDead())
-                    throw new IllegalStateException("");
-                livingEntity.getLeashHolder();
-            } catch (IllegalStateException ignored)
+            if (livingEntity.isDead() || !livingEntity.isLeashed())
             {
                 this.hub.getCosmeticManager().getBalloonManager().disableCosmetic(player, false);
-                break;
+                break ;
             }
     }
 

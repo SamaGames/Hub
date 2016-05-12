@@ -2,18 +2,23 @@ package net.samagames.hub.cosmetics.balloons;
 
 import net.samagames.hub.Hub;
 import net.samagames.hub.cosmetics.common.AbstractCosmeticManager;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.ItemSpawnEvent;
 
 import javax.lang.model.type.NullType;
 
 /**
  * Created by Rigner for project Hub.
  */
-public class BalloonManager extends AbstractCosmeticManager<BalloonCosmetic>
+public class BalloonManager extends AbstractCosmeticManager<BalloonCosmetic> implements Listener
 {
     public BalloonManager(Hub hub)
     {
         super(hub, new BalloonRegistry(hub));
+        this.hub.getServer().getPluginManager().registerEvents(this, this.hub);
     }
 
     @Override
@@ -32,4 +37,11 @@ public class BalloonManager extends AbstractCosmeticManager<BalloonCosmetic>
 
     @Override
     public void update() { /** Not needed **/ }
+
+    @EventHandler
+    public void onItemSpawn(ItemSpawnEvent event)
+    {
+        if (event.getEntity().getItemStack() != null && event.getEntity().getItemStack().getType() == Material.LEASH)
+            event.setCancelled(true);
+    }
 }
