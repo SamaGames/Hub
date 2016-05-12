@@ -93,7 +93,7 @@ public class GadgetManager extends AbstractCosmeticManager
                 if (location.getBlock().getType() != Material.AIR || this.blocksUsed.contains(location) || location.getBlock().getRelative(BlockFace.DOWN).getType() != Material.AIR)
                     hasSpaceToUse = false;
 
-            if (!hasSpaceToUse)
+            if (!hasSpaceToUse || player.getLocation().distanceSquared(this.hub.getPlayerManager().getSpawn()) < 100)
             {
                 player.sendMessage(PlayerManager.COSMETICS_TAG + ChatColor.RED + "Vous ne pouvez pas utiliser ce gadget ici.");
                 return;
