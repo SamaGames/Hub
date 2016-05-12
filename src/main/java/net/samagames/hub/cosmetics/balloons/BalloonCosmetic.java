@@ -78,10 +78,14 @@ class BalloonCosmetic extends AbstractCosmetic
         if (livingEntities == null)
             return ;
         for (LivingEntity livingEntity : livingEntities)
-            if (livingEntity.isDead() || livingEntity.getLeashHolder() == null)
+            try {
+                if (livingEntity.isDead())
+                    throw new IllegalStateException("");
+                livingEntity.getLeashHolder();
+            } catch (IllegalStateException ignored)
             {
                 this.hub.getCosmeticManager().getBalloonManager().disableCosmetic(player, false);
-                break ;
+                break;
             }
     }
 
