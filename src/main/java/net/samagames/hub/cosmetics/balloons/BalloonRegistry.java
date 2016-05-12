@@ -17,8 +17,10 @@ class BalloonRegistry extends AbstractCosmeticRegistry<BalloonCosmetic>
     @Override
     public void register() throws Exception
     {
-        this.registerElement(new BalloonCosmetic(this.hub, 100, EntityType.COW, 2));
-        this.registerElement(new BalloonCosmetic(this.hub, 101, EntityType.PIG, 2));
-        this.registerElement(new BalloonCosmetic(this.hub, 102, EntityType.SHEEP, 2));
+        this.registerElement(new BalloonCosmetic(this.hub, 100, EntityType.COW, 1));
+        this.registerElement(new BalloonCosmetic(this.hub, 101, EntityType.PIG, 1));
+        this.registerElement(new BalloonCosmetic(this.hub, 102, EntityType.SHEEP, 1));
+        this.registerElement(new BalloonCosmetic(this.hub, 115, EntityType.SHEEP, "jeb_", 1));
+        this.registerElement(new BalloonCosmetic(this.hub, 116, EntityType.SHEEP, "Grumm", 1));
     }
 }

@@ -23,6 +23,17 @@ class JukeboxRegistry extends AbstractCosmeticRegistry<JukeboxDiskCosmetic>
         JukeboxDiskCosmetic gerudoValleyDisk = new JukeboxDiskCosmetic(this.hub, 6, NBSDecoder.parse("GerudoValley"), 153);
         JukeboxDiskCosmetic windmillDisk = new JukeboxDiskCosmetic(this.hub, 7, NBSDecoder.parse("Windmill"), 88);
         JukeboxDiskCosmetic lostWoodsDisk = new JukeboxDiskCosmetic(this.hub, 8, NBSDecoder.parse("LostWoods"), 58);
+        JukeboxDiskCosmetic miiChannelDisk = new JukeboxDiskCosmetic(this.hub, 103, NBSDecoder.parse("MiiChannel"), 102);
+        JukeboxDiskCosmetic starfox64Disk = new JukeboxDiskCosmetic(this.hub, 104, NBSDecoder.parse("StarFox64Theme"), 45);
+        JukeboxDiskCosmetic neverGonnaGiveYouUpDisk = new JukeboxDiskCosmetic(this.hub, 105, NBSDecoder.parse("NeverGonnaGiveYouUp"), 324);
+        JukeboxDiskCosmetic callMeMaybeDisk = new JukeboxDiskCosmetic(this.hub, 106, NBSDecoder.parse("CallMeMaybe"), 100);
+        JukeboxDiskCosmetic ghostBustersDisk = new JukeboxDiskCosmetic(this.hub, 108, NBSDecoder.parse("GhostBusters"), 249);
+        JukeboxDiskCosmetic hitTheRoadJackDisk = new JukeboxDiskCosmetic(this.hub, 109, NBSDecoder.parse("HitTheRoadJack"), 114);
+        JukeboxDiskCosmetic indianaJonesDisk = new JukeboxDiskCosmetic(this.hub, 110, NBSDecoder.parse("IndianaJones"), 130);
+        JukeboxDiskCosmetic marseillaiseDisk = new JukeboxDiskCosmetic(this.hub, 111, NBSDecoder.parse("Marseillaise"), 45);
+        JukeboxDiskCosmetic nyanCatDisk = new JukeboxDiskCosmetic(this.hub, 112, NBSDecoder.parse("NyanCat"), 76);
+        JukeboxDiskCosmetic superMarioDisk = new JukeboxDiskCosmetic(this.hub, 113, NBSDecoder.parse("SuperMarioBrosMainTheme"), 77);
+        JukeboxDiskCosmetic theLostOneWeepingDisk = new JukeboxDiskCosmetic(this.hub, 114, NBSDecoder.parse("TheLostOneWeeping"), 212);
 
         this.registerElement(guilesThemeDisk);
         this.registerElement(ryusThemeDisk);
@@ -33,5 +44,16 @@ class JukeboxRegistry extends AbstractCosmeticRegistry<JukeboxDiskCosmetic>
         this.registerElement(gerudoValleyDisk);
         this.registerElement(windmillDisk);
         this.registerElement(lostWoodsDisk);
+        this.registerElement(miiChannelDisk);
+        this.registerElement(starfox64Disk);
+        this.registerElement(neverGonnaGiveYouUpDisk);
+        this.registerElement(callMeMaybeDisk);
+        this.registerElement(ghostBustersDisk);
+        this.registerElement(hitTheRoadJackDisk);
+        this.registerElement(indianaJonesDisk);
+        this.registerElement(marseillaiseDisk);
+        this.registerElement(nyanCatDisk);
+        this.registerElement(superMarioDisk);
+        this.registerElement(theLostOneWeepingDisk);
     }
 }

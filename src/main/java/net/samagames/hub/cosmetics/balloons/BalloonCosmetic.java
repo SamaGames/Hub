@@ -32,6 +32,7 @@ class BalloonCosmetic extends AbstractCosmetic
     private EntityType entityType;
     private int count;
     private Random random;
+    private String name;
 
     BalloonCosmetic(Hub hub, int storageId, EntityType entityType, int count) throws Exception
     {
@@ -41,6 +42,18 @@ class BalloonCosmetic extends AbstractCosmetic
         this.balloons = new HashMap<>();
         this.random = new Random();
         this.destroyTasks = new HashMap<>();
+        this.name = null;
+    }
+
+    BalloonCosmetic(Hub hub, int storageId, EntityType entityType, String name, int count) throws Exception
+    {
+        super(hub, storageId);
+        this.entityType = entityType;
+        this.count = count;
+        this.balloons = new HashMap<>();
+        this.random = new Random();
+        this.destroyTasks = new HashMap<>();
+        this.name = name;
     }
 
     public void spawn(Player player)
@@ -53,6 +66,8 @@ class BalloonCosmetic extends AbstractCosmetic
             ((CraftLivingEntity)livingEntities[i]).getHandle().h(true);
             freeze(livingEntities[i]);
             livingEntities[i].setLeashHolder(player);
+            if (this.name != null)
+                livingEntities[i].setCustomName(this.name);
         }
         this.destroyTasks.put(player.getUniqueId(), this.hub.getServer().getScheduler().runTaskTimer(this.hub, () -> this.autoCheck(player), 2L, 2L));
         this.balloons.put(player.getUniqueId(), livingEntities);
