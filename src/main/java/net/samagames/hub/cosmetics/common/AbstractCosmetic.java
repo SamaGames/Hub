@@ -24,7 +24,7 @@ import java.util.logging.Level;
 
 public abstract class AbstractCosmetic implements Comparable<AbstractCosmetic>
 {
-    private final Hub hub;
+    protected final Hub hub;
     private final int storageId;
     private final ItemStack icon;
     private final CosmeticRarity rarity;
