@@ -1,7 +1,9 @@
 package net.samagames.hub.cosmetics.balloons;
 
 import net.samagames.hub.Hub;
+import net.samagames.hub.common.players.PlayerManager;
 import net.samagames.hub.cosmetics.common.AbstractCosmeticManager;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -25,6 +27,8 @@ public class BalloonManager extends AbstractCosmeticManager<BalloonCosmetic> imp
     public void enableCosmetic(Player player, BalloonCosmetic cosmetic, NullType useless)
     {
         cosmetic.spawn(player);
+
+        player.sendMessage(PlayerManager.COSMETICS_TAG + ChatColor.GREEN + "Des ballons flottent autour de vous !");
     }
 
     @Override
@@ -33,6 +37,8 @@ public class BalloonManager extends AbstractCosmeticManager<BalloonCosmetic> imp
         BalloonCosmetic balloonCosmetic = this.getEquippedCosmetic(player);
         if (balloonCosmetic != null)
             balloonCosmetic.remove(player);
+
+        player.sendMessage(PlayerManager.COSMETICS_TAG + ChatColor.GREEN + "Vos ballons ont éclaté.");
     }
 
     @Override
