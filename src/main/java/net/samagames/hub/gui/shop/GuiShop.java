@@ -6,7 +6,9 @@ import net.samagames.hub.gui.AbstractGui;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 public class GuiShop extends AbstractGui
 {
@@ -49,7 +51,11 @@ public class GuiShop extends AbstractGui
 
             if (game.hasShop())
             {
-                this.setSlotData(ChatColor.YELLOW + game.getName(), game.getIcon(), slots[slot] + (9 * lines), null, "game_" + game.getCodeName());
+                ItemStack icon = game.getIcon();
+                ItemMeta itemMeta = icon.getItemMeta();
+                itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+                icon.setItemMeta(itemMeta);
+                this.setSlotData(ChatColor.YELLOW + game.getName(), icon, slots[slot] + (9 * lines), null, "game_" + game.getCodeName());
                 slot++;
 
                 if(slot == slots.length)

@@ -147,6 +147,7 @@ public abstract class AbstractCosmetic implements Comparable<AbstractCosmetic>
                 lore.add(ChatColor.WHITE + "Débloquez cet objet pour " + ChatColor.AQUA + "1");
                 lore.add(ChatColor.AQUA + "étoile" + ChatColor.WHITE + " symbolique !");
             }
+            cloned.removeEnchantment(GlowEffect.getGlow());
         }
         else
         {
