@@ -22,5 +22,6 @@ class BalloonRegistry extends AbstractCosmeticRegistry<BalloonCosmetic>
         this.registerElement(new BalloonCosmetic(this.hub, 102, EntityType.SHEEP, 1));
         this.registerElement(new BalloonCosmetic(this.hub, 115, EntityType.SHEEP, "jeb_", 1));
         this.registerElement(new BalloonCosmetic(this.hub, 116, EntityType.SHEEP, "Grumm", 1));
+        this.registerElement(new BalloonCosmetic(this.hub, 140, EntityType.MUSHROOM_COW, 1));
     }
 }

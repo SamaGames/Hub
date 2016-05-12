@@ -26,6 +26,10 @@ public class BalloonManager extends AbstractCosmeticManager<BalloonCosmetic> imp
     @Override
     public void enableCosmetic(Player player, BalloonCosmetic cosmetic, NullType useless)
     {
+        BalloonCosmetic balloonCosmetic = this.getEquippedCosmetic(player);
+        if (balloonCosmetic != null)
+            balloonCosmetic.remove(player);
+
         cosmetic.spawn(player);
 
         player.sendMessage(PlayerManager.COSMETICS_TAG + ChatColor.GREEN + "Des ballons flottent autour de vous !");
