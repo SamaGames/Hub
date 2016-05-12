@@ -63,7 +63,7 @@ public class GameSign
         if(this.isSoon)
         {
             this.sign.setLine(0, "");
-            this.sign.setLine(1, ChatColor.GREEN + "* Prochainement *");
+            this.sign.setLine(1, "* Prochainement *");
             this.sign.setLine(2, "");
             this.sign.setLine(3, "");
 
