@@ -42,7 +42,7 @@ public class ParticleManager extends AbstractCosmeticManager<ParticleCosmetic>
             particleEffectObject.start();
 
             this.playersParticleEffect.put(player.getUniqueId(), particleEffectObject);
-            player.sendMessage(ChatColor.GREEN + "Vous voilà noyé sous les particules...");
+            player.sendMessage(PlayerManager.COSMETICS_TAG + ChatColor.GREEN + "Vous voilà noyé sous les particules...");
         }
         catch (ReflectiveOperationException e)
         {
