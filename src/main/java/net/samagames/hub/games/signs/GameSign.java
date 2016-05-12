@@ -116,7 +116,7 @@ public class GameSign
 
     public void scrollMapName()
     {
-        if(this.isMaintenance)
+        if(this.isMaintenance || this.isSoon)
             return;
 
         if(this.map.length() <= 10)
