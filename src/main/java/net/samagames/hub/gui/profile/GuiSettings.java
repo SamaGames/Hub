@@ -9,9 +9,12 @@ import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.SkullType;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -123,7 +126,11 @@ class GuiSettings extends AbstractGui
                 }
             });
 
-            this.drawSetting(player, "Notifications", new ItemStack(Material.MAP, 1), 13, new String[] {
+            ItemStack map = new ItemStack(Material.MAP, 1);
+            ItemMeta itemMeta = map.getItemMeta();
+            itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+            map.setItemMeta(itemMeta);
+            this.drawSetting(player, "Notifications", map, 13, new String[] {
                     ChatColor.GRAY + "Quand cette option est activée, vous pourrez",
                     ChatColor.GRAY + "recevoir un signal sonore lorsqu'un joueur",
                     ChatColor.GRAY + "écrit votre nom dans le chat.",
