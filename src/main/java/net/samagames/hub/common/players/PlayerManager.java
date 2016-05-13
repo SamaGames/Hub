@@ -9,7 +9,10 @@ import net.samagames.tools.PlayerUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitTask;
 import redis.clients.jedis.Jedis;
 
@@ -101,7 +104,19 @@ public class PlayerManager extends AbstractManager
                 jedis.close();
 
                 player.getInventory().clear();
+
+                if (SamaGamesAPI.get().getSettingsManager().getSettings(player.getUniqueId()).isElytraActivated())
+                {
+                    ItemStack elytra = new ItemStack(Material.ELYTRA);
+                    ItemMeta meta = elytra.getItemMeta();
+                    meta.spigot().setUnbreakable(true);
+                    elytra.setItemMeta(meta);
+
+                    player.getInventory().setChestplate(elytra);
+                }
+
                 this.staticInventory.setInventoryToPlayer(player);
+
                 this.updateHiders(player);
 
                 if (SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "hub.fly"))

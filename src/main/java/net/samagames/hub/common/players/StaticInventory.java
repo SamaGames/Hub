@@ -117,6 +117,8 @@ public class StaticInventory
 
             player.getInventory().setItem(4, itemStack);
         }
+        else
+            player.getInventory().setItem(4, new ItemStack(Material.AIR));
 
         player.getInventory().setHeldItemSlot(0);
     }
