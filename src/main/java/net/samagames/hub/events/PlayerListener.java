@@ -139,7 +139,7 @@ public class PlayerListener implements Listener
         {
             IPermissionsEntity permissionsEntity = SamaGamesAPI.get().getPermissionsManager().getPlayer(event.getPlayer().getUniqueId());
 
-            if (permissionsEntity.getGroupId() < 3)
+            if (permissionsEntity.getGroupId() < 3 || !SamaGamesAPI.get().getSettingsManager().getSettings(event.getPlayer().getUniqueId()).isElytraActivated())
                 event.getPlayer().getInventory().setChestplate(new ItemStack(Material.AIR));
         }
     }
