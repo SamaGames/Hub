@@ -3,6 +3,7 @@ package net.samagames.hub.games.types;
 import net.samagames.hub.Hub;
 import net.samagames.hub.games.AbstractGame;
 import net.samagames.hub.games.shops.ShopCategory;
+import net.samagames.hub.games.shops.ShopImprovableItem;
 import net.samagames.tools.RulesBook;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -74,6 +75,36 @@ public class DimensionsGame extends AbstractGame
     @Override
     public ShopCategory getShopConfiguration()
     {
+        try
+        {
+            ShopCategory shopCategory = new ShopCategory(this.hub, this, 142, 10);
+
+            ShopImprovableItem teleport = new ShopImprovableItem(this.hub, 143, 11, 117);
+            for (int i = 118; i <= 121; i++)
+                teleport.addLevel(i);
+
+            ShopImprovableItem healAtKill = new ShopImprovableItem(this.hub, 144, 30, 122);
+            for (int i = 123; i <= 126; i++)
+                healAtKill.addLevel(i);
+
+            ShopImprovableItem healAtStrike = new ShopImprovableItem(this.hub, 145, 32, 127);
+            for (int i = 128; i <= 133; i++)
+                healAtStrike.addLevel(i);
+
+            ShopImprovableItem strengthAtKill = new ShopImprovableItem(this.hub, 146, 15, 134);
+            for (int i = 135; i <= 139; i++)
+                strengthAtKill.addLevel(i);
+
+            shopCategory.addContent(teleport);
+            shopCategory.addContent(healAtKill);
+            shopCategory.addContent(healAtStrike);
+            shopCategory.addContent(strengthAtKill);
+            return shopCategory;
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+        }
         return null;
     }
 
