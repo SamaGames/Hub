@@ -271,6 +271,7 @@ class GuiSettings extends AbstractGui
                 public void invert(IPlayerSettings setting)
                 {
                     setting.setElytraActivated(!this.get(setting));
+                    GuiSettings.this.hub.getPlayerManager().getStaticInventory().setInventoryToPlayer(player);
                 }
             });
 
