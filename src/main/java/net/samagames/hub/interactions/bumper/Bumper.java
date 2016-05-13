@@ -87,6 +87,7 @@ public class Bumper extends AbstractInteraction implements Listener
             stack.setItemMeta(meta);
             player.getInventory().setChestplate(stack);
             ((CraftPlayer)player).getHandle().setFlag(7, true);
+            this.hub.getPlayerManager().getStaticInventory().setInventoryToPlayer(player);
             this.hub.getServer().getPluginManager().callEvent(new EntityToggleGlideEvent(player, true));
             Titles.sendTitle(player, 10, 40, 10, "", ChatColor.GOLD + "Bon vol !");
             this.stop(player);

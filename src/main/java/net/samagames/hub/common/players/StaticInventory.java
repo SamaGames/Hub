@@ -60,12 +60,12 @@ public class StaticInventory
                 elytra.setItemMeta(meta);
 
                 player.getInventory().setChestplate(elytra);
-                stack.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
+                this.setInventoryToPlayer(player);
             }
             else
             {
                 player.getInventory().setChestplate(new ItemStack(Material.AIR));
-                stack.removeEnchantment(Enchantment.DURABILITY);
+                this.setInventoryToPlayer(player);
             }
 
             player.playSound(player.getLocation(), Sound.ENTITY_HORSE_SADDLE, 1F, 1F);
@@ -105,20 +105,14 @@ public class StaticInventory
             player.getInventory().setItem(slot, this.items.get(slot));
         }
 
-        if (SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "network.vipplus"))
+        if (SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "network.vipplus")
+                && SamaGamesAPI.get().getSettingsManager().getSettings(player.getUniqueId()).isElytraActivated())
         {
-            ItemStack itemStack = buildItemStack(Material.ELYTRA, 1, 0, createTitle("Ailes"), null);
-
-            if (SamaGamesAPI.get().getSettingsManager().getSettings(player.getUniqueId()).isElytraActivated())
-            {
-                ItemStack elytra = new ItemStack(Material.ELYTRA);
-                ItemMeta meta = elytra.getItemMeta();
-                meta.spigot().setUnbreakable(true);
-                elytra.setItemMeta(meta);
-
-                itemStack.addEnchantment(Enchantment.DURABILITY, 1);
-                player.getInventory().setChestplate(elytra);
-            }
+            ItemStack itemStack;
+            if (player.getInventory().getChestplate() != null && player.getInventory().getChestplate().getType() == Material.ELYTRA)
+                itemStack = buildItemStack(Material.ELYTRA, 1, 0, createTitle("Désactiver les ailes"), null);
+            else
+                itemStack = buildItemStack(Material.ELYTRA, 1, 0, createTitle("Activer les ailes"), null);
 
             player.getInventory().setItem(4, itemStack);
         }
