@@ -256,6 +256,7 @@ public class Parkour
         this.playersIn.remove(player.getUniqueId());
         this.playersCheckpoints.remove(player.getUniqueId());
 
+        player.getInventory().clear();
         this.hub.getPlayerManager().getStaticInventory().setInventoryToPlayer(player);
     }
 

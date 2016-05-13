@@ -6,6 +6,7 @@ import net.samagames.hub.gui.cosmetics.GuiCosmetics;
 import net.samagames.hub.gui.main.GuiMain;
 import net.samagames.hub.gui.profile.GuiProfile;
 import net.samagames.hub.gui.shop.GuiShop;
+import net.samagames.tools.GlowEffect;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -89,9 +90,6 @@ public class StaticInventory
 
     public void setInventoryToPlayer(Player player)
     {
-        for (int i = 0; i < 9; i++)
-            player.getInventory().setItem(i, null);
-
         for (int slot : this.items.keySet())
         {
             if(this.items.get(slot).getType() == Material.SKULL_ITEM)
@@ -110,7 +108,10 @@ public class StaticInventory
         {
             ItemStack itemStack;
             if (player.getInventory().getChestplate() != null && player.getInventory().getChestplate().getType() == Material.ELYTRA)
+            {
                 itemStack = buildItemStack(Material.ELYTRA, 1, 0, createTitle("Désactiver les ailes"), null);
+                GlowEffect.addGlow(itemStack);
+            }
             else
                 itemStack = buildItemStack(Material.ELYTRA, 1, 0, createTitle("Activer les ailes"), null);
 

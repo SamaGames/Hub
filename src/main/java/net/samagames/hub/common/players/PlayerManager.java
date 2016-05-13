@@ -100,6 +100,7 @@ public class PlayerManager extends AbstractManager
                 
                 jedis.close();
 
+                player.getInventory().clear();
                 this.staticInventory.setInventoryToPlayer(player);
                 this.updateHiders(player);
 
