@@ -138,8 +138,8 @@ public abstract class AbstractCosmetic implements Comparable<AbstractCosmetic>
 
             if (this.accessibility != CosmeticAccessibility.STAFF && this.accessibility != CosmeticAccessibility.ADMIN)
             {
-                lore.add(ChatColor.WHITE + "Débloquez cet objet dans le " + ChatColor.RED + "coffre");
-                lore.add(ChatColor.RED + "magique" + ChatColor.WHITE + " ou achetez le pour " + ChatColor.AQUA + NumberUtils.format(this.stars));
+                lore.add(ChatColor.WHITE + "Débloquez cet objet dans le " + ChatColor.RED + ChatColor.MAGIC + "coffre");
+                lore.add(ChatColor.RED + "" + ChatColor.MAGIC + "magique" + ChatColor.WHITE + " ou achetez le pour " + ChatColor.AQUA + NumberUtils.format(this.stars));
                 lore.add(ChatColor.AQUA + "étoiles" + ChatColor.WHITE + " !");
             }
             else
