@@ -204,11 +204,7 @@ class GuiSettings extends AbstractGui
                 {
                     boolean value = !this.get(setting);
                     setting.setJukeboxListen(value);
-
-                    if (value)
-                        GuiSettings.this.hub.getCosmeticManager().getJukeboxManager().addPlayer(player);
-                    else
-                        GuiSettings.this.hub.getCosmeticManager().getJukeboxManager().removePlayer(player);
+                    GuiSettings.this.hub.getCosmeticManager().getJukeboxManager().mute(player, !value);
                 }
             });
         }
