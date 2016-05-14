@@ -24,7 +24,7 @@ public class ParkourListener implements Listener
     {
         if (event.getAction().equals(Action.PHYSICAL))
         {
-            if(event.getClickedBlock().getType().equals(Material.GOLD_PLATE))
+            if(event.getClickedBlock().getType().equals(Material.GOLD_PLATE) || event.getClickedBlock().getType().equals(Material.IRON_PLATE))
             {
                 Parkour parkour = this.hub.getParkourManager().getPlayerParkour(event.getPlayer().getUniqueId());
 
