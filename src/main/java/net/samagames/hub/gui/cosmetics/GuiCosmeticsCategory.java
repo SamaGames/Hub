@@ -79,12 +79,12 @@ public class GuiCosmeticsCategory<COSMETIC extends AbstractCosmetic> extends Abs
 
         if (this.canBeRemoved)
         {
-            this.setSlotData(getBackIcon(), this.inventory.getSize() - 5, "back");
+            this.setSlotData(getBackIcon(), this.inventory.getSize() - 4, "back");
             this.setSlotData(ChatColor.RED + "Désactiver votre cosmétique actuel", Material.FLINT_AND_STEEL, this.inventory.getSize() - 4, null, "delete");
         }
         else
         {
-            this.setSlotData(getBackIcon(), this.inventory.getSize() - 4, "back");
+            this.setSlotData(getBackIcon(), this.inventory.getSize() - 5, "back");
         }
     }
 
