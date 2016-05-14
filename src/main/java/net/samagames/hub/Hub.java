@@ -107,7 +107,7 @@ public class Hub extends JavaPlugin
         this.getServer().getPluginManager().registerEvents(new PlayerListener(this), this);
         this.getServer().getPluginManager().registerEvents(new ParkourListener(this), this);
         this.getServer().getPluginManager().registerEvents(new GuiListener(this), this);
-        this.getServer().getPluginManager().registerEvents(new DoubleJumpListener(), this);
+        this.getServer().getPluginManager().registerEvents(new DoubleJumpListener(this), this);
         this.getServer().getPluginManager().registerEvents(new PetListener(), this);
 
         this.getServer().getPluginManager().registerEvents(new EntityEditionListener(this), this);

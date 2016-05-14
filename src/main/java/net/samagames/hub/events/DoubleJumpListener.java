@@ -17,10 +17,12 @@ import java.util.UUID;
 public class DoubleJumpListener implements Listener
 {
     private final List<UUID> allowed;
+    private final Hub hub;
 
-    public DoubleJumpListener()
+    public DoubleJumpListener(Hub hub)
     {
         this.allowed = new ArrayList<>();
+        this.hub = hub;
     }
 
     @EventHandler
@@ -32,7 +34,7 @@ public class DoubleJumpListener implements Listener
         if (SamaGamesAPI.get().getPermissionsManager().hasPermission(event.getPlayer(), "hub.fly"))
             return;
 
-        if (((LivingEntity) event.getPlayer()).isOnGround())
+        if (((LivingEntity) event.getPlayer()).isOnGround() && this.hub.getParkourManager().getPlayerParkour(event.getPlayer().getUniqueId()) == null)
         {
             event.getPlayer().setAllowFlight(true);
             this.allowed.add(event.getPlayer().getUniqueId());
