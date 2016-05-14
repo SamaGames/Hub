@@ -5,14 +5,16 @@ import net.samagames.hub.Hub;
 
 public class SignReloadListener implements IPacketsReceiver
 {
+    private final Hub hub;
+
     public SignReloadListener(Hub hub)
     {
-
+        this.hub = hub;
     }
 
     @Override
     public void receive(String channel, String packet)
     {
-        //this.signManager.reloadList();
+        this.hub.getSignManager().reloadList();
     }
 }

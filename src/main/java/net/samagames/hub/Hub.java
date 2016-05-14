@@ -11,6 +11,7 @@ import net.samagames.hub.common.managers.EntityManager;
 import net.samagames.hub.common.managers.EventBus;
 import net.samagames.hub.common.players.ChatManager;
 import net.samagames.hub.common.players.PlayerManager;
+import net.samagames.hub.common.receivers.*;
 import net.samagames.hub.common.tasks.TaskManager;
 import net.samagames.hub.cosmetics.CosmeticManager;
 import net.samagames.hub.events.*;
@@ -116,6 +117,12 @@ public class Hub extends JavaPlugin
         this.getServer().getPluginManager().registerEvents(new WorldEditionListener(this), this);
 
         this.hydroangeasSynchronization = this.getScheduledExecutorService().scheduleAtFixedRate(() -> new ServerStatus(SamaGamesAPI.get().getServerName(), "Hub", "Map", Status.IN_GAME, Bukkit.getOnlinePlayers().size(), Bukkit.getMaxPlayers()).sendToHydro(), 0, 1, TimeUnit.MINUTES);
+
+        SamaGamesAPI.get().getPubSub().subscribe("cheat", new SamaritanListener(this));
+        //SamaGamesAPI.get().getPubSub().subscribe("", new InteractionListener(this));
+        SamaGamesAPI.get().getPubSub().subscribe("maintenanceSignChannel", new MaintenanceListener(this));
+        SamaGamesAPI.get().getPubSub().subscribe("soonSignChannel", new SoonListener(this));
+        //SamaGamesAPI.get().getPubSub().subscribe("", new SignReloadListener(this));
 
         SamaGamesAPI.get().getStatsManager().setStatsToLoad(GamesNames.GLOBAL, true);
     }

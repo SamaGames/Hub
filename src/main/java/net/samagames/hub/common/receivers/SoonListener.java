@@ -7,11 +7,11 @@ import net.samagames.hub.games.signs.GameSign;
 
 import java.util.List;
 
-public class MaintenanceListener implements IPacketsReceiver
+public class SoonListener implements IPacketsReceiver
 {
     private final Hub hub;
 
-    public MaintenanceListener(Hub hub)
+    public SoonListener(Hub hub)
     {
         this.hub = hub;
     }
@@ -35,6 +35,6 @@ public class MaintenanceListener implements IPacketsReceiver
         if (sign == null)
             return;
 
-        sign.forEach(gameSign -> gameSign.setMaintenance(flag));
+        sign.forEach(gameSign -> gameSign.setSoon(flag));
     }
 }
