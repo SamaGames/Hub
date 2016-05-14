@@ -8,6 +8,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.*;
 import org.bukkit.event.hanging.HangingBreakEvent;
+import org.bukkit.event.player.PlayerArmorStandManipulateEvent;
 
 public class EntityEditionListener implements Listener
 {
@@ -97,5 +98,11 @@ public class EntityEditionListener implements Listener
     private boolean canDoAction(Player player)
     {
         return this.hub.getPlayerManager().canBuild() && player != null && player.isOp();
+    }
+
+    @EventHandler
+    public void onArmorStandEdit(PlayerArmorStandManipulateEvent event)
+    {
+        event.setCancelled(true);
     }
 }
