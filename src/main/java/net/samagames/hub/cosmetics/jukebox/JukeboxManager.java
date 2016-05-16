@@ -5,7 +5,9 @@ import com.xxmicloxx.NoteBlockAPI.SongPlayer;
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.api.settings.IPlayerSettings;
 import net.samagames.hub.Hub;
+import net.samagames.hub.common.players.PlayerManager;
 import net.samagames.hub.cosmetics.common.AbstractCosmeticManager;
+import net.samagames.hub.gui.AbstractGui;
 import net.samagames.tools.ParticleEffect;
 import net.samagames.tools.bossbar.BossBarAPI;
 import org.bukkit.ChatColor;
@@ -85,10 +87,32 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
     }
 
     @Override
-    public void enableCosmetic(Player player, JukeboxDiskCosmetic cosmetic, NullType useless)
+    public void enableCosmetic(Player player, JukeboxDiskCosmetic cosmetic)
     {
-        this.play(cosmetic, player);
+        if (cosmetic.isOwned(player))
+        {
+            if (cosmetic.getAccessibility().canAccess(player))
+            {
+                this.play(cosmetic, player);
+
+                AbstractGui gui = (AbstractGui) this.hub.getGuiManager().getPlayerGui(player);
+
+                if (gui != null)
+                    gui.update(player);
+            }
+            else
+            {
+                player.sendMessage(PlayerManager.COSMETICS_TAG + ChatColor.RED + "Vous n'avez pas le grade nécessaire pour utiliser cette cosmétique.");
+            }
+        }
+        else
+        {
+            cosmetic.buy(player, false);
+        }
     }
+
+    @Override
+    public void enableCosmetic(Player player, JukeboxDiskCosmetic cosmetic, NullType useless) {}
 
     @Override
     public void disableCosmetic(Player player, boolean logout, NullType useless) { /** Not needed **/ }
@@ -210,9 +234,8 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
                     {
                         SamaGamesAPI.get().getStatsManager().getPlayerStats(playerUUID).getJukeBoxStatistics().incrByWoots(woots);
                         SamaGamesAPI.get().getStatsManager().getPlayerStats(playerUUID).getJukeBoxStatistics().incrByMehs(mehs);
-                        //TODO: Handle stats if player is offline
                     }
-                    catch (NullPointerException ignored){}
+                    catch (NullPointerException ignored) {}
                 }
 
                 this.currentPlaylist = null;
