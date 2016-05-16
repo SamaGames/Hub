@@ -2,9 +2,12 @@ package net.samagames.hub.cosmetics.gadgets.displayers;
 
 import net.samagames.hub.Hub;
 import net.samagames.hub.utils.FireworkUtils;
+import net.samagames.hub.utils.ProximityUtils;
 import net.samagames.tools.ParticleEffect;
 import net.samagames.tools.SimpleBlock;
 import org.bukkit.*;
+import org.bukkit.craftbukkit.v1_9_R1.entity.CraftPlayer;
+import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
@@ -14,8 +17,11 @@ import java.util.Map;
 
 public class TrampoSlimeDisplayer extends AbstractDisplayer
 {
+    private final Map<Location, SimpleBlock> corners;
+
+    private ArmorStand beacon;
+    private BukkitTask beaconTask;
     private BukkitTask loopTask;
-    private Map<Location, SimpleBlock> corners;
 
     public TrampoSlimeDisplayer(Hub hub, Player player)
     {
@@ -64,6 +70,13 @@ public class TrampoSlimeDisplayer extends AbstractDisplayer
             block.getBlock().setType(this.blocksUsed.get(block).getType());
             block.getBlock().setData(this.blocksUsed.get(block).getData());
         }
+
+        this.beacon = this.baseLocation.getWorld().spawn(this.baseLocation.clone().add(0.0D, 2.0D, 0.0D), ArmorStand.class);
+        this.beaconTask = ProximityUtils.onNearbyOf(this.hub, this.beacon, 1.0D, 1.0D, 1.0D, Player.class, (player) ->
+        {
+            ((CraftPlayer) player).getHandle().motY = 5.0D;
+            ((CraftPlayer) player).getHandle().velocityChanged = true;
+        });
 
         this.player.teleport(this.baseLocation.clone().add(0.0D, 2.0D, 0.0D));
 

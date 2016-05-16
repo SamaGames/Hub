@@ -21,10 +21,7 @@ import org.bukkit.util.Vector;
 
 import java.util.*;
 
-/**
- * Created by Rigner for project Hub.
- */
-public class Bumper extends AbstractInteraction implements Listener
+class Bumper extends AbstractInteraction implements Listener
 {
     private final Location bumperLocation;
     private final BukkitTask startTask;
@@ -51,6 +48,7 @@ public class Bumper extends AbstractInteraction implements Listener
                 Math.cos(this.bumperLocation.getPitch() * Math.PI * 2D / 180D),
                 Math.sin(this.bumperLocation.getYaw() * Math.PI * 2D / 180D)
         )), ArmorStand.class);
+
         this.startBeacon.setVisible(false);
         this.startBeacon.setGravity(false);
 
@@ -61,18 +59,25 @@ public class Bumper extends AbstractInteraction implements Listener
     public void play(Player player)
     {
         if (this.flyingPlayers.contains(player.getUniqueId()))
-            return ;
+            return;
+
+        if (this.hub.getPlayerManager().isBusy(player))
+            return;
+
         this.flyingPlayers.add(player.getUniqueId());
+
         Vector vec = this.bumperLocation.getDirection().multiply(this.power);
         long flyTime = (long) (((vec.getY()) / g )* 20.0);
-        BukkitTask run = new BukkitRunnable() {
 
+        BukkitTask run = new BukkitRunnable()
+        {
             double x = vec.getX() / 2;
             double y = vec.getY() / 2;
             double z = vec.getZ() / 2;
 
             @Override
-            public void run() {
+            public void run()
+            {
                 ((CraftPlayer)player).getHandle().motX = x;
                 ((CraftPlayer)player).getHandle().motY = y;
                 ((CraftPlayer)player).getHandle().motZ = z;
@@ -80,26 +85,32 @@ public class Bumper extends AbstractInteraction implements Listener
             }
         }.runTaskTimer(this.hub, 0L, flyTime/2L);
 
-        this.flyTasks.put(player.getUniqueId(), this.hub.getServer().getScheduler().runTaskLater(this.hub, () -> {
+        this.flyTasks.put(player.getUniqueId(), this.hub.getServer().getScheduler().runTaskLater(this.hub, () ->
+        {
             ItemStack stack = new ItemStack(Material.ELYTRA);
+
             ItemMeta meta = stack.getItemMeta();
             meta.spigot().setUnbreakable(true);
+
             stack.setItemMeta(meta);
+
             player.getInventory().setChestplate(stack);
             ((CraftPlayer)player).getHandle().setFlag(7, true);
+
             this.hub.getPlayerManager().getStaticInventory().setInventoryToPlayer(player);
             this.hub.getServer().getPluginManager().callEvent(new EntityToggleGlideEvent(player, true));
+
             Titles.sendTitle(player, 10, 40, 10, "", ChatColor.GOLD + "Bon vol !");
+
             this.stop(player);
             run.cancel();
-       // }, 40L)); old
         }, flyTime));
     }
 
     @Override
     public boolean hasPlayer(Player player)
     {
-        return (flyingPlayers.contains(player.getUniqueId()));
+        return (this.flyingPlayers.contains(player.getUniqueId()));
     }
 
     @Override

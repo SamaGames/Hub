@@ -153,6 +153,9 @@ public class Parkour
             player.getInventory().clear();
             player.getInventory().setItem(4, QUIT_STACK);
             player.getInventory().setHeldItemSlot(4);
+
+            for (UUID playerIn : this.playersIn.keySet())
+                player.hidePlayer(this.hub.getServer().getPlayer(playerIn));
         });
 
         if (this.hub.getCosmeticManager().getPetManager().getEquippedCosmetic(player) != null)
@@ -258,6 +261,12 @@ public class Parkour
 
         player.getInventory().clear();
         this.hub.getPlayerManager().getStaticInventory().setInventoryToPlayer(player);
+
+        for (UUID playerIn : this.playersIn.keySet())
+        {
+            player.showPlayer(this.hub.getServer().getPlayer(playerIn));
+            this.hub.getServer().getPlayer(playerIn).showPlayer(player);
+        }
     }
 
     public String getParkourName()

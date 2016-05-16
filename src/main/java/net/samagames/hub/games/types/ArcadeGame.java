@@ -51,8 +51,7 @@ public class ArcadeGame extends AbstractGame
                 "\u2B29 BurnThatChicken",
                 "\u2B29 PacMan",
                 "\u2B29 Timberman",
-                "\u2B29 Bomberman",
-                "\u2B29 FlyRing"
+                "\u2B29 Bomberman"
         };
     }
 

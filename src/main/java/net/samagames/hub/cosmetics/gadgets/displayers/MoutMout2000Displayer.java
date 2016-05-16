@@ -34,7 +34,7 @@ public class MoutMout2000Displayer extends AbstractDisplayer
     {
         World craftbukkitWorld = ((CraftWorld) this.player.getWorld()).getHandle();
         MoutMout2000Sheep craftbukkitSheep = new MoutMout2000Sheep(craftbukkitWorld);
-        craftbukkitSheep.setPosition(player.getLocation().getX(), player.getLocation().getY(), player.getLocation().getZ());
+        craftbukkitSheep.setPosition(this.player.getLocation().getX(), this.player.getLocation().getY(), this.player.getLocation().getZ());
         craftbukkitWorld.addEntity(craftbukkitSheep, CreatureSpawnEvent.SpawnReason.CUSTOM);
 
         Sheep sheep = (Sheep) craftbukkitSheep.getBukkitEntity();
@@ -60,7 +60,7 @@ public class MoutMout2000Displayer extends AbstractDisplayer
                     Color c2 = ColorUtils.getColor(r2i);
 
                     sheep.setColor(DyeColor.values()[GadgetManager.RANDOM.nextInt(DyeColor.values().length)]);
-                    craftbukkitSheep.b(((CraftPlayer) player).getHandle());
+                    craftbukkitSheep.a(((CraftPlayer) player).getHandle());
 
                     FireworkEffect effect = FireworkEffect.builder().flicker(GadgetManager.RANDOM.nextBoolean()).withColor(c1).withFade(c2).with(FireworkEffect.Type.BURST).trail(GadgetManager.RANDOM.nextBoolean()).build();
                     FireworkUtils.launchfw(hub, sheep.getLocation(), effect);
@@ -103,7 +103,7 @@ public class MoutMout2000Displayer extends AbstractDisplayer
 
     public static class MoutMout2000Sheep extends EntitySheep
     {
-        public MoutMout2000Sheep(World world)
+        MoutMout2000Sheep(World world)
         {
             super(world);
 
