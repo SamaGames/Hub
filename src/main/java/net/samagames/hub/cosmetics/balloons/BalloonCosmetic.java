@@ -63,7 +63,7 @@ class BalloonCosmetic extends AbstractCosmetic
         {
             livingEntities[i] = (LivingEntity)player.getWorld().spawnEntity(player.getLocation().add(random.nextDouble() % 2 - 1, 2.5D, random.nextDouble() % 2 - 1), this.entityType);
             livingEntities[i].addPotionEffect(PotionEffectType.LEVITATION.createEffect(Integer.MAX_VALUE, 2));
-            ((CraftLivingEntity)livingEntities[i]).getHandle().h(true);
+            ((CraftLivingEntity)livingEntities[i]).getHandle().setInvisible(true);
             freeze(livingEntities[i]);
             livingEntities[i].setLeashHolder(player);
             if (this.name != null)

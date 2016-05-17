@@ -13,7 +13,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitTask;
 
-import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 public class GameSign
@@ -102,8 +101,12 @@ public class GameSign
                 new ChatMessage(this.sign.getLine(2)),
                 new ChatMessage(this.sign.getLine(3))
         };
-
-        PacketPlayOutUpdateSign packet = new PacketPlayOutUpdateSign(worldServer, new BlockPosition(this.sign.getX(), this.sign.getY(), this.sign.getZ()), lines);
+        NBTTagCompound nbt = new NBTTagCompound();
+        for(int i = 0; i < 4; ++i) {
+            String s = this.sign.getLine(i);
+            nbt.setString("Text" + (i + 1), s);
+        }
+        PacketPlayOutTileEntityData packet = new PacketPlayOutTileEntityData(new BlockPosition(this.sign.getX(), this.sign.getY(), this.sign.getZ()), 9, nbt);
 
         this.sign.getWorld().getNearbyEntities(this.sign.getLocation(), 30, 30, 30).stream().filter(entity -> entity instanceof Player).forEach(entity -> ((CraftPlayer) entity).getHandle().playerConnection.sendPacket(packet));
     }
