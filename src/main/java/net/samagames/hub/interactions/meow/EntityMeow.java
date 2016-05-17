@@ -26,7 +26,7 @@ class EntityMeow extends EntityOcelot
     }
 
     @Override
-    protected void da() {}
+    protected void db() {}
 
     @Override
     public void b(NBTTagCompound nbttagcompound) {}
@@ -47,5 +47,5 @@ class EntityMeow extends EntityOcelot
     }
 
     @Override
-    public void e(NBTTagCompound nbttagcompound) {}
+    public void f(NBTTagCompound nbttagcompound) {}
 }

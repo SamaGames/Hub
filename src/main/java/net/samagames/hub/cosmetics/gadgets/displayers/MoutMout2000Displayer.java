@@ -129,7 +129,7 @@ public class MoutMout2000Displayer extends AbstractDisplayer
         }
 
         @Override
-        public boolean cK()
+        public boolean cL()
         {
             return true;
         }

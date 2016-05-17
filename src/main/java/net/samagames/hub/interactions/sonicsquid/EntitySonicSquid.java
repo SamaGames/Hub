@@ -56,7 +56,7 @@ class EntitySonicSquid extends EntitySquid
     @Override
     public void n()
     {
-        EntityLiving entityliving = (EntityLiving) this.bt();
+        EntityLiving entityliving = (EntityLiving) this.bu();
 
         if (entityliving == null)
         {
@@ -123,7 +123,7 @@ class EntitySonicSquid extends EntitySquid
     }
 
     @Override
-    public void e(NBTTagCompound nbttagcompound) {}
+    public void f(NBTTagCompound nbttagcompound) {}
 
     private boolean checkBlock(double x, double y, double z)
     {
