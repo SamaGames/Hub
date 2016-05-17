@@ -1,16 +1,16 @@
 package net.samagames.hub.cosmetics.gadgets.displayers;
 
 import com.google.common.collect.Sets;
-import net.minecraft.server.v1_9_R1.*;
+import net.minecraft.server.v1_9_R2.*;
 import net.samagames.hub.Hub;
 import net.samagames.hub.cosmetics.gadgets.GadgetManager;
 import net.samagames.tools.ParticleEffect;
 import net.samagames.tools.SimpleBlock;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.v1_9_R1.CraftWorld;
-import org.bukkit.craftbukkit.v1_9_R1.entity.CraftEntity;
-import org.bukkit.craftbukkit.v1_9_R1.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_9_R2.CraftWorld;
+import org.bukkit.craftbukkit.v1_9_R2.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_9_R2.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -118,7 +118,7 @@ public class AnimalChestDisplayer extends AbstractDisplayer
 
     private void freeze(Entity e)
     {
-        net.minecraft.server.v1_9_R1.Entity entity = ((CraftEntity)e).getHandle();
+        net.minecraft.server.v1_9_R2.Entity entity = ((CraftEntity)e).getHandle();
 
         if (!(entity instanceof EntityInsentient))
             return ;

@@ -1,6 +1,6 @@
 package net.samagames.hub.interactions.meow;
 
-import net.minecraft.server.v1_9_R1.*;
+import net.minecraft.server.v1_9_R2.*;
 
 import java.util.UUID;
 

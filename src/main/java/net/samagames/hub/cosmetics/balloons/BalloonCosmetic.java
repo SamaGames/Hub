@@ -1,13 +1,13 @@
 package net.samagames.hub.cosmetics.balloons;
 
 import com.google.common.collect.Sets;
-import net.minecraft.server.v1_9_R1.EntityInsentient;
-import net.minecraft.server.v1_9_R1.Navigation;
-import net.minecraft.server.v1_9_R1.PathfinderGoalSelector;
+import net.minecraft.server.v1_9_R2.EntityInsentient;
+import net.minecraft.server.v1_9_R2.Navigation;
+import net.minecraft.server.v1_9_R2.PathfinderGoalSelector;
 import net.samagames.hub.Hub;
 import net.samagames.hub.cosmetics.common.AbstractCosmetic;
-import org.bukkit.craftbukkit.v1_9_R1.entity.CraftEntity;
-import org.bukkit.craftbukkit.v1_9_R1.entity.CraftLivingEntity;
+import org.bukkit.craftbukkit.v1_9_R2.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_9_R2.entity.CraftLivingEntity;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
@@ -102,7 +102,7 @@ class BalloonCosmetic extends AbstractCosmetic
 
     private void freeze(Entity e)
     {
-        net.minecraft.server.v1_9_R1.Entity entity = ((CraftEntity)e).getHandle();
+        net.minecraft.server.v1_9_R2.Entity entity = ((CraftEntity)e).getHandle();
 
         if (!(entity instanceof EntityInsentient))
             return ;
