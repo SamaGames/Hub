@@ -103,8 +103,7 @@ public class GameSign
         };
         NBTTagCompound nbt = new NBTTagCompound();
         for(int i = 0; i < 4; ++i) {
-            String s = this.sign.getLine(i);
-            nbt.setString("Text" + (i + 1), s);
+            nbt.setString("Text" + (i + 1), IChatBaseComponent.ChatSerializer.a(lines[i]));
         }
         PacketPlayOutTileEntityData packet = new PacketPlayOutTileEntityData(new BlockPosition(this.sign.getX(), this.sign.getY(), this.sign.getZ()), 9, nbt);
 
