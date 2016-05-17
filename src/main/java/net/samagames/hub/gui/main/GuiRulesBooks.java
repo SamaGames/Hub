@@ -22,8 +22,9 @@ public class GuiRulesBooks extends AbstractGui
 
         this.books = new ArrayList<>();
 
-        for (RulesBook book : game.getRulesBooks())
-            this.books.add(book.toItemStack());
+        if (game.getRulesBooks() != null)
+            for (RulesBook book : game.getRulesBooks())
+                this.books.add(book.toItemStack());
     }
 
     @Override
