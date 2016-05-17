@@ -100,6 +100,10 @@ public class GameSign
                 new ChatComponentText(this.sign.getLine(3))
         };
         NBTTagCompound nbt = new NBTTagCompound();
+        nbt.setString("id", "Sign");
+        nbt.setInt("x", this.sign.getLocation().getBlockX());
+        nbt.setInt("y", this.sign.getLocation().getBlockY());
+        nbt.setInt("z", this.sign.getLocation().getBlockZ());
         for(int i = 0; i < 4; ++i) {
             nbt.setString("Text" + (i + 1), IChatBaseComponent.ChatSerializer.a(lines[i]));
         }
