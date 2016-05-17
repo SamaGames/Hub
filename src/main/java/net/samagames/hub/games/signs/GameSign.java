@@ -93,13 +93,11 @@ public class GameSign
 
     public void updateSign()
     {
-        WorldServer worldServer = ((CraftWorld) this.sign.getWorld()).getHandle();
-
         IChatBaseComponent[] lines = new IChatBaseComponent[] {
-                new ChatMessage(this.sign.getLine(0)),
-                new ChatMessage(this.sign.getLine(1)),
-                new ChatMessage(this.sign.getLine(2)),
-                new ChatMessage(this.sign.getLine(3))
+                new ChatComponentText(this.sign.getLine(0)),
+                new ChatComponentText(this.sign.getLine(1)),
+                new ChatComponentText(this.sign.getLine(2)),
+                new ChatComponentText(this.sign.getLine(3))
         };
         NBTTagCompound nbt = new NBTTagCompound();
         for(int i = 0; i < 4; ++i) {
