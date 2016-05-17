@@ -72,6 +72,8 @@ public class TrampoSlimeDisplayer extends AbstractDisplayer
         }
 
         this.beacon = this.baseLocation.getWorld().spawn(this.baseLocation.clone().add(0.0D, 2.0D, 0.0D), ArmorStand.class);
+        this.beacon.setVisible(false);
+        this.beacon.setInvulnerable(true);
         this.beaconTask = ProximityUtils.onNearbyOf(this.hub, this.beacon, 1.0D, 1.0D, 1.0D, Player.class, (player) ->
         {
             ((CraftPlayer) player).getHandle().motY = 5.0D;
@@ -122,6 +124,8 @@ public class TrampoSlimeDisplayer extends AbstractDisplayer
                 {
                     baseLocation.getWorld().createExplosion(baseLocation.getX(), baseLocation.getY(), baseLocation.getZ(), 5, false, false);
 
+                    TrampoSlimeDisplayer.this.beacon.remove();
+                    TrampoSlimeDisplayer.this.beaconTask.cancel();
                     restore();
                     end();
                     callback();
