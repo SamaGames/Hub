@@ -99,7 +99,7 @@ public class NukeDisplayer extends AbstractDisplayer
                 else if (this.timer <= 5)
                     hub.getServer().broadcastMessage(TAG + this.timer);
 
-                meowBossBar.setProgress(100.0D - (this.timer * 10));
+                meowBossBar.setProgress((100.0D - (this.timer * 10)) / 100);
 
                 for (Player player : hub.getServer().getOnlinePlayers())
                     player.playSound(player.getLocation(), Sound.ENTITY_CAT_AMBIENT, 1.0F, 1.0F);
@@ -113,7 +113,7 @@ public class NukeDisplayer extends AbstractDisplayer
     private void timeToSendCatInTheHairLikeTheHandsInTheFamousSing()
     {
         this.loopFirst.cancel();
-        this.meowBossBar.setProgress(100.0D);
+        this.meowBossBar.setProgress(1.0D);
 
         TornadoEffect tornadoEffect = new TornadoEffect(this.hub.getCosmeticManager().getParticleManager().getEffectManager());
         tornadoEffect.setLocation(this.baseLocation.clone().add(0.5D, 1.5D, 0.5D));
@@ -166,7 +166,7 @@ public class NukeDisplayer extends AbstractDisplayer
                 ocelot.setCustomName(ChatColor.GOLD + "" + ChatColor.BOLD + "Meow");
                 ocelot.setCustomNameVisible(true);
 
-                meowBossBar.setProgress(100.0D - (this.loops * 100 / 600));
+                meowBossBar.setProgress((100.0D - (this.loops * 100 / 600)) / 100);
 
                 if(GadgetManager.RANDOM.nextInt(5) == 3)
                     for (Player player : hub.getServer().getOnlinePlayers())
