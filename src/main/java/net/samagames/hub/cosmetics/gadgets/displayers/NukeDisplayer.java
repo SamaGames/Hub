@@ -116,19 +116,15 @@ public class NukeDisplayer extends AbstractDisplayer
         this.meowBossBar.setProgress(1.0D);
 
         TornadoEffect tornadoEffect = new TornadoEffect(this.hub.getCosmeticManager().getParticleManager().getEffectManager());
-        tornadoEffect.setLocation(this.baseLocation.clone().add(0.5D, 1.5D, 0.5D));
+        tornadoEffect.setLocation(this.baseLocation.getBlock().getLocation().clone().add(0.5D, 1.5D, 0.5D));
         tornadoEffect.showCloud = false;
         tornadoEffect.yOffset = 0.0D;
-        tornadoEffect.tornadoHeight = 25.0F;
+        tornadoEffect.tornadoHeight = 15.0F;
         tornadoEffect.tornadoParticle = de.slikey.effectlib.util.ParticleEffect.FIREWORKS_SPARK;
         tornadoEffect.start();
 
         AtomEffect atomEffect = new AtomEffect(this.hub.getCosmeticManager().getParticleManager().getEffectManager());
-        atomEffect.setLocation(this.baseLocation.clone().add(0.5D, 1.5D, 0.5D));
-        atomEffect.radius = 8.0D;
-        atomEffect.radiusNucleus = 0.75F;
-        atomEffect.particlesNucleus = 20;
-        atomEffect.particlesOrbital = 20;
+        atomEffect.setLocation(this.baseLocation.getBlock().getLocation().clone().add(0.5D, 1.5D, 0.5D));
         atomEffect.particleNucleus = de.slikey.effectlib.util.ParticleEffect.FLAME;
         atomEffect.particleOrbital = de.slikey.effectlib.util.ParticleEffect.PORTAL;
         atomEffect.infinite();
@@ -137,7 +133,7 @@ public class NukeDisplayer extends AbstractDisplayer
         HelixEffect helixEffect = new HelixEffect(this.hub.getCosmeticManager().getParticleManager().getEffectManager());
         helixEffect.particle = de.slikey.effectlib.util.ParticleEffect.CRIT_MAGIC;
         helixEffect.radius = 10;
-        helixEffect.setLocation(this.baseLocation.clone().add(0.5D, 0.25D, 0.5D));
+        helixEffect.setLocation(this.baseLocation.getBlock().getLocation().clone().add(0.5D, 0.25D, 0.5D));
         helixEffect.infinite();
         helixEffect.start();
 
@@ -189,7 +185,7 @@ public class NukeDisplayer extends AbstractDisplayer
 
                     ocelot.setHealth(0);
                     ocelot.remove();
-                }, 20L * 5);
+                }, 20L * 8);
             }
         }, 1L, 1L);
 
