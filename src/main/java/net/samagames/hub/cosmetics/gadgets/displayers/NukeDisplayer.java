@@ -82,7 +82,7 @@ public class NukeDisplayer extends AbstractDisplayer
 
         this.hub.getServer().broadcastMessage(ChatColor.DARK_RED + "" + ChatColor.BOLD + "[" + ChatColor.RED + ChatColor.BOLD + "Meow" + ChatColor.DARK_RED + ChatColor.BOLD + "] " + ChatColor.RED + ChatColor.BOLD + "Non ! " + this.player.getName() + " a lancé une bombe atomique à chat sur le monde ! Tous aux abris !");
 
-        this.meowBossBar = new CraftBossBar(ChatColor.RED + "Meow", BarColor.RED, BarStyle.SEGMENTED_12);
+        this.meowBossBar = new CraftBossBar(ChatColor.RED + "Meow", BarColor.PURPLE, BarStyle.SEGMENTED_10);
         this.hub.getServer().getOnlinePlayers().forEach(this.meowBossBar::addPlayer);
 
         this.loopFirst = this.hub.getServer().getScheduler().runTaskTimerAsynchronously(this.hub, new Runnable()
@@ -120,6 +120,7 @@ public class NukeDisplayer extends AbstractDisplayer
         tornadoEffect.showCloud = false;
         tornadoEffect.yOffset = 0.0D;
         tornadoEffect.tornadoHeight = 15.0F;
+        tornadoEffect.maxTornadoRadius = 2.5F;
         tornadoEffect.tornadoParticle = de.slikey.effectlib.util.ParticleEffect.FIREWORKS_SPARK;
         tornadoEffect.infinite();
         tornadoEffect.start();
