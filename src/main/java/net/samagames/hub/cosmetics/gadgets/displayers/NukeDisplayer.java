@@ -83,10 +83,9 @@ public class NukeDisplayer extends AbstractDisplayer
         tornadoEffect.setLocation(this.baseLocation.clone().add(0.5D, 1.5D, 0.5D));
         tornadoEffect.showCloud = false;
         tornadoEffect.yOffset = 0.0D;
-        tornadoEffect.tornadoHeight = 20.0F;
+        tornadoEffect.tornadoHeight = 25.0F;
         tornadoEffect.tornadoParticle = de.slikey.effectlib.util.ParticleEffect.FIREWORKS_SPARK;
-        tornadoEffect.type = EffectType.REPEATING;
-        tornadoEffect.iterations = -1;
+        tornadoEffect.asynchronous = true;
         tornadoEffect.run();
 
         AtomEffect atomEffect = new AtomEffect(this.hub.getCosmeticManager().getParticleManager().getEffectManager());
@@ -94,6 +93,7 @@ public class NukeDisplayer extends AbstractDisplayer
         atomEffect.particleOrbital = de.slikey.effectlib.util.ParticleEffect.PORTAL;
         atomEffect.type = EffectType.REPEATING;
         atomEffect.iterations = -1;
+        atomEffect.asynchronous = true;
         atomEffect.run();
 
         restore();
