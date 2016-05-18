@@ -152,7 +152,7 @@ public class NukeDisplayer extends AbstractDisplayer
             {
                 this.loops++;
 
-                if (this.loops == 600)
+                if (this.loops == 500)
                 {
                     baseLocation.getWorld().createExplosion(baseLocation.getX(), baseLocation.getY(), baseLocation.getZ(), 10, false, false);
                     meowBossBar.removeAll();
@@ -176,7 +176,7 @@ public class NukeDisplayer extends AbstractDisplayer
                 ocelot.setCustomName(ChatColor.GOLD + "" + ChatColor.BOLD + "Meow");
                 ocelot.setCustomNameVisible(true);
 
-                meowBossBar.setProgress((100.0D - (this.loops * 100 / 600)) / 100);
+                meowBossBar.setProgress((100.0D - (this.loops * 100 / 500)) / 100);
 
                 if(GadgetManager.RANDOM.nextInt(5) == 3)
                     for (Player player : hub.getServer().getOnlinePlayers())
@@ -192,9 +192,9 @@ public class NukeDisplayer extends AbstractDisplayer
 
                     ocelot.setHealth(0);
                     ocelot.remove();
-                }, 20L * 8);
+                }, 20L * 5);
             }
-        }, 1L, 1L);
+        }, 4L, 4L);
     }
 
     @Override
