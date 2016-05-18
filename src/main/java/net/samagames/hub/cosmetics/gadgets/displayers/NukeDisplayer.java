@@ -28,7 +28,7 @@ public class NukeDisplayer extends AbstractDisplayer
         super(hub, player);
 
         this.addBlockToUse(this.baseLocation.clone(), new SimpleBlock(Material.BARRIER));
-        this.addBlockToUse(this.baseLocation.clone().add(0.0D, 2.0D, 0.0D), new SimpleBlock(Material.BARRIER));
+        this.addBlockToUse(this.baseLocation.clone().add(0.0D, 2.0D, 0.0D), new SimpleBlock(Material.QUARTZ_BLOCK, 1));
         this.addBlockToUse(this.baseLocation.clone().add(0.0D, 1.0D, 0.0D).subtract(0.0D, 0.0D, 1.0D), new SimpleBlock(Material.BARRIER));
         this.addBlockToUse(this.baseLocation.clone().add(0.0D, 2.0D, 0.0D).subtract(0.0D, 0.0D, 1.0D), new SimpleBlock(Material.BARRIER));
         this.addBlockToUse(this.baseLocation.clone().add(0.0D, 1.0D, 0.0D).subtract(1.0D, 0.0D, 0.0D), new SimpleBlock(Material.BARRIER));
@@ -89,17 +89,14 @@ public class NukeDisplayer extends AbstractDisplayer
         tornadoEffect.run();
 
         AtomEffect atomEffect = new AtomEffect(this.hub.getCosmeticManager().getParticleManager().getEffectManager());
+        atomEffect.setLocation(this.baseLocation.clone().add(0.5D, 1.5D, 0.5D));
         atomEffect.particleNucleus = de.slikey.effectlib.util.ParticleEffect.FLAME;
         atomEffect.particleOrbital = de.slikey.effectlib.util.ParticleEffect.PORTAL;
         atomEffect.type = EffectType.REPEATING;
-        atomEffect.iterations = -1;
         atomEffect.asynchronous = true;
         atomEffect.run();
 
-        restore();
-        end();
-
-        /**this.loopSecond = this.hub.getServer().getScheduler().runTaskTimer(this.hub, new Runnable()
+        this.loopSecond = this.hub.getServer().getScheduler().runTaskTimer(this.hub, new Runnable()
         {
             int loops = 0;
 
@@ -142,13 +139,8 @@ public class NukeDisplayer extends AbstractDisplayer
                     ocelot.setHealth(0);
                     ocelot.remove();
                 }, 20L * 5);
-
-                ParticleEffect.FLAME.display(0, 1.5F, 0, 0, 5, baseLocation.getBlock().getLocation().clone().subtract(2.0D, 0.0D, 0.0D).add(0.0D, 0.0D, 2.0D).add(0.5D, 0.0D, 0.5D), 100.0D);
-                ParticleEffect.FLAME.display(0, 1.5F, 0, 0, 5, baseLocation.getBlock().getLocation().clone().subtract(2.0D, 0.0D, 2.0D).add(0.5D, 0.0D, 0.5D), 100.0D);
-                ParticleEffect.FLAME.display(0, 1.5F, 0, 0, 5, baseLocation.getBlock().getLocation().clone().add(2.0D, 0.0D, 2.0D).add(0.5D, 0.0D, 0.5D), 100.0D);
-                ParticleEffect.FLAME.display(0, 1.5F, 0, 0, 5, baseLocation.getBlock().getLocation().clone().add(2.0D, 0.0D, 0.0D).subtract(0.0D, 0.0D, 2.0D).add(0.5D, 0.0D, 0.5D), 100.0D);
             }
-        }, 1L, 1L);**/
+        }, 1L, 1L);
     }
 
     @Override
