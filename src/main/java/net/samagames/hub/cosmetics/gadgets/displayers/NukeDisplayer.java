@@ -126,10 +126,10 @@ public class NukeDisplayer extends AbstractDisplayer
         tornadoEffect.start();
 
         AtomEffect atomEffect = new AtomEffect(this.hub.getCosmeticManager().getParticleManager().getEffectManager());
-        atomEffect.setLocation(this.baseLocation.getBlock().getLocation().clone().add(0.5D, 5.5D, 0.5D));
+        atomEffect.setLocation(this.baseLocation.getBlock().getLocation().clone().add(0.5D, 7.5D, 0.5D));
         atomEffect.particleNucleus = de.slikey.effectlib.util.ParticleEffect.FLAME;
         atomEffect.particleOrbital = de.slikey.effectlib.util.ParticleEffect.REDSTONE;
-        atomEffect.radiusNucleus = 0.35F;
+        atomEffect.radiusNucleus = 0.4F;
         atomEffect.radius = 5.0F;
         atomEffect.particlesNucleus = 30;
         atomEffect.particlesOrbital = 45;
@@ -170,7 +170,7 @@ public class NukeDisplayer extends AbstractDisplayer
                     player.getWorld().createExplosion(player.getLocation().getX(), player.getLocation().getY(), player.getLocation().getZ(), 5.0F, false, false);
                 }
 
-                Ocelot ocelot = baseLocation.getWorld().spawn(baseLocation.clone().add(0.5D, 3.0D, 0.5D), Ocelot.class);
+                Ocelot ocelot = baseLocation.getWorld().spawn(baseLocation.getBlock().getLocation().clone().add(0.5D, 3.0D, 0.5D), Ocelot.class);
                 ocelot.setCatType(Ocelot.Type.values()[GadgetManager.RANDOM.nextInt(Ocelot.Type.values().length)]);
                 ocelot.setVelocity(new Vector(GadgetManager.RANDOM.nextInt(8) - 4, 5, GadgetManager.RANDOM.nextInt(8) - 4));
                 ocelot.setCustomName(ChatColor.GOLD + "" + ChatColor.BOLD + "Meow");
