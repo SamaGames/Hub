@@ -1,9 +1,7 @@
 package net.samagames.hub.cosmetics.gadgets.displayers;
 
-import de.slikey.effectlib.effect.DnaEffect;
-import de.slikey.effectlib.effect.HillEffect;
-import de.slikey.effectlib.effect.SphereEffect;
-import de.slikey.effectlib.effect.VortexEffect;
+import de.slikey.effectlib.EffectType;
+import de.slikey.effectlib.effect.*;
 import net.samagames.hub.Hub;
 import net.samagames.hub.cosmetics.gadgets.GadgetManager;
 import net.samagames.hub.utils.FireworkUtils;
@@ -81,19 +79,22 @@ public class NukeDisplayer extends AbstractDisplayer
     {
         this.loopFirst.cancel();
 
-        HillEffect sphereEffect = new HillEffect(this.hub.getCosmeticManager().getParticleManager().getEffectManager());
-        sphereEffect.setLocation(this.baseLocation.clone().add(0.5D, 1.5D, 0.5D));
-        sphereEffect.particle = de.slikey.effectlib.util.ParticleEffect.FIREWORKS_SPARK;
-        sphereEffect.edgeLength = 8.5F;
-        sphereEffect.height = 2.5F;
-        sphereEffect.run();
+        TornadoEffect tornadoEffect = new TornadoEffect(this.hub.getCosmeticManager().getParticleManager().getEffectManager());
+        tornadoEffect.setLocation(this.baseLocation.clone().add(0.5D, 1.5D, 0.5D));
+        tornadoEffect.showCloud = false;
+        tornadoEffect.yOffset = 0.0D;
+        tornadoEffect.tornadoHeight = 20.0F;
+        tornadoEffect.tornadoParticle = de.slikey.effectlib.util.ParticleEffect.FIREWORKS_SPARK;
+        tornadoEffect.type = EffectType.REPEATING;
+        tornadoEffect.iterations = -1;
+        tornadoEffect.run();
 
-        DnaEffect dnaEffect = new DnaEffect(this.hub.getCosmeticManager().getParticleManager().getEffectManager());
-        dnaEffect.particleHelix = de.slikey.effectlib.util.ParticleEffect.REDSTONE;
-        dnaEffect.particleBase1 = de.slikey.effectlib.util.ParticleEffect.FIREWORKS_SPARK;
-        dnaEffect.particleBase2 = de.slikey.effectlib.util.ParticleEffect.FIREWORKS_SPARK;
-        dnaEffect.length = 25.0F;
-        dnaEffect.run();
+        AtomEffect atomEffect = new AtomEffect(this.hub.getCosmeticManager().getParticleManager().getEffectManager());
+        atomEffect.particleNucleus = de.slikey.effectlib.util.ParticleEffect.FLAME;
+        atomEffect.particleOrbital = de.slikey.effectlib.util.ParticleEffect.PORTAL;
+        atomEffect.type = EffectType.REPEATING;
+        atomEffect.iterations = -1;
+        atomEffect.run();
 
         restore();
         end();
