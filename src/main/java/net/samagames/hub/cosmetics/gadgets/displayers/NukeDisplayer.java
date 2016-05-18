@@ -121,14 +121,16 @@ public class NukeDisplayer extends AbstractDisplayer
         tornadoEffect.yOffset = 0.0D;
         tornadoEffect.tornadoHeight = 15.0F;
         tornadoEffect.tornadoParticle = de.slikey.effectlib.util.ParticleEffect.FIREWORKS_SPARK;
+        tornadoEffect.infinite();
         tornadoEffect.start();
 
         AtomEffect atomEffect = new AtomEffect(this.hub.getCosmeticManager().getParticleManager().getEffectManager());
         atomEffect.setLocation(this.baseLocation.getBlock().getLocation().clone().add(0.5D, 5.5D, 0.5D));
         atomEffect.particleNucleus = de.slikey.effectlib.util.ParticleEffect.FLAME;
         atomEffect.particleOrbital = de.slikey.effectlib.util.ParticleEffect.REDSTONE;
-        atomEffect.radiusNucleus = 0.5F;
-        atomEffect.radius = 6.0F;
+        atomEffect.radiusNucleus = 0.35F;
+        atomEffect.radius = 5.0F;
+        atomEffect.particlesNucleus = 30;
         atomEffect.particlesOrbital = 45;
         atomEffect.infinite();
         atomEffect.start();
@@ -154,6 +156,7 @@ public class NukeDisplayer extends AbstractDisplayer
                     baseLocation.getWorld().createExplosion(baseLocation.getX(), baseLocation.getY(), baseLocation.getZ(), 10, false, false);
                     meowBossBar.removeAll();
 
+                    tornadoEffect.cancel();
                     atomEffect.cancel();
                     helixEffect.cancel();
 
@@ -191,41 +194,6 @@ public class NukeDisplayer extends AbstractDisplayer
                 }, 20L * 8);
             }
         }, 1L, 1L);
-
-        new BukkitRunnable()
-        {
-            double t = Math.PI / 4;
-            Location loc = baseLocation.getBlock().getLocation().clone().add(0.5D, 3.0D, 0.5D);
-
-            @Override
-            public void run()
-            {
-                this.t = this.t + 0.1D * Math.PI;
-
-                for (double theta = 0; theta <= 2 * Math.PI; theta = theta + Math.PI / 32)
-                {
-                    double x = this.t * Math.cos(theta);
-                    double y = 2 * Math.exp(-0.1 * this.t) * Math.sin(this.t) + 1.5;
-                    double z = this.t * Math.sin(theta);
-                    this.loc.add(x, y, z);
-                    ParticleEffect.FIREWORKS_SPARK.display(0, 0, 0, 0, 1, this.loc, 100.0D);
-                    this.loc.subtract(x, y, z);
-
-                    theta = theta + Math.PI / 64;
-
-                    x = t * Math.cos(theta);
-                    y = 2 * Math.exp(-0.1 * this.t) * Math.sin(t) + 1.5;
-                    z = t * Math.sin(theta);
-
-                    this.loc.add(x, y, z);
-                    ParticleEffect.REDSTONE.display(new ParticleEffect.OrdinaryColor(230, 126, 34), loc, 100.0D);
-                    this.loc.subtract(x, y, z);
-                }
-
-                if (this.t > 30)
-                    this.cancel();
-            }
-        }.runTaskTimerAsynchronously(this.hub, 0L, 1L);
     }
 
     @Override
