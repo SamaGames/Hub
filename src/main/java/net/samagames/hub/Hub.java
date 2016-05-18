@@ -5,7 +5,7 @@ import net.samagames.api.SamaGamesAPI;
 import net.samagames.api.games.GamesNames;
 import net.samagames.api.games.Status;
 import net.samagames.hub.commands.CommandManager;
-import net.samagames.hub.common.HubRefresher;
+import net.samagames.hub.common.refresh.HubRefresher;
 import net.samagames.hub.common.hydroangeas.HydroangeasManager;
 import net.samagames.hub.common.managers.EntityManager;
 import net.samagames.hub.common.managers.EventBus;
@@ -85,6 +85,7 @@ public class Hub extends JavaPlugin
         {
             this.hubRefresher = new HubRefresher(this);
             this.hubRefresherTask = this.getServer().getScheduler().runTaskTimerAsynchronously(this, this.hubRefresher, 20L, 20L);
+            SamaGamesAPI.get().getPubSub().subscribe("hub-status", this.hubRefresher);
         }
 
         this.eventBus = new EventBus();
@@ -131,10 +132,7 @@ public class Hub extends JavaPlugin
     public void onDisable()
     {
         if (this.hubRefresher != null)
-        {
             this.hubRefresherTask.cancel();
-            this.hubRefresher.removeFromList();
-        }
 
         this.hydroangeasSynchronization.cancel(true);
         this.eventBus.onDisable();
