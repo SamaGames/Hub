@@ -1,5 +1,7 @@
 package net.samagames.hub.cosmetics.gadgets.displayers;
 
+import de.slikey.effectlib.effect.DnaEffect;
+import de.slikey.effectlib.effect.HillEffect;
 import de.slikey.effectlib.effect.SphereEffect;
 import de.slikey.effectlib.effect.VortexEffect;
 import net.samagames.hub.Hub;
@@ -77,15 +79,24 @@ public class NukeDisplayer extends AbstractDisplayer
 
     private void timeToSendCatInTheHairLikeTheHandsInTheFamousSing()
     {
-        VortexEffect sphereEffect = new VortexEffect(this.hub.getCosmeticManager().getParticleManager().getEffectManager());
+        this.loopFirst.cancel();
+
+        HillEffect sphereEffect = new HillEffect(this.hub.getCosmeticManager().getParticleManager().getEffectManager());
         sphereEffect.setLocation(this.baseLocation.clone().add(0.5D, 1.5D, 0.5D));
-        sphereEffect.particle = de.slikey.effectlib.util.ParticleEffect.CRIT_MAGIC;
-        sphereEffect.radius = 8;
-        sphereEffect.circles = 4;
+        sphereEffect.particle = de.slikey.effectlib.util.ParticleEffect.FIREWORKS_SPARK;
+        sphereEffect.edgeLength = 8.5F;
+        sphereEffect.height = 2.5F;
         sphereEffect.infinite();
         sphereEffect.run();
 
-        this.loopFirst.cancel();
+        DnaEffect dnaEffect = new DnaEffect(this.hub.getCosmeticManager().getParticleManager().getEffectManager());
+        dnaEffect.particleHelix = de.slikey.effectlib.util.ParticleEffect.REDSTONE;
+        dnaEffect.particleBase1 = de.slikey.effectlib.util.ParticleEffect.FIREWORKS_SPARK;
+        dnaEffect.particleBase2 = de.slikey.effectlib.util.ParticleEffect.FIREWORKS_SPARK;
+        dnaEffect.length = 25.0F;
+        dnaEffect.infinite();
+        dnaEffect.run();
+
         this.loopSecond = this.hub.getServer().getScheduler().runTaskTimer(this.hub, new Runnable()
         {
             int loops = 0;
@@ -110,7 +121,7 @@ public class NukeDisplayer extends AbstractDisplayer
 
                 Ocelot ocelot = baseLocation.getWorld().spawn(baseLocation.getBlock().getLocation().clone().add(0.5D, 3.0D, 0.5D), Ocelot.class);
                 ocelot.setCatType(Ocelot.Type.values()[GadgetManager.RANDOM.nextInt(Ocelot.Type.values().length)]);
-                ocelot.setVelocity(new Vector(GadgetManager.RANDOM.nextInt(8) - 4, 3, GadgetManager.RANDOM.nextInt(8) - 4));
+                ocelot.setVelocity(new Vector(GadgetManager.RANDOM.nextInt(8) - 4, 5, GadgetManager.RANDOM.nextInt(8) - 4));
                 ocelot.setCustomName(ChatColor.GOLD + "" + ChatColor.BOLD + "Meow");
                 ocelot.setCustomNameVisible(true);
 
@@ -136,41 +147,6 @@ public class NukeDisplayer extends AbstractDisplayer
                 ParticleEffect.FLAME.display(0, 1.5F, 0, 0, 5, baseLocation.getBlock().getLocation().clone().add(2.0D, 0.0D, 0.0D).subtract(0.0D, 0.0D, 2.0D).add(0.5D, 0.0D, 0.5D), 100.0D);
             }
         }, 1L, 1L);
-
-        new BukkitRunnable()
-        {
-            double t = Math.PI / 4;
-            Location loc = baseLocation.getBlock().getLocation().clone().add(0.5D, 3.0D, 0.5D);
-
-            @Override
-            public void run()
-            {
-                this.t = this.t + 0.1D * Math.PI;
-
-                for (double theta = 0; theta <= 2 * Math.PI; theta = theta + Math.PI / 32)
-                {
-                    double x = this.t * Math.cos(theta);
-                    double y = 2 * Math.exp(-0.1 * this.t) * Math.sin(this.t) + 1.5;
-                    double z = this.t * Math.sin(theta);
-                    this.loc.add(x, y, z);
-                    ParticleEffect.FIREWORKS_SPARK.display(0, 0, 0, 0, 1, this.loc, 100.0D);
-                    this.loc.subtract(x, y, z);
-
-                    theta = theta + Math.PI / 64;
-
-                    x = t * Math.cos(theta);
-                    y = 2 * Math.exp(-0.1 * this.t) * Math.sin(t) + 1.5;
-                    z = t * Math.sin(theta);
-
-                    this.loc.add(x, y, z);
-                    ParticleEffect.REDSTONE.display(new ParticleEffect.OrdinaryColor(230, 126, 34), loc, 100.0D);
-                    this.loc.subtract(x, y, z);
-                }
-
-                if (this.t > 30)
-                    this.cancel();
-            }
-        }.runTaskTimerAsynchronously(this.hub, 0, 1);
     }
 
     @Override
