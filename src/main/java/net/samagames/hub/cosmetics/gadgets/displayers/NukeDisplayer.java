@@ -124,9 +124,12 @@ public class NukeDisplayer extends AbstractDisplayer
         tornadoEffect.start();
 
         AtomEffect atomEffect = new AtomEffect(this.hub.getCosmeticManager().getParticleManager().getEffectManager());
-        atomEffect.setLocation(this.baseLocation.getBlock().getLocation().clone().add(0.5D, 1.5D, 0.5D));
+        atomEffect.setLocation(this.baseLocation.getBlock().getLocation().clone().add(0.5D, 5.5D, 0.5D));
         atomEffect.particleNucleus = de.slikey.effectlib.util.ParticleEffect.FLAME;
         atomEffect.particleOrbital = de.slikey.effectlib.util.ParticleEffect.PORTAL;
+        atomEffect.radiusNucleus = 0.5F;
+        atomEffect.radius = 6.0F;
+        atomEffect.particlesOrbital = 45;
         atomEffect.infinite();
         atomEffect.start();
 
