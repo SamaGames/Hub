@@ -52,7 +52,7 @@ public class NukeDisplayer extends AbstractDisplayer
 
         this.player.teleport(this.baseLocation.getBlock().getLocation().clone().add(0.5D, 2.0D, 0.5D));
 
-        this.hub.getServer().broadcastMessage(ChatColor.DARK_RED + "" + ChatColor.BOLD + "[" + ChatColor.RED + ChatColor.BOLD + "Meow" + ChatColor.DARK_RED + ChatColor.BOLD + "] " + ChatColor.RED + ChatColor.BOLD + "Non ! " + player.getName() + " a lancé une bombe atomique à chat sur le monde ! Tous aux abris !");
+        this.hub.getServer().broadcastMessage(ChatColor.DARK_RED + "" + ChatColor.BOLD + "[" + ChatColor.RED + ChatColor.BOLD + "Meow" + ChatColor.DARK_RED + ChatColor.BOLD + "] " + ChatColor.RED + ChatColor.BOLD + "Non ! " + this.player.getName() + " a lancé une bombe atomique à chat sur le monde ! Tous aux abris !");
 
         this.loopFirst = this.hub.getServer().getScheduler().runTaskTimerAsynchronously(this.hub, new Runnable()
         {
@@ -86,7 +86,6 @@ public class NukeDisplayer extends AbstractDisplayer
         sphereEffect.particle = de.slikey.effectlib.util.ParticleEffect.FIREWORKS_SPARK;
         sphereEffect.edgeLength = 8.5F;
         sphereEffect.height = 2.5F;
-        sphereEffect.infinite();
         sphereEffect.run();
 
         DnaEffect dnaEffect = new DnaEffect(this.hub.getCosmeticManager().getParticleManager().getEffectManager());
@@ -94,10 +93,12 @@ public class NukeDisplayer extends AbstractDisplayer
         dnaEffect.particleBase1 = de.slikey.effectlib.util.ParticleEffect.FIREWORKS_SPARK;
         dnaEffect.particleBase2 = de.slikey.effectlib.util.ParticleEffect.FIREWORKS_SPARK;
         dnaEffect.length = 25.0F;
-        dnaEffect.infinite();
         dnaEffect.run();
 
-        this.loopSecond = this.hub.getServer().getScheduler().runTaskTimer(this.hub, new Runnable()
+        restore();
+        end();
+
+        /**this.loopSecond = this.hub.getServer().getScheduler().runTaskTimer(this.hub, new Runnable()
         {
             int loops = 0;
 
@@ -146,7 +147,7 @@ public class NukeDisplayer extends AbstractDisplayer
                 ParticleEffect.FLAME.display(0, 1.5F, 0, 0, 5, baseLocation.getBlock().getLocation().clone().add(2.0D, 0.0D, 2.0D).add(0.5D, 0.0D, 0.5D), 100.0D);
                 ParticleEffect.FLAME.display(0, 1.5F, 0, 0, 5, baseLocation.getBlock().getLocation().clone().add(2.0D, 0.0D, 0.0D).subtract(0.0D, 0.0D, 2.0D).add(0.5D, 0.0D, 0.5D), 100.0D);
             }
-        }, 1L, 1L);
+        }, 1L, 1L);**/
     }
 
     @Override
