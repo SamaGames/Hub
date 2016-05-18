@@ -79,8 +79,10 @@ public class NukeDisplayer extends AbstractDisplayer
     {
         VortexEffect sphereEffect = new VortexEffect(this.hub.getCosmeticManager().getParticleManager().getEffectManager());
         sphereEffect.setLocation(this.baseLocation.clone().add(0.5D, 1.5D, 0.5D));
-        sphereEffect.particle = de.slikey.effectlib.util.ParticleEffect.DRAGON_BREATH;
-        sphereEffect.radius = 4;
+        sphereEffect.particle = de.slikey.effectlib.util.ParticleEffect.CRIT_MAGIC;
+        sphereEffect.radius = 8;
+        sphereEffect.circles = 4;
+        sphereEffect.infinite();
         sphereEffect.run();
 
         this.loopFirst.cancel();
