@@ -4,7 +4,7 @@ import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
-import net.samagames.hub.common.JsonHub;
+import net.samagames.hub.common.refresh.JsonHub;
 import net.samagames.hub.gui.AbstractGui;
 import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;

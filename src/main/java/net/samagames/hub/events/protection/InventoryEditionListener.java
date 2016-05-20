@@ -20,7 +20,7 @@ public class InventoryEditionListener implements Listener
     @EventHandler
     public void onCraftItem(CraftItemEvent event)
     {
-        if (!(event.getWhoClicked() instanceof Player) || !canDoAction((Player) event.getWhoClicked()))
+        if (!(event.getWhoClicked() instanceof Player) || !this.canDoAction((Player) event.getWhoClicked()))
             event.setCancelled(true);
     }
 
@@ -39,21 +39,21 @@ public class InventoryEditionListener implements Listener
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event)
     {
-        if (!(event.getWhoClicked() instanceof Player) || !canDoAction((Player) event.getWhoClicked()))
+        if (!(event.getWhoClicked() instanceof Player) || !this.canDoAction((Player) event.getWhoClicked()))
             event.setCancelled(true);
     }
 
     @EventHandler
     public void onInventoryInteract(InventoryInteractEvent event)
     {
-        if (!(event.getWhoClicked() instanceof Player) || !canDoAction((Player) event.getWhoClicked()))
+        if (!(event.getWhoClicked() instanceof Player) || !this.canDoAction((Player) event.getWhoClicked()))
             event.setCancelled(true);
     }
 
     @EventHandler
     public void onSecondHandItemSwap(PlayerSwapHandItemsEvent event)
     {
-        if (!canDoAction(event.getPlayer()))
+        if (!this.canDoAction(event.getPlayer()))
             event.setCancelled(true);
     }
 

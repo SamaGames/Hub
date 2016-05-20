@@ -10,6 +10,7 @@ import net.samagames.hub.cosmetics.common.AbstractCosmeticManager;
 import net.samagames.hub.gui.AbstractGui;
 import net.samagames.tools.ParticleEffect;
 import net.samagames.tools.bossbar.BossBarAPI;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.boss.BarColor;
@@ -125,18 +126,23 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
 
     public void onLogin(Player player)
     {
-        IPlayerSettings settings = SamaGamesAPI.get().getSettingsManager().getSettings(player.getUniqueId());
+        Bukkit.getScheduler().runTaskAsynchronously(hub, () -> {
+            IPlayerSettings settings = SamaGamesAPI.get().getSettingsManager().getSettings(player.getUniqueId());
 
-        if(!settings.isJukeboxListen())
-            this.mutedPlayers.add(player.getUniqueId());
-        else
-            this.addPlayer(player);
+            if(!settings.isJukeboxListen())
+                mutedPlayers.add(player.getUniqueId());
+            else
+                addPlayer(player);
+        });
     }
 
     public void onLogout(Player player)
     {
-        this.removePlayer(player);
-        this.mutedPlayers.remove(player.getUniqueId());
+        Bukkit.getScheduler().runTaskAsynchronously(hub, () -> {
+            this.removePlayer(player);
+            this.mutedPlayers.remove(player.getUniqueId());
+        });
+
     }
 
     public void play(JukeboxDiskCosmetic disk, Player player)

@@ -1,4 +1,4 @@
-package net.samagames.hub.common;
+package net.samagames.hub.common.refresh;
 
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.api.permissions.IPermissionsEntity;
