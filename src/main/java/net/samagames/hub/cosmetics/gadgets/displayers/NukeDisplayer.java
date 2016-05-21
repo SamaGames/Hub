@@ -150,7 +150,7 @@ public class NukeDisplayer extends AbstractDisplayer
                 }
                 else
                 {
-                    sphereEffect.radius = this.radius += 0.005F;
+                    sphereEffect.radius = this.radius += 0.01F;
                     this.ticks += 2;
                 }
             }

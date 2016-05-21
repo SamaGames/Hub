@@ -47,14 +47,14 @@ public class HubRefresher implements Runnable, IPacketsReceiver
     @Override
     public void receive(String channel, String data)
     {
-        this.hubs.add(new Gson().fromJson(data, JsonHub.class));
+        JsonHub jsonHub = new Gson().fromJson(data, JsonHub.class);
+        this.hubs.put(jsonHub.getHubNumber(), jsonHub);
     }
 
     public JsonHub getHubByID(int id)
     {
-        for(JsonHub jsonHub : this.hubs)
-            if(jsonHub.getHubNumber() == id)
-                return jsonHub;
+        if(this.hubs.containsKey(id))
+            return this.hubs.get(id);
 
         return null;
     }

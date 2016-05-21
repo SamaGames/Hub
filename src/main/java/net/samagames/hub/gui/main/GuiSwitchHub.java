@@ -16,6 +16,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class GuiSwitchHub extends AbstractGui
 {
@@ -40,7 +41,7 @@ public class GuiSwitchHub extends AbstractGui
     @Override
     public void update(Player player)
     {
-        List<JsonHub> hubs = this.hub.getHubRefresher().getHubs();
+        Map<Integer, JsonHub> hubs = this.hub.getHubRefresher().getHubs();
         int[] baseSlots = { 10, 11, 12, 13, 14, 15, 16 };
         int line = 0;
         int slot = 0;
@@ -50,7 +51,7 @@ public class GuiSwitchHub extends AbstractGui
         int i = 0;
         boolean more = false;
 
-        for(JsonHub hub : hubs)
+        for(JsonHub hub : hubs.values())
         {
             if (i < (7 * (this.page - 1)))
             {
