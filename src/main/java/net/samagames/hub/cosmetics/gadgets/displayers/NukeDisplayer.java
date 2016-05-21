@@ -143,38 +143,31 @@ public class NukeDisplayer extends AbstractDisplayer
         atomEffect.infinite();
         atomEffect.start();
 
-        HelixEffect helixEffect = new HelixEffect(this.hub.getCosmeticManager().getParticleManager().getEffectManager());
-        helixEffect.particle = de.slikey.effectlib.util.ParticleEffect.CRIT_MAGIC;
-        helixEffect.radius = 10;
-        helixEffect.setLocation(this.baseLocation.getBlock().getLocation().clone().add(0.5D, 0.25D, 0.5D));
-        helixEffect.infinite();
-        helixEffect.start();
-
         LineEffect cornerOneEffect = new LineEffect(this.hub.getCosmeticManager().getParticleManager().getEffectManager());
         cornerOneEffect.particle = ParticleEffect.ENCHANTMENT_TABLE;
-        cornerOneEffect.setLocation(this.baseLocation.clone().subtract(2.0D, 0.0D, 0.0D).add(0.0D, 1.0D, 2.0D));
-        cornerOneEffect.setTargetLocation(this.baseLocation.getBlock().getLocation().clone().add(0.5D, 3.0D, 0.5D));
+        cornerOneEffect.setLocation(this.baseLocation.getBlock().getLocation().clone().subtract(2.0D, 0.0D, 0.0D).add(0.5D, 1.75D, 2.5D));
+        cornerOneEffect.setTargetLocation(this.baseLocation.getBlock().getLocation().clone().add(0.5D, 4.0D, 0.5D));
         cornerOneEffect.infinite();
         cornerOneEffect.start();
 
         LineEffect cornerTwoEffect = new LineEffect(this.hub.getCosmeticManager().getParticleManager().getEffectManager());
         cornerTwoEffect.particle = ParticleEffect.ENCHANTMENT_TABLE;
-        cornerTwoEffect.setLocation(this.baseLocation.clone().add(2.0D, 1.0D, 2.0D));
-        cornerTwoEffect.setTargetLocation(this.baseLocation.getBlock().getLocation().clone().add(0.5D, 3.0D, 0.5D));
+        cornerTwoEffect.setLocation(this.baseLocation.getBlock().getLocation().clone().add(2.5D, 1.75D, 2.5D));
+        cornerTwoEffect.setTargetLocation(this.baseLocation.getBlock().getLocation().clone().add(0.5D, 4.0D, 0.5D));
         cornerTwoEffect.infinite();
         cornerTwoEffect.start();
 
         LineEffect cornerThreeEffect = new LineEffect(this.hub.getCosmeticManager().getParticleManager().getEffectManager());
         cornerThreeEffect.particle = ParticleEffect.ENCHANTMENT_TABLE;
-        cornerThreeEffect.setLocation(this.baseLocation.clone().subtract(0.0D, 0.0D, 2.0D).add(0.0D, 1.0D, 2.0D));
-        cornerThreeEffect.setTargetLocation(this.baseLocation.getBlock().getLocation().clone().add(0.5D, 3.0D, 0.5D));
+        cornerThreeEffect.setLocation(this.baseLocation.getBlock().getLocation().clone().subtract(0.0D, 0.0D, 2.0D).add(0.5D, 1.75D, 2.5D));
+        cornerThreeEffect.setTargetLocation(this.baseLocation.getBlock().getLocation().clone().add(0.5D, 4.0D, 0.5D));
         cornerThreeEffect.infinite();
         cornerThreeEffect.start();
 
         LineEffect cornerFourEffect = new LineEffect(this.hub.getCosmeticManager().getParticleManager().getEffectManager());
         cornerFourEffect.particle = ParticleEffect.ENCHANTMENT_TABLE;
-        cornerFourEffect.setLocation(this.baseLocation.clone().subtract(2.0D, 0.0D, 2.0D).add(0.0D, 1.0D, 0.0D));
-        cornerFourEffect.setTargetLocation(this.baseLocation.getBlock().getLocation().clone().add(0.5D, 3.0D, 0.5D));
+        cornerFourEffect.setLocation(this.baseLocation.getBlock().getLocation().clone().subtract(2.0D, 0.0D, 2.0D).add(0.5D, 1.75D, 0.5D));
+        cornerFourEffect.setTargetLocation(this.baseLocation.getBlock().getLocation().clone().add(0.5D, 4.0D, 0.5D));
         cornerFourEffect.infinite();
         cornerFourEffect.start();
 
@@ -194,7 +187,6 @@ public class NukeDisplayer extends AbstractDisplayer
 
                     tornadoEffect.cancel();
                     atomEffect.cancel();
-                    helixEffect.cancel();
 
                     cornerOneEffect.cancel();
                     cornerTwoEffect.cancel();
