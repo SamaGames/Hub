@@ -86,6 +86,43 @@ public class NukeDisplayer extends AbstractDisplayer
         this.meowBossBar = new CraftBossBar(ChatColor.RED + "Meow", BarColor.PURPLE, BarStyle.SEGMENTED_10);
         this.hub.getServer().getOnlinePlayers().forEach(this.meowBossBar::addPlayer);
 
+        AtomEffect atomEffect = new AtomEffect(this.hub.getCosmeticManager().getParticleManager().getEffectManager());
+        atomEffect.setLocation(this.baseLocation.getBlock().getLocation().clone().add(0.5D, 5.5D, 0.5D));
+        atomEffect.particleNucleus = ParticleEffect.FLAME;
+        atomEffect.particleOrbital = ParticleEffect.REDSTONE;
+        atomEffect.radiusNucleus = 0.3F;
+        atomEffect.radius = 3.5F;
+        atomEffect.infinite();
+        atomEffect.start();
+
+        LineEffect cornerOneEffect = new LineEffect(this.hub.getCosmeticManager().getParticleManager().getEffectManager());
+        cornerOneEffect.particle = ParticleEffect.ENCHANTMENT_TABLE;
+        cornerOneEffect.setLocation(this.baseLocation.getBlock().getLocation().clone().subtract(2.0D, 0.0D, 0.0D).add(0.5D, 1.75D, 2.5D));
+        cornerOneEffect.setTargetLocation(this.baseLocation.getBlock().getLocation().clone().add(0.5D, 5.5D, 0.5D));
+        cornerOneEffect.infinite();
+        cornerOneEffect.start();
+
+        LineEffect cornerTwoEffect = new LineEffect(this.hub.getCosmeticManager().getParticleManager().getEffectManager());
+        cornerTwoEffect.particle = ParticleEffect.ENCHANTMENT_TABLE;
+        cornerTwoEffect.setLocation(this.baseLocation.getBlock().getLocation().clone().add(2.5D, 1.75D, 2.5D));
+        cornerTwoEffect.setTargetLocation(this.baseLocation.getBlock().getLocation().clone().add(0.5D, 5.5D, 0.5D));
+        cornerTwoEffect.infinite();
+        cornerTwoEffect.start();
+
+        LineEffect cornerThreeEffect = new LineEffect(this.hub.getCosmeticManager().getParticleManager().getEffectManager());
+        cornerThreeEffect.particle = ParticleEffect.ENCHANTMENT_TABLE;
+        cornerThreeEffect.setLocation(this.baseLocation.getBlock().getLocation().clone().subtract(0.0D, 0.0D, 2.0D).add(0.5D, 1.75D, 2.5D));
+        cornerThreeEffect.setTargetLocation(this.baseLocation.getBlock().getLocation().clone().add(0.5D, 5.5D, 0.5D));
+        cornerThreeEffect.infinite();
+        cornerThreeEffect.start();
+
+        LineEffect cornerFourEffect = new LineEffect(this.hub.getCosmeticManager().getParticleManager().getEffectManager());
+        cornerFourEffect.particle = ParticleEffect.ENCHANTMENT_TABLE;
+        cornerFourEffect.setLocation(this.baseLocation.getBlock().getLocation().clone().subtract(2.0D, 0.0D, 2.0D).add(0.5D, 1.75D, 0.5D));
+        cornerFourEffect.setTargetLocation(this.baseLocation.getBlock().getLocation().clone().add(0.5D, 5.5D, 0.5D));
+        cornerFourEffect.infinite();
+        cornerFourEffect.start();
+
         this.loopFirst = this.hub.getServer().getScheduler().runTaskTimerAsynchronously(this.hub, new Runnable()
         {
             int timer = 10;
@@ -98,6 +135,18 @@ public class NukeDisplayer extends AbstractDisplayer
                 if (this.timer == 0)
                 {
                     hub.getServer().broadcastMessage(TAG + "GRAOUUW !");
+
+                    atomEffect.cancel();
+                    cornerOneEffect.cancel();
+                    cornerTwoEffect.cancel();
+                    cornerThreeEffect.cancel();
+                    cornerFourEffect.cancel();
+
+                    baseLocation.clone().subtract(2.0D, 0.0D, 0.0D).add(0.0D, 1.0D, 2.0D).getBlock().setType(Material.REDSTONE_TORCH_OFF);
+                    baseLocation.clone().add(2.0D, 1.0D, 2.0D).getBlock().setType(Material.REDSTONE_TORCH_OFF);
+                    baseLocation.clone().subtract(0.0D, 0.0D, 2.0D).add(2.0D, 1.0D, 0.0D).getBlock().setType(Material.REDSTONE_TORCH_OFF);
+                    baseLocation.clone().subtract(2.0D, 0.0D, 2.0D).add(0.0D, 1.0D, 0.0D).getBlock().setType(Material.REDSTONE_TORCH_OFF);
+
                     timeToSendCatInTheHairLikeTheHandsInTheFamousSing();
                 }
                 else if (this.timer <= 5)
@@ -132,45 +181,6 @@ public class NukeDisplayer extends AbstractDisplayer
         tornadoEffect.infinite();
         tornadoEffect.start();
 
-        AtomEffect atomEffect = new AtomEffect(this.hub.getCosmeticManager().getParticleManager().getEffectManager());
-        atomEffect.setLocation(this.baseLocation.getBlock().getLocation().clone().add(0.5D, 7.5D, 0.5D));
-        atomEffect.particleNucleus = ParticleEffect.FLAME;
-        atomEffect.particleOrbital = ParticleEffect.REDSTONE;
-        atomEffect.radiusNucleus = 0.4F;
-        atomEffect.radius = 5.0F;
-        atomEffect.particlesNucleus = 30;
-        atomEffect.particlesOrbital = 45;
-        atomEffect.infinite();
-        atomEffect.start();
-
-        LineEffect cornerOneEffect = new LineEffect(this.hub.getCosmeticManager().getParticleManager().getEffectManager());
-        cornerOneEffect.particle = ParticleEffect.ENCHANTMENT_TABLE;
-        cornerOneEffect.setLocation(this.baseLocation.getBlock().getLocation().clone().subtract(2.0D, 0.0D, 0.0D).add(0.5D, 1.75D, 2.5D));
-        cornerOneEffect.setTargetLocation(this.baseLocation.getBlock().getLocation().clone().add(0.5D, 4.0D, 0.5D));
-        cornerOneEffect.infinite();
-        cornerOneEffect.start();
-
-        LineEffect cornerTwoEffect = new LineEffect(this.hub.getCosmeticManager().getParticleManager().getEffectManager());
-        cornerTwoEffect.particle = ParticleEffect.ENCHANTMENT_TABLE;
-        cornerTwoEffect.setLocation(this.baseLocation.getBlock().getLocation().clone().add(2.5D, 1.75D, 2.5D));
-        cornerTwoEffect.setTargetLocation(this.baseLocation.getBlock().getLocation().clone().add(0.5D, 4.0D, 0.5D));
-        cornerTwoEffect.infinite();
-        cornerTwoEffect.start();
-
-        LineEffect cornerThreeEffect = new LineEffect(this.hub.getCosmeticManager().getParticleManager().getEffectManager());
-        cornerThreeEffect.particle = ParticleEffect.ENCHANTMENT_TABLE;
-        cornerThreeEffect.setLocation(this.baseLocation.getBlock().getLocation().clone().subtract(0.0D, 0.0D, 2.0D).add(0.5D, 1.75D, 2.5D));
-        cornerThreeEffect.setTargetLocation(this.baseLocation.getBlock().getLocation().clone().add(0.5D, 4.0D, 0.5D));
-        cornerThreeEffect.infinite();
-        cornerThreeEffect.start();
-
-        LineEffect cornerFourEffect = new LineEffect(this.hub.getCosmeticManager().getParticleManager().getEffectManager());
-        cornerFourEffect.particle = ParticleEffect.ENCHANTMENT_TABLE;
-        cornerFourEffect.setLocation(this.baseLocation.getBlock().getLocation().clone().subtract(2.0D, 0.0D, 2.0D).add(0.5D, 1.75D, 0.5D));
-        cornerFourEffect.setTargetLocation(this.baseLocation.getBlock().getLocation().clone().add(0.5D, 4.0D, 0.5D));
-        cornerFourEffect.infinite();
-        cornerFourEffect.start();
-
         this.loopSecond = this.hub.getServer().getScheduler().runTaskTimer(this.hub, new Runnable()
         {
             int loops = 0;
@@ -180,18 +190,12 @@ public class NukeDisplayer extends AbstractDisplayer
             {
                 this.loops++;
 
-                if (this.loops == 500)
+                if (this.loops == 400)
                 {
                     baseLocation.getWorld().createExplosion(baseLocation.getX(), baseLocation.getY(), baseLocation.getZ(), 10, false, false);
                     meowBossBar.removeAll();
 
                     tornadoEffect.cancel();
-                    atomEffect.cancel();
-
-                    cornerOneEffect.cancel();
-                    cornerTwoEffect.cancel();
-                    cornerThreeEffect.cancel();
-                    cornerFourEffect.cancel();
 
                     restore();
                     end();
@@ -208,7 +212,7 @@ public class NukeDisplayer extends AbstractDisplayer
                 ocelot.setCustomName(ChatColor.GOLD + "" + ChatColor.BOLD + "Meow");
                 ocelot.setCustomNameVisible(true);
 
-                meowBossBar.setProgress((100.0D - (this.loops * 100 / 500)) / 100);
+                meowBossBar.setProgress((100.0D - (this.loops * 100 / 400)) / 100);
 
                 if(GadgetManager.RANDOM.nextInt(5) == 3)
                     for (Player player : hub.getServer().getOnlinePlayers())
