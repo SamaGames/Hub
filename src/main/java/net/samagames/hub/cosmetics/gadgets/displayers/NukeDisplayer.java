@@ -86,14 +86,12 @@ public class NukeDisplayer extends AbstractDisplayer
         this.meowBossBar = new CraftBossBar(ChatColor.RED + "Meow", BarColor.PURPLE, BarStyle.SEGMENTED_10);
         this.hub.getServer().getOnlinePlayers().forEach(this.meowBossBar::addPlayer);
 
-        AtomEffect atomEffect = new AtomEffect(this.hub.getCosmeticManager().getParticleManager().getEffectManager());
-        atomEffect.setLocation(this.baseLocation.getBlock().getLocation().clone().add(0.5D, 5.5D, 0.5D));
-        atomEffect.particleNucleus = ParticleEffect.FLAME;
-        atomEffect.particleOrbital = ParticleEffect.REDSTONE;
-        atomEffect.radiusNucleus = 0.15F;
-        atomEffect.radius = 3.0F;
-        atomEffect.infinite();
-        atomEffect.start();
+        SphereEffect sphereEffect = new SphereEffect(this.hub.getCosmeticManager().getParticleManager().getEffectManager());
+        sphereEffect.particle = ParticleEffect.FLAME;
+        sphereEffect.radius = 0.15F;
+        sphereEffect.setLocation(this.baseLocation.getBlock().getLocation().clone().add(0.5D, 5.5D, 0.5D));
+        sphereEffect.infinite();
+        sphereEffect.start();
 
         LineEffect cornerOneEffect = new LineEffect(this.hub.getCosmeticManager().getParticleManager().getEffectManager());
         cornerOneEffect.particle = ParticleEffect.ENCHANTMENT_TABLE;
@@ -111,7 +109,7 @@ public class NukeDisplayer extends AbstractDisplayer
 
         LineEffect cornerThreeEffect = new LineEffect(this.hub.getCosmeticManager().getParticleManager().getEffectManager());
         cornerThreeEffect.particle = ParticleEffect.ENCHANTMENT_TABLE;
-        cornerThreeEffect.setLocation(this.baseLocation.getBlock().getLocation().clone().subtract(0.0D, 0.0D, 2.0D).add(0.5D, 1.75D, 2.5D));
+        cornerThreeEffect.setLocation(this.baseLocation.getBlock().getLocation().clone().subtract(0.0D, 0.0D, 2.0D).add(2.5D, 1.75D, 0.5D));
         cornerThreeEffect.setTargetLocation(this.baseLocation.getBlock().getLocation().clone().add(0.5D, 5.5D, 0.5D));
         cornerThreeEffect.infinite();
         cornerThreeEffect.start();
@@ -136,7 +134,7 @@ public class NukeDisplayer extends AbstractDisplayer
                 {
                     hub.getServer().broadcastMessage(TAG + "GRAOUUW !");
 
-                    atomEffect.cancel();
+                    sphereEffect.cancel();
                     cornerOneEffect.cancel();
                     cornerTwoEffect.cancel();
                     cornerThreeEffect.cancel();
@@ -225,7 +223,7 @@ public class NukeDisplayer extends AbstractDisplayer
                     ocelot.remove();
                 }, 20L * 5);
             }
-        }, 4L, 4L);
+        }, 2L, 2L);
     }
 
     @Override
