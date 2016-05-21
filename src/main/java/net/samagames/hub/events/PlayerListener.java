@@ -206,7 +206,7 @@ public class PlayerListener implements Listener
                     if (!SamaGamesAPI.get().getSettingsManager().getSettings(target.getUniqueId()).isClickOnMeActivation())
                         return;
 
-                    this.hub.getServer().getScheduler().runTask(this.hub, () -> this.hub.getGuiManager().openGui(player, new GuiClickMe(this.hub, target)));
+                    this.hub.getGuiManager().openGui(player, new GuiClickMe(this.hub, target));
                 }
             });
         }
