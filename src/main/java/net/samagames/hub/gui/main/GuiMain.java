@@ -40,7 +40,7 @@ public class GuiMain extends AbstractGui
                 this.setSlotData(game.isLocked() ? ChatColor.GOLD + "" + ChatColor.MAGIC + "aaaaaaaa" : (game.isNew() ? ChatColor.GREEN + "" + ChatColor.BOLD + "NOUVEAU ! " + ChatColor.RESET : "") + ChatColor.GOLD + game.getName(), game.isLocked() ? new ItemStack(Material.IRON_FENCE, 1) : game.getIcon(), game.getSlotInMainMenu(), makeGameLore(game), "game_" + gameIdentifier);
         }
 
-        player.openInventory(this.inventory);
+        this.hub.getServer().getScheduler().runTask(this.hub, () -> player.openInventory(this.inventory));
     }
 
     @Override

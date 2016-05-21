@@ -52,7 +52,7 @@ public class GuiClickMe extends AbstractGui
 
         this.setSlotData(getBackIcon(), 49, "back");
 
-        player.openInventory(this.inventory);
+        this.hub.getServer().getScheduler().runTask(this.hub, () -> player.openInventory(this.inventory));
     }
 
     @Override

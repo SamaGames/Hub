@@ -140,6 +140,6 @@ public class AnimalChestDisplayer extends AbstractDisplayer
 
             ((Navigation) ce.getNavigation()).a(true);
         }
-        catch (ReflectiveOperationException ignored) {}
+        catch (ReflectiveOperationException | ClassCastException ignored) {}
     }
 }
