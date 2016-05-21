@@ -66,7 +66,7 @@ public class NukeDisplayer extends AbstractDisplayer
 
         this.addBlockToUse(this.baseLocation.clone().subtract(2.0D, 0.0D, 0.0D).add(0.0D, 1.0D, 2.0D), new SimpleBlock(Material.REDSTONE_TORCH_ON, 5));
         this.addBlockToUse(this.baseLocation.clone().add(2.0D, 1.0D, 2.0D), new SimpleBlock(Material.REDSTONE_TORCH_ON, 5));
-        this.addBlockToUse(this.baseLocation.clone().subtract(0.0D, 0.0D, 2.0D).add(0.0D, 1.0D, 2.0D), new SimpleBlock(Material.REDSTONE_TORCH_ON, 5));
+        this.addBlockToUse(this.baseLocation.clone().subtract(0.0D, 0.0D, 2.0D).add(2.0D, 1.0D, 0.0D), new SimpleBlock(Material.REDSTONE_TORCH_ON, 5));
         this.addBlockToUse(this.baseLocation.clone().subtract(2.0D, 0.0D, 2.0D).add(0.0D, 1.0D, 0.0D), new SimpleBlock(Material.REDSTONE_TORCH_ON, 5));
     }
 
@@ -90,8 +90,8 @@ public class NukeDisplayer extends AbstractDisplayer
         atomEffect.setLocation(this.baseLocation.getBlock().getLocation().clone().add(0.5D, 5.5D, 0.5D));
         atomEffect.particleNucleus = ParticleEffect.FLAME;
         atomEffect.particleOrbital = ParticleEffect.REDSTONE;
-        atomEffect.radiusNucleus = 0.3F;
-        atomEffect.radius = 3.5F;
+        atomEffect.radiusNucleus = 0.15F;
+        atomEffect.radius = 3.0F;
         atomEffect.infinite();
         atomEffect.start();
 
@@ -141,11 +141,6 @@ public class NukeDisplayer extends AbstractDisplayer
                     cornerTwoEffect.cancel();
                     cornerThreeEffect.cancel();
                     cornerFourEffect.cancel();
-
-                    baseLocation.clone().subtract(2.0D, 0.0D, 0.0D).add(0.0D, 1.0D, 2.0D).getBlock().setType(Material.REDSTONE_TORCH_OFF);
-                    baseLocation.clone().add(2.0D, 1.0D, 2.0D).getBlock().setType(Material.REDSTONE_TORCH_OFF);
-                    baseLocation.clone().subtract(0.0D, 0.0D, 2.0D).add(2.0D, 1.0D, 0.0D).getBlock().setType(Material.REDSTONE_TORCH_OFF);
-                    baseLocation.clone().subtract(2.0D, 0.0D, 2.0D).add(0.0D, 1.0D, 0.0D).getBlock().setType(Material.REDSTONE_TORCH_OFF);
 
                     timeToSendCatInTheHairLikeTheHandsInTheFamousSing();
                 }
