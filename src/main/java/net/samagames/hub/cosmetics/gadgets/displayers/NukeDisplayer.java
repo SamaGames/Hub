@@ -1,15 +1,12 @@
 package net.samagames.hub.cosmetics.gadgets.displayers;
 
-import de.slikey.effectlib.EffectType;
 import de.slikey.effectlib.effect.*;
-import net.minecraft.server.v1_9_R2.BossBattleServer;
+import de.slikey.effectlib.util.ParticleEffect;
 import net.samagames.hub.Hub;
 import net.samagames.hub.cosmetics.gadgets.GadgetManager;
 import net.samagames.hub.utils.FireworkUtils;
 import net.samagames.tools.ColorUtils;
-import net.samagames.tools.ParticleEffect;
 import net.samagames.tools.SimpleBlock;
-import net.samagames.tools.bossbar.BossBarAPI;
 import org.bukkit.*;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
@@ -17,7 +14,6 @@ import org.bukkit.craftbukkit.v1_9_R2.boss.CraftBossBar;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Ocelot;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
 
@@ -67,6 +63,11 @@ public class NukeDisplayer extends AbstractDisplayer
         this.addBlockToUse(this.baseLocation.clone().add(0.0D, 2.0D, 0.0D).subtract(0.0D, 0.0D, 1.0D), new SimpleBlock(Material.BARRIER, 1));
         this.addBlockToUse(this.baseLocation.clone().add(0.0D, 2.0D, 0.0D).add(0.0D, 0.0D, 1.0D), new SimpleBlock(Material.BARRIER, 1));
         this.addBlockToUse(this.baseLocation.clone().add(0.0D, 3.0D, 0.0D), new SimpleBlock(Material.BARRIER, 1));
+
+        this.addBlockToUse(this.baseLocation.clone().subtract(2.0D, 0.0D, 0.0D).add(0.0D, 1.0D, 2.0D), new SimpleBlock(Material.REDSTONE_TORCH_ON, 1));
+        this.addBlockToUse(this.baseLocation.clone().add(1.0D, 1.0D, 2.0D), new SimpleBlock(Material.REDSTONE_TORCH_ON, 1));
+        this.addBlockToUse(this.baseLocation.clone().subtract(0.0D, 0.0D, 2.0D).add(0.0D, 1.0D, 2.0D), new SimpleBlock(Material.REDSTONE_TORCH_ON, 1));
+        this.addBlockToUse(this.baseLocation.clone().subtract(2.0D, 0.0D, 2.0D).add(0.0D, 1.0D, 0.0D), new SimpleBlock(Material.REDSTONE_TORCH_ON, 1));
     }
 
     @Override
@@ -95,9 +96,14 @@ public class NukeDisplayer extends AbstractDisplayer
                 this.timer--;
 
                 if (this.timer == 0)
+                {
+                    hub.getServer().broadcastMessage(TAG + "GRAOUUW !");
                     timeToSendCatInTheHairLikeTheHandsInTheFamousSing();
+                }
                 else if (this.timer <= 5)
+                {
                     hub.getServer().broadcastMessage(TAG + this.timer);
+                }
 
                 meowBossBar.setProgress((100.0D - (this.timer * 10)) / 100);
 
@@ -118,17 +124,18 @@ public class NukeDisplayer extends AbstractDisplayer
         TornadoEffect tornadoEffect = new TornadoEffect(this.hub.getCosmeticManager().getParticleManager().getEffectManager());
         tornadoEffect.setLocation(this.baseLocation.getBlock().getLocation().clone().add(0.5D, 1.5D, 0.5D));
         tornadoEffect.showCloud = false;
+        tornadoEffect.period = 20;
         tornadoEffect.yOffset = 0.0D;
         tornadoEffect.tornadoHeight = 15.0F;
         tornadoEffect.maxTornadoRadius = 2.5F;
-        tornadoEffect.tornadoParticle = de.slikey.effectlib.util.ParticleEffect.FIREWORKS_SPARK;
+        tornadoEffect.tornadoParticle = ParticleEffect.FIREWORKS_SPARK;
         tornadoEffect.infinite();
         tornadoEffect.start();
 
         AtomEffect atomEffect = new AtomEffect(this.hub.getCosmeticManager().getParticleManager().getEffectManager());
         atomEffect.setLocation(this.baseLocation.getBlock().getLocation().clone().add(0.5D, 7.5D, 0.5D));
-        atomEffect.particleNucleus = de.slikey.effectlib.util.ParticleEffect.FLAME;
-        atomEffect.particleOrbital = de.slikey.effectlib.util.ParticleEffect.REDSTONE;
+        atomEffect.particleNucleus = ParticleEffect.FLAME;
+        atomEffect.particleOrbital = ParticleEffect.REDSTONE;
         atomEffect.radiusNucleus = 0.4F;
         atomEffect.radius = 5.0F;
         atomEffect.particlesNucleus = 30;
@@ -142,6 +149,38 @@ public class NukeDisplayer extends AbstractDisplayer
         helixEffect.setLocation(this.baseLocation.getBlock().getLocation().clone().add(0.5D, 0.25D, 0.5D));
         helixEffect.infinite();
         helixEffect.start();
+
+        LineEffect cornerOneEffect = new LineEffect(this.hub.getCosmeticManager().getParticleManager().getEffectManager());
+        cornerOneEffect.particle = ParticleEffect.ENCHANTMENT_TABLE;
+        cornerOneEffect.isZigZag = true;
+        cornerOneEffect.setLocation(this.baseLocation.clone().subtract(2.0D, 0.0D, 0.0D).add(0.0D, 1.0D, 2.0D));
+        cornerOneEffect.setTargetLocation(this.baseLocation.getBlock().getLocation().clone().add(0.5D, 3.0D, 0.5D));
+        cornerOneEffect.infinite();
+        cornerOneEffect.start();
+
+        LineEffect cornerTwoEffect = new LineEffect(this.hub.getCosmeticManager().getParticleManager().getEffectManager());
+        cornerTwoEffect.particle = ParticleEffect.ENCHANTMENT_TABLE;
+        cornerTwoEffect.isZigZag = true;
+        cornerTwoEffect.setLocation(this.baseLocation.clone().add(1.0D, 1.0D, 2.0D));
+        cornerTwoEffect.setTargetLocation(this.baseLocation.getBlock().getLocation().clone().add(0.5D, 3.0D, 0.5D));
+        cornerTwoEffect.infinite();
+        cornerTwoEffect.start();
+
+        LineEffect cornerThreeEffect = new LineEffect(this.hub.getCosmeticManager().getParticleManager().getEffectManager());
+        cornerThreeEffect.particle = ParticleEffect.ENCHANTMENT_TABLE;
+        cornerThreeEffect.isZigZag = true;
+        cornerThreeEffect.setLocation(this.baseLocation.clone().subtract(0.0D, 0.0D, 2.0D).add(0.0D, 1.0D, 2.0D));
+        cornerThreeEffect.setTargetLocation(this.baseLocation.getBlock().getLocation().clone().add(0.5D, 3.0D, 0.5D));
+        cornerThreeEffect.infinite();
+        cornerThreeEffect.start();
+
+        LineEffect cornerFourEffect = new LineEffect(this.hub.getCosmeticManager().getParticleManager().getEffectManager());
+        cornerFourEffect.particle = ParticleEffect.ENCHANTMENT_TABLE;
+        cornerFourEffect.isZigZag = true;
+        cornerFourEffect.setLocation(this.baseLocation.clone().subtract(2.0D, 0.0D, 2.0D).add(0.0D, 1.0D, 0.0D));
+        cornerFourEffect.setTargetLocation(this.baseLocation.getBlock().getLocation().clone().add(0.5D, 3.0D, 0.5D));
+        cornerFourEffect.infinite();
+        cornerFourEffect.start();
 
         this.loopSecond = this.hub.getServer().getScheduler().runTaskTimer(this.hub, new Runnable()
         {
@@ -160,6 +199,11 @@ public class NukeDisplayer extends AbstractDisplayer
                     tornadoEffect.cancel();
                     atomEffect.cancel();
                     helixEffect.cancel();
+
+                    cornerOneEffect.cancel();
+                    cornerTwoEffect.cancel();
+                    cornerThreeEffect.cancel();
+                    cornerFourEffect.cancel();
 
                     restore();
                     end();
