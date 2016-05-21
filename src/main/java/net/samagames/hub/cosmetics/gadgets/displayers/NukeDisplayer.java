@@ -123,36 +123,47 @@ public class NukeDisplayer extends AbstractDisplayer
 
         this.loopFirst = this.hub.getServer().getScheduler().runTaskTimerAsynchronously(this.hub, new Runnable()
         {
+            int ticks = 0;
             int timer = 10;
+            float radius = 0.15F;
 
             @Override
             public void run()
             {
-                this.timer--;
-
-                if (this.timer == 0)
+                if (this.ticks == 20)
                 {
-                    hub.getServer().broadcastMessage(TAG + "GRAOUUW !");
+                    this.ticks = 0;
+                    this.timer--;
 
-                    sphereEffect.cancel();
-                    cornerOneEffect.cancel();
-                    cornerTwoEffect.cancel();
-                    cornerThreeEffect.cancel();
-                    cornerFourEffect.cancel();
+                    if (this.timer == 0)
+                    {
+                        hub.getServer().broadcastMessage(TAG + "GRAOUUW !");
 
-                    timeToSendCatInTheHairLikeTheHandsInTheFamousSing();
+                        sphereEffect.cancel();
+                        cornerOneEffect.cancel();
+                        cornerTwoEffect.cancel();
+                        cornerThreeEffect.cancel();
+                        cornerFourEffect.cancel();
+
+                        timeToSendCatInTheHairLikeTheHandsInTheFamousSing();
+                    }
+                    else if (this.timer <= 5)
+                    {
+                        hub.getServer().broadcastMessage(TAG + this.timer);
+                    }
+
+                    meowBossBar.setProgress((100.0D - (this.timer * 10)) / 100);
+
+                    for (Player player : hub.getServer().getOnlinePlayers())
+                        player.playSound(player.getLocation(), Sound.ENTITY_CAT_AMBIENT, 1.0F, 1.0F);
                 }
-                else if (this.timer <= 5)
+                else
                 {
-                    hub.getServer().broadcastMessage(TAG + this.timer);
+                    sphereEffect.radius = this.radius += 0.025F;
+                    this.ticks += 2;
                 }
-
-                meowBossBar.setProgress((100.0D - (this.timer * 10)) / 100);
-
-                for (Player player : hub.getServer().getOnlinePlayers())
-                    player.playSound(player.getLocation(), Sound.ENTITY_CAT_AMBIENT, 1.0F, 1.0F);
             }
-        }, 20L, 20L);
+        }, 2L, 2L);
     }
 
     @Override
