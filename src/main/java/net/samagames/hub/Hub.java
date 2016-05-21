@@ -84,7 +84,7 @@ public class Hub extends JavaPlugin
         if (!this.getConfig().getBoolean("disconnected", false))
         {
             this.hubRefresher = new HubRefresher(this);
-            this.hubRefresherTask = this.getServer().getScheduler().runTaskTimerAsynchronously(this, this.hubRefresher, 20L, 20L);
+            this.hubRefresherTask = this.getServer().getScheduler().runTaskTimerAsynchronously(this, this.hubRefresher, 20L * 3, 20L * 3);
             SamaGamesAPI.get().getPubSub().subscribe("hub-status", this.hubRefresher);
         }
 

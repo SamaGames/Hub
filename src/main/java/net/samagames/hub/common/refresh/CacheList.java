@@ -23,7 +23,7 @@ public class CacheList extends HashMap<Integer, JsonHub>
         if (this.timeouts.containsKey(hubNumber))
             this.timeouts.remove(hubNumber);
 
-        this.timeouts.put(hubNumber, 5);
+        this.timeouts.put(hubNumber, 10);
 
         return super.put(hubNumber, jsonHub);
     }

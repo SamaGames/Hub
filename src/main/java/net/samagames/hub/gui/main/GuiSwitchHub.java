@@ -47,6 +47,7 @@ public class GuiSwitchHub extends AbstractGui
         int slot = 0;
 
         this.inventory.clear();
+        this.setSlotData(getBackIcon(), this.inventory.getSize() - 5, "back");
 
         int i = 0;
         boolean more = false;
@@ -81,8 +82,6 @@ public class GuiSwitchHub extends AbstractGui
 
         if(more)
             this.setSlotData(ChatColor.YELLOW + "Page " + (this.page + 1) + " »", Material.PAPER, this.inventory.getSize() - 1, null, "page_next");
-
-        this.setSlotData(getBackIcon(), this.inventory.getSize() - 5, "back");
     }
 
     @Override
@@ -127,7 +126,7 @@ public class GuiSwitchHub extends AbstractGui
     {
         ItemStack glass = new ItemStack(Material.STAINED_GLASS, 1);
         ItemMeta meta = glass.getItemMeta();
-        String baseName = "Hub " + hub.getHubNumber() + " (" + hub.getConnectedPlayers() + " joueurs)";
+        String baseName = "Hub " + hub.getHubNumber() + " (" + hub.getConnectedPlayers() + " joueur" + (hub.getConnectedPlayers() > 1 ? "s" : "") + ")";
 
         if(hub.getHubNumber() == Integer.parseInt(SamaGamesAPI.get().getServerName().split("_")[1]))
         {
