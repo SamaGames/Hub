@@ -54,15 +54,6 @@ public class NukeDisplayer extends AbstractDisplayer
         this.addBlockToUse(this.baseLocation.clone().subtract(0.0D, 0.0D, 2.0D), new SimpleBlock(Material.STEP, 7));
         this.addBlockToUse(this.baseLocation.clone().subtract(0.0D, 0.0D, 2.0D).add(1.0D, 0.0D, 0.0D), new SimpleBlock(Material.STEP, 7));
         this.addBlockToUse(this.baseLocation.clone().subtract(0.0D, 0.0D, 2.0D).add(2.0D, 0.0D, 0.0D), new SimpleBlock(Material.QUARTZ_BLOCK, 1));
-        this.addBlockToUse(this.baseLocation.clone().add(0.0D, 1.0D, 0.0D).subtract(1.0D, 0.0D, 0.0D), new SimpleBlock(Material.BARRIER, 1));
-        this.addBlockToUse(this.baseLocation.clone().add(0.0D, 1.0D, 0.0D).add(1.0D, 0.0D, 0.0D), new SimpleBlock(Material.BARRIER, 1));
-        this.addBlockToUse(this.baseLocation.clone().add(0.0D, 1.0D, 0.0D).subtract(0.0D, 0.0D, 1.0D), new SimpleBlock(Material.BARRIER, 1));
-        this.addBlockToUse(this.baseLocation.clone().add(0.0D, 1.0D, 0.0D).add(0.0D, 0.0D, 1.0D), new SimpleBlock(Material.BARRIER, 1));
-        this.addBlockToUse(this.baseLocation.clone().add(0.0D, 2.0D, 0.0D).subtract(1.0D, 0.0D, 0.0D), new SimpleBlock(Material.BARRIER, 1));
-        this.addBlockToUse(this.baseLocation.clone().add(0.0D, 2.0D, 0.0D).add(1.0D, 0.0D, 0.0D), new SimpleBlock(Material.BARRIER, 1));
-        this.addBlockToUse(this.baseLocation.clone().add(0.0D, 2.0D, 0.0D).subtract(0.0D, 0.0D, 1.0D), new SimpleBlock(Material.BARRIER, 1));
-        this.addBlockToUse(this.baseLocation.clone().add(0.0D, 2.0D, 0.0D).add(0.0D, 0.0D, 1.0D), new SimpleBlock(Material.BARRIER, 1));
-        this.addBlockToUse(this.baseLocation.clone().add(0.0D, 3.0D, 0.0D), new SimpleBlock(Material.BARRIER, 1));
 
         this.addBlockToUse(this.baseLocation.clone().subtract(2.0D, 0.0D, 0.0D).add(0.0D, 1.0D, 2.0D), new SimpleBlock(Material.REDSTONE_TORCH_ON, 5));
         this.addBlockToUse(this.baseLocation.clone().add(2.0D, 1.0D, 2.0D), new SimpleBlock(Material.REDSTONE_TORCH_ON, 5));
@@ -159,7 +150,7 @@ public class NukeDisplayer extends AbstractDisplayer
                 }
                 else
                 {
-                    sphereEffect.radius = this.radius += 0.025F;
+                    sphereEffect.radius = this.radius += 0.005F;
                     this.ticks += 2;
                 }
             }
@@ -194,7 +185,7 @@ public class NukeDisplayer extends AbstractDisplayer
             {
                 this.loops++;
 
-                if (this.loops == 400)
+                if (this.loops == 500)
                 {
                     baseLocation.getWorld().createExplosion(baseLocation.getX(), baseLocation.getY(), baseLocation.getZ(), 10, false, false);
                     meowBossBar.removeAll();
@@ -216,7 +207,7 @@ public class NukeDisplayer extends AbstractDisplayer
                 ocelot.setCustomName(ChatColor.GOLD + "" + ChatColor.BOLD + "Meow");
                 ocelot.setCustomNameVisible(true);
 
-                meowBossBar.setProgress((100.0D - (this.loops * 100 / 400)) / 100);
+                meowBossBar.setProgress((100.0D - (this.loops * 100 / 500)) / 100);
 
                 if(GadgetManager.RANDOM.nextInt(5) == 3)
                     for (Player player : hub.getServer().getOnlinePlayers())

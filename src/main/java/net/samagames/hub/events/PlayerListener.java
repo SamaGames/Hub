@@ -137,10 +137,7 @@ public class PlayerListener implements Listener
             && event.getPlayer().getInventory().getChestplate() != null
             && event.getPlayer().getInventory().getChestplate().getType() == Material.ELYTRA)
         {
-            IPermissionsEntity permissionsEntity = SamaGamesAPI.get().getPermissionsManager().getPlayer(event.getPlayer().getUniqueId());
-
-            if (permissionsEntity.getGroupId() < 3 || !SamaGamesAPI.get().getSettingsManager().getSettings(event.getPlayer().getUniqueId()).isElytraActivated())
-                event.getPlayer().getInventory().setChestplate(new ItemStack(Material.AIR));
+            this.checkElytra(event.getPlayer());
         }
     }
 
@@ -148,6 +145,9 @@ public class PlayerListener implements Listener
     public void onPlayerGlide(EntityToggleGlideEvent event)
     {
         if (!(event.getEntity() instanceof Player))
+            return;
+
+        if (!this.checkElytra((Player) event.getEntity()))
             return;
 
         if (event.isGliding())
@@ -166,7 +166,7 @@ public class PlayerListener implements Listener
     @EventHandler
     public void onPlayerToggleFlight(PlayerToggleFlightEvent event)
     {
-        onPlayerGlide(new EntityToggleGlideEvent(event.getPlayer(), false));
+        this.onPlayerGlide(new EntityToggleGlideEvent(event.getPlayer(), false));
     }
 
     @EventHandler
@@ -222,5 +222,18 @@ public class PlayerListener implements Listener
                 }
             }
         }
+    }
+
+    private boolean checkElytra(Player player)
+    {
+        IPermissionsEntity permissionsEntity = SamaGamesAPI.get().getPermissionsManager().getPlayer(player.getUniqueId());
+
+        if (permissionsEntity.getGroupId() < 3 || !SamaGamesAPI.get().getSettingsManager().getSettings(player.getUniqueId()).isElytraActivated())
+        {
+            player.getInventory().setChestplate(new ItemStack(Material.AIR));
+            return false;
+        }
+
+        return true;
     }
 }
