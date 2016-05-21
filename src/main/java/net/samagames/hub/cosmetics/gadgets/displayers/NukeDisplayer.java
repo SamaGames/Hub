@@ -64,10 +64,10 @@ public class NukeDisplayer extends AbstractDisplayer
         this.addBlockToUse(this.baseLocation.clone().add(0.0D, 2.0D, 0.0D).add(0.0D, 0.0D, 1.0D), new SimpleBlock(Material.BARRIER, 1));
         this.addBlockToUse(this.baseLocation.clone().add(0.0D, 3.0D, 0.0D), new SimpleBlock(Material.BARRIER, 1));
 
-        this.addBlockToUse(this.baseLocation.clone().subtract(2.0D, 0.0D, 0.0D).add(0.0D, 1.0D, 2.0D), new SimpleBlock(Material.REDSTONE_TORCH_ON, 1));
-        this.addBlockToUse(this.baseLocation.clone().add(1.0D, 1.0D, 2.0D), new SimpleBlock(Material.REDSTONE_TORCH_ON, 1));
-        this.addBlockToUse(this.baseLocation.clone().subtract(0.0D, 0.0D, 2.0D).add(0.0D, 1.0D, 2.0D), new SimpleBlock(Material.REDSTONE_TORCH_ON, 1));
-        this.addBlockToUse(this.baseLocation.clone().subtract(2.0D, 0.0D, 2.0D).add(0.0D, 1.0D, 0.0D), new SimpleBlock(Material.REDSTONE_TORCH_ON, 1));
+        this.addBlockToUse(this.baseLocation.clone().subtract(2.0D, 0.0D, 0.0D).add(0.0D, 1.0D, 2.0D), new SimpleBlock(Material.REDSTONE_TORCH_ON, 5));
+        this.addBlockToUse(this.baseLocation.clone().add(2.0D, 1.0D, 2.0D), new SimpleBlock(Material.REDSTONE_TORCH_ON, 5));
+        this.addBlockToUse(this.baseLocation.clone().subtract(0.0D, 0.0D, 2.0D).add(0.0D, 1.0D, 2.0D), new SimpleBlock(Material.REDSTONE_TORCH_ON, 5));
+        this.addBlockToUse(this.baseLocation.clone().subtract(2.0D, 0.0D, 2.0D).add(0.0D, 1.0D, 0.0D), new SimpleBlock(Material.REDSTONE_TORCH_ON, 5));
     }
 
     @Override
@@ -124,7 +124,7 @@ public class NukeDisplayer extends AbstractDisplayer
         TornadoEffect tornadoEffect = new TornadoEffect(this.hub.getCosmeticManager().getParticleManager().getEffectManager());
         tornadoEffect.setLocation(this.baseLocation.getBlock().getLocation().clone().add(0.5D, 1.5D, 0.5D));
         tornadoEffect.showCloud = false;
-        tornadoEffect.period = 20;
+        tornadoEffect.period = 40;
         tornadoEffect.yOffset = 0.0D;
         tornadoEffect.tornadoHeight = 15.0F;
         tornadoEffect.maxTornadoRadius = 2.5F;
@@ -152,7 +152,6 @@ public class NukeDisplayer extends AbstractDisplayer
 
         LineEffect cornerOneEffect = new LineEffect(this.hub.getCosmeticManager().getParticleManager().getEffectManager());
         cornerOneEffect.particle = ParticleEffect.ENCHANTMENT_TABLE;
-        cornerOneEffect.isZigZag = true;
         cornerOneEffect.setLocation(this.baseLocation.clone().subtract(2.0D, 0.0D, 0.0D).add(0.0D, 1.0D, 2.0D));
         cornerOneEffect.setTargetLocation(this.baseLocation.getBlock().getLocation().clone().add(0.5D, 3.0D, 0.5D));
         cornerOneEffect.infinite();
@@ -160,15 +159,13 @@ public class NukeDisplayer extends AbstractDisplayer
 
         LineEffect cornerTwoEffect = new LineEffect(this.hub.getCosmeticManager().getParticleManager().getEffectManager());
         cornerTwoEffect.particle = ParticleEffect.ENCHANTMENT_TABLE;
-        cornerTwoEffect.isZigZag = true;
-        cornerTwoEffect.setLocation(this.baseLocation.clone().add(1.0D, 1.0D, 2.0D));
+        cornerTwoEffect.setLocation(this.baseLocation.clone().add(2.0D, 1.0D, 2.0D));
         cornerTwoEffect.setTargetLocation(this.baseLocation.getBlock().getLocation().clone().add(0.5D, 3.0D, 0.5D));
         cornerTwoEffect.infinite();
         cornerTwoEffect.start();
 
         LineEffect cornerThreeEffect = new LineEffect(this.hub.getCosmeticManager().getParticleManager().getEffectManager());
         cornerThreeEffect.particle = ParticleEffect.ENCHANTMENT_TABLE;
-        cornerThreeEffect.isZigZag = true;
         cornerThreeEffect.setLocation(this.baseLocation.clone().subtract(0.0D, 0.0D, 2.0D).add(0.0D, 1.0D, 2.0D));
         cornerThreeEffect.setTargetLocation(this.baseLocation.getBlock().getLocation().clone().add(0.5D, 3.0D, 0.5D));
         cornerThreeEffect.infinite();
@@ -176,7 +173,6 @@ public class NukeDisplayer extends AbstractDisplayer
 
         LineEffect cornerFourEffect = new LineEffect(this.hub.getCosmeticManager().getParticleManager().getEffectManager());
         cornerFourEffect.particle = ParticleEffect.ENCHANTMENT_TABLE;
-        cornerFourEffect.isZigZag = true;
         cornerFourEffect.setLocation(this.baseLocation.clone().subtract(2.0D, 0.0D, 2.0D).add(0.0D, 1.0D, 0.0D));
         cornerFourEffect.setTargetLocation(this.baseLocation.getBlock().getLocation().clone().add(0.5D, 3.0D, 0.5D));
         cornerFourEffect.infinite();
