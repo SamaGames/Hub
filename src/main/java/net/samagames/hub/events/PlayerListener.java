@@ -12,6 +12,7 @@ import net.samagames.hub.utils.ServerStatus;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Sign;
+import org.bukkit.craftbukkit.v1_9_R2.entity.CraftPlayer;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -131,7 +132,7 @@ public class PlayerListener implements Listener
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event)
     {
-        if (event.getPlayer().isOnGround()
+        if (!event.getPlayer().getLocation().subtract(0, 0.1, 0).getBlock().getType().equals(Material.AIR)
             && event.getPlayer().getInventory().getChestplate() != null
             && event.getPlayer().getInventory().getChestplate().getType() == Material.ELYTRA)
         {
