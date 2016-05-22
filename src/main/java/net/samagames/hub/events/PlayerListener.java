@@ -132,7 +132,7 @@ public class PlayerListener implements Listener
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event)
     {
-        if (event.getPlayer().getLocation().subtract(0, 0.1, 0).getBlock().getType().equals(Material.AIR)
+        if (!event.getPlayer().getLocation().subtract(0, 0.1, 0).getBlock().getType().equals(Material.AIR)
             && event.getPlayer().getInventory().getChestplate() != null
             && event.getPlayer().getInventory().getChestplate().getType() == Material.ELYTRA)
         {
