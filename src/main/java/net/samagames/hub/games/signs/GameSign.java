@@ -99,14 +99,16 @@ public class GameSign
                 new ChatComponentText(this.sign.getLine(2)),
                 new ChatComponentText(this.sign.getLine(3))
         };
+
         NBTTagCompound nbt = new NBTTagCompound();
         nbt.setString("id", "Sign");
         nbt.setInt("x", this.sign.getLocation().getBlockX());
         nbt.setInt("y", this.sign.getLocation().getBlockY());
         nbt.setInt("z", this.sign.getLocation().getBlockZ());
-        for(int i = 0; i < 4; ++i) {
+
+        for(int i = 0; i < 4; ++i)
             nbt.setString("Text" + (i + 1), IChatBaseComponent.ChatSerializer.a(lines[i]));
-        }
+
         PacketPlayOutTileEntityData packet = new PacketPlayOutTileEntityData(new BlockPosition(this.sign.getX(), this.sign.getY(), this.sign.getZ()), 9, nbt);
 
         this.sign.getWorld().getNearbyEntities(this.sign.getLocation(), 30, 30, 30).stream().filter(entity -> entity instanceof Player).forEach(entity -> ((CraftPlayer) entity).getHandle().playerConnection.sendPacket(packet));

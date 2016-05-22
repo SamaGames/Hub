@@ -145,9 +145,6 @@ public class PlayerListener implements Listener
         if (!(event.getEntity() instanceof Player))
             return;
 
-        if (!this.checkElytra((Player) event.getEntity()))
-            return;
-
         if (event.isGliding())
         {
             ItemStack stack = new ItemStack(Material.FEATHER);

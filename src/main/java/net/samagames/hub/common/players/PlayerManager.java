@@ -1,6 +1,7 @@
 package net.samagames.hub.common.players;
 
 import net.samagames.api.SamaGamesAPI;
+import net.samagames.api.permissions.IPermissionsEntity;
 import net.samagames.hub.Hub;
 import net.samagames.hub.common.managers.AbstractManager;
 import net.samagames.tools.InventoryUtils;
@@ -108,7 +109,9 @@ public class PlayerManager extends AbstractManager
 
                 try
                 {
-                    if (SamaGamesAPI.get().getSettingsManager().getSettings(player.getUniqueId()).isElytraActivated())
+                    IPermissionsEntity permissionsEntity = SamaGamesAPI.get().getPermissionsManager().getPlayer(player.getUniqueId());
+
+                    if (permissionsEntity.getGroupId() >= 3 && SamaGamesAPI.get().getSettingsManager().getSettings(player.getUniqueId()).isElytraActivated())
                     {
                         ItemStack elytra = new ItemStack(Material.ELYTRA);
                         ItemMeta meta = elytra.getItemMeta();
