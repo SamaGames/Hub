@@ -49,6 +49,7 @@ public class GameManager extends AbstractManager
         this.registerGame(new BackEndGame(hub, "switchrun", "SwitchRun", uhcZoneGame.getLobbySpawn()));
         this.registerGame(new BackEndGame(hub, "doublerunner", "DoubleRunner", uhcZoneGame.getLobbySpawn()));
         this.registerGame(new BackEndGame(hub, "uhcrandom", "UHCRandom", uhcZoneGame.getLobbySpawn()));
+        this.registerGame(new BackEndGame(hub, "randomrun", "RandomRun", uhcZoneGame.getLobbySpawn()));
 
         // -----
 
