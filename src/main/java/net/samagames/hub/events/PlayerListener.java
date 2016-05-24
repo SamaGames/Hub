@@ -12,6 +12,7 @@ import net.samagames.hub.utils.ServerStatus;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Sign;
+import org.bukkit.craftbukkit.v1_9_R2.entity.CraftPlayer;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -39,8 +40,6 @@ public class PlayerListener implements Listener
     @EventHandler
     public void onPlayerLogin(PlayerJoinEvent event)
     {
-        long startTime = System.currentTimeMillis();
-
         this.hub.getEventBus().onLogin(event.getPlayer());
         new ServerStatus(SamaGamesAPI.get().getServerName(), "Hub", "Map", Status.IN_GAME, this.hub.getServer().getOnlinePlayers().size(), this.hub.getServer().getMaxPlayers()).sendToHydro();
     }
@@ -133,14 +132,11 @@ public class PlayerListener implements Listener
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event)
     {
-        if (event.getPlayer().isOnGround()
+        if (!event.getPlayer().getLocation().subtract(0, 0.1, 0).getBlock().getType().equals(Material.AIR)
             && event.getPlayer().getInventory().getChestplate() != null
             && event.getPlayer().getInventory().getChestplate().getType() == Material.ELYTRA)
         {
-            IPermissionsEntity permissionsEntity = SamaGamesAPI.get().getPermissionsManager().getPlayer(event.getPlayer().getUniqueId());
-
-            if (permissionsEntity.getGroupId() < 3 || !SamaGamesAPI.get().getSettingsManager().getSettings(event.getPlayer().getUniqueId()).isElytraActivated())
-                event.getPlayer().getInventory().setChestplate(new ItemStack(Material.AIR));
+            this.checkElytra(event.getPlayer());
         }
     }
 
@@ -166,7 +162,7 @@ public class PlayerListener implements Listener
     @EventHandler
     public void onPlayerToggleFlight(PlayerToggleFlightEvent event)
     {
-        onPlayerGlide(new EntityToggleGlideEvent(event.getPlayer(), false));
+        this.onPlayerGlide(new EntityToggleGlideEvent(event.getPlayer(), false));
     }
 
     @EventHandler
@@ -222,5 +218,18 @@ public class PlayerListener implements Listener
                 }
             }
         }
+    }
+
+    private boolean checkElytra(Player player)
+    {
+        IPermissionsEntity permissionsEntity = SamaGamesAPI.get().getPermissionsManager().getPlayer(player.getUniqueId());
+
+        if (permissionsEntity.getGroupId() < 3 || !SamaGamesAPI.get().getSettingsManager().getSettings(player.getUniqueId()).isElytraActivated())
+        {
+            player.getInventory().setChestplate(new ItemStack(Material.AIR));
+            return false;
+        }
+
+        return true;
     }
 }

@@ -16,6 +16,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class GuiSwitchHub extends AbstractGui
 {
@@ -40,17 +41,18 @@ public class GuiSwitchHub extends AbstractGui
     @Override
     public void update(Player player)
     {
-        List<JsonHub> hubs = this.hub.getHubRefresher().getHubs();
+        Map<Integer, JsonHub> hubs = this.hub.getHubRefresher().getHubs();
         int[] baseSlots = { 10, 11, 12, 13, 14, 15, 16 };
         int line = 0;
         int slot = 0;
 
         this.inventory.clear();
+        this.setSlotData(getBackIcon(), this.inventory.getSize() - 5, "back");
 
         int i = 0;
         boolean more = false;
 
-        for(JsonHub hub : hubs)
+        for(JsonHub hub : hubs.values())
         {
             if (i < (7 * (this.page - 1)))
             {
@@ -80,8 +82,6 @@ public class GuiSwitchHub extends AbstractGui
 
         if(more)
             this.setSlotData(ChatColor.YELLOW + "Page " + (this.page + 1) + " »", Material.PAPER, this.inventory.getSize() - 1, null, "page_next");
-
-        this.setSlotData(getBackIcon(), this.inventory.getSize() - 5, "back");
     }
 
     @Override
@@ -126,7 +126,7 @@ public class GuiSwitchHub extends AbstractGui
     {
         ItemStack glass = new ItemStack(Material.STAINED_GLASS, 1);
         ItemMeta meta = glass.getItemMeta();
-        String baseName = "Hub " + hub.getHubNumber() + " (" + hub.getConnectedPlayers() + " joueurs)";
+        String baseName = "Hub " + hub.getHubNumber() + " (" + hub.getConnectedPlayers() + " joueur" + (hub.getConnectedPlayers() > 1 ? "s" : "") + ")";
 
         if(hub.getHubNumber() == Integer.parseInt(SamaGamesAPI.get().getServerName().split("_")[1]))
         {

@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CacheList extends ArrayList<JsonHub>
+public class CacheList extends HashMap<Integer, JsonHub>
 {
     private final Map<Integer, Integer> timeouts;
 
@@ -15,45 +15,46 @@ public class CacheList extends ArrayList<JsonHub>
     }
 
     @Override
-    public boolean add(JsonHub jsonHub)
+    public JsonHub put(Integer hubNumber, JsonHub jsonHub)
     {
-        if (this.contains(jsonHub))
-            this.remove(jsonHub);
+        if (this.containsKey(hubNumber))
+            this.remove(hubNumber);
 
-        if (this.timeouts.containsKey(jsonHub.getHubNumber()))
-            this.timeouts.remove(jsonHub.getHubNumber());
+        if (this.timeouts.containsKey(hubNumber))
+            this.timeouts.remove(hubNumber);
 
-        this.timeouts.put(jsonHub.getHubNumber(), 5);
+        this.timeouts.put(hubNumber, 10);
 
-        return super.add(jsonHub);
+        return super.put(hubNumber, jsonHub);
     }
 
     public void update()
     {
-        List<JsonHub> toRemove = new ArrayList<>();
+        List<Integer> toRemove = new ArrayList<>();
 
-        for (JsonHub hub : this)
+        for (int hubNumber : this.keySet())
         {
-            if (!this.timeouts.containsKey(hub.getHubNumber()))
+            if (!this.timeouts.containsKey(hubNumber))
             {
-                toRemove.add(hub);
+                toRemove.add(hubNumber);
             }
             else
             {
-                int newValue = this.timeouts.get(hub.getHubNumber()) - 1;
+                int newValue = this.timeouts.get(hubNumber) - 1;
 
                 if (newValue <= 0)
                 {
-                    toRemove.add(hub);
+                    this.timeouts.remove(hubNumber);
+                    toRemove.add(hubNumber);
                 }
                 else
                 {
-                    this.timeouts.remove(hub.getHubNumber());
-                    this.timeouts.put(hub.getHubNumber(), newValue);
+                    this.timeouts.remove(hubNumber);
+                    this.timeouts.put(hubNumber, newValue);
                 }
             }
         }
 
-        this.removeAll(toRemove);
+        toRemove.forEach(this::remove);
     }
 }

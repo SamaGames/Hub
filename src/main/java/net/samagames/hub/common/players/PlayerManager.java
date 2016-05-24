@@ -1,6 +1,7 @@
 package net.samagames.hub.common.players;
 
 import net.samagames.api.SamaGamesAPI;
+import net.samagames.api.permissions.IPermissionsEntity;
 import net.samagames.hub.Hub;
 import net.samagames.hub.common.managers.AbstractManager;
 import net.samagames.tools.InventoryUtils;
@@ -106,14 +107,23 @@ public class PlayerManager extends AbstractManager
 
                 player.getInventory().clear();
 
-                if (SamaGamesAPI.get().getSettingsManager().getSettings(player.getUniqueId()).isElytraActivated())
+                try
                 {
-                    ItemStack elytra = new ItemStack(Material.ELYTRA);
-                    ItemMeta meta = elytra.getItemMeta();
-                    meta.spigot().setUnbreakable(true);
-                    elytra.setItemMeta(meta);
+                    IPermissionsEntity permissionsEntity = SamaGamesAPI.get().getPermissionsManager().getPlayer(player.getUniqueId());
 
-                    player.getInventory().setChestplate(elytra);
+                    if (permissionsEntity.getGroupId() >= 3 && SamaGamesAPI.get().getSettingsManager().getSettings(player.getUniqueId()).isElytraActivated())
+                    {
+                        ItemStack elytra = new ItemStack(Material.ELYTRA);
+                        ItemMeta meta = elytra.getItemMeta();
+                        meta.spigot().setUnbreakable(true);
+                        elytra.setItemMeta(meta);
+
+                        player.getInventory().setChestplate(elytra);
+                    }
+                }
+                catch (NullPointerException ignored)
+                {
+                    player.sendMessage(ChatColor.RED + "Une erreur a été détectée lors du chargement de votre joueur, vous devrez peut-être vous reconnecter.");
                 }
 
                 this.staticInventory.setInventoryToPlayer(player);
