@@ -3,6 +3,7 @@ package net.samagames.hub.interactions.yodels;
 import net.samagames.hub.Hub;
 import net.samagames.hub.interactions.AbstractInteraction;
 import net.samagames.hub.utils.ProximityUtils;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
@@ -79,7 +80,7 @@ public class Yodel extends AbstractInteraction
     @Override
     public void play(Player player)
     {
-        if (runnerList.containsKey(player.getUniqueId()))
+        if (runnerList.containsKey(player.getUniqueId()) || player.getGameMode() == GameMode.SPECTATOR)
             return ;
 
         YodelRunner runner = new YodelRunner(this.hub, this, player, this.reverse);

@@ -4,10 +4,7 @@ import net.samagames.hub.Hub;
 import net.samagames.hub.interactions.AbstractInteraction;
 import net.samagames.hub.utils.ProximityUtils;
 import net.samagames.tools.Titles;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.craftbukkit.v1_9_R2.entity.CraftPlayer;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
@@ -61,7 +58,7 @@ class Bumper extends AbstractInteraction implements Listener
         if (this.flyingPlayers.contains(player.getUniqueId()))
             return;
 
-        if (this.hub.getPlayerManager().isBusy(player))
+        if (this.hub.getPlayerManager().isBusy(player) || player.getGameMode() == GameMode.SPECTATOR)
             return;
 
         this.flyingPlayers.add(player.getUniqueId());

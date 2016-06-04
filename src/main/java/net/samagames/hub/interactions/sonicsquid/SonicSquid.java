@@ -3,6 +3,7 @@ package net.samagames.hub.interactions.sonicsquid;
 import net.minecraft.server.v1_9_R2.WorldServer;
 import net.samagames.hub.Hub;
 import net.samagames.hub.interactions.AbstractInteraction;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_9_R2.CraftWorld;
 import org.bukkit.entity.EntityType;
@@ -76,7 +77,7 @@ class SonicSquid extends AbstractInteraction implements Listener
     @Override
     public void play(Player player)
     {
-        if (!this.squids.containsKey(player.getUniqueId()))
+        if (!this.squids.containsKey(player.getUniqueId()) && player.getGameMode() != GameMode.SPECTATOR)
         {
             WorldServer world = ((CraftWorld) player.getWorld()).getHandle();
             EntitySonicSquid sonicSquidEntity = new EntitySonicSquid(this.hub, world, player);
