@@ -293,9 +293,9 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
                                 BossBarAPI.removeBar(barPlayer);
 
                                 if (this.i <= 4)
-                                    BossBarAPI.setBar(barPlayer, randomizedColor + "♫" + ChatColor.YELLOW + " " + ChatColor.GOLD + currentPlaylist.getSong().getTitle() + ChatColor.YELLOW + " jouée par " + ChatColor.GOLD + currentPlaylist.getPlayedBy() + " " + randomizedColor + "♪", BarColor.YELLOW, BarStyle.SOLID, currentPlaylist.getFormattedSecondsRemaining());
+                                    BossBarAPI.getBar(randomizedColor + "♫" + ChatColor.YELLOW + " " + ChatColor.GOLD + currentPlaylist.getSong().getTitle() + ChatColor.YELLOW + " jouée par " + ChatColor.GOLD + currentPlaylist.getPlayedBy() + " " + randomizedColor + "♪", BarColor.YELLOW, BarStyle.SOLID, currentPlaylist.getFormattedSecondsRemaining()).getValue().addPlayer(barPlayer);
                                 else
-                                    BossBarAPI.setBar(barPlayer, randomizedColor + "♫" + ChatColor.GREEN + " " + currentPlaylist.getWoots() + " Woot" + (currentPlaylist.getWoots() > 1 ? "s" : "") + ChatColor.YELLOW + " et " + ChatColor.RED + currentPlaylist.getMehs() + " Meh" + (currentPlaylist.getMehs() > 1 ? "s" : "") + " " + randomizedColor + "♪", BarColor.YELLOW, BarStyle.SOLID, currentPlaylist.getFormattedSecondsRemaining());
+                                    BossBarAPI.getBar(randomizedColor + "♫" + ChatColor.GREEN + " " + currentPlaylist.getWoots() + " Woot" + (currentPlaylist.getWoots() > 1 ? "s" : "") + ChatColor.YELLOW + " et " + ChatColor.RED + currentPlaylist.getMehs() + " Meh" + (currentPlaylist.getMehs() > 1 ? "s" : "") + " " + randomizedColor + "♪", BarColor.YELLOW, BarStyle.SOLID, currentPlaylist.getFormattedSecondsRemaining()).getValue().addPlayer(barPlayer);
                             });
 
                             this.i++;
