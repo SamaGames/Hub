@@ -22,7 +22,7 @@ public class WelcomeTutorialNPCAction implements NPCInteractCallback
          * Chapter I
          * Location: On the wheel of the Dimensions sign
          */
-        this.tuturial.addChapter(new TutorialChapter(new Location(hub.getWorld(), -18.5D, 130.0D, -55.5D, -7.1F, 23.5F), ChatColor.GOLD + "Salut l'aventurié !", Arrays.asList(new String[] {
+        this.tuturial.addChapter(new TutorialChapter(new Location(hub.getWorld(), -18.5D, 130.0D, -55.5D, -7.1F, 23.5F), ChatColor.GOLD + "Salut l'aventurier !", Arrays.asList(new String[] {
                 "Bienvenue sur SamaGames !",
                 "Laissez-moi donc vous guider...",
         }), true));
@@ -58,7 +58,7 @@ public class WelcomeTutorialNPCAction implements NPCInteractCallback
                 "En cliquant dessus vous serez en attente.",
                 "Quand assez de joueurs seront en attente ;",
                 "votre serveur de jeu démarrera ;",
-                "et vous serez ensuité téléportés."
+                "et vous serez ensuite téléportés."
         }), true));
 
         /**
@@ -98,7 +98,7 @@ public class WelcomeTutorialNPCAction implements NPCInteractCallback
          */
         this.tuturial.addChapter(new TutorialChapter(new Location(hub.getWorld(), -11.5D, 119.0D, -1.5D, 180.0F, 90.0F), ChatColor.GOLD + "C'est tout ?", Arrays.asList(new String[] {
                 "Oh que non cher ami...",
-                "Ce hub regorge de secret perdus...",
+                "Ce hub regorge de secrets perdus...",
                 "A vous de voyager et de les trouver !",
                 "Bon jeu sur SamaGames !"
         }), true));
