@@ -22,6 +22,8 @@ public class HubRefresher implements Runnable, IPacketsReceiver
     public void run()
     {
         Jedis jedis = SamaGamesAPI.get().getBungeeResource();
+        if (jedis == null)
+            return ;
 
         try
         {

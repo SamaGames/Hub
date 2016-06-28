@@ -58,12 +58,13 @@ public abstract class AbstractGame
 
         Jedis jedis = SamaGamesAPI.get().getBungeeResource();
 
-        if (jedis.exists("hub:maintenance:" + this.getCodeName() + ":" + template))
+        if (jedis != null && jedis.exists("hub:maintenance:" + this.getCodeName() + ":" + template))
             gameSign.setMaintenance(Boolean.valueOf(jedis.get("hub:maintenance:" + this.getCodeName() + ":" + template)));
-        if (jedis.exists("hub:soon:" + this.getCodeName() + ":" + template))
+        if (jedis != null && jedis.exists("hub:soon:" + this.getCodeName() + ":" + template))
             gameSign.setSoon(Boolean.valueOf(jedis.get("hub:soon:" + this.getCodeName() + ":" + template)));
 
-        jedis.close();
+        if (jedis != null)
+            jedis.close();
 
         if (this.signs.containsKey(map))
         {
