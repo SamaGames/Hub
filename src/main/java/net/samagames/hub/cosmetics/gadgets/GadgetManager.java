@@ -4,7 +4,6 @@ import net.minecraft.server.v1_9_R2.EntityItem;
 import net.minecraft.server.v1_9_R2.NBTTagCompound;
 import net.samagames.hub.Hub;
 import net.samagames.hub.common.players.PlayerManager;
-import net.samagames.hub.cosmetics.common.AbstractCosmetic;
 import net.samagames.hub.cosmetics.common.AbstractCosmeticManager;
 import net.samagames.hub.cosmetics.gadgets.displayers.AbstractDisplayer;
 import org.bukkit.ChatColor;
@@ -21,12 +20,10 @@ import java.lang.reflect.Field;
 import java.util.*;
 import java.util.logging.Level;
 
-public class GadgetManager extends AbstractCosmeticManager
+public class GadgetManager extends AbstractCosmeticManager<GadgetCosmetic>
 {
     public static final Random RANDOM = new Random();
     public static final Field AGE_FIELD;
-
-    private static final String KEY = "gadget";
 
     private final Map<UUID, Integer> cooldowns;
     private final Map<UUID, AbstractDisplayer> playersGadgets;
@@ -43,7 +40,7 @@ public class GadgetManager extends AbstractCosmeticManager
     }
 
     @Override
-    public void enableCosmetic(Player player, AbstractCosmetic cosmetic, NullType useless)
+    public void enableCosmetic(Player player, GadgetCosmetic cosmetic, NullType useless)
     {
         player.getInventory().setItem(6, cosmetic.getIcon(player));
         player.sendMessage(PlayerManager.COSMETICS_TAG + ChatColor.GREEN + "Votre gadget a été équipé dans votre barre d'action.");
@@ -78,7 +75,7 @@ public class GadgetManager extends AbstractCosmeticManager
 
         try
         {
-            GadgetCosmetic gadget = (GadgetCosmetic) this.getRegistry().getElementByStorageId(gadgetKey);
+            GadgetCosmetic gadget = this.getRegistry().getElementByStorageId(gadgetKey);
             AbstractDisplayer displayer = gadget.getDisplayerClass().getDeclaredConstructor(Hub.class, Player.class).newInstance(this.hub, player);
 
             if (!displayer.canUse())
