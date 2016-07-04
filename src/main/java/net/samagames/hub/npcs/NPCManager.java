@@ -37,8 +37,8 @@ public class NPCManager extends AbstractManager
         if(jsonRoot == null)
             return;
 
-        CustomNPC welcomeTutorialNPC = SamaGamesAPI.get().getNPCManager().createNPC(LocationUtils.str2loc(jsonRoot.get("welcome-tutorial").getAsString()), AURELIEN_SAMA_UUID, "Aurelien_Sama");
-        welcomeTutorialNPC.setCallback(new WelcomeTutorialNPCAction(hub));
+        //CustomNPC welcomeTutorialNPC = SamaGamesAPI.get().getNPCManager().createNPC(LocationUtils.str2loc(jsonRoot.get("welcome-tutorial").getAsString()), AURELIEN_SAMA_UUID, "Aurelien_Sama");
+        //welcomeTutorialNPC.setCallback(new WelcomeTutorialNPCAction(hub));
 
         //this.npcs.add(welcomeTutorialNPC);
         //this.log(Level.INFO, "Registered 'Welcome tutorial' NPC!");
