@@ -264,8 +264,11 @@ public class Parkour
 
         for (UUID playerIn : this.playersIn.keySet())
         {
-            player.showPlayer(this.hub.getServer().getPlayer(playerIn));
-            this.hub.getServer().getPlayer(playerIn).showPlayer(player);
+            this.hub.getServer().getScheduler().runTask(this.hub, () ->
+            {
+                player.showPlayer(this.hub.getServer().getPlayer(playerIn));
+                this.hub.getServer().getPlayer(playerIn).showPlayer(player);
+            });
         }
     }
 

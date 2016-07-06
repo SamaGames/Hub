@@ -13,6 +13,7 @@ public class TaskManager extends AbstractManager
         super(hub);
 
         this.circlesTask = new CirclesTask(hub);
+        new BirthdayTask(hub);
     }
 
     @Override
