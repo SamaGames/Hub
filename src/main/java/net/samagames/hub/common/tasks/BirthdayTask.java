@@ -66,7 +66,7 @@ public class BirthdayTask extends AbstractTask
     @Override
     public void run()
     {
-        Date date = Date.from(Instant.now());
+        Date date = new Date(System.currentTimeMillis());
         this.infos.forEach(info ->
         {
             Player player = null;
