@@ -51,10 +51,10 @@ public class UHCZoneGame extends AbstractGame
                 "",
                 "\u2B29 UHC",
                 "\u2B29 UHCRun",
-                "\u2B29 SwitchRun",
                 "\u2B29 DoubleRunner",
                 "\u2B29 UHCRandom",
-                "\u2B29 RandomRun"
+                "\u2B29 RandomRun",
+                "\u2B29 UltraFlagKeeper"
         };
     }
 
@@ -103,6 +103,7 @@ public class UHCZoneGame extends AbstractGame
         players += this.hub.getGameManager().getGameByIdentifier("doublerunner").getOnlinePlayers();
         players += this.hub.getGameManager().getGameByIdentifier("uhcrandom").getOnlinePlayers();
         players += this.hub.getGameManager().getGameByIdentifier("randomrun").getOnlinePlayers();
+        players += this.hub.getGameManager().getGameByIdentifier("ultraflagkeeper").getOnlinePlayers();
 
         return players;
     }
