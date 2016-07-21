@@ -2,11 +2,15 @@ package net.samagames.hub.games.types;
 
 import net.samagames.hub.Hub;
 import net.samagames.hub.games.AbstractGame;
+import net.samagames.hub.games.leaderboards.HubLeaderboard;
 import net.samagames.hub.games.shops.ShopCategory;
 import net.samagames.tools.RulesBook;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class HeroBattleGame extends AbstractGame
 {
@@ -98,5 +102,11 @@ public class HeroBattleGame extends AbstractGame
     public boolean isNew()
     {
         return false;
+    }
+
+    @Override
+    public List<HubLeaderboard> getLeaderBoards()
+    {
+        return new ArrayList<>();
     }
 }

@@ -20,6 +20,7 @@ import net.samagames.hub.events.protection.InventoryEditionListener;
 import net.samagames.hub.events.protection.PlayerProtectionListener;
 import net.samagames.hub.events.protection.WorldEditionListener;
 import net.samagames.hub.games.GameManager;
+import net.samagames.hub.games.leaderboards.HubLeaderboard;
 import net.samagames.hub.games.signs.SignManager;
 import net.samagames.hub.gui.GuiManager;
 import net.samagames.hub.interactions.InteractionManager;
@@ -125,6 +126,7 @@ public class Hub extends JavaPlugin
         SamaGamesAPI.get().getPubSub().subscribe("soonSignChannel", new SoonListener(this));
         //SamaGamesAPI.get().getPubSub().subscribe("", new SignReloadListener(this));
 
+        this.getServer().getScheduler().runTaskTimerAsynchronously(this, () -> this.getGameManager().getGames().values().forEach(abstractGame -> abstractGame.getLeaderBoards().forEach(HubLeaderboard::refresh)), 0L, 6000L);
         SamaGamesAPI.get().getStatsManager().setStatsToLoad(GamesNames.GLOBAL, true);
     }
 
