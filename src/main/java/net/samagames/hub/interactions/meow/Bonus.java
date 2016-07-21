@@ -106,8 +106,8 @@ class Bonus
         }
         else
         {
-            lore.add(ChatColor.GRAY + "Récupérer votre bonus dès");
-            lore.add(ChatColor.GRAY + "maintenant !");
+            lore.add(ChatColor.GREEN + "Récupérer votre bonus dès");
+            lore.add(ChatColor.GREEN + "maintenant !");
         }
 
         meta.setLore(lore);
