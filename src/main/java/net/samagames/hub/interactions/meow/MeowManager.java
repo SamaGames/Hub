@@ -116,13 +116,19 @@ public class MeowManager extends AbstractInteractionManager<Meow> implements Lis
         BONUS.add(new Bonus(0, 12, ChatColor.GOLD + "Bonus mensuel : " + ChatColor.GREEN + "VIP", new String[] {
                 ChatColor.GRAY + "Afin de vous remercier pour",
                 ChatColor.GRAY + "l'achat de votre grade,",
-                ChatColor.GRAY + "acceptez ce modeste présent."
+                ChatColor.GRAY + "acceptez ce modeste présent.",
+                "",
+                ChatColor.GRAY + "Contient :",
+                ChatColor.WHITE + "- " + ChatColor.AQUA + "300 étoiles"
         }, 300, calendar.getActualMaximum(Calendar.DAY_OF_MONTH), Calendar.DAY_OF_YEAR, "network.vip"));
 
         BONUS.add(new Bonus(1, 14, ChatColor.GOLD + "Bonus mensuel : " + ChatColor.AQUA + "VIP" + ChatColor.LIGHT_PURPLE + "+", new String[] {
                 ChatColor.GRAY + "Afin de vous remercier pour",
                 ChatColor.GRAY + "l'achat de votre grade,",
-                ChatColor.GRAY + "acceptez ce modeste présent."
+                ChatColor.GRAY + "acceptez ce modeste présent.",
+                "",
+                ChatColor.GRAY + "Contient :",
+                ChatColor.WHITE + "- " + ChatColor.AQUA + "700 étoiles"
         }, 700, calendar.getActualMaximum(Calendar.DAY_OF_MONTH), Calendar.DAY_OF_YEAR, "network.vipplus"));
     }
 }

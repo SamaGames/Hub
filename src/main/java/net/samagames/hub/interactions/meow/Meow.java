@@ -130,7 +130,7 @@ class Meow extends AbstractInteraction
         else
             hologram.change(MEOW_NAME);
 
-        hologram.sendLinesForPlayers();
+        hologram.sendLines(player);
     }
 
     public void playThankYou()
