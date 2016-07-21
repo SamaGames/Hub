@@ -70,6 +70,10 @@ class Meow extends AbstractInteraction
 
         int fishes = 0;
 
+        for (Bonus bonus : MeowManager.getBonus())
+            if (bonus.isAbleFor(player.getUniqueId()))
+                fishes++;
+
         Hologram hologram;
 
         if (fishes > 0)
@@ -104,8 +108,7 @@ class Meow extends AbstractInteraction
     @Override
     public void play(Player player)
     {
-        // TODO: this.hub.getGuiManager().openGui(player, new GuiMeow(this.hub, this));
-        player.sendMessage(TAG + "Je suis en train d'emménager, je serai disponible bientôt :)");
+        this.hub.getGuiManager().openGui(player, new GuiMeow(this.hub, this));
         player.playSound(player.getLocation(), Sound.ENTITY_CAT_AMBIENT, 1.0F, 1.0F);
     }
 
@@ -116,12 +119,18 @@ class Meow extends AbstractInteraction
     {
         int fishes = 0;
 
+        for (Bonus bonus : MeowManager.getBonus())
+            if (bonus.isAbleFor(player.getUniqueId()))
+                fishes++;
+
         Hologram hologram = this.holograms.get(player.getUniqueId());
 
         if (fishes > 0)
             hologram.change(MEOW_NAME, ChatColor.GOLD + "" + fishes + ChatColor.YELLOW + " poisson" + (fishes > 1 ? "s" : "") + " disponible" + (fishes > 1 ? "s" : ""));
         else
             hologram.change(MEOW_NAME);
+
+        hologram.sendLinesForPlayers();
     }
 
     public void playThankYou()
@@ -139,7 +148,7 @@ class Meow extends AbstractInteraction
             public void run()
             {
                 Item fish = meowEntity.getBukkitEntity().getWorld().dropItem(meowEntity.getBukkitEntity().getLocation(), new ItemStack(Material.RAW_FISH, 1));
-                fish.setVelocity(new Vector(random.nextFloat() * 2 - 1, 1.5F, random.nextFloat() * 2 - 1));
+                fish.setVelocity(new Vector(random.nextFloat() * 2 - 1, 1.25F, random.nextFloat() * 2 - 1));
 
                 try
                 {
@@ -150,17 +159,17 @@ class Meow extends AbstractInteraction
                     e.printStackTrace();
                 }
 
-                meowEntity.getBukkitEntity().getWorld().playSound(meowEntity.getBukkitEntity().getLocation(), Sound.BLOCK_DISPENSER_DISPENSE, 1.0F, 2.0F);
+                meowEntity.getBukkitEntity().getWorld().playSound(meowEntity.getBukkitEntity().getLocation(), Sound.ENTITY_CHICKEN_EGG, 1.0F, 1.1F);
 
                 this.times++;
 
-                if (this.times == 20)
+                if (this.times == 40)
                 {
                     lock = false;
                     this.cancel();
                 }
             }
-        }.runTaskTimer(this.hub, 10L, 10L);
+        }.runTaskTimer(this.hub, 2L, 2L);
     }
 
     public EntityMeow getMeowEntity()

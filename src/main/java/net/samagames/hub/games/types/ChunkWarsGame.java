@@ -52,7 +52,8 @@ public class ChunkWarsGame extends AbstractGame
     public String[] getDevelopers()
     {
         return new String[] {
-                "IamBlueSlime"
+                "IamBlueSlime",
+                "6infinity8"
         };
     }
 
@@ -65,7 +66,7 @@ public class ChunkWarsGame extends AbstractGame
     @Override
     public int getSlotInMainMenu()
     {
-        return 32;
+        return 31;
     }
 
     @Override

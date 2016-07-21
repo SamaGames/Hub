@@ -73,7 +73,7 @@ public class DimensionsGame extends AbstractGame
     @Override
     public int getSlotInMainMenu()
     {
-        return 23;
+        return 21;
     }
 
     @Override

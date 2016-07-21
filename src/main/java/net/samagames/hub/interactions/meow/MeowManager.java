@@ -2,24 +2,29 @@ package net.samagames.hub.interactions.meow;
 
 import com.google.gson.JsonArray;
 import net.minecraft.server.v1_9_R2.EntityOcelot;
+import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import net.samagames.hub.interactions.AbstractInteractionManager;
 import net.samagames.tools.LocationUtils;
+import org.apache.commons.lang3.tuple.Triple;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
+import redis.clients.jedis.Jedis;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
 public class MeowManager extends AbstractInteractionManager<Meow> implements Listener
 {
+    private static final List<Bonus> BONUS;
+
     private List<UUID> lock;
 
     public MeowManager(Hub hub)
@@ -38,6 +43,13 @@ public class MeowManager extends AbstractInteractionManager<Meow> implements Lis
         super.onLogin(player);
 
         this.interactions.forEach(meow -> meow.onLogin(player));
+
+        Jedis jedis = SamaGamesAPI.get().getBungeeResource();
+
+        jedis.del("bonus:" + player.getUniqueId().toString() + ":0");
+        jedis.del("bonus:" + player.getUniqueId().toString() + ":1");
+
+        jedis.close();
     }
 
     @Override
@@ -90,5 +102,36 @@ public class MeowManager extends AbstractInteractionManager<Meow> implements Lis
             this.interactions.add(meow);
             this.log(Level.INFO, "Registered Meow at '" + rootJson.get(i).getAsString());
         }
+    }
+
+    static Bonus getBonusById(int id)
+    {
+        for (Bonus bonus : BONUS)
+            if (bonus.getId() == id)
+                return bonus;
+
+        return null;
+    }
+
+    static List<Bonus> getBonus()
+    {
+        return BONUS;
+    }
+
+    static
+    {
+        BONUS = new ArrayList<>();
+
+        BONUS.add(new Bonus(0, 12, ChatColor.GOLD + "Bonus mensuel : " + ChatColor.GREEN + "VIP", new String[] {
+                ChatColor.GRAY + "Afin de vous remercier pour",
+                ChatColor.GRAY + "l'achat de votre grade,",
+                ChatColor.GRAY + "acceptez ce modeste présent."
+        }, 300, 1, Calendar.MONTH, "network.vip"));
+
+        BONUS.add(new Bonus(1, 14, ChatColor.GOLD + "Bonus mensuel : " + ChatColor.AQUA + "VIP" + ChatColor.LIGHT_PURPLE + "+", new String[] {
+                ChatColor.GRAY + "Afin de vous remercier pour",
+                ChatColor.GRAY + "l'achat de votre grade,",
+                ChatColor.GRAY + "acceptez ce modeste présent."
+        }, 700, 1, Calendar.MONTH, "network.vipplus"));
     }
 }

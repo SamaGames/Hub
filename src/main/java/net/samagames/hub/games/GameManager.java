@@ -36,7 +36,6 @@ public class GameManager extends AbstractManager
         this.registerGame(new UppervoidGame(hub));
         this.registerGame(new QuakeGame(hub));
         this.registerGame(new DimensionsGame(hub));
-        this.registerGame(new HeroBattleGame(hub));
         this.registerGame(new ChunkWarsGame(hub));
 
         // -----
@@ -83,16 +82,13 @@ public class GameManager extends AbstractManager
                 {
                     for (List<GameSign> list : game.getSigns().values())
                     {
-                        for (GameSign sign : list)
+                        list.stream().filter(sign -> sign.getTemplate().equalsIgnoreCase(packet.getTemplateID())).forEach(sign ->
                         {
-                            if (sign.getTemplate().equalsIgnoreCase(packet.getTemplateID()))
-                            {
-                                sign.setPlayerPerGame(packet.getPlayerMaxForMap());
-                                sign.setPlayerWaitFor(packet.getPlayerWaitFor());
-                                sign.setTotalPlayerOnServers(packet.getTotalPlayerOnServers());
-                                sign.update();
-                            }
-                        }
+                            sign.setPlayerPerGame(packet.getPlayerMaxForMap());
+                            sign.setPlayerWaitFor(packet.getPlayerWaitFor());
+                            sign.setTotalPlayerOnServers(packet.getTotalPlayerOnServers());
+                            sign.update();
+                        });
                     }
                 }
             }

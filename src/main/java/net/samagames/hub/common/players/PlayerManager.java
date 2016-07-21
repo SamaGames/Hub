@@ -88,11 +88,10 @@ public class PlayerManager extends AbstractManager
                 Jedis jedis = SamaGamesAPI.get().getBungeeResource();
                 String key = "lastgame." + player.getUniqueId().toString();
 
-                if (jedis == null || jedis.exists(key))
+                if (jedis != null && jedis.exists(key))
                 {
-                    String lastGame = jedis == null ? "TESTENV" : jedis.get(key);
-                    if (jedis != null)
-                        jedis.del(key);
+                    String lastGame = jedis.get(key);
+                    jedis.del(key);
 
                     if (this.hub.getGameManager().getGameByIdentifier(lastGame) != null)
                         player.teleport(this.hub.getGameManager().getGameByIdentifier(lastGame).getLobbySpawn());
