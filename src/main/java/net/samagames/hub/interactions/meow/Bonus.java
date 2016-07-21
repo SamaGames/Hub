@@ -64,7 +64,7 @@ class Bonus
 
         meta.setDisplayName(this.name);
 
-        List<String> lore = Arrays.asList(this.description);
+        List<String> lore = new ArrayList<>(Arrays.asList(this.description));
         lore.add("");
 
         if (!able)
