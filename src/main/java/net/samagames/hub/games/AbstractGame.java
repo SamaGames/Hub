@@ -2,6 +2,7 @@ package net.samagames.hub.games;
 
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
+import net.samagames.hub.games.leaderboards.HubLeaderboard;
 import net.samagames.hub.games.shops.ShopCategory;
 import net.samagames.hub.games.signs.GameSign;
 import net.samagames.tools.RulesBook;
@@ -51,6 +52,7 @@ public abstract class AbstractGame
     public abstract boolean isGroup();
     public abstract boolean isLocked();
     public abstract boolean isNew();
+    public abstract List<HubLeaderboard> getLeaderBoards();
 
     public void addSignForMap(String map, Sign sign, String template, ChatColor color)
     {

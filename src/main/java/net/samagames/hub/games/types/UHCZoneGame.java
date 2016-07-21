@@ -1,14 +1,16 @@
 package net.samagames.hub.games.types;
 
+import net.samagames.api.games.GamesNames;
 import net.samagames.hub.Hub;
 import net.samagames.hub.games.AbstractGame;
+import net.samagames.hub.games.leaderboards.HubLeaderboard;
 import net.samagames.hub.games.shops.ShopCategory;
-import net.samagames.hub.games.signs.GameSign;
 import net.samagames.tools.RulesBook;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class UHCZoneGame extends AbstractGame
@@ -124,5 +126,25 @@ public class UHCZoneGame extends AbstractGame
     public boolean isNew()
     {
         return false;
+    }
+
+    @Override
+    public List<HubLeaderboard> getLeaderBoards()
+    {
+        List<HubLeaderboard> leaderBoards = new ArrayList<>();
+
+        List<HubLeaderboard.HubLeaderBoardStand> leaderBoardStands1 = new ArrayList<>();
+        leaderBoardStands1.add(new HubLeaderboard.HubLeaderBoardStand(new Location(this.hub.getWorld(), 36, 102, 44), new Location(this.hub.getWorld(), 37.5, 105, 44.5)));
+        leaderBoardStands1.add(new HubLeaderboard.HubLeaderBoardStand(new Location(this.hub.getWorld(), 36, 102, 43), new Location(this.hub.getWorld(), 37.5, 104, 43.5)));
+        leaderBoardStands1.add(new HubLeaderboard.HubLeaderBoardStand(new Location(this.hub.getWorld(), 36, 102, 45), new Location(this.hub.getWorld(), 37.5, 104, 45.5)));
+        leaderBoards.add(new HubLeaderboard(this.hub, GamesNames.UHCRUN, "Meurtres", "kills", new Location(this.hub.getWorld(), 36, 103, 44), leaderBoardStands1));
+
+        List<HubLeaderboard.HubLeaderBoardStand> leaderBoardStands2 = new ArrayList<>();
+        leaderBoardStands2.add(new HubLeaderboard.HubLeaderBoardStand(new Location(this.hub.getWorld(), 34, 102, 46), new Location(this.hub.getWorld(), 34.5, 105, 47.5)));
+        leaderBoardStands2.add(new HubLeaderboard.HubLeaderBoardStand(new Location(this.hub.getWorld(), 35, 102, 46), new Location(this.hub.getWorld(), 35.5, 104, 47.5)));
+        leaderBoardStands2.add(new HubLeaderboard.HubLeaderBoardStand(new Location(this.hub.getWorld(), 33, 102, 46), new Location(this.hub.getWorld(), 33.5, 104, 47.5)));
+        leaderBoards.add(new HubLeaderboard(this.hub, GamesNames.UHCRUN, "Victoires", "wins", new Location(this.hub.getWorld(), 34, 103, 46), leaderBoardStands2));
+
+        return leaderBoards;
     }
 }

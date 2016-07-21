@@ -35,7 +35,7 @@ public class BirthdayTask extends AbstractTask
         /**                                                 UUID                                MONTH  DAY     PARTICLE                    COLOR            SOUND                          SPECIAL       USERNAME     */
         this.infos.add(new BirthdayInfo(UUID.fromString("29b2b527-1b59-45df-b7b0-d5ab20d8731a"), 7,     7,   Particle.SLIME,             Color.GREEN,    Sound.ENTITY_CAT_AMBIENT,        true));      //IamBlueSlime
         this.infos.add(new BirthdayInfo(UUID.fromString("ad345a5e-5ae3-45bf-aba4-94f4102f37c0"), 3,     19,  Particle.REDSTONE,          Color.RED,      Sound.ENTITY_CHICKEN_AMBIENT,    true));      //Silvanosky
-        this.infos.add(new BirthdayInfo(UUID.fromString("c1f45796-d2f9-4622-9475-2afe58324dee"), 7,     4,   Particle.END_ROD,           Color.GRAY,     Sound.ENTITY_SILVERFISH_AMBIENT, true));      //Rigner
+        this.infos.add(new BirthdayInfo(UUID.fromString("c1f45796-d2f9-4622-9475-2afe58324dee"), 2,     17,  Particle.END_ROD,           Color.GRAY,     Sound.ENTITY_SILVERFISH_AMBIENT, true));      //Rigner
         this.infos.add(new BirthdayInfo(UUID.fromString("a0737ed1-23c8-46e9-a2ad-3a7f09b3009e"), 4,     15,  Particle.WATER_BUBBLE,      Color.BLUE));                                                 //Yannismx
         this.infos.add(new BirthdayInfo(UUID.fromString("dee5c414-a530-42e5-acd5-1b7a97268f76"), 5,     4,   Particle.DAMAGE_INDICATOR,  Color.FUCHSIA));                                              //Yumeshi
         this.infos.add(new BirthdayInfo(UUID.fromString("a32704a7-2349-4849-b541-e4f74bb1adb8"), 8,     18,  Particle.TOWN_AURA,         Color.OLIVE));                                                //Flaz_
