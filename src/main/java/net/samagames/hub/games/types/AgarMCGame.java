@@ -68,7 +68,7 @@ public class AgarMCGame extends AbstractGame
     @Override
     public int getSlotInMainMenu()
     {
-        return 30;
+        return 23;
     }
 
     @Override

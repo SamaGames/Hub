@@ -38,8 +38,8 @@ class GuiMeow extends AbstractGui
     @Override
     public void update(Player player)
     {
-        this.drawFish(player, "vip", 12);
-        this.drawFish(player, "vipplus", 14);
+        for (Bonus bonus : MeowManager.getBonus())
+            this.setSlotData(bonus.getIcon(player.getUniqueId()), bonus.getSlot(), bonus.isAbleFor(player.getUniqueId()) ? "bonus_" + bonus.getId() : "taken");
 
         this.setSlotData(getBackIcon(), this.inventory.getSize() - 5, "back");
     }
@@ -47,16 +47,16 @@ class GuiMeow extends AbstractGui
     @Override
     public void onClick(Player player, ItemStack stack, String action, ClickType clickType)
     {
-        if (action.startsWith("unlock_"))
+        if (action.startsWith("bonus_"))
         {
-            String bonusKey = action.split("_")[1];
-
-            // TODO: Unlocking
+            int bonusId = Integer.parseInt(action.split("_")[1]);
+            
+            MeowManager.getBonusById(bonusId).take(player.getUniqueId());
 
             this.parent.playThankYou();
             this.parent.update(player);
         }
-        else if (action.equals("unlocked"))
+        else if (action.equals("taken"))
         {
             player.sendMessage(Meow.TAG + ChatColor.RED + "Vous ne pouvez récupérer ce bonus pour le moment.");
         }
@@ -65,78 +65,5 @@ class GuiMeow extends AbstractGui
             this.hub.getGuiManager().closeGui(player);
             this.parent.stop(player);
         }
-    }
-
-    private void drawFish(Player player, String bonusKey, int slot)
-    {
-        Bonus bonus = null; // TODO: Persistance
-
-        if (bonus == null)
-            return;
-
-        boolean unlocked = bonus.isUnlocked(player);
-
-        ItemStack stack = new ItemStack(unlocked ? Material.RAW_FISH : Material.COOKED_FISH);
-        ItemMeta meta = stack.getItemMeta();
-        meta.setDisplayName(bonus.getDisplayName());
-
-        List<String> lore = new ArrayList<>();
-
-        if (unlocked)
-        {
-            lore.add(ChatColor.RED + "Vous ne pourrez récupérer votre");
-            lore.add(ChatColor.RED + "bonus seulement dans :");
-            lore.add("");
-
-            Timestamp lastUnlock = bonus.getLastUnlock(player);
-
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTimeInMillis(lastUnlock.getNanos());
-            calendar.add(Calendar.MONTH, 1);
-
-            long timeInMillis = calendar.getTimeInMillis() - new Date().getTime();
-
-            long days = TimeUnit.MILLISECONDS.toDays(timeInMillis);
-            timeInMillis -= TimeUnit.DAYS.toMillis(days);
-            long hours = TimeUnit.MILLISECONDS.toHours(timeInMillis);
-            timeInMillis -= TimeUnit.HOURS.toMillis(hours);
-            long minutes = TimeUnit.MILLISECONDS.toMinutes(timeInMillis);
-            timeInMillis -= TimeUnit.MINUTES.toMillis(minutes);
-            long seconds = TimeUnit.MILLISECONDS.toSeconds(timeInMillis);
-
-            String line = "";
-
-            if (days > 0)
-                line += days + " jour" + (days > 1 ? "s" : "") + " ";
-
-            if (hours > 0)
-                line += hours + " heure" + (hours > 1 ? "s" : "") + " ";
-
-            if (minutes > 0)
-                line += minutes + " minute" + (minutes > 1 ? "s" : "") + " ";
-
-            if (seconds > 0)
-                line += seconds + " seconde" + (seconds > 1 ? "s" : "");
-
-            lore.add(ChatColor.RED + line);
-        }
-        else
-        {
-            lore.add(ChatColor.GRAY + "Récupérer votre bonus dès");
-            lore.add(ChatColor.GRAY + "maintenant !");
-        }
-
-        meta.setLore(lore);
-        stack.setItemMeta(meta);
-
-        this.setSlotData(stack, slot, unlocked ? "unlocked" : "unlock_" + bonusKey);
-    }
-
-    private interface Bonus
-    {
-        void unlock(Player player);
-        Timestamp getLastUnlock(Player player);
-        boolean isUnlocked(Player player);
-        String getDisplayName();
     }
 }

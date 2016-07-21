@@ -70,6 +70,10 @@ class Meow extends AbstractInteraction
 
         int fishes = 0;
 
+        for (Bonus bonus : MeowManager.getBonus())
+            if (bonus.isAbleFor(player.getUniqueId()))
+                fishes++;
+
         Hologram hologram;
 
         if (fishes > 0)
@@ -104,8 +108,7 @@ class Meow extends AbstractInteraction
     @Override
     public void play(Player player)
     {
-        // TODO: this.hub.getGuiManager().openGui(player, new GuiMeow(this.hub, this));
-        player.sendMessage(TAG + "Je suis en train d'emménager, je serai disponible bientôt :)");
+        this.hub.getGuiManager().openGui(player, new GuiMeow(this.hub, this));
         player.playSound(player.getLocation(), Sound.ENTITY_CAT_AMBIENT, 1.0F, 1.0F);
     }
 
@@ -115,6 +118,10 @@ class Meow extends AbstractInteraction
     public void update(Player player)
     {
         int fishes = 0;
+
+        for (Bonus bonus : MeowManager.getBonus())
+            if (bonus.isAbleFor(player.getUniqueId()))
+                fishes++;
 
         Hologram hologram = this.holograms.get(player.getUniqueId());
 
