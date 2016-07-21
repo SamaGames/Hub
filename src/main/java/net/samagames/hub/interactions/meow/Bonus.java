@@ -49,7 +49,7 @@ class Bonus
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
         calendar.add(this.reloadNumber, this.reloadUnit);
-        
+
         long millis = calendar.getTime().getTime() - new Date().getTime();
         long seconds = TimeUnit.MILLISECONDS.toSeconds(millis);
 
