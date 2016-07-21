@@ -159,11 +159,11 @@ class Meow extends AbstractInteraction
                     e.printStackTrace();
                 }
 
-                meowEntity.getBukkitEntity().getWorld().playSound(meowEntity.getBukkitEntity().getLocation(), Sound.ENTITY_CHICKEN_EGG, 1.0F, 2.0F);
+                meowEntity.getBukkitEntity().getWorld().playSound(meowEntity.getBukkitEntity().getLocation(), Sound.ENTITY_CHICKEN_EGG, 1.0F, 0.5F);
 
                 this.times++;
 
-                if (this.times == 20)
+                if (this.times == 40)
                 {
                     lock = false;
                     this.cancel();

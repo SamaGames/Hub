@@ -48,14 +48,15 @@ class Bonus
 
         Calendar calendar = GregorianCalendar.getInstance();
         calendar.add(this.reloadNumber, this.reloadUnit);
-        long millis = (int) (calendar.getTimeInMillis() - new Date().getTime());
+        long millis = calendar.getTime().getTime() - new Date().getTime();
+        long seconds = TimeUnit.MILLISECONDS.toSeconds(millis);
 
         String key = "bonus:" + uuid.toString() + ":" + this.id;
 
         jedis.set(key, String.valueOf(millis));
-        jedis.expire(key, (int) (millis / 1000));
+        jedis.expire(key, (int) seconds);
 
-        Bukkit.broadcastMessage("Expire in " + ((int) (millis / 1000)) + " seconds");
+        Bukkit.broadcastMessage("Expire in " + seconds + " seconds");
 
         jedis.close();
     }
