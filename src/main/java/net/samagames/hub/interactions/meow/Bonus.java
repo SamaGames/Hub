@@ -1,7 +1,6 @@
 package net.samagames.hub.interactions.meow;
 
 import net.samagames.api.SamaGamesAPI;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -75,39 +74,8 @@ class Bonus
 
         if (!able)
         {
-            lore.add(ChatColor.RED + "Vous ne pourrez récupérer votre");
-            lore.add(ChatColor.RED + "bonus seulement dans :");
-            lore.add("");
-
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTimeInMillis(this.getUnlockTime(uuid));
-            calendar.add(Calendar.MONTH, 1);
-
-            long timeInMillis = calendar.getTimeInMillis() - new Date().getTime();
-
-            long days = TimeUnit.MILLISECONDS.toDays(timeInMillis);
-            timeInMillis -= TimeUnit.DAYS.toMillis(days);
-            long hours = TimeUnit.MILLISECONDS.toHours(timeInMillis);
-            timeInMillis -= TimeUnit.HOURS.toMillis(hours);
-            long minutes = TimeUnit.MILLISECONDS.toMinutes(timeInMillis);
-            timeInMillis -= TimeUnit.MINUTES.toMillis(minutes);
-            long seconds = TimeUnit.MILLISECONDS.toSeconds(timeInMillis);
-
-            String line = "";
-
-            if (days > 0)
-                line += days + " jour" + (days > 1 ? "s" : "") + " ";
-
-            if (hours > 0)
-                line += hours + " heure" + (hours > 1 ? "s" : "") + " ";
-
-            if (minutes > 0)
-                line += minutes + " minute" + (minutes > 1 ? "s" : "") + " ";
-
-            if (seconds > 0)
-                line += seconds + " seconde" + (seconds > 1 ? "s" : "");
-
-            lore.add(ChatColor.RED + line);
+            lore.add(ChatColor.RED + "Vous ne pouvez pas récupérer");
+            lore.add(ChatColor.RED + "votre bonus pour le moment.");
         }
         else
         {

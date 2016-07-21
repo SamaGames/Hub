@@ -110,7 +110,7 @@ public class MeowManager extends AbstractInteractionManager<Meow> implements Lis
     {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
-        
+
         BONUS = new ArrayList<>();
 
         BONUS.add(new Bonus(0, 12, ChatColor.GOLD + "Bonus mensuel : " + ChatColor.GREEN + "VIP", new String[] {
