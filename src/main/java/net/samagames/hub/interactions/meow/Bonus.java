@@ -48,7 +48,7 @@ class Bonus
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
-        calendar.add(calendar.getActualMaximum(Calendar.DAY_OF_MONTH), Calendar.DAY_OF_MONTH);
+        calendar.add(calendar.getActualMaximum(Calendar.DAY_OF_MONTH), Calendar.DAY_OF_YEAR);
 
         Bukkit.broadcastMessage("Calendar time: " + calendar.getTime().getTime());
         Bukkit.broadcastMessage("Current time: " + new Date().getTime());
