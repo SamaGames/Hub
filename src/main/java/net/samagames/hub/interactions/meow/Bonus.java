@@ -110,6 +110,8 @@ class Bonus
             lore.add(ChatColor.GRAY + "maintenant !");
         }
 
+        meta.setLore(lore);
+
         stack.setItemMeta(meta);
 
         return stack;
