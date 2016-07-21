@@ -129,6 +129,8 @@ class Meow extends AbstractInteraction
             hologram.change(MEOW_NAME, ChatColor.GOLD + "" + fishes + ChatColor.YELLOW + " poisson" + (fishes > 1 ? "s" : "") + " disponible" + (fishes > 1 ? "s" : ""));
         else
             hologram.change(MEOW_NAME);
+
+        hologram.sendLinesForPlayers();
     }
 
     public void playThankYou()
@@ -145,8 +147,8 @@ class Meow extends AbstractInteraction
             @Override
             public void run()
             {
-                Item fish = meowEntity.getBukkitEntity().getWorld().dropItem(meowEntity.getBukkitEntity().getLocation(), new ItemStack(Material.RAW_FISH, 1));
-                fish.setVelocity(new Vector(random.nextFloat() * 2 - 1, 1.5F, random.nextFloat() * 2 - 1));
+                Item fish = meowEntity.getBukkitEntity().getWorld().dropItem(meowEntity.getBukkitEntity().getLocation(), new ItemStack(Material. , 1));
+                fish.setVelocity(new Vector(random.nextFloat() * 2 - 1, 1.25F, random.nextFloat() * 2 - 1));
 
                 try
                 {
@@ -157,7 +159,7 @@ class Meow extends AbstractInteraction
                     e.printStackTrace();
                 }
 
-                meowEntity.getBukkitEntity().getWorld().playSound(meowEntity.getBukkitEntity().getLocation(), Sound.BLOCK_DISPENSER_DISPENSE, 1.0F, 2.0F);
+                meowEntity.getBukkitEntity().getWorld().playSound(meowEntity.getBukkitEntity().getLocation(), Sound.ENTITY_CHICKEN_EGG, 1.0F, 2.0F);
 
                 this.times++;
 
@@ -167,7 +169,7 @@ class Meow extends AbstractInteraction
                     this.cancel();
                 }
             }
-        }.runTaskTimer(this.hub, 10L, 10L);
+        }.runTaskTimer(this.hub, 2L, 2L);
     }
 
     public EntityMeow getMeowEntity()

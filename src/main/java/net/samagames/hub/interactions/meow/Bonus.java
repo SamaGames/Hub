@@ -1,6 +1,7 @@
 package net.samagames.hub.interactions.meow;
 
 import net.samagames.api.SamaGamesAPI;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -53,6 +54,10 @@ class Bonus
 
         jedis.set(key, String.valueOf(millis));
         jedis.expire(key, (int) (millis / 1000));
+
+        Bukkit.broadcastMessage("Expire in " + ((int) (millis / 1000)) + " seconds");
+
+        jedis.close();
     }
 
     public ItemStack getIcon(UUID uuid)
@@ -69,7 +74,6 @@ class Bonus
 
         if (!able)
         {
-
             lore.add(ChatColor.RED + "Vous ne pourrez récupérer votre");
             lore.add(ChatColor.RED + "bonus seulement dans :");
             lore.add("");
@@ -127,7 +131,11 @@ class Bonus
         if (jedis == null)
             return 0;
 
-        return Long.parseLong(jedis.get("bonus:" + uuid.toString() + ":" + this.id));
+        String value = jedis.get("bonus:" + uuid.toString() + ":" + this.id);
+
+        jedis.close();
+
+        return Long.parseLong(value);
     }
 
     public int getId()
@@ -150,6 +158,10 @@ class Bonus
         if (jedis == null)
             return true;
 
-        return !jedis.exists("bonus:" + uuid.toString() + ":" + this.id);
+        boolean value = !jedis.exists("bonus:" + uuid.toString() + ":" + this.id);
+
+        jedis.close();
+
+        return value;
     }
 }
