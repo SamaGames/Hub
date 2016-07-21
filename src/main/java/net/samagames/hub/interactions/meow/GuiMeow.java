@@ -50,11 +50,14 @@ class GuiMeow extends AbstractGui
         if (action.startsWith("bonus_"))
         {
             int bonusId = Integer.parseInt(action.split("_")[1]);
-            
+
             MeowManager.getBonusById(bonusId).take(player.getUniqueId());
 
             this.parent.playThankYou();
             this.parent.update(player);
+
+            this.hub.getScoreboardManager().update(player);
+            this.update(player);
         }
         else if (action.equals("taken"))
         {

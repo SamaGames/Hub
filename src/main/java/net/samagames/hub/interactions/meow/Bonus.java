@@ -48,23 +48,15 @@ class Bonus
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
-        calendar.add(Calendar.DAY_OF_YEAR, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
-
-        Bukkit.broadcastMessage("Calendar time: " + calendar.getTime().getTime());
-        Bukkit.broadcastMessage("Current time: " + new Date().getTime());
+        calendar.add(this.reloadUnit, this.reloadNumber);
 
         long millis = calendar.getTime().getTime() - new Date().getTime();
-
-        Bukkit.broadcastMessage("Expire millis: " + millis);
-
         long seconds = TimeUnit.MILLISECONDS.toSeconds(millis);
 
         String key = "bonus:" + uuid.toString() + ":" + this.id;
 
-        /**jedis.set(key, String.valueOf(millis));
-        jedis.expire(key, (int) seconds);**/
-
-        Bukkit.broadcastMessage("Expire seconds: " + seconds);
+        jedis.set(key, String.valueOf(millis));
+        jedis.expire(key, (int) seconds);
 
         jedis.close();
     }
