@@ -2,6 +2,7 @@ package net.samagames.hub.interactions.meow;
 
 import com.google.gson.JsonArray;
 import net.minecraft.server.v1_9_R2.EntityOcelot;
+import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import net.samagames.hub.interactions.AbstractInteractionManager;
 import net.samagames.tools.LocationUtils;
@@ -14,6 +15,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
+import redis.clients.jedis.Jedis;
 
 import java.util.*;
 import java.util.concurrent.TimeUnit;
@@ -41,6 +43,13 @@ public class MeowManager extends AbstractInteractionManager<Meow> implements Lis
         super.onLogin(player);
 
         this.interactions.forEach(meow -> meow.onLogin(player));
+
+        Jedis jedis = SamaGamesAPI.get().getBungeeResource();
+
+        jedis.del("bonus:" + player.getUniqueId().toString() + ":0");
+        jedis.del("bonus:" + player.getUniqueId().toString() + ":1");
+
+        jedis.close();
     }
 
     @Override

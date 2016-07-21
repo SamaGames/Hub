@@ -50,15 +50,21 @@ class Bonus
         calendar.setTime(new Date());
         calendar.add(this.reloadNumber, this.reloadUnit);
 
+        Bukkit.broadcastMessage("Calendar time: " + calendar.getTime().getTime());
+        Bukkit.broadcastMessage("Current time: " + new Date().getTime());
+
         long millis = calendar.getTime().getTime() - new Date().getTime();
+
+        Bukkit.broadcastMessage("Expire millis: " + millis);
+
         long seconds = TimeUnit.MILLISECONDS.toSeconds(millis);
 
         String key = "bonus:" + uuid.toString() + ":" + this.id;
 
-        jedis.set(key, String.valueOf(millis));
-        jedis.expire(key, (int) seconds);
+        /**jedis.set(key, String.valueOf(millis));
+        jedis.expire(key, (int) seconds);**/
 
-        Bukkit.broadcastMessage("Expire in " + seconds + " seconds");
+        Bukkit.broadcastMessage("Expire seconds: " + seconds);
 
         jedis.close();
     }
