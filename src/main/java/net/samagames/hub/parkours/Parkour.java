@@ -65,8 +65,8 @@ public class Parkour
         this.minimalHeight = minimalHeight;
 
 
-        spawn.getWorld().getNearbyEntities(spawn, 5.0D, 5.0D, 5.0D).stream().filter(entity -> entity.getType() == EntityType.ARMOR_STAND).forEach(Entity::remove);
-        end.getWorld().getNearbyEntities(end, 5.0D, 5.0D, 5.0D).stream().filter(entity -> entity.getType() == EntityType.ARMOR_STAND).forEach(Entity::remove);
+        spawn.getWorld().getNearbyEntities(spawn, 3.0D, 3.0D, 3.0D).stream().filter(entity -> entity.getType() == EntityType.ARMOR_STAND).forEach(Entity::remove);
+        end.getWorld().getNearbyEntities(end, 3.0D, 3.0D, 3.0D).stream().filter(entity -> entity.getType() == EntityType.ARMOR_STAND).forEach(Entity::remove);
 
         for (Location checkpoint : checkpoints)
             checkpoint.getWorld().getNearbyEntities(checkpoint, 5.0D, 5.0D, 5.0D).stream().filter(entity -> entity.getType() == EntityType.ARMOR_STAND).forEach(Entity::remove);
