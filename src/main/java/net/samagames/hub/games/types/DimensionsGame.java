@@ -1,5 +1,6 @@
 package net.samagames.hub.games.types;
 
+import net.samagames.api.games.GamesNames;
 import net.samagames.hub.Hub;
 import net.samagames.hub.games.AbstractGame;
 import net.samagames.hub.games.leaderboards.HubLeaderboard;
@@ -139,6 +140,14 @@ public class DimensionsGame extends AbstractGame
     @Override
     public List<HubLeaderboard> getLeaderBoards()
     {
-        return new ArrayList<>();
+        List<HubLeaderboard> leaderBoards = new ArrayList<>();
+
+        List<HubLeaderboard.HubLeaderBoardStand> leaderBoardStands1 = new ArrayList<>();
+        leaderBoardStands1.add(new HubLeaderboard.HubLeaderBoardStand(new Location(this.hub.getWorld(), -22, 86, -53), new Location(this.hub.getWorld(), -22.5, 88, -52.5)));
+        leaderBoardStands1.add(new HubLeaderboard.HubLeaderBoardStand(new Location(this.hub.getWorld(), -22, 86, -52), new Location(this.hub.getWorld(), -22.5, 88, -51.5)));
+        leaderBoardStands1.add(new HubLeaderboard.HubLeaderBoardStand(new Location(this.hub.getWorld(), -22, 86, -54), new Location(this.hub.getWorld(), -22.5, 88, -53.5)));
+        leaderBoards.add(new HubLeaderboard(this.hub, GamesNames.DIMENSION, "Victoires", "wins", new Location(this.hub.getWorld(), -22, 87, -53), leaderBoardStands1));
+
+        return leaderBoards;
     }
 }

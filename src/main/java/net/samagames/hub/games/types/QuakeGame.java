@@ -1,5 +1,6 @@
 package net.samagames.hub.games.types;
 
+import net.samagames.api.games.GamesNames;
 import net.samagames.hub.Hub;
 import net.samagames.hub.games.AbstractGame;
 import net.samagames.hub.games.leaderboards.HubLeaderboard;
@@ -151,6 +152,14 @@ public class QuakeGame extends AbstractGame
     @Override
     public List<HubLeaderboard> getLeaderBoards()
     {
-        return new ArrayList<>();
+        List<HubLeaderboard> leaderBoards = new ArrayList<>();
+
+        List<HubLeaderboard.HubLeaderBoardStand> leaderBoardStands1 = new ArrayList<>();
+        leaderBoardStands1.add(new HubLeaderboard.HubLeaderBoardStand(new Location(this.hub.getWorld(), 26, 100, -40), new Location(this.hub.getWorld(), 25.5, 102, -39.5)));
+        leaderBoardStands1.add(new HubLeaderboard.HubLeaderBoardStand(new Location(this.hub.getWorld(), 26, 100, -39), new Location(this.hub.getWorld(), 25.5, 102, -38.5)));
+        leaderBoardStands1.add(new HubLeaderboard.HubLeaderBoardStand(new Location(this.hub.getWorld(), 26, 100, -41), new Location(this.hub.getWorld(), 25.5, 102, -40.5)));
+        leaderBoards.add(new HubLeaderboard(this.hub, GamesNames.QUAKE, "Victoires", "wins", new Location(this.hub.getWorld(), 26, 101, -40), leaderBoardStands1));
+
+        return leaderBoards;
     }
 }
