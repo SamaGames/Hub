@@ -141,10 +141,10 @@ public class UppervoidGame extends AbstractGame
         List<HubLeaderboard> leaderBoards = new ArrayList<>();
 
         List<HubLeaderboard.HubLeaderBoardStand> leaderBoardStands1 = new ArrayList<>();
-        leaderBoardStands1.add(new HubLeaderboard.HubLeaderBoardStand(new Location(this.hub.getWorld(), -12, 82, 68), new Location(this.hub.getWorld(), -12.5, 84, 68.5)));
-        leaderBoardStands1.add(new HubLeaderboard.HubLeaderBoardStand(new Location(this.hub.getWorld(), -12, 82, 69), new Location(this.hub.getWorld(), -12.5, 84, 69.5)));
-        leaderBoardStands1.add(new HubLeaderboard.HubLeaderBoardStand(new Location(this.hub.getWorld(), -12, 82, 67), new Location(this.hub.getWorld(), -12.5, 84, 67.5)));
-        leaderBoards.add(new HubLeaderboard(this.hub, GamesNames.UPPERVOID, "Victoires", "wins", new Location(this.hub.getWorld(), -12, 83, 68), leaderBoardStands1));
+        leaderBoardStands1.add(new HubLeaderboard.HubLeaderBoardStand(new Location(this.hub.getWorld(), -17, 82, 70), new Location(this.hub.getWorld(), -16.5, 85, 71.5)));
+        leaderBoardStands1.add(new HubLeaderboard.HubLeaderBoardStand(new Location(this.hub.getWorld(), -15, 82, 70), new Location(this.hub.getWorld(), -14.5, 85, 71.5)));
+        leaderBoardStands1.add(new HubLeaderboard.HubLeaderBoardStand(new Location(this.hub.getWorld(), -17, 82, 69), new Location(this.hub.getWorld(), -17.5, 85, 69.5)));
+        leaderBoards.add(new HubLeaderboard(this.hub, GamesNames.UPPERVOID, "Victoires", "wins", new Location(this.hub.getWorld(), -17, 83, 70), leaderBoardStands1));
 
         return leaderBoards;
     }
