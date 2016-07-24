@@ -55,8 +55,7 @@ public class UHCZoneGame extends AbstractGame
                 "\u2B29 UHCRun",
                 "\u2B29 DoubleRunner",
                 "\u2B29 UHCRandom",
-                "\u2B29 RandomRun",
-                "\u2B29 UltraFlagKeeper"
+                "\u2B29 RandomRun"
         };
     }
 
