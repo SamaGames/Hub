@@ -86,7 +86,7 @@ public class PlayerManager extends AbstractManager
                 InventoryUtils.cleanPlayer(player);
 
                 Jedis jedis = SamaGamesAPI.get().getBungeeResource();
-                String key = "lastgame." + player.getUniqueId().toString();
+                String key = "lastgame:" + player.getUniqueId().toString();
 
                 if (jedis != null && jedis.exists(key))
                 {
