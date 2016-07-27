@@ -122,7 +122,7 @@ public class Parkour
         playerCheckpoints.add(checkpointFormatted);
 
         this.playersCheckpoints.put(player.getUniqueId(), playerCheckpoints);
-        this.tries.put(player.getUniqueId(), this.tries.get(player.getUniqueId()) + 3);
+        this.tries.put(player.getUniqueId(), this.tries.get(player.getUniqueId()) + 5);
 
         player.sendMessage(TAG + ChatColor.WHITE + "Checkpoint !");
     }
