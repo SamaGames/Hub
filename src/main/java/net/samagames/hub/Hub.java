@@ -126,7 +126,15 @@ public class Hub extends JavaPlugin
         SamaGamesAPI.get().getPubSub().subscribe("soonSignChannel", new SoonListener(this));
         //SamaGamesAPI.get().getPubSub().subscribe("", new SignReloadListener(this));
 
-        this.getServer().getScheduler().runTaskTimerAsynchronously(this, () -> this.getGameManager().getGames().values().forEach(abstractGame -> abstractGame.getLeaderBoards().forEach(HubLeaderboard::refresh)), 0L, 6000L);
+        this.getServer().getScheduler().runTaskTimerAsynchronously(this, () ->
+                this.getGameManager().getGames().values().stream()
+                        .filter(abstractGame -> abstractGame.getLeaderBoards() != null)
+                        .forEach(abstractGame -> abstractGame.getLeaderBoards()
+                                .forEach(HubLeaderboard::refresh)
+                        )
+                , 0L, 6000L
+        );
+
         SamaGamesAPI.get().getStatsManager().setStatsToLoad(GamesNames.GLOBAL, true);
     }
 
