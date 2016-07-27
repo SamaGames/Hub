@@ -9,6 +9,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import java.util.*;
@@ -32,6 +34,7 @@ public class ChatManager extends AbstractManager
         this.chatLocked = false;
     }
 
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onAsyncPlayerChat(AsyncPlayerChatEvent event)
     {
         if (this.chatLocked)
