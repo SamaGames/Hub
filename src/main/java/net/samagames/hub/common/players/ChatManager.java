@@ -86,7 +86,7 @@ public class ChatManager extends AbstractManager
         receivers.addAll(event.getRecipients());
         receivers.stream().filter(this::hasChatDisabled).forEach(player -> event.getRecipients().remove(player));
 
-        this.hub.getServer().getOnlinePlayers().stream().filter(player -> StringUtils.containsIgnoreCase(event.getMessage(), player.getName())).forEach(player ->
+        this.hub.getServer().getOnlinePlayers().stream().filter(player -> StringUtils.containsIgnoreCase(event.getMessage(), player.getName())).filter(player -> !this.hasChatDisabled(player)).forEach(player ->
         {
             event.getRecipients().remove(player);
 
