@@ -146,7 +146,7 @@ public class PlayerListener implements Listener
         if (!(event.getEntity() instanceof Player))
             return;
 
-        if (event.isGliding())
+        if (event.isGliding() && !this.hub.getPlayerManager().isBusy((Player) event.getEntity()))
         {
             ItemStack stack = new ItemStack(Material.FEATHER);
             ItemMeta meta = stack.getItemMeta();
@@ -156,7 +156,9 @@ public class PlayerListener implements Listener
             ((Player) event.getEntity()).getInventory().setItem(3, stack);
         }
         else
+        {
             ((Player) event.getEntity()).getInventory().setItem(3, new ItemStack(Material.AIR));
+        }
     }
 
     @EventHandler
