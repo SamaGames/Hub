@@ -60,7 +60,7 @@ public class MoutMout2000Displayer extends AbstractDisplayer
                     Color c2 = ColorUtils.getColor(r2i);
 
                     sheep.setColor(DyeColor.values()[GadgetManager.RANDOM.nextInt(DyeColor.values().length)]);
-                    craftbukkitSheep.a(((CraftPlayer) player).getHandle());
+                    craftbukkitSheep.lastDamager = ((CraftPlayer) player).getHandle();
 
                     FireworkEffect effect = FireworkEffect.builder().flicker(GadgetManager.RANDOM.nextBoolean()).withColor(c1).withFade(c2).with(FireworkEffect.Type.BURST).trail(GadgetManager.RANDOM.nextBoolean()).build();
                     FireworkUtils.launchfw(hub, sheep.getLocation(), effect);
@@ -122,8 +122,8 @@ public class MoutMout2000Displayer extends AbstractDisplayer
                 cField.set(this.targetSelector, Sets.newLinkedHashSet());
 
                 ((Navigation) getNavigation()).a(true);
-                this.goalSelector.a(0, new PathfinderGoalPanic(this, 3.0D));
-                this.goalSelector.a(1, new PathfinderGoalFloat(this));
+                this.goalSelector.a(0, new PathfinderGoalFloat(this));
+                this.goalSelector.a(1, new PathfinderGoalPanic(this, 3.0D));
             }
             catch (ReflectiveOperationException ignored) {}
         }
