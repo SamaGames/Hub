@@ -1,5 +1,8 @@
 package net.samagames.hub.gui.profile;
 
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.ComponentBuilder;
+import net.md_5.bungee.api.chat.TextComponent;
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.api.player.AbstractPlayerData;
 import net.samagames.hub.Hub;
@@ -44,7 +47,16 @@ public class GuiProfile extends AbstractGui
         switch (action)
         {
             case "stats":
-                player.sendMessage(ChatColor.RED + "Prochainement...");
+                TextComponent clickComponent = new TextComponent("Cliquez ici");
+                clickComponent.setColor(net.md_5.bungee.api.ChatColor.GOLD);
+                clickComponent.setBold(true);
+                clickComponent.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://www.samagames.net/stats/" + player.getName() + ".html"));
+
+                TextComponent sentenceComponent = new TextComponent(" pour accéder à vos statistiques.");
+                sentenceComponent.setColor(net.md_5.bungee.api.ChatColor.YELLOW);
+
+                clickComponent.addExtra(sentenceComponent);
+                player.spigot().sendMessage(clickComponent);
                 break;
 
             case "achievements":
