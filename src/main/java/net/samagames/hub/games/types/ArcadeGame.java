@@ -9,7 +9,6 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ArcadeGame extends AbstractGame
@@ -185,6 +184,18 @@ public class ArcadeGame extends AbstractGame
     }
 
     @Override
+    public List<HubLeaderboard> getLeaderBoards()
+    {
+        return null;
+    }
+
+    @Override
+    public boolean hasResourcesPack()
+    {
+        return false;
+    }
+
+    @Override
     public boolean isGroup()
     {
         return true;
@@ -200,11 +211,5 @@ public class ArcadeGame extends AbstractGame
     public boolean isNew()
     {
         return true;
-    }
-
-    @Override
-    public List<HubLeaderboard> getLeaderBoards()
-    {
-        return new ArrayList<>();
     }
 }

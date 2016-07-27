@@ -118,6 +118,26 @@ public class UppervoidGame extends AbstractGame
     }
 
     @Override
+    public List<HubLeaderboard> getLeaderBoards()
+    {
+        List<HubLeaderboard> leaderBoards = new ArrayList<>();
+
+        List<HubLeaderboard.HubLeaderBoardStand> leaderBoardStands1 = new ArrayList<>();
+        leaderBoardStands1.add(new HubLeaderboard.HubLeaderBoardStand(new Location(this.hub.getWorld(), -17, 82, 70), new Location(this.hub.getWorld(), -16.5, 85, 71.5)));
+        leaderBoardStands1.add(new HubLeaderboard.HubLeaderBoardStand(new Location(this.hub.getWorld(), -15, 82, 70), new Location(this.hub.getWorld(), -14.5, 85, 71.5)));
+        leaderBoardStands1.add(new HubLeaderboard.HubLeaderBoardStand(new Location(this.hub.getWorld(), -17, 82, 69), new Location(this.hub.getWorld(), -17.5, 85, 69.5)));
+        leaderBoards.add(new HubLeaderboard(this.hub, GamesNames.UPPERVOID, "Victoires", "wins", new Location(this.hub.getWorld(), -17, 83, 70), leaderBoardStands1));
+
+        return leaderBoards;
+    }
+
+    @Override
+    public boolean hasResourcesPack()
+    {
+        return false;
+    }
+
+    @Override
     public boolean isGroup()
     {
         return false;
@@ -133,19 +153,5 @@ public class UppervoidGame extends AbstractGame
     public boolean isNew()
     {
         return false;
-    }
-
-    @Override
-    public List<HubLeaderboard> getLeaderBoards()
-    {
-        List<HubLeaderboard> leaderBoards = new ArrayList<>();
-
-        List<HubLeaderboard.HubLeaderBoardStand> leaderBoardStands1 = new ArrayList<>();
-        leaderBoardStands1.add(new HubLeaderboard.HubLeaderBoardStand(new Location(this.hub.getWorld(), -17, 82, 70), new Location(this.hub.getWorld(), -16.5, 85, 71.5)));
-        leaderBoardStands1.add(new HubLeaderboard.HubLeaderBoardStand(new Location(this.hub.getWorld(), -15, 82, 70), new Location(this.hub.getWorld(), -14.5, 85, 71.5)));
-        leaderBoardStands1.add(new HubLeaderboard.HubLeaderBoardStand(new Location(this.hub.getWorld(), -17, 82, 69), new Location(this.hub.getWorld(), -17.5, 85, 69.5)));
-        leaderBoards.add(new HubLeaderboard(this.hub, GamesNames.UPPERVOID, "Victoires", "wins", new Location(this.hub.getWorld(), -17, 83, 70), leaderBoardStands1));
-
-        return leaderBoards;
     }
 }

@@ -9,7 +9,6 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class AgarMCGame extends AbstractGame
@@ -88,6 +87,18 @@ public class AgarMCGame extends AbstractGame
     }
 
     @Override
+    public List<HubLeaderboard> getLeaderBoards()
+    {
+        return null;
+    }
+
+    @Override
+    public boolean hasResourcesPack()
+    {
+        return true;
+    }
+
+    @Override
     public boolean isGroup()
     {
         return false;
@@ -103,11 +114,5 @@ public class AgarMCGame extends AbstractGame
     public boolean isNew()
     {
         return false;
-    }
-
-    @Override
-    public List<HubLeaderboard> getLeaderBoards()
-    {
-        return new ArrayList<>();
     }
 }

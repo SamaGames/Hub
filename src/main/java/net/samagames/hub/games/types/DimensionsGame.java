@@ -104,6 +104,7 @@ public class DimensionsGame extends AbstractGame
             shopCategory.addContent(healAtKill);
             shopCategory.addContent(healAtStrike);
             shopCategory.addContent(strengthAtKill);
+
             return shopCategory;
         }
         catch (Exception ex)
@@ -117,24 +118,6 @@ public class DimensionsGame extends AbstractGame
     public Location getLobbySpawn()
     {
         return new Location(this.hub.getWorld(), -13D, 87.0D, -51D, 180.0F, 0.0F);
-    }
-
-    @Override
-    public boolean isGroup()
-    {
-        return false;
-    }
-
-    @Override
-    public boolean isLocked()
-    {
-        return false;
-    }
-
-    @Override
-    public boolean isNew()
-    {
-        return false;
     }
 
     @Override
@@ -155,5 +138,29 @@ public class DimensionsGame extends AbstractGame
         leaderBoards.add(new HubLeaderboard(this.hub, GamesNames.DIMENSION, "Meurtres", "kills", new Location(this.hub.getWorld(), -26, 87, -53), leaderBoardStands2));
 
         return leaderBoards;
+    }
+
+    @Override
+    public boolean hasResourcesPack()
+    {
+        return false;
+    }
+
+    @Override
+    public boolean isGroup()
+    {
+        return false;
+    }
+
+    @Override
+    public boolean isLocked()
+    {
+        return false;
+    }
+
+    @Override
+    public boolean isNew()
+    {
+        return false;
     }
 }

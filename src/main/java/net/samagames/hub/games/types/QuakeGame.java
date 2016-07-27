@@ -132,24 +132,6 @@ public class QuakeGame extends AbstractGame
     }
 
     @Override
-    public boolean isGroup()
-    {
-        return false;
-    }
-
-    @Override
-    public boolean isLocked()
-    {
-        return false;
-    }
-
-    @Override
-    public boolean isNew()
-    {
-        return false;
-    }
-
-    @Override
     public List<HubLeaderboard> getLeaderBoards()
     {
         List<HubLeaderboard> leaderBoards = new ArrayList<>();
@@ -167,5 +149,29 @@ public class QuakeGame extends AbstractGame
         leaderBoards.add(new HubLeaderboard(this.hub, GamesNames.QUAKE, "Meurtres", "kills", new Location(this.hub.getWorld(), 37, 103, -16), leaderBoardStands2));
 
         return leaderBoards;
+    }
+
+    @Override
+    public boolean hasResourcesPack()
+    {
+        return false;
+    }
+
+    @Override
+    public boolean isGroup()
+    {
+        return false;
+    }
+
+    @Override
+    public boolean isLocked()
+    {
+        return false;
+    }
+
+    @Override
+    public boolean isNew()
+    {
+        return false;
     }
 }

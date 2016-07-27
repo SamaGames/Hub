@@ -166,7 +166,8 @@ public class GameSign
             return;
         }
 
-        this.hub.getServer().getScheduler().runTaskAsynchronously(this.hub, () -> {
+        this.hub.getServer().getScheduler().runTaskAsynchronously(this.hub, () ->
+        {
             IParty party = SamaGamesAPI.get().getPartiesManager().getPartyForPlayer(player.getUniqueId());
 
             if(party == null)

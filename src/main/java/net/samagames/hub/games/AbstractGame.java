@@ -49,10 +49,11 @@ public abstract class AbstractGame
     public abstract int getSlotInMainMenu();
     public abstract ShopCategory getShopConfiguration();
     public abstract Location getLobbySpawn();
+    public abstract List<HubLeaderboard> getLeaderBoards();
+    public abstract boolean hasResourcesPack();
     public abstract boolean isGroup();
     public abstract boolean isLocked();
     public abstract boolean isNew();
-    public abstract List<HubLeaderboard> getLeaderBoards();
 
     public void addSignForMap(String map, Sign sign, String template, ChatColor color)
     {

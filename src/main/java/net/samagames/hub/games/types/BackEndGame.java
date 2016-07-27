@@ -8,7 +8,6 @@ import net.samagames.tools.RulesBook;
 import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class BackEndGame extends AbstractGame
@@ -16,14 +15,16 @@ public class BackEndGame extends AbstractGame
     private final String codeName;
     private final String publicName;
     private final Location spawn;
+    private final boolean hasResourcesPack;
 
-    public BackEndGame(Hub hub, String codeName, String publicName, Location spawn)
+    public BackEndGame(Hub hub, String codeName, String publicName, Location spawn, boolean hasResourcesPack)
     {
         super(hub);
 
         this.codeName = codeName;
         this.publicName = publicName;
         this.spawn = spawn;
+        this.hasResourcesPack = hasResourcesPack;
     }
 
     @Override
@@ -87,6 +88,18 @@ public class BackEndGame extends AbstractGame
     }
 
     @Override
+    public List<HubLeaderboard> getLeaderBoards()
+    {
+        return null;
+    }
+
+    @Override
+    public boolean hasResourcesPack()
+    {
+        return this.hasResourcesPack;
+    }
+
+    @Override
     public boolean isGroup()
     {
         return false;
@@ -102,11 +115,5 @@ public class BackEndGame extends AbstractGame
     public boolean isNew()
     {
         return false;
-    }
-
-    @Override
-    public List<HubLeaderboard> getLeaderBoards()
-    {
-        return new ArrayList<>();
     }
 }

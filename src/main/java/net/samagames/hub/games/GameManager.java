@@ -31,7 +31,7 @@ public class GameManager extends AbstractManager
         this.games = new HashMap<>();
         this.playerHided = new CopyOnWriteArrayList<>();
 
-        this.registerGame(new BackEndGame(hub, "beta_vip", "VIP", LocationUtils.str2loc(hub.getConfig().getString("vip-zone"))));
+        this.registerGame(new BackEndGame(hub, "beta_vip", "VIP", LocationUtils.str2loc(hub.getConfig().getString("vip-zone")), false));
 
         this.registerGame(new UppervoidGame(hub));
         this.registerGame(new QuakeGame(hub));
@@ -43,35 +43,35 @@ public class GameManager extends AbstractManager
         UHCZoneGame uhcZoneGame = new UHCZoneGame(hub);
 
         this.registerGame(uhcZoneGame);
-        this.registerGame(new BackEndGame(hub, "uhc", "UHC", uhcZoneGame.getLobbySpawn()));
-        this.registerGame(new BackEndGame(hub, "uhcrun", "UHCRun", uhcZoneGame.getLobbySpawn()));
-        this.registerGame(new BackEndGame(hub, "switchrun", "SwitchRun", uhcZoneGame.getLobbySpawn()));
-        this.registerGame(new BackEndGame(hub, "doublerunner", "DoubleRunner", uhcZoneGame.getLobbySpawn()));
-        this.registerGame(new BackEndGame(hub, "uhcrandom", "UHCRandom", uhcZoneGame.getLobbySpawn()));
-        this.registerGame(new BackEndGame(hub, "randomrun", "RandomRun", uhcZoneGame.getLobbySpawn()));
-        this.registerGame(new BackEndGame(hub, "ultraflagkeeper", "UltraFlagKeeper", uhcZoneGame.getLobbySpawn()));
+        this.registerGame(new BackEndGame(hub, "uhc", "UHC", uhcZoneGame.getLobbySpawn(), false));
+        this.registerGame(new BackEndGame(hub, "uhcrun", "UHCRun", uhcZoneGame.getLobbySpawn(), false));
+        this.registerGame(new BackEndGame(hub, "switchrun", "SwitchRun", uhcZoneGame.getLobbySpawn(), false));
+        this.registerGame(new BackEndGame(hub, "doublerunner", "DoubleRunner", uhcZoneGame.getLobbySpawn(), false));
+        this.registerGame(new BackEndGame(hub, "uhcrandom", "UHCRandom", uhcZoneGame.getLobbySpawn(), false));
+        this.registerGame(new BackEndGame(hub, "randomrun", "RandomRun", uhcZoneGame.getLobbySpawn(), false));
+        this.registerGame(new BackEndGame(hub, "ultraflagkeeper", "UltraFlagKeeper", uhcZoneGame.getLobbySpawn(), false));
 
         // -----
 
         ArcadeGame arcadeGame = new ArcadeGame(hub);
 
         this.registerGame(arcadeGame);
-        this.registerGame(new BackEndGame(hub, "craftmything", "CraftMyThing", arcadeGame.getLobbySpawn()));
-        this.registerGame(new BackEndGame(hub, "witherparty", "WitherParty", arcadeGame.getLobbySpawn()));
-        this.registerGame(new BackEndGame(hub, "hangovergames", "HangoverGames", arcadeGame.getLobbySpawn()));
-        this.registerGame(new BackEndGame(hub, "pacman", "PacMan", arcadeGame.getLobbySpawn()));
-        this.registerGame(new BackEndGame(hub, "burnthatchicken", "BurnThatChicken", arcadeGame.getLobbySpawn()));
-        this.registerGame(new BackEndGame(hub, "timberman", "Timberman", arcadeGame.getLobbySpawn()));
-        this.registerGame(new BackEndGame(hub, "bomberman", "Bomberman", arcadeGame.getLobbySpawn()));
-        this.registerGame(new BackEndGame(hub, "flyring", "FlyRing", arcadeGame.getLobbySpawn()));
-        this.registerGame(new BackEndGame(hub, "partygames", "PartyGames", arcadeGame.getLobbySpawn()));
-        this.registerGame(new BackEndGame(hub, "casino", "Casino", arcadeGame.getLobbySpawn()));
-        this.registerGame(new BackEndGame(hub, "samabox", "SamaBox", arcadeGame.getLobbySpawn()));
+        this.registerGame(new BackEndGame(hub, "craftmything", "CraftMyThing", arcadeGame.getLobbySpawn(), false));
+        this.registerGame(new BackEndGame(hub, "witherparty", "WitherParty", arcadeGame.getLobbySpawn(), false));
+        this.registerGame(new BackEndGame(hub, "hangovergames", "HangoverGames", arcadeGame.getLobbySpawn(), false));
+        this.registerGame(new BackEndGame(hub, "pacman", "PacMan", arcadeGame.getLobbySpawn(), false));
+        this.registerGame(new BackEndGame(hub, "burnthatchicken", "BurnThatChicken", arcadeGame.getLobbySpawn(), false));
+        this.registerGame(new BackEndGame(hub, "timberman", "Timberman", arcadeGame.getLobbySpawn(), false));
+        this.registerGame(new BackEndGame(hub, "bomberman", "Bomberman", arcadeGame.getLobbySpawn(), true));
+        this.registerGame(new BackEndGame(hub, "flyring", "FlyRing", arcadeGame.getLobbySpawn(), false));
+        this.registerGame(new BackEndGame(hub, "partygames", "PartyGames", arcadeGame.getLobbySpawn(), false));
+        this.registerGame(new BackEndGame(hub, "casino", "Casino", arcadeGame.getLobbySpawn(), false));
+        this.registerGame(new BackEndGame(hub, "samabox", "SamaBox", arcadeGame.getLobbySpawn(), false));
         this.registerGame(new AgarMCGame(hub));
 
         // -----
 
-        this.registerGame(new BackEndGame(hub, "event", "Événement", this.hub.getPlayerManager().getSpawn()));
+        this.registerGame(new BackEndGame(hub, "event", "Événement", this.hub.getPlayerManager().getSpawn(), false));
 
         hub.getHydroangeasManager().getPacketReceiver().registerCallBack(new PacketCallBack<GameInfoToHubPacket>(GameInfoToHubPacket.class)
         {
@@ -118,6 +118,13 @@ public class GameManager extends AbstractManager
                             player.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
                             player.sendMessage(ChatColor.GREEN + "Ajouté à la file d'attente de " + ChatColor.GOLD + packet.getGame() +  ChatColor.GREEN + " sur la map " + ChatColor.GOLD + packet.getMap() + ChatColor.GREEN + " !");
                             player.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
+
+                            if (getGameByIdentifier(packet.getGame()).hasResourcesPack())
+                            {
+                                player.sendMessage(ChatColor.AQUA + "Ce jeu fait l'usage d'un pack de ressources. Vérifiez vos paramètres afin qu'ils soient correctement activés.");
+                                player.sendMessage(ChatColor.AQUA + "Si vous n'utilisez pas le pack de ressources avant le début de la partie, vous serez renvoyé au Hub.");
+                                player.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
+                            }
                         }
                         else if(packet.getType().equals(QueueInfosUpdatePacket.Type.REMOVE))
                         {

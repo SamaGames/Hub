@@ -110,24 +110,6 @@ public class UHCZoneGame extends AbstractGame
     }
 
     @Override
-    public boolean isGroup()
-    {
-        return true;
-    }
-
-    @Override
-    public boolean isLocked()
-    {
-        return false;
-    }
-
-    @Override
-    public boolean isNew()
-    {
-        return false;
-    }
-
-    @Override
     public List<HubLeaderboard> getLeaderBoards()
     {
         List<HubLeaderboard> leaderBoards = new ArrayList<>();
@@ -145,5 +127,29 @@ public class UHCZoneGame extends AbstractGame
         leaderBoards.add(new HubLeaderboard(this.hub, GamesNames.UHCRUN, "Victoires", "wins", new Location(this.hub.getWorld(), 34, 103, 46), leaderBoardStands2));
 
         return leaderBoards;
+    }
+
+    @Override
+    public boolean hasResourcesPack()
+    {
+        return false;
+    }
+
+    @Override
+    public boolean isGroup()
+    {
+        return true;
+    }
+
+    @Override
+    public boolean isLocked()
+    {
+        return false;
+    }
+
+    @Override
+    public boolean isNew()
+    {
+        return false;
     }
 }
