@@ -1,13 +1,11 @@
 package net.samagames.hub.gui.profile;
 
-import net.md_5.bungee.api.chat.ClickEvent;
-import net.md_5.bungee.api.chat.ComponentBuilder;
-import net.md_5.bungee.api.chat.TextComponent;
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.api.player.AbstractPlayerData;
 import net.samagames.hub.Hub;
 import net.samagames.hub.gui.AbstractGui;
 import net.samagames.tools.PlayerUtils;
+import net.samagames.tools.chat.fanciful.FancyMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.SkullType;
@@ -47,16 +45,7 @@ public class GuiProfile extends AbstractGui
         switch (action)
         {
             case "stats":
-                TextComponent clickComponent = new TextComponent("Cliquez ici");
-                clickComponent.setColor(net.md_5.bungee.api.ChatColor.GOLD);
-                clickComponent.setBold(true);
-                clickComponent.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://www.samagames.net/stats/" + player.getName() + ".html"));
-
-                TextComponent sentenceComponent = new TextComponent(" pour accéder à vos statistiques.");
-                sentenceComponent.setColor(net.md_5.bungee.api.ChatColor.YELLOW);
-
-                clickComponent.addExtra(sentenceComponent);
-                player.spigot().sendMessage(clickComponent);
+                new FancyMessage(ChatColor.YELLOW + "Cliquez sur ").then("[Accéder]").color(ChatColor.GOLD).style(ChatColor.BOLD).link("https://www.samagames.net/stats/" + player.getName() + ".html").then(" pour accéder à vos statistiques.").color(ChatColor.YELLOW).send(player);
                 break;
 
             case "achievements":
