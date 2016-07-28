@@ -5,10 +5,7 @@ import net.samagames.api.settings.IPlayerSettings;
 import net.samagames.hub.Hub;
 import net.samagames.hub.common.players.PlayerManager;
 import net.samagames.hub.gui.AbstractGui;
-import org.bukkit.ChatColor;
-import org.bukkit.DyeColor;
-import org.bukkit.Material;
-import org.bukkit.SkullType;
+import org.bukkit.*;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
@@ -74,6 +71,7 @@ class GuiSettings extends AbstractGui
                 {
                     boolean value = !this.get(setting);
                     setting.setPlayerVisible(value);
+                    updateSettings(setting);
 
                     if (value)
                         GuiSettings.this.hub.getPlayerManager().removeHider(player);
@@ -98,6 +96,7 @@ class GuiSettings extends AbstractGui
                 {
                     boolean value = !this.get(setting);
                     setting.setChatVisible(value);
+                    updateSettings(setting);
 
                     if (value)
                         GuiSettings.this.hub.getChatManager().enableChatFor(player);
@@ -123,6 +122,7 @@ class GuiSettings extends AbstractGui
                 public void invert(IPlayerSettings setting)
                 {
                     setting.setPrivateMessageReceive(!this.get(setting));
+                    updateSettings(setting);
                 }
             });
 
@@ -146,6 +146,7 @@ class GuiSettings extends AbstractGui
                 public void invert(IPlayerSettings setting)
                 {
                     setting.setNotificationReceive(!this.get(setting));
+                    updateSettings(setting);
                 }
             });
 
@@ -164,6 +165,7 @@ class GuiSettings extends AbstractGui
                 public void invert(IPlayerSettings setting)
                 {
                     setting.setFriendshipDemandReceive(!this.get(setting));
+                    updateSettings(setting);
                 }
             });
 
@@ -184,6 +186,7 @@ class GuiSettings extends AbstractGui
                 public void invert(IPlayerSettings setting)
                 {
                     setting.setGroupDemandReceive(!this.get(setting));
+                    updateSettings(setting);
                 }
             });
 
@@ -204,6 +207,7 @@ class GuiSettings extends AbstractGui
                 {
                     boolean value = !this.get(setting);
                     setting.setJukeboxListen(value);
+                    updateSettings(setting);
                     GuiSettings.this.hub.getCosmeticManager().getJukeboxManager().mute(player, !value);
                 }
             });
@@ -228,6 +232,7 @@ class GuiSettings extends AbstractGui
                 public void invert(IPlayerSettings setting)
                 {
                     setting.setNotificationReceive(!this.get(setting));
+                    updateSettings(setting);
                 }
             });
 
@@ -247,6 +252,7 @@ class GuiSettings extends AbstractGui
                 public void invert(IPlayerSettings setting)
                 {
                     setting.setWaitingLineNotification(!this.get(setting));
+                    updateSettings(setting);
                 }
             });
 
@@ -267,6 +273,7 @@ class GuiSettings extends AbstractGui
                 public void invert(IPlayerSettings setting)
                 {
                     setting.setElytraActivated(!this.get(setting));
+                    updateSettings(setting);
                     GuiSettings.this.hub.getPlayerManager().getStaticInventory().setInventoryToPlayer(player);
                 }
             });
@@ -289,6 +296,7 @@ class GuiSettings extends AbstractGui
                 public void invert(IPlayerSettings setting)
                 {
                     setting.setClickOnMeActivation(!this.get(setting));
+                    updateSettings(setting);
                 }
             });
         }
@@ -300,6 +308,11 @@ class GuiSettings extends AbstractGui
             this.setSlotData(ChatColor.YELLOW + "Page " + (this.page + 1) + " »", Material.PAPER, this.inventory.getSize() - 1, null, "page_next");
 
         this.setSlotData(getBackIcon(), 40, "back");
+    }
+
+    private void updateSettings(IPlayerSettings setting)
+    {
+        Bukkit.getScheduler().runTaskAsynchronously(hub, setting::update);
     }
 
     @Override
