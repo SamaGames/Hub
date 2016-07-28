@@ -3,10 +3,8 @@ package net.samagames.hub.gui.profile;
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.api.settings.IPlayerSettings;
 import net.samagames.hub.Hub;
-import net.samagames.hub.common.players.PlayerManager;
 import net.samagames.hub.gui.AbstractGui;
 import org.bukkit.*;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemFlag;
@@ -312,7 +310,7 @@ class GuiSettings extends AbstractGui
 
     private void updateSettings(IPlayerSettings setting)
     {
-        Bukkit.getScheduler().runTaskAsynchronously(hub, setting::update);
+        this.hub.getServer().getScheduler().runTaskAsynchronously(hub, setting::update);
     }
 
     @Override
