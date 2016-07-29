@@ -4,6 +4,7 @@ import net.samagames.api.SamaGamesAPI;
 import net.samagames.api.permissions.IPermissionsEntity;
 import net.samagames.hub.Hub;
 import net.samagames.hub.common.managers.AbstractManager;
+import net.samagames.tools.Area;
 import net.samagames.tools.InventoryUtils;
 import net.samagames.tools.LocationUtils;
 import net.samagames.tools.PlayerUtils;
@@ -30,6 +31,8 @@ public class PlayerManager extends AbstractManager
     public static final String SHOPPING_TAG = ChatColor.DARK_AQUA + "[" + ChatColor.AQUA + "Boutique" + ChatColor.DARK_AQUA + "] " + ChatColor.RESET;
     public static final String COSMETICS_TAG = ChatColor.DARK_AQUA + "[" + ChatColor.AQUA + "Cosmétique" + ChatColor.DARK_AQUA + "] " + ChatColor.RESET;
     public static final String RULES_TAG = ChatColor.DARK_AQUA + "[" + ChatColor.AQUA + "Règles" + ChatColor.DARK_AQUA + "] " + ChatColor.RESET;
+
+    public static final Area VIP_ZONE = new Area(new Location(null, 98.0D, 255.0D, 412.0D), new Location(null, -68.0D, 0.0D, 546.0D));
 
     public static final float WALK_SPEED = 0.20F;
     public static final float FLY_SPEED = 0.15F;

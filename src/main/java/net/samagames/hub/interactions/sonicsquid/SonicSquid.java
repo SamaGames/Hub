@@ -2,6 +2,7 @@ package net.samagames.hub.interactions.sonicsquid;
 
 import net.minecraft.server.v1_9_R2.WorldServer;
 import net.samagames.hub.Hub;
+import net.samagames.hub.common.players.PlayerManager;
 import net.samagames.hub.interactions.AbstractInteraction;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -57,6 +58,9 @@ class SonicSquid extends AbstractInteraction implements Listener
             return;
 
         if (this.hub.getPlayerManager().isBusy(event.getPlayer()))
+            return;
+
+        if (PlayerManager.VIP_ZONE.isInArea(event.getPlayer().getLocation()))
             return;
 
         this.play(event.getPlayer());
