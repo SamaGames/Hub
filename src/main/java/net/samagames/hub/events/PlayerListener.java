@@ -128,7 +128,6 @@ public class PlayerListener implements Listener
             this.hub.getServer().getScheduler().runTask(this.hub, () -> event.getPlayer().setAllowFlight(true));
     }
 
-    @SuppressWarnings("deprecation")
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event)
     {
