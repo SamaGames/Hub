@@ -1,6 +1,5 @@
 apply plugin: 'java'
 apply plugin: 'idea'
-apply plugin: 'sonar-runner'
 
 group = 'net.samagames'
 version = '2.0.0'
@@ -44,15 +43,4 @@ dependencies {
     compile group: 'de.slikey', name: 'EffectLib', version: '4.3-SNAPSHOT'
     compile group: 'LibsDisguises', name: 'LibsDisguises', version: '9.0.3'
     compile group: 'net.techcable', name: 'SonarPet', version: '1.0.1'
-}
-
-sonarRunner {
-    sonarProperties {
-        property "sonar.host.url", "http://blackmesa.samagames.net:9494/"
-        property "sonar.projectKey", group + "." + archivesBaseName
-        property "sonar.projectName", archivesBaseName
-
-        property "sonar.login", sonaruser
-        property "sonar.password", sonarpass
-    }
 }
