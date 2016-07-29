@@ -155,13 +155,13 @@ public class PlayerManager extends AbstractManager
         });
     }
 
-    public void addHider(Player player)
+    public void addHider(Player hider)
     {
-        this.hiders.add(player.getUniqueId());
+        this.hiders.add(hider.getUniqueId());
 
         this.hub.getServer().getScheduler().runTaskAsynchronously(this.hub, () ->
-                this.hub.getServer().getOnlinePlayers().stream().filter(p -> !SamaGamesAPI.get().getPermissionsManager().hasPermission(p, "hub.announce") && !SamaGamesAPI.get().getFriendsManager().areFriends(player.getUniqueId(), p.getUniqueId())).forEach(p ->
-                        this.hub.getServer().getScheduler().runTask(this.hub, () -> player.hidePlayer(p))));
+                this.hub.getServer().getOnlinePlayers().stream().filter(player -> !SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "hub.announce") && !SamaGamesAPI.get().getFriendsManager().areFriends(hider.getUniqueId(), player.getUniqueId())).forEach(player ->
+                        this.hub.getServer().getScheduler().runTask(this.hub, () -> hider.hidePlayer(player))));
     }
 
     public void removeHider(Player player)
@@ -174,18 +174,18 @@ public class PlayerManager extends AbstractManager
 
     private void updateHiders(Player newConnected)
     {
-        this.hub.getScheduledExecutorService().execute(() ->
+        this.hub.getServer().getScheduler().runTaskAsynchronously(this.hub, () ->
         {
-            List<UUID> uuidList = new ArrayList<>();
-            uuidList.addAll(this.hiders);
+            List<UUID> hidersUUIDList = new ArrayList<>();
+            hidersUUIDList.addAll(this.hiders);
 
-            for (UUID uuid : uuidList)
+            for (UUID hiderUUID : hidersUUIDList)
             {
-                Player player = this.hub.getServer().getPlayer(uuid);
+                Player hider = this.hub.getServer().getPlayer(hiderUUID);
 
-                if(player != null && !player.equals(newConnected))
-                    if (!SamaGamesAPI.get().getPermissionsManager().hasPermission(newConnected, "hub.announce") && !SamaGamesAPI.get().getFriendsManager().areFriends(newConnected.getUniqueId(), uuid))
-                        this.hub.getServer().getScheduler().runTask(this.hub, () -> player.hidePlayer(newConnected));
+                if(hider != null && !hider.equals(newConnected))
+                    if (!SamaGamesAPI.get().getPermissionsManager().hasPermission(newConnected, "hub.announce") && !SamaGamesAPI.get().getFriendsManager().areFriends(newConnected.getUniqueId(), hiderUUID))
+                        this.hub.getServer().getScheduler().runTask(this.hub, () -> hider.hidePlayer(newConnected));
             }
         });
     }
