@@ -152,7 +152,7 @@ public class MagicCakeDisplayer extends AbstractDisplayer
 
     private List<Entity> getNearbyPlayers(Location where, int range)
     {
-        List<Entity> found = where.getWorld().getEntities().stream().filter(entity -> distance(where, entity.getLocation()) <= range && entity instanceof Player).collect(Collectors.toList());
+        List<Entity> found = where.getWorld().getEntities().stream().filter(entity -> this.distance(where, entity.getLocation()) <= range && entity instanceof Player).filter(player -> this.canInteractWith((Player) player)).collect(Collectors.toList());
         return found;
     }
 

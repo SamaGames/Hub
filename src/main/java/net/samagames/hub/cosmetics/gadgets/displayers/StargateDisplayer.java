@@ -17,6 +17,7 @@ import org.bukkit.util.Vector;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class StargateDisplayer extends AbstractDisplayer
 {
@@ -82,6 +83,9 @@ public class StargateDisplayer extends AbstractDisplayer
                 for (Entity entity : ProximityUtils.getNearbyEntities(blackHoleLocation, 12, EntityType.PLAYER))
                 {
                     Player player = (Player) entity;
+
+                    if (this.hub.getPlayerManager().isBusy(player))
+                        continue;
 
                     Vector entityVector = new Vector(player.getLocation().getX(), player.getLocation().getY(), player.getLocation().getZ());
                     Vector blackholeVector = new Vector(blackHoleLocation.getX(), blackHoleLocation.getY(), blackHoleLocation.getZ());

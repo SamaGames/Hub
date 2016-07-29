@@ -182,7 +182,11 @@ public class PlayerListener implements Listener
 
                 if (displayer.isInteractionsEnabled() && !SamaGamesAPI.get().getSettingsManager().getSettings(event.getEntity().getUniqueId()).isOtherPlayerInteraction())
                 {
-                    event.getDamager().sendMessage(ChatColor.RED + "Ce joueur n'accepte pas les intéractions !");
+                    if (this.hub.getPlayerManager().isBusy((Player) event.getEntity()))
+                        event.getDamager().sendMessage(ChatColor.RED + "Ce joueur est actuellement occupé.");
+                    else
+                        event.getDamager().sendMessage(ChatColor.RED + "Ce joueur n'accepte pas les intéractions !");
+
                     return;
                 }
 

@@ -34,6 +34,11 @@ public abstract class AbstractDisplayer
     public abstract boolean isInteractionsEnabled();
     public abstract boolean canUse();
 
+    public void end()
+    {
+        this.hub.getCosmeticManager().getGadgetManager().callbackGadget(this);
+    }
+
     public void addBlockToUse(Location location, SimpleBlock block)
     {
         this.blocksUsed.put(new Location(location.getWorld(), location.getBlockX(), location.getBlockY(), location.getBlockZ()), block);
@@ -79,18 +84,17 @@ public abstract class AbstractDisplayer
         return this.player;
     }
 
-    public boolean isBlockUsed(Location location)
-    {
-        return this.blocksUsed.containsKey(new Location(location.getWorld(), location.getBlockX(), location.getBlockY(), location.getBlockZ()));
-    }
-
-    public void end()
-    {
-        this.hub.getCosmeticManager().getGadgetManager().callbackGadget(this);
-    }
-
     public Map<Location, SimpleBlock> getBlocksUsed()
     {
         return this.blocksUsed;
+    }
+
+    public boolean canInteractWith(Player player)
+    {
+        return !this.hub.getPlayerManager().isBusy(player);
+    }
+    public boolean isBlockUsed(Location location)
+    {
+        return this.blocksUsed.containsKey(new Location(location.getWorld(), location.getBlockX(), location.getBlockY(), location.getBlockZ()));
     }
 }
