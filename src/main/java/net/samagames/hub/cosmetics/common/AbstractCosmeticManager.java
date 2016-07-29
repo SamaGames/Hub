@@ -136,20 +136,16 @@ public abstract class AbstractCosmeticManager<COSMETIC extends AbstractCosmetic>
 
     public void resetCurrents(Player player)
     {
-        for (int storageId : this.registry.getElements().keySet())
+        this.registry.getElements().keySet().stream().filter(storageId -> SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).getTransactionsByID(storageId) != null).forEach(storageId ->
         {
-            if (SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).getTransactionsByID(storageId) != null)
+            try
             {
-                try
-                {
-                    SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).setSelectedItem(storageId, false);
-                }
-                catch (Exception e)
-                {
-                    e.printStackTrace();
-                }
+                SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).setSelectedItem(storageId, false);
             }
-        }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     public COSMETIC getEquippedCosmetic(Player player)

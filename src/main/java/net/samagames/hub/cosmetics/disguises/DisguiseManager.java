@@ -22,7 +22,7 @@ public class DisguiseManager extends AbstractCosmeticManager<DisguiseCosmetic>
     {
         MobDisguise disguise = new MobDisguise(cosmetic.getDisguiseType());
         disguise.setShowName(true);
-        disguise.setViewSelfDisguise(true);
+        disguise.setViewSelfDisguise(false);
 
         DisguiseAPI.disguiseToAll(player, disguise);
 

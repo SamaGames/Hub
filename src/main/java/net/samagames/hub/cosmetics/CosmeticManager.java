@@ -32,6 +32,12 @@ public class CosmeticManager extends AbstractManager
     public void onLogin(Player player)
     {
         this.jukeboxManager.onLogin(player);
+
+        this.disguiseManager.restoreCosmetic(player);
+        this.petManager.restoreCosmetic(player);
+        this.gadgetManager.restoreCosmetic(player);
+        this.particleManager.restoreCosmetic(player);
+        this.balloonManager.restoreCosmetic(player);
     }
 
     @Override
