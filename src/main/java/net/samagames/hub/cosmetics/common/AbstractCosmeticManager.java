@@ -141,7 +141,8 @@ public abstract class AbstractCosmeticManager<COSMETIC extends AbstractCosmetic>
             {
                 SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).setSelectedItem(storageId, false);
             }
-            catch (Exception e) {
+            catch (Exception e)
+            {
                 e.printStackTrace();
             }
         });

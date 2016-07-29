@@ -8,9 +8,9 @@ import net.samagames.hub.Hub;
 import net.samagames.hub.common.players.PlayerManager;
 import net.samagames.hub.cosmetics.common.AbstractCosmeticManager;
 import net.samagames.hub.gui.AbstractGui;
+import net.samagames.tools.Misc;
 import net.samagames.tools.ParticleEffect;
 import net.samagames.tools.bossbar.BossBarAPI;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.boss.BarColor;
@@ -126,11 +126,12 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
 
     public void onLogin(Player player)
     {
-        Bukkit.getScheduler().runTaskAsynchronously(hub, () -> {
+        this.hub.getServer().getScheduler().runTaskAsynchronously(this.hub, () ->
+        {
             IPlayerSettings settings = SamaGamesAPI.get().getSettingsManager().getSettings(player.getUniqueId());
 
             if(!settings.isJukeboxListen())
-                mutedPlayers.add(player.getUniqueId());
+                this.mutedPlayers.add(player.getUniqueId());
             else
                 addPlayer(player);
         });
@@ -138,7 +139,8 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
 
     public void onLogout(Player player)
     {
-        Bukkit.getScheduler().runTaskAsynchronously(hub, () -> {
+        this.hub.getServer().getScheduler().runTaskAsynchronously(this.hub, () ->
+        {
             this.removePlayer(player);
             this.mutedPlayers.remove(player.getUniqueId());
         });
@@ -160,7 +162,7 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
             }
             else if (this.recentDJs.containsKey(player.getUniqueId()))
             {
-                player.sendMessage(ChatColor.RED + "Vous ne pouvez proposer un titre que dans " + this.recentDJs.get(player.getUniqueId()) + " secondes.");
+                player.sendMessage(ChatColor.RED + "Vous ne pouvez proposer un titre que dans " + Misc.formatTime(this.recentDJs.get(player.getUniqueId())) + ".");
                 return;
             }
             else if ((containsSong(song.getTitle()) || (this.currentPlaylist != null && this.currentPlaylist.getSong().getTitle().equals(song.getTitle()))))
