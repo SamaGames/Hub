@@ -22,7 +22,6 @@ public abstract class AbstractCosmeticManager<COSMETIC extends AbstractCosmetic>
     public AbstractCosmeticManager(Hub hub, AbstractCosmeticRegistry<COSMETIC> registry)
     {
         this.hub = hub;
-
         this.registry = registry;
 
         try

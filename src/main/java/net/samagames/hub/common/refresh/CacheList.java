@@ -1,17 +1,17 @@
 package net.samagames.hub.common.refresh;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
-public class CacheList extends HashMap<Integer, JsonHub>
+class CacheList extends ConcurrentHashMap<Integer, JsonHub>
 {
     private final Map<Integer, Integer> timeouts;
 
     CacheList()
     {
-        this.timeouts = new HashMap<>();
+        this.timeouts = new ConcurrentHashMap<>();
     }
 
     @Override

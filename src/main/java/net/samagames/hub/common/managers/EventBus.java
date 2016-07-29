@@ -1,6 +1,5 @@
 package net.samagames.hub.common.managers;
 
-
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
