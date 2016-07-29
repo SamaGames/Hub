@@ -145,6 +145,10 @@ public class PlayerListener implements Listener
         if (!(event.getEntity() instanceof Player))
             return;
 
+        if (!SamaGamesAPI.get().getPermissionsManager().hasPermission(event.getEntity(), "network.vipplus"))
+            if (((Player) event.getEntity()).isFlying() && ((Player) event.getEntity()).getInventory().getChestplate().getType() == Material.ELYTRA)
+                ((Player) event.getEntity()).getInventory().setChestplate(null);
+
         if (event.isGliding())
         {
             ItemStack stack = new ItemStack(Material.FEATHER);

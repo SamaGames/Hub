@@ -34,7 +34,10 @@ public class DoubleJumpListener implements Listener
         if (SamaGamesAPI.get().getPermissionsManager().hasPermission(event.getPlayer(), "hub.fly"))
             return;
 
-        if (((LivingEntity) event.getPlayer()).isOnGround() && this.hub.getParkourManager().getPlayerParkour(event.getPlayer().getUniqueId()) == null)
+        if (this.hub.getPlayerManager().isBusy(event.getPlayer()))
+            return;
+
+        if (((LivingEntity) event.getPlayer()).isOnGround())
         {
             event.getPlayer().setAllowFlight(true);
             this.allowed.add(event.getPlayer().getUniqueId());
