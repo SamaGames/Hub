@@ -63,12 +63,12 @@ public class HubLeaderboard
             {
                 Leaderboard.PlayerStatData stat = i == 0 ? leaderboard.getFirst() : i == 1 ? leaderboard.getSecond() : leaderboard.getThird();
                 Block block2 = this.stands.get(i).sign.getBlock();
-                if (stat != null && (block2.getType() == Material.SIGN_POST || block2.getType() == Material.WALL_SIGN))
+                if (block2.getType() == Material.SIGN_POST || block2.getType() == Material.WALL_SIGN)
                 {
                     Sign sign = (Sign) block2.getState();
                     sign.setLine(0, "*-*-*-*-*");
-                    sign.setLine(1, stat.getName());
-                    sign.setLine(2, String.valueOf(stat.getScore()));
+                    sign.setLine(1, stat == null ? "" : stat.getName());
+                    sign.setLine(2, stat == null ? "" : String.valueOf(stat.getScore()));
                     sign.setLine(3, "*-*-*-*-*");
                     sign.update();
                 }
