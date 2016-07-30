@@ -9,7 +9,7 @@ import java.util.List;
 public class RotatingLeaderboard extends HubLeaderboard
 {
     private List<RotatingLeaderboardFrame> frames;
-    private int currentFrame;
+    private static int currentFrame = 0;
 
     public RotatingLeaderboard(Hub hub, Location sign, List<HubLeaderBoardStand> stands, List<RotatingLeaderboardFrame> frames)
     {
@@ -17,39 +17,41 @@ public class RotatingLeaderboard extends HubLeaderboard
         this.sign = sign;
         this.stands = stands;
         this.frames = frames;
-        this.currentFrame = 0;
+    }
+
+    public static void increment()
+    {
+        RotatingLeaderboard.currentFrame++;
     }
 
     @Override
     public void refresh()
     {
-        this.currentFrame++;
-        this.currentFrame %= this.frames.size();
         super.refresh();
     }
 
     @Override
     protected GamesNames getGame()
     {
-        return this.frames.get(this.currentFrame).game;
+        return this.frames.get(RotatingLeaderboard.currentFrame % this.frames.size()).game;
     }
 
     @Override
     protected String getDisplayName()
     {
-        return this.frames.get(this.currentFrame).displayName;
+        return this.frames.get(RotatingLeaderboard.currentFrame % this.frames.size()).displayName;
     }
 
     @Override
     protected String getStatName()
     {
-        return this.frames.get(this.currentFrame).statName;
+        return this.frames.get(RotatingLeaderboard.currentFrame % this.frames.size()).statName;
     }
 
     @Override
     protected String getGameName()
     {
-        return this.frames.get(this.currentFrame).gameName;
+        return this.frames.get(RotatingLeaderboard.currentFrame % this.frames.size()).gameName;
     }
 
     public static class RotatingLeaderboardFrame

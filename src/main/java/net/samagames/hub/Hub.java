@@ -21,6 +21,7 @@ import net.samagames.hub.events.protection.PlayerProtectionListener;
 import net.samagames.hub.events.protection.WorldEditionListener;
 import net.samagames.hub.games.GameManager;
 import net.samagames.hub.games.leaderboards.HubLeaderboard;
+import net.samagames.hub.games.leaderboards.RotatingLeaderboard;
 import net.samagames.hub.games.signs.SignManager;
 import net.samagames.hub.gui.GuiManager;
 import net.samagames.hub.interactions.InteractionManager;
@@ -127,11 +128,14 @@ public class Hub extends JavaPlugin
         //SamaGamesAPI.get().getPubSub().subscribe("", new SignReloadListener(this));
 
         this.getServer().getScheduler().runTaskTimerAsynchronously(this, () ->
-                this.getGameManager().getGames().values().stream()
-                        .filter(abstractGame -> abstractGame.getLeaderBoards() != null)
-                        .forEach(abstractGame -> abstractGame.getLeaderBoards()
-                                .forEach(HubLeaderboard::refresh)
-                        )
+                {
+                    this.getGameManager().getGames().values().stream()
+                            .filter(abstractGame -> abstractGame.getLeaderBoards() != null)
+                            .forEach(abstractGame -> abstractGame.getLeaderBoards()
+                                    .forEach(HubLeaderboard::refresh)
+                            );
+                    RotatingLeaderboard.increment();
+                }
                 , 0L, 1200L
         );
 
