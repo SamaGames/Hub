@@ -75,18 +75,13 @@ public class HubLeaderboard
                 ArmorStand armorStand = (ArmorStand)this.stands.get(i).hologram.getWorld().getNearbyEntities(this.stands.get(i).hologram, 0.3D, 2D, 0.3D).stream().filter(entity -> entity instanceof ArmorStand).findFirst().orElse(null);
                 if (armorStand != null)
                 {
-                    armorStand.setCustomNameVisible(true);
+                    armorStand.setCustomNameVisible(stat != null);
                     armorStand.setCustomName(stat == null ? "" : (i == 0 ? ChatColor.AQUA + "1er": i == 1 ? ChatColor.GOLD + "2e" : ChatColor.GRAY + "3e") + " - " + stat.getName());
-                    if (stat == null)
-                        armorStand.setHelmet(new ItemStack(Material.AIR));
-                    else
-                    {
-                        ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (byte) SkullType.PLAYER.ordinal());
-                        SkullMeta meta = (SkullMeta) skull.getItemMeta();
-                        meta.setOwner(stat.getName());
-                        skull.setItemMeta(meta);
-                        armorStand.setHelmet(skull);
-                    }
+                    ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (byte) SkullType.PLAYER.ordinal());
+                    SkullMeta meta = (SkullMeta) skull.getItemMeta();
+                    meta.setOwner(stat == null ? "Aurelien_Sama" : stat.getName());
+                    skull.setItemMeta(meta);
+                    armorStand.setHelmet(skull);
                 }
             }
         });
