@@ -11,7 +11,6 @@ import org.bukkit.SkullType;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.ArmorStand;
-import org.bukkit.entity.Entity;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
@@ -19,17 +18,23 @@ import java.util.List;
 
 public class HubLeaderboard
 {
-    private Hub hub;
+    protected Hub hub;
     private GamesNames game;
+    private String gameName;
     private String displayName;
     private String statName;
-    private Location sign;
-    private List<HubLeaderBoardStand> stands;
+    protected Location sign;
+    protected List<HubLeaderBoardStand> stands;
 
-    public HubLeaderboard(Hub hub, GamesNames game, String displayName, String statName, Location sign, List<HubLeaderBoardStand> stands)
+    HubLeaderboard()
+    {
+    }
+
+    public HubLeaderboard(Hub hub, GamesNames game, String gameName, String displayName, String statName, Location sign, List<HubLeaderBoardStand> stands)
     {
         this.hub = hub;
         this.game = game;
+        this.gameName = gameName;
         this.displayName = displayName;
         this.statName = statName;
         this.sign = sign;
@@ -38,7 +43,7 @@ public class HubLeaderboard
 
     public void refresh()
     {
-        final Leaderboard leaderboard = SamaGamesAPI.get().getStatsManager().getLeaderboard(this.game, this.statName);
+        final Leaderboard leaderboard = SamaGamesAPI.get().getStatsManager().getLeaderboard(this.getGame(), this.getStatName());
         if (leaderboard == null)
             return ;
         this.hub.getServer().getScheduler().runTask(this.hub, () ->
@@ -48,18 +53,17 @@ public class HubLeaderboard
             {
                 Sign sign = (Sign)block.getState();
                 sign.setLine(0, "*-*-*-*-*");
-                sign.setLine(1, this.displayName);
-                sign.setLine(2, "");
+                sign.setLine(1, this.getGameName());
+                sign.setLine(2, this.getDisplayName());
                 sign.setLine(3, "*-*-*-*-*");
                 sign.update();
             }
-            for (int i = 0; i < 3 && i < this.stands.size(); i++)
+            int i;
+            for (i = 0; i < 3 && i < this.stands.size(); i++)
             {
                 Leaderboard.PlayerStatData stat = i == 0 ? leaderboard.getFirst() : i == 1 ? leaderboard.getSecond() : leaderboard.getThird();
-                if (stat == null)
-                    continue;
                 Block block2 = this.stands.get(i).sign.getBlock();
-                if (block2.getType() == Material.SIGN_POST || block2.getType() == Material.WALL_SIGN)
+                if (stat != null && (block2.getType() == Material.SIGN_POST || block2.getType() == Material.WALL_SIGN))
                 {
                     Sign sign = (Sign) block2.getState();
                     sign.setLine(0, "*-*-*-*-*");
@@ -72,15 +76,40 @@ public class HubLeaderboard
                 if (armorStand != null)
                 {
                     armorStand.setCustomNameVisible(true);
-                    armorStand.setCustomName((i == 0 ? ChatColor.AQUA + "1er": i == 1 ? ChatColor.GOLD + "2e" : ChatColor.GRAY + "3e") + " - " + stat.getName());
-                    ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (byte) SkullType.PLAYER.ordinal());
-                    SkullMeta meta = (SkullMeta) skull.getItemMeta();
-                    meta.setOwner(stat.getName());
-                    skull.setItemMeta(meta);
-                    armorStand.setHelmet(skull);
+                    armorStand.setCustomName(stat == null ? "" : (i == 0 ? ChatColor.AQUA + "1er": i == 1 ? ChatColor.GOLD + "2e" : ChatColor.GRAY + "3e") + " - " + stat.getName());
+                    if (stat == null)
+                        armorStand.setHelmet(new ItemStack(Material.AIR));
+                    else
+                    {
+                        ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (byte) SkullType.PLAYER.ordinal());
+                        SkullMeta meta = (SkullMeta) skull.getItemMeta();
+                        meta.setOwner(stat.getName());
+                        skull.setItemMeta(meta);
+                        armorStand.setHelmet(skull);
+                    }
                 }
             }
         });
+    }
+
+    protected String getDisplayName()
+    {
+        return this.displayName;
+    }
+
+    protected GamesNames getGame()
+    {
+        return this.game;
+    }
+
+    protected String getStatName()
+    {
+        return this.statName;
+    }
+
+    protected String getGameName()
+    {
+        return this.gameName;
     }
 
     public static class HubLeaderBoardStand

@@ -4,6 +4,7 @@ import net.samagames.api.games.GamesNames;
 import net.samagames.hub.Hub;
 import net.samagames.hub.games.AbstractGame;
 import net.samagames.hub.games.leaderboards.HubLeaderboard;
+import net.samagames.hub.games.leaderboards.RotatingLeaderboard;
 import net.samagames.hub.games.shops.ShopCategory;
 import net.samagames.tools.RulesBook;
 import org.bukkit.Location;
@@ -118,13 +119,31 @@ public class UHCZoneGame extends AbstractGame
         leaderBoardStands1.add(new HubLeaderboard.HubLeaderBoardStand(new Location(this.hub.getWorld(), 36, 102, 44), new Location(this.hub.getWorld(), 37.5, 105, 44.5)));
         leaderBoardStands1.add(new HubLeaderboard.HubLeaderBoardStand(new Location(this.hub.getWorld(), 36, 102, 43), new Location(this.hub.getWorld(), 37.5, 104, 43.5)));
         leaderBoardStands1.add(new HubLeaderboard.HubLeaderBoardStand(new Location(this.hub.getWorld(), 36, 102, 45), new Location(this.hub.getWorld(), 37.5, 104, 45.5)));
-        leaderBoards.add(new HubLeaderboard(this.hub, GamesNames.UHCRUN, "Meurtres", "kills", new Location(this.hub.getWorld(), 36, 103, 44), leaderBoardStands1));
+
+        List<RotatingLeaderboard.RotatingLeaderboardFrame> frames1 = new ArrayList<>();
+        frames1.add(new RotatingLeaderboard.RotatingLeaderboardFrame(GamesNames.UHCRUN, "UHCRun", "Meurtres", "kills"));
+        frames1.add(new RotatingLeaderboard.RotatingLeaderboardFrame(GamesNames.DOUBLERUNNER, "DoubleRunner", "Meurtres", "kills"));
+        frames1.add(new RotatingLeaderboard.RotatingLeaderboardFrame(GamesNames.UHC, "UHC", "Meurtres", "kills"));
+        frames1.add(new RotatingLeaderboard.RotatingLeaderboardFrame(GamesNames.RANDOMRUN, "RandomRun", "Meurtres", "kills"));
+        frames1.add(new RotatingLeaderboard.RotatingLeaderboardFrame(GamesNames.UHCRANDOM, "UHCRandom", "Meurtres", "kills"));
+        frames1.add(new RotatingLeaderboard.RotatingLeaderboardFrame(GamesNames.ULTRAFLAGKEEPER, "Run4Flag", "Meurtres", "kills"));
+
+        leaderBoards.add(new RotatingLeaderboard(this.hub, new Location(this.hub.getWorld(), 36, 103, 44), leaderBoardStands1, frames1));
 
         List<HubLeaderboard.HubLeaderBoardStand> leaderBoardStands2 = new ArrayList<>();
         leaderBoardStands2.add(new HubLeaderboard.HubLeaderBoardStand(new Location(this.hub.getWorld(), 34, 102, 46), new Location(this.hub.getWorld(), 34.5, 105, 47.5)));
         leaderBoardStands2.add(new HubLeaderboard.HubLeaderBoardStand(new Location(this.hub.getWorld(), 35, 102, 46), new Location(this.hub.getWorld(), 35.5, 104, 47.5)));
         leaderBoardStands2.add(new HubLeaderboard.HubLeaderBoardStand(new Location(this.hub.getWorld(), 33, 102, 46), new Location(this.hub.getWorld(), 33.5, 104, 47.5)));
-        leaderBoards.add(new HubLeaderboard(this.hub, GamesNames.UHCRUN, "Victoires", "wins", new Location(this.hub.getWorld(), 34, 103, 46), leaderBoardStands2));
+
+        List<RotatingLeaderboard.RotatingLeaderboardFrame> frames2 = new ArrayList<>();
+        frames2.add(new RotatingLeaderboard.RotatingLeaderboardFrame(GamesNames.UHCRUN, "UHCRun", "Victoires", "wins"));
+        frames2.add(new RotatingLeaderboard.RotatingLeaderboardFrame(GamesNames.DOUBLERUNNER, "DoubleRunner", "Victoires", "wins"));
+        frames2.add(new RotatingLeaderboard.RotatingLeaderboardFrame(GamesNames.UHC, "UHC", "Victoires", "wins"));
+        frames2.add(new RotatingLeaderboard.RotatingLeaderboardFrame(GamesNames.RANDOMRUN, "RandomRun", "Victoires", "wins"));
+        frames2.add(new RotatingLeaderboard.RotatingLeaderboardFrame(GamesNames.UHCRANDOM, "UHCRandom", "Victoires", "wins"));
+        frames2.add(new RotatingLeaderboard.RotatingLeaderboardFrame(GamesNames.ULTRAFLAGKEEPER, "Run4Flag", "Victoires", "wins"));
+
+        leaderBoards.add(new RotatingLeaderboard(this.hub, new Location(this.hub.getWorld(), 34, 103, 46), leaderBoardStands2, frames2));
 
         return leaderBoards;
     }

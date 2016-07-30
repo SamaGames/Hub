@@ -129,13 +129,13 @@ public class DimensionsGame extends AbstractGame
         leaderBoardStands1.add(new HubLeaderboard.HubLeaderBoardStand(new Location(this.hub.getWorld(), -26, 86, -45), new Location(this.hub.getWorld(), -25.5, 88, -43.5)));
         leaderBoardStands1.add(new HubLeaderboard.HubLeaderBoardStand(new Location(this.hub.getWorld(), -24, 86, -45), new Location(this.hub.getWorld(), -23.5, 88, -43.5)));
         leaderBoardStands1.add(new HubLeaderboard.HubLeaderBoardStand(new Location(this.hub.getWorld(), -26, 86, -46), new Location(this.hub.getWorld(), -26.5, 88, -45.5)));
-        leaderBoards.add(new HubLeaderboard(this.hub, GamesNames.DIMENSION, "Victoires", "wins", new Location(this.hub.getWorld(), -26, 87, -45), leaderBoardStands1));
+        leaderBoards.add(new HubLeaderboard(this.hub, GamesNames.DIMENSION, "Dimensions", "Victoires", "wins", new Location(this.hub.getWorld(), -26, 87, -45), leaderBoardStands1));
 
         List<HubLeaderboard.HubLeaderBoardStand> leaderBoardStands2 = new ArrayList<>();
         leaderBoardStands2.add(new HubLeaderboard.HubLeaderBoardStand(new Location(this.hub.getWorld(), -26, 86, -53), new Location(this.hub.getWorld(), -25.5, 88, -53.5)));
         leaderBoardStands2.add(new HubLeaderboard.HubLeaderBoardStand(new Location(this.hub.getWorld(), -26, 86, -52), new Location(this.hub.getWorld(), -26.5, 88, -51.5)));
         leaderBoardStands2.add(new HubLeaderboard.HubLeaderBoardStand(new Location(this.hub.getWorld(), -24, 86, -53), new Location(this.hub.getWorld(), -23.5, 88, -53.5)));
-        leaderBoards.add(new HubLeaderboard(this.hub, GamesNames.DIMENSION, "Meurtres", "kills", new Location(this.hub.getWorld(), -26, 87, -53), leaderBoardStands2));
+        leaderBoards.add(new HubLeaderboard(this.hub, GamesNames.DIMENSION, "Dimensions", "Meurtres", "kills", new Location(this.hub.getWorld(), -26, 87, -53), leaderBoardStands2));
 
         return leaderBoards;
     }
