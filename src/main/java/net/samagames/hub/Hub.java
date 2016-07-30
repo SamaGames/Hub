@@ -132,7 +132,7 @@ public class Hub extends JavaPlugin
                         .forEach(abstractGame -> abstractGame.getLeaderBoards()
                                 .forEach(HubLeaderboard::refresh)
                         )
-                , 0L, 6000L
+                , 0L, 1200L
         );
 
         SamaGamesAPI.get().getStatsManager().setStatsToLoad(GamesNames.GLOBAL, true);
