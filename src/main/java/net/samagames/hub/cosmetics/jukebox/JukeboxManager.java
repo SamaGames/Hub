@@ -60,9 +60,9 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
         {
             if (this.currentPlaylist != null)
             {
-                for (String wooter : this.currentPlaylist.getWooters())
+                for (UUID wooter : this.currentPlaylist.getWooters())
                 {
-                    Player player = this.hub.getServer().getPlayerExact(wooter);
+                    Player player = this.hub.getServer().getPlayer(wooter);
 
                     if (player != null)
                     {
@@ -72,9 +72,9 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
                     }
                 }
 
-                for (String meher : this.currentPlaylist.getMehers())
+                for (UUID meher : this.currentPlaylist.getMehers())
                 {
-                    Player player = this.hub.getServer().getPlayerExact(meher);
+                    Player player = this.hub.getServer().getPlayer(meher);
 
                     if (player != null)
                     {
@@ -242,6 +242,15 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
                     {
                         SamaGamesAPI.get().getStatsManager().getPlayerStats(playerUUID).getJukeBoxStatistics().incrByWoots(woots);
                         SamaGamesAPI.get().getStatsManager().getPlayerStats(playerUUID).getJukeBoxStatistics().incrByMehs(mehs);
+                    }
+                    catch (NullPointerException ignored) {}
+                }
+
+                for (UUID wooter : this.currentPlaylist.getWooters())
+                {
+                    try
+                    {
+                        SamaGamesAPI.get().getStatsManager().getPlayerStats(wooter).getJukeBoxStatistics().incrByWootsGiven(1);
                     }
                     catch (NullPointerException ignored) {}
                 }

@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class JukeboxSong
 {
@@ -16,8 +17,8 @@ public class JukeboxSong
     private final Song song;
     private final SongPlayer player;
     private final String playedBy;
-    private final List<String> wooters;
-    private final List<String> mehers;
+    private final List<UUID> wooters;
+    private final List<UUID> mehers;
     private final int initialSeconds;
     private int secondsRemaining;
 
@@ -42,15 +43,15 @@ public class JukeboxSong
 
     public boolean woot(Player player)
     {
-        if (this.mehers.contains(player.getName()))
+        if (this.mehers.contains(player.getUniqueId()))
         {
-            this.mehers.remove(player.getName());
+            this.mehers.remove(player.getUniqueId());
             this.player.addPlayer(player);
         }
 
-        if (!this.wooters.contains(player.getName()))
+        if (!this.wooters.contains(player.getUniqueId()))
         {
-            this.wooters.add(player.getName());
+            this.wooters.add(player.getUniqueId());
             return true;
         }
 
@@ -59,12 +60,12 @@ public class JukeboxSong
 
     public boolean meh(Player player)
     {
-        if (this.wooters.contains(player.getName()))
-            this.wooters.remove(player.getName());
+        if (this.wooters.contains(player.getUniqueId()))
+            this.wooters.remove(player.getUniqueId());
 
-        if (!this.mehers.contains(player.getName()))
+        if (!this.mehers.contains(player.getUniqueId()))
         {
-            this.mehers.add(player.getName());
+            this.mehers.add(player.getUniqueId());
             this.player.removePlayer(player);
 
             if (this.getMehs() > this.hub.getServer().getOnlinePlayers().size() / 3.0)
@@ -111,12 +112,12 @@ public class JukeboxSong
         return this.initialSeconds == -1 ? 100.0D : this.secondsRemaining * 100.0D / this.initialSeconds;
     }
 
-    public List<String> getWooters()
+    public List<UUID> getWooters()
     {
         return this.wooters;
     }
 
-    public List<String> getMehers()
+    public List<UUID> getMehers()
     {
         return this.mehers;
     }
