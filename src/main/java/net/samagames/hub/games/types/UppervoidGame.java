@@ -126,7 +126,7 @@ public class UppervoidGame extends AbstractGame
         leaderBoardStands1.add(new HubLeaderboard.HubLeaderBoardStand(new Location(this.hub.getWorld(), -17, 82, 70), new Location(this.hub.getWorld(), -16.5, 85, 71.5)));
         leaderBoardStands1.add(new HubLeaderboard.HubLeaderBoardStand(new Location(this.hub.getWorld(), -15, 82, 70), new Location(this.hub.getWorld(), -14.5, 85, 71.5)));
         leaderBoardStands1.add(new HubLeaderboard.HubLeaderBoardStand(new Location(this.hub.getWorld(), -17, 82, 69), new Location(this.hub.getWorld(), -17.5, 85, 69.5)));
-        leaderBoards.add(new HubLeaderboard(this.hub, GamesNames.UPPERVOID, "Victoires", "wins", new Location(this.hub.getWorld(), -17, 83, 70), leaderBoardStands1));
+        leaderBoards.add(new HubLeaderboard(this.hub, GamesNames.UPPERVOID, "Uppervoid", "Victoires", "wins", new Location(this.hub.getWorld(), -17, 83, 70), leaderBoardStands1));
 
         return leaderBoards;
     }

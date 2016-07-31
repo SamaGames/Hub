@@ -140,13 +140,13 @@ public class QuakeGame extends AbstractGame
         leaderBoardStands1.add(new HubLeaderboard.HubLeaderBoardStand(new Location(this.hub.getWorld(), 37, 102, -24), new Location(this.hub.getWorld(), 38.5, 104, -23.5)));
         leaderBoardStands1.add(new HubLeaderboard.HubLeaderBoardStand(new Location(this.hub.getWorld(), 36, 102, -24), new Location(this.hub.getWorld(), 36.5, 104, -24.5)));
         leaderBoardStands1.add(new HubLeaderboard.HubLeaderBoardStand(new Location(this.hub.getWorld(), 37, 102, -22), new Location(this.hub.getWorld(), 38.5, 104, -21.5)));
-        leaderBoards.add(new HubLeaderboard(this.hub, GamesNames.QUAKE, "Victoires", "wins", new Location(this.hub.getWorld(), 37, 103, -24), leaderBoardStands1));
+        leaderBoards.add(new HubLeaderboard(this.hub, GamesNames.QUAKE, "Quake", "Victoires", "wins", new Location(this.hub.getWorld(), 37, 103, -24), leaderBoardStands1));
 
         List<HubLeaderboard.HubLeaderBoardStand> leaderBoardStands2 = new ArrayList<>();
         leaderBoardStands2.add(new HubLeaderboard.HubLeaderBoardStand(new Location(this.hub.getWorld(), 37, 102, -16), new Location(this.hub.getWorld(), 38.5, 104, -15.5)));
         leaderBoardStands2.add(new HubLeaderboard.HubLeaderBoardStand(new Location(this.hub.getWorld(), 37, 102, -18), new Location(this.hub.getWorld(), 38.5, 104, -17.5)));
         leaderBoardStands2.add(new HubLeaderboard.HubLeaderBoardStand(new Location(this.hub.getWorld(), 36, 102, -16), new Location(this.hub.getWorld(), 36.5, 104, -14.5)));
-        leaderBoards.add(new HubLeaderboard(this.hub, GamesNames.QUAKE, "Meurtres", "kills", new Location(this.hub.getWorld(), 37, 103, -16), leaderBoardStands2));
+        leaderBoards.add(new HubLeaderboard(this.hub, GamesNames.QUAKE, "Quake", "Meurtres", "kills", new Location(this.hub.getWorld(), 37, 103, -16), leaderBoardStands2));
 
         return leaderBoards;
     }
