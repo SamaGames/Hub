@@ -123,7 +123,7 @@ public class UHCZoneGame extends AbstractGame
         List<RotatingLeaderboard.RotatingLeaderboardFrame> frames1 = new ArrayList<>();
         frames1.add(new RotatingLeaderboard.RotatingLeaderboardFrame(GamesNames.UHCRUN, "UHCRun", "Meurtres", "kills"));
         frames1.add(new RotatingLeaderboard.RotatingLeaderboardFrame(GamesNames.DOUBLERUNNER, "DoubleRunner", "Meurtres", "kills"));
-        frames1.add(new RotatingLeaderboard.RotatingLeaderboardFrame(GamesNames.UHC, "UHC", "Meurtres", "kills"));
+        //frames1.add(new RotatingLeaderboard.RotatingLeaderboardFrame(GamesNames.UHCORIGINAL, "UHC", "Meurtres", "kills"));
         frames1.add(new RotatingLeaderboard.RotatingLeaderboardFrame(GamesNames.RANDOMRUN, "RandomRun", "Meurtres", "kills"));
         frames1.add(new RotatingLeaderboard.RotatingLeaderboardFrame(GamesNames.UHCRANDOM, "UHCRandom", "Meurtres", "kills"));
         frames1.add(new RotatingLeaderboard.RotatingLeaderboardFrame(GamesNames.ULTRAFLAGKEEPER, "Run4Flag", "Meurtres", "kills"));
