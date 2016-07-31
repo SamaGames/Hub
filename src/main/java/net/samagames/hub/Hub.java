@@ -136,7 +136,7 @@ public class Hub extends JavaPlugin
                             );
                     RotatingLeaderboard.increment();
                 }
-                , 0L, 1200L
+                , 0L, 600L
         );
 
         SamaGamesAPI.get().getStatsManager().setStatsToLoad(GamesNames.GLOBAL, true);
