@@ -49,7 +49,7 @@ public class GameManager extends AbstractManager
         this.registerGame(new BackEndGame(hub, "doublerunner", "DoubleRunner", uhcZoneGame.getLobbySpawn(), false));
         this.registerGame(new BackEndGame(hub, "uhcrandom", "UHCRandom", uhcZoneGame.getLobbySpawn(), false));
         this.registerGame(new BackEndGame(hub, "randomrun", "RandomRun", uhcZoneGame.getLobbySpawn(), false));
-        this.registerGame(new BackEndGame(hub, "ultraflagkeeper", "UltraFlagKeeper", uhcZoneGame.getLobbySpawn(), false));
+        this.registerGame(new BackEndGame(hub, "ultraflagkeeper", "Run4Flag", uhcZoneGame.getLobbySpawn(), false));
 
         // -----
 
