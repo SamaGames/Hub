@@ -172,7 +172,7 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
             }
             else if ((wasRecentlyPlayed(song.getTitle())))
             {
-                player.sendMessage(ChatColor.RED + "Cette musique a déjà été jouée récement. Merci d'attendre avant de l'ajouter à nouveau.");
+                player.sendMessage(ChatColor.RED + "Cette musique a déjà été jouée récemment. Merci d'attendre avant de l'ajouter à nouveau.");
                 return;
             }
             else if (this.isLocked)
