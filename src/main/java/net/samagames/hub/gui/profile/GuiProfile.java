@@ -30,7 +30,7 @@ public class GuiProfile extends AbstractGui
         this.inventory = this.hub.getServer().createInventory(null, 45, "Profil");
 
         this.setSlotData(this.createPlayerHead(player), 13, "none");
-        this.setSlotData(ChatColor.GOLD + "Statistiques", Material.ENCHANTED_BOOK, 20, new String[] { ChatColor.GRAY + "Retrouvez vos scores et classements !", "", ChatColor.RED + "Prochainement..." }, "stats");
+        this.setSlotData(ChatColor.GOLD + "Statistiques", Material.ENCHANTED_BOOK, 20, new String[] { ChatColor.GRAY + "Retrouvez vos scores et classements !" }, "stats");
         this.setSlotData(ChatColor.GOLD + "Objectifs", Material.DIAMOND, 22, new String[] { ChatColor.GRAY + "Allez-vous réussir à tous les", ChatColor.GRAY + "compléter ?", "", ChatColor.RED + "Prochainement..." }, "achievements");
         this.setSlotData(ChatColor.GOLD + "Paramètres", Material.DIODE, 24, new String[] { ChatColor.GRAY + "Vos préférences sur le serveur" }, "settings");
 
