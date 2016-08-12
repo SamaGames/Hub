@@ -9,10 +9,8 @@ import net.samagames.tools.InventoryUtils;
 import net.samagames.tools.LocationUtils;
 import net.samagames.tools.PlayerUtils;
 import net.samagames.tools.chat.ActionBarAPI;
-import org.bukkit.ChatColor;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import net.samagames.tools.chat.fanciful.FancyMessage;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -20,6 +18,7 @@ import org.bukkit.scheduler.BukkitTask;
 import redis.clients.jedis.Jedis;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
 public class PlayerManager extends AbstractManager
@@ -142,7 +141,22 @@ public class PlayerManager extends AbstractManager
 
                 if (player.getUniqueId().equals(UUID.fromString("568046c8-6045-4c59-a255-28027aac8c33")))
                     ActionBarAPI.sendMessage(player, ChatColor.RED + "\u2764");
+
+
             });
+
+            //New Games
+            hub.getScheduledExecutorService().schedule(() -> {
+                if(player == null || !player.isOnline())
+                    return;
+
+                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_HAT, 1.0F, 0.8F);
+                player.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
+                FancyMessage toolBox = new FancyMessage("En cliquant ici, vous rejoignez automatiquement la fil d'attente pour gagner du temps.").color(ChatColor.GOLD).style(ChatColor.ITALIC);
+                new FancyMessage("Hey ! Venez tester notre nouveau jeu Run4Flag ! ").color(ChatColor.GOLD).send(player);
+                new FancyMessage("[Cliquez ici] ").color(ChatColor.GREEN).style(ChatColor.BOLD).command("/join ultraflagkeeper ultraflagkeeper_t2").formattedTooltip(toolBox).send(player);
+                player.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
+            }, 10, TimeUnit.SECONDS);
         });
     }
 
