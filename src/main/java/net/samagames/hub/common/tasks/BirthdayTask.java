@@ -32,7 +32,7 @@ class BirthdayTask extends AbstractTask
         this.time = 0;
         this.infos = new ArrayList<>();
         /*                                                  UUID                                MONTH  DAY     PARTICLE                    COLOR            SOUND                          SPECIAL       USERNAME     */
-        this.infos.add(new BirthdayInfo(UUID.fromString("29b2b527-1b59-45df-b7b0-d5ab20d8731a"), 7,     7,   Particle.SLIME,             Color.GREEN,    Sound.ENTITY_CAT_AMBIENT,        true));      //IamBlueSlime
+        this.infos.add(new BirthdayInfo(UUID.fromString("29b2b527-1b59-45df-b7b0-d5ab20d8731a"), 7,     7,   Particle.SLIME,             Color.ORANGE,   Sound.ENTITY_CAT_AMBIENT,        true));      //IamBlueSlime
         this.infos.add(new BirthdayInfo(UUID.fromString("ad345a5e-5ae3-45bf-aba4-94f4102f37c0"), 3,     19,  Particle.REDSTONE,          Color.RED,      Sound.ENTITY_CHICKEN_AMBIENT,    true));      //Silvanosky
         this.infos.add(new BirthdayInfo(UUID.fromString("c1f45796-d2f9-4622-9475-2afe58324dee"), 2,     17,  Particle.END_ROD,           Color.GRAY,     Sound.ENTITY_SILVERFISH_AMBIENT, true));      //Rigner
         this.infos.add(new BirthdayInfo(UUID.fromString("70481513-fe72-4184-8da2-4c16b92ea98a"), 9,     22,  Particle.DAMAGE_INDICATOR,  Color.RED));                                                  //Reelwens
