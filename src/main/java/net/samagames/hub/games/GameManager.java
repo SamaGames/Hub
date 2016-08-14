@@ -10,9 +10,7 @@ import net.samagames.hub.games.signs.GameSign;
 import net.samagames.hub.games.types.*;
 import net.samagames.tools.LocationUtils;
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
 import org.bukkit.Sound;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
 import java.util.*;
@@ -106,7 +104,7 @@ public class GameManager extends AbstractManager
                     if (!packet.isSuccess() && (packet.getErrorMessage() != null && !packet.getErrorMessage().isEmpty()))
                     {
                         player.sendRawMessage(packet.getErrorMessage());
-                        return;
+                        return ;
                     }
 
                     if(player != null)
@@ -136,8 +134,8 @@ public class GameManager extends AbstractManager
                         }
                         else if(packet.getType().equals(QueueInfosUpdatePacket.Type.INFO) && packet.getMessage() != null)
                         {
-                            if (!SamaGamesAPI.get().getSettingsManager().getSettings(player.getUniqueId()).isNotificationReceive())
-                                return;
+                            if (!SamaGamesAPI.get().getSettingsManager().getSettings(player.getUniqueId()).isWaitingLineNotification())
+                                return ;
 
                             player.playSound(player.getLocation(), Sound.ENTITY_VILLAGER_AMBIENT, 10.0F, 2.0F);
 
@@ -200,16 +198,16 @@ public class GameManager extends AbstractManager
     @Override
     public void onDisable()
     {
-        this.games.values().stream().forEach(AbstractGame::clearSigns);
+        this.games.values().forEach(AbstractGame::clearSigns);
     }
 
     @Override
-    public void onLogin(Player player) { /** Not needed **/ }
+    public void onLogin(Player player) { /* Not needed **/ }
 
     @Override
-    public void onLogout(Player player) {/** Not needed **/ }
+    public void onLogout(Player player) {/* Not needed **/ }
 
-    public void registerGame(AbstractGame game)
+    private void registerGame(AbstractGame game)
     {
         if(!this.games.containsKey(game.getCodeName()))
         {
