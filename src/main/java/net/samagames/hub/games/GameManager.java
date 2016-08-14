@@ -104,7 +104,7 @@ public class GameManager extends AbstractManager
                     if (!packet.isSuccess() && (packet.getErrorMessage() != null && !packet.getErrorMessage().isEmpty()))
                     {
                         player.sendRawMessage(packet.getErrorMessage());
-                        return ;
+                        return;
                     }
 
                     if(player != null)
@@ -135,7 +135,7 @@ public class GameManager extends AbstractManager
                         else if(packet.getType().equals(QueueInfosUpdatePacket.Type.INFO) && packet.getMessage() != null)
                         {
                             if (!SamaGamesAPI.get().getSettingsManager().getSettings(player.getUniqueId()).isWaitingLineNotification())
-                                return ;
+                                return;
 
                             player.playSound(player.getLocation(), Sound.ENTITY_VILLAGER_AMBIENT, 10.0F, 2.0F);
 
@@ -202,10 +202,10 @@ public class GameManager extends AbstractManager
     }
 
     @Override
-    public void onLogin(Player player) { /* Not needed **/ }
+    public void onLogin(Player player) { /** Not needed **/ }
 
     @Override
-    public void onLogout(Player player) {/* Not needed **/ }
+    public void onLogout(Player player) {/** Not needed **/ }
 
     private void registerGame(AbstractGame game)
     {
