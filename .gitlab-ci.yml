@@ -1,7 +1,14 @@
+stages:
+  - build
+  - deploy
+  
+before_script:
+  - chmod +x gradlew
+
 build:
   stage: build
   script:
-    - gradle build
+    - gradlew build
   artifacts:
     paths:
       - build/libs/*.jar
