@@ -13,13 +13,13 @@ build:
 deploy-developement:
   stage: deploy
   only:
-    - /develop/i
+    - develop
   script:
     - echo developement
 
 deploy-production:
   stage: deploy
   only:
-    - /master/i
+    - master
   script:
     - echo production
