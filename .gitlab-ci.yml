@@ -1,0 +1,21 @@
+build:
+  stage: build
+  script:
+    - gradle build
+  artifacts:
+    paths:
+      - build/libs/*.jar
+
+deploy-developement:
+  stage: deploy
+  only:
+    - /develop/i
+  script:
+    - echo developement
+
+deploy-production:
+  stage: deploy
+  only:
+    - /master/i
+  script:
+    - echo production
