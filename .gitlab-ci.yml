@@ -1,0 +1,35 @@
+stages:
+  - build
+  - deploy
+
+variables:
+  PUBLISH_TO_ARTIFACTORY: "false"
+  ARTIFACTORY_REPOSITORY: ""
+  ARTIFACTORY_ARTIFACT_GROUP: ""
+  ARTIFACTORY_ARTIFACT_NAME: ""
+  ARTIFACTORY_ARTIFACT_VERSION: ""
+
+build:
+  stage: build
+  script:
+    - 'if [ -f "build.gradle" ]; then gradle build; else mvn install; fi'
+  artifacts:
+    paths:
+      - build/libs/*.jar
+      - target/*.jar
+    expire_in: 1 day
+
+deploy-developement:
+  stage: deploy
+  only:
+    - develop
+  script:
+    - 'if [ -f "build.gradle" ]; then cp -f build/libs/*.jar /home/www/static/templates/dependencies/; else cp -f target/*.jar /home/www/static/templates/dependencies/; fi'
+    - 'if [ "$PUBLISH_TO_ARTIFACTORY" == "true" ]; then if [ -f "build.gradle" ]; then artifactory-publish build/libs/${ARTIFACTORY_ARTIFACT_NAME}-${ARTIFACTORY_ARTIFACT_VERSION}.jar $ARTIFACTORY_REPOSITORY $ARTIFACTORY_ARTIFACT_GROUP $ARTIFACTORY_ARTIFACT_NAME $ARTIFACTORY_ARTIFACT_VERSION; else artifactory-publish target/${ARTIFACTORY_ARTIFACT_NAME}-${ARTIFACTORY_ARTIFACT_VERSION}.jar $ARTIFACTORY_REPOSITORY $ARTIFACTORY_ARTIFACT_GROUP $ARTIFACTORY_ARTIFACT_NAME $ARTIFACTORY_ARTIFACT_VERSION; fi ; fi'
+
+deploy-production:
+  stage: deploy
+  only:
+    - master
+  script:
+    - 'if [ -f "build.gradle" ]; then scp -prq build/libs/*.jar root@94.23.20.180:/var/www/static/templates/dependencies/; else scp -prq target/*.jar root@94.23.20.180:/var/www/static/templates/dependencies/; fi'
