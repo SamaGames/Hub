@@ -10,13 +10,19 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
 public class ParkourListener implements Listener
 {
     private final Hub hub;
+    private List<UUID> cooldown;
 
     public ParkourListener(Hub hub)
     {
         this.hub = hub;
+        this.cooldown = new ArrayList<>();
     }
 
     @EventHandler
@@ -24,7 +30,7 @@ public class ParkourListener implements Listener
     {
         if (event.getAction().equals(Action.PHYSICAL))
         {
-            if(event.getClickedBlock().getType().equals(Material.GOLD_PLATE) || event.getClickedBlock().getType().equals(Material.IRON_PLATE))
+            if (event.getClickedBlock().getType().equals(Material.GOLD_PLATE) || event.getClickedBlock().getType().equals(Material.IRON_PLATE))
             {
                 Parkour parkour = this.hub.getParkourManager().getPlayerParkour(event.getPlayer().getUniqueId());
 
@@ -49,8 +55,12 @@ public class ParkourListener implements Listener
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event)
     {
+        if (this.cooldown.contains(event.getPlayer().getUniqueId()))
+            return ;
+        this.cooldown.add(event.getPlayer().getUniqueId());
         this.hub.getServer().getScheduler().runTask(this.hub, () ->
         {
+            this.cooldown.remove(event.getPlayer().getUniqueId());
             Parkour parkour = this.hub.getParkourManager().getPlayerParkour(event.getPlayer().getUniqueId());
 
             if (parkour != null && event.getTo().getBlockY() <= parkour.getMinimalHeight())
