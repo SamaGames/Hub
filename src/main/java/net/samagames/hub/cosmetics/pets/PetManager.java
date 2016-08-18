@@ -12,8 +12,6 @@ import javax.lang.model.type.NullType;
 
 public class PetManager extends AbstractCosmeticManager<PetCosmetic>
 {
-    private static final String KEY = "pet";
-
     public PetManager(Hub hub)
     {
         super(hub, new PetRegistry(hub));

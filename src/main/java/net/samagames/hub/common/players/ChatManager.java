@@ -131,13 +131,13 @@ public class ChatManager extends AbstractManager
 
     public void enableChatFor(Player player)
     {
-        if(this.chatDisablers.contains(player.getUniqueId()))
+        if (this.chatDisablers.contains(player.getUniqueId()))
             this.chatDisablers.remove(player.getUniqueId());
     }
 
     public void disableChatFor(Player player)
     {
-        if(!this.chatDisablers.contains(player.getUniqueId()))
+        if (!this.chatDisablers.contains(player.getUniqueId()))
             this.chatDisablers.add(player.getUniqueId());
     }
 
@@ -168,7 +168,7 @@ public class ChatManager extends AbstractManager
 
     private Date getLastPlayerMessageDate(Player player)
     {
-        if(this.lastPlayerMessages.containsKey(player.getUniqueId()))
+        if (this.lastPlayerMessages.containsKey(player.getUniqueId()))
             return this.lastPlayerMessages.get(player.getUniqueId());
         else
             return null;

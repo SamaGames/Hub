@@ -6,7 +6,7 @@ public abstract class PacketCallBack<PACKET extends Packet>
 {
     private Class<? extends Packet> packet;
 
-    public PacketCallBack(Class<? extends Packet> packet)
+    protected PacketCallBack(Class<? extends Packet> packet)
     {
         this.packet = packet;
     }

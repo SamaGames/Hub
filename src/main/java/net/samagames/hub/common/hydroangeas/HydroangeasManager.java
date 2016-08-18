@@ -12,7 +12,6 @@ import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -34,7 +33,7 @@ public class HydroangeasManager extends AbstractManager
             {
                 this.connectionManager.getPacket(packet);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 e.printStackTrace();
             }

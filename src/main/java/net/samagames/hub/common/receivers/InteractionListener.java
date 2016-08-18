@@ -15,13 +15,13 @@ public class InteractionListener implements IPacketsReceiver
     @Override
     public void receive(String channel, String packet)
     {
-        String type = packet.split(":")[0];
+        /*String type = packet.split(":")[0];
         String playerName = packet.split(":")[1];
 
-        if(this.hub.getServer().getPlayer(playerName) == null)
+        if (this.hub.getServer().getPlayer(playerName) == null)
             return;
 
-        /**switch(type)
+        switch (type)
         {
             case "friends":
                 Hub.getInstance().getGuiManager().openGui(Bukkit.getPlayer(playerName), new GuiFriends(1));

@@ -1,7 +1,6 @@
 package net.samagames.hub.utils;
 
 import net.samagames.hub.Hub;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -32,11 +31,8 @@ public class ProximityUtils
 
                 for (Entity entity : new Location(center.getWorld(), x + (chX * 16), y, z + (chZ * 16)).getChunk().getEntities())
                 {
-                    if (filter != null)
-                    {
-                        if(entity.getType() != filter)
+                    if (filter != null && entity.getType() != filter)
                             continue;
-                    }
 
                     if (entity.getLocation().distance(center) <= radius && entity.getLocation().getBlock() != center.getBlock())
                         entities.add(entity);
@@ -51,7 +47,7 @@ public class ProximityUtils
     {
         return hub.getServer().getScheduler().runTaskTimerAsynchronously(hub, () ->
         {
-            entity.getNearbyEntities(offsetX, offsetY, offsetZ).stream().forEach(found ->
+            entity.getNearbyEntities(offsetX, offsetY, offsetZ).forEach(found ->
             {
                 if (filter == null || filter.isAssignableFrom(found.getClass()))
                     hub.getServer().getScheduler().runTask(hub, () -> callback.run((ENTITY) found));

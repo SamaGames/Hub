@@ -2,16 +2,13 @@ package net.samagames.hub.cosmetics.common;
 
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.api.shops.IItemDescription;
-import net.samagames.api.shops.IShopsManager;
 import net.samagames.hub.Hub;
 import net.samagames.hub.common.players.PlayerManager;
 import net.samagames.hub.gui.AbstractGui;
 import net.samagames.hub.gui.shop.GuiConfirm;
 import net.samagames.hub.utils.NumberUtils;
 import net.samagames.hub.utils.PersistanceUtils;
-import net.samagames.tools.CallBack;
 import net.samagames.tools.GlowEffect;
-import net.samagames.tools.ItemUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -79,33 +76,24 @@ public abstract class AbstractCosmetic implements Comparable<AbstractCosmetic>
             }
 
             GuiConfirm confirm = new GuiConfirm(this.hub, (AbstractGui) this.hub.getGuiManager().getPlayerGui(player), (parent) ->
-            {
-                SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).withdrawStars(this.stars, (newAmount, difference, error) ->
-                {
-                    SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).addItem(this.storageId, 0, this.stars, false, (success, throwable) ->
-                    {
-                        if (success)
-                        {
-                            this.hub.getScoreboardManager().update(player);
-                            this.hub.getGuiManager().openGui(player, parent);
+                    SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).withdrawStars(this.stars, (newAmount, difference, error) ->
+                            SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).addItem(this.storageId, 0, this.stars, false, (success, throwable) ->
+                            {
+                                if (success)
+                                {
+                                    this.hub.getScoreboardManager().update(player);
+                                    this.hub.getGuiManager().openGui(player, parent);
 
-                            player.sendMessage(PlayerManager.COSMETICS_TAG + ChatColor.GREEN + "Votre achat a bien été effectué, vous pouvez maintenant utiliser votre cosmétique.");
-                        }
-                        else
-                        {
-                            throwable.printStackTrace();
-                        }
-                    });
-                });
-            });
+                                    player.sendMessage(PlayerManager.COSMETICS_TAG + ChatColor.GREEN + "Votre achat a bien été effectué, vous pouvez maintenant utiliser votre cosmétique.");
+                                }
+                                else
+                                {
+                                    throwable.printStackTrace();
+                                }
+                            })));
 
             this.hub.getGuiManager().openGui(player, confirm);
         }
-    }
-
-    public void permissionNeededToView(String permissionNeededToView)
-    {
-        this.permissionNeededToView = permissionNeededToView;
     }
 
     public ItemStack getIcon()

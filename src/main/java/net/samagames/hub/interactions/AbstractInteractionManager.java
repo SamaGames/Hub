@@ -12,7 +12,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public abstract class AbstractInteractionManager<T extends AbstractInteraction> extends AbstractManager
 {
@@ -26,7 +25,7 @@ public abstract class AbstractInteractionManager<T extends AbstractInteraction> 
 
         File yodelsConfigurationFile = new File(hub.getDataFolder(), "interactions" + File.separator + name + ".json");
 
-        if(!yodelsConfigurationFile.exists())
+        if (!yodelsConfigurationFile.exists())
         {
             try
             {
@@ -45,7 +44,7 @@ public abstract class AbstractInteractionManager<T extends AbstractInteraction> 
         JsonConfiguration yodelsConfiguration = new JsonConfiguration(yodelsConfigurationFile);
         JsonObject jsonRoot = yodelsConfiguration.load();
 
-        if(jsonRoot == null)
+        if (jsonRoot == null)
             return;
 
         this.loadConfiguration(jsonRoot.getAsJsonArray(name));
@@ -56,7 +55,7 @@ public abstract class AbstractInteractionManager<T extends AbstractInteraction> 
     @Override
     public void onDisable()
     {
-        this.interactions.stream().forEach(AbstractInteraction::onDisable);
+        this.interactions.forEach(AbstractInteraction::onDisable);
     }
 
     @Override

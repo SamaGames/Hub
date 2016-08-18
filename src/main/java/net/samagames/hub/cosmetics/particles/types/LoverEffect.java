@@ -7,11 +7,13 @@ import de.slikey.effectlib.util.ParticleEffect;
 
 import java.util.Random;
 
-public class LoverEffect extends Effect {
+public class LoverEffect extends Effect
+{
 
     private Random random;
 
-    public LoverEffect(EffectManager effectManager) {
+    public LoverEffect(EffectManager effectManager)
+    {
         super(effectManager);
         this.type = EffectType.REPEATING;
         this.period = 4;
@@ -21,7 +23,8 @@ public class LoverEffect extends Effect {
     }
 
     @Override
-    public void onRun() {
+    public void onRun()
+    {
         double dx = this.random.nextDouble() % 0.2F;
         double dz = this.random.nextDouble() % 0.2F;
         display(ParticleEffect.HEART, this.getEntity().getLocation().add(dx, 2D, dz));

@@ -46,7 +46,7 @@ class ItemBombTask extends BukkitRunnable
         this.hub.getServer().getScheduler().runTaskLater(this.hub, item::remove, 60L);
         this.i++;
 
-        if(this.i >= 10)
+        if (this.i >= 10)
             this.cancel();
     }
 }

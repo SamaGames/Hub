@@ -19,8 +19,8 @@ public class JukeboxUtils
     {
         ArrayList<Material> records = new ArrayList<>();
 
-        for(Material material : Material.values())
-            if(material.isRecord())
+        for (Material material : Material.values())
+            if (material.isRecord())
                 records.add(material);
 
         return records.get(RANDOM.nextInt(records.size()));
@@ -28,13 +28,13 @@ public class JukeboxUtils
 
     public static void playRecord(Location loc, Material record)
     {
-        for(Player p : Bukkit.getOnlinePlayers())
+        for (Player p : Bukkit.getOnlinePlayers())
             ((CraftPlayer)p).getHandle().playerConnection.sendPacket(new PacketPlayOutWorldEvent(1005, new BlockPosition(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ()), record.getId(), false));
     }
 
     public static void stopRecord(Location loc)
     {
-        for(Player p : Bukkit.getOnlinePlayers())
+        for (Player p : Bukkit.getOnlinePlayers())
             ((CraftPlayer)p).getHandle().playerConnection.sendPacket(new PacketPlayOutWorldEvent(1005, new BlockPosition(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ()), 0, false));
     }
 

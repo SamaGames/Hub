@@ -54,6 +54,7 @@ public abstract class AbstractDisplayer
         }
     }
 
+    @SuppressWarnings("deprecation")
     public void restore()
     {
         for (Location block : this.blocksUsed.keySet())
@@ -66,11 +67,12 @@ public abstract class AbstractDisplayer
         this.blocksBefore.clear();
     }
 
+    @SuppressWarnings("deprecation")
     public void restore(Location location)
     {
         Location finalLocation = new Location(location.getWorld(), location.getBlockX(), location.getBlockY(), location.getBlockZ());
 
-        if(this.blocksUsed.containsKey(finalLocation) && this.blocksBefore.containsKey(finalLocation))
+        if (this.blocksUsed.containsKey(finalLocation) && this.blocksBefore.containsKey(finalLocation))
         {
             this.blocksUsed.remove(finalLocation);
             finalLocation.getBlock().setType(this.blocksBefore.get(finalLocation).getType());
@@ -93,6 +95,7 @@ public abstract class AbstractDisplayer
     {
         return !this.hub.getPlayerManager().isBusy(player);
     }
+
     public boolean isBlockUsed(Location location)
     {
         return this.blocksUsed.containsKey(new Location(location.getWorld(), location.getBlockX(), location.getBlockY(), location.getBlockZ()));

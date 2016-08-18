@@ -3,7 +3,6 @@ package net.samagames.hub.scoreboards;
 import net.samagames.hub.Hub;
 import net.samagames.hub.common.managers.AbstractManager;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitTask;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,7 +33,7 @@ public class ScoreboardManager extends AbstractManager
     public void onDisable()
     {
         this.reloadingTask.cancel(true);
-        this.scoreboards.values().stream().forEach(PersonalScoreboard::onLogout);
+        this.scoreboards.values().forEach(PersonalScoreboard::onLogout);
     }
 
     @Override

@@ -8,11 +8,12 @@ import org.bukkit.Color;
 
 import java.util.Random;
 
-public class MusicEffect extends Effect {
-
+public class MusicEffect extends Effect
+{
     private Random random;
 
-    public MusicEffect(EffectManager effectManager) {
+    public MusicEffect(EffectManager effectManager)
+    {
         super(effectManager);
         this.type = EffectType.REPEATING;
         this.period = 4;
@@ -21,9 +22,10 @@ public class MusicEffect extends Effect {
         this.random = new Random();
     }
 
-    @SuppressWarnings("deprecated")
+    @SuppressWarnings("deprecation")
     @Override
-    public void onRun() {
+    public void onRun()
+    {
         double dx = this.random.nextDouble() % 0.2F;
         double dz = this.random.nextDouble() % 0.2F;
         ParticleEffect.NOTE.display(this.getEntity().getLocation().add(dx, 2D, dz), visibleRange, 0, 0, 0, .5F, 1);

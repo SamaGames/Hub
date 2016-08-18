@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 
+@SuppressWarnings("unchecked")
 public class EntityManager extends AbstractManager
 {
     private final BiomeBase[] biomes;

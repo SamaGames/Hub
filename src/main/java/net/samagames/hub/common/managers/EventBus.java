@@ -22,18 +22,18 @@ public class EventBus implements EntryPoints
     @Override
     public void onDisable()
     {
-        this.managers.stream().forEach(AbstractManager::onDisable);
+        this.managers.forEach(AbstractManager::onDisable);
     }
 
     @Override
     public void onLogin(Player player)
     {
-        this.managers.stream().forEach(manager -> manager.onLogin(player));
+        this.managers.forEach(manager -> manager.onLogin(player));
     }
 
     @Override
     public void onLogout(Player player)
     {
-        this.managers.stream().forEach(manager -> manager.onLogout(player));
+        this.managers.forEach(manager -> manager.onLogout(player));
     }
 }

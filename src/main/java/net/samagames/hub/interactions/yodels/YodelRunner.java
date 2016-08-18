@@ -2,9 +2,7 @@ package net.samagames.hub.interactions.yodels;
 
 import net.samagames.hub.Hub;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.NumberConversions;
 import org.bukkit.util.Vector;
@@ -12,7 +10,7 @@ import org.bukkit.util.Vector;
 import java.util.logging.Level;
 
 
-public class YodelRunner extends BukkitRunnable
+class YodelRunner extends BukkitRunnable
 {
     private static final double SPEED = 1;
 
@@ -116,7 +114,7 @@ public class YodelRunner extends BukkitRunnable
 
             player.teleport(getLanding().setDirection(player.getLocation().getDirection()));
         }
-        catch(IllegalStateException ignored) {}
+        catch (IllegalStateException ignored) {}
     }
 
     private Location getStart()

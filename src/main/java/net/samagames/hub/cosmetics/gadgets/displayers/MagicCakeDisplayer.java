@@ -31,6 +31,7 @@ public class MagicCakeDisplayer extends AbstractDisplayer
         this.centerLoc = this.baseLocation.clone().add(0.5D, 0.5D, 0.5D);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void display()
     {
@@ -152,8 +153,7 @@ public class MagicCakeDisplayer extends AbstractDisplayer
 
     private List<Entity> getNearbyPlayers(Location where, int range)
     {
-        List<Entity> found = where.getWorld().getEntities().stream().filter(entity -> this.distance(where, entity.getLocation()) <= range && entity instanceof Player).filter(player -> this.canInteractWith((Player) player)).collect(Collectors.toList());
-        return found;
+        return where.getWorld().getEntities().stream().filter(entity -> this.distance(where, entity.getLocation()) <= range && entity instanceof Player).filter(player1 -> this.canInteractWith((Player) player1)).collect(Collectors.toList());
     }
 
     private double distance(Location loc1, Location loc2)

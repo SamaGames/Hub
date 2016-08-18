@@ -12,7 +12,7 @@ public class PacketReceiver
     private final Hub plugin;
     private final List<PacketCallBack> callbacks;
 
-    public PacketReceiver(Hub plugin)
+    PacketReceiver(Hub plugin)
     {
         this.plugin = plugin;
         this.callbacks = new ArrayList<>();

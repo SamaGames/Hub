@@ -2,10 +2,7 @@ package net.samagames.hub.parkours;
 
 import net.samagames.hub.Hub;
 import net.samagames.hub.parkours.types.WhitelistBasedParkour;
-import net.samagames.hub.utils.ProximityUtils;
-import net.samagames.tools.ParticleEffect;
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.EntityType;

@@ -22,7 +22,7 @@ public class GuiSwitchHub extends AbstractGui
 {
     private final int page;
 
-    public GuiSwitchHub(Hub hub, int page)
+    GuiSwitchHub(Hub hub, int page)
     {
         super(hub);
 
@@ -52,7 +52,7 @@ public class GuiSwitchHub extends AbstractGui
         int i = 0;
         boolean more = false;
 
-        for(JsonHub hub : hubs.values())
+        for (JsonHub hub : hubs.values())
         {
             if (i < (7 * (this.page - 1)))
             {
@@ -68,7 +68,7 @@ public class GuiSwitchHub extends AbstractGui
             this.setSlotData(this.getHubItem(hub), baseSlots[slot] + (9 * line), "Hub_" + hub.getHubNumber());
             slot++;
 
-            if(slot == baseSlots.length)
+            if (slot == baseSlots.length)
             {
                 slot = 0;
                 line++;
@@ -77,24 +77,24 @@ public class GuiSwitchHub extends AbstractGui
             i++;
         }
 
-        if(this.page > 1)
+        if (this.page > 1)
             this.setSlotData(ChatColor.YELLOW + "« Page " + (this.page - 1), Material.PAPER, this.inventory.getSize() - 9, null, "page_back");
 
-        if(more)
+        if (more)
             this.setSlotData(ChatColor.YELLOW + "Page " + (this.page + 1) + " »", Material.PAPER, this.inventory.getSize() - 1, null, "page_next");
     }
 
     @Override
     public void onClick(Player player, ItemStack stack, String action, ClickType clickType)
     {
-        if(action.startsWith("Hub_"))
+        if (action.startsWith("Hub_"))
         {
-            if(action.split("_")[1].equals(SamaGamesAPI.get().getServerName().split("_")[1]))
+            if (action.split("_")[1].equals(SamaGamesAPI.get().getServerName().split("_")[1]))
             {
                 player.sendMessage(ChatColor.RED + "Vous ne pouvez pas aller sur votre hub actuel !");
                 return;
             }
-            else if(this.hub.getHubRefresher().getHubByID(Integer.parseInt(action.split("_")[1])).getConnectedPlayers() >= 120)
+            else if (this.hub.getHubRefresher().getHubByID(Integer.parseInt(action.split("_")[1])).getConnectedPlayers() >= 120)
             {
                 player.sendMessage(ChatColor.RED + "Le hub sélectionné est plein !");
                 return;
@@ -108,42 +108,43 @@ public class GuiSwitchHub extends AbstractGui
             // TODO: Use API
             // SamaGamesAPI.get().getPlayerManager().connectToServer(player.getUniqueId(), action);
         }
-        else if(action.equals("page_back"))
+        else if (action.equals("page_back"))
         {
             this.hub.getGuiManager().openGui(player, new GuiSwitchHub(this.hub, (this.page - 1)));
         }
-        else if(action.equals("page_next"))
+        else if (action.equals("page_next"))
         {
             this.hub.getGuiManager().openGui(player, new GuiSwitchHub(this.hub, (this.page + 1)));
         }
-        else if(action.equals("back"))
+        else if (action.equals("back"))
         {
             this.hub.getGuiManager().openGui(player, new GuiMain(this.hub));
         }
     }
 
+    @SuppressWarnings("deprecation")
     private ItemStack getHubItem(JsonHub hub)
     {
         ItemStack glass = new ItemStack(Material.STAINED_GLASS, 1);
         ItemMeta meta = glass.getItemMeta();
         String baseName = "Hub " + hub.getHubNumber() + " (" + hub.getConnectedPlayers() + " joueur" + (hub.getConnectedPlayers() > 1 ? "s" : "") + ")";
 
-        if(hub.getHubNumber() == Integer.parseInt(SamaGamesAPI.get().getServerName().split("_")[1]))
+        if (hub.getHubNumber() == Integer.parseInt(SamaGamesAPI.get().getServerName().split("_")[1]))
         {
             glass.setDurability(DyeColor.LIGHT_BLUE.getData());
             meta.setDisplayName(ChatColor.AQUA + baseName);
         }
-        else if(hub.getConnectedPlayers() <= 40)
+        else if (hub.getConnectedPlayers() <= 40)
         {
             glass.setDurability(DyeColor.GREEN.getData());
             meta.setDisplayName(ChatColor.GREEN + baseName);
         }
-        else if(hub.getConnectedPlayers() <= 80)
+        else if (hub.getConnectedPlayers() <= 80)
         {
             glass.setDurability(DyeColor.YELLOW.getData());
             meta.setDisplayName(ChatColor.YELLOW + baseName);
         }
-        else if(hub.getConnectedPlayers() < 100)
+        else if (hub.getConnectedPlayers() < 100)
         {
             glass.setDurability(DyeColor.RED.getData());
             meta.setDisplayName(ChatColor.RED + baseName);
@@ -156,7 +157,7 @@ public class GuiSwitchHub extends AbstractGui
 
         List<String> lore = new ArrayList<>();
 
-        for(String group : hub.getPlayersDetails().keySet())
+        for (String group : hub.getPlayersDetails().keySet())
         {
             int value = hub.getPlayersDetails().get(group);
             String finalGroup = (value <= 1 ? group : group.substring(0, group.length() - 1));

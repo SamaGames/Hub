@@ -1,21 +1,15 @@
 package net.samagames.hub.cosmetics.balloons;
 
-import com.google.common.collect.Sets;
-import net.minecraft.server.v1_9_R2.EntityInsentient;
-import net.minecraft.server.v1_9_R2.Navigation;
-import net.minecraft.server.v1_9_R2.PathfinderGoalSelector;
 import net.samagames.hub.Hub;
 import net.samagames.hub.cosmetics.common.AbstractCosmetic;
-import org.bukkit.craftbukkit.v1_9_R2.entity.CraftEntity;
+import net.samagames.hub.utils.EntityUtils;
 import org.bukkit.craftbukkit.v1_9_R2.entity.CraftLivingEntity;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitTask;
 
-import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -64,7 +58,7 @@ class BalloonCosmetic extends AbstractCosmetic
             livingEntities[i] = (LivingEntity)player.getWorld().spawnEntity(player.getLocation().add(random.nextDouble() % 2 - 1, 2.5D, random.nextDouble() % 2 - 1), this.entityType);
             livingEntities[i].addPotionEffect(PotionEffectType.LEVITATION.createEffect(Integer.MAX_VALUE, 2));
             ((CraftLivingEntity)livingEntities[i]).getHandle().setInvisible(true);
-            freeze(livingEntities[i]);
+            EntityUtils.freezeEntity(livingEntities[i]);
             livingEntities[i].setLeashHolder(player);
             if (this.name != null)
                 livingEntities[i].setCustomName(this.name);
@@ -98,32 +92,5 @@ class BalloonCosmetic extends AbstractCosmetic
                 this.hub.getCosmeticManager().getBalloonManager().disableCosmetic(player, false);
                 break ;
             }
-    }
-
-    private void freeze(Entity e)
-    {
-        net.minecraft.server.v1_9_R2.Entity entity = ((CraftEntity)e).getHandle();
-
-        if (!(entity instanceof EntityInsentient))
-            return ;
-
-        EntityInsentient ce = (EntityInsentient) entity;
-        Field bField;
-
-        try
-        {
-            bField = PathfinderGoalSelector.class.getDeclaredField("b");
-            bField.setAccessible(true);
-            Field cField = PathfinderGoalSelector.class.getDeclaredField("c");
-            cField.setAccessible(true);
-
-            bField.set(ce.goalSelector, Sets.newLinkedHashSet());
-            bField.set(ce.targetSelector, Sets.newLinkedHashSet());
-            cField.set(ce.goalSelector, Sets.newLinkedHashSet());
-            cField.set(ce.targetSelector, Sets.newLinkedHashSet());
-
-            ((Navigation) ce.getNavigation()).a(true);
-        }
-        catch (ReflectiveOperationException ignored) {}
     }
 }

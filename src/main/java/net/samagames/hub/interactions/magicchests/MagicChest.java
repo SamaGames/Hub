@@ -66,16 +66,16 @@ class MagicChest extends AbstractInteraction
 
         this.hub.getServer().getScheduler().runTask(this.hub, () ->
         {
-            for(int i = 0; i < LENGTH; i++)
+            for (int i = 0; i < LENGTH; i++)
             {
-                for(Player p : this.hub.getServer().getOnlinePlayers())
+                for (Player p : this.hub.getServer().getOnlinePlayers())
                 {
                     this.play(p, this.location, Instrument.PIANO, PIANO_MAIN[i]);
                     this.play(p, this.location, Instrument.PIANO, PIANO_SECONDARY[i]);
                     this.play(p, this.location, Instrument.SNARE_DRUM, SNARE_DRUM[i]);
                     this.play(p, this.location, Instrument.BASS_GUITAR, BASS_GUITAR[i]);
 
-                    if(i == 52)
+                    if (i == 52)
                     {
                         player.sendMessage(TAG + ChatColor.YELLOW + "Vous avez trouvé un " + ChatColor.GOLD + ChatColor.BOLD + "Gadget Tramposlime");
                         this.sendChestPacket(player, true);
@@ -86,29 +86,29 @@ class MagicChest extends AbstractInteraction
 
                 int wait = i;
 
-                if(i >> 2 >= 12)
+                if (i >> 2 >= 12)
                     wait = 12 << 2;
 
-                if(i == 52)
+                if (i == 52)
                     new ItemBombTask(this.hub, this.location);
 
-                if(i < 35)
+                if (i < 35)
                 {
                     double speed = 1 + i / 10;
 
-                    for(int k = 0; k < Math.floor(speed * speed) + 2; k++)
+                    for (int k = 0; k < Math.floor(speed * speed) + 2; k++)
                         ParticleEffect.ENCHANTMENT_TABLE.display(new Vector((0.5 - this.random.nextDouble()) * speed, (0.5 - this.random.nextDouble()) * speed, (0.5 - this.random.nextDouble()) * speed), (float) (speed * 2), this.location.clone().add((0.5 - this.random.nextDouble()) * 2 + 0.5, (0.5 - this.random.nextDouble()) * 2 + 0.5, (0.5 - this.random.nextDouble()) * 2 + 0.5), 40);
                 }
 
-                if(i >= 54 && i < 58)
+                if (i >= 54 && i < 58)
                 {
                     double speed = 0.5;
 
-                    for(int k = 0; k < 5; k++)
+                    for (int k = 0; k < 5; k++)
                         ParticleEffect.FIREWORKS_SPARK.display(new Vector((0.5 - this.random.nextDouble()) * speed, (0.5 - this.random.nextDouble()) * speed, (0.5 - this.random.nextDouble()) * speed), 1F, this.location.clone().add((0.5 - this.random.nextDouble()) * 2 + 0.5, (0.5 - this.random.nextDouble()) * 2 + 0.5, (0.5 - this.random.nextDouble()) * 2 + 0.5), 40);
                 }
 
-                if(i == 52)
+                if (i == 52)
                 {
                     this.hub.getServer().getScheduler().runTask(this.hub, () ->
                     {
@@ -136,7 +136,7 @@ class MagicChest extends AbstractInteraction
                 {
                     Thread.sleep(158 - wait);
                 }
-                catch(InterruptedException e)
+                catch (InterruptedException e)
                 {
                     e.printStackTrace();
                 }
@@ -148,7 +148,7 @@ class MagicChest extends AbstractInteraction
 
     private void play(Player player, Location location, Instrument instrument, int note)
     {
-        if(note < 0)
+        if (note < 0)
             return;
 
         player.playNote(location, instrument, new Note(note));
@@ -173,7 +173,7 @@ class MagicChest extends AbstractInteraction
         ArmorStand armorStand = (ArmorStand) this.location.getWorld().spawnEntity(location, EntityType.ARMOR_STAND);
         armorStand.setVisible(false);
         armorStand.setGravity(false);
-        if(name != null && name.length() != 0)
+        if (name != null && name.length() != 0)
         {
             armorStand.setCustomNameVisible(true);
             armorStand.setCustomName(name);

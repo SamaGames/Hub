@@ -4,6 +4,7 @@ import com.google.common.collect.Sets;
 import net.minecraft.server.v1_9_R2.*;
 import net.samagames.hub.Hub;
 import net.samagames.hub.cosmetics.gadgets.GadgetManager;
+import net.samagames.hub.utils.EntityUtils;
 import net.samagames.tools.ParticleEffect;
 import net.samagames.tools.SimpleBlock;
 import org.bukkit.Location;
@@ -79,7 +80,7 @@ public class AnimalChestDisplayer extends AbstractDisplayer
                 Entity entity = this.centerLoc.getWorld().spawnEntity(this.centerLoc.clone().add(0, 0.3, 0), this.type);
                 entity.teleport(this.centerLoc);
 
-                this.freeze(entity);
+                EntityUtils.freezeEntity(entity);
 
                 double x = Math.random() * 2 - 1;
                 double y = Math.random();
@@ -114,32 +115,5 @@ public class AnimalChestDisplayer extends AbstractDisplayer
     public boolean canUse()
     {
         return true;
-    }
-
-    private void freeze(Entity e)
-    {
-        net.minecraft.server.v1_9_R2.Entity entity = ((CraftEntity)e).getHandle();
-
-        if (!(entity instanceof EntityInsentient))
-            return ;
-
-        EntityInsentient ce = (EntityInsentient) entity;
-        Field bField;
-
-        try
-        {
-            bField = PathfinderGoalSelector.class.getDeclaredField("b");
-            bField.setAccessible(true);
-            Field cField = PathfinderGoalSelector.class.getDeclaredField("c");
-            cField.setAccessible(true);
-
-            bField.set(ce.goalSelector, Sets.newLinkedHashSet());
-            bField.set(ce.targetSelector, Sets.newLinkedHashSet());
-            cField.set(ce.goalSelector, Sets.newLinkedHashSet());
-            cField.set(ce.targetSelector, Sets.newLinkedHashSet());
-
-            ((Navigation) ce.getNavigation()).a(true);
-        }
-        catch (ReflectiveOperationException | ClassCastException ignored) {}
     }
 }

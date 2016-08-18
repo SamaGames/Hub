@@ -20,7 +20,7 @@ public class CommandShutup extends AbstractCommand
         boolean now = !this.hub.getChatManager().isChatLocked();
         this.hub.getChatManager().setChatLocked(now);
 
-        if(now)
+        if (now)
             this.hub.getServer().broadcastMessage(PlayerManager.MODERATING_TAG + ChatColor.RED + "Le chat a été fermé par un modérateur.");
         else
             this.hub.getServer().broadcastMessage(PlayerManager.MODERATING_TAG + ChatColor.GREEN + "Le chat a été réouvert.");

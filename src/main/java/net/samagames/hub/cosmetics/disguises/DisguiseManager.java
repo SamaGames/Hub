@@ -32,7 +32,7 @@ public class DisguiseManager extends AbstractCosmeticManager<DisguiseCosmetic>
     @Override
     public void disableCosmetic(Player player, boolean logout, NullType useless)
     {
-        if(DisguiseAPI.isDisguised(player))
+        if (DisguiseAPI.isDisguised(player))
             DisguiseAPI.undisguiseToAll(player);
 
         if (!logout)

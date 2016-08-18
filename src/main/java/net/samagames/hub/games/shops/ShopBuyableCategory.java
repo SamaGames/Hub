@@ -25,11 +25,11 @@ public class ShopBuyableCategory extends ShopCategory
     @Override
     public void execute(Player player, ClickType clickType)
     {
-        if(this.isOwned(player))
+        if (this.isOwned(player))
         {
             super.execute(player, clickType);
         }
-        else if(!SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).hasEnoughCoins(this.itemDescription.getPriceCoins()))
+        else if (!SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).hasEnoughCoins(this.itemDescription.getPriceCoins()))
         {
             player.sendMessage(PlayerManager.SHOPPING_TAG + ChatColor.RED + "Vous n'avez pas assez de pièces pour acheter cet objet.");
         }
@@ -37,7 +37,7 @@ public class ShopBuyableCategory extends ShopCategory
         {
             GuiConfirm confirm = new GuiConfirm(this.hub, (AbstractGui) this.hub.getGuiManager().getPlayerGui(player), (parent) ->
             {
-                if(this.isOwned(player))
+                if (this.isOwned(player))
                     return;
 
                 SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).withdrawCoins(this.itemDescription.getPriceCoins(), (newAmount, difference, error) ->
@@ -66,7 +66,7 @@ public class ShopBuyableCategory extends ShopCategory
         ItemMeta meta = stack.getItemMeta();
         List<String> lore = meta.getLore() != null ? meta.getLore() : new ArrayList<>();
 
-        if(isOwned(player))
+        if (isOwned(player))
             lore.add(ChatColor.GREEN + "Objet possédé");
         else
             lore.add(ChatColor.GRAY + "Prix : " + ChatColor.GOLD + this.itemDescription.getPriceCoins() + " pièces");
@@ -79,7 +79,7 @@ public class ShopBuyableCategory extends ShopCategory
 
     public boolean isOwned(Player player)
     {
-        if(this.itemDescription.getPriceCoins() == 0)
+        if (this.itemDescription.getPriceCoins() == 0)
             return true;
 
         return super.isOwned(player);

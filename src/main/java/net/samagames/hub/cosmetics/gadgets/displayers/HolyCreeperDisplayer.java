@@ -34,7 +34,7 @@ public class HolyCreeperDisplayer extends AbstractDisplayer
 
         this.lovingTask = this.hub.getServer().getScheduler().runTaskTimer(this.hub, () ->
         {
-            if(!creeper.isDead())
+            if (!creeper.isDead())
                 ParticleEffect.HEART.display(0.25F, 0.5F, 0.25F, 1.0F, 6, creeper.getLocation(), 20.0D);
         }, 5L, 5L);
     }
@@ -42,7 +42,7 @@ public class HolyCreeperDisplayer extends AbstractDisplayer
     @Override
     public void handleInteraction(Entity who, Entity with)
     {
-        if(with instanceof Creeper)
+        if (with instanceof Creeper)
             this.explode((Creeper) with);
     }
 
@@ -52,7 +52,7 @@ public class HolyCreeperDisplayer extends AbstractDisplayer
 
         Location flowerSpawnLocation = creeper.getLocation().clone().add(0.0D, 1.5D, 0.0D);
 
-        for(int i = 0; i < 64; i++)
+        for (int i = 0; i < 64; i++)
         {
             ItemStack redDye = new ItemStack(Material.INK_SACK, 1, (short) 1);
             Item item = this.player.getWorld().dropItemNaturally(flowerSpawnLocation, redDye);

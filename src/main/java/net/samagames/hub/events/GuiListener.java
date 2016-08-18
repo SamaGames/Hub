@@ -26,7 +26,7 @@ public class GuiListener implements Listener
             Player player = (Player) event.getWhoClicked();
             AbstractGui gui = (AbstractGui) this.hub.getGuiManager().getPlayerGui(player);
 
-            if(event.getClickedInventory() instanceof PlayerInventory)
+            if (event.getClickedInventory() instanceof PlayerInventory)
             {
                 event.setCancelled(true);
                 this.hub.getPlayerManager().getStaticInventory().doInteraction(player, event.getCurrentItem());

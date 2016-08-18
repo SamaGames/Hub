@@ -33,6 +33,7 @@ public class DiscoBombDisplayer extends AbstractDisplayer
         this.addBlockToUse(this.baseLocation.clone().subtract(1.0D, 0.0D, 0.0D), new SimpleBlock(Material.STAINED_GLASS));
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void display()
     {
@@ -40,14 +41,14 @@ public class DiscoBombDisplayer extends AbstractDisplayer
         {
             block.getBlock().setType(this.blocksUsed.get(block).getType());
 
-            if(this.blocksUsed.get(block).getType() == Material.STAINED_GLASS)
+            if (this.blocksUsed.get(block).getType() == Material.STAINED_GLASS)
             {
                 DyeColor random = DyeColor.values()[GadgetManager.RANDOM.nextInt(DyeColor.values().length)];
                 block.getBlock().setData(random.getData());
             }
         }
 
-        if(this.hub.getCosmeticManager().getJukeboxManager().getCurrentSong() == null)
+        if (this.hub.getCosmeticManager().getJukeboxManager().getCurrentSong() == null)
         {
             JukeboxUtils.playRecord(this.baseLocation, Material.RECORD_7);
             this.music = true;
@@ -108,7 +109,7 @@ public class DiscoBombDisplayer extends AbstractDisplayer
     {
         this.loopTask.cancel();
 
-        if(this.music)
+        if (this.music)
             JukeboxUtils.stopRecord(this.baseLocation);
     }
 }

@@ -41,7 +41,7 @@ public class PerchedCatDisplayer extends AbstractDisplayer
 
         this.waitingTask = this.hub.getServer().getScheduler().runTaskLaterAsynchronously(this.hub, () ->
         {
-            if(this.waitingFirstInteraction)
+            if (this.waitingFirstInteraction)
             {
                 this.player.playSound(this.player.getLocation(), Sound.ENTITY_CAT_AMBIENT, 1.0F, 1.0F);
                 this.player.sendMessage(TAG + ChatColor.RED + "Vous n'avez pas provoqué de joueur pendant 10 secondes, le gadget s'annule !");
@@ -55,9 +55,9 @@ public class PerchedCatDisplayer extends AbstractDisplayer
     @Override
     public void handleInteraction(Entity who, Entity with)
     {
-        if(who instanceof Player && with instanceof Player)
+        if (who instanceof Player && with instanceof Player)
         {
-            if(this.waitingFirstInteraction && who.getUniqueId().equals(this.player.getUniqueId()))
+            if (this.waitingFirstInteraction && who.getUniqueId().equals(this.player.getUniqueId()))
             {
                 this.playerTargeted = with.getUniqueId();
 
@@ -96,20 +96,20 @@ public class PerchedCatDisplayer extends AbstractDisplayer
                     this.end();
                 }, 20L * 60);
             }
-            else if(this.waitingSecondInteraction && who.getUniqueId().equals(this.playerTargeted))
+            else if (this.waitingSecondInteraction && who.getUniqueId().equals(this.playerTargeted))
             {
                 this.waitingInteractionTask.cancel();
 
                 this.player.sendMessage(TAG + ChatColor.GOLD + who.getName() + ChatColor.YELLOW + " remporte le duel contre " + ChatColor.GOLD + this.player.getName() + ChatColor.YELLOW + " !");
                 who.sendMessage(TAG + ChatColor.GOLD + who.getName() + ChatColor.YELLOW + " remporte le duel contre " + ChatColor.GOLD + this.player.getName() + ChatColor.YELLOW + " !");
 
-                if(this.hub.getServer().getPlayer(who.getUniqueId()) != null)
+                if (this.hub.getServer().getPlayer(who.getUniqueId()) != null)
                 {
                     ((Player) who).playSound(who.getLocation(), Sound.ENTITY_CAT_AMBIENT, 1.0F, 1.0F);
                     ((Player) who).setAllowFlight(this.targetWasFlying);
                 }
 
-                if(this.hub.getServer().getPlayer(this.player.getUniqueId()) != null)
+                if (this.hub.getServer().getPlayer(this.player.getUniqueId()) != null)
                     this.player.setAllowFlight(this.playerWasFlying);
 
                 this.waitingSecondInteraction = false;

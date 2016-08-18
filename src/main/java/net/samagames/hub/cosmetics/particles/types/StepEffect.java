@@ -11,13 +11,13 @@ import de.slikey.effectlib.EffectType;
 import de.slikey.effectlib.util.ParticleEffect;
 import de.slikey.effectlib.util.VectorUtils;
 
-public class StepEffect extends Effect {
-
+public class StepEffect extends Effect
+{
     private boolean p = false;
-
     private Location last = null;
 
-    public StepEffect(EffectManager effectManager) {
+    public StepEffect(EffectManager effectManager)
+    {
         super(effectManager);
         type = EffectType.REPEATING;
         period = 4;
@@ -26,9 +26,10 @@ public class StepEffect extends Effect {
     }
 
     @Override
-    public void onRun() {
+    public void onRun()
+    {
         // Prevents an excess of particles
-        if(last != null && last.getX() == getEntity().getLocation().getX() && last.getZ() == getEntity().getLocation().getZ())
+        if (last != null && last.getX() == getEntity().getLocation().getX() && last.getZ() == getEntity().getLocation().getZ())
             return;
         last = getEntity().getLocation();
 
@@ -36,7 +37,7 @@ public class StepEffect extends Effect {
         Material type = block.getType();
 
         // If the step should be displayed or not
-        if(type.isBlock() && type.isSolid() && !type.isTransparent()) {
+        if (type.isBlock() && type.isSolid() && !type.isTransparent()) {
             Location loc = getEntity().getLocation();
             loc.setY(block.getY());
             loc = loc.add(0, 1 + Math.random() / 100, 0);

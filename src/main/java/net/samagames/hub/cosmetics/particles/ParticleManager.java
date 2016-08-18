@@ -16,8 +16,6 @@ import java.util.logging.Level;
 
 public class ParticleManager extends AbstractCosmeticManager<ParticleCosmetic>
 {
-    private static final String KEY = "particle";
-
     private final Map<UUID, Effect> playersParticleEffect;
     private final EffectManager effectManager;
 

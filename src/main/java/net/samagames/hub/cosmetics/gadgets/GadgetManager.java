@@ -142,7 +142,7 @@ public class GadgetManager extends AbstractCosmeticManager<GadgetCosmetic>
 
     public AbstractDisplayer getPlayerGadget(UUID player)
     {
-        if(this.playersGadgets.containsKey(player))
+        if (this.playersGadgets.containsKey(player))
             return this.playersGadgets.get(player);
         else
             return null;
@@ -150,7 +150,7 @@ public class GadgetManager extends AbstractCosmeticManager<GadgetCosmetic>
 
     public int getCooldown(Player player)
     {
-        if(this.cooldowns.containsKey(player.getUniqueId()))
+        if (this.cooldowns.containsKey(player.getUniqueId()))
             return this.cooldowns.get(player.getUniqueId());
         else
             return 0;

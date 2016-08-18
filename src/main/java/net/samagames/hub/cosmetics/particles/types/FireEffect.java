@@ -9,14 +9,15 @@ import de.slikey.effectlib.util.VectorUtils;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
-public class FireEffect extends Effect {
-
+public class FireEffect extends Effect
+{
     /**
      * ParticleType of spawned particle
      */
-    public ParticleEffect particle = ParticleEffect.FLAME;
+    private ParticleEffect particle = ParticleEffect.FLAME;
 
-    public FireEffect(EffectManager effectManager) {
+    public FireEffect(EffectManager effectManager)
+    {
         super(effectManager);
         type = EffectType.REPEATING;
         period = 4;
@@ -24,7 +25,8 @@ public class FireEffect extends Effect {
     }
 
     @Override
-    public void onRun() {
+    public void onRun()
+    {
         Location location = this.getEntity().getLocation().add(0,1.5,0);
 
         //Reactor Left

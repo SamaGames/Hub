@@ -7,7 +7,7 @@ public class QPlayer
     private UUID uuid;
     private int priority;
 
-    public QPlayer(UUID uuid, int priority)
+    QPlayer(UUID uuid, int priority)
     {
         this.uuid = uuid;
         this.priority = priority;

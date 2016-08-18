@@ -32,6 +32,7 @@ public class GuiConfirm extends AbstractGui
         this.isInProgress = false;
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void display(Player player)
     {
@@ -53,7 +54,7 @@ public class GuiConfirm extends AbstractGui
     @Override
     public void onClick(Player player, ItemStack stack, String action)
     {
-        if(action.equals("confirm") && !this.isInProgress)
+        if (action.equals("confirm") && !this.isInProgress)
         {
             this.waitingTask = this.hub.getServer().getScheduler().runTaskTimer(this.hub, () ->
             {
@@ -90,6 +91,7 @@ public class GuiConfirm extends AbstractGui
 
     static
     {
+        //noinspection deprecation
         WAITING_STACK = new ItemStack(Material.STAINED_GLASS, 1, DyeColor.YELLOW.getWoolData());
 
         ItemMeta meta = WAITING_STACK.getItemMeta();

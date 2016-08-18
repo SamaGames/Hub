@@ -7,11 +7,12 @@ import de.slikey.effectlib.util.ParticleEffect;
 
 import java.util.Random;
 
-public class NervousEffect extends Effect {
-
+public class NervousEffect extends Effect
+{
     private Random random;
 
-    public NervousEffect(EffectManager effectManager) {
+    public NervousEffect(EffectManager effectManager)
+    {
         super(effectManager);
         this.type = EffectType.REPEATING;
         this.period = 4;
@@ -21,7 +22,8 @@ public class NervousEffect extends Effect {
     }
 
     @Override
-    public void onRun() {
+    public void onRun()
+    {
         double dx = this.random.nextDouble() % 0.2F;
         double dz = this.random.nextDouble() % 0.2F;
         display(ParticleEffect.VILLAGER_ANGRY, this.getEntity().getLocation().add(dx, 2D, dz));

@@ -15,7 +15,7 @@ public class CirclesTask extends AbstractTask
     private final List<Location> locations;
     private double i;
 
-    public CirclesTask(Hub hub)
+    CirclesTask(Hub hub)
     {
         super(hub);
 

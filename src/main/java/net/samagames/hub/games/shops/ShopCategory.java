@@ -4,11 +4,9 @@ import net.samagames.hub.Hub;
 import net.samagames.hub.games.AbstractGame;
 import net.samagames.hub.gui.AbstractGui;
 import net.samagames.hub.gui.shop.GuiShopCategory;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,8 +43,8 @@ public class ShopCategory extends ShopIcon
 
     public ShopIcon getIconByAction(String action)
     {
-        for(ShopIcon icon : this.contents)
-            if(icon.getStorageId() == Long.parseLong(action))
+        for (ShopIcon icon : this.contents)
+            if (icon.getStorageId() == Long.parseLong(action))
                 return icon;
 
         return null;

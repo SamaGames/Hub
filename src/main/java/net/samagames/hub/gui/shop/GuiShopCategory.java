@@ -43,9 +43,9 @@ public class GuiShopCategory extends AbstractGui
     {
         int slot = 0;
 
-        for(ShopIcon item : this.category.getContents())
+        for (ShopIcon item : this.category.getContents())
         {
-            if(item.getSlot() != -1)
+            if (item.getSlot() != -1)
             {
                 this.setSlotData(item.getFormattedIcon(player), item.getSlot(), "item_" + item.getStorageId());
             }
@@ -65,7 +65,7 @@ public class GuiShopCategory extends AbstractGui
     {
         if (action.equals("back"))
         {
-            if(this.before != null)
+            if (this.before != null)
                 this.hub.getGuiManager().openGui(player, this.before);
             else
                 this.hub.getGuiManager().closeGui(player);

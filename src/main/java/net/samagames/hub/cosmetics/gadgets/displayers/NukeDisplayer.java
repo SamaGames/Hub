@@ -25,6 +25,7 @@ public class NukeDisplayer extends AbstractDisplayer
     private BukkitTask loopFirst;
     private BukkitTask loopSecond;
 
+    @SuppressWarnings("deprecation")
     public NukeDisplayer(Hub hub, Player player)
     {
         super(hub, player);
@@ -61,6 +62,7 @@ public class NukeDisplayer extends AbstractDisplayer
         this.addBlockToUse(this.baseLocation.clone().subtract(2.0D, 0.0D, 2.0D).add(0.0D, 1.0D, 0.0D), new SimpleBlock(Material.REDSTONE_TORCH_ON, 5));
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void display()
     {
@@ -209,7 +211,7 @@ public class NukeDisplayer extends AbstractDisplayer
 
                 meowBossBar.setProgress((100.0D - (this.loops * 100 / 500)) / 100);
 
-                if(GadgetManager.RANDOM.nextInt(5) == 3)
+                if (GadgetManager.RANDOM.nextInt(5) == 3)
                     for (Player player : hub.getServer().getOnlinePlayers())
                         player.playSound(player.getLocation(), Sound.ENTITY_CAT_AMBIENT, 1.0F, 1.0F);
 

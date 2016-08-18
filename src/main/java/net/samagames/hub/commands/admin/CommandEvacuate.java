@@ -27,21 +27,21 @@ public class CommandEvacuate extends AbstractCommand
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args)
     {
-        if(sender instanceof Player)
+        if (sender instanceof Player)
         {
-            if(!this.hasPermission((Player) sender))
+            if (!this.hasPermission((Player) sender))
             {
                 sender.sendMessage(ChatColor.RED + "Vous n'avez pas la permission d'utiliser cette commande.");
                 return true;
             }
         }
         
-        if(this.lock)
+        if (this.lock)
             return true;
 
         this.lock = true;
 
-        if(args.length != 1)
+        if (args.length != 1)
         {
             sender.sendMessage(ChatColor.RED + "Usage: /evacuate <destination>");
             return true;

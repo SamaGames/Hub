@@ -16,8 +16,6 @@ import java.util.List;
 
 class GuiSettings extends AbstractGui
 {
-    public enum Settings { PLAYERS, CHAT, NOTIFICATIONS}
-
     private final List<GuiSettingsCallback> callbackList;
     private final int page;
     private int index;
@@ -299,10 +297,10 @@ class GuiSettings extends AbstractGui
             });
         }
 
-        if(this.page > 1)
+        if (this.page > 1)
             this.setSlotData(ChatColor.YELLOW + "« Page " + (this.page - 1), Material.PAPER, this.inventory.getSize() - 9, null, "page_back");
 
-        if(this.page < 2)
+        if (this.page < 2)
             this.setSlotData(ChatColor.YELLOW + "Page " + (this.page + 1) + " »", Material.PAPER, this.inventory.getSize() - 1, null, "page_next");
 
         this.setSlotData(getBackIcon(), 40, "back");
@@ -316,9 +314,9 @@ class GuiSettings extends AbstractGui
     @Override
     public void onClick(Player player, ItemStack stack, String action, ClickType clickType)
     {
-        if(action.startsWith("setting_"))
+        if (action.startsWith("setting_"))
         {
-            if(this.getClass().equals(GuiSettings.class) && (this.getSlot(action) == 16 || this.getSlot(action) == 25) && stack.getType() == Material.WOOD_BUTTON)
+            if (this.getClass().equals(GuiSettings.class) && (this.getSlot(action) == 16 || this.getSlot(action) == 25) && stack.getType() == Material.WOOD_BUTTON)
             {
                 this.hub.getGuiManager().openGui(player, new GuiClickMeSettings(this.hub));
                 return;
@@ -330,15 +328,15 @@ class GuiSettings extends AbstractGui
                 callback.invert(settings);
             this.update(player);
         }
-        else if(action.equals("page_back"))
+        else if (action.equals("page_back"))
         {
             this.hub.getGuiManager().openGui(player, new GuiSettings(this.hub, this.page - 1));
         }
-        else if(action.equals("page_next"))
+        else if (action.equals("page_next"))
         {
             this.hub.getGuiManager().openGui(player, new GuiSettings(this.hub, this.page + 1));
         }
-        else if(action.equals("back"))
+        else if (action.equals("back"))
         {
             this.hub.getGuiManager().openGui(player, new GuiProfile(this.hub));
         }

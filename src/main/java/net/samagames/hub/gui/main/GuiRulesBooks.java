@@ -12,11 +12,11 @@ import org.bukkit.inventory.ItemStack;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GuiRulesBooks extends AbstractGui
+class GuiRulesBooks extends AbstractGui
 {
     private final List<ItemStack> books;
 
-    public GuiRulesBooks(Hub hub, AbstractGame game)
+    GuiRulesBooks(Hub hub, AbstractGame game)
     {
         super(hub);
 
@@ -34,11 +34,11 @@ public class GuiRulesBooks extends AbstractGui
         int slot = 0;
         int lines = 1;
 
-        for(ItemStack book : this.books)
+        for (ItemStack book : this.books)
         {
             slot++;
 
-            if(slot == slots.length)
+            if (slot == slots.length)
             {
                 slot = 0;
                 lines++;
@@ -50,12 +50,12 @@ public class GuiRulesBooks extends AbstractGui
         slot = 0;
         lines = 0;
 
-        for(int i = 0; i < this.books.size(); i++)
+        for (int i = 0; i < this.books.size(); i++)
         {
             this.setSlotData(this.books.get(i), slots[slot] + (9 * lines), "rule_" + i);
             slot++;
 
-            if(slot == slots.length)
+            if (slot == slots.length)
             {
                 slot = 0;
                 lines++;
@@ -70,11 +70,11 @@ public class GuiRulesBooks extends AbstractGui
     @Override
     public void onClick(Player player, ItemStack stack, String action, ClickType clickType)
     {
-        if(action.equals("back"))
+        if (action.equals("back"))
         {
             this.hub.getGuiManager().openGui(player, new GuiMain(this.hub));
         }
-        else if(action.startsWith("rule_"))
+        else if (action.startsWith("rule_"))
         {
             ItemStack rulesBook = this.books.get(Integer.parseInt(action.replace("rule_", "")));
             player.getInventory().setItem(2, rulesBook);

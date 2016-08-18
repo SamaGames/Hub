@@ -31,14 +31,14 @@ public class GuiCosmeticsCategory<COSMETIC extends AbstractCosmetic> extends Abs
         int lines = 1;
         int slot = 0;
 
-        for(AbstractCosmetic cosmetic : this.manager.getRegistry().getElements().values())
+        for (AbstractCosmetic cosmetic : this.manager.getRegistry().getElements().values())
         {
-            if(!cosmetic.canView(player))
+            if (!cosmetic.canView(player))
                 continue;
 
             slot++;
 
-            if(slot == 8)
+            if (slot == 8)
             {
                 slot = 0;
                 lines++;
@@ -61,7 +61,7 @@ public class GuiCosmeticsCategory<COSMETIC extends AbstractCosmetic> extends Abs
 
         for (AbstractCosmetic cosmetic : this.manager.getRegistry().getElements().values())
         {
-            if(!cosmetic.canView(player))
+            if (!cosmetic.canView(player))
                 continue;
 
             this.setSlotData(cosmetic.getIcon(player), (baseSlots[slot] + (lines * 9)), "cosmetic_" + cosmetic.getStorageId());
@@ -91,16 +91,16 @@ public class GuiCosmeticsCategory<COSMETIC extends AbstractCosmetic> extends Abs
     @Override
     public void onClick(Player player, ItemStack stack, String action, ClickType clickType)
     {
-        if(action.startsWith("cosmetic_"))
+        if (action.startsWith("cosmetic_"))
         {
             int cosmetic = Integer.parseInt(action.split("_")[1]);
             this.manager.enableCosmetic(player, this.manager.getRegistry().getElementByStorageId(cosmetic));
         }
-        else if(action.equals("delete"))
+        else if (action.equals("delete"))
         {
             this.manager.disableCosmetic(player, false);
         }
-        else if(action.equals("back"))
+        else if (action.equals("back"))
         {
             this.hub.getGuiManager().openGui(player, new GuiCosmetics(this.hub));
         }

@@ -54,7 +54,7 @@ public class ConnectionManager extends AbstractManager
         {
             id = packet.split(":")[0];
 
-            if(id == null || this.packets[Integer.parseInt(id)] == null)
+            if (id == null || this.packets[Integer.parseInt(id)] == null)
             {
                 this.log(Level.SEVERE, "Error bad packet ID in the channel");
                 return;
@@ -77,10 +77,10 @@ public class ConnectionManager extends AbstractManager
     {
         for (int i = 0; i < this.packets.length; i++)
         {
-            if(this.packets[i] == null)
+            if (this.packets[i] == null)
                 continue;
 
-            if(this.packets[i].getClass().equals(p.getClass()))
+            if (this.packets[i].getClass().equals(p.getClass()))
                 return i;
         }
 
@@ -91,12 +91,12 @@ public class ConnectionManager extends AbstractManager
     {
         int id = this.packetId(data);
 
-        if(id < 0)
+        if (id < 0)
         {
             this.log(Level.SEVERE, "Bad packet ID: " + id);
             return;
         }
-        else if(channel == null)
+        else if (channel == null)
         {
             this.log(Level.SEVERE, "Channel null !");
             return;

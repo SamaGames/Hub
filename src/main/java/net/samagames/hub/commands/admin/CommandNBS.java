@@ -6,10 +6,8 @@ import net.samagames.hub.Hub;
 import net.samagames.hub.commands.AbstractCommand;
 import net.samagames.hub.cosmetics.jukebox.JukeboxDiskCosmetic;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
 import java.io.File;
 
@@ -26,7 +24,7 @@ public class CommandNBS extends AbstractCommand
     @Override
     public boolean doAction(Player player, Command command, String s, String[] args)
     {
-        if(args.length == 1)
+        if (args.length == 1)
         {
             if (new File(this.hub.getDataFolder(), "nbs" + File.separator + args[0] + ".nbs").exists())
             {

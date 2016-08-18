@@ -48,7 +48,7 @@ public class ShopImprovableItem extends ShopIcon
 
             for (ItemLevel level : this.levels)
                 if (SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).getTransactionsByID(level.getStorageId()) != null)
-                    SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).setSelectedItem((int) level.getStorageId(), false);
+                    SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).setSelectedItem(level.getStorageId(), false);
         }
         catch (Exception e)
         {
@@ -98,7 +98,7 @@ public class ShopImprovableItem extends ShopIcon
 
             GuiConfirm confirm = new GuiConfirm(this.hub, (AbstractGui) this.hub.getGuiManager().getPlayerGui(player), (parent) ->
             {
-                if(this.isOwned(player, finalLevel.getStorageId()))
+                if (this.isOwned(player, finalLevel.getStorageId()))
                     return;
 
                 SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).withdrawCoins(finalLevel.getCost(), (newAmount, difference, error) ->
@@ -154,14 +154,14 @@ public class ShopImprovableItem extends ShopIcon
             lore.add("");
         }
 
-        for(int i = 0; i < this.levels.size(); i++)
+        for (int i = 0; i < this.levels.size(); i++)
         {
             ItemLevel level = this.levels.get(i);
             String prefix = "";
 
-            if(currentLevel >= i)
+            if (currentLevel >= i)
                 prefix += ChatColor.GREEN;
-            else if(i == (currentLevel + 1))
+            else if (i == (currentLevel + 1))
                 prefix += ChatColor.YELLOW + "" + ChatColor.BOLD;
             else
                 prefix += ChatColor.RED;
@@ -171,7 +171,7 @@ public class ShopImprovableItem extends ShopIcon
 
         lore.add("");
 
-        if(next == null)
+        if (next == null)
             lore.add(ChatColor.GREEN + "Améliorations débloquées");
         else
             lore.add(ChatColor.GRAY + "Prix : " + ChatColor.GOLD + next.getCost() + " pièces");

@@ -59,7 +59,7 @@ public class GameSign
 
     public void update()
     {
-        if(this.isSoon)
+        if (this.isSoon)
         {
             this.sign.setLine(0, "-*--*-");
             this.sign.setLine(1, "Prochainement");
@@ -70,7 +70,7 @@ public class GameSign
             return;
         }
 
-        if(this.isMaintenance)
+        if (this.isMaintenance)
         {
             this.sign.setLine(0, "");
             this.sign.setLine(1, ChatColor.DARK_RED + "Jeu en");
@@ -106,7 +106,7 @@ public class GameSign
         nbt.setInt("y", this.sign.getLocation().getBlockY());
         nbt.setInt("z", this.sign.getLocation().getBlockZ());
 
-        for(int i = 0; i < 4; ++i)
+        for (int i = 0; i < 4; ++i)
             nbt.setString("Text" + (i + 1), IChatBaseComponent.ChatSerializer.a(lines[i]));
 
         PacketPlayOutTileEntityData packet = new PacketPlayOutTileEntityData(new BlockPosition(this.sign.getX(), this.sign.getY(), this.sign.getZ()), 9, nbt);
@@ -122,10 +122,10 @@ public class GameSign
 
     public void scrollMapName()
     {
-        if(this.isMaintenance || this.isSoon)
+        if (this.isMaintenance || this.isSoon)
             return;
 
-        if(this.map.length() <= 10)
+        if (this.map.length() <= 10)
         {
             this.scrolledMapName = this.map;
             return;
@@ -134,13 +134,13 @@ public class GameSign
         int start = this.scrollIndex;
         int end = this.scrollIndex + 10;
 
-        if(end > this.map.length())
+        if (end > this.map.length())
         {
             this.scrollVector = -1;
             this.scrollIndex = this.map.length() - 10;
             return;
         }
-        if(start < 0)
+        if (start < 0)
         {
             this.scrollVector = 1;
             this.scrollIndex = 0;
@@ -155,12 +155,12 @@ public class GameSign
 
     public void click(Player player)
     {
-        if(this.isSoon)
+        if (this.isSoon)
         {
             player.sendMessage(ChatColor.RED + "Ce jeu n'est pas encore disponible.");
             return;
         }
-        if(this.isMaintenance)
+        if (this.isMaintenance)
         {
             player.sendMessage(ChatColor.RED + "Ce jeu est actuellement en maintenance.");
             return;
@@ -170,13 +170,13 @@ public class GameSign
         {
             IParty party = SamaGamesAPI.get().getPartiesManager().getPartyForPlayer(player.getUniqueId());
 
-            if(party == null)
+            if (party == null)
             {
                 this.hub.getHydroangeasManager().addPlayerToQueue(player.getUniqueId(), template);
             }
             else
             {
-                if(!party.getLeader().equals(player.getUniqueId()))
+                if (!party.getLeader().equals(player.getUniqueId()))
                 {
                     player.sendMessage(ChatColor.RED + "Vous n'êtes pas le leader de votre partie, vous ne pouvez donc pas l'ajouter dans une file d'attente.");
                     return;
@@ -244,11 +244,6 @@ public class GameSign
     public int getTotalPlayerOnServers()
     {
         return this.totalPlayerOnServers;
-    }
-
-    public boolean isMaintenance()
-    {
-        return this.isMaintenance;
     }
 
     public void setSoon(boolean isSoon)

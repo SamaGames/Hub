@@ -15,7 +15,6 @@ import org.bukkit.entity.Player;
 
 import java.io.*;
 import java.nio.charset.Charset;
-import java.util.Scanner;
 import java.util.logging.Level;
 
 public class SignManager extends AbstractManager
@@ -28,7 +27,7 @@ public class SignManager extends AbstractManager
 
         File config = new File(this.hub.getDataFolder(), "signs.json");
 
-        if(!config.exists())
+        if (!config.exists())
         {
             try
             {
@@ -68,7 +67,7 @@ public class SignManager extends AbstractManager
 
         JsonArray signZonesArray = this.jsonConfig.load().getAsJsonArray("zones");
 
-        for(int i = 0; i < signZonesArray.size(); i++)
+        for (int i = 0; i < signZonesArray.size(); i++)
         {
             JsonObject signZoneObject = signZonesArray.get(i).getAsJsonObject();
 
@@ -76,7 +75,7 @@ public class SignManager extends AbstractManager
 
             JsonArray maps = signZoneObject.get("maps").getAsJsonArray();
 
-            for(int j = 0; j < maps.size(); j++)
+            for (int j = 0; j < maps.size(); j++)
             {
                 JsonObject mapObject = maps.get(j).getAsJsonObject();
                 String map = mapObject.get("map").getAsString();
@@ -86,7 +85,7 @@ public class SignManager extends AbstractManager
 
                 AbstractGame gameObject = this.hub.getGameManager().getGameByIdentifier(game);
 
-                if(gameObject == null)
+                if (gameObject == null)
                 {
                     this.log(Level.SEVERE, "Wanted to register a game sign withing an unknown game!");
                     continue;
@@ -94,7 +93,7 @@ public class SignManager extends AbstractManager
 
                 Block block = this.hub.getWorld().getBlockAt(sign);
 
-                if(!(block.getState() instanceof Sign))
+                if (!(block.getState() instanceof Sign))
                 {
                     this.log(Level.SEVERE, "Sign block for game '" + game + "' and map '" + map + "' is not a sign in the world!");
                     continue;
@@ -114,11 +113,11 @@ public class SignManager extends AbstractManager
         JsonObject root = this.jsonConfig.load();
         JsonArray signZonesArray = root.getAsJsonArray("zones");
 
-        for(int i = 0; i < signZonesArray.size(); i++)
+        for (int i = 0; i < signZonesArray.size(); i++)
         {
             JsonObject signZoneObject = signZonesArray.get(i).getAsJsonObject();
 
-            if(signZoneObject.get("game").getAsString().equals(game))
+            if (signZoneObject.get("game").getAsString().equals(game))
             {
                 JsonArray maps = signZoneObject.get("maps").getAsJsonArray();
 

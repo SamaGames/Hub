@@ -15,7 +15,7 @@ public class RankUtils
         String prefix = overrideNickname ? permissionsEntity.getPrefix() : permissionsEntity.getDisplayPrefix();
         String display = (overrideNickname ? permissionsEntity.getTag() : permissionsEntity.getDisplayTag()).replace("[", "").replace("]", "");
 
-        if(ChatColor.stripColor(display).isEmpty())
+        if (ChatColor.stripColor(display).isEmpty())
             display = ChatColor.GRAY + "Joueur";
 
         return prefix + display;

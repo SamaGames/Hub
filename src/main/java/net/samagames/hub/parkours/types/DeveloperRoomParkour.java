@@ -104,6 +104,7 @@ public class DeveloperRoomParkour extends Parkour implements Listener
         player.setResourcePack("http://resources.samagames.net/" + this.resourcePack + ".zip");
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void removePlayer(Player player)
     {
@@ -114,6 +115,7 @@ public class DeveloperRoomParkour extends Parkour implements Listener
         player.playEffect(player.getLocation(), Effect.RECORD_PLAY, 0);
     }
 
+    @SuppressWarnings("deprecation")
     private void playMusic(Player player)
     {
         player.playEffect(player.getLocation(), Effect.RECORD_PLAY, Material.GREEN_RECORD.getId());

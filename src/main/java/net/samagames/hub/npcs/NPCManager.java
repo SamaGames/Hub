@@ -1,11 +1,8 @@
 package net.samagames.hub.npcs;
 
-import com.google.gson.JsonObject;
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import net.samagames.hub.common.managers.AbstractManager;
-import net.samagames.tools.JsonConfiguration;
-import net.samagames.tools.LocationUtils;
 import net.samagames.tools.npc.nms.CustomNPC;
 import org.bukkit.entity.Player;
 
@@ -15,7 +12,6 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.logging.Level;
 
 public class NPCManager extends AbstractManager
 {
@@ -29,19 +25,20 @@ public class NPCManager extends AbstractManager
 
         this.npcs = new ArrayList<>();
 
-        File configuration = this.reloadConfiguration();
+        /*File configuration = this.reloadConfiguration();
 
         JsonConfiguration npcsConfig = new JsonConfiguration(configuration);
         JsonObject jsonRoot = npcsConfig.load();
 
-        if(jsonRoot == null)
+        if (jsonRoot == null)
             return;
 
-        //CustomNPC welcomeTutorialNPC = SamaGamesAPI.get().getNPCManager().createNPC(LocationUtils.str2loc(jsonRoot.get("welcome-tutorial").getAsString()), AURELIEN_SAMA_UUID, "Aurelien_Sama");
-        //welcomeTutorialNPC.setCallback(new WelcomeTutorialNPCAction(hub));
+        CustomNPC welcomeTutorialNPC = SamaGamesAPI.get().getNPCManager().createNPC(LocationUtils.str2loc(jsonRoot.get("welcome-tutorial").getAsString()), AURELIEN_SAMA_UUID, "Aurelien_Sama");
+        welcomeTutorialNPC.setCallback(new WelcomeTutorialNPCAction(hub));
 
-        //this.npcs.add(welcomeTutorialNPC);
-        //this.log(Level.INFO, "Registered 'Welcome tutorial' NPC!");
+        this.npcs.add(welcomeTutorialNPC);
+        this.log(Level.INFO, "Registered 'Welcome tutorial' NPC!");
+        */
     }
 
     @Override
@@ -61,7 +58,7 @@ public class NPCManager extends AbstractManager
     {
         File configuration = new File(this.hub.getDataFolder(), "npcs.json");
 
-        if(!configuration.exists())
+        if (!configuration.exists())
         {
             try
             {

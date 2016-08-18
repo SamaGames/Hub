@@ -24,7 +24,7 @@ public class GuiCosmetics extends AbstractGui
 
         this.slots = new ArrayList<>();
 
-        for(int i = 1; i <= 4; i++)
+        for (int i = 1; i <= 4; i++)
             this.slots.add(i);
     }
 
@@ -126,13 +126,14 @@ public class GuiCosmetics extends AbstractGui
         this.drawLineOfGlass(slot, color, action);
     }
 
+    @SuppressWarnings("deprecation")
     private void drawLineOfGlass(int baseSlot, DyeColor color, String action)
     {
         int slot = baseSlot - 9;
 
-        while(slot >= 0)
+        while (slot >= 0)
         {
-            if(this.inventory.getItem(slot) == null)
+            if (this.inventory.getItem(slot) == null)
                 this.setSlotData(ChatColor.GRAY + "", new ItemStack(Material.STAINED_GLASS_PANE, 1, color.getData()), slot, null, action);
 
             slot -= 9;

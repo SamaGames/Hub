@@ -27,16 +27,16 @@ public class EnderSwapDisplayer extends AbstractDisplayer
 
         Location last = this.baseLocation;
 
-        for(int i = 0; i < 10; i++)
+        for (int i = 0; i < 10; i++)
         {
             Location randomizedLocation = last.clone().add(GadgetManager.RANDOM.nextInt(80) - 40, 0, GadgetManager.RANDOM.nextInt(80) - 40);
             randomizedLocation.setY(250);
 
-            while(randomizedLocation.getBlock().getRelative(BlockFace.DOWN).getType() == Material.AIR)
+            while (randomizedLocation.getBlock().getRelative(BlockFace.DOWN).getType() == Material.AIR)
             {
                 randomizedLocation.subtract(0.0D, 1.0D, 0.0D);
 
-                if(randomizedLocation.getBlockY() < 10)
+                if (randomizedLocation.getBlockY() < 10)
                 {
                     randomizedLocation.setY(250);
                     break;
@@ -67,7 +67,7 @@ public class EnderSwapDisplayer extends AbstractDisplayer
 
                     this.teleportPositions.remove(0);
 
-                    if(this.teleportPositions.isEmpty())
+                    if (this.teleportPositions.isEmpty())
                     {
                         this.end();
                         this.teleportTask.cancel();

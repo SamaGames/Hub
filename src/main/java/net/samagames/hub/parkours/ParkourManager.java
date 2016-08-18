@@ -67,7 +67,7 @@ public class ParkourManager extends AbstractManager
     {
         File configuration = new File(this.hub.getDataFolder(), "parkours.json");
 
-        if(!configuration.exists())
+        if (!configuration.exists())
         {
             try
             {
@@ -86,12 +86,12 @@ public class ParkourManager extends AbstractManager
         JsonConfiguration parkoursConfig = new JsonConfiguration(configuration);
         JsonObject jsonRoot = parkoursConfig.load();
 
-        if(jsonRoot == null)
+        if (jsonRoot == null)
             return;
 
         JsonArray jsonParkours = jsonRoot.getAsJsonArray("parkours");
 
-        for(int i = 0; i < jsonParkours.size(); i++)
+        for (int i = 0; i < jsonParkours.size(); i++)
         {
             JsonObject jsonParkour = jsonParkours.get(i).getAsJsonObject();
 
@@ -107,17 +107,17 @@ public class ParkourManager extends AbstractManager
             List<Location> checkpoints = new ArrayList<>();
             JsonArray jsonCheckpoints = jsonParkour.get("checkpoints").getAsJsonArray();
 
-            for(int j = 0; j < jsonCheckpoints.size(); j++)
+            for (int j = 0; j < jsonCheckpoints.size(); j++)
                 checkpoints.add(LocationUtils.str2loc(jsonCheckpoints.get(j).getAsString()));
 
             List<Material> whitelist = new ArrayList<>();
             JsonArray jsonMaterials = jsonParkour.get("whitelist").getAsJsonArray();
 
-            for(int j = 0; j < jsonMaterials.size(); j++)
+            for (int j = 0; j < jsonMaterials.size(); j++)
             {
                 String materialName = jsonMaterials.get(j).getAsString();
 
-                if(Material.matchMaterial(materialName) != null)
+                if (Material.matchMaterial(materialName) != null)
                     whitelist.add(Material.matchMaterial(materialName));
                 else
                     this.log(Level.SEVERE, "Cannot add the material '" + materialName + "' to the whitelist of the parkour '" + name + "'!");

@@ -107,9 +107,9 @@ public class GameManager extends AbstractManager
                         return;
                     }
 
-                    if(player != null)
+                    if (player != null)
                     {
-                        if(packet.getType().equals(QueueInfosUpdatePacket.Type.ADD))
+                        if (packet.getType().equals(QueueInfosUpdatePacket.Type.ADD))
                         {
                             player.playSound(player.getLocation(), Sound.BLOCK_NOTE_PLING, 1.0F, 1.5F);
 
@@ -124,7 +124,7 @@ public class GameManager extends AbstractManager
                                 player.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
                             }
                         }
-                        else if(packet.getType().equals(QueueInfosUpdatePacket.Type.REMOVE))
+                        else if (packet.getType().equals(QueueInfosUpdatePacket.Type.REMOVE))
                         {
                             player.playSound(player.getLocation(), Sound.BLOCK_NOTE_PLING, 1.0F, 0.8F);
 
@@ -132,7 +132,7 @@ public class GameManager extends AbstractManager
                             player.sendMessage(ChatColor.RED + "Retiré de la file d'attente de " + ChatColor.GOLD + packet.getGame() + ChatColor.RED + " sur la map " + ChatColor.GOLD + packet.getMap() + ChatColor.RED + " !");
                             player.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
                         }
-                        else if(packet.getType().equals(QueueInfosUpdatePacket.Type.INFO) && packet.getMessage() != null)
+                        else if (packet.getType().equals(QueueInfosUpdatePacket.Type.INFO) && packet.getMessage() != null)
                         {
                             if (!SamaGamesAPI.get().getSettingsManager().getSettings(player.getUniqueId()).isWaitingLineNotification())
                                 return;
@@ -141,14 +141,14 @@ public class GameManager extends AbstractManager
 
                             player.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
 
-                            for(String message : packet.getMessage())
+                            for (String message : packet.getMessage())
                                 player.sendMessage(ChatColor.YELLOW + message.replaceAll("<RESET>", String.valueOf(ChatColor.YELLOW)));
 
                             player.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
                         }
                     }
                 }
-                catch(Exception ignored) {}
+                catch (Exception ignored) {}
             }
         });
 
@@ -209,7 +209,7 @@ public class GameManager extends AbstractManager
 
     private void registerGame(AbstractGame game)
     {
-        if(!this.games.containsKey(game.getCodeName()))
+        if (!this.games.containsKey(game.getCodeName()))
         {
             this.games.put(game.getCodeName(), game);
             this.log(Level.INFO, "Registered game '" + game.getCodeName() + "'");
@@ -218,7 +218,7 @@ public class GameManager extends AbstractManager
 
     public AbstractGame getGameByIdentifier(String identifier)
     {
-        if(this.games.containsKey(identifier.toLowerCase()))
+        if (this.games.containsKey(identifier.toLowerCase()))
             return this.games.get(identifier.toLowerCase());
         else
             return null;

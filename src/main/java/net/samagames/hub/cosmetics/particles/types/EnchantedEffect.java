@@ -10,7 +10,8 @@ public class EnchantedEffect extends Effect {
 
     private Random random;
 
-    public EnchantedEffect(EffectManager effectManager) {
+    public EnchantedEffect(EffectManager effectManager)
+    {
         super(effectManager);
         this.period = 2;
         this.iterations = 5;
@@ -18,7 +19,8 @@ public class EnchantedEffect extends Effect {
     }
 
     @Override
-    public void onRun() {
+    public void onRun()
+    {
         double dx = this.random.nextDouble() % 3D - 1.5D;
         double dy = this.random.nextDouble() % 2D;
         double dz = this.random.nextDouble() % 3D - 1.5D;

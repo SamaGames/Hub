@@ -19,8 +19,6 @@ import java.util.Map;
 
 public abstract class AbstractGame
 {
-    public static final long TODO_SHOP = 0;
-
     protected final Hub hub;
     private final Map<String, List<GameSign>> signs;
 

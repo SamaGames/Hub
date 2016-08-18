@@ -21,7 +21,7 @@ public abstract class AbstractCosmeticRegistry<COSMETIC extends AbstractCosmetic
 
     protected void registerElement(COSMETIC element)
     {
-        if(this.elements.containsKey(element.getStorageId()))
+        if (this.elements.containsKey(element.getStorageId()))
         {
             this.hub.getCosmeticManager().log(Level.SEVERE, "Cosmetic already registered with the storage id '" + element.getStorageId() + "'!");
             return;
@@ -32,7 +32,7 @@ public abstract class AbstractCosmeticRegistry<COSMETIC extends AbstractCosmetic
 
     public COSMETIC getElementByStorageId(int storageId)
     {
-        if(this.elements.containsKey(storageId))
+        if (this.elements.containsKey(storageId))
             return this.elements.get(storageId);
         else
             return null;

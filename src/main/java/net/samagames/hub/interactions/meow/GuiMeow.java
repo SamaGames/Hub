@@ -3,15 +3,9 @@ package net.samagames.hub.interactions.meow;
 import net.samagames.hub.Hub;
 import net.samagames.hub.gui.AbstractGui;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-
-import java.sql.Timestamp;
-import java.util.*;
-import java.util.concurrent.TimeUnit;
 
 class GuiMeow extends AbstractGui
 {
@@ -51,7 +45,10 @@ class GuiMeow extends AbstractGui
         {
             int bonusId = Integer.parseInt(action.split("_")[1]);
 
-            MeowManager.getBonusById(bonusId).take(player.getUniqueId());
+            Bonus bonus = MeowManager.getBonusById(bonusId);
+            if (bonus == null)
+                return ;
+            bonus.take(player.getUniqueId());
 
             this.parent.playThankYou();
             this.parent.update(player);

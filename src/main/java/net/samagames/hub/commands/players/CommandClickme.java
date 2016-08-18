@@ -31,13 +31,13 @@ public class CommandClickme extends AbstractCommand
 
         UUID uuid = SamaGamesAPI.get().getUUIDTranslator().getUUID(args[0], false);
 
-        if(uuid == null)
+        if (uuid == null)
         {
             player.sendMessage(ChatColor.RED + "Ce joueur n'existe pas !");
             return true;
         }
 
-        if(SamaGamesAPI.get().getSettingsManager().getSettings(uuid).isClickOnMeActivation())
+        if (SamaGamesAPI.get().getSettingsManager().getSettings(uuid).isClickOnMeActivation())
         {
             this.hub.getGuiManager().openGui(player, new GuiClickMe(this.hub, args[0], uuid));
         }

@@ -7,11 +7,12 @@ import de.slikey.effectlib.EffectManager;
 import de.slikey.effectlib.EffectType;
 import de.slikey.effectlib.util.ParticleEffect;
 
-public class SnowyEffect extends Effect {
-
+public class SnowyEffect extends Effect
+{
     private final Random random = new Random();
 
-    public SnowyEffect(EffectManager effectManager) {
+    public SnowyEffect(EffectManager effectManager)
+    {
         super(effectManager);
         type = EffectType.REPEATING;
         period = 2;
@@ -20,13 +21,14 @@ public class SnowyEffect extends Effect {
     }
 
     @Override
-    public void onRun() {
+    public void onRun()
+    {
         // Cloud
-        for(int i = 0; i < 20; i++)
+        for (int i = 0; i < 20; i++)
             display(ParticleEffect.CLOUD, getEntity().getLocation().add(random.nextDouble() - 0.5, 2.75 + random.nextDouble() / 4, random.nextDouble() - 0.5));
 
         // Snow drops
-        if(random.nextBoolean())
+        if (random.nextBoolean())
             display(ParticleEffect.SNOW_SHOVEL, getEntity().getLocation().add(random.nextDouble() * 0.8 - 0.4, 2.75 + random.nextDouble() / 4, random.nextDouble() * 0.8 - 0.4), 7, 0);
     }
 }

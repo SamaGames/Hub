@@ -17,7 +17,6 @@ import org.bukkit.util.Vector;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class StargateDisplayer extends AbstractDisplayer
 {
@@ -43,6 +42,7 @@ public class StargateDisplayer extends AbstractDisplayer
         this.addBlocksToUse(this.createPortalFrame(this.exitPortalLocation, true));
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void display()
     {
@@ -121,7 +121,7 @@ public class StargateDisplayer extends AbstractDisplayer
     {
         Map<Location, SimpleBlock> blocks = new HashMap<>();
 
-        if(exit)
+        if (exit)
         {
             blocks.put(basePortalLocation, new SimpleBlock(Material.STAINED_CLAY, 3));
             blocks.put(basePortalLocation.clone().subtract(0.0D, 0.0D, 1.0D), new SimpleBlock(Material.STAINED_CLAY, 3));

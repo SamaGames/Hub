@@ -84,7 +84,7 @@ class SonicSquid extends AbstractInteraction implements Listener
         if (!this.squids.containsKey(player.getUniqueId()) && player.getGameMode() != GameMode.SPECTATOR)
         {
             WorldServer world = ((CraftWorld) player.getWorld()).getHandle();
-            EntitySonicSquid sonicSquidEntity = new EntitySonicSquid(this.hub, world, player);
+            EntitySonicSquid sonicSquidEntity = new EntitySonicSquid(world, player);
             world.addEntity(sonicSquidEntity, CreatureSpawnEvent.SpawnReason.CUSTOM);
 
             sonicSquidEntity.getBukkitEntity().setPassenger(player);

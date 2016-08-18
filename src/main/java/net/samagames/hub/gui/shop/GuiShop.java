@@ -24,7 +24,7 @@ public class GuiShop extends AbstractGui
         int slot = 0;
         int lines = 1;
 
-        for(String gameIdentifier : this.hub.getGameManager().getGames().keySet())
+        for (String gameIdentifier : this.hub.getGameManager().getGames().keySet())
         {
             AbstractGame game = this.hub.getGameManager().getGameByIdentifier(gameIdentifier);
 
@@ -32,7 +32,7 @@ public class GuiShop extends AbstractGui
             {
                 slot++;
 
-                if(slot == slots.length)
+                if (slot == slots.length)
                 {
                     slot = 0;
                     lines++;
@@ -45,7 +45,7 @@ public class GuiShop extends AbstractGui
         slot = 0;
         lines = 0;
 
-        for(String gameIdentifier : this.hub.getGameManager().getGames().keySet())
+        for (String gameIdentifier : this.hub.getGameManager().getGames().keySet())
         {
             AbstractGame game = this.hub.getGameManager().getGameByIdentifier(gameIdentifier);
 
@@ -58,7 +58,7 @@ public class GuiShop extends AbstractGui
                 this.setSlotData(ChatColor.YELLOW + game.getName(), icon, slots[slot] + (9 * lines), null, "game_" + game.getCodeName());
                 slot++;
 
-                if(slot == slots.length)
+                if (slot == slots.length)
                 {
                     slot = 0;
                     lines++;
@@ -74,11 +74,11 @@ public class GuiShop extends AbstractGui
     @Override
     public void onClick(Player player, ItemStack stack, String action, ClickType clickType)
     {
-        if(action.equals("back"))
+        if (action.equals("back"))
         {
             this.hub.getGuiManager().closeGui(player);
         }
-        else if(action.startsWith("game_"))
+        else if (action.startsWith("game_"))
         {
             AbstractGame game = this.hub.getGameManager().getGameByIdentifier(action.split("_")[1]);
             this.hub.getGuiManager().openGui(player, new GuiShopCategory(this.hub, game, game.getShopConfiguration(), this));

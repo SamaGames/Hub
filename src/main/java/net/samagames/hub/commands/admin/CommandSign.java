@@ -24,13 +24,13 @@ public class CommandSign extends AbstractCommand
     @Override
     public boolean doAction(Player player, Command command, String s, String[] args)
     {
-        if(args.length < 1)
+        if (args.length < 1)
         {
             player.sendMessage(ChatColor.RED + "Usage: /sign <add|maintenance|reload|list> <...>");
             return true;
         }
 
-        switch(args[0])
+        switch (args[0])
         {
             case "add":
                 this.addSign(player, args);
@@ -62,13 +62,13 @@ public class CommandSign extends AbstractCommand
 
     private void addSign(Player player, String[] args)
     {
-        if(args.length < 5)
+        if (args.length < 5)
         {
             player.sendMessage(ChatColor.RED + "Usage: /sign add <game code name> <map> <color [default GREEN]> <template>");
             return;
         }
 
-        if(this.hub.getPlayerManager().getSelection(player) == null)
+        if (this.hub.getPlayerManager().getSelection(player) == null)
         {
             player.sendMessage(ChatColor.RED + "Vous devez sélectionner une zone pour l'ajouter.");
             return;
@@ -81,7 +81,7 @@ public class CommandSign extends AbstractCommand
         ChatColor color = ChatColor.valueOf(args[3].toUpperCase());
         String template = args[4];
 
-        if(!(selection.getBlock().getState() instanceof Sign))
+        if (!(selection.getBlock().getState() instanceof Sign))
         {
             player.sendMessage(ChatColor.RED + "Le bloc sélectionné n'est pas un panneau !");
             return;
@@ -93,7 +93,7 @@ public class CommandSign extends AbstractCommand
 
     private void maintenanceSigns(Player player, String[] args)
     {
-        if(args.length < 4)
+        if (args.length < 4)
         {
             player.sendMessage(ChatColor.RED + "Usage: /sign maintenance <game> <template> <true/false>");
             return;
@@ -104,7 +104,7 @@ public class CommandSign extends AbstractCommand
 
         AbstractGame gameObject = this.hub.getGameManager().getGameByIdentifier(game);
 
-        if(gameObject == null)
+        if (gameObject == null)
         {
             player.sendMessage(ChatColor.RED + "Jeu non trouvé :(");
             return;
@@ -114,7 +114,7 @@ public class CommandSign extends AbstractCommand
         {
             List<GameSign> gameSign = gameObject.getGameSignsByTemplate(template);
 
-            if(gameSign == null)
+            if (gameSign == null)
             {
                 player.sendMessage(ChatColor.RED + "Template non trouvé :(");
                 return;
@@ -148,7 +148,7 @@ public class CommandSign extends AbstractCommand
     {
         player.sendMessage(ChatColor.GREEN + "Liste des zones :");
 
-        for(AbstractGame game : this.hub.getGameManager().getGames().values())
+        for (AbstractGame game : this.hub.getGameManager().getGames().values())
         {
             player.sendMessage(ChatColor.GREEN + "-> " + ChatColor.AQUA + game.getCodeName() + ChatColor.GREEN + " (" + ChatColor.AQUA + game.getSigns().values().size() + " panneaux" + ChatColor.GREEN + ")");
         }
@@ -156,7 +156,7 @@ public class CommandSign extends AbstractCommand
 
     private void soonSigns(Player player, String[] args)
     {
-        if(args.length < 4)
+        if (args.length < 4)
         {
             player.sendMessage(ChatColor.RED + "Usage: /sign soon <game> <template> <true/false>");
             return;
@@ -167,7 +167,7 @@ public class CommandSign extends AbstractCommand
 
         AbstractGame gameObject = this.hub.getGameManager().getGameByIdentifier(game);
 
-        if(gameObject == null)
+        if (gameObject == null)
         {
             player.sendMessage(ChatColor.RED + "Jeu non trouvé :(");
             return;
@@ -177,7 +177,7 @@ public class CommandSign extends AbstractCommand
         {
             List<GameSign> gameSign = gameObject.getGameSignsByTemplate(template);
 
-            if(gameSign == null)
+            if (gameSign == null)
             {
                 player.sendMessage(ChatColor.RED + "Template non trouvé :(");
                 return;

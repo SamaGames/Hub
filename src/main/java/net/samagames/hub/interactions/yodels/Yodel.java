@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class Yodel extends AbstractInteraction
+class Yodel extends AbstractInteraction
 {
     private Location boarding;
     private Location start;
@@ -28,7 +28,7 @@ public class Yodel extends AbstractInteraction
     private final ArmorStand startBeacon;
     private static final Map<UUID, YodelRunner> runnerList = new HashMap<>();
 
-    public Yodel(Hub hub, Location boarding, Location start, Location end, Location landing, boolean reverse)
+    Yodel(Hub hub, Location boarding, Location start, Location end, Location landing, boolean reverse)
     {
         super(hub);
         this.boarding = boarding.clone();

@@ -2,26 +2,18 @@ package net.samagames.hub.interactions.sonicsquid;
 
 import com.google.common.collect.Sets;
 import net.minecraft.server.v1_9_R2.*;
-import net.samagames.hub.Hub;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 import java.lang.reflect.Field;
-import java.util.UUID;
 
 class EntitySonicSquid extends EntitySquid
 {
-    private final Hub hub;
-    private final UUID uuid;
-
-    EntitySonicSquid(Hub hub, World world, Player player)
+    EntitySonicSquid(World world, Player player)
     {
         super(world);
-
-        this.hub = hub;
-        this.uuid = player.getUniqueId();
 
         try
         {

@@ -23,8 +23,6 @@ import java.util.logging.Level;
 
 public class PlayerManager extends AbstractManager
 {
-    static Hub HUB;
-
     public static final String SETTINGS_TAG = ChatColor.DARK_AQUA + "[" + ChatColor.AQUA + "Paramêtres" + ChatColor.DARK_AQUA + "] " + ChatColor.RESET;
     public static final String MODERATING_TAG = ChatColor.DARK_AQUA + "[" + ChatColor.AQUA + "Modération" + ChatColor.DARK_AQUA + "] " + ChatColor.RESET;
     public static final String SHOPPING_TAG = ChatColor.DARK_AQUA + "[" + ChatColor.AQUA + "Boutique" + ChatColor.DARK_AQUA + "] " + ChatColor.RESET;
@@ -47,8 +45,6 @@ public class PlayerManager extends AbstractManager
     public PlayerManager(Hub hub)
     {
         super(hub);
-
-        HUB = hub;
 
         this.selections = new HashMap<>();
         this.rulesBookTasks = new HashMap<>();
@@ -147,7 +143,7 @@ public class PlayerManager extends AbstractManager
 
             //New Games
             hub.getScheduledExecutorService().schedule(() -> {
-                if(player == null || !player.isOnline())
+                if (!player.isOnline())
                     return;
 
                 player.playSound(player.getLocation(), Sound.BLOCK_NOTE_HAT, 1.0F, 0.8F);
@@ -183,7 +179,7 @@ public class PlayerManager extends AbstractManager
 
     public void removeHider(Player player)
     {
-        if(this.hiders.contains(player.getUniqueId()))
+        if (this.hiders.contains(player.getUniqueId()))
             this.hiders.remove(player.getUniqueId());
 
         this.hub.getServer().getScheduler().runTask(this.hub, () -> this.hub.getServer().getOnlinePlayers().forEach(player::showPlayer));
@@ -200,7 +196,7 @@ public class PlayerManager extends AbstractManager
             {
                 Player hider = this.hub.getServer().getPlayer(hiderUUID);
 
-                if(hider != null && !hider.equals(newConnected))
+                if (hider != null && !hider.equals(newConnected))
                     if (!SamaGamesAPI.get().getPermissionsManager().hasPermission(newConnected, "hub.announce") && !SamaGamesAPI.get().getFriendsManager().areFriends(newConnected.getUniqueId(), hiderUUID))
                         this.hub.getServer().getScheduler().runTask(this.hub, () -> hider.hidePlayer(newConnected));
             }

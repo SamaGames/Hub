@@ -17,7 +17,7 @@ public class CommandAnguille extends AbstractCommand
     @Override
     public boolean doAction(Player player, Command command, String s, String[] args)
     {
-        if(this.hub.getPlayerManager().canBuild())
+        if (this.hub.getPlayerManager().canBuild())
         {
             this.hub.getPlayerManager().setBuild(false);
             player.sendMessage(PlayerManager.SETTINGS_TAG + ChatColor.RED + "Construction désactivée.");

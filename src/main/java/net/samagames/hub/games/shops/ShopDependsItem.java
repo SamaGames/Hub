@@ -28,7 +28,7 @@ public class ShopDependsItem extends ShopItem
     @Override
     public void execute(Player player, ClickType clickType)
     {
-        if(this.isActive(player))
+        if (this.isActive(player))
         {
             player.sendMessage(PlayerManager.SHOPPING_TAG + ChatColor.RED + "Cet objet est déjà équipé.");
         }
@@ -65,7 +65,7 @@ public class ShopDependsItem extends ShopItem
         {
             GuiConfirm confirm = new GuiConfirm(this.hub, (AbstractGui) this.hub.getGuiManager().getPlayerGui(player), (parent) ->
             {
-                if(this.isActive(player))
+                if (this.isActive(player))
                     return;
 
                 SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).withdrawCoins(this.itemDescription.getPriceCoins(), (newAmount, difference, error) ->
@@ -99,11 +99,11 @@ public class ShopDependsItem extends ShopItem
         ItemMeta meta = stack.getItemMeta();
         List<String> lore = meta.getLore() != null ? meta.getLore() : new ArrayList<>();
 
-        if(this.isActive(player))
+        if (this.isActive(player))
             lore.add(ChatColor.GREEN + "Objet actif");
-        else if(this.isOwned(player) || this.isDefaultItem())
+        else if (this.isOwned(player) || this.isDefaultItem())
             lore.add(ChatColor.GREEN + "Objet possédé");
-        else if(( this.dependsOn != null && this.hasDepend(player)) || this.dependsOn == null)
+        else if (( this.dependsOn != null && this.hasDepend(player)) || this.dependsOn == null)
             lore.add(ChatColor.GRAY + "Prix : " + ChatColor.GOLD + this.itemDescription.getPriceCoins() + " pièces");
         else
             lore.add(ChatColor.RED + "Nécessite " + ChatColor.AQUA + this.dependsOn.getIcon().getItemMeta().getDisplayName());

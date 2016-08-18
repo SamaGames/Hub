@@ -44,7 +44,7 @@ public class GuiManager extends AbstractManager implements IGuiManager
     @Override
     public void openGui(Player player, AbstractGui gui)
     {
-        if(this.playersGui.containsKey(player.getUniqueId()))
+        if (this.playersGui.containsKey(player.getUniqueId()))
         {
             player.closeInventory();
             this.playersGui.remove(player.getUniqueId());

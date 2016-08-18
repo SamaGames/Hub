@@ -108,7 +108,7 @@ public class Parkour
 
         this.startTooltip.remove();
         this.endTooltip.remove();
-        this.checkpointsTooltips.stream().forEach(Entity::remove);
+        this.checkpointsTooltips.forEach(Entity::remove);
     }
 
     public void checkpoint(Player player, Location location)
@@ -116,7 +116,7 @@ public class Parkour
         List<Location> playerCheckpoints = new ArrayList<>(this.playersCheckpoints.get(player.getUniqueId()));
         Location checkpointFormatted = new Location(location.getWorld(), location.getBlockX(), location.getBlockY(), location.getBlockZ());
 
-        if(playerCheckpoints.contains(checkpointFormatted))
+        if (playerCheckpoints.contains(checkpointFormatted))
             return;
 
         playerCheckpoints.add(checkpointFormatted);
@@ -219,7 +219,7 @@ public class Parkour
 
         this.removePlayer(player);
 
-        if(this.achievementName != null && !SamaGamesAPI.get().getAchievementManager().isUnlocked(player, this.achievementName))
+        if (this.achievementName != null && !SamaGamesAPI.get().getAchievementManager().isUnlocked(player, this.achievementName))
             SamaGamesAPI.get().getAchievementManager().getAchievementByID(this.achievementName).unlock(player);
 
         this.restoreFly(player);
@@ -230,7 +230,7 @@ public class Parkour
         int now = this.tries.get(player.getUniqueId()) - 1;
         this.tries.put(player.getUniqueId(), now);
 
-        if(now > 0)
+        if (now > 0)
         {
             player.sendMessage(TAG + ChatColor.WHITE + "Il ne vous reste plus que " + now + " essai" + (now == 1 ? "" : "s") + " !");
             player.teleport(this.playersCheckpoints.get(player.getUniqueId()).get(this.playersCheckpoints.get(player.getUniqueId()).size() - 1));

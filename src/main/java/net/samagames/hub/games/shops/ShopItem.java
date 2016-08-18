@@ -20,7 +20,7 @@ public class ShopItem extends ShopIcon
 {
     protected boolean defaultItem;
 
-    public ShopItem(Hub hub, int storageId, int slot, int[] resetIds) throws Exception
+    ShopItem(Hub hub, int storageId, int slot, int[] resetIds) throws Exception
     {
         super(hub, storageId, slot, resetIds);
     }
@@ -28,11 +28,11 @@ public class ShopItem extends ShopIcon
     @Override
     public void execute(Player player, ClickType clickType)
     {
-        if(this.isActive(player))
+        if (this.isActive(player))
         {
             player.sendMessage(PlayerManager.SHOPPING_TAG + ChatColor.RED + "Cet objet est déjà équipé.");
         }
-        else if(this.isOwned(player) || this.isDefaultItem())
+        else if (this.isOwned(player) || this.isDefaultItem())
         {
             this.resetCurrents(player);
 
@@ -49,7 +49,7 @@ public class ShopItem extends ShopIcon
                 return;
             }
         }
-        else if(!SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).hasEnoughCoins(this.itemDescription.getPriceCoins()))
+        else if (!SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).hasEnoughCoins(this.itemDescription.getPriceCoins()))
         {
             player.sendMessage(PlayerManager.SHOPPING_TAG + ChatColor.RED + "Vous n'avez pas assez de pièces pour acheter cet objet.");
         }
@@ -57,7 +57,7 @@ public class ShopItem extends ShopIcon
         {
             GuiConfirm confirm = new GuiConfirm(this.hub, (AbstractGui) this.hub.getGuiManager().getPlayerGui(player), (parent) ->
             {
-                if(this.isOwned(player))
+                if (this.isOwned(player))
                     return;
 
                 SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).withdrawCoins(this.itemDescription.getPriceCoins(), (newAmount, difference, error) ->
@@ -90,9 +90,9 @@ public class ShopItem extends ShopIcon
         ItemMeta meta = stack.getItemMeta();
         List<String> lore = meta.getLore() != null ? meta.getLore() : new ArrayList<>();
 
-        if(this.isActive(player))
+        if (this.isActive(player))
             lore.add(ChatColor.GREEN + "Objet actif");
-        else if(isDefaultItem() || isOwned(player))
+        else if (isDefaultItem() || isOwned(player))
             lore.add(ChatColor.GREEN + "Objet possédé");
         else
             lore.add(ChatColor.GRAY + "Prix : " + ChatColor.GOLD + this.itemDescription.getPriceCoins() + " pièces");

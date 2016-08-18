@@ -37,7 +37,7 @@ public class HubRefresher implements Runnable, IPacketsReceiver
 
             this.hubs.update();
         }
-        catch(Exception e)
+        catch (Exception e)
         {
             e.printStackTrace();
         }
@@ -56,7 +56,7 @@ public class HubRefresher implements Runnable, IPacketsReceiver
 
     public JsonHub getHubByID(int id)
     {
-        if(this.hubs.containsKey(id))
+        if (this.hubs.containsKey(id))
             return this.hubs.get(id);
 
         return null;

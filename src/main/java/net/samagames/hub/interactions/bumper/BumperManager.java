@@ -2,11 +2,8 @@ package net.samagames.hub.interactions.bumper;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import net.samagames.hub.Hub;
 import net.samagames.hub.interactions.AbstractInteractionManager;
-import net.samagames.tools.LocationUtils;
-import org.bukkit.Location;
 
 import java.util.logging.Level;
 

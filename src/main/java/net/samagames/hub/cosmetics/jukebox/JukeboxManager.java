@@ -130,7 +130,7 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
         {
             IPlayerSettings settings = SamaGamesAPI.get().getSettingsManager().getSettings(player.getUniqueId());
 
-            if(!settings.isJukeboxListen())
+            if (!settings.isJukeboxListen())
                 this.mutedPlayers.add(player.getUniqueId());
             else
                 addPlayer(player);
@@ -257,7 +257,7 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
 
                 this.currentPlaylist = null;
 
-                if(this.barTask != null)
+                if (this.barTask != null)
                 {
                     this.barTask.cancel();
                     this.barTask = null;
@@ -287,7 +287,7 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
                 this.hub.getServer().broadcastMessage(JUKEBOX_TAG + ChatColor.GOLD + this.currentPlaylist.getPlayedBy() + ChatColor.YELLOW + " joue " + ChatColor.GOLD + ChatColor.ITALIC + this.currentPlaylist.getSong().getTitle() + ChatColor.YELLOW + " de " + ChatColor.GOLD + this.currentPlaylist.getSong().getAuthor());
                 this.hub.getServer().broadcastMessage(JUKEBOX_TAG + ChatColor.GRAY + ChatColor.ITALIC + "Tapez " + ChatColor.GREEN + "/woot" + ChatColor.GRAY + ChatColor.ITALIC + " pour apprécier ou " + ChatColor.RED + "/meh" + ChatColor.GRAY + ChatColor.ITALIC + " pour indiquer que vous n'aimez pas la musique jouée actuellement et la couper.");
 
-                if(this.barTask == null)
+                if (this.barTask == null)
                 {
                     this.barTask = this.hub.getServer().getScheduler().runTaskTimerAsynchronously(this.hub, new Runnable()
                     {
@@ -311,7 +311,7 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
 
                             this.i++;
 
-                            if(this.i == 10)
+                            if (this.i == 10)
                                 this.i = 0;
                         }
                     }, 20L, 20L);
@@ -342,7 +342,7 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
     {
         if (this.currentPlaylist != null && this.currentPlaylist.getPlayer().isPlaying())
         {
-            if(becauseMehs)
+            if (becauseMehs)
                 this.hub.getServer().broadcastMessage(JUKEBOX_TAG + ChatColor.RED + "La musique est passée car elle a reçu plus de 33% de votes négatifs.");
 
             this.currentPlaylist.getPlayer().setPlaying(false);
@@ -377,7 +377,7 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
 
     public void mute(Player player, boolean flag)
     {
-        if(flag)
+        if (flag)
         {
             this.mutedPlayers.add(player.getUniqueId());
             this.removePlayer(player);

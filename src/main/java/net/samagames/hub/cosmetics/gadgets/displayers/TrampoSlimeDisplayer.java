@@ -23,6 +23,7 @@ public class TrampoSlimeDisplayer extends AbstractDisplayer
     private BukkitTask beaconTask;
     private BukkitTask loopTask;
 
+    @SuppressWarnings("deprecation")
     public TrampoSlimeDisplayer(Hub hub, Player player)
     {
         super(hub, player);
@@ -62,6 +63,7 @@ public class TrampoSlimeDisplayer extends AbstractDisplayer
         this.addBlocksToUse(this.corners);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void display()
     {

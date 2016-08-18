@@ -11,9 +11,9 @@ public class QueuePacket extends Packet
     private String templateID;
     private TypeQueue typeQueue;
 
-    public QueuePacket() {}
+    QueuePacket() {}
 
-    public QueuePacket(TypeQueue typeQueue, String game, String map)
+    QueuePacket(TypeQueue typeQueue, String game, String map)
     {
         this(typeQueue, game + "_" + map);
 
@@ -21,7 +21,7 @@ public class QueuePacket extends Packet
         this.map = map;
     }
 
-    public QueuePacket(TypeQueue typeQueue, String templateID)
+    QueuePacket(TypeQueue typeQueue, String templateID)
     {
         this.typeQueue = typeQueue;
         this.templateID = templateID;

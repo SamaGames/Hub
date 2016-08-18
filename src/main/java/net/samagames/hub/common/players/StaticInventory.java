@@ -11,7 +11,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.craftbukkit.v1_9_R2.entity.CraftPlayer;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -39,13 +38,13 @@ public class StaticInventory
 
     public void doInteraction(Player player, ItemStack stack)
     {
-        if(stack.getType() == Material.COMPASS)
+        if (stack.getType() == Material.COMPASS)
             this.hub.getGuiManager().openGui(player, new GuiMain(this.hub));
-        else if(stack.getType() == Material.SKULL_ITEM)
+        else if (stack.getType() == Material.SKULL_ITEM)
             this.hub.getGuiManager().openGui(player, new GuiProfile(this.hub));
-        else if(stack.getType() == Material.ENDER_CHEST)
+        else if (stack.getType() == Material.ENDER_CHEST)
             this.hub.getGuiManager().openGui(player, new GuiCosmetics(this.hub));
-        else if(stack.getType() == Material.GOLD_INGOT)
+        else if (stack.getType() == Material.GOLD_INGOT)
             this.hub.getGuiManager().openGui(player, new GuiShop(this.hub));
         else if (stack.getType() == Material.BARRIER && this.hub.getParkourManager().getPlayerParkour(player.getUniqueId()) != null)
             this.hub.getParkourManager().getPlayerParkour(player.getUniqueId()).quitPlayer(player);
@@ -92,7 +91,7 @@ public class StaticInventory
     {
         for (int slot : this.items.keySet())
         {
-            if(this.items.get(slot).getType() == Material.SKULL_ITEM)
+            if (this.items.get(slot).getType() == Material.SKULL_ITEM)
             {
                 SkullMeta meta = (SkullMeta) this.items.get(slot).getItemMeta();
                 meta.setOwner(player.getName());
@@ -134,7 +133,7 @@ public class StaticInventory
         ItemMeta meta = stack.getItemMeta();
         meta.setDisplayName(name);
 
-        if(lores != null)
+        if (lores != null)
             meta.setLore(Arrays.asList(lores));
 
         stack.setItemMeta(meta);
