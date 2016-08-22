@@ -4,6 +4,7 @@ import net.samagames.api.SamaGamesAPI;
 import net.samagames.api.player.AbstractPlayerData;
 import net.samagames.hub.Hub;
 import net.samagames.hub.gui.AbstractGui;
+import net.samagames.hub.gui.achievements.GuiAchievements;
 import net.samagames.tools.PlayerUtils;
 import net.samagames.tools.chat.fanciful.FancyMessage;
 import org.bukkit.ChatColor;
@@ -49,7 +50,7 @@ public class GuiProfile extends AbstractGui
                 break;
 
             case "achievements":
-                player.sendMessage(ChatColor.RED + "Prochainement...");
+                this.hub.getGuiManager().openGui(player, new GuiAchievements(this.hub, null));
                 break;
 
             case "settings":
