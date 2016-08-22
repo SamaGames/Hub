@@ -11,8 +11,6 @@ import net.samagames.hub.cosmetics.particles.ParticleManager;
 import net.samagames.hub.cosmetics.pets.PetManager;
 import org.bukkit.entity.Player;
 
-import java.util.concurrent.TimeUnit;
-
 public class CosmeticManager extends AbstractManager
 {
     private DisguiseManager disguiseManager;
@@ -35,14 +33,14 @@ public class CosmeticManager extends AbstractManager
     {
         this.jukeboxManager.onLogin(player);
 
-        this.hub.getExecutorMonoThread().schedule(() ->
+        this.hub.getServer().getScheduler().runTaskLater(this.hub, () ->
         {
             this.disguiseManager.restoreCosmetic(player);
             this.petManager.restoreCosmetic(player);
             this.gadgetManager.restoreCosmetic(player);
             this.particleManager.restoreCosmetic(player);
             this.balloonManager.restoreCosmetic(player);
-        }, 1, TimeUnit.SECONDS);
+        }, 20L);
     }
 
     @Override

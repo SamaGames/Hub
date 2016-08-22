@@ -21,6 +21,9 @@ import java.util.UUID;
 
 public class GuiAchievements extends AbstractGui
 {
+    private static final ItemStack HEAD_1 = GuiAchievements.getCustomSkull("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYWM3ZjdiNzJmYzNlNzMzODI4ZmNjY2MwY2E4Mjc4YWNhMjYzM2FhMzNhMjMxYzkzYTY4MmQxNGFjNTRhYTBjNCJ9fX0=");
+    private static final ItemStack HEAD_2 = GuiAchievements.getCustomSkull("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZDhjNTNiY2U4YWU1OGRjNjkyNDkzNDgxOTA5YjcwZTExYWI3ZTk0MjJkOWQ4NzYzNTEyM2QwNzZjNzEzM2UifX19");
+
     private AchievementCategory category;
     private int page;
 
@@ -57,9 +60,8 @@ public class GuiAchievements extends AbstractGui
         samaGamesAPI.getAchievementManager().getAchievements().stream().filter(achievement -> achievement.getParentCategoryID() == this.category).forEach(achievement ->
         {
             boolean unlocked = achievement.isUnlocked(player.getUniqueId());
-            ItemStack itemStack = unlocked ?
-                    GuiAchievements.getCustomSkull("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYWM3ZjdiNzJmYzNlNzMzODI4ZmNjY2MwY2E4Mjc4YWNhMjYzM2FhMzNhMjMxYzkzYTY4MmQxNGFjNTRhYTBjNCJ9fX0=") :
-                    GuiAchievements.getCustomSkull("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZDhjNTNiY2U4YWU1OGRjNjkyNDkzNDgxOTA5YjcwZTExYWI3ZTk0MjJkOWQ4NzYzNTEyM2QwNzZjNzEzM2UifX19");
+            ItemStack itemStack = unlocked ? HEAD_1 : HEAD_2;
+            itemStack = itemStack.clone();
             ItemMeta itemMeta = itemStack.getItemMeta();
             itemMeta.setLore(Arrays.asList(achievement.getDescription()));
             itemMeta.setDisplayName((unlocked ? ChatColor.GREEN : ChatColor.RED) + ChatColor.translateAlternateColorCodes('&', achievement.getDisplayName()));
