@@ -50,7 +50,7 @@ public class GuiProfile extends AbstractGui
                 break;
 
             case "achievements":
-                this.hub.getGuiManager().openGui(player, new GuiAchievements(this.hub, null));
+                this.hub.getGuiManager().openGui(player, new GuiAchievements(this.hub, null, 0));
                 break;
 
             case "settings":

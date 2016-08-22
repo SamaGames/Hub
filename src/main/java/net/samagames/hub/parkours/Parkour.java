@@ -1,6 +1,5 @@
 package net.samagames.hub.parkours;
 
-import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import net.samagames.hub.common.players.PlayerManager;
 import net.samagames.tools.ColorUtils;
@@ -219,8 +218,8 @@ public class Parkour
 
         this.removePlayer(player);
 
-        if (this.achievementName != null && !SamaGamesAPI.get().getAchievementManager().isUnlocked(player, this.achievementName))
-            SamaGamesAPI.get().getAchievementManager().getAchievementByID(this.achievementName).unlock(player);
+        /*if (this.achievementName != null && !SamaGamesAPI.get().getAchievementManager().isUnlocked(player, this.achievementName))
+            SamaGamesAPI.get().getAchievementManager().getAchievementByID(this.achievementName).unlock(player);*/
 
         this.restoreFly(player);
     }
