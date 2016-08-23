@@ -99,8 +99,10 @@ public class GuiAchievements extends AbstractGui
             }
             else
             {
+                int target = (progress == null ? ((IncrementationAchievement) achievement).getObjective() : (((IncrementationAchievement) achievement).getObjective() - progress.getProgress()));
+
                 lore.add(ChatColor.DARK_GRAY + "Vous devez effectuer cette action encore");
-                lore.add(ChatColor.DARK_GRAY + String.valueOf((((IncrementationAchievement) achievement).getObjective() - progress.getProgress())) + " fois pour débloquer cet objectif.");
+                lore.add(ChatColor.DARK_GRAY + String.valueOf(target) + " fois pour débloquer cet objectif.");
             }
 
             itemMeta.setLore(lore);
