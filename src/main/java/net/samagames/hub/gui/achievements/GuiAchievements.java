@@ -89,6 +89,8 @@ public class GuiAchievements extends AbstractGui
 
         for (int i = 0; i < itemStackList.size(); i++)
             this.setSlotData(itemStackList.get(i), 10 + i % 7 + i / 7 * 9, i < categories.size() ? "category_" + categories.get(i).getID() : "");
+
+        player.openInventory(this.inventory);
     }
 
     @Override
