@@ -8,6 +8,7 @@ import net.samagames.hub.Hub;
 import net.samagames.hub.gui.AbstractGui;
 import net.samagames.hub.gui.profile.GuiProfile;
 import net.samagames.tools.ItemUtils;
+import org.apache.commons.lang.WordUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -23,8 +24,7 @@ public class GuiAchievements extends AbstractGui
     private static final ItemStack LOCKED_HEAD = ItemUtils.getCustomHead("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZDhjNTNiY2U4YWU1OGRjNjkyNDkzNDgxOTA5YjcwZTExYWI3ZTk0MjJkOWQ4NzYzNTEyM2QwNzZjNzEzM2UifX19");
     private static final ItemStack UNLOCKED_BLUE_HEAD = ItemUtils.getCustomHead("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMTI2ZTM0NjI4N2EyMWRiZmNhNWI1OGMxNDJkOGQ1NzEyYmRjODRmNWI3NWQ0MzE0ZWQyYTgzYjIyMmVmZmEifX19");
     private static final ItemStack UNLOCKED_GOLD_HEAD = ItemUtils.getCustomHead("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYWM3ZjdiNzJmYzNlNzMzODI4ZmNjY2MwY2E4Mjc4YWNhMjYzM2FhMzNhMjMxYzkzYTY4MmQxNGFjNTRhYTBjNCJ9fX0=");
-    private static final DateFormat DATE_FORMATTER = new SimpleDateFormat("EEEE d MMMM yyyy", Locale.FRENCH);
-    private static final DateFormat HOUR_FORMATTER = new SimpleDateFormat("HH:mm");
+    private static final DateFormat DATE_FORMATTER = new SimpleDateFormat("EEEE d MMMM yyyy à HH:mm", Locale.FRENCH);
 
     private AchievementCategory category;
     private int page;
@@ -91,22 +91,21 @@ public class GuiAchievements extends AbstractGui
                 Date unlockDate = new Date();
                 unlockDate.setTime(progress.getUnlockTime().getTime());
 
-                lore.add(ChatColor.GRAY + "Vous avez débloqué cet objectif");
-                lore.add(ChatColor.GRAY + "le : " + DATE_FORMATTER.format(unlockDate));
-                lore.add(ChatColor.GRAY + "à " + HOUR_FORMATTER.format(unlockDate) + ".");
+                lore.add(ChatColor.DARK_GRAY + "Vous avez débloqué cet objectif");
+                lore.add(ChatColor.DARK_GRAY + "le : " + ChatColor.GOLD + WordUtils.capitalize(DATE_FORMATTER.format(unlockDate)) + ChatColor.DARK_GRAY + ".");
             }
             else if (!(achievement instanceof IncrementationAchievement))
             {
-                lore.add(ChatColor.GRAY + "Cet objectif n'est pas encore");
-                lore.add(ChatColor.GRAY + "débloqué.");
+                lore.add(ChatColor.DARK_GRAY + "Cet objectif n'est pas encore");
+                lore.add(ChatColor.DARK_GRAY + "débloqué.");
             }
             else
             {
                 int target = (progress == null ? ((IncrementationAchievement) achievement).getObjective() : (((IncrementationAchievement) achievement).getObjective() - progress.getProgress()));
 
-                lore.add(ChatColor.GRAY + "Vous devez effectuer cette");
-                lore.add(ChatColor.GRAY + "action encore " + String.valueOf(target) + " fois pour");
-                lore.add(ChatColor.GRAY + "débloquer cet objectif.");
+                lore.add(ChatColor.DARK_GRAY + "Vous devez effectuer cette");
+                lore.add(ChatColor.DARK_GRAY + "action encore " + ChatColor.GOLD + String.valueOf(target) + ChatColor.DARK_GRAY + " fois pour");
+                lore.add(ChatColor.DARK_GRAY + "débloquer cet objectif.");
             }
 
             itemMeta.setLore(lore);
