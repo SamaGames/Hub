@@ -2,6 +2,8 @@ package net.samagames.hub.gui.achievements;
 
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.api.achievements.AchievementCategory;
+import net.samagames.api.achievements.AchievementProgress;
+import net.samagames.api.achievements.IncrementationAchievement;
 import net.samagames.hub.Hub;
 import net.samagames.hub.gui.AbstractGui;
 import net.samagames.hub.gui.profile.GuiProfile;
@@ -12,6 +14,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class GuiAchievements extends AbstractGui
@@ -19,6 +23,7 @@ public class GuiAchievements extends AbstractGui
     private static final ItemStack LOCKED_HEAD = ItemUtils.getCustomHead("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZDhjNTNiY2U4YWU1OGRjNjkyNDkzNDgxOTA5YjcwZTExYWI3ZTk0MjJkOWQ4NzYzNTEyM2QwNzZjNzEzM2UifX19");
     private static final ItemStack UNLOCKED_BLUE_HEAD = ItemUtils.getCustomHead("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMTI2ZTM0NjI4N2EyMWRiZmNhNWI1OGMxNDJkOGQ1NzEyYmRjODRmNWI3NWQ0MzE0ZWQyYTgzYjIyMmVmZmEifX19");
     private static final ItemStack UNLOCKED_GOLD_HEAD = ItemUtils.getCustomHead("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYWM3ZjdiNzJmYzNlNzMzODI4ZmNjY2MwY2E4Mjc4YWNhMjYzM2FhMzNhMjMxYzkzYTY4MmQxNGFjNTRhYTBjNCJ9fX0=");
+    private static final DateFormat DATE_FORMATTER = new SimpleDateFormat("EEEE d MMMM yyyy à HH:mm");
 
     private AchievementCategory category;
     private int page;
@@ -34,7 +39,7 @@ public class GuiAchievements extends AbstractGui
     @Override
     public void display(Player player)
     {
-        this.inventory = this.hub.getServer().createInventory(null, 54, "Objectifs (Page " + this.page + 1 + ")");
+        this.inventory = this.hub.getServer().createInventory(null, 54, "Objectifs (Page " + (this.page + 1) + ")");
 
         this.setSlotData(AbstractGui.getBackIcon(), 49, "back");
 
@@ -75,6 +80,28 @@ public class GuiAchievements extends AbstractGui
 
             for (String line : achievement.getDescription())
                 lore.add(ChatColor.GRAY + line);
+
+            lore.add("");
+
+            AchievementProgress progress = achievement.getProgress(player.getUniqueId());
+
+            if (unlocked)
+            {
+                Date unlockDate = new Date();
+                unlockDate.setTime(progress.getUnlockTime().getTime());
+
+                lore.add(ChatColor.DARK_GRAY + "Vous avez débloqué cet objectif le :");
+                lore.add(ChatColor.DARK_GRAY + DATE_FORMATTER.format(unlockDate));
+            }
+            else if (!(achievement instanceof IncrementationAchievement))
+            {
+                lore.add(ChatColor.DARK_GRAY + "Cet objectif n'est pas encore débloqué.");
+            }
+            else
+            {
+                lore.add(ChatColor.DARK_GRAY + "Vous devez effectuer cette action encore");
+                lore.add(ChatColor.DARK_GRAY + String.valueOf((((IncrementationAchievement) achievement).getObjective() - progress.getProgress())) + " fois pour débloquer cet objectif.");
+            }
 
             itemMeta.setLore(lore);
 
