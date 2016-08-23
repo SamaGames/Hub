@@ -100,20 +100,20 @@ public class GuiAchievements extends AbstractGui
         switch (action)
         {
             case "next":
-                SamaGamesAPI.get().getGuiManager().openGui(player, new GuiAchievements(this.hub, this.category, this.page + 1));
+                this.hub.getGuiManager().openGui(player, new GuiAchievements(this.hub, this.category, this.page + 1));
                 break ;
             case "previous":
-                SamaGamesAPI.get().getGuiManager().openGui(player, new GuiAchievements(this.hub, this.category, this.page - 1));
+                this.hub.getGuiManager().openGui(player, new GuiAchievements(this.hub, this.category, this.page - 1));
                 break ;
             case "back":
-                SamaGamesAPI.get().getGuiManager().openGui(player, this.category == null ? new GuiProfile(this.hub) : new GuiAchievements(this.hub, this.category.getParent(), 0));
+                this.hub.getGuiManager().openGui(player, this.category == null ? new GuiProfile(this.hub) : new GuiAchievements(this.hub, this.category.getParent(), 0));
                 break ;
             default:
                 if (action.startsWith("category_"))
                 {
                     Integer id = Integer.parseInt(action.substring(9));
                     AchievementCategory category = SamaGamesAPI.get().getAchievementManager().getAchievementCategoryByID(id);
-                    SamaGamesAPI.get().getGuiManager().openGui(player, new GuiAchievements(this.hub, category, 0));
+                    this.hub.getGuiManager().openGui(player, new GuiAchievements(this.hub, category, 0));
                 }
         }
     }
