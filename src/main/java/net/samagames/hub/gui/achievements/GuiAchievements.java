@@ -15,10 +15,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class GuiAchievements extends AbstractGui
 {
@@ -51,7 +48,11 @@ public class GuiAchievements extends AbstractGui
         {
             ItemStack itemStack = category.getIcon().clone();
             ItemMeta itemMeta = itemStack.getItemMeta();
-            itemMeta.setLore(Arrays.asList(category.getDescription()));
+            List<String> lore = new ArrayList<>();
+            lore.add("");
+            for (String line : category.getDescription())
+                lore.add(ChatColor.GRAY + ChatColor.ITALIC.toString() + line);
+            itemMeta.setLore(lore);
             itemMeta.setDisplayName(ChatColor.GOLD + ChatColor.translateAlternateColorCodes('&', category.getDisplayName()));
             itemStack.setItemMeta(itemMeta);
             itemStackList.add(itemStack);
@@ -64,7 +65,11 @@ public class GuiAchievements extends AbstractGui
             ItemStack itemStack = unlocked ? HEAD_1 : HEAD_2;
             itemStack = itemStack.clone();
             ItemMeta itemMeta = itemStack.getItemMeta();
-            itemMeta.setLore(Arrays.asList(achievement.getDescription()));
+            List<String> lore = new ArrayList<>();
+            lore.add("");
+            for (String line : achievement.getDescription())
+                lore.add(ChatColor.GRAY + ChatColor.ITALIC.toString() + line);
+            itemMeta.setLore(lore);
             itemMeta.setDisplayName((unlocked ? ChatColor.GREEN : ChatColor.RED) + ChatColor.translateAlternateColorCodes('&', achievement.getDisplayName()));
             itemStack.setItemMeta(itemMeta);
             itemStackList.add(itemStack);
