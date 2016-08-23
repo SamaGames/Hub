@@ -7,6 +7,7 @@ import net.samagames.api.SamaGamesAPI;
 import net.samagames.api.achievements.AchievementCategory;
 import net.samagames.hub.Hub;
 import net.samagames.hub.gui.AbstractGui;
+import net.samagames.hub.gui.profile.GuiProfile;
 import net.samagames.tools.Reflection;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -103,6 +104,9 @@ public class GuiAchievements extends AbstractGui
                 break ;
             case "previous":
                 SamaGamesAPI.get().getGuiManager().openGui(player, new GuiAchievements(this.hub, this.category, this.page - 1));
+                break ;
+            case "back":
+                SamaGamesAPI.get().getGuiManager().openGui(player, this.category == null ? new GuiProfile(this.hub) : new GuiAchievements(this.hub, this.category.getParent(), 0));
                 break ;
             default:
                 if (action.startsWith("category_"))
