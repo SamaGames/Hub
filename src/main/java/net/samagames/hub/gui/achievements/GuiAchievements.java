@@ -1,14 +1,11 @@
 package net.samagames.hub.gui.achievements;
 
-import com.mojang.authlib.GameProfile;
-import com.mojang.authlib.properties.Property;
-import com.mojang.authlib.properties.PropertyMap;
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.api.achievements.AchievementCategory;
 import net.samagames.hub.Hub;
 import net.samagames.hub.gui.AbstractGui;
 import net.samagames.hub.gui.profile.GuiProfile;
-import net.samagames.tools.Reflection;
+import net.samagames.tools.ItemUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -19,8 +16,9 @@ import java.util.*;
 
 public class GuiAchievements extends AbstractGui
 {
-    private static final ItemStack HEAD_1 = GuiAchievements.getCustomSkull("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYWM3ZjdiNzJmYzNlNzMzODI4ZmNjY2MwY2E4Mjc4YWNhMjYzM2FhMzNhMjMxYzkzYTY4MmQxNGFjNTRhYTBjNCJ9fX0=");
-    private static final ItemStack HEAD_2 = GuiAchievements.getCustomSkull("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZDhjNTNiY2U4YWU1OGRjNjkyNDkzNDgxOTA5YjcwZTExYWI3ZTk0MjJkOWQ4NzYzNTEyM2QwNzZjNzEzM2UifX19");
+    private static final ItemStack LOCKED_HEAD = ItemUtils.getCustomHead("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZDhjNTNiY2U4YWU1OGRjNjkyNDkzNDgxOTA5YjcwZTExYWI3ZTk0MjJkOWQ4NzYzNTEyM2QwNzZjNzEzM2UifX19");
+    private static final ItemStack UNLOCKED_BLUE_HEAD = ItemUtils.getCustomHead("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMTI2ZTM0NjI4N2EyMWRiZmNhNWI1OGMxNDJkOGQ1NzEyYmRjODRmNWI3NWQ0MzE0ZWQyYTgzYjIyMmVmZmEifX19");
+    private static final ItemStack UNLOCKED_GOLD_HEAD = ItemUtils.getCustomHead("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYWM3ZjdiNzJmYzNlNzMzODI4ZmNjY2MwY2E4Mjc4YWNhMjYzM2FhMzNhMjMxYzkzYTY4MmQxNGFjNTRhYTBjNCJ9fX0=");
 
     private AchievementCategory category;
     private int page;
@@ -36,59 +34,71 @@ public class GuiAchievements extends AbstractGui
     @Override
     public void display(Player player)
     {
-        this.inventory = this.hub.getServer().createInventory(null, 54, "Objectifs");
+        this.inventory = this.hub.getServer().createInventory(null, 54, "Objectifs (Page " + this.page + 1 + ")");
 
         this.setSlotData(AbstractGui.getBackIcon(), 49, "back");
 
         List<ItemStack> itemStackList = new ArrayList<>();
         List<AchievementCategory> categories = new ArrayList<>();
 
-        SamaGamesAPI samaGamesAPI = SamaGamesAPI.get();
-        samaGamesAPI.getAchievementManager().getAchievementsCategories().stream().filter(category -> category.getParent() == this.category).forEach(category ->
+        SamaGamesAPI.get().getAchievementManager().getAchievementsCategories().stream().filter(category -> category.getParent() == this.category).forEach(category ->
         {
             ItemStack itemStack = category.getIcon().clone();
+
             ItemMeta itemMeta = itemStack.getItemMeta();
+            itemMeta.setDisplayName(ChatColor.GOLD + ChatColor.translateAlternateColorCodes('&', category.getDisplayName()));
+
             List<String> lore = new ArrayList<>();
             lore.add("");
+
             for (String line : category.getDescription())
-                lore.add(ChatColor.GRAY + ChatColor.ITALIC.toString() + line);
+                lore.add(ChatColor.GRAY + line);
+
             itemMeta.setLore(lore);
-            itemMeta.setDisplayName(ChatColor.GOLD + ChatColor.translateAlternateColorCodes('&', category.getDisplayName()));
             itemStack.setItemMeta(itemMeta);
+
             itemStackList.add(itemStack);
             categories.add(category);
         });
 
-        samaGamesAPI.getAchievementManager().getAchievements().stream().filter(achievement -> achievement.getParentCategoryID() == this.category).forEach(achievement ->
+        SamaGamesAPI.get().getAchievementManager().getAchievements().stream().filter(achievement -> achievement.getParentCategoryID() == this.category).forEach(achievement ->
         {
             boolean unlocked = achievement.isUnlocked(player.getUniqueId());
-            ItemStack itemStack = unlocked ? HEAD_1 : HEAD_2;
-            itemStack = itemStack.clone();
+
+            ItemStack itemStack = (unlocked ? UNLOCKED_GOLD_HEAD : LOCKED_HEAD).clone();
+
             ItemMeta itemMeta = itemStack.getItemMeta();
+            itemMeta.setDisplayName((unlocked ? ChatColor.GREEN : ChatColor.RED) + ChatColor.translateAlternateColorCodes('&', achievement.getDisplayName()));
+
             List<String> lore = new ArrayList<>();
             lore.add("");
+
             for (String line : achievement.getDescription())
-                lore.add(ChatColor.GRAY + ChatColor.ITALIC.toString() + line);
+                lore.add(ChatColor.GRAY + line);
+
             itemMeta.setLore(lore);
-            itemMeta.setDisplayName((unlocked ? ChatColor.GREEN : ChatColor.RED) + ChatColor.translateAlternateColorCodes('&', achievement.getDisplayName()));
+
             itemStack.setItemMeta(itemMeta);
             itemStackList.add(itemStack);
         });
 
-        if (this.page > 0)
-            this.setSlotData(GuiAchievements.getPageIcon(false), 45, "previous");
-
         for (int i = 0; i < this.page; i++)
+        {
             for (int j = 0; j < 28; j++)
             {
-                if (itemStackList.size() > 0)
+                if (!itemStackList.isEmpty())
                     itemStackList.remove(0);
-                if (categories.size() > 0)
+
+                if (!categories.isEmpty())
                     categories.remove(0);
             }
+        }
+
+        if (this.page > 0)
+            this.setSlotData(ChatColor.YELLOW + "« Page " + (this.page), Material.PAPER, this.inventory.getSize() - 9, null, "page_back");
 
         if (itemStackList.size() > 28)
-            this.setSlotData(GuiAchievements.getPageIcon(true), 53, "next");
+            this.setSlotData(ChatColor.YELLOW + "Page " + (this.page + 2) + " »", Material.PAPER, this.inventory.getSize() - 1, null, "page_next");
 
         while (itemStackList.size() > 28)
             itemStackList.remove(28);
@@ -102,56 +112,22 @@ public class GuiAchievements extends AbstractGui
     @Override
     public void onClick(Player player, ItemStack stack, String action)
     {
-        switch (action)
+        if (action.startsWith("category_"))
         {
-            case "next":
-                this.hub.getGuiManager().openGui(player, new GuiAchievements(this.hub, this.category, this.page + 1));
-                break ;
-            case "previous":
-                this.hub.getGuiManager().openGui(player, new GuiAchievements(this.hub, this.category, this.page - 1));
-                break ;
-            case "back":
-                this.hub.getGuiManager().openGui(player, this.category == null ? new GuiProfile(this.hub) : new GuiAchievements(this.hub, this.category.getParent(), 0));
-                break ;
-            default:
-                if (action.startsWith("category_"))
-                {
-                    Integer id = Integer.parseInt(action.substring(9));
-                    AchievementCategory category = SamaGamesAPI.get().getAchievementManager().getAchievementCategoryByID(id);
-                    this.hub.getGuiManager().openGui(player, new GuiAchievements(this.hub, category, 0));
-                }
+            int id = Integer.parseInt(action.substring(9));
+            this.hub.getGuiManager().openGui(player, new GuiAchievements(this.hub, SamaGamesAPI.get().getAchievementManager().getAchievementCategoryByID(id), 0));
         }
-    }
-
-    private static ItemStack getCustomSkull(String url)
-    {
-        GameProfile profile = new GameProfile(UUID.randomUUID(), null);
-        PropertyMap propertyMap = profile.getProperties();
-        if (propertyMap == null)
-            throw new IllegalStateException("Profile doesn't contain a property map");
-        byte[] encodedData = url.getBytes();
-        propertyMap.put("textures", new Property("textures", new String(encodedData)));
-        ItemStack head = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
-        ItemMeta headMeta = head.getItemMeta();
-        try
+        else if (action.equals("page_back"))
         {
-            Reflection.setValue(headMeta, "profile", profile);
+            this.hub.getGuiManager().openGui(player, new GuiAchievements(this.hub, this.category, this.page - 1));
         }
-        catch (NoSuchFieldException | IllegalAccessException e)
+        else if (action.equals("page_next"))
         {
-            e.printStackTrace();
+            this.hub.getGuiManager().openGui(player, new GuiAchievements(this.hub, this.category, this.page + 1));
         }
-        //Reflections.getField(headMetaClass, "profile", GameProfile.class).set(headMeta, profile);
-        head.setItemMeta(headMeta);
-        return head;
-    }
-
-    private static ItemStack getPageIcon(boolean next)
-    {
-        ItemStack itemStack = new ItemStack(Material.ARROW);
-        ItemMeta itemMeta = itemStack.getItemMeta();
-        itemMeta.setDisplayName("Page " + (next ? "suivante" : "précédente"));
-        itemStack.setItemMeta(itemMeta);
-        return itemStack;
+        else if (action.equals("back"))
+        {
+            this.hub.getGuiManager().openGui(player, this.category == null ? new GuiProfile(this.hub) : new GuiAchievements(this.hub, this.category.getParent(), 0));
+        }
     }
 }

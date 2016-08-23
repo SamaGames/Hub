@@ -3,12 +3,10 @@ package net.samagames.hub.games.shops;
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.api.shops.IItemDescription;
 import net.samagames.hub.Hub;
-import net.samagames.hub.utils.PersistanceUtils;
-import org.bukkit.ChatColor;
+import net.samagames.tools.PersistanceUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.logging.Level;
 
