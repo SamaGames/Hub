@@ -40,7 +40,7 @@ public class GuiAchievements extends AbstractGui
     {
         this.inventory = this.hub.getServer().createInventory(null, 54, "Objectifs");
 
-        this.setSlotData(AbstractGui.getBackIcon(), 50, "back");
+        this.setSlotData(AbstractGui.getBackIcon(), 49, "back");
 
         List<ItemStack> itemStackList = new ArrayList<>();
         List<AchievementCategory> categories = new ArrayList<>();
@@ -70,7 +70,7 @@ public class GuiAchievements extends AbstractGui
         });
 
         if (this.page > 0)
-            this.setSlotData(GuiAchievements.getPageIcon(false), 53, "previous");
+            this.setSlotData(GuiAchievements.getPageIcon(false), 45, "previous");
 
         for (int i = 0; i < this.page; i++)
             for (int j = 0; j < 28; j++)
