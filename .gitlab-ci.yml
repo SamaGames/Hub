@@ -33,4 +33,3 @@ deploy-production:
     - master
   script:
     - 'if [ -f "build.gradle" ]; then scp -prq build/libs/*.jar root@94.23.20.180:/var/www/static/templates/dependencies/; else scp -prq target/*.jar root@94.23.20.180:/var/www/static/templates/dependencies/; fi'
-
