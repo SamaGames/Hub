@@ -39,7 +39,7 @@ public class SamaritanListener implements IPacketsReceiver
         {
             player.playSound(player.getLocation(), Sound.ENTITY_WITHER_SPAWN, 2.0F, 0.75F);
             world.strikeLightningEffect(player.getLocation());
-            FireworkUtils.launchfw(this.hub, player.getLocation(), FIREWORK);
+            this.hub.getServer().getScheduler().runTask(this.hub, () -> FireworkUtils.launchfw(this.hub, player.getLocation(), FIREWORK));
         }
 
         new BukkitRunnable()
