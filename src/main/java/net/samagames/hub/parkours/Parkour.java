@@ -63,7 +63,6 @@ public class Parkour
         this.stars = temporaryStars;
         this.minimalHeight = minimalHeight;
 
-
         spawn.getWorld().getNearbyEntities(spawn, 3.0D, 3.0D, 3.0D).stream().filter(entity -> entity.getType() == EntityType.ARMOR_STAND).forEach(Entity::remove);
         end.getWorld().getNearbyEntities(end, 3.0D, 3.0D, 3.0D).stream().filter(entity -> entity.getType() == EntityType.ARMOR_STAND).forEach(Entity::remove);
 

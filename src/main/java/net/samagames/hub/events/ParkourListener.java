@@ -59,6 +59,7 @@ public class ParkourListener implements Listener
             return;
 
         this.cooldown.add(event.getPlayer().getUniqueId());
+
         this.hub.getServer().getScheduler().runTask(this.hub, () ->
         {
             this.cooldown.remove(event.getPlayer().getUniqueId());

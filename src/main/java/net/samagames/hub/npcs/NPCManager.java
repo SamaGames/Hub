@@ -1,8 +1,11 @@
 package net.samagames.hub.npcs;
 
+import com.google.gson.JsonObject;
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import net.samagames.hub.common.managers.AbstractManager;
+import net.samagames.tools.JsonConfiguration;
+import net.samagames.tools.LocationUtils;
 import net.samagames.tools.npc.nms.CustomNPC;
 import org.bukkit.entity.Player;
 
@@ -12,6 +15,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.logging.Level;
 
 public class NPCManager extends AbstractManager
 {
@@ -25,7 +29,7 @@ public class NPCManager extends AbstractManager
 
         this.npcs = new ArrayList<>();
 
-        /*File configuration = this.reloadConfiguration();
+        File configuration = this.reloadConfiguration();
 
         JsonConfiguration npcsConfig = new JsonConfiguration(configuration);
         JsonObject jsonRoot = npcsConfig.load();
@@ -38,7 +42,6 @@ public class NPCManager extends AbstractManager
 
         this.npcs.add(welcomeTutorialNPC);
         this.log(Level.INFO, "Registered 'Welcome tutorial' NPC!");
-        */
     }
 
     @Override
