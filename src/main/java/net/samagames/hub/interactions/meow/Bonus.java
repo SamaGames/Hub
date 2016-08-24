@@ -75,9 +75,9 @@ class Bonus
         if (!able)
         {
             long millis = new Date(this.getUnlockTime(uuid)).getTime() - new Date().getTime();
-            long days = TimeUnit.MILLISECONDS.toDays(millis);
-            long hours = TimeUnit.MILLISECONDS.toHours(millis);
-            long minutes = TimeUnit.MILLISECONDS.toMinutes(millis);
+            long days = millis / (1000 * 60 * 60 * 24);
+            long hours = (millis / (1000 * 60 * 60)) % 24;
+            long minutes = (millis / (1000 * 60)) % 60;
 
             lore.add(ChatColor.RED + "Vous pourrez récupérer ce bonus");
             lore.add(ChatColor.RED + "dans : " + days + " jour" + (days > 1 ? "s" : "") + " " + hours + " heure" + (hours > 1 ? "s" : "") + " et " + minutes + " minute" + (minutes > 1 ? "s" : "")  + ".");
