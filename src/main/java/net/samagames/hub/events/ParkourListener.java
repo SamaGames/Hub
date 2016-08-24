@@ -56,7 +56,8 @@ public class ParkourListener implements Listener
     public void onPlayerMove(PlayerMoveEvent event)
     {
         if (this.cooldown.contains(event.getPlayer().getUniqueId()))
-            return ;
+            return;
+
         this.cooldown.add(event.getPlayer().getUniqueId());
         this.hub.getServer().getScheduler().runTask(this.hub, () ->
         {

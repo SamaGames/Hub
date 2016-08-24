@@ -53,8 +53,7 @@ public class InventoryEditionListener implements Listener
     @EventHandler
     public void onSecondHandItemSwap(PlayerSwapHandItemsEvent event)
     {
-        if (!this.canDoAction(event.getPlayer()))
-            event.setCancelled(true);
+        event.setCancelled(true);
     }
 
     private boolean canDoAction(Player player)

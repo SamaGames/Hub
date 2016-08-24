@@ -76,21 +76,25 @@ public abstract class AbstractCosmetic implements Comparable<AbstractCosmetic>
             }
 
             GuiConfirm confirm = new GuiConfirm(this.hub, (AbstractGui) this.hub.getGuiManager().getPlayerGui(player), (parent) ->
-                    SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).withdrawStars(this.stars, (newAmount, difference, error) ->
-                            SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).addItem(this.storageId, 0, this.stars, false, (success, throwable) ->
-                            {
-                                if (success)
-                                {
-                                    this.hub.getScoreboardManager().update(player);
-                                    this.hub.getGuiManager().openGui(player, parent);
+            {
+                SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).withdrawStars(this.stars, (newAmount, difference, error) ->
+                {
+                    SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).addItem(this.storageId, 0, this.stars, false, (success, throwable) ->
+                    {
+                        if (success)
+                        {
+                            this.hub.getScoreboardManager().update(player);
+                            this.hub.getGuiManager().openGui(player, parent);
 
-                                    player.sendMessage(PlayerManager.COSMETICS_TAG + ChatColor.GREEN + "Votre achat a bien été effectué, vous pouvez maintenant utiliser votre cosmétique.");
-                                }
-                                else
-                                {
-                                    throwable.printStackTrace();
-                                }
-                            })));
+                            player.sendMessage(PlayerManager.COSMETICS_TAG + ChatColor.GREEN + "Votre achat a bien été effectué, vous pouvez maintenant utiliser votre cosmétique.");
+                        }
+                        else
+                        {
+                            throwable.printStackTrace();
+                        }
+                    });
+                });
+            });
 
             this.hub.getGuiManager().openGui(player, confirm);
         }

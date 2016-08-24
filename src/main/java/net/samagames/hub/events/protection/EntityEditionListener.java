@@ -1,6 +1,7 @@
 package net.samagames.hub.events.protection;
 
 import net.samagames.hub.Hub;
+import org.bukkit.GameMode;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -79,8 +80,7 @@ public class EntityEditionListener implements Listener
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerFood(FoodLevelChangeEvent event)
     {
-        if (event.getEntity() instanceof Player)
-            event.setCancelled(true);
+        event.setCancelled(true);
     }
 
     @EventHandler
@@ -95,14 +95,15 @@ public class EntityEditionListener implements Listener
         event.setCancelled(true);
     }
 
-    private boolean canDoAction(Player player)
-    {
-        return this.hub.getPlayerManager().canBuild() && player != null && player.isOp();
-    }
-
     @EventHandler
     public void onArmorStandEdit(PlayerArmorStandManipulateEvent event)
     {
-        event.setCancelled(true);
+        if (!this.canDoAction(event.getPlayer()))
+            event.setCancelled(true);
+    }
+
+    private boolean canDoAction(Player player)
+    {
+        return this.hub.getPlayerManager().canBuild() && player != null && player.isOp() && player.getGameMode() == GameMode.CREATIVE;
     }
 }

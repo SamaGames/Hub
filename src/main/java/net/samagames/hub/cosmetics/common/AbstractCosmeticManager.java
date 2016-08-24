@@ -57,6 +57,8 @@ public abstract class AbstractCosmeticManager<COSMETIC extends AbstractCosmetic>
                     this.enableCosmetic(player, cosmetic, null);
                     this.equipped.put(player.getUniqueId(), cosmetic);
 
+                    this.resetCurrents(player);
+
                     try
                     {
                         SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).setSelectedItem(cosmetic.getStorageId(), true);

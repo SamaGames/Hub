@@ -3,6 +3,7 @@ package net.samagames.hub.events.protection;
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_9_R2.entity.CraftPlayer;
 import org.bukkit.entity.Player;
@@ -58,9 +59,6 @@ public class PlayerProtectionListener implements Listener
         if (event.getItem() != null && event.getItem().getType() == Material.WRITTEN_BOOK)
             return;
 
-        if (!this.canDoAction(event.getPlayer()))
-            event.setCancelled(true);
-
         this.hub.getServer().getScheduler().runTaskAsynchronously(this.hub, () ->
         {
             if (SamaGamesAPI.get().getPermissionsManager().hasPermission(event.getPlayer(), "hub.sign.selection"))
@@ -79,11 +77,6 @@ public class PlayerProtectionListener implements Listener
         });
     }
 
-    private boolean canDoAction(Player player)
-    {
-        return this.hub.getPlayerManager().canBuild() && player.isOp();
-    }
-
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerMove(PlayerMoveEvent event)
     {
@@ -99,5 +92,10 @@ public class PlayerProtectionListener implements Listener
                     ((CraftPlayer)event.getPlayer()).getHandle().setFlag(7, false);
             }, 1);
         }
+    }
+
+    private boolean canDoAction(Player player)
+    {
+        return this.hub.getPlayerManager().canBuild() && player != null && player.isOp() && player.getGameMode() == GameMode.CREATIVE;
     }
 }
