@@ -7,6 +7,7 @@ import net.samagames.hub.common.managers.AbstractManager;
 import net.samagames.tools.JsonConfiguration;
 import net.samagames.tools.LocationUtils;
 import net.samagames.tools.npc.nms.CustomNPC;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import java.io.File;
@@ -37,7 +38,7 @@ public class NPCManager extends AbstractManager
         if (jsonRoot == null)
             return;
 
-        CustomNPC welcomeTutorialNPC = SamaGamesAPI.get().getNPCManager().createNPC(LocationUtils.str2loc(jsonRoot.get("welcome-tutorial").getAsString()), AURELIEN_SAMA_UUID, "Aurelien_Sama");
+        CustomNPC welcomeTutorialNPC = SamaGamesAPI.get().getNPCManager().createNPC(LocationUtils.str2loc(jsonRoot.get("welcome-tutorial").getAsString()), AURELIEN_SAMA_UUID, ChatColor.GOLD + "" + ChatColor.BOLD + "Tutoriel de Bienvenue");
         welcomeTutorialNPC.setCallback(new WelcomeTutorialNPCAction(hub));
 
         this.npcs.add(welcomeTutorialNPC);
