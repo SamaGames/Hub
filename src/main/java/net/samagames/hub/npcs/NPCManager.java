@@ -1,19 +1,24 @@
 package net.samagames.hub.npcs;
 
 import com.google.gson.JsonObject;
+import com.mojang.authlib.GameProfile;
+import com.mojang.authlib.properties.Property;
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import net.samagames.hub.common.managers.AbstractManager;
 import net.samagames.tools.JsonConfiguration;
 import net.samagames.tools.LocationUtils;
 import net.samagames.tools.npc.nms.CustomNPC;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.craftbukkit.v1_9_R2.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 import java.util.logging.Level;
@@ -55,7 +60,21 @@ public class NPCManager extends AbstractManager
     }
 
     @Override
-    public void onLogin(Player player) { /** Not needed **/ }
+    public void onLogin(Player player)
+    {
+        GameProfile profile = ((CraftPlayer) player).getProfile();
+
+        Bukkit.broadcastMessage("Handling login (" + profile.getName() + ")");
+
+        for (String key : profile.getProperties().keySet())
+        {
+            for (Property property : profile.getProperties().get(key))
+            {
+                Bukkit.broadcastMessage(key + ":" + property.getName() + ":" + property.getValue() + ":" + property.getSignature());
+                Bukkit.getLogger().info(key + ":" + property.getName() + ":" + property.getValue() + ":" + property.getSignature());
+            }
+        }
+    }
 
     @Override
     public void onLogout(Player player) { /** Not needed **/ }
