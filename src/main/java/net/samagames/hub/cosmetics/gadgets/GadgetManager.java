@@ -29,7 +29,6 @@ public class GadgetManager extends AbstractCosmeticManager<GadgetCosmetic>
     private final Map<UUID, AbstractDisplayer> playersGadgets;
     private final List<Location> blocksUsed;
 
-
     public GadgetManager(Hub hub)
     {
         super(hub, new GadgetRegistry(hub));
@@ -132,6 +131,7 @@ public class GadgetManager extends AbstractCosmeticManager<GadgetCosmetic>
     public void callbackGadget(AbstractDisplayer displayer)
     {
         displayer.getBlocksUsed().keySet().forEach(this.blocksUsed::remove);
+
         this.playersGadgets.remove(displayer.getPlayer().getUniqueId());
     }
 
@@ -170,6 +170,15 @@ public class GadgetManager extends AbstractCosmeticManager<GadgetCosmetic>
     public boolean hasGadget(UUID player)
     {
         return this.playersGadgets.containsKey(player);
+    }
+
+    public boolean isInteracting(Player player)
+    {
+        for (AbstractDisplayer displayer : this.playersGadgets.values())
+            if (displayer.isInteractionsEnabled() && displayer.isInteractingWith(player))
+                return true;
+
+        return false;
     }
 
     static

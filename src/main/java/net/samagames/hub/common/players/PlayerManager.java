@@ -250,18 +250,18 @@ public class PlayerManager extends AbstractManager
 
     public boolean isBusy(Player player)
     {
-        boolean busy = false;
-
         if (this.hub.getGuiManager().getPlayerGui(player.getUniqueId()) != null)
-            busy = true;
+            return true;
         else if (this.hub.getParkourManager().getPlayerParkour(player.getUniqueId()) != null)
-            busy = true;
+            return true;
         else if (this.hub.getInteractionManager().isInteracting(player))
-            busy = true;
+            return true;
         else if (this.hub.getCosmeticManager().getGadgetManager().hasGadget(player))
-            busy = true;
+            return true;
+        else if (this.hub.getCosmeticManager().getGadgetManager().isInteracting(player))
+            return true;
 
-        return busy;
+        return false;
     }
 
     public boolean canBuild()

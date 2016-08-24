@@ -6,9 +6,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 public abstract class AbstractDisplayer
 {
@@ -18,6 +16,7 @@ public abstract class AbstractDisplayer
     protected final Player player;
     protected final Map<Location, SimpleBlock> blocksUsed;
     protected final Map<Location, SimpleBlock> blocksBefore;
+    protected final List<UUID> interactingPlayers;
     protected Location baseLocation;
 
     public AbstractDisplayer(Hub hub, Player player)
@@ -26,6 +25,7 @@ public abstract class AbstractDisplayer
         this.player = player;
         this.blocksUsed = new HashMap<>();
         this.blocksBefore = new HashMap<>();
+        this.interactingPlayers = new ArrayList<>();
         this.baseLocation = player.getLocation();
     }
 
@@ -54,7 +54,11 @@ public abstract class AbstractDisplayer
         }
     }
 
-    @SuppressWarnings("deprecation")
+    public void interactWith(Player player)
+    {
+        this.interactingPlayers.add(player.getUniqueId());
+    }
+
     public void restore()
     {
         for (Location block : this.blocksUsed.keySet())
@@ -67,7 +71,6 @@ public abstract class AbstractDisplayer
         this.blocksBefore.clear();
     }
 
-    @SuppressWarnings("deprecation")
     public void restore(Location location)
     {
         Location finalLocation = new Location(location.getWorld(), location.getBlockX(), location.getBlockY(), location.getBlockZ());
@@ -99,5 +102,10 @@ public abstract class AbstractDisplayer
     public boolean isBlockUsed(Location location)
     {
         return this.blocksUsed.containsKey(new Location(location.getWorld(), location.getBlockX(), location.getBlockY(), location.getBlockZ()));
+    }
+
+    public boolean isInteractingWith(Player player)
+    {
+        return this.interactingPlayers.contains(player.getUniqueId());
     }
 }

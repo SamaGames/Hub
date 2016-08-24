@@ -60,6 +60,7 @@ public class PerchedCatDisplayer extends AbstractDisplayer
             if (this.waitingFirstInteraction && who.getUniqueId().equals(this.player.getUniqueId()))
             {
                 this.playerTargeted = with.getUniqueId();
+                this.interactWith((Player) with);
 
                 this.playerWasFlying = this.player.getAllowFlight();
                 this.targetWasFlying = ((Player) with).getAllowFlight();

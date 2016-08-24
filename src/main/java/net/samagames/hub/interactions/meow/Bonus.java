@@ -80,7 +80,8 @@ class Bonus
             long minutes = (millis / (1000 * 60)) % 60;
 
             lore.add(ChatColor.RED + "Vous pourrez récupérer ce bonus");
-            lore.add(ChatColor.RED + "dans : " + days + " jour" + (days > 1 ? "s" : "") + " " + hours + " heure" + (hours > 1 ? "s" : "") + " et " + minutes + " minute" + (minutes > 1 ? "s" : "")  + ".");
+            lore.add(ChatColor.RED + "dans : ");
+            lore.add(ChatColor.RED + "" + days + " jour" + (days > 1 ? "s" : "") + " " + hours + " heure" + (hours > 1 ? "s" : "") + " et " + minutes + " minute" + (minutes > 1 ? "s" : "")  + ".");
         }
         else
         {
