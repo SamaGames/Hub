@@ -33,7 +33,7 @@ public class SamaritanListener implements IPacketsReceiver
         World world = this.hub.getWorld();
         world.setTime(world.getTime() == DAY ? NIGHT : DAY);
 
-        this.hub.getServer().broadcastMessage(TAG + "Le joueur " + ChatColor.LIGHT_PURPLE + ChatColor.BOLD + cheater + ChatColor.DARK_PURPLE + " a été banni pour la raison " + ChatColor.LIGHT_PURPLE + ChatColor.BOLD + reason + ChatColor.DARK_PURPLE + ChatColor.BOLD + ".");
+        this.hub.getServer().broadcastMessage(TAG + "Le joueur " + ChatColor.LIGHT_PURPLE + ChatColor.BOLD + cheater + ChatColor.DARK_PURPLE + ChatColor.BOLD + " a été banni pour la raison " + ChatColor.LIGHT_PURPLE + ChatColor.BOLD + reason + ChatColor.DARK_PURPLE + ChatColor.BOLD + ".");
 
         for (Player player : this.hub.getServer().getOnlinePlayers())
         {
