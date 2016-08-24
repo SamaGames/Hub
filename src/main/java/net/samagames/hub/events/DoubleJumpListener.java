@@ -50,11 +50,14 @@ public class DoubleJumpListener implements Listener
         if (!this.allowed.contains(event.getPlayer().getUniqueId()))
             return;
 
+        this.allowed.remove(event.getPlayer().getUniqueId());
+
+        if (this.hub.getPlayerManager().isBusy(event.getPlayer()))
+            return;
+
         event.setCancelled(true);
         event.getPlayer().setVelocity(event.getPlayer().getLocation().getDirection().multiply(1.6D).setY(1.0D));
         event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.ENTITY_ENDERDRAGON_FLAP, 1.0F, 1.0F);
         event.getPlayer().setAllowFlight(false);
-
-        this.allowed.remove(event.getPlayer().getUniqueId());
     }
 }
