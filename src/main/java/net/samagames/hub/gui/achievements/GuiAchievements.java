@@ -12,6 +12,7 @@ import org.apache.commons.lang.WordUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -62,6 +63,8 @@ public class GuiAchievements extends AbstractGui
 
             itemMeta.setLore(lore);
             itemStack.setItemMeta(itemMeta);
+            
+            itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 
             itemStackList.add(itemStack);
             categories.add(category);
@@ -109,6 +112,8 @@ public class GuiAchievements extends AbstractGui
             }
 
             itemMeta.setLore(lore);
+
+            itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 
             itemStack.setItemMeta(itemMeta);
             itemStackList.add(itemStack);
