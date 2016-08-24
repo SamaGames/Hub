@@ -54,7 +54,7 @@ class Bonus
 
         String key = "bonus:" + uuid.toString() + ":" + this.id;
 
-        jedis.set(key, String.valueOf(millis));
+        jedis.set(key, String.valueOf(calendar.getTime().getTime()));
         jedis.expire(key, (int) seconds);
 
         jedis.close();
