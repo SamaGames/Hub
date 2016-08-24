@@ -74,8 +74,13 @@ class Bonus
 
         if (!able)
         {
-            lore.add(ChatColor.RED + "Vous ne pouvez pas récupérer");
-            lore.add(ChatColor.RED + "votre bonus pour le moment.");
+            long remaining = this.getUnlockTime(uuid) - new Date().getTime();
+            long minutes = (remaining / (1000 * 60)) % 60;
+            long hours = (remaining / (1000 * 60 * 60)) % 24;
+            long days = remaining / (1000 * 60 * 60 * 24);
+
+            lore.add(ChatColor.RED + "Vous pourrez récupérer ce bonus");
+            lore.add(ChatColor.RED + "dans : " + days + " jour" + (days > 1 ? "s" : "") + " " + hours + " heure" + (hours > 1 ? "s" : "") + " et " + minutes + " minute" + (minutes > 1 ? "s" : "")  + ".");
         }
         else
         {

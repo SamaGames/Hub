@@ -52,7 +52,7 @@ public class SamaritanListener implements IPacketsReceiver
                 SamaritanListener.this.hub.getWorld().getEntitiesByClass(ArmorStand.class).stream().filter(entity -> entity.getCustomName() != null && entity.getCustomName().equals("Helicot")).forEach(entity ->
                 {
                     Location to = entity.getLocation().clone();
-                    to.setYaw(entity.getLocation().getYaw() + 50);
+                    to.setYaw(entity.getLocation().getYaw() + 75);
 
                     entity.teleport(to);
                 });
