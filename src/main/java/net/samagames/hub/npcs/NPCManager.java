@@ -46,7 +46,7 @@ public class NPCManager extends AbstractManager
         }).setCallback(new WelcomeTutorialNPCAction(hub));
 
         GameProfile blueSlime = ProfileLoader.loadProfile(UUID.fromString("29b2b527-1b59-45df-b7b0-d5ab20d8731a"), "IamBlueSlime", UUID.fromString("29b2b527-1b59-45df-b7b0-d5ab20d8731a"));
-        this.log(Level.INFO, "BlueSlime profile: " + ProfileLoader.SERIALIZER.toJson(blueSlime.getProperties().get("textures"));
+        this.log(Level.INFO, "BlueSlime profile: " + ProfileLoader.SERIALIZER.toJson(blueSlime.getProperties().get("textures")));
 
         this.npcs.add(welcomeTutorialNPC);
         this.log(Level.INFO, "Registered 'Welcome tutorial' NPC!");
