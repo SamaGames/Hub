@@ -57,7 +57,7 @@ public class SamaritanListener implements IPacketsReceiver
                     entity.teleport(to);
                 });
 
-                if (this.loop == 4 * 5)
+                if (this.loop == 4 * 3)
                     this.cancel();
                 else
                     this.loop++;
