@@ -21,6 +21,7 @@ import java.util.logging.Level;
 public class NPCManager extends AbstractManager
 {
     private static final UUID AURELIEN_SAMA_UUID = UUID.fromString("c59220b1-662f-4aa8-b9d9-72660eb97c10");
+    private static final UUID BLUESLIME_UUID = UUID.fromString("29b2b527-1b59-45df-b7b0-d5ab20d8731a");
 
     private final List<CustomNPC> npcs;
 
@@ -43,7 +44,7 @@ public class NPCManager extends AbstractManager
                 ChatColor.YELLOW + "" + ChatColor.BOLD + "CLIC DROIT"
         }).setCallback(new WelcomeTutorialNPCAction(hub));*/
 
-        CustomNPC welcomeTutorialNPC = SamaGamesAPI.get().getNPCManager().createNPC(LocationUtils.str2loc(jsonRoot.get("welcome-tutorial").getAsString()), AURELIEN_SAMA_UUID, new String[] {
+        CustomNPC welcomeTutorialNPC = SamaGamesAPI.get().getNPCManager().createNPC(LocationUtils.str2loc(jsonRoot.get("welcome-tutorial").getAsString()), BLUESLIME_UUID, new String[] {
             ChatColor.GOLD + "" + ChatColor.BOLD + "Tutoriel de Bienvenue",
             ChatColor.YELLOW + "" + ChatColor.BOLD + "CLIC DROIT"
         }).setCallback(new WelcomeTutorialNPCAction(hub));
