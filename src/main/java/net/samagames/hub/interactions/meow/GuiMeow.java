@@ -3,6 +3,7 @@ package net.samagames.hub.interactions.meow;
 import net.samagames.hub.Hub;
 import net.samagames.hub.gui.AbstractGui;
 import org.bukkit.ChatColor;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
@@ -61,6 +62,7 @@ class GuiMeow extends AbstractGui
         else if (action.equals("taken"))
         {
             player.sendMessage(Meow.TAG + ChatColor.RED + "Vous ne pouvez récupérer ce bonus pour le moment.");
+            player.playSound(player.getLocation(), Sound.ENTITY_CAT_HISS, 1.0F, 1.0F);
         }
         else if (action.equals("back"))
         {
