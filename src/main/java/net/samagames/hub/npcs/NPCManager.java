@@ -8,7 +8,9 @@ import net.samagames.tools.JsonConfiguration;
 import net.samagames.tools.LocationUtils;
 import net.samagames.tools.npc.nms.CustomNPC;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import java.io.File;
 import java.io.IOException;
@@ -48,6 +50,8 @@ public class NPCManager extends AbstractManager
             ChatColor.GOLD + "" + ChatColor.BOLD + "Tutoriel de Bienvenue",
             ChatColor.YELLOW + "" + ChatColor.BOLD + "CLIC DROIT"
         }).setCallback(new WelcomeTutorialNPCAction(hub));
+
+        welcomeTutorialNPC.getBukkitEntity().getInventory().setItemInMainHand(new ItemStack(Material.MAP, 1));
 
         this.npcs.add(welcomeTutorialNPC);
         this.log(Level.INFO, "Registered 'Welcome tutorial' NPC!");
