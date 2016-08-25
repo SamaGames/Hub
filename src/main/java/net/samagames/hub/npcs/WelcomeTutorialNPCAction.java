@@ -73,23 +73,23 @@ public class WelcomeTutorialNPCAction implements NPCInteractCallback
 
         /**
          * Chapter VI
-         * Location: At the spawn before the Uppervoid's yodel
+         * Location: In front of a tornado
          */
-        this.tuturial.addChapter(new TutorialChapter(new Location(hub.getWorld(), -12.0D, 109.5D, 7.7D, -22.7F, 33.5F), ChatColor.GOLD + "Et si je suis perdu ?", Arrays.asList(
+        this.tuturial.addChapter(new TutorialChapter(new Location(hub.getWorld(), 12.5D, 72.0D, -25.5D, -54.0F, 24.6F), ChatColor.GOLD + "Et si je suis perdu ?", Arrays.asList(
                 "Ne vous inquiétez pas !",
-                "Cherchez les tornades qui nous offrirons ;",
-                "un voyage dans le ciel pour vous retrouver."
+                "Cherchez les tornades qui vous offrirons",
+                "un voyage dans le ciel afin de vous retrouver."
         ), true));
 
         /**
          * Chapter VII
-         * Location: On front of Meow
+         * Location: In front of Meow
          */
         this.tuturial.addChapter(new TutorialChapter(new Location(hub.getWorld(), -8.5D, 108.0D, -1.5D, -56.7F, 0.0F), ChatColor.GOLD + "Qui est Meow ?", Arrays.asList(
                 "Voici Meow, notre chat.",
-                "Il est encore en train d'emménager...",
-                "Allez parfois prendre de ses nouvelles ;",
-                "il aura beaucoup à vous dire bientôt..."
+                "C'est à lui que vous pourrez récupérer",
+                "Certains bonus dont ceux offert avec",
+                "l'achat d'un grade."
         ), true));
 
         /**
@@ -107,6 +107,7 @@ public class WelcomeTutorialNPCAction implements NPCInteractCallback
     @Override
     public void done(boolean right, Player player)
     {
-        this.tuturial.start(player.getUniqueId());
+        if (right)
+            this.tuturial.start(player.getUniqueId());
     }
 }
