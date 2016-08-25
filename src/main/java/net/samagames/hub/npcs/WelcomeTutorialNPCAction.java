@@ -1,5 +1,6 @@
 package net.samagames.hub.npcs;
 
+import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import net.samagames.tools.npc.NPCInteractCallback;
 import net.samagames.tools.tutorials.Tutorial;
@@ -9,20 +10,21 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import java.util.Arrays;
+import java.util.function.Consumer;
 
 public class WelcomeTutorialNPCAction implements NPCInteractCallback
 {
-    private final Tutorial tuturial;
+    private final NPCTutorial tuturial;
 
     public WelcomeTutorialNPCAction(Hub hub)
     {
-        this.tuturial = new Tutorial();
+        this.tuturial = new NPCTutorial();
 
         /**
          * Chapter I
          * Location: On the wheel of the Dimensions sign
          */
-        this.tuturial.addChapter(new TutorialChapter(new Location(hub.getWorld(), -18.5D, 130.0D, -55.5D, -7.1F, 23.5F), ChatColor.GOLD + "Salut l'aventurier !", Arrays.asList(
+        this.tuturial.addChapter(new TutorialChapter(new Location(hub.getWorld(), -20.5D, 132.0D, -55.1D, -10F, 22.5F), ChatColor.GOLD + "Salut l'aventurier !", Arrays.asList(
                 "Bienvenue sur SamaGames !",
                 "Laissez-moi donc vous guider..."
         ), true));
@@ -31,7 +33,7 @@ public class WelcomeTutorialNPCAction implements NPCInteractCallback
          * Chapter II
          * Location: On the 'S' under the golden apple
          */
-        this.tuturial.addChapter(new TutorialChapter(new Location(hub.getWorld(), 36.5D, 131.0D, -4.5D, 86.2F, 26.9F), ChatColor.GOLD + "Kékesé SamaGames ?", Arrays.asList(
+        this.tuturial.addChapter(new TutorialChapter(new Location(hub.getWorld(), 36.5D, 133.0D, -4.5D, 89.2F, 26.3F), ChatColor.GOLD + "Kékesé SamaGames ?", Arrays.asList(
                 "Ceci est un très bon début ;)",
                 "SamaGames est un serveur mini-jeux ;",
                 "mais nous savons que jouer seul est ennuyant...",
@@ -42,7 +44,7 @@ public class WelcomeTutorialNPCAction implements NPCInteractCallback
          * Chapter III
          * Location: On a spark of the Uppervoid tnt
          */
-        this.tuturial.addChapter(new TutorialChapter(new Location(hub.getWorld(), -6.5D, 131.0D, 70.5D, 176.1F, 18.0F), ChatColor.GOLD + "Où suis-je ?", Arrays.asList(
+        this.tuturial.addChapter(new TutorialChapter(new Location(hub.getWorld(), -10.5D, 131.0D, 70.5D, 179.2F, 19.7F), ChatColor.GOLD + "Où suis-je ?", Arrays.asList(
                 "Vous êtes actuellement au Hub !",
                 "C'est ici que vous vous connectez.",
                 "C'est un lieu de détente et de partage ;",
@@ -53,7 +55,7 @@ public class WelcomeTutorialNPCAction implements NPCInteractCallback
          * Chapter IV
          * Location: On front of the DoubleRunner's signs
          */
-        this.tuturial.addChapter(new TutorialChapter(new Location(hub.getWorld(), 44.5D, 104.0D, 34.5D, -90.0F, 0.0F), ChatColor.GOLD + "Comment jouer ?", Arrays.asList(
+        this.tuturial.addChapter(new TutorialChapter(new Location(hub.getWorld(), 41.5D, 106.0D, 34.5D, -90.0F, 22.3F), ChatColor.GOLD + "Comment jouer ?", Arrays.asList(
                 "Voici des panneaux de jeu.",
                 "En cliquant dessus vous serez en attente.",
                 "Quand assez de joueurs seront en attente ;",
@@ -85,7 +87,7 @@ public class WelcomeTutorialNPCAction implements NPCInteractCallback
          * Chapter VII
          * Location: In front of Meow
          */
-        this.tuturial.addChapter(new TutorialChapter(new Location(hub.getWorld(), -8.5D, 108.0D, -1.5D, -56.7F, 0.0F), ChatColor.GOLD + "Qui est Meow ?", Arrays.asList(
+        this.tuturial.addChapter(new TutorialChapter(new Location(hub.getWorld(), -9.0D, 110.5D, -1.5D, -59.0F, 38.4F), ChatColor.GOLD + "Qui est Meow ?", Arrays.asList(
                 "Voici Meow, notre chat.",
                 "C'est à lui que vous pourrez récupérer",
                 "Certains bonus dont ceux offert avec",
@@ -102,12 +104,28 @@ public class WelcomeTutorialNPCAction implements NPCInteractCallback
                 "A vous de voyager et de les trouver !",
                 "Bon jeu sur SamaGames !"
         ), true));
+
+        this.tuturial.onTutorialEnds((player, interrupted) ->
+        {
+            if (interrupted)
+                return;
+
+            hub.getServer().getScheduler().runTask(hub, () ->
+            {
+                SamaGamesAPI.get().getAchievementManager().getAchievementByID(1).unlock(player.getUniqueId());
+
+                if (player.hasPermission("hub.fly"))
+                    player.setAllowFlight(true);
+            });
+        });
     }
 
     @Override
     public void done(boolean right, Player player)
     {
         if (right)
+        {
             this.tuturial.start(player.getUniqueId());
+        }
     }
 }
