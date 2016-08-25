@@ -116,6 +116,8 @@ public class WelcomeTutorialNPCAction implements NPCInteractCallback
 
                 if (player.hasPermission("hub.fly"))
                     player.setAllowFlight(true);
+
+                hub.getPlayerManager().getStaticInventory().setInventoryToPlayer(player);
             });
         });
     }
@@ -125,6 +127,7 @@ public class WelcomeTutorialNPCAction implements NPCInteractCallback
     {
         if (right)
         {
+            player.getInventory().clear();
             this.tuturial.start(player.getUniqueId());
         }
     }
