@@ -38,7 +38,7 @@ public class NPCManager extends AbstractManager
         if (jsonRoot == null)
             return;
 
-        CustomNPC welcomeTutorialNPC = SamaGamesAPI.get().getNPCManager().createNPC(LocationUtils.str2loc(jsonRoot.get("welcome-tutorial").getAsString()), "https://rigner.ovh/skin.png" /* Just for test */, null, new String[] {
+        CustomNPC welcomeTutorialNPC = SamaGamesAPI.get().getNPCManager().createNPC(LocationUtils.str2loc(jsonRoot.get("welcome-tutorial").getAsString()), "http://image.noelshack.com/fichiers/2016/34/1472084356-fr-minecraft-skin-31w6-aurelien-sama.png" /* Just for test */, null, new String[] {
                 ChatColor.GOLD + "" + ChatColor.BOLD + "Tutoriel de Bienvenue",
                 ChatColor.YELLOW + "" + ChatColor.BOLD + "CLIC DROIT"
         }).setCallback(new WelcomeTutorialNPCAction(hub));
