@@ -24,6 +24,7 @@ import net.samagames.hub.games.leaderboards.HubLeaderboard;
 import net.samagames.hub.games.leaderboards.RotatingLeaderboard;
 import net.samagames.hub.games.signs.SignManager;
 import net.samagames.hub.gui.GuiManager;
+import net.samagames.hub.gui.achievements.GuiAchievements;
 import net.samagames.hub.interactions.InteractionManager;
 import net.samagames.hub.npcs.NPCManager;
 import net.samagames.hub.parkours.ParkourManager;
@@ -107,6 +108,8 @@ public class Hub extends JavaPlugin
 
         this.cosmeticManager = new CosmeticManager(this);
         this.cosmeticManager.init();
+
+        GuiAchievements.createCache();
 
         this.getServer().getPluginManager().registerEvents(new PlayerListener(this), this);
         this.getServer().getPluginManager().registerEvents(new ParkourListener(this), this);
