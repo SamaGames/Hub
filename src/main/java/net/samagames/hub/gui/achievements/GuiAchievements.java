@@ -49,7 +49,7 @@ public class GuiAchievements extends AbstractGui
     @Override
     public void display(Player player)
     {
-        this.inventory = this.hub.getServer().createInventory(null, 54, "Objectifs (Page " + (this.page + 1) + ")");
+        this.inventory = this.hub.getServer().createInventory(null, 54, "Objectifs" + (this.category != null ? "Page " + (this.page + 1) + ")" : ""));
 
         int[] baseSlots = {10, 11, 12, 13, 14, 15, 16};
         int lines = 0;
@@ -140,10 +140,10 @@ public class GuiAchievements extends AbstractGui
             }
         }
 
-        if (this.page > 0)
+        if (this.category != null && this.page > 0)
             this.setSlotData(ChatColor.YELLOW + "« Page " + (this.page), Material.PAPER, this.inventory.getSize() - 9, null, "page_back");
 
-        if (CACHE.contains(this.category.getID(), this.page + 1))
+        if (this.category != null && CACHE.contains(this.category.getID(), this.page + 1))
             this.setSlotData(ChatColor.YELLOW + "Page " + (this.page + 2) + " »", Material.PAPER, this.inventory.getSize() - 1, null, "page_next");
 
         this.setSlotData(AbstractGui.getBackIcon(), 49, "back");
@@ -295,7 +295,7 @@ public class GuiAchievements extends AbstractGui
                         CACHE.put(categoryId, page, new ArrayList<>());
 
                     CACHE.get(categoryId, page).add(Triple.of(slot, achievementId, columnPair.getRight()));
-                    
+
                     System.out.println("> Setted achievement " + achievementId + " at the slot " + slot + " on the page " + page);
 
                     slot -= 9;
