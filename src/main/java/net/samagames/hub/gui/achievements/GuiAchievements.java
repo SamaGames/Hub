@@ -289,7 +289,7 @@ public class GuiAchievements extends AbstractGui
             {
                 for (int achievementId : columnPair.getLeft())
                 {
-                    if (CACHE.contains(categoryId, page))
+                    if (!CACHE.contains(categoryId, page))
                         CACHE.put(categoryId, page, new ArrayList<>());
 
                     CACHE.get(categoryId, page).add(Triple.of(slot, achievementId, columnPair.getRight()));
