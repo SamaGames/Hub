@@ -228,7 +228,7 @@ public class GuiAchievements extends AbstractGui
                         String remainingAchievementConcatenated = Arrays.toString(remainingAchievement.getDescription());
                         String remainingAchievementCleared = remainingAchievementConcatenated.replaceAll("[^A-Za-z]+", "");
 
-                        if (SimilarityUtils.similarity(cleared, remainingAchievementCleared) > 0.5D)
+                        if (SimilarityUtils.similarity(cleared, remainingAchievementCleared) > 0.8D)
                         {
                             System.out.println(">>> Description equals! Adding " + remainingAchievementId + " into the family.");
 

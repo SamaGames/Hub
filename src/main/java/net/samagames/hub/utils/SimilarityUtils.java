@@ -1,5 +1,8 @@
 package net.samagames.hub.utils;
 
+/**
+ * http://stackoverflow.com/questions/955110/similarity-string-comparison-in-java
+ */
 public class SimilarityUtils
 {
     public static double similarity(String s1, String s2)
