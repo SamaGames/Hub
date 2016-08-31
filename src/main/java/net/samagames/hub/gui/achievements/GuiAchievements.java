@@ -271,9 +271,9 @@ public class GuiAchievements extends AbstractGui
                 if ((((List) o1).size() > 1 && ((List) o2).size() > 1) || (((List) o1).size() == ((List) o2).size()))
                     return 0;
                 else if (((List) o1).size() > ((List) o2).size())
-                    return 1;
-                else
                     return -1;
+                else
+                    return 1;
             });
 
             List<Pair<List<Integer>, Boolean>> columns = new ArrayList<>();
