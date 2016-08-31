@@ -221,7 +221,7 @@ public class GuiAchievements extends AbstractGui
                             if (cleared.equals(remainingAchievementCleared))
                             {
                                 family.add(remainingAchievementId);
-                                remaining.remove(remaining.indexOf(remainingAchievementId));
+                                remaining.remove(new Integer(remainingAchievementId));
                             }
                         }
                     }
@@ -233,7 +233,7 @@ public class GuiAchievements extends AbstractGui
                     families.add(Collections.singletonList(achievementId));
                 }
 
-                remaining.remove(remaining.indexOf(achievementId));
+                remaining.remove(new Integer(achievementId));
             }
 
             Collections.sort(families, (o1, o2) ->
