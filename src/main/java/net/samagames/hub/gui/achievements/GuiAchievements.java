@@ -49,7 +49,7 @@ public class GuiAchievements extends AbstractGui
     @Override
     public void display(Player player)
     {
-        this.inventory = this.hub.getServer().createInventory(null, 54, "Objectifs" + (this.category != null ? "Page " + (this.page + 1) + ")" : ""));
+        this.inventory = this.hub.getServer().createInventory(null, 54, "Objectifs" + (this.category != null ? " (Page " + (this.page + 1) + ")" : ""));
 
         int[] baseSlots = {10, 11, 12, 13, 14, 15, 16};
         int lines = 0;
