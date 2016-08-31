@@ -239,6 +239,7 @@ public class GuiAchievements extends AbstractGui
                 }
 
                 remaining.remove(new Integer(achievementId));
+                families.add(family);
             }
 
             System.out.println("Sorting families...");
