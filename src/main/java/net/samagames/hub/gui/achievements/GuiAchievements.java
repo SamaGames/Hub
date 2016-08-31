@@ -298,7 +298,7 @@ public class GuiAchievements extends AbstractGui
 
                 slotIndex++;
 
-                if (slotIndex > slots.length)
+                if (slotIndex == slots.length)
                 {
                     slotIndex = 0;
                     page++;
