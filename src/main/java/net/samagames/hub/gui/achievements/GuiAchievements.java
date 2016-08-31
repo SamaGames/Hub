@@ -87,7 +87,7 @@ public class GuiAchievements extends AbstractGui
             }
         }
 
-        if (CACHE.containsRow(this.category.getID()))
+        if (this.category != null && CACHE.containsRow(this.category.getID()))
         {
             for (Triple<Integer, Integer, Boolean> achievementPair : CACHE.get(this.category.getID(), this.page))
             {
