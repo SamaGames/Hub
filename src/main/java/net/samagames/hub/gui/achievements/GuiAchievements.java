@@ -310,7 +310,7 @@ public class GuiAchievements extends AbstractGui
                     {
                         System.out.println(">> Adding a white column to separate the big families from the independents.");
 
-                        families.add(new ArrayList<>());
+                        columns.add(Pair.of(null, null));
                         wasBig = false;
                     }
 
@@ -340,16 +340,26 @@ public class GuiAchievements extends AbstractGui
             {
                 System.out.println("New column");
 
-                for (int achievementId : columnPair.getLeft())
+                if (columnPair.getLeft() == null && columnPair.getRight() == null)
                 {
-                    if (!CACHE.contains(categoryId, page))
-                        CACHE.put(categoryId, page, new ArrayList<>());
+                    System.out.println("> This is a separation column");
 
-                    CACHE.get(categoryId, page).add(Triple.of(slot, achievementId, columnPair.getRight()));
+                    if (slotIndex == 0 || slotIndex == slots.length - 1)
+                        continue;
+                }
+                else
+                {
+                    for (int achievementId : columnPair.getLeft())
+                    {
+                        if (!CACHE.contains(categoryId, page))
+                            CACHE.put(categoryId, page, new ArrayList<>());
 
-                    System.out.println("> Setted achievement " + achievementId + " at the slot " + slot + " on the page " + page);
+                        CACHE.get(categoryId, page).add(Triple.of(slot, achievementId, columnPair.getRight()));
 
-                    slot -= 9;
+                        System.out.println("> Setted achievement " + achievementId + " at the slot " + slot + " on the page " + page);
+
+                        slot -= 9;
+                    }
                 }
 
                 slotIndex++;
