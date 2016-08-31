@@ -231,11 +231,20 @@ public class GuiAchievements extends AbstractGui
                             String remainingAchievementConcatenated = Arrays.toString(remainingAchievement.getDescription());
                             String remainingAchievementCleared = remainingAchievementConcatenated.replaceAll("[^A-Za-z]+", "");
 
-                            System.out.println(">>> Description of this one is: " + cleared);
+                            System.out.println(">>> Description of this one is: " + remainingAchievementCleared);
 
                             if (cleared.equals(remainingAchievementCleared))
                             {
                                 System.out.println(">>> Description equals! Adding into the family.");
+
+                                List<Integer> toRemove = null;
+
+                                for (List<Integer> f : families)
+                                    if (f.get(0) == remainingAchievementId)
+                                        toRemove = f;
+
+                                if (toRemove != null)
+                                    families.remove(toRemove);
 
                                 family.add(remainingAchievementId);
                                 remaining.remove(new Integer(remainingAchievementId));
