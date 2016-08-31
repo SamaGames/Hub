@@ -190,6 +190,8 @@ public class GuiAchievements extends AbstractGui
 
         for (int categoryId : achievementParents.keySet())
         {
+            System.out.println("New category (" + categoryId + ")");
+
             List<List<Integer>> families = new ArrayList<>();
             CopyOnWriteArrayList<Integer> remaining = new CopyOnWriteArrayList<>(achievementParents.get(categoryId));
 
@@ -199,18 +201,29 @@ public class GuiAchievements extends AbstractGui
 
             for (int achievementId : remaining)
             {
+                System.out.println("> Listing in the first loop. Achievement " + achievementId);
+
                 Achievement achievement = SamaGamesAPI.get().getAchievementManager().getAchievementByID(achievementId);
 
                 if (achievement instanceof IncrementationAchievement)
                 {
+                    System.out.println(">> It's an incrementation one");
+
                     String concatenated = Arrays.toString(achievement.getDescription());
                     String cleared = concatenated.replaceAll("[^A-Za-z]+", "");
 
                     ArrayList<Integer> family = new ArrayList<>();
                     family.add(achievementId);
 
+                    System.out.println(">> Searching for family member width cleared description: '" + cleared + "'...");
+
                     for (int remainingAchievementId : remaining)
                     {
+                        if (remainingAchievementId == achievementId)
+                            continue;
+
+                        System.out.println(">> Listing in the second loop. Achievement " + remainingAchievementId);
+
                         Achievement remainingAchievement = SamaGamesAPI.get().getAchievementManager().getAchievementByID(remainingAchievementId);
 
                         if (remainingAchievement instanceof IncrementationAchievement)
@@ -218,8 +231,12 @@ public class GuiAchievements extends AbstractGui
                             String remainingAchievementConcatenated = Arrays.toString(remainingAchievement.getDescription());
                             String remainingAchievementCleared = remainingAchievementConcatenated.replaceAll("[^A-Za-z]+", "");
 
+                            System.out.println(">>> Description of this one is: " + cleared);
+
                             if (cleared.equals(remainingAchievementCleared))
                             {
+                                System.out.println(">>> Description equals! Adding into the family.");
+
                                 family.add(remainingAchievementId);
                                 remaining.remove(new Integer(remainingAchievementId));
                             }
@@ -230,11 +247,15 @@ public class GuiAchievements extends AbstractGui
                 }
                 else
                 {
+                    System.out.println(">> It's a normal one");
+
                     families.add(Collections.singletonList(achievementId));
                 }
 
                 remaining.remove(new Integer(achievementId));
             }
+
+            System.out.println("Sorting families...");
 
             Collections.sort(families, (o1, o2) ->
             {
@@ -250,10 +271,16 @@ public class GuiAchievements extends AbstractGui
             List<Integer> independentActualColumn = new ArrayList<>();
             boolean wasBig = false;
 
+            System.out.println("Creating columns...");
+
             for (List<Integer> family : families)
             {
+                System.out.println("> New family: " + Arrays.toString(family.toArray()));
+
                 if (family.size() > 1)
                 {
+                    System.out.println(">> This family is a big one");
+
                     Collections.sort(family, (o1, o2) ->
                     {
                         String o1Concatenated = Arrays.toString(SamaGamesAPI.get().getAchievementManager().getAchievementByID((Integer) o1).getDescription());
@@ -270,15 +297,21 @@ public class GuiAchievements extends AbstractGui
                 }
                 else if (wasBig)
                 {
+                    System.out.println(">> Adding a white column to separate the big families from the independents.");
+
                     families.add(new ArrayList<>());
                     wasBig = false;
                 }
                 else
                 {
+                    System.out.println(">> This family is an independent one");
+
                     independentActualColumn.add(family.get(0));
 
                     if (independentActualColumn.size() == 5)
                     {
+                        System.out.println(">>> This independent family has reached 5 members, flushing...");
+
                         columns.add(Pair.of(independentActualColumn, false));
                         independentActualColumn.clear();
                     }
