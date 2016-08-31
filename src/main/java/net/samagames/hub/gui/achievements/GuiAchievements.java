@@ -334,7 +334,7 @@ public class GuiAchievements extends AbstractGui
             System.out.println("Listing columns");
 
             for (Pair<List<Integer>, Boolean> columnPair : columns)
-                System.out.print("> " + (columnPair.getLeft() != null ? Arrays.toString(columnPair.getLeft().toArray()) : ""));
+                System.out.print("> " + (columnPair.getLeft() != null ? Arrays.toString(columnPair.getLeft().toArray()) + (columnPair.getRight() ? " B" : "") : ""));
 
             for (Pair<List<Integer>, Boolean> columnPair : columns)
             {
