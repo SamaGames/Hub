@@ -143,7 +143,7 @@ public class GuiAchievements extends AbstractGui
         if (this.page > 0)
             this.setSlotData(ChatColor.YELLOW + "« Page " + (this.page), Material.PAPER, this.inventory.getSize() - 9, null, "page_back");
 
-        if (CACHE.contains(this.category, this.page + 1))
+        if (CACHE.contains(this.category.getID(), this.page + 1))
             this.setSlotData(ChatColor.YELLOW + "Page " + (this.page + 2) + " »", Material.PAPER, this.inventory.getSize() - 1, null, "page_next");
 
         this.setSlotData(AbstractGui.getBackIcon(), 49, "back");
@@ -287,12 +287,17 @@ public class GuiAchievements extends AbstractGui
 
             for (Pair<List<Integer>, Boolean> columnPair : columns)
             {
+                System.out.println("New column");
+
                 for (int achievementId : columnPair.getLeft())
                 {
                     if (!CACHE.contains(categoryId, page))
                         CACHE.put(categoryId, page, new ArrayList<>());
 
                     CACHE.get(categoryId, page).add(Triple.of(slot, achievementId, columnPair.getRight()));
+                    
+                    System.out.println("> Setted achievement " + achievementId + " at the slot " + slot + " on the page " + page);
+
                     slot -= 9;
                 }
 
