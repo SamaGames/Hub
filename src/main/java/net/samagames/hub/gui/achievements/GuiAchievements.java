@@ -87,9 +87,9 @@ public class GuiAchievements extends AbstractGui
             }
         }
 
-        if (CACHE.containsRow(this.category))
+        if (CACHE.containsRow(this.category.getID()))
         {
-            for (Triple<Integer, Integer, Boolean> achievementPair : CACHE.get(this.category, this.page))
+            for (Triple<Integer, Integer, Boolean> achievementPair : CACHE.get(this.category.getID(), this.page))
             {
                 Achievement achievement = SamaGamesAPI.get().getAchievementManager().getAchievementByID(achievementPair.getMiddle());
 
