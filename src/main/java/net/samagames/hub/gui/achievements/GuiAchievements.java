@@ -296,9 +296,9 @@ public class GuiAchievements extends AbstractGui
                         String o2Concatenated = Arrays.toString(SamaGamesAPI.get().getAchievementManager().getAchievementByID((Integer) o2).getDescription());
 
                         if (Integer.parseInt(o1Concatenated.replaceAll("[\\D]", "")) < Integer.parseInt(o2Concatenated.replaceAll("[\\D]", "")))
-                            return 1;
-                        else
                             return -1;
+                        else
+                            return 1;
                     });
 
                     wasBig = true;
