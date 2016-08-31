@@ -304,15 +304,16 @@ public class GuiAchievements extends AbstractGui
                     wasBig = true;
                     columns.add(Pair.of(family, true));
                 }
-                else if (wasBig)
-                {
-                    System.out.println(">> Adding a white column to separate the big families from the independents.");
-
-                    families.add(new ArrayList<>());
-                    wasBig = false;
-                }
                 else
                 {
+                    if (wasBig)
+                    {
+                        System.out.println(">> Adding a white column to separate the big families from the independents.");
+
+                        families.add(new ArrayList<>());
+                        wasBig = false;
+                    }
+
                     System.out.println(">> This family is an independent one");
 
                     independentActualColumn.add(family.get(0));
