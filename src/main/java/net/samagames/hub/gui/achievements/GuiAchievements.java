@@ -24,6 +24,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class GuiAchievements extends AbstractGui
 {
@@ -190,17 +191,14 @@ public class GuiAchievements extends AbstractGui
         for (int categoryId : achievementParents.keySet())
         {
             List<List<Integer>> families = new ArrayList<>();
-            List<Integer> remaining = achievementParents.get(categoryId);
+            CopyOnWriteArrayList<Integer> remaining = new CopyOnWriteArrayList<>(achievementParents.get(categoryId));
 
             int page = 0;
             int slotIndex = 0;
             int slot = slots[slotIndex];
 
-            for (int achievementId : new ArrayList<>(remaining))
+            for (int achievementId : remaining)
             {
-                if (!remaining.contains(achievementId))
-                    continue;
-
                 Achievement achievement = SamaGamesAPI.get().getAchievementManager().getAchievementByID(achievementId);
 
                 if (achievement instanceof IncrementationAchievement)
@@ -211,7 +209,7 @@ public class GuiAchievements extends AbstractGui
                     ArrayList<Integer> family = new ArrayList<>();
                     family.add(achievementId);
 
-                    for (int remainingAchievementId : new ArrayList<>(remaining))
+                    for (int remainingAchievementId : remaining)
                     {
                         Achievement remainingAchievement = SamaGamesAPI.get().getAchievementManager().getAchievementByID(remainingAchievementId);
 
