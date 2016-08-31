@@ -110,7 +110,7 @@ public class PlayerManager extends AbstractManager
                 {
                     IPermissionsEntity permissionsEntity = SamaGamesAPI.get().getPermissionsManager().getPlayer(player.getUniqueId());
 
-                    if (permissionsEntity.getGroupId() >= 3 && SamaGamesAPI.get().getSettingsManager().getSettings(player.getUniqueId()).isElytraActivated())
+                    if (permissionsEntity.hasPermission("network.vipplus") && SamaGamesAPI.get().getSettingsManager().getSettings(player.getUniqueId()).isElytraActivated())
                     {
                         ItemStack elytra = new ItemStack(Material.ELYTRA);
                         ItemMeta meta = elytra.getItemMeta();
@@ -135,22 +135,31 @@ public class PlayerManager extends AbstractManager
                 if (SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "hub.announce") && !SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).hasNickname())
                     this.hub.getServer().broadcastMessage(PlayerUtils.getFullyFormattedPlayerName(player) + ChatColor.YELLOW + " a rejoint le hub !");
 
+                SamaGamesAPI.get().getAchievementManager().getAchievementByID(1).unlock(player.getUniqueId());
+
+                if (SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "network.vip"))
+                    SamaGamesAPI.get().getAchievementManager().getAchievementByID(3).unlock(player.getUniqueId());
+
+                if (SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "network.vipplus"))
+                    SamaGamesAPI.get().getAchievementManager().getAchievementByID(4).unlock(player.getUniqueId());
+
                 if (player.getUniqueId().equals(UUID.fromString("568046c8-6045-4c59-a255-28027aac8c33")))
                     ActionBarAPI.sendMessage(player, ChatColor.RED + "\u2764");
-
-
             });
 
             //New Games
-            hub.getScheduledExecutorService().schedule(() -> {
+            this.hub.getScheduledExecutorService().schedule(() ->
+            {
                 if (!player.isOnline())
                     return;
 
                 player.playSound(player.getLocation(), Sound.BLOCK_NOTE_HAT, 1.0F, 0.8F);
                 player.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
+
                 FancyMessage toolBox = new FancyMessage("En cliquant ici, vous rejoignez automatiquement la fil d'attente pour gagner du temps.").color(ChatColor.GOLD).style(ChatColor.ITALIC);
                 new FancyMessage("Hey ! Venez tester notre nouveau jeu Run4Flag ! ").color(ChatColor.GOLD).send(player);
                 new FancyMessage("[Cliquez ici] ").color(ChatColor.GREEN).style(ChatColor.BOLD).command("/join ultraflagkeeper ultraflagkeeper_t2").formattedTooltip(toolBox).send(player);
+
                 player.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
             }, 10, TimeUnit.SECONDS);
         });

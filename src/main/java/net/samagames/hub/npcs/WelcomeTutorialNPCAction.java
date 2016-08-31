@@ -112,7 +112,7 @@ public class WelcomeTutorialNPCAction implements NPCInteractCallback
 
             hub.getServer().getScheduler().runTask(hub, () ->
             {
-                SamaGamesAPI.get().getAchievementManager().getAchievementByID(1).unlock(player.getUniqueId());
+                SamaGamesAPI.get().getAchievementManager().getAchievementByID(2).unlock(player.getUniqueId());
 
                 if (player.hasPermission("hub.fly"))
                     player.setAllowFlight(true);

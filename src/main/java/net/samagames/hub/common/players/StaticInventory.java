@@ -39,17 +39,29 @@ public class StaticInventory
     public void doInteraction(Player player, ItemStack stack)
     {
         if (stack.getType() == Material.COMPASS)
+        {
             this.hub.getGuiManager().openGui(player, new GuiMain(this.hub));
+        }
         else if (stack.getType() == Material.SKULL_ITEM)
+        {
             this.hub.getGuiManager().openGui(player, new GuiProfile(this.hub));
+        }
         else if (stack.getType() == Material.ENDER_CHEST)
+        {
             this.hub.getGuiManager().openGui(player, new GuiCosmetics(this.hub));
+        }
         else if (stack.getType() == Material.GOLD_INGOT)
+        {
             this.hub.getGuiManager().openGui(player, new GuiShop(this.hub));
+        }
         else if (stack.getType() == Material.BARRIER && this.hub.getParkourManager().getPlayerParkour(player.getUniqueId()) != null)
+        {
             this.hub.getParkourManager().getPlayerParkour(player.getUniqueId()).quitPlayer(player);
+        }
         else if (player.getInventory().getHeldItemSlot() == 6)
+        {
             this.hub.getServer().getScheduler().runTask(this.hub, () -> this.hub.getCosmeticManager().getGadgetManager().useSelectedCosmetic(player, stack));
+        }
         else if (stack.getType() == Material.ELYTRA)
         {
             if (stack.getEnchantments().isEmpty())
@@ -75,7 +87,7 @@ public class StaticInventory
             if (!SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "network.vip"))
             {
                 player.sendMessage(ChatColor.RED + "Devenez VIP pour utiliser le booster.");
-                return ;
+                return;
             }
 
             Vector velocity = player.getVelocity().add(player.getLocation().getDirection().normalize().multiply(1.5D));
@@ -84,6 +96,9 @@ public class StaticInventory
             ((CraftPlayer)player).getHandle().motZ = velocity.getZ();
             ((CraftPlayer)player).getHandle().velocityChanged = true;
             player.getWorld().playSound(player.getLocation(), Sound.ENTITY_ENDERDRAGON_FLAP, 2F, 2F);
+
+            if (!SamaGamesAPI.get().getAchievementManager().isUnlocked(player.getUniqueId(), 5))
+                SamaGamesAPI.get().getAchievementManager().getAchievementByID(5).unlock(player.getUniqueId());
         }
     }
 

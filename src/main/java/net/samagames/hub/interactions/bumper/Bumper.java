@@ -1,5 +1,6 @@
 package net.samagames.hub.interactions.bumper;
 
+import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import net.samagames.hub.interactions.AbstractInteraction;
 import net.samagames.hub.utils.ProximityUtils;
@@ -60,6 +61,9 @@ class Bumper extends AbstractInteraction implements Listener
 
         if (this.hub.getPlayerManager().isBusy(player) || player.getGameMode() == GameMode.SPECTATOR)
             return;
+
+        if (!SamaGamesAPI.get().getAchievementManager().isUnlocked(player.getUniqueId(), 6))
+            SamaGamesAPI.get().getAchievementManager().getAchievementByID(6).unlock(player.getUniqueId());
 
         this.flyingPlayers.add(player.getUniqueId());
 
