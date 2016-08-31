@@ -204,61 +204,38 @@ public class GuiAchievements extends AbstractGui
                 System.out.println("> Listing in the first loop. Achievement " + achievementId);
 
                 Achievement achievement = SamaGamesAPI.get().getAchievementManager().getAchievementByID(achievementId);
+                String concatenated = Arrays.toString(achievement.getDescription());
+                String cleared = concatenated.replaceAll("[^A-Za-z]+", "");
 
-                if (achievement instanceof IncrementationAchievement)
+                ArrayList<Integer> family = new ArrayList<>();
+                family.add(achievementId);
+
+                System.out.println(">> Searching for family member width cleared description: '" + cleared + "'...");
+
+                for (int remainingAchievementId : remaining)
                 {
-                    System.out.println(">> It's an incrementation one");
+                    if (remainingAchievementId == achievementId)
+                        continue;
 
-                    String concatenated = Arrays.toString(achievement.getDescription());
-                    String cleared = concatenated.replaceAll("[^A-Za-z]+", "");
+                    System.out.println(">> Listing in the second loop. Achievement " + remainingAchievementId);
 
-                    ArrayList<Integer> family = new ArrayList<>();
-                    family.add(achievementId);
+                    Achievement remainingAchievement = SamaGamesAPI.get().getAchievementManager().getAchievementByID(remainingAchievementId);
 
-                    System.out.println(">> Searching for family member width cleared description: '" + cleared + "'...");
-
-                    for (int remainingAchievementId : remaining)
+                    if (remainingAchievement instanceof IncrementationAchievement)
                     {
-                        if (remainingAchievementId == achievementId)
-                            continue;
+                        String remainingAchievementConcatenated = Arrays.toString(remainingAchievement.getDescription());
+                        String remainingAchievementCleared = remainingAchievementConcatenated.replaceAll("[^A-Za-z]+", "");
 
-                        System.out.println(">> Listing in the second loop. Achievement " + remainingAchievementId);
+                        System.out.println(">>> Description of this one is: " + remainingAchievementCleared);
 
-                        Achievement remainingAchievement = SamaGamesAPI.get().getAchievementManager().getAchievementByID(remainingAchievementId);
-
-                        if (remainingAchievement instanceof IncrementationAchievement)
+                        if (cleared.equals(remainingAchievementCleared))
                         {
-                            String remainingAchievementConcatenated = Arrays.toString(remainingAchievement.getDescription());
-                            String remainingAchievementCleared = remainingAchievementConcatenated.replaceAll("[^A-Za-z]+", "");
+                            System.out.println(">>> Description equals! Adding into the family.");
 
-                            System.out.println(">>> Description of this one is: " + remainingAchievementCleared);
-
-                            if (cleared.equals(remainingAchievementCleared))
-                            {
-                                System.out.println(">>> Description equals! Adding into the family.");
-
-                                List<Integer> toRemove = null;
-
-                                for (List<Integer> f : families)
-                                    if (f.get(0) == remainingAchievementId)
-                                        toRemove = f;
-
-                                if (toRemove != null)
-                                    families.remove(toRemove);
-
-                                family.add(remainingAchievementId);
-                                remaining.remove(new Integer(remainingAchievementId));
-                            }
+                            family.add(remainingAchievementId);
+                            remaining.remove(new Integer(remainingAchievementId));
                         }
                     }
-
-                    families.add(family);
-                }
-                else
-                {
-                    System.out.println(">> It's a normal one");
-
-                    families.add(Collections.singletonList(achievementId));
                 }
 
                 remaining.remove(new Integer(achievementId));
