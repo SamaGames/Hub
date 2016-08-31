@@ -327,6 +327,14 @@ public class GuiAchievements extends AbstractGui
                 }
             }
 
+            if (!independentActualColumn.isEmpty())
+                columns.add(Pair.of(independentActualColumn, false));
+
+            System.out.println("Listing columns");
+
+            for (Pair<List<Integer>, Boolean> columnPair : columns)
+                System.out.print("> " + Arrays.toString(columnPair.getLeft().toArray()));
+
             for (Pair<List<Integer>, Boolean> columnPair : columns)
             {
                 System.out.println("New column");
