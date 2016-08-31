@@ -300,7 +300,7 @@ public class GuiAchievements extends AbstractGui
                         System.out.println(">>> This independent family has reached 5 members, flushing...");
 
                         columns.add(Pair.of(independentActualColumn, false));
-                        independentActualColumn.clear();
+                        independentActualColumn = new ArrayList<>();
                     }
                 }
             }
