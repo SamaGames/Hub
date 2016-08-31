@@ -201,6 +201,9 @@ public class GuiAchievements extends AbstractGui
 
             for (int achievementId : remaining)
             {
+                if (!remaining.contains(achievementId))
+                    continue;
+
                 System.out.println("> Listing in the first loop. Achievement " + achievementId);
 
                 Achievement achievement = SamaGamesAPI.get().getAchievementManager().getAchievementByID(achievementId);
@@ -209,7 +212,7 @@ public class GuiAchievements extends AbstractGui
 
                 ArrayList<Integer> family = new ArrayList<>();
                 family.add(achievementId);
-                
+
                 for (int remainingAchievementId : remaining)
                 {
                     if (remainingAchievementId == achievementId)
