@@ -41,7 +41,6 @@ public class PlayerListener implements Listener
     {
         this.hub.getEventBus().onLogin(event.getPlayer());
         new ServerStatus(SamaGamesAPI.get().getServerName(), "Hub", "Map", Status.IN_GAME, this.hub.getServer().getOnlinePlayers().size(), this.hub.getServer().getMaxPlayers()).sendToHydro();
-        this.hub.getServer().getScheduler().runTask(this.hub, () -> SamaGamesAPI.get().getAchievementManager().getAchievementByID(0).unlock(event.getPlayer().getUniqueId()));
     }
 
     @EventHandler

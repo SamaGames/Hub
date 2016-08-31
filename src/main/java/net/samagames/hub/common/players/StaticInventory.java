@@ -97,8 +97,11 @@ public class StaticInventory
             ((CraftPlayer)player).getHandle().velocityChanged = true;
             player.getWorld().playSound(player.getLocation(), Sound.ENTITY_ENDERDRAGON_FLAP, 2F, 2F);
 
-            if (!SamaGamesAPI.get().getAchievementManager().isUnlocked(player.getUniqueId(), 5))
-                SamaGamesAPI.get().getAchievementManager().getAchievementByID(5).unlock(player.getUniqueId());
+            this.hub.getServer().getScheduler().runTask(this.hub, () ->
+            {
+                if (!SamaGamesAPI.get().getAchievementManager().isUnlocked(player.getUniqueId(), 5))
+                    SamaGamesAPI.get().getAchievementManager().getAchievementByID(5).unlock(player.getUniqueId());
+            });
         }
     }
 
