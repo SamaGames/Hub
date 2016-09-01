@@ -10,9 +10,9 @@ import net.samagames.api.achievements.IncrementationAchievement;
 import net.samagames.hub.Hub;
 import net.samagames.hub.gui.AbstractGui;
 import net.samagames.hub.gui.profile.GuiProfile;
-import net.samagames.hub.utils.SimilarityUtils;
 import net.samagames.tools.ItemUtils;
 import org.apache.commons.lang.WordUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.commons.lang3.tuple.Triple;
 import org.bukkit.ChatColor;
@@ -228,7 +228,7 @@ public class GuiAchievements extends AbstractGui
                         String remainingAchievementConcatenated = Arrays.toString(remainingAchievement.getDescription());
                         String remainingAchievementCleared = remainingAchievementConcatenated.replaceAll("[^A-Za-z]+", "");
 
-                        if (SimilarityUtils.similarity(cleared, remainingAchievementCleared) > 0.9D)
+                        if (StringUtils.getJaroWinklerDistance(cleared, remainingAchievementCleared) > 0.85D)
                         {
                             System.out.println(">>> Description equals! Adding " + testAchievementId + " into the family.");
 
