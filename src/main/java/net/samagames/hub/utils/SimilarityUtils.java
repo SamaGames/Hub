@@ -38,24 +38,22 @@ public class SimilarityUtils
                 {
                     costs[j] = j;
                 }
-                else
+                else if (j > 0)
                 {
-                    if (j > 0)
-                    {
-                        int newValue = costs[j - 1];
+                    int newValue = costs[j - 1];
 
-                        if (s1.charAt(i - 1) != s2.charAt(j - 1))
-                            newValue = Math.min(Math.min(newValue, lastValue), costs[j]) + 1;
+                    if (s1.charAt(i - 1) != s2.charAt(j - 1))
+                        newValue = Math.min(Math.min(newValue, lastValue), costs[j]) + 1;
 
-                        costs[j - 1] = lastValue;
-                        lastValue = newValue;
-                    }
+                    costs[j - 1] = lastValue;
+                    lastValue = newValue;
                 }
             }
 
             if (i > 0)
                 costs[s2.length()] = lastValue;
         }
+
         return costs[s2.length()];
     }
 }
