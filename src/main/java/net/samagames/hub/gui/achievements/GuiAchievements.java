@@ -177,10 +177,17 @@ public class GuiAchievements extends AbstractGui
     public static void createCache()
     {
         CACHE = HashBasedTable.create();
+
+        /*
+         * This is the base slots
+         */
         int[] slots = { 36, 37, 38, 39, 40, 41, 42, 43, 44 };
 
         Map<Integer, List<Integer>> achievementParents = new HashMap<>();
 
+        /*
+         * Group the achievements with their category
+         */
         SamaGamesAPI.get().getAchievementManager().getAchievements().forEach(achievement ->
         {
             if (!achievementParents.containsKey(achievement.getParentCategoryID().getID()))
@@ -189,49 +196,76 @@ public class GuiAchievements extends AbstractGui
             achievementParents.get(achievement.getParentCategoryID().getID()).add(achievement.getID());
         });
 
+        /*
+         * Iterate the categories
+         */
         for (int categoryId : achievementParents.keySet())
         {
             System.out.println("New category (" + categoryId + ")");
 
             List<List<Integer>> families = new ArrayList<>();
+
+            // We copy the list to edit it in these loops
             CopyOnWriteArrayList<Integer> remaining = new CopyOnWriteArrayList<>(achievementParents.get(categoryId));
 
             int page = 0;
             int slotIndex = 0;
             int slot = slots[slotIndex];
 
+            /*
+             * We iterate the copied list
+             */
             for (int achievementId : remaining)
             {
+                /*
+                 * If we have deleted this achievement id from the remaining list
+                 * we continue the loop
+                 */
                 if (!remaining.contains(achievementId))
                     continue;
 
-                System.out.println("> Listing in the first loop. Achievement " + achievementId);
-
                 Achievement achievement = SamaGamesAPI.get().getAchievementManager().getAchievementByID(achievementId);
+
+                /*
+                 * We are creating a string who contains the description of the achievement
+                 * with only alphabetic characters
+                 */
                 String concatenated = Arrays.toString(achievement.getDescription());
                 String cleared = concatenated.replaceAll("[^A-Za-z]+", "");
 
                 ArrayList<Integer> family = new ArrayList<>();
                 family.add(achievementId);
 
+                /*
+                 * We iterate the achievements around this one to find similarities in their
+                 * description. It's permit to group them in a family
+                 */
                 for (int testAchievementId = achievementId - 2; testAchievementId < achievementId + 5; testAchievementId++)
                 {
                     if (testAchievementId == achievementId)
                         continue;
 
-                    System.out.println(">> Listing in the second loop. Achievement " + testAchievementId);
-
                     Achievement remainingAchievement = SamaGamesAPI.get().getAchievementManager().getAchievementByID(testAchievementId);
 
+                    /*
+                     * A family can only contains incrementation achievements
+                     */
                     if (remainingAchievement instanceof IncrementationAchievement)
                     {
+                        /*
+                         * We are creating a string who contains the description of the achievement
+                         * with only alphabetic characters
+                         */
                         String remainingAchievementConcatenated = Arrays.toString(remainingAchievement.getDescription());
                         String remainingAchievementCleared = remainingAchievementConcatenated.replaceAll("[^A-Za-z]+", "");
 
+                        /*
+                         * We calculate the Jaro Winkler similarity to determinate if the description of
+                         * this around achievement is similar. If yes, we add this achievement to the
+                         * family
+                         */
                         if (StringUtils.getJaroWinklerDistance(cleared, remainingAchievementCleared) > 0.85D)
                         {
-                            System.out.println(">>> Description equals! Adding " + testAchievementId + " into the family.");
-
                             family.add(testAchievementId);
                             remaining.remove(new Integer(testAchievementId));
                         }
@@ -242,8 +276,9 @@ public class GuiAchievements extends AbstractGui
                 families.add(family);
             }
 
-            System.out.println("Sorting families...");
-
+            /*
+             * We sort the families to have the 'big ones' at the beginning
+             */
             Collections.sort(families, (o1, o2) ->
             {
                 if ((((List) o1).size() > 1 && ((List) o2).size() > 1) || (((List) o1).size() == ((List) o2).size()))
@@ -254,20 +289,29 @@ public class GuiAchievements extends AbstractGui
                     return 1;
             });
 
+            /*
+             * Now we are creating columns. Columns are a list of slot<->achievement_id
+             * who are stored in the cache to create easily the GUI's
+             */
             List<Pair<List<Integer>, Boolean>> columns = new ArrayList<>();
             List<Integer> independentActualColumn = new ArrayList<>();
             boolean wasBig = false;
 
-            System.out.println("Creating columns...");
-
+            /*
+             * We iterate the families
+             */
             for (List<Integer> family : families)
             {
-                System.out.println("> New family: " + Arrays.toString(family.toArray()));
-
+                /*
+                 * If the family contains more than 1 member, this is a 'big' family
+                 */
                 if (family.size() > 1)
                 {
-                    System.out.println(">> This family is a big one");
-
+                    /*
+                     * The descriptions contains a number who represent the amount of the
+                     * action we have to repeat. With this, we can sort this amount to sort
+                     * in the positive order
+                     */
                     Collections.sort(family, (o1, o2) ->
                     {
                         String o1Concatenated = Arrays.toString(SamaGamesAPI.get().getAchievementManager().getAchievementByID((Integer) o1).getDescription());
@@ -284,64 +328,90 @@ public class GuiAchievements extends AbstractGui
                 }
                 else
                 {
+                    /*
+                     * If the last iterated family was a 'big' one, we put a blank column
+                     * to separate them in the GUI's
+                     */
                     if (wasBig)
                     {
-                        System.out.println(">> Adding a white column to separate the big families from the independents.");
-
                         columns.add(Pair.of(null, null));
                         wasBig = false;
                     }
 
-                    System.out.println(">> This family is an independent one");
-
                     independentActualColumn.add(family.get(0));
 
+                    /*
+                     * A column can handle at least 5 items. When we hit this number, we
+                     * merge the 'temporary' column into a separate one
+                     */
                     if (independentActualColumn.size() == 5)
                     {
-                        System.out.println(">>> This independent family has reached 5 members, flushing...");
-
                         columns.add(Pair.of(independentActualColumn, false));
                         independentActualColumn = new ArrayList<>();
                     }
                 }
             }
 
+            /*
+             * If we don't hit the 5 items, we can miss achievements so we
+             * merge them in a column
+             */
             if (!independentActualColumn.isEmpty())
                 columns.add(Pair.of(independentActualColumn, false));
 
-            System.out.println("Listing columns");
-
-            for (Pair<List<Integer>, Boolean> columnPair : columns)
-                System.out.print("> " + (columnPair.getLeft() != null ? Arrays.toString(columnPair.getLeft().toArray()) + (columnPair.getRight() ? " B" : "") : ""));
-
+            /*
+             * It's time to iterate the families and to attribute a inventory
+             * slot to an achievement id
+             */
             for (Pair<List<Integer>, Boolean> columnPair : columns)
             {
-                System.out.println("New column");
-
+                /*
+                 * If the sides of the Pair are both null, it's because it's an empty
+                 * column we created to separate the 'big' columns from the 'individuals'
+                 */
                 if (columnPair.getLeft() == null && columnPair.getRight() == null)
                 {
-                    System.out.println("> This is a separation column");
-
+                    /*
+                     * But, if this empty column has to be placed at the beginning or at
+                     * this ending of the GUI, it's not necessary to have one
+                     */
                     if (slotIndex == 0 || slotIndex == slots.length - 1)
                         continue;
                 }
                 else
                 {
+                    /*
+                     * We iterate the members of the family
+                     */
                     for (int achievementId : columnPair.getLeft())
                     {
+                        /*
+                         * If we don't have a list according to this category id and
+                         * this page, we create one
+                         */
                         if (!CACHE.contains(categoryId, page))
                             CACHE.put(categoryId, page, new ArrayList<>());
 
+                        /*
+                         * We put the data in the cache. If the family according to the columns
+                         * was a 'big' one, we set the third parameter of the Triple to true.
+                         */
                         CACHE.get(categoryId, page).add(Triple.of(slot, achievementId, columnPair.getRight()));
 
-                        System.out.println("> Setted achievement " + achievementId + " at the slot " + slot + " on the page " + page);
-
+                        /*
+                         * We decrease the slot to put the next achievement at the bot of this
+                         * one
+                         */
                         slot -= 9;
                     }
                 }
 
                 slotIndex++;
 
+                /*
+                 * If the next index is out the array, we increment the page and we put
+                 * back the index to 0
+                 */
                 if (slotIndex == slots.length)
                 {
                     slotIndex = 0;
@@ -351,5 +421,9 @@ public class GuiAchievements extends AbstractGui
                 slot = slots[slotIndex];
             }
         }
+
+        /*
+         * Now the cache is ordered. End of this algorithm.
+         */
     }
 }
