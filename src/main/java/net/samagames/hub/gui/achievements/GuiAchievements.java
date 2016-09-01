@@ -397,7 +397,7 @@ public class GuiAchievements extends AbstractGui
                         CACHE.get(categoryId, page).add(Triple.of(slot, achievementId, columnPair.getRight()));
 
                         /*
-                         * We decrease the slot to put the next achievement at the bot of this
+                         * We decrease the slot to put the next achievement at the top of this
                          * one
                          */
                         slot -= 9;
