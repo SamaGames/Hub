@@ -186,7 +186,7 @@ public class GuiAchievements extends AbstractGui
         Map<Integer, List<Integer>> achievementParents = new HashMap<>();
 
         /*
-         * Group the achievements with their category
+         * We group the achievements with their category
          */
         SamaGamesAPI.get().getAchievementManager().getAchievements().forEach(achievement ->
         {
@@ -197,12 +197,10 @@ public class GuiAchievements extends AbstractGui
         });
 
         /*
-         * Iterate the categories
+         * We iterate the categories
          */
         for (int categoryId : achievementParents.keySet())
         {
-            System.out.println("New category (" + categoryId + ")");
-
             List<List<Integer>> families = new ArrayList<>();
 
             // We copy the list to edit it in these loops
