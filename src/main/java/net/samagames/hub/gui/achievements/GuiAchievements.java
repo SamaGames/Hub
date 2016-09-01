@@ -214,14 +214,14 @@ public class GuiAchievements extends AbstractGui
                 ArrayList<Integer> family = new ArrayList<>();
                 family.add(achievementId);
 
-                for (int remainingAchievementId : remaining)
+                for (int testAchievementId = achievementId - 2; testAchievementId < achievementId + 5; testAchievementId++)
                 {
-                    if (remainingAchievementId == achievementId)
+                    if (testAchievementId == achievementId)
                         continue;
 
-                    System.out.println(">> Listing in the second loop. Achievement " + remainingAchievementId);
+                    System.out.println(">> Listing in the second loop. Achievement " + testAchievementId);
 
-                    Achievement remainingAchievement = SamaGamesAPI.get().getAchievementManager().getAchievementByID(remainingAchievementId);
+                    Achievement remainingAchievement = SamaGamesAPI.get().getAchievementManager().getAchievementByID(testAchievementId);
 
                     if (remainingAchievement instanceof IncrementationAchievement)
                     {
@@ -230,10 +230,10 @@ public class GuiAchievements extends AbstractGui
 
                         if (SimilarityUtils.similarity(cleared, remainingAchievementCleared) > 0.8D)
                         {
-                            System.out.println(">>> Description equals! Adding " + remainingAchievementId + " into the family.");
+                            System.out.println(">>> Description equals! Adding " + testAchievementId + " into the family.");
 
-                            family.add(remainingAchievementId);
-                            remaining.remove(new Integer(remainingAchievementId));
+                            family.add(testAchievementId);
+                            remaining.remove(new Integer(testAchievementId));
                         }
                     }
                 }
