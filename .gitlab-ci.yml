@@ -15,7 +15,7 @@ variables:
 pre-notify:
   stage: pre-notify
   script:
-    - 'curl -k --data "status=pre&project=${CI_PROJECT_NAME}&url=${CI_PROJECT_URL}&branch=${CI_BUILD_REF_NAME}&deployToData=${HAS_TO_BE_PUT_IN_THE_DATA}&deployToArtifactory=${HAS_TO_BE_PUBLISHED_INTO_ARTIFACTORY}" https://blackmesa.samagames.net:3978/api/gitlab-ci'
+    - 'curl -k --data "status=pre&project=${CI_PROJECT_NAME}&url=${CI_PROJECT_URL}&branch=${CI_BUILD_REF_NAME}" https://blackmesa.samagames.net:3978/api/gitlab-ci'
 
 build:
   stage: build
@@ -45,11 +45,11 @@ deploy-production:
 post-notify-success:
   stage: post-notify
   script:
-    - 'curl -k --data "status=post&result=success&project=${CI_PROJECT_NAME}&url=${CI_PROJECT_URL}&branch=${CI_BUILD_REF_NAME}&deployToData=${HAS_TO_BE_PUT_IN_THE_DATA}&deployToArtifactory=${HAS_TO_BE_PUBLISHED_INTO_ARTIFACTORY}" https://blackmesa.samagames.net:3978/api/gitlab-ci'
+    - 'curl -k --data "status=post&result=success&project=${CI_PROJECT_NAME}&url=${CI_PROJECT_URL}&branch=${CI_BUILD_REF_NAME}" https://blackmesa.samagames.net:3978/api/gitlab-ci'
   when: on_success
   
 post-notify-fail:
   stage: post-notify
   script:
-    - 'curl -k --data "status=post&result=fail&project=${CI_PROJECT_NAME}&url=${CI_PROJECT_URL}&branch=${CI_BUILD_REF_NAME}&deployToData=${HAS_TO_BE_PUT_IN_THE_DATA}&deployToArtifactory=${HAS_TO_BE_PUBLISHED_INTO_ARTIFACTORY}" https://blackmesa.samagames.net:3978/api/gitlab-ci'
+    - 'curl -k --data "status=post&result=fail&project=${CI_PROJECT_NAME}&url=${CI_PROJECT_URL}&branch=${CI_BUILD_REF_NAME}" https://blackmesa.samagames.net:3978/api/gitlab-ci'
   when: on_failure
