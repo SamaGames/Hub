@@ -1,7 +1,7 @@
 package net.samagames.hub.cosmetics.gadgets;
 
-import net.minecraft.server.v1_9_R2.EntityItem;
-import net.minecraft.server.v1_9_R2.NBTTagCompound;
+import net.minecraft.server.v1_10_R1.EntityItem;
+import net.minecraft.server.v1_10_R1.NBTTagCompound;
 import net.samagames.hub.Hub;
 import net.samagames.hub.common.players.PlayerManager;
 import net.samagames.hub.cosmetics.common.AbstractCosmeticManager;
@@ -10,7 +10,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
-import org.bukkit.craftbukkit.v1_9_R2.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_10_R1.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -68,7 +68,7 @@ public class GadgetManager extends AbstractCosmeticManager<GadgetCosmetic>
             return;
         }
 
-        net.minecraft.server.v1_9_R2.ItemStack craftStack = CraftItemStack.asNMSCopy(cosmeticIcon);
+        net.minecraft.server.v1_10_R1.ItemStack craftStack = CraftItemStack.asNMSCopy(cosmeticIcon);
         NBTTagCompound tagCompound = craftStack.getTag();
         int gadgetKey = tagCompound.getInt("gadget-key");
 

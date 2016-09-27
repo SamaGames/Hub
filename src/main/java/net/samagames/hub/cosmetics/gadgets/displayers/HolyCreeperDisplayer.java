@@ -6,7 +6,7 @@ import net.samagames.hub.cosmetics.gadgets.GadgetManager;
 import net.samagames.tools.ParticleEffect;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.v1_9_R2.entity.CraftItem;
+import org.bukkit.craftbukkit.v1_10_R1.entity.CraftItem;
 import org.bukkit.entity.Creeper;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;

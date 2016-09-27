@@ -1,6 +1,6 @@
 package net.samagames.hub.cosmetics.gadgets;
 
-import net.minecraft.server.v1_9_R2.EntitySheep;
+import net.minecraft.server.v1_10_R1.EntitySheep;
 import net.samagames.hub.Hub;
 import net.samagames.hub.cosmetics.common.AbstractCosmeticRegistry;
 import net.samagames.hub.cosmetics.gadgets.displayers.*;

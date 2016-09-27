@@ -10,7 +10,7 @@ import net.samagames.tools.SimpleBlock;
 import org.bukkit.*;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
-import org.bukkit.craftbukkit.v1_9_R2.boss.CraftBossBar;
+import org.bukkit.craftbukkit.v1_10_R1.boss.CraftBossBar;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Ocelot;
 import org.bukkit.entity.Player;

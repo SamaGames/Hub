@@ -1,6 +1,6 @@
 package net.samagames.hub.common.managers;
 
-import net.minecraft.server.v1_9_R2.*;
+import net.minecraft.server.v1_10_R1.*;
 import net.samagames.hub.Hub;
 import org.bukkit.entity.Player;
 

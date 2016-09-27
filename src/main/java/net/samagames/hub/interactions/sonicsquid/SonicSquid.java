@@ -1,12 +1,12 @@
 package net.samagames.hub.interactions.sonicsquid;
 
-import net.minecraft.server.v1_9_R2.WorldServer;
+import net.minecraft.server.v1_10_R1.WorldServer;
 import net.samagames.hub.Hub;
 import net.samagames.hub.common.players.PlayerManager;
 import net.samagames.hub.interactions.AbstractInteraction;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.v1_9_R2.CraftWorld;
+import org.bukkit.craftbukkit.v1_10_R1.CraftWorld;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
