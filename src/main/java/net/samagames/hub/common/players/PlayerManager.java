@@ -294,6 +294,8 @@ public class PlayerManager extends AbstractManager
 
     private void sendFriendsCheckRequest(Player player)
     {
+        this.hub.getServer().broadcastMessage("test");
+        
         ByteArrayDataOutput out = ByteStreams.newDataOutput();
         out.writeUTF("friendsCheck");
         out.writeUTF(player.getUniqueId().toString());
