@@ -147,6 +147,9 @@ public class PlayerManager extends AbstractManager
                 if (SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "network.vipplus"))
                     SamaGamesAPI.get().getAchievementManager().getAchievementByID(4).unlock(player.getUniqueId());
 
+                if (SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "network.staff"))
+                    SamaGamesAPI.get().getAchievementManager().getAchievementByID(52).unlock(player.getUniqueId());
+
                 if (player.getUniqueId().equals(UUID.fromString("568046c8-6045-4c59-a255-28027aac8c33")))
                     ActionBarAPI.sendMessage(player, ChatColor.RED + "\u2764");
             });
