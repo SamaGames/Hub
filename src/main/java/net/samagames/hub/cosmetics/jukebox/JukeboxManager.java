@@ -242,6 +242,11 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
                     {
                         SamaGamesAPI.get().getStatsManager().getPlayerStats(playerUUID).getJukeBoxStatistics().incrByWoots(woots);
                         SamaGamesAPI.get().getStatsManager().getPlayerStats(playerUUID).getJukeBoxStatistics().incrByMehs(mehs);
+
+                        this.hub.getServer().getScheduler().runTask(this.hub, () ->
+                        {
+                            Arrays.asList(40, 41, 42, 43, 44).forEach(id -> SamaGamesAPI.get().getAchievementManager().incrementAchievement(playerUUID, id, woots));
+                        });
                     }
                     catch (NullPointerException ignored) {}
                 }
