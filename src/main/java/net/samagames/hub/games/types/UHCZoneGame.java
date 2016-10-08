@@ -102,7 +102,6 @@ public class UHCZoneGame extends AbstractGame
 
         players += this.hub.getGameManager().getGameByIdentifier("uhc").getOnlinePlayers();
         players += this.hub.getGameManager().getGameByIdentifier("uhcrun").getOnlinePlayers();
-        players += this.hub.getGameManager().getGameByIdentifier("switchrun").getOnlinePlayers();
         players += this.hub.getGameManager().getGameByIdentifier("doublerunner").getOnlinePlayers();
         players += this.hub.getGameManager().getGameByIdentifier("uhcrandom").getOnlinePlayers();
         players += this.hub.getGameManager().getGameByIdentifier("randomrun").getOnlinePlayers();
