@@ -84,6 +84,7 @@ public class Hub extends JavaPlugin
         this.executorMonoThread = Executors.newScheduledThreadPool(1);
 
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
+        this.getServer().getMessenger().registerOutgoingPluginChannel(this, "Network");
 
         if (!this.getConfig().getBoolean("disconnected", false))
         {

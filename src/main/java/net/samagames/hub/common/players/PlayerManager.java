@@ -19,6 +19,9 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitTask;
 import redis.clients.jedis.Jedis;
 
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
@@ -154,6 +157,8 @@ public class PlayerManager extends AbstractManager
                 if (TeamSpeakAPI.isLinked(player.getUniqueId()))
                     SamaGamesAPI.get().getAchievementManager().getAchievementByID(18).unlock(player.getUniqueId());
 
+                this.sendFriendsCheckRequest(player);
+
                 if (player.getUniqueId().equals(UUID.fromString("568046c8-6045-4c59-a255-28027aac8c33")))
                     ActionBarAPI.sendMessage(player, ChatColor.RED + "\u2764");
             });
@@ -286,5 +291,20 @@ public class PlayerManager extends AbstractManager
     public boolean canBuild()
     {
         return this.canBuild;
+    }
+
+    private void sendFriendsCheckRequest(Player player)
+    {
+        ByteArrayOutputStream b = new ByteArrayOutputStream();
+        DataOutputStream out = new DataOutputStream(b);
+
+        try
+        {
+            out.writeUTF("friendsCheck");
+            out.writeUTF(player.getUniqueId().toString());
+        }
+        catch (IOException ignored) {}
+
+        player.sendPluginMessage(this.hub, "Network", b.toByteArray());
     }
 }
