@@ -67,19 +67,17 @@ public class InteractionManager extends AbstractManager
 
     public boolean isInteracting(Player player)
     {
-        boolean interacting = false;
-
         if (this.yodelManager.hasPlayer(player))
-            interacting = true;
+            return true;
         else if (this.sonicSquidManager.hasPlayer(player))
-            interacting = true;
+            return true;
         else if (this.bumperManager.hasPlayer(player))
-            interacting = true;
+            return true;
         else if (this.magicChestManager.hasPlayer(player))
-            interacting = true;
+            return true;
         else if (this.meowManager.hasPlayer(player))
-            interacting = true;
+            return true;
 
-        return interacting;
+        return false;
     }
 }

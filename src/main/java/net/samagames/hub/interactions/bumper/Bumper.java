@@ -26,6 +26,7 @@ class Bumper extends AbstractInteraction implements Listener
     private final BukkitTask startTask;
     private final ArmorStand startBeacon;
     private final Map<UUID, BukkitTask> flyTasks;
+    private final Map<UUID, Integer> disclaimerCooldowns;
     private final List<UUID> flyingPlayers;
     private final double power;
 
@@ -40,6 +41,7 @@ class Bumper extends AbstractInteraction implements Listener
         this.bumperLocation = new Location(Bukkit.getWorld(args[0]), Double.parseDouble(args[1]), Double.parseDouble(args[2]), Double.parseDouble(args[3]), Float.parseFloat(args[4]), Float.parseFloat(args[5]));
         this.power = Double.parseDouble(args[6]);
         this.flyTasks = new HashMap<>();
+        this.disclaimerCooldowns = new HashMap<>();
         this.flyingPlayers = new ArrayList<>();
 
         this.startBeacon = this.bumperLocation.getWorld().spawn(this.bumperLocation.clone().add(new Vector(
@@ -65,7 +67,24 @@ class Bumper extends AbstractInteraction implements Listener
 
         if (!VersionUtils.isLoggedInPost19(player))
         {
-            player.sendMessage(ChatColor.RED + "Veuillez vous connecter avec une version supérieure ou égale à Minecraft 1.9 pour utiliser les Bumpers.");
+            if (!this.disclaimerCooldowns.containsKey(player.getUniqueId()))
+            {
+                player.sendMessage(ChatColor.RED + "Veuillez vous connecter avec une version supérieure ou égale à Minecraft 1.9 pour utiliser les Bumpers.");
+                this.disclaimerCooldowns.put(player.getUniqueId(), 20);
+            }
+            else
+            {
+                int cooldown = this.disclaimerCooldowns.get(player.getUniqueId());
+                cooldown--;
+
+                this.disclaimerCooldowns.remove(player.getUniqueId());
+
+                if (cooldown > 0)
+                {
+                    this.disclaimerCooldowns.put(player.getUniqueId(), cooldown);
+                }
+            }
+            
             return;
         }
 
