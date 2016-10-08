@@ -111,4 +111,9 @@ public class RestrictedVersion
 
         return new RestrictedVersion(operator, protocolVersion, literalVersion);
     }
+
+    public static boolean isLoggedInPost19(Player player)
+    {
+        return ProtocolSupportAPI.getProtocolVersion(player).getId() >= 107;
+    }
 }

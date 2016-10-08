@@ -4,7 +4,7 @@ import net.samagames.api.SamaGamesAPI;
 import net.samagames.api.permissions.IPermissionsEntity;
 import net.samagames.hub.Hub;
 import net.samagames.hub.common.managers.AbstractManager;
-import net.samagames.hub.utils.VersionUtils;
+import net.samagames.hub.utils.RestrictedVersion;
 import net.samagames.tools.Area;
 import net.samagames.tools.InventoryUtils;
 import net.samagames.tools.LocationUtils;
@@ -109,7 +109,7 @@ public class PlayerManager extends AbstractManager
 
                 this.staticInventory.setInventoryToPlayer(player);
 
-                if (VersionUtils.isLoggedInPost19(player))
+                if (RestrictedVersion.isLoggedInPost19(player))
                 {
                     try
                     {

@@ -4,7 +4,7 @@ import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import net.samagames.hub.interactions.AbstractInteraction;
 import net.samagames.hub.utils.ProximityUtils;
-import net.samagames.hub.utils.VersionUtils;
+import net.samagames.hub.utils.RestrictedVersion;
 import net.samagames.tools.Titles;
 import org.bukkit.*;
 import org.bukkit.craftbukkit.v1_10_R1.entity.CraftPlayer;
@@ -65,7 +65,7 @@ class Bumper extends AbstractInteraction implements Listener
         if (this.hub.getPlayerManager().isBusy(player) || player.getGameMode() == GameMode.SPECTATOR)
             return;
 
-        if (!VersionUtils.isLoggedInPost19(player))
+        if (!RestrictedVersion.isLoggedInPost19(player))
         {
             if (!this.disclaimerCooldowns.containsKey(player.getUniqueId()))
             {
@@ -84,7 +84,7 @@ class Bumper extends AbstractInteraction implements Listener
                     this.disclaimerCooldowns.put(player.getUniqueId(), cooldown);
                 }
             }
-            
+
             return;
         }
 

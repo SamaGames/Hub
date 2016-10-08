@@ -4,7 +4,7 @@ import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import net.samagames.hub.games.AbstractGame;
 import net.samagames.hub.gui.AbstractGui;
-import net.samagames.hub.utils.ItemStackUtils;
+import net.samagames.tools.ItemUtils;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -38,7 +38,7 @@ public class GuiMain extends AbstractGui
             AbstractGame game = this.hub.getGameManager().getGameByIdentifier(gameIdentifier);
 
             if (game.getSlotInMainMenu() >= 0)
-                this.setSlotData(game.isLocked() ? ChatColor.GOLD + "" + ChatColor.MAGIC + "aaaaaaaa" : (game.isNew() ? ChatColor.GREEN + "" + ChatColor.BOLD + "NOUVEAU ! " + ChatColor.RESET : "") + ChatColor.GOLD + game.getName(), ItemStackUtils.hideAllAttributes(game.isLocked() ? new ItemStack(Material.IRON_FENCE, 1) : game.getIcon()), game.getSlotInMainMenu(), makeGameLore(game), "game_" + gameIdentifier);
+                this.setSlotData(game.isLocked() ? ChatColor.GOLD + "" + ChatColor.MAGIC + "aaaaaaaa" : (game.isNew() ? ChatColor.GREEN + "" + ChatColor.BOLD + "NOUVEAU ! " + ChatColor.RESET : "") + ChatColor.GOLD + game.getName(), ItemUtils.hideAllAttributes(game.isLocked() ? new ItemStack(Material.IRON_FENCE, 1) : game.getIcon()), game.getSlotInMainMenu(), makeGameLore(game), "game_" + gameIdentifier);
         }
 
         this.hub.getServer().getScheduler().runTask(this.hub, () -> player.openInventory(this.inventory));

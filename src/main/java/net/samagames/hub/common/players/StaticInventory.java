@@ -6,7 +6,7 @@ import net.samagames.hub.gui.cosmetics.GuiCosmetics;
 import net.samagames.hub.gui.main.GuiMain;
 import net.samagames.hub.gui.profile.GuiProfile;
 import net.samagames.hub.gui.shop.GuiShop;
-import net.samagames.hub.utils.VersionUtils;
+import net.samagames.hub.utils.RestrictedVersion;
 import net.samagames.tools.GlowEffect;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -117,7 +117,7 @@ public class StaticInventory
             player.getInventory().setItem(slot, this.items.get(slot));
         }
 
-        if (VersionUtils.isLoggedInPost19(player))
+        if (RestrictedVersion.isLoggedInPost19(player))
         {
             if (SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "network.vipplus") && SamaGamesAPI.get().getSettingsManager().getSettings(player.getUniqueId()).isElytraActivated())
             {
