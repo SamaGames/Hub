@@ -5,6 +5,7 @@ import net.samagames.api.SamaGamesAPI;
 import net.samagames.api.parties.IParty;
 import net.samagames.hub.Hub;
 import net.samagames.hub.games.AbstractGame;
+import net.samagames.hub.utils.RestrictedVersion;
 import org.bukkit.ChatColor;
 import org.bukkit.block.Sign;
 import org.bukkit.craftbukkit.v1_10_R1.CraftWorld;
@@ -22,6 +23,7 @@ public class GameSign
     private final String map;
     private final ChatColor color;
     private final String template;
+    private final RestrictedVersion restrictedVersion;
     private final Sign sign;
     private final BukkitTask updateTask;
     private boolean isMaintenance;
@@ -35,13 +37,14 @@ public class GameSign
     private int playerWaitFor;
     private int totalPlayerOnServers;
 
-    public GameSign(Hub hub, AbstractGame game, String map, ChatColor color, String template, Sign sign)
+    public GameSign(Hub hub, AbstractGame game, String map, ChatColor color, String template, RestrictedVersion restrictedVersion, Sign sign)
     {
         this.hub = hub;
         this.game = game;
         this.map = map;
         this.color = color;
         this.template = template;
+        this.restrictedVersion = restrictedVersion;
         this.sign = sign;
 
         this.sign.setMetadata("game", new FixedMetadataValue(hub, game.getCodeName()));
@@ -160,9 +163,29 @@ public class GameSign
             player.sendMessage(ChatColor.RED + "Ce jeu n'est pas encore disponible.");
             return;
         }
-        if (this.isMaintenance)
+        else if (this.isMaintenance)
         {
             player.sendMessage(ChatColor.RED + "Ce jeu est actuellement en maintenance.");
+            return;
+        }
+
+        if (this.restrictedVersion != null && !this.restrictedVersion.canAccess(player))
+        {
+            player.sendMessage(ChatColor.RED + "Vous ne pouvez pas jouer à ce jeu avec votre version de Minecraft actuelle !");
+
+            if (this.restrictedVersion.getOperator() == RestrictedVersion.Operator.EQUALS)
+            {
+                player.sendMessage(ChatColor.RED + "Veuillez utiliser la version " + this.restrictedVersion.getLiteralVersion() + " pour pouvoir jouer.");
+            }
+            else if (this.restrictedVersion.getOperator() == RestrictedVersion.Operator.GREATER_OR_EQUALS)
+            {
+                player.sendMessage(ChatColor.RED + "Veuillez utiliser une version supérieure ou égale à la version " + this.restrictedVersion.getLiteralVersion() + " pour pouvoir jouer.");
+            }
+            else if (this.restrictedVersion.getOperator() == RestrictedVersion.Operator.GREATER_OR_EQUALS)
+            {
+                player.sendMessage(ChatColor.RED + "Veuillez utiliser une version inférieure ou égale à la version " + this.restrictedVersion.getLiteralVersion() + " pour pouvoir jouer.");
+            }
+
             return;
         }
 
@@ -194,6 +217,7 @@ public class GameSign
         player.sendMessage(ChatColor.GOLD + "> " + ChatColor.AQUA + "Template : " + ChatColor.GREEN + this.template);
         player.sendMessage(ChatColor.GOLD + "> " + ChatColor.AQUA + "Jeu : " + ChatColor.GREEN + this.game.getCodeName());
         player.sendMessage(ChatColor.GOLD + "> " + ChatColor.AQUA + "Map : " + ChatColor.GREEN + this.map);
+        player.sendMessage(ChatColor.GOLD + "> " + ChatColor.AQUA + "Version restreinte : " + ChatColor.GREEN + (this.restrictedVersion == null ? "Aucune" : this.restrictedVersion.getOperator().getSymbol() + this.restrictedVersion.getLiteralVersion()));
         player.sendMessage(ChatColor.GOLD + "> " + ChatColor.AQUA + "Joueurs par jeu : " + ChatColor.GREEN + this.playerPerGame);
         player.sendMessage(ChatColor.GOLD + "> " + ChatColor.AQUA + "Joueurs en attente : " + ChatColor.GREEN + this.playerWaitFor);
         player.sendMessage(ChatColor.GOLD + "> " + ChatColor.AQUA + "Joueurs en jeu : " + ChatColor.GREEN + this.totalPlayerOnServers);

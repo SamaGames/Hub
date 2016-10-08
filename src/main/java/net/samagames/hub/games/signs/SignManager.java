@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import net.samagames.hub.Hub;
 import net.samagames.hub.common.managers.AbstractManager;
 import net.samagames.hub.games.AbstractGame;
+import net.samagames.hub.utils.RestrictedVersion;
 import net.samagames.tools.JsonConfiguration;
 import net.samagames.tools.LocationUtils;
 import org.bukkit.ChatColor;
@@ -83,6 +84,22 @@ public class SignManager extends AbstractManager
                 ChatColor color = ChatColor.valueOf(mapObject.get("color").getAsString());
                 Location sign = LocationUtils.str2loc(mapObject.get("sign").getAsString());
 
+                RestrictedVersion restrictedVersion = null;
+
+                if (mapObject.has("restricted-version"))
+                {
+                    try
+                    {
+                        restrictedVersion = RestrictedVersion.parse(mapObject.get("restricted-version").getAsString());
+                    }
+                    catch (Exception e)
+                    {
+                        this.log(Level.SEVERE, "Wanted to register a game sign with an invalid restricted version! (" + e.getMessage() + ")");
+                    }
+
+                    continue;
+                }
+
                 AbstractGame gameObject = this.hub.getGameManager().getGameByIdentifier(game);
 
                 if (gameObject == null)
@@ -99,7 +116,7 @@ public class SignManager extends AbstractManager
                     continue;
                 }
 
-                gameObject.addSignForMap(map.replace("_", " "), (Sign) block.getState(), template, color);
+                gameObject.addSignForMap(map.replace("_", " "), color, template, restrictedVersion, (Sign) block.getState());
 
                 this.log(Level.INFO, "Registered sign zone for the game '" + game + "' and the map '" + map + "'!");
             }

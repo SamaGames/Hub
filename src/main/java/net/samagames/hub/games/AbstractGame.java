@@ -5,6 +5,7 @@ import net.samagames.hub.Hub;
 import net.samagames.hub.games.leaderboards.HubLeaderboard;
 import net.samagames.hub.games.shops.ShopCategory;
 import net.samagames.hub.games.signs.GameSign;
+import net.samagames.hub.utils.RestrictedVersion;
 import net.samagames.tools.RulesBook;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -53,9 +54,9 @@ public abstract class AbstractGame
     public abstract boolean isLocked();
     public abstract boolean isNew();
 
-    public void addSignForMap(String map, Sign sign, String template, ChatColor color)
+    public void addSignForMap(String map, ChatColor color, String template, RestrictedVersion restrictedVersion, Sign sign)
     {
-        GameSign gameSign = new GameSign(this.hub, this, map, color, template, sign);
+        GameSign gameSign = new GameSign(this.hub, this, map, color, template, restrictedVersion, sign);
 
         Jedis jedis = SamaGamesAPI.get().getBungeeResource();
 
