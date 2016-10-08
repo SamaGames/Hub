@@ -122,13 +122,16 @@ public class StaticInventory
             if (SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "network.vipplus") && SamaGamesAPI.get().getSettingsManager().getSettings(player.getUniqueId()).isElytraActivated())
             {
                 ItemStack itemStack;
+
                 if (player.getInventory().getChestplate() != null && player.getInventory().getChestplate().getType() == Material.ELYTRA)
                 {
                     itemStack = buildItemStack(Material.ELYTRA, 1, 0, createTitle("Désactiver les ailes"), null);
                     GlowEffect.addGlow(itemStack);
                 }
                 else
+                {
                     itemStack = buildItemStack(Material.ELYTRA, 1, 0, createTitle("Activer les ailes"), null);
+                }
 
                 player.getInventory().setItem(4, itemStack);
             }

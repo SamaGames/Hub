@@ -9,6 +9,7 @@ import net.samagames.hub.games.AbstractGame;
 import net.samagames.hub.games.signs.GameSign;
 import net.samagames.hub.gui.profile.GuiClickMe;
 import net.samagames.hub.utils.ServerStatus;
+import net.samagames.hub.utils.VersionUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Sign;
@@ -148,7 +149,7 @@ public class PlayerListener implements Listener
             if (((Player) event.getEntity()).isFlying() && ((Player) event.getEntity()).getInventory().getChestplate().getType() == Material.ELYTRA)
                 ((Player) event.getEntity()).getInventory().setChestplate(null);
 
-        if (event.isGliding())
+        if (event.isGliding() && VersionUtils.isLoggedInPost19((Player) event.getEntity()))
         {
             ItemStack stack = new ItemStack(Material.FEATHER);
             ItemMeta meta = stack.getItemMeta();
