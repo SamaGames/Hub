@@ -92,7 +92,7 @@ public class UHCZoneGame extends AbstractGame
     @Override
     public Location getLobbySpawn()
     {
-        return new Location(this.hub.getWorld(), 28.5D, 105.0D, 35.5D, -90.0F, 0.0F);
+        return new Location(this.hub.getWorld(), -58.5D, 108.0D, -3.5D, 90.0F, 0.0F);
     }
 
     @Override
