@@ -1,5 +1,6 @@
 package net.samagames.hub.interactions.yodels;
 
+import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import net.samagames.hub.interactions.AbstractInteraction;
 import net.samagames.hub.utils.ProximityUtils;
@@ -81,11 +82,13 @@ class Yodel extends AbstractInteraction
     public void play(Player player)
     {
         if (runnerList.containsKey(player.getUniqueId()) || player.getGameMode() == GameMode.SPECTATOR)
-            return ;
+            return;
 
         YodelRunner runner = new YodelRunner(this.hub, this, player, this.reverse);
         runnerList.put(player.getUniqueId(), runner);
         runner.start();
+
+        this.hub.getServer().getScheduler().runTask(this.hub, () -> SamaGamesAPI.get().getAchievementManager().getAchievementByID(58).unlock(player.getUniqueId()));
     }
 
     @Override
@@ -98,6 +101,7 @@ class Yodel extends AbstractInteraction
     public void onDisable()
     {
         runnerList.values().forEach(YodelRunner::stop);
+
         this.startTask.cancel();
         this.startBeacon.remove();
     }

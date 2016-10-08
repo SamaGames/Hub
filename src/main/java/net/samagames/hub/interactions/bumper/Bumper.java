@@ -88,8 +88,7 @@ class Bumper extends AbstractInteraction implements Listener
             return;
         }
 
-        if (!SamaGamesAPI.get().getAchievementManager().isUnlocked(player.getUniqueId(), 6))
-            SamaGamesAPI.get().getAchievementManager().getAchievementByID(6).unlock(player.getUniqueId());
+        this.hub.getServer().getScheduler().runTask(this.hub, () -> SamaGamesAPI.get().getAchievementManager().getAchievementByID(6).unlock(player.getUniqueId()));
 
         this.flyingPlayers.add(player.getUniqueId());
 
