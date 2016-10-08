@@ -1,5 +1,6 @@
 package net.samagames.hub.common.receivers;
 
+import net.samagames.api.SamaGamesAPI;
 import net.samagames.api.pubsub.IPacketsReceiver;
 import net.samagames.hub.Hub;
 import net.samagames.hub.utils.FireworkUtils;
@@ -30,6 +31,11 @@ public class SamaritanListener implements IPacketsReceiver
         String cheater = splited[0];
         String reason = splited[1];
 
+        this.doStuff(cheater, reason, false);
+    }
+
+    public void doStuff(String cheater, String reason, boolean simulation)
+    {
         World world = this.hub.getWorld();
         world.setTime(world.getTime() == DAY ? NIGHT : DAY);
 
@@ -39,7 +45,14 @@ public class SamaritanListener implements IPacketsReceiver
         {
             player.playSound(player.getLocation(), Sound.ENTITY_WITHER_SPAWN, 2.0F, 0.75F);
             world.strikeLightningEffect(player.getLocation());
-            this.hub.getServer().getScheduler().runTask(this.hub, () -> FireworkUtils.launchfw(this.hub, player.getLocation(), FIREWORK));
+
+            this.hub.getServer().getScheduler().runTask(this.hub, () ->
+            {
+                FireworkUtils.launchfw(this.hub, player.getLocation(), FIREWORK);
+
+                if (!simulation)
+                    SamaGamesAPI.get().getAchievementManager().getAchievementByID(51).unlock(player.getUniqueId());
+            });
         }
 
         new BukkitRunnable()

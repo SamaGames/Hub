@@ -68,6 +68,7 @@ public class Hub extends JavaPlugin
     private CosmeticManager cosmeticManager;
 
     private ScheduledFuture hydroangeasSynchronization;
+    private SamaritanListener samaritanListener;
 
     @Override
     public void onEnable()
@@ -123,8 +124,9 @@ public class Hub extends JavaPlugin
         this.getServer().getPluginManager().registerEvents(new WorldEditionListener(this), this);
 
         this.hydroangeasSynchronization = this.getScheduledExecutorService().scheduleAtFixedRate(() -> new ServerStatus(SamaGamesAPI.get().getServerName(), "Hub", "Map", Status.IN_GAME, Bukkit.getOnlinePlayers().size(), Bukkit.getMaxPlayers()).sendToHydro(), 0, 1, TimeUnit.MINUTES);
+        this.samaritanListener = new SamaritanListener(this);
 
-        SamaGamesAPI.get().getPubSub().subscribe("cheat", new SamaritanListener(this));
+        SamaGamesAPI.get().getPubSub().subscribe("cheat", this.samaritanListener);
         //SamaGamesAPI.get().getPubSub().subscribe("", new InteractionListener(this));
         SamaGamesAPI.get().getPubSub().subscribe("maintenanceSignChannel", new MaintenanceListener(this));
         SamaGamesAPI.get().getPubSub().subscribe("soonSignChannel", new SoonListener(this));
@@ -193,6 +195,11 @@ public class Hub extends JavaPlugin
     public NPCManager getNPCManager() { return this.npcManager; }
     public CommandManager getCommandManager() { return this.commandManager; }
     public CosmeticManager getCosmeticManager() { return this.cosmeticManager; }
+
+    public SamaritanListener getSamaritanListener()
+    {
+        return this.samaritanListener;
+    }
 
     public EffectLib getEffectLib()
     {
