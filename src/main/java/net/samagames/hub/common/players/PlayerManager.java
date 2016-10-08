@@ -1,5 +1,7 @@
 package net.samagames.hub.common.players;
 
+import com.google.common.io.ByteArrayDataOutput;
+import com.google.common.io.ByteStreams;
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.api.permissions.IPermissionsEntity;
 import net.samagames.hub.Hub;
@@ -19,9 +21,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitTask;
 import redis.clients.jedis.Jedis;
 
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
@@ -295,16 +294,10 @@ public class PlayerManager extends AbstractManager
 
     private void sendFriendsCheckRequest(Player player)
     {
-        ByteArrayOutputStream b = new ByteArrayOutputStream();
-        DataOutputStream out = new DataOutputStream(b);
+        ByteArrayDataOutput out = ByteStreams.newDataOutput();
+        out.writeUTF("friendsCheck");
+        out.writeUTF(player.getUniqueId().toString());
 
-        try
-        {
-            out.writeUTF("friendsCheck");
-            out.writeUTF(player.getUniqueId().toString());
-        }
-        catch (IOException ignored) {}
-
-        player.sendPluginMessage(this.hub, "Network", b.toByteArray());
+        player.sendPluginMessage(this.hub, "Network", out.toByteArray());
     }
 }
