@@ -81,14 +81,22 @@ public class RestrictedVersion
         if (versionLine == null)
             return null;
 
+        int openingParenthesesAt = versionLine.indexOf('(');
+        int closingParenthesesAt = versionLine.indexOf(')');
+
+        if (openingParenthesesAt == -1 || closingParenthesesAt == -1)
+        {
+            throw new Exception("No literal version found");
+        }
+
         String operatorSymbol = String.valueOf(versionLine.charAt(0));
 
-        int beginSubstringIndex = 0;
+        int beginSubstringIndex = 1;
 
         if (versionLine.charAt(1) == '=')
         {
             operatorSymbol += "=";
-            beginSubstringIndex = 1;
+            beginSubstringIndex = 2;
         }
 
         Operator operator = Operator.getBySymbol(operatorSymbol);
@@ -98,19 +106,9 @@ public class RestrictedVersion
             throw new Exception("Operator symbol isn't valid! (" + operatorSymbol + ")");
         }
 
-        int protocolVersion = Integer.parseInt(versionLine.substring(beginSubstringIndex));
-
-        int openingParenthesesAt = versionLine.indexOf('(');
-        int closingParenthesesAt = versionLine.indexOf(')');
-
-        if (openingParenthesesAt == -1 || closingParenthesesAt == -1)
-        {
-            throw new Exception("No literal version found");
-        }
+        int protocolVersion = Integer.parseInt(versionLine.substring(beginSubstringIndex, openingParenthesesAt));
 
         String literalVersion = versionLine.substring(openingParenthesesAt, closingParenthesesAt);
-
-        System.out.println(operator.getSymbol() + " // " + protocolVersion + " // " + literalVersion);
 
         return new RestrictedVersion(operator, protocolVersion, literalVersion);
     }
