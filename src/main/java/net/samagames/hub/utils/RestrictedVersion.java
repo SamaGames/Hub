@@ -107,10 +107,7 @@ public class RestrictedVersion
         }
 
         int protocolVersion = Integer.parseInt(versionLine.substring(beginSubstringIndex, openingParenthesesAt));
-
-        String literalVersion = versionLine.substring(openingParenthesesAt, closingParenthesesAt);
-
-        System.out.println(operator.name() + " // " + protocolVersion + " // " + literalVersion);
+        String literalVersion = versionLine.substring(openingParenthesesAt + 1, closingParenthesesAt);
 
         return new RestrictedVersion(operator, protocolVersion, literalVersion);
     }
