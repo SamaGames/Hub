@@ -65,7 +65,7 @@ public class ChunkWarsGame extends AbstractGame
     @Override
     public int getSlotInMainMenu()
     {
-        return 31;
+        return 22;
     }
 
     @Override

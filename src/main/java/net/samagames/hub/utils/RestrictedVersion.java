@@ -110,6 +110,8 @@ public class RestrictedVersion
 
         String literalVersion = versionLine.substring(openingParenthesesAt, closingParenthesesAt);
 
+        System.out.println(operator.name() + " // " + protocolVersion + " // " + literalVersion)
+
         return new RestrictedVersion(operator, protocolVersion, literalVersion);
     }
 }

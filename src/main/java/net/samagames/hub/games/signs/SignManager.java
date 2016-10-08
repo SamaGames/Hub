@@ -95,9 +95,8 @@ public class SignManager extends AbstractManager
                     catch (Exception e)
                     {
                         this.log(Level.SEVERE, "Wanted to register a game sign with an invalid restricted version! (" + e.getMessage() + ")");
+                        continue;
                     }
-
-                    continue;
                 }
 
                 AbstractGame gameObject = this.hub.getGameManager().getGameByIdentifier(game);
