@@ -11,6 +11,7 @@ import net.samagames.tools.LocationUtils;
 import net.samagames.tools.PlayerUtils;
 import net.samagames.tools.chat.ActionBarAPI;
 import net.samagames.tools.chat.fanciful.FancyMessage;
+import net.samagames.tools.teamspeak.TeamSpeakAPI;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -149,6 +150,9 @@ public class PlayerManager extends AbstractManager
 
                 if (SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "network.staff"))
                     SamaGamesAPI.get().getAchievementManager().getAchievementByID(52).unlock(player.getUniqueId());
+
+                if (TeamSpeakAPI.isLinked(player.getUniqueId()))
+                    SamaGamesAPI.get().getAchievementManager().getAchievementByID(18).unlock(player.getUniqueId());
 
                 if (player.getUniqueId().equals(UUID.fromString("568046c8-6045-4c59-a255-28027aac8c33")))
                     ActionBarAPI.sendMessage(player, ChatColor.RED + "\u2764");
