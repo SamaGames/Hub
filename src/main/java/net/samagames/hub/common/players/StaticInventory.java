@@ -6,6 +6,7 @@ import net.samagames.hub.gui.cosmetics.GuiCosmetics;
 import net.samagames.hub.gui.main.GuiMain;
 import net.samagames.hub.gui.profile.GuiProfile;
 import net.samagames.hub.gui.shop.GuiShop;
+import net.samagames.hub.utils.VersionUtils;
 import net.samagames.tools.GlowEffect;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -116,22 +117,26 @@ public class StaticInventory
             player.getInventory().setItem(slot, this.items.get(slot));
         }
 
-        if (SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "network.vipplus")
-                && SamaGamesAPI.get().getSettingsManager().getSettings(player.getUniqueId()).isElytraActivated())
+        if (VersionUtils.isLoggedInPost19(player))
         {
-            ItemStack itemStack;
-            if (player.getInventory().getChestplate() != null && player.getInventory().getChestplate().getType() == Material.ELYTRA)
+            if (SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "network.vipplus") && SamaGamesAPI.get().getSettingsManager().getSettings(player.getUniqueId()).isElytraActivated())
             {
-                itemStack = buildItemStack(Material.ELYTRA, 1, 0, createTitle("Désactiver les ailes"), null);
-                GlowEffect.addGlow(itemStack);
+                ItemStack itemStack;
+                if (player.getInventory().getChestplate() != null && player.getInventory().getChestplate().getType() == Material.ELYTRA)
+                {
+                    itemStack = buildItemStack(Material.ELYTRA, 1, 0, createTitle("Désactiver les ailes"), null);
+                    GlowEffect.addGlow(itemStack);
+                }
+                else
+                    itemStack = buildItemStack(Material.ELYTRA, 1, 0, createTitle("Activer les ailes"), null);
+
+                player.getInventory().setItem(4, itemStack);
             }
             else
-                itemStack = buildItemStack(Material.ELYTRA, 1, 0, createTitle("Activer les ailes"), null);
-
-            player.getInventory().setItem(4, itemStack);
+            {
+                player.getInventory().setItem(4, new ItemStack(Material.AIR));
+            }
         }
-        else
-            player.getInventory().setItem(4, new ItemStack(Material.AIR));
 
         player.getInventory().setHeldItemSlot(0);
     }

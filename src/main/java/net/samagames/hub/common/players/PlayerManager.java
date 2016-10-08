@@ -4,6 +4,7 @@ import net.samagames.api.SamaGamesAPI;
 import net.samagames.api.permissions.IPermissionsEntity;
 import net.samagames.hub.Hub;
 import net.samagames.hub.common.managers.AbstractManager;
+import net.samagames.hub.utils.VersionUtils;
 import net.samagames.tools.Area;
 import net.samagames.tools.InventoryUtils;
 import net.samagames.tools.LocationUtils;
@@ -106,26 +107,29 @@ public class PlayerManager extends AbstractManager
 
                 player.getInventory().clear();
 
-                try
+                this.staticInventory.setInventoryToPlayer(player);
+
+                if (VersionUtils.isLoggedInPost19(player))
                 {
-                    IPermissionsEntity permissionsEntity = SamaGamesAPI.get().getPermissionsManager().getPlayer(player.getUniqueId());
-
-                    if (permissionsEntity.hasPermission("network.vipplus") && SamaGamesAPI.get().getSettingsManager().getSettings(player.getUniqueId()).isElytraActivated())
+                    try
                     {
-                        ItemStack elytra = new ItemStack(Material.ELYTRA);
-                        ItemMeta meta = elytra.getItemMeta();
-                        meta.spigot().setUnbreakable(true);
-                        elytra.setItemMeta(meta);
+                        IPermissionsEntity permissionsEntity = SamaGamesAPI.get().getPermissionsManager().getPlayer(player.getUniqueId());
 
-                        player.getInventory().setChestplate(elytra);
+                        if (permissionsEntity.hasPermission("network.vipplus") && SamaGamesAPI.get().getSettingsManager().getSettings(player.getUniqueId()).isElytraActivated())
+                        {
+                            ItemStack elytra = new ItemStack(Material.ELYTRA);
+                            ItemMeta meta = elytra.getItemMeta();
+                            meta.spigot().setUnbreakable(true);
+                            elytra.setItemMeta(meta);
+
+                            player.getInventory().setChestplate(elytra);
+                        }
+                    }
+                    catch (NullPointerException ignored)
+                    {
+                        player.sendMessage(ChatColor.RED + "Une erreur a été détectée lors du chargement de votre joueur, vous devrez peut-être vous reconnecter.");
                     }
                 }
-                catch (NullPointerException ignored)
-                {
-                    player.sendMessage(ChatColor.RED + "Une erreur a été détectée lors du chargement de votre joueur, vous devrez peut-être vous reconnecter.");
-                }
-
-                this.staticInventory.setInventoryToPlayer(player);
 
                 this.updateHiders(player);
 
@@ -147,7 +151,6 @@ public class PlayerManager extends AbstractManager
                     ActionBarAPI.sendMessage(player, ChatColor.RED + "\u2764");
             });
 
-            //New Games
             this.hub.getScheduledExecutorService().schedule(() ->
             {
                 if (!player.isOnline())
@@ -157,7 +160,7 @@ public class PlayerManager extends AbstractManager
                 player.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
 
                 FancyMessage toolBox = new FancyMessage("En cliquant ici, vous rejoignez automatiquement la fil d'attente pour gagner du temps.").color(ChatColor.GOLD).style(ChatColor.ITALIC);
-                new FancyMessage("Hey ! Venez tester notre nouveau jeu Run4Flag ! ").color(ChatColor.GOLD).send(player);
+                new FancyMessage("Hey ! Venez tester notre nouveau jeu Run4Flag !").color(ChatColor.GOLD).send(player);
                 new FancyMessage("[Cliquez ici] ").color(ChatColor.GREEN).style(ChatColor.BOLD).command("/join ultraflagkeeper ultraflagkeeper_t2").formattedTooltip(toolBox).send(player);
 
                 player.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
