@@ -34,7 +34,7 @@ class GuiGraou extends AbstractGui
     @Override
     public void update(Player player)
     {
-        this.setSlotData(PEARL_HEAD, 10, "pearl");
+        this.setSlotData(PEARL_HEAD, 10, "pearl_0");
         this.setSlotData(getBackIcon(), this.inventory.getSize() - 5, "back");
     }
 
