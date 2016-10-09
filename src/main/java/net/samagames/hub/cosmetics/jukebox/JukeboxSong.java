@@ -22,12 +22,12 @@ public class JukeboxSong
     private final int initialSeconds;
     private int secondsRemaining;
 
-    JukeboxSong(Hub hub, JukeboxDiskCosmetic disk, String playerBy)
+    JukeboxSong(Hub hub, JukeboxDiskCosmetic disk, String playedBy)
     {
         this.hub = hub;
         this.disk = disk;
         this.song = disk.getSong();
-        this.playedBy = playerBy;
+        this.playedBy = playedBy;
         this.initialSeconds = disk.getSeconds();
         this.secondsRemaining = disk.getSeconds();
 
@@ -43,6 +43,9 @@ public class JukeboxSong
 
     public boolean woot(Player player)
     {
+        if (this.playedBy.equals(player.getName()))
+            return false;
+
         if (this.mehers.contains(player.getUniqueId()))
         {
             this.mehers.remove(player.getUniqueId());
@@ -60,6 +63,9 @@ public class JukeboxSong
 
     public boolean meh(Player player)
     {
+        if (this.playedBy.equals(player.getName()))
+            return false;
+
         if (this.wooters.contains(player.getUniqueId()))
             this.wooters.remove(player.getUniqueId());
 

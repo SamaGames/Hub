@@ -3,6 +3,7 @@ package net.samagames.hub.interactions;
 import net.samagames.hub.Hub;
 import net.samagames.hub.common.managers.AbstractManager;
 import net.samagames.hub.interactions.bumper.BumperManager;
+import net.samagames.hub.interactions.graou.GraouManager;
 import net.samagames.hub.interactions.magicchests.MagicChestManager;
 import net.samagames.hub.interactions.meow.MeowManager;
 import net.samagames.hub.interactions.sonicsquid.SonicSquidManager;
@@ -18,6 +19,7 @@ public class InteractionManager extends AbstractManager
     private final BumperManager bumperManager;
     private final MagicChestManager magicChestManager;
     private final MeowManager meowManager;
+    private final GraouManager graouManager;
 
     public InteractionManager(Hub hub)
     {
@@ -33,6 +35,7 @@ public class InteractionManager extends AbstractManager
         this.bumperManager = new BumperManager(hub);
         this.magicChestManager = new MagicChestManager(hub);
         this.meowManager = new MeowManager(hub);
+        this.graouManager = new GraouManager(hub);
     }
 
     @Override
@@ -43,6 +46,7 @@ public class InteractionManager extends AbstractManager
         this.bumperManager.onDisable();
         this.magicChestManager.onDisable();
         this.meowManager.onDisable();
+        this.graouManager.onDisable();
     }
 
     @Override
@@ -53,6 +57,7 @@ public class InteractionManager extends AbstractManager
         this.bumperManager.onLogin(player);
         this.magicChestManager.onLogin(player);
         this.meowManager.onLogin(player);
+        this.graouManager.onLogin(player);
     }
 
     @Override
@@ -63,6 +68,7 @@ public class InteractionManager extends AbstractManager
         this.bumperManager.onLogout(player);
         this.magicChestManager.onLogout(player);
         this.meowManager.onLogout(player);
+        this.graouManager.onLogout(player);
     }
 
     public boolean isInteracting(Player player)
@@ -76,6 +82,8 @@ public class InteractionManager extends AbstractManager
         else if (this.magicChestManager.hasPlayer(player))
             return true;
         else if (this.meowManager.hasPlayer(player))
+            return true;
+        else if (this.graouManager.hasPlayer(player))
             return true;
 
         return false;
