@@ -21,7 +21,7 @@ public class GraouManager extends AbstractInteractionManager<Graou> implements L
 
     public GraouManager(Hub hub)
     {
-        super(hub, "meow");
+        super(hub, "graou");
 
         this.lock = new ArrayList<>();
 
@@ -86,6 +86,6 @@ public class GraouManager extends AbstractInteractionManager<Graou> implements L
         Graou meow = new Graou(this.hub, location);
 
         this.interactions.add(meow);
-        this.log(Level.INFO, "Registered Meow at '" + rootJson.get(0).getAsString());
+        this.log(Level.INFO, "Registered Graou at '" + rootJson.get(0).getAsString());
     }
 }
