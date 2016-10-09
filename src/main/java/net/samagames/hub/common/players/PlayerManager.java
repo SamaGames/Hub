@@ -292,23 +292,29 @@ public class PlayerManager extends AbstractManager
 
     private void checkFriendsCount(Player player)
     {
-        int totalFriend = SamaGamesAPI.get().getFriendsManager().uuidFriendsList(player.getUniqueId()).size();
+        this.hub.getServer().getScheduler().runTaskAsynchronously(this.hub, () ->
+        {
+            int totalFriend = SamaGamesAPI.get().getFriendsManager().uuidFriendsList(player.getUniqueId()).size();
 
-        this.hub.getServer().broadcastMessage(String.valueOf(totalFriend));
+            if (totalFriend >= 1)
+                this.hub.getServer().getScheduler().runTask(this.hub, () ->
+                    SamaGamesAPI.get().getAchievementManager().getAchievementByID(45).unlock(player.getUniqueId()));
 
-        if (totalFriend >= 1)
-            SamaGamesAPI.get().getAchievementManager().getAchievementByID(45).unlock(player.getUniqueId());
+            if (totalFriend >= 10)
+                this.hub.getServer().getScheduler().runTask(this.hub, () ->
+                    SamaGamesAPI.get().getAchievementManager().incrementAchievement(player.getUniqueId(), 46, 10));
 
-        if (totalFriend >= 10)
-            SamaGamesAPI.get().getAchievementManager().incrementAchievement(player.getUniqueId(), 46, 10);
+            if (totalFriend >= 50)
+                this.hub.getServer().getScheduler().runTask(this.hub, () ->
+                    SamaGamesAPI.get().getAchievementManager().incrementAchievement(player.getUniqueId(), 47, 50));
 
-        if (totalFriend >= 50)
-            SamaGamesAPI.get().getAchievementManager().incrementAchievement(player.getUniqueId(), 47, 50);
+            if (totalFriend >= 75)
+                this.hub.getServer().getScheduler().runTask(this.hub, () ->
+                    SamaGamesAPI.get().getAchievementManager().incrementAchievement(player.getUniqueId(), 48, 75));
 
-        if (totalFriend >= 75)
-            SamaGamesAPI.get().getAchievementManager().incrementAchievement(player.getUniqueId(), 48, 75);
-
-        if (totalFriend >= 100)
-            SamaGamesAPI.get().getAchievementManager().incrementAchievement(player.getUniqueId(), 49, 100);
+            if (totalFriend >= 100)
+                this.hub.getServer().getScheduler().runTask(this.hub, () ->
+                        SamaGamesAPI.get().getAchievementManager().incrementAchievement(player.getUniqueId(), 49, 100));
+        });
     }
 }
