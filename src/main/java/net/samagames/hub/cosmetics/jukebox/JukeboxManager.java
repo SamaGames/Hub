@@ -245,7 +245,12 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
 
                         this.hub.getServer().getScheduler().runTask(this.hub, () ->
                         {
-                            Arrays.asList(40, 41, 42, 43, 44).forEach(id -> SamaGamesAPI.get().getAchievementManager().incrementAchievement(playerUUID, id, woots));
+                            if (woots > 0)
+                            {
+                                SamaGamesAPI.get().getAchievementManager().getAchievementByID(40).unlock(playerUUID);
+                                Arrays.asList(41, 42, 43, 44).forEach(id -> SamaGamesAPI.get().getAchievementManager().incrementAchievement(playerUUID, id, woots));
+                            }
+
                             Arrays.asList(55, 56, 57).forEach(id -> SamaGamesAPI.get().getAchievementManager().incrementAchievement(playerUUID, id, this.currentPlaylist.getDisk().getSeconds() / 60));
                         });
                     }
