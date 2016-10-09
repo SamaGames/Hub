@@ -20,8 +20,8 @@ import java.util.UUID;
 
 class Graou extends AbstractInteraction
 {
-    protected static final String TAG = ChatColor.GOLD + "[" + ChatColor.YELLOW + "Graou" + ChatColor.GOLD + "] " + ChatColor.RESET;
-    private static final String GRAOU_NAME = ChatColor.YELLOW + "" + ChatColor.BOLD + "Graou";
+    protected static final String TAG = ChatColor.DARK_BLUE + "[" + ChatColor.BLUE + "Graou" + ChatColor.DARK_BLUE + "] " + ChatColor.RESET;
+    private static final String GRAOU_NAME = ChatColor.BLUE + "" + ChatColor.BOLD + "Graou";
 
     private final Map<UUID, Hologram> holograms;
     private final EntityGraou graouEntity;
@@ -66,7 +66,7 @@ class Graou extends AbstractInteraction
         Hologram hologram;
 
         if (perls > 0)
-            hologram = new Hologram(GRAOU_NAME, ChatColor.GOLD + "" + perls + ChatColor.YELLOW + " perle" + (perls > 1 ? "s" : "") + " à échanger");
+            hologram = new Hologram(GRAOU_NAME, ChatColor.AQUA + "" + perls + ChatColor.BLUE + " perle" + (perls > 1 ? "s" : "") + " à échanger");
         else
             hologram = new Hologram(GRAOU_NAME);
 
@@ -77,7 +77,7 @@ class Graou extends AbstractInteraction
 
         if (perls > 0)
         {
-            player.sendMessage(TAG + ChatColor.RED + "Vous avez " + ChatColor.GOLD + perls + ChatColor.RED + " perle" + (perls > 1 ? "s" : "") + " à échanger ! Venez me voir :)");
+            player.sendMessage(TAG + ChatColor.BLUE + "Vous avez " + ChatColor.AQUA + perls + ChatColor.BLUE + " perle" + (perls > 1 ? "s" : "") + " à échanger ! Venez me voir :)");
             player.playSound(this.graouEntity.getBukkitEntity().getLocation(), Sound.ENTITY_CAT_AMBIENT, 1.0F, 1.5F);
         }
     }
@@ -122,7 +122,7 @@ class Graou extends AbstractInteraction
         Hologram hologram = this.holograms.get(player.getUniqueId());
 
         if (perls > 0)
-            hologram.change(GRAOU_NAME, ChatColor.GOLD + "" + perls + ChatColor.YELLOW + " perle" + (perls > 1 ? "s" : "") + " à échanger");
+            hologram.change(GRAOU_NAME, ChatColor.AQUA + "" + perls + ChatColor.BLUE + " perle" + (perls > 1 ? "s" : "") + " à échanger");
         else
             hologram.change(GRAOU_NAME);
 
