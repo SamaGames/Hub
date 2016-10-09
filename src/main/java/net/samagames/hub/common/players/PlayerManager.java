@@ -301,7 +301,7 @@ public class PlayerManager extends AbstractManager
             SamaGamesAPI.get().getAchievementManager().incrementAchievement(player.getUniqueId(), 46, 10);
 
         if (totalFriend >= 50)
-            SamaGamesAPI.get().getAchievementManager().incrementAchievement(player.getUniqueId(), 47, 50;
+            SamaGamesAPI.get().getAchievementManager().incrementAchievement(player.getUniqueId(), 47, 50);
 
         if (totalFriend >= 75)
             SamaGamesAPI.get().getAchievementManager().incrementAchievement(player.getUniqueId(), 48, 75);
