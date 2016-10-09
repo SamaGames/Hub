@@ -304,7 +304,7 @@ public class PlayerManager extends AbstractManager
 
             if (friendsCount >= 1)
                 this.hub.getServer().getScheduler().runTask(this.hub, () ->
-                        SamaGamesAPI.get().getAchievementManager().incrementAchievement(player.getUniqueId(), 45, 1));
+                        SamaGamesAPI.get().getAchievementManager().getAchievementByID(45).unlock(player.getUniqueId()));
 
             if (friendsCount >= 10)
                 this.hub.getServer().getScheduler().runTask(this.hub, () ->
@@ -352,7 +352,7 @@ public class PlayerManager extends AbstractManager
 
             if (woots >= 1)
                 this.hub.getServer().getScheduler().runTask(this.hub, () ->
-                        SamaGamesAPI.get().getAchievementManager().incrementAchievement(player.getUniqueId(), 40, 1));
+                        SamaGamesAPI.get().getAchievementManager().getAchievementByID(40).unlock(player.getUniqueId()));
 
             if (woots >= 100)
                 this.hub.getServer().getScheduler().runTask(this.hub, () ->
