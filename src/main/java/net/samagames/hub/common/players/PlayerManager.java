@@ -1,7 +1,5 @@
 package net.samagames.hub.common.players;
 
-import com.google.common.io.ByteArrayDataOutput;
-import com.google.common.io.ByteStreams;
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.api.permissions.IPermissionsEntity;
 import net.samagames.hub.Hub;
@@ -16,7 +14,6 @@ import net.samagames.tools.chat.fanciful.FancyMessage;
 import net.samagames.tools.teamspeak.TeamSpeakAPI;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitTask;
@@ -157,7 +154,7 @@ public class PlayerManager extends AbstractManager
                 if (TeamSpeakAPI.isLinked(player.getUniqueId()))
                     SamaGamesAPI.get().getAchievementManager().getAchievementByID(18).unlock(player.getUniqueId());
 
-                this.hub.getServer().getScheduler().runTaskLater(this.hub, () -> this.sendFriendsCheckRequest(player), 20L * 3);
+                this.checkFriendsCount(player);
 
                 if (player.getUniqueId().equals(UUID.fromString("568046c8-6045-4c59-a255-28027aac8c33")))
                     ActionBarAPI.sendMessage(player, ChatColor.RED + "\u2764");
@@ -293,12 +290,23 @@ public class PlayerManager extends AbstractManager
         return this.canBuild;
     }
 
-    private void sendFriendsCheckRequest(Player player)
+    private void checkFriendsCount(Player player)
     {
-        ByteArrayDataOutput out = ByteStreams.newDataOutput();
-        out.writeUTF("friendsCheck");
-        out.writeUTF(player.getUniqueId().toString());
+        int totalFriend = SamaGamesAPI.get().getFriendsManager().uuidFriendsList(player.getUniqueId()).size();
 
-        player.sendPluginMessage(this.hub, "Network", out.toByteArray());
+        if (totalFriend >= 1)
+            SamaGamesAPI.get().getAchievementManager().getAchievementByID(45).unlock(player.getUniqueId());
+
+        if (totalFriend >= 10)
+            SamaGamesAPI.get().getAchievementManager().incrementAchievement(player.getUniqueId(), 46, 10);
+
+        if (totalFriend >= 50)
+            SamaGamesAPI.get().getAchievementManager().incrementAchievement(player.getUniqueId(), 47, 50;
+
+        if (totalFriend >= 75)
+            SamaGamesAPI.get().getAchievementManager().incrementAchievement(player.getUniqueId(), 48, 75);
+
+        if (totalFriend >= 100)
+            SamaGamesAPI.get().getAchievementManager().incrementAchievement(player.getUniqueId(), 49, 100);
     }
 }
