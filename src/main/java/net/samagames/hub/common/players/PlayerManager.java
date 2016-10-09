@@ -280,9 +280,6 @@ public class PlayerManager extends AbstractManager
     {
         this.hub.getServer().getScheduler().runTaskAsynchronously(this.hub, () ->
         {
-            long startTime = System.currentTimeMillis();
-            long step = System.currentTimeMillis();
-
             SamaGamesAPI.get().getAchievementManager().getAchievementByID(1).unlock(player.getUniqueId());
 
             if (SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "network.vip"))
@@ -301,15 +298,9 @@ public class PlayerManager extends AbstractManager
                 this.hub.getExecutorMonoThread().submit(() ->
                     SamaGamesAPI.get().getAchievementManager().getAchievementByID(18).unlock(player.getUniqueId()));
 
-            Bukkit.broadcastMessage("Ranks & TS linking check done in:" + String.valueOf(System.currentTimeMillis() - step) + " ms");
-
             // --
 
-            step = System.currentTimeMillis();
-
             int friendsCount = SamaGamesAPI.get().getFriendsManager().uuidFriendsList(player.getUniqueId()).size();
-
-            Bukkit.broadcastMessage(String.valueOf(friendsCount));
 
             if (friendsCount >= 1)
                 this.hub.getExecutorMonoThread().submit(() ->
@@ -331,15 +322,9 @@ public class PlayerManager extends AbstractManager
                 this.hub.getExecutorMonoThread().submit(() ->
                         SamaGamesAPI.get().getAchievementManager().incrementAchievement(player.getUniqueId(), 49, 100));
 
-            Bukkit.broadcastMessage("Friends check done in:" + String.valueOf(System.currentTimeMillis() - step) + " ms");
-
             // --
 
-            step = System.currentTimeMillis();
-
             long coins = SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).getCoins();
-
-            Bukkit.broadcastMessage(String.valueOf(coins));
 
             if (coins >= 100)
                 this.hub.getExecutorMonoThread().submit(() ->
@@ -361,15 +346,9 @@ public class PlayerManager extends AbstractManager
                 this.hub.getExecutorMonoThread().submit(() ->
                         SamaGamesAPI.get().getAchievementManager().incrementAchievement(player.getUniqueId(), 34, 50000));
 
-            Bukkit.broadcastMessage("Coins check done in:" + String.valueOf(System.currentTimeMillis() - step) + " ms");
-
             // --
 
-            step = System.currentTimeMillis();
-
             int woots = SamaGamesAPI.get().getStatsManager().getPlayerStats(player.getUniqueId()).getJukeBoxStatistics().getWoots();
-
-            Bukkit.broadcastMessage(String.valueOf(woots));
 
             if (woots >= 1)
                 this.hub.getExecutorMonoThread().submit(() ->
@@ -391,8 +370,15 @@ public class PlayerManager extends AbstractManager
                 this.hub.getExecutorMonoThread().submit(() ->
                         SamaGamesAPI.get().getAchievementManager().incrementAchievement(player.getUniqueId(), 44, 5000));
 
-            Bukkit.broadcastMessage("Woots check done in:" + String.valueOf(System.currentTimeMillis() - step) + " ms");
-            Bukkit.broadcastMessage("Achievement check done in:" + String.valueOf(System.currentTimeMillis() - startTime) + " ms");
+            // --
+
+            //
+            // This stop the current Thread, has to be put at the end!
+            //
+
+            if (TeamSpeakAPI.isLinked(player.getUniqueId()))
+                this.hub.getExecutorMonoThread().submit(() ->
+                        SamaGamesAPI.get().getAchievementManager().getAchievementByID(18).unlock(player.getUniqueId()));
         });
     }
 }
