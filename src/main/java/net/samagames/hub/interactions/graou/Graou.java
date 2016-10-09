@@ -168,6 +168,14 @@ class Graou extends AbstractInteraction
         this.stop(player);
     }
 
+    public void toggleHolograms(boolean visible)
+    {
+        if (visible)
+            this.holograms.values().forEach(Hologram::sendLinesForPlayers);
+        else
+            this.holograms.values().forEach(Hologram::removeLinesForPlayers);
+    }
+
     public EntityGraou getGraouEntity()
     {
         return this.graouEntity;

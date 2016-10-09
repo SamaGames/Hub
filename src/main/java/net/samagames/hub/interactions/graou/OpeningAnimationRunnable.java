@@ -33,11 +33,14 @@ class OpeningAnimationRunnable implements Runnable
             return;
         }
 
+        this.graou.toggleHolograms(false);
+
         this.player.setWalkSpeed(0.0F);
         this.player.setAllowFlight(false);
         this.player.setFlying(false);
 
-        this.graou.getGraouEntity().getNavigation().a(path, 1.0D);
+        this.graou.getGraouEntity().getGoalSit().setSitting(false);
+        this.graou.getGraouEntity().getNavigation().a(path, 0.75D);
 
 
     }

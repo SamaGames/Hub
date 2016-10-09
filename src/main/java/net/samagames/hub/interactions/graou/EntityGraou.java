@@ -1,8 +1,6 @@
 package net.samagames.hub.interactions.graou;
 
-import net.minecraft.server.v1_10_R1.EntityOcelot;
-import net.minecraft.server.v1_10_R1.NBTTagCompound;
-import net.minecraft.server.v1_10_R1.World;
+import net.minecraft.server.v1_10_R1.*;
 
 import java.util.UUID;
 
@@ -50,4 +48,10 @@ class EntityGraou extends EntityOcelot
 
     @Override
     public void f(NBTTagCompound nbttagcompound) {}
+
+    @Override
+    protected SoundEffect G()
+    {
+        return SoundEffects.T;
+    }
 }
