@@ -50,6 +50,7 @@ class OpeningAnimationRunnable implements Runnable
         this.player.setFlying(false);
 
         this.graou.getGraouEntity().getGoalSit().setSitting(false);
+        this.graou.getGraouEntity().setSprinting(true);
         this.graou.getGraouEntity().getNavigation().a(path, 1.0D);
 
         new BukkitRunnable()

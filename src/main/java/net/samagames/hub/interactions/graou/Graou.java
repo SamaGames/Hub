@@ -169,6 +169,8 @@ class Graou extends AbstractInteraction
 
     public void respawn()
     {
+        this.graouEntity.getGoalSit().setSitting(true);
+        this.graouEntity.setSprinting(false);
         this.graouEntity.setPosition(this.catLocation.getX(), this.catLocation.getY(), this.catLocation.getZ());
         this.graouEntity.positionChanged = true;
     }
