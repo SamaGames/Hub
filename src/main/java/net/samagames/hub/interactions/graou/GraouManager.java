@@ -1,6 +1,7 @@
 package net.samagames.hub.interactions.graou;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import net.minecraft.server.v1_10_R1.EntityOcelot;
 import net.samagames.hub.Hub;
 import net.samagames.hub.interactions.AbstractInteractionManager;
@@ -82,8 +83,11 @@ public class GraouManager extends AbstractInteractionManager<Graou> implements L
         if (rootJson.size() == 0)
             return;
 
-        Location location = LocationUtils.str2loc(rootJson.get(0).getAsString());
-        Graou meow = new Graou(this.hub, location);
+        JsonObject graouJson = rootJson.get(0).getAsJsonObject();
+
+        Location catLocation = LocationUtils.str2loc(graouJson.get("cat").getAsString());
+        Location treasureLocation = LocationUtils.str2loc(graouJson.get("treasure").getAsString());
+        Graou meow = new Graou(this.hub, catLocation, treasureLocation);
 
         this.interactions.add(meow);
         this.log(Level.INFO, "Registered Graou at '" + rootJson.get(0).getAsString());

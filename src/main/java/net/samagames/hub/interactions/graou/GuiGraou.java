@@ -34,13 +34,18 @@ class GuiGraou extends AbstractGui
     @Override
     public void update(Player player)
     {
+        this.setSlotData(PEARL_HEAD, 10, "pearl");
         this.setSlotData(getBackIcon(), this.inventory.getSize() - 5, "back");
     }
 
     @Override
     public void onClick(Player player, ItemStack stack, String action, ClickType clickType)
     {
-        if (action.equals("back"))
+        if (action.startsWith("pearl_"))
+        {
+            this.parent.openBox(player);
+        }
+        else if (action.equals("back"))
         {
             this.hub.getGuiManager().closeGui(player);
             this.parent.stop(player);

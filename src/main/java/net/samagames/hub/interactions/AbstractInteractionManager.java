@@ -67,6 +67,11 @@ public abstract class AbstractInteractionManager<T extends AbstractInteraction> 
         this.interactions.stream().filter(interaction -> interaction.hasPlayer(player)).forEach(interaction -> interaction.stop(player));
     }
 
+    public List<T> getInteractions()
+    {
+        return this.interactions;
+    }
+
     public boolean hasPlayer(Player player)
     {
         return this.interactions.stream().filter((interaction) -> interaction.hasPlayer(player)).findFirst().orElse(null) != null;

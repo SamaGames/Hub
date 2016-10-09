@@ -20,29 +20,35 @@ import java.util.UUID;
 
 class Graou extends AbstractInteraction
 {
-    protected static final String TAG = ChatColor.DARK_BLUE + "[" + ChatColor.BLUE + "Graou" + ChatColor.DARK_BLUE + "] " + ChatColor.RESET;
-    private static final String GRAOU_NAME = ChatColor.BLUE + "" + ChatColor.BOLD + "Graou";
+    protected static final String TAG = ChatColor.GOLD + "[" + ChatColor.YELLOW + "Graou" + ChatColor.GOLD + "] " + ChatColor.RESET;
+    private static final String GRAOU_NAME = ChatColor.GOLD + "" + ChatColor.BOLD + "Graou";
 
     private final Map<UUID, Hologram> holograms;
     private final EntityGraou graouEntity;
+    private final Location catLocation;
+    private final Location treasureLocation;
     private BukkitTask animationTask;
+    private UUID playerUsing;
 
-    Graou(Hub hub, Location location)
+    Graou(Hub hub, Location catLocation, Location treasureLocation)
     {
         super(hub);
 
         this.holograms = new HashMap<>();
 
-        WorldServer world = ((CraftWorld) location.getWorld()).getHandle();
+        WorldServer world = ((CraftWorld) catLocation.getWorld()).getHandle();
 
         this.graouEntity = new EntityGraou(world);
-        this.graouEntity.setPosition(location.getX(), location.getY(), location.getZ());
+        this.graouEntity.setPosition(catLocation.getX(), catLocation.getY(), catLocation.getZ());
         world.addEntity(this.graouEntity, CreatureSpawnEvent.SpawnReason.CUSTOM);
-        location.getChunk().load(true);
+        catLocation.getChunk().load(true);
 
-        hub.getServer().getScheduler().runTaskLater(hub, () -> this.graouEntity.postInit(location.getYaw(), location.getPitch()), 20L);
+        hub.getServer().getScheduler().runTaskLater(hub, () -> this.graouEntity.postInit(catLocation.getYaw(), catLocation.getPitch()), 20L);
 
+        this.catLocation = catLocation;
+        this.treasureLocation = treasureLocation;
         this.animationTask = null;
+        this.playerUsing = null;
     }
 
     @Override
@@ -66,7 +72,7 @@ class Graou extends AbstractInteraction
         Hologram hologram;
 
         if (perls > 0)
-            hologram = new Hologram(GRAOU_NAME, ChatColor.AQUA + "" + perls + ChatColor.BLUE + " perle" + (perls > 1 ? "s" : "") + " à échanger");
+            hologram = new Hologram(GRAOU_NAME, ChatColor.GOLD + "" + perls + ChatColor.YELLOW + " perle" + (perls > 1 ? "s" : "") + " à échanger");
         else
             hologram = new Hologram(GRAOU_NAME);
 
@@ -77,13 +83,24 @@ class Graou extends AbstractInteraction
 
         if (perls > 0)
         {
-            player.sendMessage(TAG + ChatColor.BLUE + "Vous avez " + ChatColor.AQUA + perls + ChatColor.BLUE + " perle" + (perls > 1 ? "s" : "") + " à échanger ! Venez me voir :)");
+            player.sendMessage(TAG + ChatColor.RED + "Vous avez " + ChatColor.GOLD + perls + ChatColor.RED + " perle" + (perls > 1 ? "s" : "") + " à échanger ! Venez me voir :)");
             player.playSound(this.graouEntity.getBukkitEntity().getLocation(), Sound.ENTITY_CAT_AMBIENT, 1.0F, 1.5F);
         }
     }
 
     public void onLogout(Player player)
     {
+        if (this.playerUsing != null && this.playerUsing == player.getUniqueId())
+        {
+            this.playerUsing = null;
+
+            this.animationTask.cancel();
+            this.animationTask = null;
+
+            this.graouEntity.setPosition(this.catLocation.getX(), this.catLocation.getY(), this.catLocation.getZ());
+            this.graouEntity.positionChanged = true;
+        }
+
         if (this.holograms.containsKey(player.getUniqueId()))
         {
             Hologram hologram = this.holograms.get(player.getUniqueId());
@@ -122,7 +139,7 @@ class Graou extends AbstractInteraction
         Hologram hologram = this.holograms.get(player.getUniqueId());
 
         if (perls > 0)
-            hologram.change(GRAOU_NAME, ChatColor.AQUA + "" + perls + ChatColor.BLUE + " perle" + (perls > 1 ? "s" : "") + " à échanger");
+            hologram.change(GRAOU_NAME, ChatColor.GOLD + "" + perls + ChatColor.YELLOW + " perle" + (perls > 1 ? "s" : "") + " à échanger");
         else
             hologram.change(GRAOU_NAME);
 
@@ -137,14 +154,18 @@ class Graou extends AbstractInteraction
             return;
         }
 
+        this.playerUsing = player.getUniqueId();
+
         this.graouEntity.getBukkitEntity().getWorld().playSound(this.graouEntity.getBukkitEntity().getLocation(), Sound.ENTITY_CAT_AMBIENT, 1.0F, 1.5F);
-        this.animationTask = this.hub.getServer().getScheduler().runTask(this.hub, new OpeningAnimationRunnable(this.hub, this, player));
+        this.animationTask = this.hub.getServer().getScheduler().runTask(this.hub, new OpeningAnimationRunnable(this.hub, this, player, this.catLocation, this.treasureLocation));
     }
 
-    public void animationFinished()
+    public void animationFinished(Player player)
     {
         this.animationTask.cancel();
         this.animationTask = null;
+
+        this.stop(player);
     }
 
     public EntityGraou getGraouEntity()
