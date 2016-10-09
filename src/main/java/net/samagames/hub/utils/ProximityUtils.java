@@ -32,7 +32,7 @@ public class ProximityUtils
                 for (Entity entity : new Location(center.getWorld(), x + (chX * 16), y, z + (chZ * 16)).getChunk().getEntities())
                 {
                     if (filter != null && entity.getType() != filter)
-                            continue;
+                        continue;
 
                     if (entity.getLocation().distance(center) <= radius && entity.getLocation().getBlock() != center.getBlock())
                         entities.add(entity);

@@ -52,16 +52,12 @@ class OpeningAnimationRunnable implements Runnable
         this.graou.getGraouEntity().getGoalSit().setSitting(false);
         this.graou.getGraouEntity().getNavigation().a(path, 1.0D);
 
-        ArmorStand treasureProximityEntity = this.treasureLocation.getWorld().spawn(this.treasureLocation, ArmorStand.class);
-        treasureProximityEntity.setInvulnerable(true);
-        treasureProximityEntity.setVisible(false);
-
         new BukkitRunnable()
         {
             @Override
             public void run()
             {
-                Optional<Entity> entity = ProximityUtils.getNearbyEntities(OpeningAnimationRunnable.this.treasureLocation, 2.0D, EntityType.OCELOT).stream()
+                Optional<Entity> entity = ProximityUtils.getNearbyEntities(OpeningAnimationRunnable.this.treasureLocation, 3.0D).stream()
                         .filter(e -> e.getUniqueId() == OpeningAnimationRunnable.this.graou.getGraouEntity().getUniqueID())
                         .findAny();
 
@@ -99,7 +95,7 @@ class OpeningAnimationRunnable implements Runnable
                 @Override
                 public void run()
                 {
-                    Optional<Entity> entity = ProximityUtils.getNearbyEntities(OpeningAnimationRunnable.this.initialLocation, 1.0D, EntityType.OCELOT).stream()
+                    Optional<Entity> entity = ProximityUtils.getNearbyEntities(OpeningAnimationRunnable.this.initialLocation, 2.0D).stream()
                             .filter(e -> e.getUniqueId() == OpeningAnimationRunnable.this.graou.getGraouEntity().getUniqueID())
                             .findAny();
 
