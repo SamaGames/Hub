@@ -140,19 +140,7 @@ public class PlayerManager extends AbstractManager
                 if (SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "hub.announce") && !SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).hasNickname())
                     this.hub.getServer().broadcastMessage(PlayerUtils.getFullyFormattedPlayerName(player) + ChatColor.YELLOW + " a rejoint le hub !");
 
-                SamaGamesAPI.get().getAchievementManager().getAchievementByID(1).unlock(player.getUniqueId());
-
-                if (SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "network.vip"))
-                    SamaGamesAPI.get().getAchievementManager().getAchievementByID(3).unlock(player.getUniqueId());
-
-                if (SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "network.vipplus"))
-                    SamaGamesAPI.get().getAchievementManager().getAchievementByID(4).unlock(player.getUniqueId());
-
-                if (SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "network.staff"))
-                    SamaGamesAPI.get().getAchievementManager().getAchievementByID(52).unlock(player.getUniqueId());
-
-                if (TeamSpeakAPI.isLinked(player.getUniqueId()))
-                    SamaGamesAPI.get().getAchievementManager().getAchievementByID(18).unlock(player.getUniqueId());
+                this.checkAchievements(player);
 
                 if (player.getUniqueId().equals(UUID.fromString("568046c8-6045-4c59-a255-28027aac8c33")))
                     ActionBarAPI.sendMessage(player, ChatColor.RED + "\u2764");
@@ -286,5 +274,29 @@ public class PlayerManager extends AbstractManager
     public boolean canBuild()
     {
         return this.canBuild;
+    }
+
+    private void checkAchievements(Player player)
+    {
+        this.hub.getServer().getScheduler().runTaskAsynchronously(this.hub, () ->
+        {
+            SamaGamesAPI.get().getAchievementManager().getAchievementByID(1).unlock(player.getUniqueId());
+
+            if (SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "network.vip"))
+                this.hub.getServer().getScheduler().runTask(this.hub, () ->
+                        SamaGamesAPI.get().getAchievementManager().getAchievementByID(3).unlock(player.getUniqueId()));
+
+            if (SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "network.vipplus"))
+                this.hub.getServer().getScheduler().runTask(this.hub, () ->
+                    SamaGamesAPI.get().getAchievementManager().getAchievementByID(4).unlock(player.getUniqueId()));
+
+            if (SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "network.staff"))
+                this.hub.getServer().getScheduler().runTask(this.hub, () ->
+                    SamaGamesAPI.get().getAchievementManager().getAchievementByID(52).unlock(player.getUniqueId()));
+
+            if (TeamSpeakAPI.isLinked(player.getUniqueId()))
+                this.hub.getServer().getScheduler().runTask(this.hub, () ->
+                    SamaGamesAPI.get().getAchievementManager().getAchievementByID(18).unlock(player.getUniqueId()));
+        });
     }
 }
