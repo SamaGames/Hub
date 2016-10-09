@@ -2,8 +2,16 @@ package net.samagames.hub.interactions.graou;
 
 import net.minecraft.server.v1_10_R1.PathEntity;
 import net.samagames.hub.Hub;
+import net.samagames.hub.utils.ProximityUtils;
 import org.bukkit.Location;
+import org.bukkit.Sound;
+import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.Optional;
 
 class OpeningAnimationRunnable implements Runnable
 {
@@ -29,7 +37,9 @@ class OpeningAnimationRunnable implements Runnable
 
         if (path == null)
         {
+            this.graou.respawn();
             this.graou.animationFinished(this.player);
+
             return;
         }
 
@@ -40,8 +50,72 @@ class OpeningAnimationRunnable implements Runnable
         this.player.setFlying(false);
 
         this.graou.getGraouEntity().getGoalSit().setSitting(false);
-        this.graou.getGraouEntity().getNavigation().a(path, 0.75D);
+        this.graou.getGraouEntity().getNavigation().a(path, 1.0D);
 
+        ArmorStand treasureProximityEntity = this.treasureLocation.getWorld().spawn(this.treasureLocation, ArmorStand.class);
+        treasureProximityEntity.setInvulnerable(true);
+        treasureProximityEntity.setVisible(false);
 
+        new BukkitRunnable()
+        {
+            @Override
+            public void run()
+            {
+                Optional<Entity> entity = ProximityUtils.getNearbyEntities(OpeningAnimationRunnable.this.treasureLocation, 2.0D, EntityType.OCELOT).stream()
+                        .filter(e -> e.getUniqueId() == OpeningAnimationRunnable.this.graou.getGraouEntity().getUniqueID())
+                        .findAny();
+
+                if (entity.isPresent())
+                {
+                    OpeningAnimationRunnable.this.arrivedAtTreasure();
+                    this.cancel();
+                }
+            }
+        }.runTaskTimer(this.hub, 5L, 5L);
+    }
+
+    private void arrivedAtTreasure()
+    {
+        this.treasureLocation.getWorld().playSound(this.treasureLocation, Sound.BLOCK_CHEST_OPEN, 1.0F, 1.0F);
+
+        this.hub.getServer().getScheduler().runTaskLater(this.hub, () ->
+        {
+            this.treasureLocation.getWorld().playSound(this.treasureLocation, Sound.BLOCK_CHEST_CLOSE, 1.0F, 1.0F);
+
+            PathEntity path = this.graou.getGraouEntity().getNavigation().a(this.initialLocation.getX(), this.initialLocation.getY(), this.initialLocation.getZ());
+
+            if (path == null)
+            {
+                this.graou.respawn();
+                this.graou.animationFinished(this.player);
+
+                return;
+            }
+
+            this.graou.getGraouEntity().getNavigation().a(path, 1.0D);
+
+            new BukkitRunnable()
+            {
+                @Override
+                public void run()
+                {
+                    Optional<Entity> entity = ProximityUtils.getNearbyEntities(OpeningAnimationRunnable.this.initialLocation, 1.0D, EntityType.OCELOT).stream()
+                            .filter(e -> e.getUniqueId() == OpeningAnimationRunnable.this.graou.getGraouEntity().getUniqueID())
+                            .findAny();
+
+                    if (entity.isPresent())
+                    {
+                        OpeningAnimationRunnable.this.backToInitial();
+                        this.cancel();
+                    }
+                }
+            }.runTaskTimer(this.hub, 5L, 5L);
+        }, 15L);
+    }
+
+    private void backToInitial()
+    {
+        this.graou.respawn();
+        this.graou.animationFinished(this.player);
     }
 }

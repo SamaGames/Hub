@@ -97,8 +97,7 @@ class Graou extends AbstractInteraction
             this.animationTask.cancel();
             this.animationTask = null;
 
-            this.graouEntity.setPosition(this.catLocation.getX(), this.catLocation.getY(), this.catLocation.getZ());
-            this.graouEntity.positionChanged = true;
+            this.respawn();
         }
 
         if (this.holograms.containsKey(player.getUniqueId()))
@@ -166,6 +165,12 @@ class Graou extends AbstractInteraction
         this.animationTask = null;
 
         this.stop(player);
+    }
+
+    public void respawn()
+    {
+        this.graouEntity.setPosition(this.catLocation.getX(), this.catLocation.getY(), this.catLocation.getZ());
+        this.graouEntity.positionChanged = true;
     }
 
     public void toggleHolograms(boolean visible)
