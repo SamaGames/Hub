@@ -294,6 +294,8 @@ public class PlayerManager extends AbstractManager
     {
         int totalFriend = SamaGamesAPI.get().getFriendsManager().uuidFriendsList(player.getUniqueId()).size();
 
+        this.hub.getServer().broadcastMessage(String.valueOf(totalFriend));
+
         if (totalFriend >= 1)
             SamaGamesAPI.get().getAchievementManager().getAchievementByID(45).unlock(player.getUniqueId());
 
