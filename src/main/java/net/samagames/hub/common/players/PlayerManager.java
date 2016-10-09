@@ -154,8 +154,6 @@ public class PlayerManager extends AbstractManager
                 if (TeamSpeakAPI.isLinked(player.getUniqueId()))
                     SamaGamesAPI.get().getAchievementManager().getAchievementByID(18).unlock(player.getUniqueId());
 
-                this.checkFriendsCount(player);
-
                 if (player.getUniqueId().equals(UUID.fromString("568046c8-6045-4c59-a255-28027aac8c33")))
                     ActionBarAPI.sendMessage(player, ChatColor.RED + "\u2764");
             });
@@ -288,33 +286,5 @@ public class PlayerManager extends AbstractManager
     public boolean canBuild()
     {
         return this.canBuild;
-    }
-
-    private void checkFriendsCount(Player player)
-    {
-        this.hub.getServer().getScheduler().runTaskAsynchronously(this.hub, () ->
-        {
-            int totalFriend = SamaGamesAPI.get().getFriendsManager().uuidFriendsList(player.getUniqueId()).size();
-
-            if (totalFriend >= 1)
-                this.hub.getServer().getScheduler().runTask(this.hub, () ->
-                    SamaGamesAPI.get().getAchievementManager().getAchievementByID(45).unlock(player.getUniqueId()));
-
-            if (totalFriend >= 10)
-                this.hub.getServer().getScheduler().runTask(this.hub, () ->
-                    SamaGamesAPI.get().getAchievementManager().incrementAchievement(player.getUniqueId(), 46, 10));
-
-            if (totalFriend >= 50)
-                this.hub.getServer().getScheduler().runTask(this.hub, () ->
-                    SamaGamesAPI.get().getAchievementManager().incrementAchievement(player.getUniqueId(), 47, 50));
-
-            if (totalFriend >= 75)
-                this.hub.getServer().getScheduler().runTask(this.hub, () ->
-                    SamaGamesAPI.get().getAchievementManager().incrementAchievement(player.getUniqueId(), 48, 75));
-
-            if (totalFriend >= 100)
-                this.hub.getServer().getScheduler().runTask(this.hub, () ->
-                        SamaGamesAPI.get().getAchievementManager().incrementAchievement(player.getUniqueId(), 49, 100));
-        });
     }
 }
