@@ -33,16 +33,6 @@ class OpeningAnimationRunnable implements Runnable
     @Override
     public void run()
     {
-        PathEntity path = this.graou.getGraouEntity().getNavigation().a(this.treasureLocation.getX(), this.treasureLocation.getY(), this.treasureLocation.getZ());
-
-        if (path == null)
-        {
-            this.graou.respawn();
-            this.graou.animationFinished(this.player);
-
-            return;
-        }
-
         this.graou.toggleHolograms(false);
 
         this.player.setWalkSpeed(0.0F);
@@ -51,7 +41,8 @@ class OpeningAnimationRunnable implements Runnable
 
         this.graou.getGraouEntity().getGoalSit().setSitting(false);
         this.graou.getGraouEntity().setSprinting(true);
-        this.graou.getGraouEntity().getNavigation().a(path, 1.0D);
+
+        this.walk(this.treasureLocation);
 
         new BukkitRunnable()
         {
@@ -78,18 +69,7 @@ class OpeningAnimationRunnable implements Runnable
         this.hub.getServer().getScheduler().runTaskLater(this.hub, () ->
         {
             this.treasureLocation.getWorld().playSound(this.treasureLocation, Sound.BLOCK_CHEST_CLOSE, 1.0F, 1.0F);
-
-            PathEntity path = this.graou.getGraouEntity().getNavigation().a(this.initialLocation.getX(), this.initialLocation.getY(), this.initialLocation.getZ());
-
-            if (path == null)
-            {
-                this.graou.respawn();
-                this.graou.animationFinished(this.player);
-
-                return;
-            }
-
-            this.graou.getGraouEntity().getNavigation().a(path, 1.0D);
+            this.walk(this.initialLocation);
 
             new BukkitRunnable()
             {
@@ -112,7 +92,25 @@ class OpeningAnimationRunnable implements Runnable
 
     private void backToInitial()
     {
+        this.graou.toggleHolograms(true);
+
         this.graou.respawn();
         this.graou.animationFinished(this.player);
+    }
+
+    private void walk(Location location)
+    {
+        PathEntity path = this.graou.getGraouEntity().getNavigation().a(location.getX(), location.getY(), location.getZ());
+
+        if (path == null)
+        {
+            this.graou.respawn();
+            this.graou.animationFinished(this.player);
+
+            return;
+        }
+
+        this.graou.getGraouEntity().getNavigation().a(path, 1.0D);
+
     }
 }
