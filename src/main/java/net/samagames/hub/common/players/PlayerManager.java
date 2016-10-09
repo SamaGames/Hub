@@ -16,6 +16,7 @@ import net.samagames.tools.chat.fanciful.FancyMessage;
 import net.samagames.tools.teamspeak.TeamSpeakAPI;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitTask;
@@ -156,7 +157,7 @@ public class PlayerManager extends AbstractManager
                 if (TeamSpeakAPI.isLinked(player.getUniqueId()))
                     SamaGamesAPI.get().getAchievementManager().getAchievementByID(18).unlock(player.getUniqueId());
 
-                this.sendFriendsCheckRequest(player);
+                this.hub.getServer().getScheduler().runTaskLater(this.hub, () -> this.sendFriendsCheckRequest(player), 20L * 3);
 
                 if (player.getUniqueId().equals(UUID.fromString("568046c8-6045-4c59-a255-28027aac8c33")))
                     ActionBarAPI.sendMessage(player, ChatColor.RED + "\u2764");
@@ -294,8 +295,6 @@ public class PlayerManager extends AbstractManager
 
     private void sendFriendsCheckRequest(Player player)
     {
-        this.hub.getServer().broadcastMessage("test");
-        
         ByteArrayDataOutput out = ByteStreams.newDataOutput();
         out.writeUTF("friendsCheck");
         out.writeUTF(player.getUniqueId().toString());
