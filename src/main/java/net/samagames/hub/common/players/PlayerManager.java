@@ -290,7 +290,7 @@ public class PlayerManager extends AbstractManager
 
             if (SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "network.staff"))
                 SamaGamesAPI.get().getAchievementManager().getAchievementByID(52).unlock(player.getUniqueId());
-            
+
             // --
 
             //
