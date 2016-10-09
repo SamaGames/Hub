@@ -283,91 +283,97 @@ public class PlayerManager extends AbstractManager
             SamaGamesAPI.get().getAchievementManager().getAchievementByID(1).unlock(player.getUniqueId());
 
             if (SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "network.vip"))
-                this.hub.getServer().getScheduler().runTask(this.hub, () ->
+                this.hub.getExecutorMonoThread().submit(() ->
                         SamaGamesAPI.get().getAchievementManager().getAchievementByID(3).unlock(player.getUniqueId()));
 
             if (SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "network.vipplus"))
-                this.hub.getServer().getScheduler().runTask(this.hub, () ->
+                this.hub.getExecutorMonoThread().submit(() ->
                     SamaGamesAPI.get().getAchievementManager().getAchievementByID(4).unlock(player.getUniqueId()));
 
             if (SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "network.staff"))
-                this.hub.getServer().getScheduler().runTask(this.hub, () ->
+                this.hub.getExecutorMonoThread().submit(() ->
                     SamaGamesAPI.get().getAchievementManager().getAchievementByID(52).unlock(player.getUniqueId()));
 
             if (TeamSpeakAPI.isLinked(player.getUniqueId()))
-                this.hub.getServer().getScheduler().runTask(this.hub, () ->
+                this.hub.getExecutorMonoThread().submit(() ->
                     SamaGamesAPI.get().getAchievementManager().getAchievementByID(18).unlock(player.getUniqueId()));
 
             // --
 
             int friendsCount = SamaGamesAPI.get().getFriendsManager().uuidFriendsList(player.getUniqueId()).size();
 
+            Bukkit.broadcastMessage(String.valueOf(friendsCount));
+
             if (friendsCount >= 1)
-                this.hub.getServer().getScheduler().runTask(this.hub, () ->
+                this.hub.getExecutorMonoThread().submit(() ->
                         SamaGamesAPI.get().getAchievementManager().getAchievementByID(45).unlock(player.getUniqueId()));
 
             if (friendsCount >= 10)
-                this.hub.getServer().getScheduler().runTask(this.hub, () ->
+                this.hub.getExecutorMonoThread().submit(() ->
                         SamaGamesAPI.get().getAchievementManager().incrementAchievement(player.getUniqueId(), 46, 10));
 
             if (friendsCount >= 50)
-                this.hub.getServer().getScheduler().runTask(this.hub, () ->
+                this.hub.getExecutorMonoThread().submit(() ->
                         SamaGamesAPI.get().getAchievementManager().incrementAchievement(player.getUniqueId(), 47, 50));
 
             if (friendsCount >= 75)
-                this.hub.getServer().getScheduler().runTask(this.hub, () ->
+                this.hub.getExecutorMonoThread().submit(() ->
                         SamaGamesAPI.get().getAchievementManager().incrementAchievement(player.getUniqueId(), 48, 75));
 
             if (friendsCount >= 100)
-                this.hub.getServer().getScheduler().runTask(this.hub, () ->
+                this.hub.getExecutorMonoThread().submit(() ->
                         SamaGamesAPI.get().getAchievementManager().incrementAchievement(player.getUniqueId(), 49, 100));
 
             // --
 
             long coins = SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).getCoins();
 
+            Bukkit.broadcastMessage(String.valueOf(coins));
+
             if (coins >= 100)
-                this.hub.getServer().getScheduler().runTask(this.hub, () ->
+                this.hub.getExecutorMonoThread().submit(() ->
                         SamaGamesAPI.get().getAchievementManager().incrementAchievement(player.getUniqueId(), 30, 100));
 
             if (coins >= 500)
-                this.hub.getServer().getScheduler().runTask(this.hub, () ->
+                this.hub.getExecutorMonoThread().submit(() ->
                         SamaGamesAPI.get().getAchievementManager().incrementAchievement(player.getUniqueId(), 31, 500));
 
             if (coins >= 2500)
-                this.hub.getServer().getScheduler().runTask(this.hub, () ->
+                this.hub.getExecutorMonoThread().submit(() ->
                         SamaGamesAPI.get().getAchievementManager().incrementAchievement(player.getUniqueId(), 32, 2500));
 
             if (coins >= 10000)
-                this.hub.getServer().getScheduler().runTask(this.hub, () ->
+                this.hub.getExecutorMonoThread().submit(() ->
                         SamaGamesAPI.get().getAchievementManager().incrementAchievement(player.getUniqueId(), 33, 10000));
 
             if (coins >= 50000)
-                this.hub.getServer().getScheduler().runTask(this.hub, () ->
+                this.hub.getExecutorMonoThread().submit(() ->
                         SamaGamesAPI.get().getAchievementManager().incrementAchievement(player.getUniqueId(), 34, 50000));
 
             // --
 
             int woots = SamaGamesAPI.get().getStatsManager().getPlayerStats(player.getUniqueId()).getJukeBoxStatistics().getWoots();
 
+            Bukkit.broadcastMessage(String.valueOf(woots));
+
             if (woots >= 1)
-                this.hub.getServer().getScheduler().runTask(this.hub, () ->
+                this.hub.getExecutorMonoThread().submit(() ->
                         SamaGamesAPI.get().getAchievementManager().getAchievementByID(40).unlock(player.getUniqueId()));
 
             if (woots >= 100)
-                this.hub.getServer().getScheduler().runTask(this.hub, () ->
+                this.hub.getExecutorMonoThread().submit(() ->
                         SamaGamesAPI.get().getAchievementManager().incrementAchievement(player.getUniqueId(), 41, 100));
 
             if (woots >= 750)
-                this.hub.getServer().getScheduler().runTask(this.hub, () ->
+                this.hub.getExecutorMonoThread().submit(() ->
                         SamaGamesAPI.get().getAchievementManager().incrementAchievement(player.getUniqueId(), 42, 750));
 
             if (woots >= 1500)
-                this.hub.getServer().getScheduler().runTask(this.hub, () ->
+                this.hub.getExecutorMonoThread().submit(() ->
                         SamaGamesAPI.get().getAchievementManager().incrementAchievement(player.getUniqueId(), 43, 1500));
 
             if (woots >= 5000)
-                this.hub.getServer().getScheduler().runTask(this.hub, () ->
+                this.hub.getExecutorMonoThread().submit(() ->
                         SamaGamesAPI.get().getAchievementManager().incrementAchievement(player.getUniqueId(), 44, 5000));
         });
     }
