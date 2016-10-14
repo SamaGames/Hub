@@ -50,11 +50,6 @@ class OpeningAnimationRunnable implements Runnable
     public void run()
     {
         this.graou.toggleHolograms(false);
-
-        this.player.setWalkSpeed(0.0F);
-        this.player.setAllowFlight(false);
-        this.player.setFlying(false);
-
         this.graou.getGraouEntity().setSitting(false);
 
         this.walk(this.treasureLocations[1]);
