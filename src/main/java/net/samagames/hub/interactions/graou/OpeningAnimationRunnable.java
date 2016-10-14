@@ -129,7 +129,7 @@ class OpeningAnimationRunnable implements Runnable
             {
                 if (this.loops == 4)
                 {
-                    OpeningAnimationRunnable.this.openingLocations[0].getWorld().createExplosion(OpeningAnimationRunnable.this.openingLocations[0].getBlockX(), OpeningAnimationRunnable.this.openingLocations[0].getBlockY(), OpeningAnimationRunnable.this.openingLocations[0].getBlockZ(), 2.0F, false, false);
+                    OpeningAnimationRunnable.this.openingLocations[0].getWorld().createExplosion(OpeningAnimationRunnable.this.openingLocations[0].getBlockX(), OpeningAnimationRunnable.this.openingLocations[0].getBlockY(), OpeningAnimationRunnable.this.openingLocations[0].getBlockZ(), 1.5F, false, false);
                     OpeningAnimationRunnable.this.graou.animationFinished(OpeningAnimationRunnable.this.player);
 
                     this.cancel();
