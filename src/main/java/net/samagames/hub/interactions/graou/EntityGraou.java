@@ -29,10 +29,8 @@ class EntityGraou extends EntityOcelot
     protected void r()
     {
         this.goalSit = new PathfinderGoalSit(this);
-        this.goalSelector.a(1, new PathfinderGoalFloat(this));
-        this.goalSelector.a(2, this.goalSit);
-        this.goalSelector.a(7, new PathfinderGoalLeapAtTarget(this, 0.3F));
-        this.goalSelector.a(11, new PathfinderGoalLookAtPlayer(this, EntityHuman.class, 10.0F));
+        this.goalSelector.a(1, this.goalSit);
+        this.goalSelector.a(2, new PathfinderGoalLookAtPlayer(this, EntityHuman.class, 10.0F));
     }
 
     @Override
