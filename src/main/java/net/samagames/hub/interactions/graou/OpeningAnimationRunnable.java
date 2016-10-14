@@ -107,6 +107,12 @@ class OpeningAnimationRunnable implements Runnable
                     {
                         BlockUtils.setCustomSkull(OpeningAnimationRunnable.this.openingLocations[0].getBlock(), selectedPresentTexture);
 
+                        OpeningAnimationRunnable.this.graou.getGraouEntity().getBukkitEntity().setPassenger(null);
+                        OpeningAnimationRunnable.this.graou.getGraouEntity().setSitting(true);
+                        OpeningAnimationRunnable.this.graou.respawn();
+
+                        OpeningAnimationRunnable.this.placedPresent();
+
                         this.cancel();
                     }
                 }
@@ -114,29 +120,25 @@ class OpeningAnimationRunnable implements Runnable
         }, 15L);
     }
 
-    private void finish()
+    private void placedPresent()
     {
-        this.graou.toggleHolograms(true);
+        this.hub.getServer().getScheduler().runTaskLater(this.hub, () ->
+        {
+            this.openingLocations[0].getWorld().createExplosion(this.openingLocations[0], 3.0F, false);
 
-        this.hub.getServer().broadcastMessage("Finished animation.");
-
-        this.graou.respawn();
-        this.graou.animationFinished(this.player);
+            this.graou.animationFinished(this.player);
+        }, 20L);
     }
 
     private void walk(Location location)
     {
         PathEntity path = this.graou.getGraouEntity().getNavigation().a(location.getX(), location.getY(), location.getZ());
 
-        if (path == null)
+        if (!this.graou.getGraouEntity().getNavigation().a(path, 1.0D))
         {
             this.graou.respawn();
             this.graou.animationFinished(this.player);
-
-            return;
         }
-
-        this.graou.getGraouEntity().getNavigation().a(path, 1.0D);
 
     }
 }

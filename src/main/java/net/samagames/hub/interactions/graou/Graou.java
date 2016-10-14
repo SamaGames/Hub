@@ -171,9 +171,10 @@ class Graou extends AbstractInteraction
 
     public void respawn()
     {
-        this.graouEntity.setSitting(true);
-        this.graouEntity.setPosition(this.catLocation.getX(), this.catLocation.getY(), this.catLocation.getZ());
+        this.graouEntity.setPositionRotation(this.catLocation.getX(), this.catLocation.getY(), this.catLocation.getZ(), this.catLocation.getYaw(), this.catLocation.getPitch());
         this.graouEntity.positionChanged = true;
+
+        this.graouEntity.setSitting(true);
     }
 
     public void toggleHolograms(boolean visible)
