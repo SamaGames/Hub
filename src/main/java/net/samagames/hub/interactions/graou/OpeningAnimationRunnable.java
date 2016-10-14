@@ -102,9 +102,11 @@ class OpeningAnimationRunnable implements Runnable
                     {
                         BlockUtils.setCustomSkull(OpeningAnimationRunnable.this.openingLocations[0].getBlock(), selectedPresentTexture);
 
-                        OpeningAnimationRunnable.this.graou.getGraouEntity().getBukkitEntity().setPassenger(null);
-                        OpeningAnimationRunnable.this.graou.getGraouEntity().setSitting(true);
+                        OpeningAnimationRunnable.this.graou.getGraouEntity().getBukkitEntity().eject();
+                        OpeningAnimationRunnable.this.present.remove();
+
                         OpeningAnimationRunnable.this.graou.respawn();
+                        OpeningAnimationRunnable.this.graou.getGraouEntity().setSitting(true);
 
                         OpeningAnimationRunnable.this.placedPresent();
 
@@ -119,7 +121,7 @@ class OpeningAnimationRunnable implements Runnable
     {
         this.hub.getServer().getScheduler().runTaskLater(this.hub, () ->
         {
-            this.openingLocations[0].getWorld().createExplosion(this.openingLocations[0], 3.0F, false);
+            this.openingLocations[0].getWorld().createExplosion(this.openingLocations[0].getBlockX(), this.openingLocations[0].getBlockY(), this.openingLocations[0].getBlockZ(), 2.0F, false, false);
 
             this.graou.animationFinished(this.player);
         }, 20L);
