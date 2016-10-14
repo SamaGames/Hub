@@ -153,7 +153,7 @@ class OpeningAnimationRunnable implements Runnable
                     for (int i = 0; i < 4; i++)
                         this.guardians[i].teleport(OpeningAnimationRunnable.this.openingLocations[0].clone().add(Math.cos(this.angle + Math.PI * i / 2), 3, Math.sin(this.angle + Math.PI * i / 2)));
 
-                    ParticleEffect.FIREWORKS_SPARK.display(0.5F, 0.5F, 0.5F, 1.25F, 12, OpeningAnimationRunnable.this.openingLocations[0]);
+                    ParticleEffect.FIREWORKS_SPARK.display(0.5F, 0.5F, 0.5F, 1.25F, 12, OpeningAnimationRunnable.this.openingLocations[0], 30.0D);
 
                     this.angle += 0.25D;
 
