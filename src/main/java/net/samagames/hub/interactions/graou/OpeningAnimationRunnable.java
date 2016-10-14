@@ -12,6 +12,7 @@ import org.bukkit.SkullType;
 import org.bukkit.Sound;
 import org.bukkit.block.Skull;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Guardian;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -122,29 +123,47 @@ class OpeningAnimationRunnable implements Runnable
     {
         new BukkitRunnable()
         {
-            private int loops = 0;
+            private Guardian[] guardians;
+            private long time = 0;
+            private double angle = 0.0D;
 
             @Override
             public void run()
             {
-                if (this.loops == 4)
+                if (this.time == 20L * 2)
                 {
-                    OpeningAnimationRunnable.this.openingLocations[0].getWorld().createExplosion(OpeningAnimationRunnable.this.openingLocations[0].getBlockX(), OpeningAnimationRunnable.this.openingLocations[0].getBlockY(), OpeningAnimationRunnable.this.openingLocations[0].getBlockZ(), 1.5F, false, false);
+                    OpeningAnimationRunnable.this.openingLocations[0].getWorld().createExplosion(OpeningAnimationRunnable.this.openingLocations[0].getBlockX(), OpeningAnimationRunnable.this.openingLocations[0].getBlockY(), OpeningAnimationRunnable.this.openingLocations[0].getBlockZ(), 2.0F, false, false);
+                    OpeningAnimationRunnable.this.openingLocations[0].getBlock().setType(Material.AIR);
                     OpeningAnimationRunnable.this.graou.animationFinished(OpeningAnimationRunnable.this.player);
 
                     this.cancel();
                 }
                 else
                 {
-                    if (this.loops == 0)
+                    if (this.time == 0)
+                    {
                         OpeningAnimationRunnable.this.openingLocations[0].getWorld().playSound(OpeningAnimationRunnable.this.openingLocations[0], Sound.ENTITY_CREEPER_PRIMED, 1.0F, 0.85F);
 
-                    ParticleEffect.SMOKE_LARGE.display(0.1F, 0.25F, 0.1F, 0.5F, 5, OpeningAnimationRunnable.this.openingLocations[0].clone().add(0.5D, 0.25D, 0.5D), 60);
+                        this.guardians = new Guardian[4];
 
-                    this.loops++;
+                        for (int i = 0; i < 4; i++)
+                            this.guardians[i] = OpeningAnimationRunnable.this.openingLocations[0].getWorld().spawn(OpeningAnimationRunnable.this.openingLocations[0], Guardian.class);
+                    }
+
+                    for (int i = 0; i < 4; i++)
+                        this.guardians[i].teleport(OpeningAnimationRunnable.this.openingLocations[0].clone().add(Math.cos(this.angle + Math.PI * i / 2), 3, Math.sin(this.angle + Math.PI * i / 2)));
+
+                    ParticleEffect.FIREWORKS_SPARK.display(0.5F, 0.5F, 0.5F, 1.25F, 12, OpeningAnimationRunnable.this.openingLocations[0]);
+
+                    this.angle += 0.25D;
+
+                    if (this.angle > Math.PI * 2.0D)
+                        this.angle = 0.0D;
+
+                    this.time += 5;
                 }
             }
-        }.runTaskTimer(this.hub, 10L, 10L);
+        }.runTaskTimer(this.hub, 5L, 5L);
     }
 
     private void walk(Location location)
