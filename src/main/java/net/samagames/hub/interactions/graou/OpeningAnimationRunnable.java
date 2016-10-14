@@ -5,6 +5,7 @@ import net.samagames.hub.Hub;
 import net.samagames.hub.utils.ProximityUtils;
 import net.samagames.tools.BlockUtils;
 import net.samagames.tools.ItemUtils;
+import net.samagames.tools.ParticleEffect;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.SkullType;
@@ -119,12 +120,27 @@ class OpeningAnimationRunnable implements Runnable
 
     private void placedPresent()
     {
-        this.hub.getServer().getScheduler().runTaskLater(this.hub, () ->
+        new BukkitRunnable()
         {
-            this.openingLocations[0].getWorld().createExplosion(this.openingLocations[0].getBlockX(), this.openingLocations[0].getBlockY(), this.openingLocations[0].getBlockZ(), 2.0F, false, false);
+            private int loops = 0;
 
-            this.graou.animationFinished(this.player);
-        }, 20L);
+            @Override
+            public void run()
+            {
+                if (this.loops == 4)
+                {
+                    OpeningAnimationRunnable.this.openingLocations[0].getWorld().createExplosion(OpeningAnimationRunnable.this.openingLocations[0].getBlockX(), OpeningAnimationRunnable.this.openingLocations[0].getBlockY(), OpeningAnimationRunnable.this.openingLocations[0].getBlockZ(), 2.0F, false, false);
+                    OpeningAnimationRunnable.this.graou.animationFinished(OpeningAnimationRunnable.this.player);
+                }
+                else
+                {
+                    OpeningAnimationRunnable.this.openingLocations[0].getWorld().playSound(OpeningAnimationRunnable.this.openingLocations[0], Sound.ENTITY_CREEPER_PRIMED, 1.0F, 2.0F);
+                    ParticleEffect.SMOKE_NORMAL.display(0.25F, 0.25F, 0.25F, 0.85F, 2, OpeningAnimationRunnable.this.openingLocations[0].clone().add(0.5D, 0.25D, 0.5D), 60);
+
+                    this.loops++;
+                }
+            }
+        }.runTaskTimer(this.hub, 10L, 10L);
     }
 
     private void walk(Location location)

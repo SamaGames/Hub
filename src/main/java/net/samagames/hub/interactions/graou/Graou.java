@@ -1,5 +1,6 @@
 package net.samagames.hub.interactions.graou;
 
+import net.minecraft.server.v1_10_R1.PathEntity;
 import net.minecraft.server.v1_10_R1.WorldServer;
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
@@ -171,6 +172,7 @@ class Graou extends AbstractInteraction
 
     public void respawn()
     {
+        this.graouEntity.getNavigation().a((PathEntity) null, 1.0F);
         this.graouEntity.setPositionRotation(this.catLocation.getX(), this.catLocation.getY(), this.catLocation.getZ(), this.catLocation.getYaw(), this.catLocation.getPitch());
         this.graouEntity.positionChanged = true;
 
