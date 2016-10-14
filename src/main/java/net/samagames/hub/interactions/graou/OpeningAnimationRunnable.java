@@ -39,7 +39,7 @@ class OpeningAnimationRunnable implements Runnable
         this.player.setAllowFlight(false);
         this.player.setFlying(false);
 
-        this.graou.getGraouEntity().getGoalSit().setSitting(false);
+        this.graou.getGraouEntity().setSitting(false);
         this.graou.getGraouEntity().setSprinting(true);
 
         this.walk(this.treasureLocation);
