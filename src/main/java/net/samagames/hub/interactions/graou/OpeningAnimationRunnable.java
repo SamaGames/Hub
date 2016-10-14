@@ -131,11 +131,15 @@ class OpeningAnimationRunnable implements Runnable
                 {
                     OpeningAnimationRunnable.this.openingLocations[0].getWorld().createExplosion(OpeningAnimationRunnable.this.openingLocations[0].getBlockX(), OpeningAnimationRunnable.this.openingLocations[0].getBlockY(), OpeningAnimationRunnable.this.openingLocations[0].getBlockZ(), 2.0F, false, false);
                     OpeningAnimationRunnable.this.graou.animationFinished(OpeningAnimationRunnable.this.player);
+
+                    this.cancel();
                 }
                 else
                 {
-                    OpeningAnimationRunnable.this.openingLocations[0].getWorld().playSound(OpeningAnimationRunnable.this.openingLocations[0], Sound.ENTITY_CREEPER_PRIMED, 1.0F, 2.0F);
-                    ParticleEffect.SMOKE_NORMAL.display(0.25F, 0.25F, 0.25F, 0.85F, 2, OpeningAnimationRunnable.this.openingLocations[0].clone().add(0.5D, 0.25D, 0.5D), 60);
+                    if (this.loops == 0)
+                        OpeningAnimationRunnable.this.openingLocations[0].getWorld().playSound(OpeningAnimationRunnable.this.openingLocations[0], Sound.ENTITY_CREEPER_PRIMED, 1.0F, 0.85F);
+
+                    ParticleEffect.SMOKE_LARGE.display(0.1F, 0.25F, 0.1F, 0.5F, 5, OpeningAnimationRunnable.this.openingLocations[0].clone().add(0.5D, 0.25D, 0.5D), 60);
 
                     this.loops++;
                 }
