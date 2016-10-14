@@ -26,6 +26,13 @@ class EntityGraou extends EntityOcelot
     }
 
     @Override
+    public void setSitting(boolean flag)
+    {
+        Thread.dumpStack();
+        super.setSitting(flag);
+    }
+
+    @Override
     protected void r()
     {
         this.goalSit = new PathfinderGoalSit(this);
