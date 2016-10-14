@@ -1,5 +1,6 @@
 package net.samagames.hub.interactions.graou;
 
+import com.google.common.base.Predicate;
 import net.minecraft.server.v1_10_R1.*;
 
 import java.util.UUID;
@@ -20,8 +21,18 @@ class EntityGraou extends EntityOcelot
 
         this.setTamed(true);
         this.setOwnerUUID(UUID.randomUUID());
-        this.goalSit.setSitting(true);
+        this.setSitting(true);
         this.persistent = true;
+    }
+
+    @Override
+    protected void r()
+    {
+        this.goalSit = new PathfinderGoalSit(this);
+        this.goalSelector.a(1, new PathfinderGoalFloat(this));
+        this.goalSelector.a(2, this.goalSit);
+        this.goalSelector.a(7, new PathfinderGoalLeapAtTarget(this, 0.3F));
+        this.goalSelector.a(11, new PathfinderGoalLookAtPlayer(this, EntityHuman.class, 10.0F));
     }
 
     @Override
