@@ -11,10 +11,7 @@ import org.bukkit.Material;
 import org.bukkit.SkullType;
 import org.bukkit.Sound;
 import org.bukkit.block.Skull;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Guardian;
-import org.bukkit.entity.Item;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -123,6 +120,7 @@ class OpeningAnimationRunnable implements Runnable
     {
         new BukkitRunnable()
         {
+            private ArmorStand fakeTarget;
             private Guardian[] guardians;
             private long time = 0;
             private double angle = 0.0D;
@@ -136,6 +134,9 @@ class OpeningAnimationRunnable implements Runnable
                     OpeningAnimationRunnable.this.openingLocations[0].getBlock().setType(Material.AIR);
                     OpeningAnimationRunnable.this.graou.animationFinished(OpeningAnimationRunnable.this.player);
 
+                    for (Guardian guardian : this.guardians)
+                        guardian.remove();
+
                     this.cancel();
                 }
                 else
@@ -144,10 +145,21 @@ class OpeningAnimationRunnable implements Runnable
                     {
                         OpeningAnimationRunnable.this.openingLocations[0].getWorld().playSound(OpeningAnimationRunnable.this.openingLocations[0], Sound.ENTITY_CREEPER_PRIMED, 1.0F, 0.85F);
 
+                        this.fakeTarget = OpeningAnimationRunnable.this.openingLocations[0].getWorld().spawn(OpeningAnimationRunnable.this.openingLocations[0], ArmorStand.class);
+                        this.fakeTarget.setVisible(false);
+                        this.fakeTarget.setGravity(false);
+                        this.fakeTarget.setInvulnerable(true);
+
                         this.guardians = new Guardian[4];
 
                         for (int i = 0; i < 4; i++)
+                        {
                             this.guardians[i] = OpeningAnimationRunnable.this.openingLocations[0].getWorld().spawn(OpeningAnimationRunnable.this.openingLocations[0], Guardian.class);
+                            this.guardians[i].setGravity(false);
+                            this.guardians[i].setAI(false);
+                            this.guardians[i].setInvulnerable(true);
+                            this.guardians[i].setTarget(this.fakeTarget);
+                        }
                     }
 
                     for (int i = 0; i < 4; i++)
