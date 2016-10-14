@@ -88,9 +88,7 @@ class OpeningAnimationRunnable implements Runnable
 
             final String selectedPresentTexture = PRESENT_TEXTURES[new Random().nextInt(PRESENT_TEXTURES.length)];
 
-            this.present = this.treasureLocations[0].getWorld().spawn(this.treasureLocations[0], Item.class);
-            this.present.setItemStack(ItemUtils.getCustomHead(selectedPresentTexture));
-
+            this.present = this.treasureLocations[0].getWorld().dropItem(this.treasureLocations[0], ItemUtils.getCustomHead(selectedPresentTexture));
             this.graou.getGraouEntity().getBukkitEntity().setPassenger(this.present);
 
             this.walk(this.openingLocations[1]);
