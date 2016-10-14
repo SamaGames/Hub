@@ -5,9 +5,7 @@ import net.samagames.hub.Hub;
 import net.samagames.hub.utils.ProximityUtils;
 import org.bukkit.Location;
 import org.bukkit.Sound;
-import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -18,16 +16,16 @@ class OpeningAnimationRunnable implements Runnable
     private final Hub hub;
     private final Graou graou;
     private final Player player;
-    private final Location initialLocation;
-    private final Location treasureLocation;
+    private final Location[] treasureLocations;
+    private final Location[] openingLocations;
 
-    OpeningAnimationRunnable(Hub hub, Graou graou, Player player, Location initialLocation, Location treasureLocation)
+    OpeningAnimationRunnable(Hub hub, Graou graou, Player player, Location[] treasureLocations, Location[] openingLocations)
     {
         this.hub = hub;
         this.graou = graou;
         this.player = player;
-        this.initialLocation = initialLocation;
-        this.treasureLocation = treasureLocation;
+        this.treasureLocations = treasureLocations;
+        this.openingLocations = openingLocations;
     }
 
     @Override
@@ -41,14 +39,14 @@ class OpeningAnimationRunnable implements Runnable
 
         this.graou.getGraouEntity().setSitting(false);
 
-        this.walk(this.treasureLocation);
+        this.walk(this.treasureLocations[1]);
 
         new BukkitRunnable()
         {
             @Override
             public void run()
             {
-                Optional<Entity> entity = ProximityUtils.getNearbyEntities(OpeningAnimationRunnable.this.treasureLocation, 3.0D).stream()
+                Optional<Entity> entity = ProximityUtils.getNearbyEntities(OpeningAnimationRunnable.this.treasureLocations[0], 3.0D).stream()
                         .filter(e -> e.getUniqueId() == OpeningAnimationRunnable.this.graou.getGraouEntity().getUniqueID())
                         .findAny();
 
@@ -63,25 +61,25 @@ class OpeningAnimationRunnable implements Runnable
 
     private void arrivedAtTreasure()
     {
-        this.treasureLocation.getWorld().playSound(this.treasureLocation, Sound.BLOCK_CHEST_OPEN, 1.0F, 1.0F);
+        this.treasureLocations[0].getWorld().playSound(this.treasureLocations[0], Sound.BLOCK_CHEST_OPEN, 1.0F, 1.0F);
 
         this.hub.getServer().getScheduler().runTaskLater(this.hub, () ->
         {
-            this.treasureLocation.getWorld().playSound(this.treasureLocation, Sound.BLOCK_CHEST_CLOSE, 1.0F, 1.0F);
-            this.walk(this.initialLocation);
+            this.treasureLocations[0].getWorld().playSound(this.treasureLocations[0], Sound.BLOCK_CHEST_CLOSE, 1.0F, 1.0F);
+            this.walk(this.openingLocations[1]);
 
             new BukkitRunnable()
             {
                 @Override
                 public void run()
                 {
-                    Optional<Entity> entity = ProximityUtils.getNearbyEntities(OpeningAnimationRunnable.this.initialLocation, 2.0D).stream()
+                    Optional<Entity> entity = ProximityUtils.getNearbyEntities(OpeningAnimationRunnable.this.openingLocations[0], 2.0D).stream()
                             .filter(e -> e.getUniqueId() == OpeningAnimationRunnable.this.graou.getGraouEntity().getUniqueID())
                             .findAny();
 
                     if (entity.isPresent())
                     {
-                        OpeningAnimationRunnable.this.backToInitial();
+                        OpeningAnimationRunnable.this.finish();
                         this.cancel();
                     }
                 }
@@ -89,9 +87,11 @@ class OpeningAnimationRunnable implements Runnable
         }, 15L);
     }
 
-    private void backToInitial()
+    private void finish()
     {
         this.graou.toggleHolograms(true);
+
+        this.hub.getServer().broadcastMessage("Finished animation.");
 
         this.graou.respawn();
         this.graou.animationFinished(this.player);
