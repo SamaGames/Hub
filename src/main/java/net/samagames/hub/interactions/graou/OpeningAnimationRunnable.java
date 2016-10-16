@@ -11,8 +11,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.craftbukkit.v1_10_R1.CraftWorld;
-import org.bukkit.craftbukkit.v1_10_R1.entity.CraftArmorStand;
-import org.bukkit.craftbukkit.v1_10_R1.entity.CraftGuardian;
+import org.bukkit.craftbukkit.v1_10_R1.entity.CraftSquid;
 import org.bukkit.entity.*;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityTargetEvent;
@@ -123,7 +122,7 @@ class OpeningAnimationRunnable implements Runnable
     {
         new BukkitRunnable()
         {
-            private ArmorStand fakeTarget;
+            private Squid fakeTarget;
             private EntityGraouLaser[] lasers;
             private long time = 0;
             private double angle = 0.0D;
@@ -131,7 +130,7 @@ class OpeningAnimationRunnable implements Runnable
             @Override
             public void run()
             {
-                if (this.time == 20L * 2)
+                if (this.time == 20L * 3)
                 {
                     OpeningAnimationRunnable.this.openingLocations[0].getWorld().createExplosion(OpeningAnimationRunnable.this.openingLocations[0].getBlockX(), OpeningAnimationRunnable.this.openingLocations[0].getBlockY(), OpeningAnimationRunnable.this.openingLocations[0].getBlockZ(), 2.0F, false, false);
                     OpeningAnimationRunnable.this.openingLocations[0].getBlock().setType(Material.AIR);
@@ -148,10 +147,10 @@ class OpeningAnimationRunnable implements Runnable
                     {
                         OpeningAnimationRunnable.this.openingLocations[0].getWorld().playSound(OpeningAnimationRunnable.this.openingLocations[0], Sound.ENTITY_CREEPER_PRIMED, 1.0F, 0.85F);
 
-                        this.fakeTarget = OpeningAnimationRunnable.this.openingLocations[0].getWorld().spawn(OpeningAnimationRunnable.this.openingLocations[0], ArmorStand.class);
-                        this.fakeTarget.setVisible(false);
+                        this.fakeTarget = OpeningAnimationRunnable.this.openingLocations[0].getWorld().spawn(OpeningAnimationRunnable.this.openingLocations[0], Squid.class);
                         this.fakeTarget.setGravity(false);
                         this.fakeTarget.setInvulnerable(true);
+                        ((CraftSquid) this.fakeTarget).getHandle().setInvisible(true);
 
                         this.lasers = new EntityGraouLaser[4];
 
@@ -162,7 +161,7 @@ class OpeningAnimationRunnable implements Runnable
 
                             laser.setPosition(OpeningAnimationRunnable.this.openingLocations[0].getX(), OpeningAnimationRunnable.this.openingLocations[0].getY(), OpeningAnimationRunnable.this.openingLocations[0].getZ());
                             world.addEntity(laser, CreatureSpawnEvent.SpawnReason.CUSTOM);
-                            laser.setGoalTarget(((CraftArmorStand) this.fakeTarget).getHandle(), EntityTargetEvent.TargetReason.CUSTOM, false);
+                            laser.setGoalTarget(((CraftSquid) this.fakeTarget).getHandle(), EntityTargetEvent.TargetReason.CUSTOM, false);
 
                             this.lasers[i] = laser;
                         }
@@ -171,7 +170,7 @@ class OpeningAnimationRunnable implements Runnable
                     for (int i = 0; i < 4; i++)
                         this.lasers[i].getBukkitEntity().teleport(OpeningAnimationRunnable.this.openingLocations[0].clone().add(Math.cos(this.angle + Math.PI * i / 2), 3, Math.sin(this.angle + Math.PI * i / 2)));
 
-                    ParticleEffect.FIREWORKS_SPARK.display(0.5F, 0.5F, 0.5F, 1.25F, 12, OpeningAnimationRunnable.this.openingLocations[0], 30.0D);
+                    ParticleEffect.FIREWORKS_SPARK.display(0.25F, 0.25F, 0.25F, 0.5F, 15, OpeningAnimationRunnable.this.openingLocations[0], 30.0D);
 
                     this.angle += 0.25D;
 

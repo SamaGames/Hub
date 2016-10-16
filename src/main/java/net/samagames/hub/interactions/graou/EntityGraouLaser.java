@@ -2,8 +2,12 @@ package net.samagames.hub.interactions.graou;
 
 import net.minecraft.server.v1_10_R1.*;
 
+import java.lang.reflect.Field;
+
 class EntityGraouLaser extends EntityGuardian
 {
+    private static final Field datawatcherField;
+
     EntityGraouLaser(World world)
     {
         super(world);
@@ -11,6 +15,8 @@ class EntityGraouLaser extends EntityGuardian
         this.setInvisible(true);
         this.setInvulnerable(true);
         this.setNoGravity(true);
+
+
     }
 
     @Override
@@ -20,6 +26,18 @@ class EntityGraouLaser extends EntityGuardian
         this.goalSelector.a(1, new PathfinderGoalGuardianAttack(this));
         this.goalSelector.a(2, this.goalRandomStroll);
         this.goalRandomStroll.a(3);
+    }
+
+    public void b(int var1)
+    {
+        try
+        {
+            this.datawatcher.set((DataWatcherObject<Integer>) datawatcherField.get(this), var1);
+        }
+        catch (IllegalAccessException e)
+        {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -51,10 +69,10 @@ class EntityGraouLaser extends EntityGuardian
 
     static class PathfinderGoalGuardianAttack extends PathfinderGoal
     {
-        private final EntityGuardian a;
+        private final EntityGraouLaser a;
         private int b;
 
-        public PathfinderGoalGuardianAttack(EntityGuardian var1)
+        public PathfinderGoalGuardianAttack(EntityGraouLaser var1)
         {
             this.a = var1;
             this.a(3);
@@ -90,7 +108,22 @@ class EntityGraouLaser extends EntityGuardian
             this.a.getNavigation().o();
             this.a.getControllerLook().a(var1, 90.0F, 90.0F);
 
+            this.a.b(this.a.getGoalTarget().getId());
+
             super.e();
+        }
+    }
+
+    static
+    {
+        try
+        {
+            datawatcherField = EntityGuardian.class.getDeclaredField("b");
+            datawatcherField.setAccessible(true);
+        }
+        catch (NoSuchFieldException e)
+        {
+            e.printStackTrace();
         }
     }
 }
