@@ -136,8 +136,8 @@ class Graou extends AbstractInteraction
         this.hub.getGuiManager().openGui(player, new GuiGraou(this.hub, this));
         player.playSound(player.getLocation(), Sound.ENTITY_CAT_AMBIENT, 1.0F, 1.0F);
 
-        if (!SamaGamesAPI.get().getAchievementManager().isUnlocked(player.getUniqueId(), 19))
-            SamaGamesAPI.get().getAchievementManager().getAchievementByID(19).unlock(player.getUniqueId());
+        if (!SamaGamesAPI.get().getAchievementManager().isUnlocked(player.getUniqueId(), 20))
+            SamaGamesAPI.get().getAchievementManager().getAchievementByID(20).unlock(player.getUniqueId());
     }
 
     @Override
