@@ -88,6 +88,7 @@ public class GraouManager extends AbstractInteractionManager<Graou> implements L
         JsonObject graouJson = rootJson.get(0).getAsJsonObject();
 
         Location catLocation = LocationUtils.str2loc(graouJson.get("cat").getAsString());
+        Location doorLocation = LocationUtils.str2loc(graouJson.get("door").getAsString());
 
         JsonArray treasureLocationsJson = graouJson.get("treasure").getAsJsonArray();
         Location[] treasureLocations = new Location[] {
@@ -101,7 +102,7 @@ public class GraouManager extends AbstractInteractionManager<Graou> implements L
                 LocationUtils.str2loc(openingLocationsJson.get(1).getAsString())
         };
 
-        Graou graou = new Graou(this.hub, catLocation, treasureLocations, openingLocations);
+        Graou graou = new Graou(this.hub, catLocation, doorLocation, treasureLocations, openingLocations);
 
         this.interactions.add(graou);
         this.log(Level.INFO, "Registered Graou at '" + graouJson.get("cat").getAsString());

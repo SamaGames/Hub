@@ -27,12 +27,13 @@ class Graou extends AbstractInteraction
     private final Map<UUID, Hologram> holograms;
     private final EntityGraou graouEntity;
     private final Location catLocation;
+    private final Location door;
     private final Location[] treasureLocations;
     private final Location[] openingLocations;
     private BukkitTask animationTask;
     private UUID playerUsing;
 
-    Graou(Hub hub, Location catLocation, Location[] treasureLocations, Location[] openingLocations)
+    Graou(Hub hub, Location catLocation, Location door, Location[] treasureLocations, Location[] openingLocations)
     {
         super(hub);
 
@@ -48,6 +49,7 @@ class Graou extends AbstractInteraction
         hub.getServer().getScheduler().runTaskLater(hub, () -> this.graouEntity.postInit(catLocation.getYaw(), catLocation.getPitch()), 20L);
 
         this.catLocation = catLocation;
+        this.door = door;
         this.treasureLocations = treasureLocations;
         this.openingLocations = openingLocations;
         this.animationTask = null;
@@ -159,7 +161,7 @@ class Graou extends AbstractInteraction
         this.playerUsing = player.getUniqueId();
 
         this.graouEntity.getBukkitEntity().getWorld().playSound(this.graouEntity.getBukkitEntity().getLocation(), Sound.ENTITY_CAT_AMBIENT, 1.0F, 1.5F);
-        this.animationTask = this.hub.getServer().getScheduler().runTask(this.hub, new OpeningAnimationRunnable(this.hub, this, player, this.treasureLocations, this.openingLocations));
+        this.animationTask = this.hub.getServer().getScheduler().runTask(this.hub, new OpeningAnimationRunnable(this.hub, this, player, this.door, this.treasureLocations, this.openingLocations));
     }
 
     public void animationFinished(Player player)
