@@ -58,6 +58,7 @@ class OpeningAnimationRunnable implements Runnable
         this.graou.getGraouEntity().setSitting(false);
 
         this.door.getBlock().setData((byte) 11);
+        this.door.getBlock().getState().update(true);
 
         this.walk(this.treasureLocations[1]);
 
@@ -100,7 +101,7 @@ class OpeningAnimationRunnable implements Runnable
                 @Override
                 public void run()
                 {
-                    Optional<Entity> entity = ProximityUtils.getNearbyEntities(OpeningAnimationRunnable.this.openingLocations[0], 2.0D).stream()
+                    Optional<Entity> entity = ProximityUtils.getNearbyEntities(OpeningAnimationRunnable.this.openingLocations[0], 3.0D).stream()
                             .filter(e -> e.getUniqueId() != null)
                             .filter(e -> e.getUniqueId() == OpeningAnimationRunnable.this.graou.getGraouEntity().getUniqueID())
                             .findAny();
@@ -108,6 +109,7 @@ class OpeningAnimationRunnable implements Runnable
                     if (entity.isPresent())
                     {
                         OpeningAnimationRunnable.this.door.getBlock().setData((byte) 7);
+                        OpeningAnimationRunnable.this.door.getBlock().getState().update(true);
 
                         BlockUtils.setCustomSkull(OpeningAnimationRunnable.this.openingLocations[0].getBlock(), selectedPresentTexture);
 
@@ -181,9 +183,8 @@ class OpeningAnimationRunnable implements Runnable
                     for (int i = 0; i < 4; i++)
                         this.lasers[i].getBukkitEntity().teleport(OpeningAnimationRunnable.this.openingLocations[0].clone().add(Math.cos(this.angle + Math.PI * i / 2), 4, Math.sin(this.angle + Math.PI * i / 2)));
 
-                    ParticleEffect.FIREWORKS_SPARK.display(0.25F, 0.25F, 0.25F, 0.5F, 15, OpeningAnimationRunnable.this.openingLocations[0], 150.0D);
-                    ParticleEffect.FIREWORKS_SPARK.display(0.25F, 0.25F, 0.25F, 0.5F, 15, OpeningAnimationRunnable.this.openingLocations[0], 150.0D);
-                    ParticleEffect.FIREWORKS_SPARK.display(0.25F, 0.25F, 0.25F, 0.5F, 15, OpeningAnimationRunnable.this.openingLocations[0], 150.0D);
+                    for (int i = 0; i < (this.time / 4); i++)
+                        ParticleEffect.FIREWORKS_SPARK.display(0.25F, 0.25F, 0.25F, 0.5F, 15, OpeningAnimationRunnable.this.openingLocations[0], 150.0D);
 
                     this.angle += 0.25D;
 
