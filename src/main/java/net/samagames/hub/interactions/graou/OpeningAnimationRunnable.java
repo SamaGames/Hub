@@ -15,6 +15,8 @@ import org.bukkit.craftbukkit.v1_10_R1.entity.CraftSquid;
 import org.bukkit.entity.*;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityTargetEvent;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Optional;
@@ -130,7 +132,7 @@ class OpeningAnimationRunnable implements Runnable
             @Override
             public void run()
             {
-                if (this.time == 20L * 3)
+                if (this.time == 20L * 5)
                 {
                     OpeningAnimationRunnable.this.openingLocations[0].getWorld().createExplosion(OpeningAnimationRunnable.this.openingLocations[0].getBlockX(), OpeningAnimationRunnable.this.openingLocations[0].getBlockY(), OpeningAnimationRunnable.this.openingLocations[0].getBlockZ(), 2.0F, false, false);
                     OpeningAnimationRunnable.this.openingLocations[0].getBlock().setType(Material.AIR);
@@ -138,6 +140,8 @@ class OpeningAnimationRunnable implements Runnable
 
                     for (EntityGraouLaser laser : this.lasers)
                         laser.getBukkitEntity().remove();
+
+                    this.fakeTarget.remove();
 
                     this.cancel();
                 }
@@ -150,7 +154,7 @@ class OpeningAnimationRunnable implements Runnable
                         this.fakeTarget = OpeningAnimationRunnable.this.openingLocations[0].getWorld().spawn(OpeningAnimationRunnable.this.openingLocations[0], Squid.class);
                         this.fakeTarget.setGravity(false);
                         this.fakeTarget.setInvulnerable(true);
-                        ((CraftSquid) this.fakeTarget).getHandle().setInvisible(true);
+                        this.fakeTarget.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 1, false, false));
 
                         this.lasers = new EntityGraouLaser[4];
 
@@ -162,13 +166,14 @@ class OpeningAnimationRunnable implements Runnable
                             laser.setPosition(OpeningAnimationRunnable.this.openingLocations[0].getX(), OpeningAnimationRunnable.this.openingLocations[0].getY(), OpeningAnimationRunnable.this.openingLocations[0].getZ());
                             world.addEntity(laser, CreatureSpawnEvent.SpawnReason.CUSTOM);
                             laser.setGoalTarget(((CraftSquid) this.fakeTarget).getHandle(), EntityTargetEvent.TargetReason.CUSTOM, false);
+                            ((Guardian) laser.getBukkitEntity()).addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 1, false, false));
 
                             this.lasers[i] = laser;
                         }
                     }
 
                     for (int i = 0; i < 4; i++)
-                        this.lasers[i].getBukkitEntity().teleport(OpeningAnimationRunnable.this.openingLocations[0].clone().add(Math.cos(this.angle + Math.PI * i / 2), 3, Math.sin(this.angle + Math.PI * i / 2)));
+                        this.lasers[i].getBukkitEntity().teleport(OpeningAnimationRunnable.this.openingLocations[0].clone().add(Math.cos(this.angle + Math.PI * i / 2), 4, Math.sin(this.angle + Math.PI * i / 2)));
 
                     ParticleEffect.FIREWORKS_SPARK.display(0.25F, 0.25F, 0.25F, 0.5F, 15, OpeningAnimationRunnable.this.openingLocations[0], 30.0D);
 
