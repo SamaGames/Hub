@@ -184,7 +184,7 @@ class OpeningAnimationRunnable implements Runnable
                         this.lasers[i].getBukkitEntity().teleport(OpeningAnimationRunnable.this.openingLocations[0].clone().add(Math.cos(this.angle + Math.PI * i / 2), 4, Math.sin(this.angle + Math.PI * i / 2)));
 
                     for (int i = 0; i < (this.time / 4); i++)
-                        ParticleEffect.FIREWORKS_SPARK.display(0.25F, 0.25F, 0.25F, 0.5F, 15, OpeningAnimationRunnable.this.openingLocations[0], 150.0D);
+                        ParticleEffect.FIREWORKS_SPARK.display(0.1F, 0.1F, 0.1F, 0.5F, 5, OpeningAnimationRunnable.this.openingLocations[0], 150.0D);
 
                     this.angle += 0.25D;
 
