@@ -62,8 +62,5 @@ commands:
   evacuate:
     description: Commande d'évacuation
     usage: /evacuate
-  simulateban:
-    description: Simuler un bannissement par Samaritan
-    usage: /simulateban
 
   # Easter Eggs --------------------------------
