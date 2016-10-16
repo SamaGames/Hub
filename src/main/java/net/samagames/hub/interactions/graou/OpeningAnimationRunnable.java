@@ -159,6 +159,8 @@ class OpeningAnimationRunnable implements Runnable
 
     private void walk(Location location, Runnable callback)
     {
+        this.hub.getServer().broadcastMessage("Starting walking...");
+
         this.graou.getGraouEntity().getPathfinderGoalWalkToTile().setTileToWalk(location.getX(), location.getY(), location.getZ());
 
         new BukkitRunnable()
@@ -166,6 +168,8 @@ class OpeningAnimationRunnable implements Runnable
             @Override
             public void run()
             {
+                OpeningAnimationRunnable.this.hub.getServer().broadcastMessage("Scanning entities...");
+
                 Optional<Entity> entity = ProximityUtils.getNearbyEntities(location, 3.0D).stream()
                         .filter(e -> e.getUniqueId() != null)
                         .filter(e -> e.getUniqueId() == OpeningAnimationRunnable.this.graou.getGraouEntity().getUniqueID())
@@ -173,6 +177,8 @@ class OpeningAnimationRunnable implements Runnable
 
                 if (entity.isPresent())
                 {
+                    OpeningAnimationRunnable.this.hub.getServer().broadcastMessage("Entity found! Callback...");
+
                     OpeningAnimationRunnable.this.graou.getGraouEntity().getPathfinderGoalWalkToTile().cancel();
                     OpeningAnimationRunnable.this.hub.getServer().getScheduler().runTask(OpeningAnimationRunnable.this.hub, callback);
 

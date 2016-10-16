@@ -3,14 +3,14 @@ package net.samagames.hub.interactions.graou;
 import net.minecraft.server.v1_10_R1.EntityCreature;
 import net.minecraft.server.v1_10_R1.PathfinderGoal;
 
-public class PathfinderGoalWalkToTile extends PathfinderGoal
+class PathfinderGoalWalkToTile extends PathfinderGoal
 {
     private final EntityCreature entitycreature;
     private final float speed;
     private double x, y, z;
     private boolean canceled;
 
-    public PathfinderGoalWalkToTile(EntityCreature entitycreature, float speed)
+    PathfinderGoalWalkToTile(EntityCreature entitycreature, float speed)
     {
         this.speed = speed;
         this.entitycreature = entitycreature;
@@ -37,7 +37,7 @@ public class PathfinderGoalWalkToTile extends PathfinderGoal
     }
 
     @Override
-    public void c()
+    public void e()
     {
         this.entitycreature.getNavigation().a(this.x, this.y, this.z, this.speed);
     }
