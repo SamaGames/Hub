@@ -1,6 +1,7 @@
 package net.samagames.hub.interactions.graou;
 
 import net.minecraft.server.v1_10_R1.PathEntity;
+import net.minecraft.server.v1_10_R1.WorldServer;
 import net.samagames.hub.Hub;
 import net.samagames.hub.utils.ProximityUtils;
 import net.samagames.tools.BlockUtils;
@@ -8,11 +9,13 @@ import net.samagames.tools.ItemUtils;
 import net.samagames.tools.ParticleEffect;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.SkullType;
 import org.bukkit.Sound;
-import org.bukkit.block.Skull;
+import org.bukkit.craftbukkit.v1_10_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_10_R1.entity.CraftArmorStand;
+import org.bukkit.craftbukkit.v1_10_R1.entity.CraftGuardian;
 import org.bukkit.entity.*;
-import org.bukkit.inventory.ItemStack;
+import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Optional;
@@ -121,7 +124,7 @@ class OpeningAnimationRunnable implements Runnable
         new BukkitRunnable()
         {
             private ArmorStand fakeTarget;
-            private Guardian[] guardians;
+            private EntityGraouLaser[] lasers;
             private long time = 0;
             private double angle = 0.0D;
 
@@ -134,8 +137,8 @@ class OpeningAnimationRunnable implements Runnable
                     OpeningAnimationRunnable.this.openingLocations[0].getBlock().setType(Material.AIR);
                     OpeningAnimationRunnable.this.graou.animationFinished(OpeningAnimationRunnable.this.player);
 
-                    for (Guardian guardian : this.guardians)
-                        guardian.remove();
+                    for (EntityGraouLaser laser : this.lasers)
+                        laser.getBukkitEntity().remove();
 
                     this.cancel();
                 }
@@ -150,20 +153,23 @@ class OpeningAnimationRunnable implements Runnable
                         this.fakeTarget.setGravity(false);
                         this.fakeTarget.setInvulnerable(true);
 
-                        this.guardians = new Guardian[4];
+                        this.lasers = new EntityGraouLaser[4];
 
                         for (int i = 0; i < 4; i++)
                         {
-                            this.guardians[i] = OpeningAnimationRunnable.this.openingLocations[0].getWorld().spawn(OpeningAnimationRunnable.this.openingLocations[0], Guardian.class);
-                            this.guardians[i].setGravity(false);
-                            this.guardians[i].setAI(false);
-                            this.guardians[i].setInvulnerable(true);
-                            this.guardians[i].setTarget(this.fakeTarget);
+                            WorldServer world = ((CraftWorld) OpeningAnimationRunnable.this.openingLocations[0].getWorld()).getHandle();
+                            EntityGraouLaser laser = new EntityGraouLaser(world);
+
+                            laser.setPosition(OpeningAnimationRunnable.this.openingLocations[0].getX(), OpeningAnimationRunnable.this.openingLocations[0].getY(), OpeningAnimationRunnable.this.openingLocations[0].getZ());
+                            world.addEntity(laser, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                            laser.setGoalTarget(((CraftArmorStand) this.fakeTarget).getHandle(), EntityTargetEvent.TargetReason.CUSTOM, false);
+
+                            this.lasers[i] = laser;
                         }
                     }
 
                     for (int i = 0; i < 4; i++)
-                        this.guardians[i].teleport(OpeningAnimationRunnable.this.openingLocations[0].clone().add(Math.cos(this.angle + Math.PI * i / 2), 3, Math.sin(this.angle + Math.PI * i / 2)));
+                        this.lasers[i].getBukkitEntity().teleport(OpeningAnimationRunnable.this.openingLocations[0].clone().add(Math.cos(this.angle + Math.PI * i / 2), 3, Math.sin(this.angle + Math.PI * i / 2)));
 
                     ParticleEffect.FIREWORKS_SPARK.display(0.5F, 0.5F, 0.5F, 1.25F, 12, OpeningAnimationRunnable.this.openingLocations[0], 30.0D);
 
