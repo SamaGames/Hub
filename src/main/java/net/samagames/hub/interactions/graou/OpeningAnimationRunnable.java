@@ -10,6 +10,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.craftbukkit.v1_10_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_10_R1.entity.CraftEntity;
 import org.bukkit.craftbukkit.v1_10_R1.entity.CraftSquid;
 import org.bukkit.entity.*;
 import org.bukkit.event.entity.CreatureSpawnEvent;
@@ -35,18 +36,16 @@ class OpeningAnimationRunnable implements Runnable
     private final Hub hub;
     private final Graou graou;
     private final Player player;
-    private final Squid fakeTarget;
     private final Location door;
     private final Location treasureLocations;
     private final Location openingLocations;
     private Item present;
 
-    OpeningAnimationRunnable(Hub hub, Graou graou, Player player, Squid fakeTarget, Location door, Location treasureLocations, Location openingLocations)
+    OpeningAnimationRunnable(Hub hub, Graou graou, Player player, Location door, Location treasureLocations, Location openingLocations)
     {
         this.hub = hub;
         this.graou = graou;
         this.player = player;
-        this.fakeTarget = fakeTarget;
         this.door = door;
         this.treasureLocations = treasureLocations;
         this.openingLocations = openingLocations;
@@ -99,6 +98,7 @@ class OpeningAnimationRunnable implements Runnable
     {
         new BukkitRunnable()
         {
+            private Squid fakeTarget;
             private EntityGraouLaser[] lasers;
             private long time = 0;
             private double angle = 0.0D;
@@ -114,6 +114,8 @@ class OpeningAnimationRunnable implements Runnable
                     for (EntityGraouLaser laser : this.lasers)
                         laser.getBukkitEntity().remove();
 
+                    this.fakeTarget.remove();
+
                     OpeningAnimationRunnable.this.graou.animationFinished(OpeningAnimationRunnable.this.player);
 
                     this.cancel();
@@ -124,6 +126,11 @@ class OpeningAnimationRunnable implements Runnable
                     {
                         OpeningAnimationRunnable.this.openingLocations.getWorld().playSound(OpeningAnimationRunnable.this.openingLocations, Sound.ENTITY_CREEPER_PRIMED, 1.0F, 0.85F);
 
+                        this.fakeTarget = OpeningAnimationRunnable.this.openingLocations.getWorld().spawn(OpeningAnimationRunnable.this.openingLocations, Squid.class);
+                        this.fakeTarget.setGravity(false);
+                        this.fakeTarget.setInvulnerable(true);
+                        ((CraftEntity) this.fakeTarget).getHandle().setInvisible(true);
+
                         this.lasers = new EntityGraouLaser[4];
 
                         for (int i = 0; i < 4; i++)
@@ -133,7 +140,7 @@ class OpeningAnimationRunnable implements Runnable
 
                             laser.setPosition(OpeningAnimationRunnable.this.openingLocations.getX(), OpeningAnimationRunnable.this.openingLocations.getY(), OpeningAnimationRunnable.this.openingLocations.getZ());
                             world.addEntity(laser, CreatureSpawnEvent.SpawnReason.CUSTOM);
-                            laser.setGoalTarget(((CraftSquid) OpeningAnimationRunnable.this.fakeTarget).getHandle(), EntityTargetEvent.TargetReason.CUSTOM, false);
+                            laser.setGoalTarget(((CraftSquid) this.fakeTarget).getHandle(), EntityTargetEvent.TargetReason.CUSTOM, false);
                             ((Guardian) laser.getBukkitEntity()).addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 1, false, false));
 
                             this.lasers[i] = laser;
