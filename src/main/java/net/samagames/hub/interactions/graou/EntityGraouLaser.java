@@ -15,8 +15,6 @@ class EntityGraouLaser extends EntityGuardian
         this.setInvisible(true);
         this.setInvulnerable(true);
         this.setNoGravity(true);
-
-
     }
 
     @Override

@@ -129,7 +129,7 @@ class OpeningAnimationRunnable implements Runnable
                         this.fakeTarget = OpeningAnimationRunnable.this.openingLocations.getWorld().spawn(OpeningAnimationRunnable.this.openingLocations, Squid.class);
                         this.fakeTarget.setGravity(false);
                         this.fakeTarget.setInvulnerable(true);
-                        ((CraftEntity) this.fakeTarget).getHandle().setInvisible(true);
+                        this.fakeTarget.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 1, false, false));
 
                         this.lasers = new EntityGraouLaser[4];
 
@@ -148,7 +148,7 @@ class OpeningAnimationRunnable implements Runnable
                     }
 
                     for (int i = 0; i < 4; i++)
-                        this.lasers[i].getBukkitEntity().teleport(OpeningAnimationRunnable.this.openingLocations.clone().add(Math.cos(this.angle + Math.PI * i / 2) * 2, 4, Math.sin(this.angle + Math.PI * i / 2) *2));
+                        this.lasers[i].getBukkitEntity().teleport(OpeningAnimationRunnable.this.openingLocations.clone().add(Math.cos(this.angle + Math.PI * i / 2) * 3, 6, Math.sin(this.angle + Math.PI * i / 2) * 3));
 
                     for (int i = 0; i < (this.time / 4); i++)
                         ParticleEffect.FIREWORKS_SPARK.display(0.1F, 0.1F, 0.1F, 0.5F, 5, OpeningAnimationRunnable.this.openingLocations, 150.0D);

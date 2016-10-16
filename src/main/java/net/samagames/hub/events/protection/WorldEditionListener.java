@@ -115,7 +115,7 @@ public class WorldEditionListener implements Listener
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
-    public void onChunkUnload(final ChunkUnloadEvent event)
+    public void onChunkUnload(ChunkUnloadEvent event)
     {
         event.setCancelled(true);
     }
