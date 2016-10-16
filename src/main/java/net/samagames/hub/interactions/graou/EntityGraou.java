@@ -7,6 +7,8 @@ import java.util.UUID;
 
 class EntityGraou extends EntityOcelot
 {
+    private PathfinderGoalWalkToTile pathfinderGoalWalkToTile;
+
     EntityGraou(World world)
     {
         super(world);
@@ -28,8 +30,11 @@ class EntityGraou extends EntityOcelot
     @Override
     protected void r()
     {
+        this.pathfinderGoalWalkToTile = new PathfinderGoalWalkToTile(this, 1.0F);
+
         this.goalSit = new PathfinderGoalSit(this);
         this.goalSelector.a(1, new PathfinderGoalLookAtPlayer(this, EntityHuman.class, 10.0F));
+        this.goalSelector.a(2, this.pathfinderGoalWalkToTile);
     }
 
     @Override
@@ -60,5 +65,10 @@ class EntityGraou extends EntityOcelot
     protected SoundEffect G()
     {
         return SoundEffects.T;
+    }
+
+    public PathfinderGoalWalkToTile getPathfinderGoalWalkToTile()
+    {
+        return this.pathfinderGoalWalkToTile;
     }
 }

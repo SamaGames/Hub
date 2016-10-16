@@ -1,6 +1,5 @@
 package net.samagames.hub.interactions.graou;
 
-import net.minecraft.server.v1_10_R1.PathEntity;
 import net.minecraft.server.v1_10_R1.WorldServer;
 import net.samagames.hub.Hub;
 import net.samagames.hub.utils.ProximityUtils;
@@ -62,25 +61,7 @@ class OpeningAnimationRunnable implements Runnable
         this.door.getBlock().setData((byte) 11);
         this.door.getBlock().getState().update(true);
 
-        this.walk(this.treasureLocations[1]);
-
-        new BukkitRunnable()
-        {
-            @Override
-            public void run()
-            {
-                Optional<Entity> entity = ProximityUtils.getNearbyEntities(OpeningAnimationRunnable.this.treasureLocations[0], 3.0D).stream()
-                        .filter(e -> e.getUniqueId() != null)
-                        .filter(e -> e.getUniqueId() == OpeningAnimationRunnable.this.graou.getGraouEntity().getUniqueID())
-                        .findAny();
-
-                if (entity.isPresent())
-                {
-                    OpeningAnimationRunnable.this.arrivedAtTreasure();
-                    this.cancel();
-                }
-            }
-        }.runTaskTimer(this.hub, 5L, 5L);
+        this.walk(this.treasureLocations[1], this::arrivedAtTreasure);
     }
 
     private void arrivedAtTreasure()
@@ -96,37 +77,21 @@ class OpeningAnimationRunnable implements Runnable
             this.present = this.treasureLocations[0].getWorld().dropItem(this.treasureLocations[0], ItemUtils.getCustomHead(selectedPresentTexture));
             this.graou.getGraouEntity().getBukkitEntity().setPassenger(this.present);
 
-            this.walk(this.openingLocations[1]);
-
-            new BukkitRunnable()
+            this.walk(this.openingLocations[1], () ->
             {
-                @Override
-                public void run()
-                {
-                    Optional<Entity> entity = ProximityUtils.getNearbyEntities(OpeningAnimationRunnable.this.openingLocations[0], 3.0D).stream()
-                            .filter(e -> e.getUniqueId() != null)
-                            .filter(e -> e.getUniqueId() == OpeningAnimationRunnable.this.graou.getGraouEntity().getUniqueID())
-                            .findAny();
+                this.door.getBlock().setData((byte) 7);
+                this.door.getBlock().getState().update(true);
 
-                    if (entity.isPresent())
-                    {
-                        OpeningAnimationRunnable.this.door.getBlock().setData((byte) 7);
-                        OpeningAnimationRunnable.this.door.getBlock().getState().update(true);
+                BlockUtils.setCustomSkull(this.openingLocations[0].getBlock(), selectedPresentTexture);
 
-                        BlockUtils.setCustomSkull(OpeningAnimationRunnable.this.openingLocations[0].getBlock(), selectedPresentTexture);
+                this.graou.getGraouEntity().getBukkitEntity().eject();
+                this.present.remove();
 
-                        OpeningAnimationRunnable.this.graou.getGraouEntity().getBukkitEntity().eject();
-                        OpeningAnimationRunnable.this.present.remove();
+                this.graou.respawn();
+                this.graou.getGraouEntity().setSitting(true);
 
-                        OpeningAnimationRunnable.this.graou.respawn();
-                        OpeningAnimationRunnable.this.graou.getGraouEntity().setSitting(true);
-
-                        OpeningAnimationRunnable.this.placedPresent();
-
-                        this.cancel();
-                    }
-                }
-            }.runTaskTimer(this.hub, 5L, 5L);
+                this.placedPresent();
+            });
         }, 15L);
     }
 
@@ -192,15 +157,28 @@ class OpeningAnimationRunnable implements Runnable
         }.runTaskTimer(this.hub, 5L, 5L);
     }
 
-    private void walk(Location location)
+    private void walk(Location location, Runnable callback)
     {
-        PathEntity path = this.graou.getGraouEntity().getNavigation().a(location.getX(), location.getY(), location.getZ());
+        this.graou.getGraouEntity().getPathfinderGoalWalkToTile().setTileToWalk(location.getX(), location.getY(), location.getZ());
 
-        if (!this.graou.getGraouEntity().getNavigation().a(path, 1.0D))
+        new BukkitRunnable()
         {
-            this.graou.respawn();
-            this.graou.animationFinished(this.player);
-        }
+            @Override
+            public void run()
+            {
+                Optional<Entity> entity = ProximityUtils.getNearbyEntities(location, 3.0D).stream()
+                        .filter(e -> e.getUniqueId() != null)
+                        .filter(e -> e.getUniqueId() == OpeningAnimationRunnable.this.graou.getGraouEntity().getUniqueID())
+                        .findAny();
 
+                if (entity.isPresent())
+                {
+                    OpeningAnimationRunnable.this.graou.getGraouEntity().getPathfinderGoalWalkToTile().cancel();
+                    OpeningAnimationRunnable.this.hub.getServer().getScheduler().runTask(OpeningAnimationRunnable.this.hub, callback);
+
+                    this.cancel();
+                }
+            }
+        }.runTaskTimer(this.hub, 5L, 5L);
     }
 }
