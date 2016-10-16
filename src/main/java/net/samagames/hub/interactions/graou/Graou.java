@@ -31,12 +31,12 @@ class Graou extends AbstractInteraction
     private final Squid fakeTarget;
     private final Location catLocation;
     private final Location door;
-    private final Location[] treasureLocations;
-    private final Location[] openingLocations;
+    private final Location treasureLocations;
+    private final Location openingLocations;
     private BukkitTask animationTask;
     private UUID playerUsing;
 
-    Graou(Hub hub, Location catLocation, Location door, Location[] treasureLocations, Location[] openingLocations)
+    Graou(Hub hub, Location catLocation, Location door, Location treasureLocations, Location openingLocations)
     {
         super(hub);
 
@@ -51,7 +51,7 @@ class Graou extends AbstractInteraction
 
         hub.getServer().getScheduler().runTaskLater(hub, () -> this.graouEntity.postInit(catLocation.getYaw(), catLocation.getPitch()), 20L);
 
-        this.fakeTarget = openingLocations[0].getWorld().spawn(openingLocations[0], Squid.class);
+        this.fakeTarget = openingLocations.getWorld().spawn(openingLocations, Squid.class);
         this.fakeTarget.setGravity(false);
         this.fakeTarget.setInvulnerable(true);
         this.fakeTarget.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 1, false, false));

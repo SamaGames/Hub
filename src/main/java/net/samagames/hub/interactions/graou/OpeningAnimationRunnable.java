@@ -37,11 +37,11 @@ class OpeningAnimationRunnable implements Runnable
     private final Player player;
     private final Squid fakeTarget;
     private final Location door;
-    private final Location[] treasureLocations;
-    private final Location[] openingLocations;
+    private final Location treasureLocations;
+    private final Location openingLocations;
     private Item present;
 
-    OpeningAnimationRunnable(Hub hub, Graou graou, Player player, Squid fakeTarget, Location door, Location[] treasureLocations, Location[] openingLocations)
+    OpeningAnimationRunnable(Hub hub, Graou graou, Player player, Squid fakeTarget, Location door, Location treasureLocations, Location openingLocations)
     {
         this.hub = hub;
         this.graou = graou;
@@ -61,28 +61,28 @@ class OpeningAnimationRunnable implements Runnable
         this.door.getBlock().setData((byte) 11);
         this.door.getBlock().getState().update(true);
 
-        this.walk(this.treasureLocations[1], this::arrivedAtTreasure);
+        this.walk(this.treasureLocations, this::arrivedAtTreasure);
     }
 
     private void arrivedAtTreasure()
     {
-        this.treasureLocations[0].getWorld().playSound(this.treasureLocations[0], Sound.BLOCK_CHEST_OPEN, 1.0F, 1.0F);
+        this.treasureLocations.getWorld().playSound(this.treasureLocations, Sound.BLOCK_CHEST_OPEN, 1.0F, 1.0F);
 
         this.hub.getServer().getScheduler().runTaskLater(this.hub, () ->
         {
-            this.treasureLocations[0].getWorld().playSound(this.treasureLocations[0], Sound.BLOCK_CHEST_CLOSE, 1.0F, 1.0F);
+            this.treasureLocations.getWorld().playSound(this.treasureLocations, Sound.BLOCK_CHEST_CLOSE, 1.0F, 1.0F);
 
             final String selectedPresentTexture = PRESENT_TEXTURES[new Random().nextInt(PRESENT_TEXTURES.length)];
 
-            this.present = this.treasureLocations[0].getWorld().dropItem(this.treasureLocations[0], ItemUtils.getCustomHead(selectedPresentTexture));
+            this.present = this.treasureLocations.getWorld().dropItem(this.treasureLocations, ItemUtils.getCustomHead(selectedPresentTexture));
             this.graou.getGraouEntity().getBukkitEntity().setPassenger(this.present);
 
-            this.walk(this.openingLocations[1], () ->
+            this.walk(this.openingLocations, () ->
             {
                 this.door.getBlock().setData((byte) 7);
                 this.door.getBlock().getState().update(true);
 
-                BlockUtils.setCustomSkull(this.openingLocations[0].getBlock(), selectedPresentTexture);
+                BlockUtils.setCustomSkull(this.openingLocations.getBlock(), selectedPresentTexture);
 
                 this.graou.getGraouEntity().getBukkitEntity().eject();
                 this.present.remove();
@@ -108,8 +108,8 @@ class OpeningAnimationRunnable implements Runnable
             {
                 if (this.time == 20L * 5)
                 {
-                    OpeningAnimationRunnable.this.openingLocations[0].getWorld().createExplosion(OpeningAnimationRunnable.this.openingLocations[0].getBlockX(), OpeningAnimationRunnable.this.openingLocations[0].getBlockY(), OpeningAnimationRunnable.this.openingLocations[0].getBlockZ(), 2.0F, false, false);
-                    OpeningAnimationRunnable.this.openingLocations[0].getBlock().setType(Material.AIR);
+                    OpeningAnimationRunnable.this.openingLocations.getWorld().createExplosion(OpeningAnimationRunnable.this.openingLocations.getBlockX(), OpeningAnimationRunnable.this.openingLocations.getBlockY(), OpeningAnimationRunnable.this.openingLocations.getBlockZ(), 2.0F, false, false);
+                    OpeningAnimationRunnable.this.openingLocations.getBlock().setType(Material.AIR);
 
                     for (EntityGraouLaser laser : this.lasers)
                         laser.getBukkitEntity().remove();
@@ -122,16 +122,16 @@ class OpeningAnimationRunnable implements Runnable
                 {
                     if (this.time == 0)
                     {
-                        OpeningAnimationRunnable.this.openingLocations[0].getWorld().playSound(OpeningAnimationRunnable.this.openingLocations[0], Sound.ENTITY_CREEPER_PRIMED, 1.0F, 0.85F);
+                        OpeningAnimationRunnable.this.openingLocations.getWorld().playSound(OpeningAnimationRunnable.this.openingLocations, Sound.ENTITY_CREEPER_PRIMED, 1.0F, 0.85F);
 
                         this.lasers = new EntityGraouLaser[4];
 
                         for (int i = 0; i < 4; i++)
                         {
-                            WorldServer world = ((CraftWorld) OpeningAnimationRunnable.this.openingLocations[0].getWorld()).getHandle();
+                            WorldServer world = ((CraftWorld) OpeningAnimationRunnable.this.openingLocations.getWorld()).getHandle();
                             EntityGraouLaser laser = new EntityGraouLaser(world);
 
-                            laser.setPosition(OpeningAnimationRunnable.this.openingLocations[0].getX(), OpeningAnimationRunnable.this.openingLocations[0].getY(), OpeningAnimationRunnable.this.openingLocations[0].getZ());
+                            laser.setPosition(OpeningAnimationRunnable.this.openingLocations.getX(), OpeningAnimationRunnable.this.openingLocations.getY(), OpeningAnimationRunnable.this.openingLocations.getZ());
                             world.addEntity(laser, CreatureSpawnEvent.SpawnReason.CUSTOM);
                             laser.setGoalTarget(((CraftSquid) OpeningAnimationRunnable.this.fakeTarget).getHandle(), EntityTargetEvent.TargetReason.CUSTOM, false);
                             ((Guardian) laser.getBukkitEntity()).addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 1, false, false));
@@ -141,10 +141,10 @@ class OpeningAnimationRunnable implements Runnable
                     }
 
                     for (int i = 0; i < 4; i++)
-                        this.lasers[i].getBukkitEntity().teleport(OpeningAnimationRunnable.this.openingLocations[0].clone().add(Math.cos(this.angle + Math.PI * i / 2) * 2, 4, Math.sin(this.angle + Math.PI * i / 2) *2));
+                        this.lasers[i].getBukkitEntity().teleport(OpeningAnimationRunnable.this.openingLocations.clone().add(Math.cos(this.angle + Math.PI * i / 2) * 2, 4, Math.sin(this.angle + Math.PI * i / 2) *2));
 
                     for (int i = 0; i < (this.time / 4); i++)
-                        ParticleEffect.FIREWORKS_SPARK.display(0.1F, 0.1F, 0.1F, 0.5F, 5, OpeningAnimationRunnable.this.openingLocations[0], 150.0D);
+                        ParticleEffect.FIREWORKS_SPARK.display(0.1F, 0.1F, 0.1F, 0.5F, 5, OpeningAnimationRunnable.this.openingLocations, 150.0D);
 
                     this.angle += 0.25D;
 
