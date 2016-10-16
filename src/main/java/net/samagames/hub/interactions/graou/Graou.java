@@ -11,12 +11,14 @@ import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.craftbukkit.v1_10_R1.CraftWorld;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Squid;
 import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 import java.util.UUID;
 
 class Graou extends AbstractInteraction
@@ -26,6 +28,7 @@ class Graou extends AbstractInteraction
 
     private final Map<UUID, Hologram> holograms;
     private final EntityGraou graouEntity;
+    private final Squid fakeTarget;
     private final Location catLocation;
     private final Location door;
     private final Location[] treasureLocations;
@@ -48,6 +51,11 @@ class Graou extends AbstractInteraction
 
         hub.getServer().getScheduler().runTaskLater(hub, () -> this.graouEntity.postInit(catLocation.getYaw(), catLocation.getPitch()), 20L);
 
+        this.fakeTarget = openingLocations[0].getWorld().spawn(openingLocations[0], Squid.class);
+        this.fakeTarget.setGravity(false);
+        this.fakeTarget.setInvulnerable(true);
+        this.fakeTarget.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 1, false, false));
+
         this.catLocation = catLocation;
         this.door = door;
         this.treasureLocations = treasureLocations;
@@ -63,6 +71,7 @@ class Graou extends AbstractInteraction
             this.animationTask.cancel();
 
         this.graouEntity.die();
+        this.fakeTarget.remove();
     }
 
     public void onLogin(Player player)
@@ -161,7 +170,7 @@ class Graou extends AbstractInteraction
         this.playerUsing = player.getUniqueId();
 
         this.graouEntity.getBukkitEntity().getWorld().playSound(this.graouEntity.getBukkitEntity().getLocation(), Sound.ENTITY_CAT_AMBIENT, 1.0F, 1.5F);
-        this.animationTask = this.hub.getServer().getScheduler().runTask(this.hub, new OpeningAnimationRunnable(this.hub, this, player, this.door, this.treasureLocations, this.openingLocations));
+        this.animationTask = this.hub.getServer().getScheduler().runTask(this.hub, new OpeningAnimationRunnable(this.hub, this, player, this.fakeTarget, this.door, this.treasureLocations, this.openingLocations));
     }
 
     public void animationFinished(Player player)
@@ -179,6 +188,7 @@ class Graou extends AbstractInteraction
         this.graouEntity.positionChanged = true;
 
         this.graouEntity.setSitting(true);
+        this.toggleHolograms(true);
     }
 
     public void toggleHolograms(boolean visible)

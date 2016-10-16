@@ -36,16 +36,18 @@ class OpeningAnimationRunnable implements Runnable
     private final Hub hub;
     private final Graou graou;
     private final Player player;
+    private final Squid fakeTarget;
     private final Location door;
     private final Location[] treasureLocations;
     private final Location[] openingLocations;
     private Item present;
 
-    OpeningAnimationRunnable(Hub hub, Graou graou, Player player, Location door, Location[] treasureLocations, Location[] openingLocations)
+    OpeningAnimationRunnable(Hub hub, Graou graou, Player player, Squid fakeTarget, Location door, Location[] treasureLocations, Location[] openingLocations)
     {
         this.hub = hub;
         this.graou = graou;
         this.player = player;
+        this.fakeTarget = fakeTarget;
         this.door = door;
         this.treasureLocations = treasureLocations;
         this.openingLocations = openingLocations;
@@ -132,7 +134,6 @@ class OpeningAnimationRunnable implements Runnable
     {
         new BukkitRunnable()
         {
-            private Squid fakeTarget;
             private EntityGraouLaser[] lasers;
             private long time = 0;
             private double angle = 0.0D;
@@ -144,12 +145,11 @@ class OpeningAnimationRunnable implements Runnable
                 {
                     OpeningAnimationRunnable.this.openingLocations[0].getWorld().createExplosion(OpeningAnimationRunnable.this.openingLocations[0].getBlockX(), OpeningAnimationRunnable.this.openingLocations[0].getBlockY(), OpeningAnimationRunnable.this.openingLocations[0].getBlockZ(), 2.0F, false, false);
                     OpeningAnimationRunnable.this.openingLocations[0].getBlock().setType(Material.AIR);
-                    OpeningAnimationRunnable.this.graou.animationFinished(OpeningAnimationRunnable.this.player);
 
                     for (EntityGraouLaser laser : this.lasers)
                         laser.getBukkitEntity().remove();
 
-                    this.fakeTarget.remove();
+                    OpeningAnimationRunnable.this.graou.animationFinished(OpeningAnimationRunnable.this.player);
 
                     this.cancel();
                 }
@@ -158,11 +158,6 @@ class OpeningAnimationRunnable implements Runnable
                     if (this.time == 0)
                     {
                         OpeningAnimationRunnable.this.openingLocations[0].getWorld().playSound(OpeningAnimationRunnable.this.openingLocations[0], Sound.ENTITY_CREEPER_PRIMED, 1.0F, 0.85F);
-
-                        this.fakeTarget = OpeningAnimationRunnable.this.openingLocations[0].getWorld().spawn(OpeningAnimationRunnable.this.openingLocations[0], Squid.class);
-                        this.fakeTarget.setGravity(false);
-                        this.fakeTarget.setInvulnerable(true);
-                        this.fakeTarget.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 1, false, false));
 
                         this.lasers = new EntityGraouLaser[4];
 
@@ -173,7 +168,7 @@ class OpeningAnimationRunnable implements Runnable
 
                             laser.setPosition(OpeningAnimationRunnable.this.openingLocations[0].getX(), OpeningAnimationRunnable.this.openingLocations[0].getY(), OpeningAnimationRunnable.this.openingLocations[0].getZ());
                             world.addEntity(laser, CreatureSpawnEvent.SpawnReason.CUSTOM);
-                            laser.setGoalTarget(((CraftSquid) this.fakeTarget).getHandle(), EntityTargetEvent.TargetReason.CUSTOM, false);
+                            laser.setGoalTarget(((CraftSquid) OpeningAnimationRunnable.this.fakeTarget).getHandle(), EntityTargetEvent.TargetReason.CUSTOM, false);
                             ((Guardian) laser.getBukkitEntity()).addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 1, false, false));
 
                             this.lasers[i] = laser;
@@ -181,7 +176,7 @@ class OpeningAnimationRunnable implements Runnable
                     }
 
                     for (int i = 0; i < 4; i++)
-                        this.lasers[i].getBukkitEntity().teleport(OpeningAnimationRunnable.this.openingLocations[0].clone().add(Math.cos(this.angle + Math.PI * i / 2), 4, Math.sin(this.angle + Math.PI * i / 2)));
+                        this.lasers[i].getBukkitEntity().teleport(OpeningAnimationRunnable.this.openingLocations[0].clone().add(Math.cos(this.angle + Math.PI * i / 2) * 2, 4, Math.sin(this.angle + Math.PI * i / 2) *2));
 
                     for (int i = 0; i < (this.time / 4); i++)
                         ParticleEffect.FIREWORKS_SPARK.display(0.1F, 0.1F, 0.1F, 0.5F, 5, OpeningAnimationRunnable.this.openingLocations[0], 150.0D);
