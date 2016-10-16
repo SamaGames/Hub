@@ -6,7 +6,7 @@ import java.lang.reflect.Field;
 
 class EntityGraouLaser extends EntityGuardian
 {
-    private static final Field datawatcherField;
+    private static Field datawatcherField;
 
     EntityGraouLaser(World world)
     {
