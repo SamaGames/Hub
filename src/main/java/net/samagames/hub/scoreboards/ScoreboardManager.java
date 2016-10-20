@@ -18,6 +18,7 @@ public class ScoreboardManager extends AbstractManager
     private final ScheduledFuture glowingTask;
     private final ScheduledFuture reloadingTask;
     private int ipCharIndex;
+    private int cooldown;
 
     public ScoreboardManager(Hub hub)
     {
@@ -25,6 +26,7 @@ public class ScoreboardManager extends AbstractManager
 
         this.scoreboards = new HashMap<>();
         this.ipCharIndex = 0;
+        this.cooldown = 0;
 
         this.glowingTask = this.hub.getScheduledExecutorService().scheduleAtFixedRate(() ->
         {
@@ -32,7 +34,7 @@ public class ScoreboardManager extends AbstractManager
 
             for (PersonalScoreboard scoreboard : this.scoreboards.values())
                 this.hub.getExecutorMonoThread().execute(() -> scoreboard.setLines(ip));
-        }, 100, 100, TimeUnit.MILLISECONDS);
+        }, 200, 200, TimeUnit.MILLISECONDS);
 
         this.reloadingTask = this.hub.getScheduledExecutorService().scheduleAtFixedRate(() ->
         {
@@ -85,6 +87,12 @@ public class ScoreboardManager extends AbstractManager
     {
         String ip = "mc.samagames.net";
 
+        if (this.cooldown > 0)
+        {
+            this.cooldown--;
+            return ip;
+        }
+
         StringBuilder formattedIp = new StringBuilder();
 
         if (this.ipCharIndex > 0)
@@ -111,6 +119,7 @@ public class ScoreboardManager extends AbstractManager
         else
         {
             this.ipCharIndex = 0;
+            this.cooldown = 20;
         }
 
         return formattedIp.toString();
