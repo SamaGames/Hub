@@ -109,7 +109,7 @@ public class ScoreboardManager extends AbstractManager
 
         if (this.ipCharIndex + 1 < ip.length())
         {
-            formattedIp.append(ChatColor.GOLD).append(ip.substring(this.ipCharIndex, this.ipCharIndex + 1));
+            formattedIp.append(ChatColor.GOLD).append(ip.charAt(this.ipCharIndex + 1));
 
             if (this.ipCharIndex + 2 < ip.length())
                 formattedIp.append(ChatColor.YELLOW).append(ip.substring(this.ipCharIndex + 1));
