@@ -46,7 +46,7 @@ public class WelcomeTutorialNPCAction implements NPCInteractCallback, Listener
         this.tutorial.addChapter(new CoveredTutorialChapter(new Location(hub.getWorld(), 36.5D, 133.0D, -4.5D, 89.2F, 26.3F), ChatColor.GOLD + "Kékesé SamaGames ?", Arrays.asList(
                 Pair.of("Ceci est un très bon début ;)", 75L),
                 Pair.of("SamaGames est un serveur mini-jeux ;", 50L),
-                Pair.of("mais nous savons que jouer seul est ennuyant...", 42L),
+                Pair.of("mais nous savons que jouer seul est ennuyant...", 40L),
                 Pair.of("Alors n'oubliez pas d'inviter vos amis !", 42L)
         ), Material.RECORD_3.getId()));
 
@@ -57,7 +57,7 @@ public class WelcomeTutorialNPCAction implements NPCInteractCallback, Listener
         this.tutorial.addChapter(new CoveredTutorialChapter(new Location(hub.getWorld(), -10.5D, 131.0D, 70.5D, 179.2F, 19.7F), ChatColor.GOLD + "Où suis-je ?", Arrays.asList(
                 Pair.of("Vous êtes actuellement au Hub !", 57L),
                 Pair.of("C'est ici que vous vous connectez.", 42L),
-                Pair.of("C'est un lieu de détente et de partage ;", 42L),
+                Pair.of("C'est un lieu de détente et de partage ;", 40L),
                 Pair.of("entre nos magnifiques joueurs.", 44L)
         ), Material.RECORD_4.getId()));
 
@@ -70,7 +70,7 @@ public class WelcomeTutorialNPCAction implements NPCInteractCallback, Listener
                 Pair.of("En cliquant dessus vous serez en attente.", 54L),
                 Pair.of("Quand assez de joueurs seront en attente ;", 35L),
                 Pair.of("votre serveur de jeu démarrera ;", 36L),
-                Pair.of("et vous serez ensuite téléportés.", 46L)
+                Pair.of("et vous serez ensuite téléportés.", 45L)
         ), Material.RECORD_5.getId()));
 
         /**
@@ -98,9 +98,9 @@ public class WelcomeTutorialNPCAction implements NPCInteractCallback, Listener
          * Location: In front of Meow
          */
         this.tutorial.addChapter(new CoveredTutorialChapter(new Location(hub.getWorld(), -9.0D, 110.5D, -1.5D, -59.0F, 38.4F), ChatColor.GOLD + "Qui est Meow ?", Arrays.asList(
-                Pair.of("Voici Meow, notre chat.", 61L),
+                Pair.of("Voici Meow, notre chat.", 60L),
                 Pair.of("C'est à lui que vous pourrez récupérer", 36L),
-                Pair.of("Certains bonus dont ceux offert avec", 33L),
+                Pair.of("Certains bonus dont ceux offert avec", 31L),
                 Pair.of("l'achat d'un grade.", 35L)
         ), Material.RECORD_8.getId()));
 
