@@ -123,7 +123,7 @@ public class ParkourManager extends AbstractManager
                     this.log(Level.SEVERE, "Cannot add the material '" + materialName + "' to the whitelist of the parkour '" + name + "'!");
             }
 
-            Integer achievementId = jsonParkour.has("achievement") ? jsonParkour.get("achievement").getAsInt() : null;
+            int achievementId = jsonParkour.has("achievement") ? jsonParkour.get("achievement").getAsInt() : -1;
 
             this.registerWhitelistBasedParkour(name, prefix, winPrefix, begin, end, fail, minimalHeight, checkpoints, whitelist, difficulty, achievementId);
         }
