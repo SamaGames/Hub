@@ -20,6 +20,7 @@ class PersonalScoreboard
     private String formattedRank;
     private long coins;
     private long stars;
+    private int pearls;
 
     PersonalScoreboard(Hub hub, Player player)
     {
@@ -44,6 +45,7 @@ class PersonalScoreboard
         this.formattedRank = RankUtils.getFormattedRank(this.player, true);
         this.coins = playerData.getCoins();
         this.stars = playerData.getStars();
+        this.pearls = 0;
     }
 
     public void setLines(String ip)
@@ -59,10 +61,11 @@ class PersonalScoreboard
 
         this.objectiveSign.setLine(4, ChatColor.GRAY + "Pièces : " + ChatColor.GOLD + NumberUtils.format(this.coins) + " \u26C1");
         this.objectiveSign.setLine(5, ChatColor.GRAY + "Étoiles : " + ChatColor.AQUA + NumberUtils.format(this.stars) + " \u2606");
+        this.objectiveSign.setLine(6, ChatColor.GRAY + "Perles : " + ChatColor.LIGHT_PURPLE + NumberUtils.format(this.pearls) + " \u25C9");
 
-        this.objectiveSign.setLine(6, ChatColor.RED + "");
+        this.objectiveSign.setLine(7, ChatColor.RED + "");
 
-        this.objectiveSign.setLine(7, ChatColor.YELLOW + ip);
+        this.objectiveSign.setLine(8, ChatColor.YELLOW + ip);
 
         this.objectiveSign.updateLines();
     }
