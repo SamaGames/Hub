@@ -80,7 +80,7 @@ public class UHCZoneGame extends AbstractGame
     @Override
     public int getSlotInMainMenu()
     {
-        return 23;
+        return 13;
     }
 
     @Override

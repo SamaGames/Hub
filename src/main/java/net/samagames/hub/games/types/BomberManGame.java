@@ -4,6 +4,7 @@ import net.samagames.hub.Hub;
 import net.samagames.hub.games.AbstractGame;
 import net.samagames.hub.games.leaderboards.HubLeaderboard;
 import net.samagames.hub.games.shops.ShopCategory;
+import net.samagames.tools.ItemUtils;
 import net.samagames.tools.RulesBook;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -11,9 +12,9 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
 
-public class HeroBattleGame extends AbstractGame
+public class BomberManGame extends AbstractGame
 {
-    public HeroBattleGame(Hub hub)
+    public BomberManGame(Hub hub)
     {
         super(hub);
     }
@@ -21,34 +22,32 @@ public class HeroBattleGame extends AbstractGame
     @Override
     public String getCodeName()
     {
-        return "herobattle";
+        return "bomberman";
     }
 
     @Override
     public String getName()
     {
-        return "HeroBattle";
+        return "BomberMan";
     }
 
     @Override
     public String getCategory()
     {
-        return "PvP";
+        return "Arcade";
     }
 
     @Override
     public ItemStack getIcon()
     {
-        return new ItemStack(Material.MAGMA_CREAM);
+        return ItemUtils.getCustomHead("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYmM1NjNiOWI1ODI0MDlmNDFmMGUwNzgxYTk4M2FmZTNkOGZlMmZiZjM4M2M1M2E1ZDI3NDMxNTU1NjRkNjgifX19");
     }
 
     @Override
     public String[] getDescription()
     {
         return new String[] {
-                "Tel que sur Smash, choisissez votre",
-                "classe puis battez-vous dans des",
-                "univers uniques !"
+                "TODO"
         };
     }
 
@@ -56,8 +55,7 @@ public class HeroBattleGame extends AbstractGame
     public String[] getDevelopers()
     {
         return new String[] {
-                "AmauryPi",
-                "6infinity8"
+                "Azuxul"
         };
     }
 
@@ -70,7 +68,7 @@ public class HeroBattleGame extends AbstractGame
     @Override
     public int getSlotInMainMenu()
     {
-        return 21;
+        return 31;
     }
 
     @Override
@@ -82,7 +80,7 @@ public class HeroBattleGame extends AbstractGame
     @Override
     public Location getLobbySpawn()
     {
-        return new Location(this.hub.getWorld(), -53D, 114.0D, 35D, 0.0F, 0.0F);
+        return new Location(this.hub.getWorld(), -53.5D, 113.0D, 36.5D, 38.0F, 0.0F);
     }
 
     @Override

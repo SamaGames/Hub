@@ -51,19 +51,20 @@ public class GameManager extends AbstractManager
 
         // -----
 
+        this.registerGame(new TimberManGame(hub));
+        this.registerGame(new BomberManGame(hub));
+        this.registerGame(new BurnThatChickenGame(hub));
+        this.registerGame(new OneTwoThreeSunGame(hub));
+
         this.registerGame(new BackEndGame(hub, "craftmything", "CraftMyThing", this.hub.getPlayerManager().getSpawn(), false));
         this.registerGame(new BackEndGame(hub, "witherparty", "WitherParty", this.hub.getPlayerManager().getSpawn(), false));
         this.registerGame(new BackEndGame(hub, "hangovergames", "HangoverGames", this.hub.getPlayerManager().getSpawn(), false));
         this.registerGame(new BackEndGame(hub, "pacman", "PacMan", this.hub.getPlayerManager().getSpawn(), false));
-        this.registerGame(new BackEndGame(hub, "burnthatchicken", "BurnThatChicken", this.hub.getPlayerManager().getSpawn(), false));
-        this.registerGame(new BackEndGame(hub, "timberman", "Timberman", this.hub.getPlayerManager().getSpawn(), false));
-        this.registerGame(new BackEndGame(hub, "bomberman", "Bomberman", this.hub.getPlayerManager().getSpawn(), true));
         this.registerGame(new BackEndGame(hub, "flyring", "FlyRing", this.hub.getPlayerManager().getSpawn(), false));
         this.registerGame(new BackEndGame(hub, "partygames", "PartyGames", this.hub.getPlayerManager().getSpawn(), false));
         this.registerGame(new BackEndGame(hub, "casino", "Casino", this.hub.getPlayerManager().getSpawn(), false));
         this.registerGame(new BackEndGame(hub, "samabox", "SamaBox", this.hub.getPlayerManager().getSpawn(), false));
         this.registerGame(new BackEndGame(hub, "agarmc", "AgarMC", this.hub.getPlayerManager().getSpawn(), false));
-        this.registerGame(new BackEndGame(hub, "onetwothreesun", "123 Soleil", this.hub.getPlayerManager().getSpawn(), false));
 
         // -----
 
