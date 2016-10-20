@@ -26,7 +26,7 @@ class PersonalScoreboard
     {
         this.hub = hub;
         this.player = player.getUniqueId();
-        this.ipCharIndex = 0;
+        this.ipCharIndex = 1;
 
         this.objectiveSign = new ObjectiveSign(SamaGamesAPI.get().getServerName().toLowerCase(), "SamaGames");
 
