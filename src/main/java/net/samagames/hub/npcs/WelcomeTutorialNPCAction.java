@@ -18,13 +18,13 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
-public class WelcomeTutorialNPCAction implements NPCInteractCallback, Listener
+class WelcomeTutorialNPCAction implements NPCInteractCallback, Listener
 {
     private final Hub hub;
     private final NPCTutorial tutorial;
     private final List<UUID> expected;
 
-    public WelcomeTutorialNPCAction(Hub hub)
+    WelcomeTutorialNPCAction(Hub hub)
     {
         this.hub = hub;
         this.tutorial = new NPCTutorial();

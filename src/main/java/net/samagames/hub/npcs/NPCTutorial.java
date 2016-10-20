@@ -5,7 +5,7 @@ import org.bukkit.entity.Player;
 
 import java.util.function.BiConsumer;
 
-public class NPCTutorial extends Tutorial
+class NPCTutorial extends Tutorial
 {
     private BiConsumer<Player, Boolean> consumer;
 

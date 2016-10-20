@@ -132,10 +132,10 @@ public class GuiMain extends AbstractGui
 
             int players = game.getOnlinePlayers();
 
-            lore.add(ChatColor.DARK_GRAY + "\u25B6 Clic gauche pour être téléporté");
+            lore.add(ChatColor.DARK_GRAY + "\u25B6 Cliquez gauche pour être téléporté");
 
             if (game.getRulesBooks() != null)
-                lore.add(ChatColor.DARK_GRAY + "\u25B6 Clic droit pour lire les règles");
+                lore.add(ChatColor.DARK_GRAY + "\u25B6 Cliquez droit pour lire les règles");
 
             lore.add("");
             lore.add(ChatColor.GRAY + "Il y a actuellement " + ChatColor.GOLD + players + ChatColor.GRAY + " joueur" + (players > 1 ? "s" : ""));

@@ -222,9 +222,7 @@ public class PlayerListener implements Listener
                 UUID uuid = UUID.fromString(event.getEntity().getMetadata("owner-id").get(0).asString());
 
                 if (this.hub.getCosmeticManager().getGadgetManager().hasGadget(uuid))
-                {
                     this.hub.getCosmeticManager().getGadgetManager().getPlayerGadget(uuid).handleInteraction(event.getDamager(), event.getEntity());
-                }
             }
         }
     }
