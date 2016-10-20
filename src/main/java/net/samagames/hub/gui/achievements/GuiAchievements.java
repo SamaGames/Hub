@@ -118,12 +118,12 @@ public class GuiAchievements extends AbstractGui
                 if (achievement instanceof IncrementationAchievement)
                 {
                     String progressBar = "";
-                    int playerProgress = progress.getProgress() * 10 / ((IncrementationAchievement) achievement).getObjective();
+                    int playerProgress = (progress != null ? progress.getProgress() * 10 / ((IncrementationAchievement) achievement).getObjective() : -1);
 
                     lore.add(ChatColor.BLUE + "Progression [" + ChatColor.YELLOW + progress.getProgress() + "/" + ((IncrementationAchievement) achievement).getObjective() + ChatColor.BLUE + "] :");
 
                     for (int i = 0; i < 10; i++)
-                        progressBar += (playerProgress <= i ? ChatColor.YELLOW : ChatColor.WHITE) + "\u25A0";
+                        progressBar += (playerProgress >= i ? ChatColor.YELLOW : ChatColor.WHITE) + "\u25A0";
 
                     lore.add(progressBar);
                     lore.add("");
