@@ -73,7 +73,7 @@ public class GuiAchievements extends AbstractGui
                 lore.add("");
                 lore.add(ChatColor.GREEN + "Objectifs : " + ChatColor.BOLD + ChatColor.YELLOW + "?/?");
                 lore.add("");
-                lore.add("\u25B6 Cliquez pour parcourir");
+                lore.add(ChatColor.DARK_GRAY + "\u25B6 Cliquez pour parcourir");
 
                 itemMeta.setLore(lore);
                 itemStack.setItemMeta(itemMeta);
@@ -120,7 +120,7 @@ public class GuiAchievements extends AbstractGui
                     String progressBar = "";
                     int playerProgress = (progress != null ? progress.getProgress() * 10 / ((IncrementationAchievement) achievement).getObjective() : -1);
 
-                    lore.add(ChatColor.BLUE + "Progression [" + ChatColor.YELLOW + progress.getProgress() + "/" + ((IncrementationAchievement) achievement).getObjective() + ChatColor.BLUE + "] :");
+                    lore.add(ChatColor.BLUE + "Progression [" + ChatColor.YELLOW + (progress != null ? progress.getProgress() : 0) + "/" + ((IncrementationAchievement) achievement).getObjective() + ChatColor.BLUE + "] :");
 
                     for (int i = 0; i < 10; i++)
                         progressBar += (playerProgress >= i ? ChatColor.YELLOW : ChatColor.WHITE) + "\u25A0";
