@@ -20,11 +20,13 @@ import java.util.UUID;
 
 public class WelcomeTutorialNPCAction implements NPCInteractCallback, Listener
 {
+    private final Hub hub;
     private final NPCTutorial tutorial;
     private final List<UUID> expected;
 
     public WelcomeTutorialNPCAction(Hub hub)
     {
+        this.hub = hub;
         this.tutorial = new NPCTutorial();
         this.expected = new ArrayList<>();
 
@@ -145,7 +147,8 @@ public class WelcomeTutorialNPCAction implements NPCInteractCallback, Listener
             return;
 
         this.expected.remove(event.getPlayer().getUniqueId());
-        this.tutorial.start(event.getPlayer().getUniqueId());
+
+        this.hub.getServer().getScheduler().runTaskLater(this.hub, () -> this.tutorial.start(event.getPlayer().getUniqueId()), 20L);
     }
 
     @Override
