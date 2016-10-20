@@ -123,9 +123,9 @@ public class ParkourManager extends AbstractManager
                     this.log(Level.SEVERE, "Cannot add the material '" + materialName + "' to the whitelist of the parkour '" + name + "'!");
             }
 
-            String achievementName = jsonParkour.has("achievement") ? jsonParkour.get("achievement").getAsString() : null;
+            Integer achievementId = jsonParkour.has("achievement") ? jsonParkour.get("achievement").getAsInt() : null;
 
-            this.registerWhitelistBasedParkour(name, prefix, winPrefix, begin, end, fail, minimalHeight, checkpoints, whitelist, difficulty, achievementName);
+            this.registerWhitelistBasedParkour(name, prefix, winPrefix, begin, end, fail, minimalHeight, checkpoints, whitelist, difficulty, achievementId);
         }
 
         // -------------------
@@ -147,9 +147,9 @@ public class ParkourManager extends AbstractManager
         }
     }
 
-    private void registerWhitelistBasedParkour(String name, String prefix, String winPrefix, Location begin, Location end, Location fail, int minimalHeight, List<Location> checkpoints, List<Material> whitelist, int difficulty, String achievementName)
+    private void registerWhitelistBasedParkour(String name, String prefix, String winPrefix, Location begin, Location end, Location fail, int minimalHeight, List<Location> checkpoints, List<Material> whitelist, int difficulty, int achievementId)
     {
-        this.registerParkour(new WhitelistBasedParkour(this.hub, name, prefix, winPrefix, begin, end, fail, minimalHeight, checkpoints, whitelist, difficulty, achievementName));
+        this.registerParkour(new WhitelistBasedParkour(this.hub, name, prefix, winPrefix, begin, end, fail, minimalHeight, checkpoints, whitelist, difficulty, achievementId));
     }
 
     private void registerParkour(Parkour parkour)

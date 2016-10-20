@@ -14,6 +14,7 @@ import java.util.logging.Level;
 public class ScoreboardManager extends AbstractManager
 {
     private final Map<UUID, PersonalScoreboard> scoreboards;
+    private final ScheduledFuture glowingTask;
     private final ScheduledFuture reloadingTask;
 
     public ScoreboardManager(Hub hub)
@@ -21,6 +22,12 @@ public class ScoreboardManager extends AbstractManager
         super(hub);
 
         this.scoreboards = new HashMap<>();
+
+        this.glowingTask = this.hub.getScheduledExecutorService().scheduleAtFixedRate(() ->
+        {
+            for (PersonalScoreboard scoreboard : this.scoreboards.values())
+                this.hub.getExecutorMonoThread().execute(scoreboard::setLines);
+        }, 200, 200, TimeUnit.MILLISECONDS);
 
         this.reloadingTask = this.hub.getScheduledExecutorService().scheduleAtFixedRate(() ->
         {
@@ -32,7 +39,9 @@ public class ScoreboardManager extends AbstractManager
     @Override
     public void onDisable()
     {
+        this.glowingTask.cancel(true);
         this.reloadingTask.cancel(true);
+
         this.scoreboards.values().forEach(PersonalScoreboard::onLogout);
     }
 

@@ -11,6 +11,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Parkour
 {
@@ -22,27 +23,29 @@ public class Parkour
     protected final Map<UUID, Long> playersIn;
     protected final Map<UUID, List<Location>> playersCheckpoints;
     protected final Map<UUID, Integer> tries;
+    protected final List<UUID> locks;
     protected final String parkourName;
     protected final String prefix;
     protected final String winPrefix;
     protected final Location spawn;
     protected final Location end;
     protected final Location fail;
-    protected final String achievementName;
     protected final String stars;
+    protected final int achievementId;
     protected final int minimalHeight;
     protected final ArmorStand startTooltip;
     protected final ArmorStand endTooltip;
     protected final List<ArmorStand> checkpointsTooltips;
     protected final ParkourBackend backend;
 
-    public Parkour(Hub hub, String parkourName, String prefix, String winPrefix, Location spawn, Location end, Location fail, int minimalHeight, List<Location> checkpoints, int difficulty, String achievementName)
+    public Parkour(Hub hub, String parkourName, String prefix, String winPrefix, Location spawn, Location end, Location fail, int minimalHeight, List<Location> checkpoints, int difficulty, int achievementId)
     {
         this.hub = hub;
 
         this.playersIn = new ConcurrentHashMap<>();
         this.playersCheckpoints = new ConcurrentHashMap<>();
         this.tries = new ConcurrentHashMap<>();
+        this.locks = new CopyOnWriteArrayList<>();
 
         this.parkourName = parkourName;
         this.prefix = prefix;
@@ -50,7 +53,7 @@ public class Parkour
         this.spawn = spawn;
         this.end = end;
         this.fail = fail;
-        this.achievementName = achievementName;
+        this.achievementId = achievementId;
 
         String temporaryStars = "";
 
@@ -225,6 +228,11 @@ public class Parkour
 
     public void failPlayer(Player player)
     {
+        if (this.locks.contains(player.getUniqueId()))
+            return;
+
+        this.locks.add(player.getUniqueId());
+
         int now = this.tries.get(player.getUniqueId()) - 1;
         this.tries.put(player.getUniqueId(), now);
 
@@ -241,6 +249,8 @@ public class Parkour
             this.restoreFly(player);
             this.removePlayer(player);
         }
+
+        this.locks.remove(player.getUniqueId());
     }
 
     public void quitPlayer(Player player)

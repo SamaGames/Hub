@@ -20,15 +20,19 @@ class PersonalScoreboard
     private String formattedRank;
     private long coins;
     private long stars;
+    private int ipCharIndex;
 
     PersonalScoreboard(Hub hub, Player player)
     {
         this.hub = hub;
         this.player = player.getUniqueId();
+        this.ipCharIndex = 0;
 
         this.objectiveSign = new ObjectiveSign(SamaGamesAPI.get().getServerName().toLowerCase(), "SamaGames");
+
         this.reloadData();
         this.objectiveSign.addReceiver(player);
+
         this.setLines();
     }
 
@@ -44,30 +48,41 @@ class PersonalScoreboard
         this.formattedRank = RankUtils.getFormattedRank(this.player, true);
         this.coins = playerData.getCoins();
         this.stars = playerData.getStars();
-
-        this.setLines();
     }
 
-    private void setLines()
+    public void setLines()
     {
         this.objectiveSign.setDisplayName(ChatColor.GOLD + "\u2726" + ChatColor.BOLD + " SamaGames " + ChatColor.RESET + ChatColor.GOLD + "\u2726");
 
         this.objectiveSign.setLine(0, ChatColor.BLUE + "");
-        this.objectiveSign.setLine(1, ChatColor.GREEN + "" + ChatColor.BOLD + "Serveur");
-        this.objectiveSign.setLine(2, ChatColor.GRAY + "Hub " + SamaGamesAPI.get().getServerName().split("_")[1]);
-        this.objectiveSign.setLine(3, ChatColor.AQUA + "");
-        this.objectiveSign.setLine(4, ChatColor.RED + "" + ChatColor.BOLD + "Rang");
-        this.objectiveSign.setLine(5, this.formattedRank);
-        this.objectiveSign.setLine(6, ChatColor.GREEN + "");
-        this.objectiveSign.setLine(7, ChatColor.GOLD + "" + ChatColor.BOLD + "Pièces");
-        this.objectiveSign.setLine(8, ChatColor.GRAY + "" + NumberUtils.format(this.coins));
-        this.objectiveSign.setLine(9, ChatColor.DARK_GREEN + "");
-        this.objectiveSign.setLine(10, ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "Étoiles");
-        this.objectiveSign.setLine(11, ChatColor.GRAY + "" + NumberUtils.format(this.stars));
-        this.objectiveSign.setLine(12, ChatColor.BLACK + "");
-        this.objectiveSign.setLine(13, ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "TeamSpeak");
-        this.objectiveSign.setLine(14, ChatColor.GRAY + "ts.samagames.net");
+
+        this.objectiveSign.setLine(1, ChatColor.GRAY + "Hub : " + ChatColor.WHITE + "#" + SamaGamesAPI.get().getServerName().split("_")[1]);
+        this.objectiveSign.setLine(2, ChatColor.GRAY + "Grade : " + this.formattedRank);
+
+        this.objectiveSign.setLine(3, ChatColor.GREEN + "");
+
+        this.objectiveSign.setLine(4, ChatColor.GRAY + "Pièces : " + ChatColor.GOLD + NumberUtils.format(this.coins) + " \u26C1");
+        this.objectiveSign.setLine(5, ChatColor.GRAY + "Étoiles : " + ChatColor.AQUA + NumberUtils.format(this.stars) + " \u2606");
+
+        this.objectiveSign.setLine(6, ChatColor.GRAY + "TeamSpeak : " + ChatColor.WHITE + "ts.samagames.net");
+
+        this.objectiveSign.setLine(7, ChatColor.GREEN + "");
+
+        this.objectiveSign.setLine(8, ChatColor.YELLOW + this.colorIpAt());
 
         this.objectiveSign.updateLines();
+    }
+
+    private String colorIpAt()
+    {
+        String ip = "mc.samagames.net";
+        ip = ip.substring(0, this.ipCharIndex) + ChatColor.RED + ip.charAt(this.ipCharIndex) + ChatColor.GOLD + ip.substring(this.ipCharIndex + 1);
+
+        this.ipCharIndex++;
+
+        if (this.ipCharIndex == ip.length())
+            this.ipCharIndex = 0;
+
+        return ip;
     }
 }
