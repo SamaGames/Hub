@@ -74,7 +74,7 @@ class PersonalScoreboard
     private String colorIpAt()
     {
         String ip = "mc.samagames.net";
-        ip = ip.substring(0, this.ipCharIndex) + ChatColor.RED + ip.charAt(this.ipCharIndex) + ChatColor.GOLD + ip.substring(this.ipCharIndex + 1);
+        ip = ip.substring(0, this.ipCharIndex - 1) + ChatColor.RED + ip.charAt(this.ipCharIndex) + (this.ipCharIndex + 1 < ip.length() ? ChatColor.YELLOW + ip.substring(this.ipCharIndex + 1) : "");
 
         this.ipCharIndex++;
 
