@@ -64,11 +64,9 @@ class PersonalScoreboard
         this.objectiveSign.setLine(4, ChatColor.GRAY + "Pièces : " + ChatColor.GOLD + NumberUtils.format(this.coins) + " \u26C1");
         this.objectiveSign.setLine(5, ChatColor.GRAY + "Étoiles : " + ChatColor.AQUA + NumberUtils.format(this.stars) + " \u2606");
 
-        this.objectiveSign.setLine(6, ChatColor.GRAY + "TeamSpeak : " + ChatColor.WHITE + "ts.samagames.net");
+        this.objectiveSign.setLine(6, ChatColor.RED + "");
 
-        this.objectiveSign.setLine(7, ChatColor.GREEN + "");
-
-        this.objectiveSign.setLine(8, ChatColor.YELLOW + this.colorIpAt());
+        this.objectiveSign.setLine(7, ChatColor.YELLOW + this.colorIpAt());
 
         this.objectiveSign.updateLines();
     }
@@ -80,7 +78,7 @@ class PersonalScoreboard
 
         this.ipCharIndex++;
 
-        if (this.ipCharIndex == ip.length())
+        if (this.ipCharIndex == ip.length() - 1)
             this.ipCharIndex = 0;
 
         return ip;
