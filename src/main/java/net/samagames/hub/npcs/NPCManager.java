@@ -23,7 +23,6 @@ import java.util.logging.Level;
 public class NPCManager extends AbstractManager
 {
     private static final UUID AURELIEN_SAMA_UUID = UUID.fromString("c59220b1-662f-4aa8-b9d9-72660eb97c10");
-    //private static final UUID BLUESLIME_UUID = UUID.fromString("29b2b527-1b59-45df-b7b0-d5ab20d8731a");
 
     private final List<CustomNPC> npcs;
 
