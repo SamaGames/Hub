@@ -33,7 +33,7 @@ public class OneTwoThreeSunGame extends AbstractGame
     @Override
     public String getCategory()
     {
-        return "";
+        return "Arcade";
     }
 
     @Override
