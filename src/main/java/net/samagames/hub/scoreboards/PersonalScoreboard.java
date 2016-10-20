@@ -20,20 +20,16 @@ class PersonalScoreboard
     private String formattedRank;
     private long coins;
     private long stars;
-    private int ipCharIndex;
 
     PersonalScoreboard(Hub hub, Player player)
     {
         this.hub = hub;
         this.player = player.getUniqueId();
-        this.ipCharIndex = 1;
 
         this.objectiveSign = new ObjectiveSign(SamaGamesAPI.get().getServerName().toLowerCase(), "SamaGames");
 
         this.reloadData();
         this.objectiveSign.addReceiver(player);
-
-        this.setLines();
     }
 
     public void onLogout()
@@ -50,7 +46,7 @@ class PersonalScoreboard
         this.stars = playerData.getStars();
     }
 
-    public void setLines()
+    public void setLines(String ip)
     {
         this.objectiveSign.setDisplayName(ChatColor.GOLD + "\u2726" + ChatColor.BOLD + " SamaGames " + ChatColor.RESET + ChatColor.GOLD + "\u2726");
 
@@ -66,21 +62,8 @@ class PersonalScoreboard
 
         this.objectiveSign.setLine(6, ChatColor.RED + "");
 
-        this.objectiveSign.setLine(7, ChatColor.YELLOW + this.colorIpAt());
+        this.objectiveSign.setLine(7, ChatColor.YELLOW + ip);
 
         this.objectiveSign.updateLines();
-    }
-
-    private String colorIpAt()
-    {
-        String ip = "mc.samagames.net";
-        ip = ip.substring(0, this.ipCharIndex - 1) + ChatColor.RED + ip.charAt(this.ipCharIndex) + (this.ipCharIndex + 1 < ip.length() ? ChatColor.YELLOW + ip.substring(this.ipCharIndex + 1) : "");
-
-        this.ipCharIndex++;
-
-        if (this.ipCharIndex == ip.length() - 1)
-            this.ipCharIndex = 1;
-
-        return ip;
     }
 }
