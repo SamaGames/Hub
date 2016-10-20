@@ -156,6 +156,8 @@ public class WelcomeTutorialNPCAction implements NPCInteractCallback, Listener
         {
             player.getInventory().clear();
             player.setResourcePack("http://resources.samagames.net/WelcomeTutorial.zip");
+
+            this.expected.add(player.getUniqueId());
         }
     }
 }
