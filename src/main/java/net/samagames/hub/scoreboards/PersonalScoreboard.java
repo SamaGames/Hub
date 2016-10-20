@@ -79,7 +79,7 @@ class PersonalScoreboard
         this.ipCharIndex++;
 
         if (this.ipCharIndex == ip.length() - 1)
-            this.ipCharIndex = 0;
+            this.ipCharIndex = 1;
 
         return ip;
     }
