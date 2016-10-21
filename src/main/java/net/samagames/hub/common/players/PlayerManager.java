@@ -80,6 +80,7 @@ public class PlayerManager extends AbstractManager
                         else
                         {
                             this.freezedPlayerCounters.put(player.getUniqueId(), timer);
+                            ActionBarAPI.sendPermanentMessage(player, String.valueOf(timer));
                         }
                     }
                 }
