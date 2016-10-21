@@ -62,7 +62,7 @@ public class PlayerManager extends AbstractManager
         {
             for (Player player : hub.getServer().getOnlinePlayers())
             {
-                int blocksWalked = player.getStatistic(Statistic.WALK_ONE_CM);
+                int blocksWalked = player.getStatistic(Statistic.WALK_ONE_CM) / 100;
                 player.setStatistic(Statistic.WALK_ONE_CM, 0);
 
                 if (blocksWalked == 0)
@@ -123,6 +123,8 @@ public class PlayerManager extends AbstractManager
                 player.setAllowFlight(false);
                 player.setFoodLevel(20);
                 player.setHealth(20.0D);
+                player.setStatistic(Statistic.WALK_ONE_CM, 0);
+
                 InventoryUtils.cleanPlayer(player);
 
                 Jedis jedis = SamaGamesAPI.get().getBungeeResource();

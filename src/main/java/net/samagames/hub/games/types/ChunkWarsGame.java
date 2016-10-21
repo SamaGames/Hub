@@ -77,7 +77,7 @@ public class ChunkWarsGame extends AbstractGame
     @Override
     public Location getLobbySpawn()
     {
-        return null;
+        return this.hub.getPlayerManager().getSpawn();
     }
 
     @Override
