@@ -64,4 +64,10 @@ public class PlayersAwayFromKeyboardTask extends AbstractTask
         if (this.timers.containsKey(uuid))
             this.timers.remove(uuid);
     }
+
+    public void resetPlayer(UUID uuid)
+    {
+        if (this.timers.containsKey(uuid))
+            this.timers.put(uuid, 0);
+    }
 }

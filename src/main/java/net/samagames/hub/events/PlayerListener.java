@@ -137,6 +137,8 @@ public class PlayerListener implements Listener
         {
             this.checkElytra(event.getPlayer());
         }
+
+        this.hub.getTaskManager().getPlayersAwayFromKeyboardTask().resetPlayer(event.getPlayer().getUniqueId());
     }
 
     @EventHandler
