@@ -22,7 +22,7 @@ class GuiGraou extends AbstractGui
     @Override
     public void display(Player player)
     {
-        this.inventory = this.hub.getServer().createInventory(null, 45, "Graou");
+        this.inventory = this.hub.getServer().createInventory(null, 54, "Graou");
 
         this.hub.getServer().getScheduler().runTaskAsynchronously(this.hub, () ->
         {

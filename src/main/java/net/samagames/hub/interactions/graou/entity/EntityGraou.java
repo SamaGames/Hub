@@ -1,15 +1,14 @@
-package net.samagames.hub.interactions.graou;
+package net.samagames.hub.interactions.graou.entity;
 
-import com.google.common.base.Predicate;
 import net.minecraft.server.v1_10_R1.*;
 
 import java.util.UUID;
 
-class EntityGraou extends EntityOcelot
+public class EntityGraou extends EntityOcelot
 {
     private PathfinderGoalWalkToTile pathfinderGoalWalkToTile;
 
-    EntityGraou(World world)
+    public EntityGraou(World world)
     {
         super(world);
 

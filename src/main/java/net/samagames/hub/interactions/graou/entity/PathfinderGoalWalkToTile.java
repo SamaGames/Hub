@@ -1,9 +1,9 @@
-package net.samagames.hub.interactions.graou;
+package net.samagames.hub.interactions.graou.entity;
 
 import net.minecraft.server.v1_10_R1.EntityCreature;
 import net.minecraft.server.v1_10_R1.PathfinderGoal;
 
-class PathfinderGoalWalkToTile extends PathfinderGoal
+public class PathfinderGoalWalkToTile extends PathfinderGoal
 {
     private final EntityCreature entitycreature;
     private final float speed;

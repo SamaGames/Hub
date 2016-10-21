@@ -2,6 +2,7 @@ package net.samagames.hub.interactions.graou;
 
 import net.minecraft.server.v1_10_R1.WorldServer;
 import net.samagames.hub.Hub;
+import net.samagames.hub.interactions.graou.entity.EntityGraouLaser;
 import net.samagames.hub.utils.ProximityUtils;
 import net.samagames.tools.BlockUtils;
 import net.samagames.tools.ItemUtils;

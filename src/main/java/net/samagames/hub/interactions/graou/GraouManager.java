@@ -6,6 +6,8 @@ import net.minecraft.server.v1_10_R1.EntityGuardian;
 import net.minecraft.server.v1_10_R1.EntityOcelot;
 import net.samagames.hub.Hub;
 import net.samagames.hub.interactions.AbstractInteractionManager;
+import net.samagames.hub.interactions.graou.entity.EntityGraou;
+import net.samagames.hub.interactions.graou.entity.EntityGraouLaser;
 import net.samagames.tools.LocationUtils;
 import org.bukkit.Location;
 import org.bukkit.entity.EntityType;

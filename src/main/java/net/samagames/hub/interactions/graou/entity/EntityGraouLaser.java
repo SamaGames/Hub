@@ -1,14 +1,14 @@
-package net.samagames.hub.interactions.graou;
+package net.samagames.hub.interactions.graou.entity;
 
 import net.minecraft.server.v1_10_R1.*;
 
 import java.lang.reflect.Field;
 
-class EntityGraouLaser extends EntityGuardian
+public class EntityGraouLaser extends EntityGuardian
 {
     private static Field datawatcherField;
 
-    EntityGraouLaser(World world)
+    public EntityGraouLaser(World world)
     {
         super(world);
 

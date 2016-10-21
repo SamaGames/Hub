@@ -96,6 +96,16 @@ class Bonus
         return stack;
     }
 
+    public int getId()
+    {
+        return this.id;
+    }
+
+    public int getSlot()
+    {
+        return this.slot;
+    }
+
     public long getUnlockTime(UUID uuid)
     {
         if (this.isAbleFor(uuid))
@@ -111,16 +121,6 @@ class Bonus
         jedis.close();
 
         return Long.parseLong(value);
-    }
-
-    public int getId()
-    {
-        return this.id;
-    }
-
-    public int getSlot()
-    {
-        return this.slot;
     }
 
     public boolean isAbleFor(UUID uuid)

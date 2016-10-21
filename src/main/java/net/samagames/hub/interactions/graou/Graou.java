@@ -5,6 +5,8 @@ import net.minecraft.server.v1_10_R1.WorldServer;
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import net.samagames.hub.interactions.AbstractInteraction;
+import net.samagames.hub.interactions.graou.entity.EntityGraou;
+import net.samagames.hub.interactions.graou.logic.Pearl;
 import net.samagames.tools.holograms.Hologram;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -13,14 +15,14 @@ import org.bukkit.craftbukkit.v1_10_R1.CraftWorld;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.scheduler.BukkitTask;
+import redis.clients.jedis.Jedis;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 class Graou extends AbstractInteraction
 {
-    protected static final String TAG = ChatColor.GOLD + "[" + ChatColor.YELLOW + "Graou" + ChatColor.GOLD + "] " + ChatColor.RESET;
+    private static final String TAG = ChatColor.GOLD + "[" + ChatColor.YELLOW + "Graou" + ChatColor.GOLD + "] " + ChatColor.RESET;
     private static final String GRAOU_NAME = ChatColor.GOLD + "" + ChatColor.BOLD + "Graou";
 
     private final Map<UUID, Hologram> holograms;
@@ -69,7 +71,7 @@ class Graou extends AbstractInteraction
         if (this.holograms.containsKey(player.getUniqueId()))
             this.onLogout(player);
 
-        int perls = 0;
+        int perls = this.getPlayerPearls(player).size();
 
         // Count boxes
 
@@ -135,7 +137,7 @@ class Graou extends AbstractInteraction
 
     public void update(Player player)
     {
-        int perls = 0;
+        int perls = this.getPlayerPearls(player).size();
 
         // Count boxes
 
@@ -192,6 +194,21 @@ class Graou extends AbstractInteraction
     public EntityGraou getGraouEntity()
     {
         return this.graouEntity;
+    }
+
+    public List<Pearl> getPlayerPearls(Player player)
+    {
+        List<Pearl> pearls = new ArrayList<>();
+        Jedis jedis = SamaGamesAPI.get().getBungeeResource();
+
+        if (jedis.exists("pearls:" + player.getUniqueId()))
+            return pearls;
+
+        pearls.addAll(jedis.lrange("pearls:" + player.getUniqueId(), 0, 21).stream().map(stars -> new Pearl(Integer.parseInt(stars))).collect(Collectors.toList()));
+
+        jedis.close();
+
+        return pearls;
     }
 
     @Override
