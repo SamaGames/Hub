@@ -2,7 +2,6 @@ package net.samagames.hub.common.tasks;
 
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
-import net.samagames.tools.chat.ActionBarAPI;
 
 import java.util.Map;
 import java.util.UUID;
@@ -48,7 +47,6 @@ public class PlayersAwayFromKeyboardTask extends AbstractTask
             }
             else
             {
-                ActionBarAPI.sendPermanentMessage(this.hub.getServer().getPlayer(uuid), String.valueOf(timer));
                 this.timers.put(uuid, timer);
             }
         }

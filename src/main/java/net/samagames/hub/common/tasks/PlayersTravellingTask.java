@@ -42,6 +42,7 @@ public class PlayersTravellingTask extends AbstractTask
             }
 
             int blocksTravelled = this.hub.getServer().getPlayer(uuid).getStatistic(Statistic.WALK_ONE_CM) / 100;
+            this.hub.getServer().getPlayer(uuid).setStatistic(Statistic.WALK_ONE_CM, 0);
 
             if (blocksTravelled > 0)
             {
@@ -56,6 +57,7 @@ public class PlayersTravellingTask extends AbstractTask
     public void registerPlayer(UUID uuid)
     {
         this.players.add(uuid);
+        this.hub.getServer().getPlayer(uuid).setStatistic(Statistic.WALK_ONE_CM, 0);
     }
 
     public void removePlayer(UUID uuid)
