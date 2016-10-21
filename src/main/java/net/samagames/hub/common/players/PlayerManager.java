@@ -63,6 +63,7 @@ public class PlayerManager extends AbstractManager
             for (Player player : hub.getServer().getOnlinePlayers())
             {
                 int blocksWalked = player.getStatistic(Statistic.WALK_ONE_CM);
+                player.setStatistic(Statistic.WALK_ONE_CM, 0);
 
                 if (blocksWalked == 0)
                 {
@@ -89,7 +90,6 @@ public class PlayerManager extends AbstractManager
                     continue;
 
                 SamaGamesAPI.get().getAchievementManager().incrementAchievement(player.getUniqueId(), 54, blocksWalked);
-                player.setStatistic(Statistic.WALK_ONE_CM, 0);
             }
         }, 20L, 20L);
 
