@@ -38,9 +38,11 @@ public class PlayerManager extends AbstractManager
 
     private final Map<UUID, Location> selections;
     private final Map<UUID, BukkitTask> rulesBookTasks;
+    private final Map<UUID, Integer> freezedPlayerCounters;
     private final List<UUID> hiders;
     private final StaticInventory staticInventory;
     private final Location spawn;
+    private final BukkitTask walkListenerTask;
 
     private boolean canBuild;
 
@@ -50,10 +52,45 @@ public class PlayerManager extends AbstractManager
 
         this.selections = new HashMap<>();
         this.rulesBookTasks = new HashMap<>();
+        this.freezedPlayerCounters = new HashMap<>();
         this.hiders = new ArrayList<>();
         this.staticInventory = new StaticInventory(hub);
         this.spawn = LocationUtils.str2loc(hub.getConfig().getString("spawn"));
         this.canBuild = false;
+
+        this.walkListenerTask = hub.getServer().getScheduler().runTaskTimer(hub, () ->
+        {
+            for (Player player : hub.getServer().getOnlinePlayers())
+            {
+                int blocksWalked = player.getStatistic(Statistic.WALK_ONE_CM);
+
+                if (blocksWalked == 0)
+                {
+                    if (!this.freezedPlayerCounters.containsKey(player.getUniqueId()) || this.freezedPlayerCounters.get(player.getUniqueId()) != -1)
+                    {
+                        int timer = this.freezedPlayerCounters.containsKey(player.getUniqueId()) ? this.freezedPlayerCounters.get(player.getUniqueId()) : 0;
+
+                        timer++;
+
+                        if (timer == 72000) // 1 hour
+                        {
+                            SamaGamesAPI.get().getAchievementManager().getAchievementByID(53).unlock(player.getUniqueId());
+                            this.freezedPlayerCounters.put(player.getUniqueId(), -1);
+                        }
+                        else
+                        {
+                            this.freezedPlayerCounters.put(player.getUniqueId(), timer);
+                        }
+                    }
+                }
+
+                if (blocksWalked == 0 || SamaGamesAPI.get().getAchievementManager().isUnlocked(player.getUniqueId(), 54))
+                    continue;
+
+                SamaGamesAPI.get().getAchievementManager().incrementAchievement(player.getUniqueId(), 54, blocksWalked);
+                player.setStatistic(Statistic.WALK_ONE_CM, 0);
+            }
+        }, 20L, 20L);
 
         this.spawn.getWorld().setSpawnLocation(this.spawn.getBlockX(), this.spawn.getBlockY(), this.spawn.getBlockZ());
     }
@@ -63,6 +100,8 @@ public class PlayerManager extends AbstractManager
     {
         this.selections.clear();
         this.hiders.clear();
+
+        this.walkListenerTask.cancel();
 
         this.rulesBookTasks.values().forEach(BukkitTask::cancel);
         this.rulesBookTasks.clear();
@@ -290,6 +329,8 @@ public class PlayerManager extends AbstractManager
 
             if (SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "network.staff"))
                 SamaGamesAPI.get().getAchievementManager().getAchievementByID(52).unlock(player.getUniqueId());
+
+
 
             // --
 
