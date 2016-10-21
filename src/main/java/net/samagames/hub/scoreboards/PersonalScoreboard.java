@@ -45,7 +45,7 @@ class PersonalScoreboard
         this.formattedRank = RankUtils.getFormattedRank(this.player, true);
         this.coins = playerData.getCoins();
         this.stars = playerData.getStars();
-        this.pearls = 0;
+        this.pearls = this.hub.getInteractionManager().getGraouManager().getPlayerPearls(this.player).size();
     }
 
     public void setLines(String ip)

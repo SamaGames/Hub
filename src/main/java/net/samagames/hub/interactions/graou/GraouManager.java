@@ -4,10 +4,12 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import net.minecraft.server.v1_10_R1.EntityGuardian;
 import net.minecraft.server.v1_10_R1.EntityOcelot;
+import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import net.samagames.hub.interactions.AbstractInteractionManager;
 import net.samagames.hub.interactions.graou.entity.EntityGraou;
 import net.samagames.hub.interactions.graou.entity.EntityGraouLaser;
+import net.samagames.hub.interactions.graou.logic.Pearl;
 import net.samagames.tools.LocationUtils;
 import org.bukkit.Location;
 import org.bukkit.entity.EntityType;
@@ -15,9 +17,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
+import redis.clients.jedis.Jedis;
 
 import java.util.*;
 import java.util.logging.Level;
+import java.util.stream.Collectors;
 
 public class GraouManager extends AbstractInteractionManager<Graou> implements Listener
 {
@@ -98,5 +102,20 @@ public class GraouManager extends AbstractInteractionManager<Graou> implements L
 
         this.interactions.add(graou);
         this.log(Level.INFO, "Registered Graou at '" + graouJson.get("cat").getAsString());
+    }
+
+    public List<Pearl> getPlayerPearls(UUID player)
+    {
+        List<Pearl> pearls = new ArrayList<>();
+        Jedis jedis = SamaGamesAPI.get().getBungeeResource();
+
+        if (jedis.exists("pearls:" + player.toString()))
+            return pearls;
+
+        pearls.addAll(jedis.lrange("pearls:" + player.toString(), 0, 21).stream().map(stars -> new Pearl(Integer.parseInt(stars))).collect(Collectors.toList()));
+
+        jedis.close();
+
+        return pearls;
     }
 }
