@@ -62,7 +62,7 @@ public class PlayerManager extends AbstractManager
         {
             for (Player player : hub.getServer().getOnlinePlayers())
             {
-                int blocksWalked = player.getStatistic(Statistic.WALK_ONE_CM) / 100;
+                int blocksWalked = player.getStatistic(Statistic.WALK_ONE_CM);
                 player.setStatistic(Statistic.WALK_ONE_CM, 0);
 
                 if (blocksWalked == 0)
