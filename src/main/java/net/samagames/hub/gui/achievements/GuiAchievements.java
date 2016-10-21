@@ -115,32 +115,26 @@ public class GuiAchievements extends AbstractGui
 
                 AchievementProgress progress = achievement.getProgress(player.getUniqueId());
 
-                if (achievement instanceof IncrementationAchievement)
-                {
-                    String progressBar = "";
-                    int playerProgress = (progress != null ? progress.getProgress() * 10 / ((IncrementationAchievement) achievement).getObjective() : -1);
-
-                    lore.add(ChatColor.BLUE + "Progression [" + ChatColor.YELLOW + (progress != null ? progress.getProgress() : 0) + "/" + ((IncrementationAchievement) achievement).getObjective() + ChatColor.BLUE + "] :");
-
-                    for (int i = 0; i < 10; i++)
-                        progressBar += (playerProgress >= i ? ChatColor.YELLOW : ChatColor.WHITE) + "\u25A0";
-
-                    lore.add(progressBar);
-                    lore.add("");
-                }
-
                 if (unlocked)
                 {
                     Date unlockDate = new Date();
                     unlockDate.setTime(progress.getUnlockTime().getTime());
 
-                    lore.add(ChatColor.GREEN + "Vous avez débloqué cet objectif");
-                    lore.add(ChatColor.GREEN + "le : " + ChatColor.AQUA + WordUtils.capitalize(DATE_FORMATTER.format(unlockDate)) + ChatColor.GREEN + ".");
+                    lore.add(ChatColor.DARK_GRAY + "Vous avez débloqué cet objectif");
+                    lore.add(ChatColor.DARK_GRAY + "le : " + ChatColor.GRAY + WordUtils.capitalize(DATE_FORMATTER.format(unlockDate)) + ChatColor.DARK_GRAY + ".");
+                }
+                else if (achievement instanceof IncrementationAchievement)
+                {
+                    int target = progress == null ? ((IncrementationAchievement) achievement).getObjective() : (((IncrementationAchievement) achievement).getObjective() - progress.getProgress());
+
+                    lore.add(ChatColor.DARK_GRAY + "Vous devez effectuer cette action");
+                    lore.add(ChatColor.DARK_GRAY + "encore " + ChatColor.GRAY + String.valueOf(target) + ChatColor.DARK_GRAY + " fois pour débloquer");
+                    lore.add(ChatColor.DARK_GRAY + "cet objectif.");
                 }
                 else
                 {
-                    lore.add(ChatColor.RED + "Cet objectif n'est pas encore");
-                    lore.add(ChatColor.RED + "débloqué.");
+                    lore.add(ChatColor.DARK_GRAY + "Cet objectif n'est pas encore");
+                    lore.add(ChatColor.DARK_GRAY + "débloqué.");
                 }
 
                 itemMeta.setLore(lore);
