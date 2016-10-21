@@ -1,5 +1,6 @@
 package net.samagames.hub.interactions.graou;
 
+import net.samagames.api.games.pearls.Pearl;
 import net.samagames.hub.Hub;
 import net.samagames.hub.gui.AbstractGui;
 import net.samagames.tools.ItemUtils;
@@ -34,7 +35,23 @@ class GuiGraou extends AbstractGui
     @Override
     public void update(Player player)
     {
-        this.setSlotData(PEARL_HEAD, 10, "pearl_0");
+        int[] baseSlots = {10, 11, 12, 13, 14, 15, 16};
+        int lines = 0;
+        int slot = 0;
+
+        for (Pearl pearl : this.hub.getInteractionManager().getGraouManager().getPlayerPearls(player.getUniqueId()))
+        {
+            this.setSlotData(PEARL_HEAD, (baseSlots[slot] + (lines * 9)), "pearl_" + pearl.getUUID());
+
+            slot++;
+
+            if (slot == 7)
+            {
+                slot = 0;
+                lines++;
+            }
+        }
+
         this.setSlotData(getBackIcon(), this.inventory.getSize() - 5, "back");
     }
 

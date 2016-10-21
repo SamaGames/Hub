@@ -1,6 +1,5 @@
-package net.samagames.hub.interactions.graou.logic;
+package net.samagames.hub.interactions.graou;
 
-import net.samagames.hub.cosmetics.common.AbstractCosmetic;
 import net.samagames.hub.cosmetics.common.CosmeticRarity;
 
 import java.util.Random;
@@ -9,12 +8,12 @@ import java.util.Random;
  *                )\._.,--....,'``.
  * .b--.        /;   _.. \   _\  (`._ ,.
  * `=,-,-'~~~   `----(,_..'--(,_..'`-.;.'
- *
+ * <p>
  * Created by Jérémy L. (BlueSlime) on 21/10/2016
  */
-public class Pearl
+public class PearlLogic
 {
-    public enum Star
+    private enum Star
     {
         ONE(80, 20, 0),
         TWO(65, 30, 5),
@@ -71,19 +70,5 @@ public class Pearl
             else
                 return FIVE;
         }
-    }
-
-    private final Star star;
-
-    public Pearl(int stars)
-    {
-        this.star = Star.getByCount(stars);
-    }
-
-    public AbstractCosmetic getRandomizedCosmetic()
-    {
-        CosmeticRarity randomizedRarity = this.star.getRandomizedRarity();
-
-        return null;
     }
 }

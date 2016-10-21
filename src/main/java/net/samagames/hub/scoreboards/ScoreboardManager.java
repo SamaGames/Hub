@@ -34,7 +34,7 @@ public class ScoreboardManager extends AbstractManager
 
             for (PersonalScoreboard scoreboard : this.scoreboards.values())
                 this.hub.getExecutorMonoThread().execute(() -> scoreboard.setLines(ip));
-        }, 200, 200, TimeUnit.MILLISECONDS);
+        }, 180, 180, TimeUnit.MILLISECONDS);
 
         this.reloadingTask = this.hub.getScheduledExecutorService().scheduleAtFixedRate(() ->
         {
