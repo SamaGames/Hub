@@ -109,9 +109,6 @@ public class GraouManager extends AbstractInteractionManager<Graou> implements L
         List<Pearl> pearls = new ArrayList<>();
         Jedis jedis = SamaGamesAPI.get().getBungeeResource();
 
-        if (jedis.exists("pearls:" + player.toString()))
-            return pearls;
-
         for (String key : jedis.keys("pearls:" + player.toString() + ":*"))
             pearls.add(new Gson().fromJson(jedis.get(key), Pearl.class));
 
