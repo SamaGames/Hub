@@ -184,10 +184,12 @@ class OpeningAnimationRunnable implements Runnable
                     }
                     else if (i % 5 == 0)
                     {
+                        int finalI = i;
+
                         OpeningAnimationRunnable.this.hub.getServer().getScheduler().runTask(OpeningAnimationRunnable.this.hub, () ->
                         {
                             for (int j = 0; j < 4; j++)
-                                this.lasers[j].getBukkitEntity().teleport(OpeningAnimationRunnable.this.openingLocations.clone().add(Math.cos(this.angle + Math.PI * j / 2) * (i / 4), 6, Math.sin(this.angle + Math.PI * j / 2) * (i / 4)));
+                                this.lasers[j].getBukkitEntity().teleport(OpeningAnimationRunnable.this.openingLocations.clone().add(Math.cos(this.angle + Math.PI * j / 2) * (finalI / 4), 6, Math.sin(this.angle + Math.PI * j / 2) * (finalI / 4)));
                         });
 
                         for (int j = 0; j < (i / 4); j++)
