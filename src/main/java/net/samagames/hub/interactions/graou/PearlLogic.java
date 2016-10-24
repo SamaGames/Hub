@@ -1,7 +1,14 @@
 package net.samagames.hub.interactions.graou;
 
+import net.samagames.api.games.pearls.Pearl;
 import net.samagames.hub.cosmetics.common.CosmeticRarity;
+import net.samagames.tools.ItemUtils;
+import org.bukkit.ChatColor;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -11,7 +18,7 @@ import java.util.Random;
  * <p>
  * Created by Jérémy L. (BlueSlime) on 21/10/2016
  */
-public class PearlLogic
+class PearlLogic
 {
     private enum Star
     {
@@ -70,5 +77,41 @@ public class PearlLogic
             else
                 return FIVE;
         }
+    }
+
+    private static final ItemStack PEARL_HEAD = ItemUtils.getCustomHead("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvN2QxNmFlOTUxMTIwMzk0ZjM2OGYyMjUwYjdjM2FkM2ZiMTJjZWE1NWVjMWIyZGI1YTk0ZDFmYjdmZDRiNmZhIn19fQ==");
+
+    public static ItemStack getIcon(Pearl pearl)
+    {
+        ItemStack stack = PEARL_HEAD.clone();
+
+        ItemMeta meta = stack.getItemMeta();
+        meta.setDisplayName(ChatColor.GREEN + "Perle");
+
+        List<String> lore = new ArrayList<>();
+        lore.add(ChatColor.DARK_GRAY + "Niveau " + pearl.getStars());
+        lore.add("");
+        lore.add(ChatColor.WHITE + "Cette perle si brillante et si");
+        lore.add(ChatColor.WHITE + "mystérieuse en fait envier plus");
+        lore.add(ChatColor.WHITE + "d'un. " + ChatColor.GOLD + "Graou" + ChatColor.WHITE + " en fait collection");
+        lore.add(ChatColor.WHITE + "et vous l'échangera contre un");
+        lore.add(ChatColor.WHITE + "cosmétique à la hauteur du niveau");
+        lore.add(ChatColor.WHITE + "de cette perle.");
+        lore.add("");
+
+        if (pearl.getStars() > 3)
+        {
+            lore.add(ChatColor.DARK_GRAY + "Nécéssite : " + (pearl.getStars() == 5 ? ChatColor.AQUA + "VIP" + ChatColor.LIGHT_PURPLE + "+" : ChatColor.GREEN + "VIP"));
+        }
+
+        lore.add(ChatColor.DARK_GRAY + "Expire dans : " + ChatColor.WHITE + pearl.getExpirationInDays() + " jours");
+
+        lore.add("");
+        lore.add(ChatColor.DARK_GRAY + "\u25B6 Cliquez pour échanger");
+
+        meta.setLore(lore);
+        stack.setItemMeta(meta);
+
+        return stack;
     }
 }

@@ -3,21 +3,25 @@ package net.samagames.hub.interactions.graou;
 import net.samagames.api.games.pearls.Pearl;
 import net.samagames.hub.Hub;
 import net.samagames.hub.gui.AbstractGui;
-import net.samagames.tools.ItemUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
 class GuiGraou extends AbstractGui
 {
-    private static final ItemStack PEARL_HEAD = ItemUtils.getCustomHead("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvN2QxNmFlOTUxMTIwMzk0ZjM2OGYyMjUwYjdjM2FkM2ZiMTJjZWE1NWVjMWIyZGI1YTk0ZDFmYjdmZDRiNmZhIn19fQ==");
-
     private final Graou parent;
+    private final Map<UUID, Pearl> pearls;
 
     GuiGraou(Hub hub, Graou parent)
     {
         super(hub);
+
         this.parent = parent;
+        this.pearls = new HashMap<>();
     }
 
     @Override
@@ -35,13 +39,15 @@ class GuiGraou extends AbstractGui
     @Override
     public void update(Player player)
     {
+        this.pearls.clear();
+
         int[] baseSlots = {10, 11, 12, 13, 14, 15, 16};
         int lines = 0;
         int slot = 0;
 
         for (Pearl pearl : this.hub.getInteractionManager().getGraouManager().getPlayerPearls(player.getUniqueId()))
         {
-            this.setSlotData(PEARL_HEAD, (baseSlots[slot] + (lines * 9)), "pearl_" + pearl.getUUID());
+            this.setSlotData(PearlLogic.getIcon(pearl), (baseSlots[slot] + (lines * 9)), "pearl_" + pearl.getUUID());
 
             slot++;
 
@@ -50,6 +56,8 @@ class GuiGraou extends AbstractGui
                 slot = 0;
                 lines++;
             }
+
+            this.pearls.put(pearl.getUUID(), pearl);
         }
 
         this.setSlotData(getBackIcon(), this.inventory.getSize() - 5, "back");
