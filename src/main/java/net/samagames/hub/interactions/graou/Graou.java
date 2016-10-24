@@ -3,10 +3,12 @@ package net.samagames.hub.interactions.graou;
 import net.minecraft.server.v1_10_R1.PathEntity;
 import net.minecraft.server.v1_10_R1.WorldServer;
 import net.samagames.api.SamaGamesAPI;
+import net.samagames.api.games.pearls.Pearl;
 import net.samagames.hub.Hub;
 import net.samagames.hub.interactions.AbstractInteraction;
 import net.samagames.hub.interactions.graou.entity.EntityGraou;
 import net.samagames.tools.holograms.Hologram;
+import org.apache.commons.lang3.tuple.Pair;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Sound;
@@ -29,7 +31,7 @@ class Graou extends AbstractInteraction
     private final Location treasureLocations;
     private final Location openingLocations;
     private BukkitTask animationTask;
-    private UUID playerUsing;
+    private Pair<UUID, Pearl> playerUsing;
 
     Graou(Hub hub, Location catLocation, Location door, Location treasureLocations, Location openingLocations)
     {
@@ -93,7 +95,7 @@ class Graou extends AbstractInteraction
 
     public void onLogout(Player player)
     {
-        if (this.playerUsing != null && this.playerUsing == player.getUniqueId())
+        if (this.playerUsing != null && this.playerUsing.getLeft() == player.getUniqueId())
         {
             this.playerUsing = null;
 
@@ -148,7 +150,7 @@ class Graou extends AbstractInteraction
         hologram.sendLines(player);
     }
 
-    public void openBox(Player player)
+    public void openBox(Player player, Pearl pearl)
     {
         if (this.animationTask != null)
         {
@@ -156,7 +158,7 @@ class Graou extends AbstractInteraction
             return;
         }
 
-        this.playerUsing = player.getUniqueId();
+        this.playerUsing = Pair.of(player.getUniqueId(), pearl);
 
         this.graouEntity.getBukkitEntity().getWorld().playSound(this.graouEntity.getBukkitEntity().getLocation(), Sound.ENTITY_CAT_AMBIENT, 1.0F, 1.5F);
         this.animationTask = this.hub.getServer().getScheduler().runTask(this.hub, new OpeningAnimationRunnable(this.hub, this, player, this.door, this.treasureLocations, this.openingLocations));
@@ -166,6 +168,11 @@ class Graou extends AbstractInteraction
     {
         this.animationTask.cancel();
         this.animationTask = null;
+
+        this.hub.getInteractionManager().getGraouManager().deletePlayerPearl(player.getUniqueId(), this.playerUsing.getRight().getUUID());
+        this.hub.getInteractionManager().getGraouManager().update(player);
+
+        this.playerUsing = null;
 
         this.stop(player);
     }

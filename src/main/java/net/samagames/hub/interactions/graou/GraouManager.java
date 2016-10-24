@@ -59,7 +59,7 @@ public class GraouManager extends AbstractInteractionManager<Graou> implements L
 
     public void update(Player player)
     {
-        this.interactions.forEach(meow -> meow.update(player));
+        this.interactions.forEach(graou -> graou.update(player));
     }
 
     @EventHandler
@@ -102,6 +102,16 @@ public class GraouManager extends AbstractInteractionManager<Graou> implements L
 
         this.interactions.add(graou);
         this.log(Level.INFO, "Registered Graou at '" + graouJson.get("cat").getAsString());
+    }
+
+    public void deletePlayerPearl(UUID player, UUID pearl)
+    {
+        Jedis jedis = SamaGamesAPI.get().getBungeeResource();
+
+        if (jedis.exists("pearls:" + player.toString() + ":" + pearl.toString()))
+            jedis.del("pearls:" + player.toString() + ":" + pearl.toString());
+
+        jedis.close();
     }
 
     public List<Pearl> getPlayerPearls(UUID player)

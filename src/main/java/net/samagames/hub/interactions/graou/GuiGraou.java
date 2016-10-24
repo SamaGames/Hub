@@ -68,7 +68,7 @@ class GuiGraou extends AbstractGui
     {
         if (action.startsWith("pearl_"))
         {
-            this.parent.openBox(player);
+            this.parent.openBox(player, this.pearls.get(UUID.fromString(action.split("_")[1])));
         }
         else if (action.equals("back"))
         {

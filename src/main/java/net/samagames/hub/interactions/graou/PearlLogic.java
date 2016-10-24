@@ -100,11 +100,9 @@ class PearlLogic
         lore.add("");
 
         if (pearl.getStars() > 3)
-        {
             lore.add(ChatColor.DARK_GRAY + "Nécéssite : " + (pearl.getStars() == 5 ? ChatColor.AQUA + "VIP" + ChatColor.LIGHT_PURPLE + "+" : ChatColor.GREEN + "VIP"));
-        }
 
-        lore.add(ChatColor.DARK_GRAY + "Expire dans : " + ChatColor.WHITE + pearl.getExpirationInDays() + " jours");
+        lore.add(ChatColor.DARK_GRAY + "Expire dans : " + ChatColor.WHITE + pearl.getExpirationInDays() + " jour" + (pearl.getExpirationInDays() > 1 ? "s" : ""));
 
         lore.add("");
         lore.add(ChatColor.DARK_GRAY + "\u25B6 Cliquez pour échanger");
