@@ -3,6 +3,7 @@ package net.samagames.hub.interactions.graou;
 import net.minecraft.server.v1_10_R1.WorldServer;
 import net.samagames.hub.Hub;
 import net.samagames.hub.interactions.graou.entity.EntityGraouLaser;
+import net.samagames.hub.interactions.graou.entity.EntityGraouLaserTarget;
 import net.samagames.hub.utils.ProximityUtils;
 import net.samagames.tools.BlockUtils;
 import net.samagames.tools.ItemUtils;
@@ -31,26 +32,10 @@ class OpeningAnimationRunnable implements Runnable
             "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYWMzODIxZDRmNjFiMTdmODJmMGQ3YThlNTMxMjYwOGZmNTBlZGUyOWIxYjRkYzg5ODQ3YmU5NDI3ZDM2In19fQ=="      // Grey
     };
 
-    private static final int[] PIANO_MAIN = {
-            1, 3, 5, 7, 1, 3, 5, 7, 2, 4, 6, 8, 2, 4, 6, 8, 3, 5, 7, 9, 3, 5, 7, 9, 4, 6, 8, 10, 4, 6, 8, 10, 5, 7, 9, 11, 6, 8, 10, 12, 7, 9, 11, 13, 8, 10, 12, 14, -1, -1, -1, -1, 15,
-            -1, 16, -1, 17, -1, 18, 18, 18, 18, 18, 18
-    };
-
-    private static final int[] PIANO_SECONDARY = {
-            -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-            -1, -1, -1, -1, -1, -1, -1, -1, 21, -1, 22, -1, 23, -1, 24, 24, 24, 24, 24, 24
-    };
-
-    private static final int[] SNARE_DRUM = {
-            1, -1, -1, -1, 24, -1, -1, -1, 3, -1, -1, -1, 24, -1, -1, -1, 5, -1, -1, -1, 24, -1, -1, -1, 7, -1, -1, -1, 24, -1, -1, -1, 9, -1, -1, -1, 17, -1, -1, -1, 17, -1, -1, -1, 17,
-            -1, -1, -1, -1, -1, -1, -1, 24, -1, 24, -1, 24, -1, 24, 24, 24, 24, 24, 24
-    };
-
-    private static final int[] BASS_GUITAR = {
-            0, -1, -1, -1, -1, -1, -1, -1, 2, -1, -1, -1, -1, -1, -1, -1, 4, -1, -1, -1, -1, -1, -1, -1, 6, -1, -1, -1, -1, -1, -1, -1, 8, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-            -1, -1, -1, -1, -1, -1, -1, 20, -1, 21, -1, 22, -1, 23, -1, -1, -1, -1, -1
-    };
-
+    private static final int[] PIANO_MAIN = { 1, 3, 5, 7, 1, 3, 5, 7, 2, 4, 6, 8, 2, 4, 6, 8, 3, 5, 7, 9, 3, 5, 7, 9, 4, 6, 8, 10, 4, 6, 8, 10, 5, 7, 9, 11, 6, 8, 10, 12, 7, 9, 11, 13, 8, 10, 12, 14, -1, -1, -1, -1, 15, -1, 16, -1, 17, -1, 18, 18, 18, 18, 18, 18 };
+    private static final int[] PIANO_SECONDARY = {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 21, -1, 22, -1, 23, -1, 24, 24, 24, 24, 24, 24 };
+    private static final int[] SNARE_DRUM = { 1, -1, -1, -1, 24, -1, -1, -1, 3, -1, -1, -1, 24, -1, -1, -1, 5, -1, -1, -1, 24, -1, -1, -1, 7, -1, -1, -1, 24, -1, -1, -1, 9, -1, -1, -1, 17, -1, -1, -1, 17, -1, -1, -1, 17, -1, -1, -1, -1, -1, -1, -1, 24, -1, 24, -1, 24, -1, 24, 24, 24, 24, 24, 24 };
+    private static final int[] BASS_GUITAR = { 0, -1, -1, -1, -1, -1, -1, -1, 2, -1, -1, -1, -1, -1, -1, -1, 4, -1, -1, -1, -1, -1, -1, -1, 6, -1, -1, -1, -1, -1, -1, -1, 8, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 20, -1, 21, -1, 22, -1, 23, -1, -1, -1, -1, -1 };
 
     private final Hub hub;
     private final Graou graou;
@@ -117,7 +102,7 @@ class OpeningAnimationRunnable implements Runnable
     {
         new Thread()
         {
-            private Squid fakeTarget;
+            private EntityGraouLaserTarget fakeTarget;
             private EntityGraouLaser[] lasers;
             private double angle = 0.0D;
 
@@ -145,14 +130,14 @@ class OpeningAnimationRunnable implements Runnable
 
                         OpeningAnimationRunnable.this.hub.getServer().getScheduler().runTask(OpeningAnimationRunnable.this.hub, () ->
                         {
-                            this.fakeTarget = OpeningAnimationRunnable.this.openingLocations.getWorld().spawn(OpeningAnimationRunnable.this.openingLocations, Squid.class);
-                            this.fakeTarget.setGravity(false);
+                            WorldServer world = ((CraftWorld) OpeningAnimationRunnable.this.openingLocations.getWorld()).getHandle();
+
+                            this.fakeTarget = new EntityGraouLaserTarget(world);
+                            this.fakeTarget.setPosition(OpeningAnimationRunnable.this.openingLocations.getX(), OpeningAnimationRunnable.this.openingLocations.getY(), OpeningAnimationRunnable.this.openingLocations.getZ());
                             this.fakeTarget.setInvulnerable(true);
-                            this.fakeTarget.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 1, false, false));
+                            this.fakeTarget.setInvisible(true);
 
                             this.lasers = new EntityGraouLaser[4];
-
-                            WorldServer world = ((CraftWorld) OpeningAnimationRunnable.this.openingLocations.getWorld()).getHandle();
 
                             for (int j = 0; j < 4; j++)
                             {
@@ -160,7 +145,7 @@ class OpeningAnimationRunnable implements Runnable
 
                                 laser.setPosition(OpeningAnimationRunnable.this.openingLocations.getX(), OpeningAnimationRunnable.this.openingLocations.getY(), OpeningAnimationRunnable.this.openingLocations.getZ());
                                 world.addEntity(laser, CreatureSpawnEvent.SpawnReason.CUSTOM);
-                                laser.setGoalTarget(((CraftSquid) this.fakeTarget).getHandle(), EntityTargetEvent.TargetReason.CUSTOM, false);
+                                laser.setGoalTarget(this.fakeTarget, EntityTargetEvent.TargetReason.CUSTOM, false);
                                 ((Guardian) laser.getBukkitEntity()).addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 1, false, false));
 
                                 this.lasers[j] = laser;
@@ -173,31 +158,35 @@ class OpeningAnimationRunnable implements Runnable
                         {
                             OpeningAnimationRunnable.this.openingLocations.getWorld().createExplosion(OpeningAnimationRunnable.this.openingLocations.getBlockX(), OpeningAnimationRunnable.this.openingLocations.getBlockY(), OpeningAnimationRunnable.this.openingLocations.getBlockZ(), 2.0F, false, false);
                             OpeningAnimationRunnable.this.openingLocations.getBlock().setType(Material.AIR);
-
-                            for (EntityGraouLaser laser : this.lasers)
-                                laser.getBukkitEntity().remove();
-
-                            this.fakeTarget.remove();
                         });
 
                         OpeningAnimationRunnable.this.graou.animationFinished(OpeningAnimationRunnable.this.player);
                     }
-
-                    int finalI = i;
-
-                    OpeningAnimationRunnable.this.hub.getServer().getScheduler().runTask(OpeningAnimationRunnable.this.hub, () ->
+                    else if (i == 46)
                     {
-                        for (int j = 0; j < 4; j++)
-                            this.lasers[j].getBukkitEntity().teleport(OpeningAnimationRunnable.this.openingLocations.clone().add(Math.cos(this.angle + Math.PI * j / 2) * (finalI / 4), 6, Math.sin(this.angle + Math.PI * j / 2) * (finalI / 4)));
-                    });
+                        for (EntityGraouLaser laser : this.lasers)
+                            laser.getBukkitEntity().remove();
 
-                    for (int j = 0; j < (i / 4); j++)
-                        ParticleEffect.FIREWORKS_SPARK.display(0.1F, 0.1F, 0.1F, 0.5F, 5, OpeningAnimationRunnable.this.openingLocations, 150.0D);
+                        this.fakeTarget.die();
+                    }
+                    else if (i < 46)
+                    {
+                        int finalI = i;
 
-                    this.angle += 0.25D;
+                        OpeningAnimationRunnable.this.hub.getServer().getScheduler().runTask(OpeningAnimationRunnable.this.hub, () ->
+                        {
+                            for (int j = 0; j < 4; j++)
+                                this.lasers[j].getBukkitEntity().teleport(OpeningAnimationRunnable.this.openingLocations.clone().add(Math.cos(this.angle + Math.PI * j / 2) * (finalI / 4), 6, Math.sin(this.angle + Math.PI * j / 2) * (finalI / 4)));
+                        });
 
-                    if (this.angle > Math.PI * 2.0D)
-                        this.angle = 0.0D;
+                        this.angle += 0.25D;
+
+                        if (this.angle > Math.PI * 2.0D)
+                            this.angle = 0.0D;
+
+                        for (int j = 0; j < (i / 4); j++)
+                            ParticleEffect.FIREWORKS_SPARK.display(0.1F, 0.1F, 0.1F, 0.5F, 5, OpeningAnimationRunnable.this.openingLocations.clone().add(0.0D, 0.25D, 0.0D), 150.0D);
+                    }
 
                     try
                     {
