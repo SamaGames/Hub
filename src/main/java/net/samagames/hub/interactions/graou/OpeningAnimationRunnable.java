@@ -137,6 +137,8 @@ class OpeningAnimationRunnable implements Runnable
                             this.fakeTarget.setInvulnerable(true);
                             this.fakeTarget.setInvisible(true);
 
+                            world.addEntity(this.fakeTarget, CreatureSpawnEvent.SpawnReason.CUSTOM);
+
                             this.lasers = new EntityGraouLaser[4];
 
                             for (int j = 0; j < 4; j++)
