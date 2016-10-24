@@ -143,43 +143,52 @@ class OpeningAnimationRunnable implements Runnable
                     {
                         OpeningAnimationRunnable.this.openingLocations.getWorld().playSound(OpeningAnimationRunnable.this.openingLocations, Sound.ENTITY_CREEPER_PRIMED, 1.0F, 0.85F);
 
-                        this.fakeTarget = OpeningAnimationRunnable.this.openingLocations.getWorld().spawn(OpeningAnimationRunnable.this.openingLocations, Squid.class);
-                        this.fakeTarget.setGravity(false);
-                        this.fakeTarget.setInvulnerable(true);
-                        this.fakeTarget.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 1, false, false));
-
-                        this.lasers = new EntityGraouLaser[4];
-
-                        WorldServer world = ((CraftWorld) OpeningAnimationRunnable.this.openingLocations.getWorld()).getHandle();
-
-                        for (int j = 0; j < 4; j++)
+                        OpeningAnimationRunnable.this.hub.getServer().getScheduler().runTask(OpeningAnimationRunnable.this.hub, () ->
                         {
-                            EntityGraouLaser laser = new EntityGraouLaser(world);
+                            this.fakeTarget = OpeningAnimationRunnable.this.openingLocations.getWorld().spawn(OpeningAnimationRunnable.this.openingLocations, Squid.class);
+                            this.fakeTarget.setGravity(false);
+                            this.fakeTarget.setInvulnerable(true);
+                            this.fakeTarget.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 1, false, false));
 
-                            laser.setPosition(OpeningAnimationRunnable.this.openingLocations.getX(), OpeningAnimationRunnable.this.openingLocations.getY(), OpeningAnimationRunnable.this.openingLocations.getZ());
-                            world.addEntity(laser, CreatureSpawnEvent.SpawnReason.CUSTOM);
-                            laser.setGoalTarget(((CraftSquid) this.fakeTarget).getHandle(), EntityTargetEvent.TargetReason.CUSTOM, false);
-                            ((Guardian) laser.getBukkitEntity()).addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 1, false, false));
+                            this.lasers = new EntityGraouLaser[4];
 
-                            this.lasers[j] = laser;
-                        }
+                            WorldServer world = ((CraftWorld) OpeningAnimationRunnable.this.openingLocations.getWorld()).getHandle();
+
+                            for (int j = 0; j < 4; j++)
+                            {
+                                EntityGraouLaser laser = new EntityGraouLaser(world);
+
+                                laser.setPosition(OpeningAnimationRunnable.this.openingLocations.getX(), OpeningAnimationRunnable.this.openingLocations.getY(), OpeningAnimationRunnable.this.openingLocations.getZ());
+                                world.addEntity(laser, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                                laser.setGoalTarget(((CraftSquid) this.fakeTarget).getHandle(), EntityTargetEvent.TargetReason.CUSTOM, false);
+                                ((Guardian) laser.getBukkitEntity()).addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 1, false, false));
+
+                                this.lasers[j] = laser;
+                            }
+                        });
                     }
                     else if (i == 52)
                     {
-                        OpeningAnimationRunnable.this.openingLocations.getWorld().createExplosion(OpeningAnimationRunnable.this.openingLocations.getBlockX(), OpeningAnimationRunnable.this.openingLocations.getBlockY(), OpeningAnimationRunnable.this.openingLocations.getBlockZ(), 2.0F, false, false);
-                        OpeningAnimationRunnable.this.openingLocations.getBlock().setType(Material.AIR);
+                        OpeningAnimationRunnable.this.hub.getServer().getScheduler().runTask(OpeningAnimationRunnable.this.hub, () ->
+                        {
+                            OpeningAnimationRunnable.this.openingLocations.getWorld().createExplosion(OpeningAnimationRunnable.this.openingLocations.getBlockX(), OpeningAnimationRunnable.this.openingLocations.getBlockY(), OpeningAnimationRunnable.this.openingLocations.getBlockZ(), 2.0F, false, false);
+                            OpeningAnimationRunnable.this.openingLocations.getBlock().setType(Material.AIR);
 
-                        for (EntityGraouLaser laser : this.lasers)
-                            laser.getBukkitEntity().remove();
+                            for (EntityGraouLaser laser : this.lasers)
+                                laser.getBukkitEntity().remove();
 
-                        this.fakeTarget.remove();
+                            this.fakeTarget.remove();
+                        });
 
                         OpeningAnimationRunnable.this.graou.animationFinished(OpeningAnimationRunnable.this.player);
                     }
                     else if (i % 5 == 0)
                     {
-                        for (int j = 0; j < 4; j++)
-                            this.lasers[j].getBukkitEntity().teleport(OpeningAnimationRunnable.this.openingLocations.clone().add(Math.cos(this.angle + Math.PI * j / 2) * (i / 4), 6, Math.sin(this.angle + Math.PI * j / 2) * (i / 4)));
+                        OpeningAnimationRunnable.this.hub.getServer().getScheduler().runTask(OpeningAnimationRunnable.this.hub, () ->
+                        {
+                            for (int j = 0; j < 4; j++)
+                                this.lasers[j].getBukkitEntity().teleport(OpeningAnimationRunnable.this.openingLocations.clone().add(Math.cos(this.angle + Math.PI * j / 2) * (i / 4), 6, Math.sin(this.angle + Math.PI * j / 2) * (i / 4)));
+                        });
 
                         for (int j = 0; j < (i / 4); j++)
                             ParticleEffect.FIREWORKS_SPARK.display(0.1F, 0.1F, 0.1F, 0.5F, 5, OpeningAnimationRunnable.this.openingLocations, 150.0D);
