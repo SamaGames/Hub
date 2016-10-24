@@ -100,7 +100,7 @@ class PearlLogic
 
     private final CosmeticList cosmetics;
 
-    public PearlLogic(Hub hub)
+    PearlLogic(Hub hub)
     {
         this.cosmetics = new CosmeticList();
         this.cosmetics.addAll(hub.getCosmeticManager().getDisguiseManager().getRegistry().getElements().values());

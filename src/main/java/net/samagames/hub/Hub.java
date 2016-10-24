@@ -62,10 +62,10 @@ public class Hub extends JavaPlugin
     private ScoreboardManager scoreboardManager;
     private GuiManager guiManager;
     private ParkourManager parkourManager;
-    private InteractionManager interactionManager;
     private NPCManager npcManager;
     private CommandManager commandManager;
     private CosmeticManager cosmeticManager;
+    private InteractionManager interactionManager;
 
     private ScheduledFuture hydroangeasSynchronization;
     private SamaritanListener samaritanListener;
@@ -103,12 +103,13 @@ public class Hub extends JavaPlugin
         this.scoreboardManager = new ScoreboardManager(this);
         this.guiManager = new GuiManager(this);
         this.parkourManager = new ParkourManager(this);
-        this.interactionManager = new InteractionManager(this);
         this.npcManager = new NPCManager(this);
         this.commandManager = new CommandManager(this);
 
         this.cosmeticManager = new CosmeticManager(this);
         this.cosmeticManager.init();
+
+        this.interactionManager = new InteractionManager(this);
 
         GuiAchievements.createCache();
 
@@ -191,10 +192,10 @@ public class Hub extends JavaPlugin
     public ScoreboardManager getScoreboardManager() { return this.scoreboardManager; }
     public GuiManager getGuiManager() { return this.guiManager; }
     public ParkourManager getParkourManager() { return this.parkourManager; }
-    public InteractionManager getInteractionManager() { return this.interactionManager; }
     public NPCManager getNPCManager() { return this.npcManager; }
     public CommandManager getCommandManager() { return this.commandManager; }
     public CosmeticManager getCosmeticManager() { return this.cosmeticManager; }
+    public InteractionManager getInteractionManager() { return this.interactionManager; }
 
     public SamaritanListener getSamaritanListener()
     {
