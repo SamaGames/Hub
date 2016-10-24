@@ -182,24 +182,22 @@ class OpeningAnimationRunnable implements Runnable
 
                         OpeningAnimationRunnable.this.graou.animationFinished(OpeningAnimationRunnable.this.player);
                     }
-                    else if (i % 5 == 0)
+
+                    int finalI = i;
+
+                    OpeningAnimationRunnable.this.hub.getServer().getScheduler().runTask(OpeningAnimationRunnable.this.hub, () ->
                     {
-                        int finalI = i;
+                        for (int j = 0; j < 4; j++)
+                            this.lasers[j].getBukkitEntity().teleport(OpeningAnimationRunnable.this.openingLocations.clone().add(Math.cos(this.angle + Math.PI * j / 2) * (finalI / 4), 6, Math.sin(this.angle + Math.PI * j / 2) * (finalI / 4)));
+                    });
 
-                        OpeningAnimationRunnable.this.hub.getServer().getScheduler().runTask(OpeningAnimationRunnable.this.hub, () ->
-                        {
-                            for (int j = 0; j < 4; j++)
-                                this.lasers[j].getBukkitEntity().teleport(OpeningAnimationRunnable.this.openingLocations.clone().add(Math.cos(this.angle + Math.PI * j / 2) * (finalI / 4), 6, Math.sin(this.angle + Math.PI * j / 2) * (finalI / 4)));
-                        });
+                    for (int j = 0; j < (i / 4); j++)
+                        ParticleEffect.FIREWORKS_SPARK.display(0.1F, 0.1F, 0.1F, 0.5F, 5, OpeningAnimationRunnable.this.openingLocations, 150.0D);
 
-                        for (int j = 0; j < (i / 4); j++)
-                            ParticleEffect.FIREWORKS_SPARK.display(0.1F, 0.1F, 0.1F, 0.5F, 5, OpeningAnimationRunnable.this.openingLocations, 150.0D);
+                    this.angle += 0.25D;
 
-                        this.angle += 0.25D;
-
-                        if (this.angle > Math.PI * 2.0D)
-                            this.angle = 0.0D;
-                    }
+                    if (this.angle > Math.PI * 2.0D)
+                        this.angle = 0.0D;
 
                     try
                     {
