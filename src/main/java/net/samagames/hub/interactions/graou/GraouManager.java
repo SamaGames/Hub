@@ -5,12 +5,14 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import net.minecraft.server.v1_10_R1.EntityGuardian;
 import net.minecraft.server.v1_10_R1.EntityOcelot;
+import net.minecraft.server.v1_10_R1.EntitySquid;
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.api.games.pearls.Pearl;
 import net.samagames.hub.Hub;
 import net.samagames.hub.interactions.AbstractInteractionManager;
 import net.samagames.hub.interactions.graou.entity.EntityGraou;
 import net.samagames.hub.interactions.graou.entity.EntityGraouLaser;
+import net.samagames.hub.interactions.graou.entity.EntityGraouLaserTarget;
 import net.samagames.tools.LocationUtils;
 import org.bukkit.Location;
 import org.bukkit.entity.EntityType;
@@ -38,6 +40,7 @@ public class GraouManager extends AbstractInteractionManager<Graou> implements L
         this.hub.getServer().getPluginManager().registerEvents(this, this.hub);
         this.hub.getEntityManager().registerEntity("Graou", 98, EntityOcelot.class, EntityGraou.class);
         this.hub.getEntityManager().registerEntity("GraouLaser", 68, EntityGuardian.class, EntityGraouLaser.class);
+        this.hub.getEntityManager().registerEntity("GraouLaserTarget", 94, EntitySquid.class, EntityGraouLaserTarget.class);
     }
 
     @Override
