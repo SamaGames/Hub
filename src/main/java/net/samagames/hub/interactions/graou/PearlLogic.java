@@ -1,6 +1,8 @@
 package net.samagames.hub.interactions.graou;
 
 import net.samagames.api.games.pearls.Pearl;
+import net.samagames.hub.Hub;
+import net.samagames.hub.cosmetics.common.AbstractCosmetic;
 import net.samagames.hub.cosmetics.common.CosmeticRarity;
 import net.samagames.tools.ItemUtils;
 import org.bukkit.ChatColor;
@@ -8,6 +10,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -15,7 +18,7 @@ import java.util.Random;
  *                )\._.,--....,'``.
  * .b--.        /;   _.. \   _\  (`._ ,.
  * `=,-,-'~~~   `----(,_..'--(,_..'`-.;.'
- * <p>
+ *
  * Created by Jérémy L. (BlueSlime) on 21/10/2016
  */
 class PearlLogic
@@ -79,9 +82,49 @@ class PearlLogic
         }
     }
 
+    private class CosmeticList extends ArrayList<AbstractCosmetic>
+    {
+        public List<AbstractCosmetic> getByRarity(CosmeticRarity cosmeticRarity)
+        {
+            List<AbstractCosmetic> list = new ArrayList<>();
+
+            for (AbstractCosmetic cosmetic : this)
+                if (cosmetic.getRarity() == cosmeticRarity)
+                    list.add(cosmetic);
+
+            return list;
+        }
+    }
+
     private static final ItemStack PEARL_HEAD = ItemUtils.getCustomHead("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvN2QxNmFlOTUxMTIwMzk0ZjM2OGYyMjUwYjdjM2FkM2ZiMTJjZWE1NWVjMWIyZGI1YTk0ZDFmYjdmZDRiNmZhIn19fQ==");
 
-    public static ItemStack getIcon(Pearl pearl)
+    private final CosmeticList cosmetics;
+
+    public PearlLogic(Hub hub)
+    {
+        this.cosmetics = new CosmeticList();
+        this.cosmetics.addAll(hub.getCosmeticManager().getDisguiseManager().getRegistry().getElements().values());
+        this.cosmetics.addAll(hub.getCosmeticManager().getParticleManager().getRegistry().getElements().values());
+        this.cosmetics.addAll(hub.getCosmeticManager().getPetManager().getRegistry().getElements().values());
+        this.cosmetics.addAll(hub.getCosmeticManager().getJukeboxManager().getRegistry().getElements().values());
+        this.cosmetics.addAll(hub.getCosmeticManager().getBalloonManager().getRegistry().getElements().values());
+        this.cosmetics.addAll(hub.getCosmeticManager().getGadgetManager().getRegistry().getElements().values());
+
+        Collections.shuffle(this.cosmetics);
+    }
+
+    public AbstractCosmetic getRandomizedCosmetic(Pearl pearl)
+    {
+        Collections.shuffle(this.cosmetics);
+
+        CosmeticRarity rarity = Star.getByCount(pearl.getStars()).getRandomizedRarity();
+        List<AbstractCosmetic> cosmeticsSelected = this.cosmetics.getByRarity(rarity);
+        AbstractCosmetic selected = cosmeticsSelected.get(new Random().nextInt(cosmeticsSelected.size()));
+
+        return selected;
+    }
+
+    public ItemStack getIcon(Pearl pearl)
     {
         ItemStack stack = PEARL_HEAD.clone();
 

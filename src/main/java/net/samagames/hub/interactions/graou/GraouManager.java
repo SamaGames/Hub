@@ -25,12 +25,14 @@ import java.util.logging.Level;
 
 public class GraouManager extends AbstractInteractionManager<Graou> implements Listener
 {
-    private List<UUID> lock;
+    private final PearlLogic pearlLogic;
+    private final List<UUID> lock;
 
     public GraouManager(Hub hub)
     {
         super(hub, "graou");
 
+        this.pearlLogic = new PearlLogic(hub);
         this.lock = new ArrayList<>();
 
         this.hub.getServer().getPluginManager().registerEvents(this, this.hub);
@@ -125,5 +127,10 @@ public class GraouManager extends AbstractInteractionManager<Graou> implements L
         jedis.close();
 
         return pearls;
+    }
+
+    public PearlLogic getPearlLogic()
+    {
+        return this.pearlLogic;
     }
 }
