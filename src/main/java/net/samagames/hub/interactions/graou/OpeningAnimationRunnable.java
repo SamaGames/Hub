@@ -134,8 +134,7 @@ class OpeningAnimationRunnable implements Runnable
 
                             this.fakeTarget = new EntityGraouLaserTarget(world);
                             this.fakeTarget.setPosition(OpeningAnimationRunnable.this.openingLocations.getX(), OpeningAnimationRunnable.this.openingLocations.getY(), OpeningAnimationRunnable.this.openingLocations.getZ());
-                            this.fakeTarget.setInvulnerable(true);
-                            this.fakeTarget.setInvisible(true);
+                            ((Squid) this.fakeTarget.getBukkitEntity()).addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 1, false, false));
 
                             world.addEntity(this.fakeTarget, CreatureSpawnEvent.SpawnReason.CUSTOM);
 
