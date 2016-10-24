@@ -91,12 +91,12 @@ class PearlLogic
         List<String> lore = new ArrayList<>();
         lore.add(ChatColor.DARK_GRAY + "Niveau " + pearl.getStars());
         lore.add("");
-        lore.add(ChatColor.WHITE + "Cette perle si brillante et si");
-        lore.add(ChatColor.WHITE + "mystérieuse en fait envier plus");
-        lore.add(ChatColor.WHITE + "d'un. " + ChatColor.GOLD + "Graou" + ChatColor.WHITE + " en fait collection");
-        lore.add(ChatColor.WHITE + "et vous l'échangera contre un");
-        lore.add(ChatColor.WHITE + "cosmétique à la hauteur du niveau");
-        lore.add(ChatColor.WHITE + "de cette perle.");
+        lore.add(ChatColor.GRAY + "Cette perle si brillante et si");
+        lore.add(ChatColor.GRAY + "mystérieuse en fait envier plus");
+        lore.add(ChatColor.GRAY + "d'un. " + ChatColor.GOLD + "Graou" + ChatColor.GRAY + " en fait collection");
+        lore.add(ChatColor.GRAY + "et vous l'échangera contre un");
+        lore.add(ChatColor.GRAY + "cosmétique à la hauteur du niveau");
+        lore.add(ChatColor.GRAY + "de cette perle.");
         lore.add("");
 
         if (pearl.getStars() > 3)
