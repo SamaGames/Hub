@@ -103,6 +103,7 @@ public class ParkourManager extends AbstractManager
             Location end = LocationUtils.str2loc(jsonParkour.get("end").getAsString());
             Location fail = LocationUtils.str2loc(jsonParkour.get("fail").getAsString());
             int minimalHeight = jsonParkour.get("minimal-height").getAsInt();
+            int lifesOnCheckpoint = jsonParkour.get("lifes-on-checkpoint").getAsInt();
 
             List<Location> checkpoints = new ArrayList<>();
             JsonArray jsonCheckpoints = jsonParkour.get("checkpoints").getAsJsonArray();
@@ -125,7 +126,7 @@ public class ParkourManager extends AbstractManager
 
             int achievementId = jsonParkour.has("achievement") ? jsonParkour.get("achievement").getAsInt() : -1;
 
-            this.registerWhitelistBasedParkour(name, prefix, winPrefix, begin, end, fail, minimalHeight, checkpoints, whitelist, difficulty, achievementId);
+            this.registerWhitelistBasedParkour(name, prefix, winPrefix, begin, end, fail, minimalHeight, lifesOnCheckpoint, checkpoints, whitelist, difficulty, achievementId);
         }
 
         // -------------------
@@ -147,9 +148,9 @@ public class ParkourManager extends AbstractManager
         }
     }
 
-    private void registerWhitelistBasedParkour(String name, String prefix, String winPrefix, Location begin, Location end, Location fail, int minimalHeight, List<Location> checkpoints, List<Material> whitelist, int difficulty, int achievementId)
+    private void registerWhitelistBasedParkour(String name, String prefix, String winPrefix, Location begin, Location end, Location fail, int minimalHeight, int lifesOnCheckpoint, List<Location> checkpoints, List<Material> whitelist, int difficulty, int achievementId)
     {
-        this.registerParkour(new WhitelistBasedParkour(this.hub, name, prefix, winPrefix, begin, end, fail, minimalHeight, checkpoints, whitelist, difficulty, achievementId));
+        this.registerParkour(new WhitelistBasedParkour(this.hub, name, prefix, winPrefix, begin, end, fail, minimalHeight, lifesOnCheckpoint, checkpoints, whitelist, difficulty, achievementId));
     }
 
     private void registerParkour(Parkour parkour)

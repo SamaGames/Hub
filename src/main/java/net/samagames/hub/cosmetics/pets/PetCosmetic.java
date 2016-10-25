@@ -6,9 +6,6 @@ import com.dsh105.echopet.compat.api.entity.PetData;
 import com.dsh105.echopet.compat.api.entity.PetType;
 import net.samagames.hub.Hub;
 import net.samagames.hub.cosmetics.common.AbstractCosmetic;
-import net.samagames.hub.cosmetics.common.CosmeticAccessibility;
-import net.samagames.hub.cosmetics.common.CosmeticRarity;
-import org.bukkit.inventory.ItemStack;
 
 class PetCosmetic extends AbstractCosmetic
 {

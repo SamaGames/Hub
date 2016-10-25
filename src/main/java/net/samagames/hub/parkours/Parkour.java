@@ -33,12 +33,13 @@ public class Parkour
     protected final String stars;
     protected final int achievementId;
     protected final int minimalHeight;
+    protected final int lifesOnCheckpoint;
     protected final ArmorStand startTooltip;
     protected final ArmorStand endTooltip;
     protected final List<ArmorStand> checkpointsTooltips;
     protected final ParkourBackend backend;
 
-    public Parkour(Hub hub, String parkourName, String prefix, String winPrefix, Location spawn, Location end, Location fail, int minimalHeight, List<Location> checkpoints, int difficulty, int achievementId)
+    public Parkour(Hub hub, String parkourName, String prefix, String winPrefix, Location spawn, Location end, Location fail, int minimalHeight, int lifesOnCheckpoint, List<Location> checkpoints, int difficulty, int achievementId)
     {
         this.hub = hub;
 
@@ -65,6 +66,7 @@ public class Parkour
 
         this.stars = temporaryStars;
         this.minimalHeight = minimalHeight;
+        this.lifesOnCheckpoint = lifesOnCheckpoint;
 
         spawn.getWorld().getNearbyEntities(spawn, 3.0D, 3.0D, 3.0D).stream().filter(entity -> entity.getType() == EntityType.ARMOR_STAND).forEach(Entity::remove);
         end.getWorld().getNearbyEntities(end, 3.0D, 3.0D, 3.0D).stream().filter(entity -> entity.getType() == EntityType.ARMOR_STAND).forEach(Entity::remove);
@@ -123,7 +125,7 @@ public class Parkour
         playerCheckpoints.add(checkpointFormatted);
 
         this.playersCheckpoints.put(player.getUniqueId(), playerCheckpoints);
-        this.tries.put(player.getUniqueId(), this.tries.get(player.getUniqueId()) + 5);
+        this.tries.put(player.getUniqueId(), this.tries.get(player.getUniqueId()) + this.lifesOnCheckpoint);
 
         player.sendMessage(TAG + ChatColor.WHITE + "Checkpoint !");
     }

@@ -11,9 +11,9 @@ public class WhitelistBasedParkour extends Parkour
 {
     private final List<Material> whitelist;
 
-    public WhitelistBasedParkour(Hub hub, String prefix, String winPrefix, String parkourName, Location spawn, Location end, Location fail, int minimalHeight, List<Location> checkpoints, List<Material> whitelist, int difficulty, int achievementId)
+    public WhitelistBasedParkour(Hub hub, String prefix, String winPrefix, String parkourName, Location spawn, Location end, Location fail, int minimalHeight, int lifesToAdd, List<Location> checkpoints, List<Material> whitelist, int difficulty, int achievementId)
     {
-        super(hub, prefix, winPrefix, parkourName, spawn, end, fail, minimalHeight, checkpoints, difficulty, achievementId);
+        super(hub, prefix, winPrefix, parkourName, spawn, end, fail, minimalHeight, lifesToAdd, checkpoints, difficulty, achievementId);
 
         this.whitelist = whitelist;
 

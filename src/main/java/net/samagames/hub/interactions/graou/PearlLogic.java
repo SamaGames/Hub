@@ -119,9 +119,8 @@ class PearlLogic
 
         CosmeticRarity rarity = Star.getByCount(pearl.getStars()).getRandomizedRarity();
         List<AbstractCosmetic> cosmeticsSelected = this.cosmetics.getByRarity(rarity);
-        AbstractCosmetic selected = cosmeticsSelected.get(new Random().nextInt(cosmeticsSelected.size()));
 
-        return selected;
+        return cosmeticsSelected.get(new Random().nextInt(cosmeticsSelected.size()));
     }
 
     public ItemStack getIcon(Pearl pearl)

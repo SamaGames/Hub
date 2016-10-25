@@ -34,7 +34,7 @@ public class DeveloperRoomParkour extends Parkour implements Listener
 
     public DeveloperRoomParkour(Hub hub, Location spawn, Location end, Location fail, Pair<Location, Location> portals, Location minusFloor, String resourcePack)
     {
-        super(hub, "Salle de test n°42", "de la", "la", spawn, end, fail, 0, new ArrayList<>(), 5, -1);
+        super(hub, "Salle de test n°42", "de la", "la", spawn, end, fail, 0, 0, new ArrayList<>(), 5, -1);
 
         this.expected = new ArrayList<>();
 
