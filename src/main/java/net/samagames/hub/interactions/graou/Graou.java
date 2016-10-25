@@ -31,7 +31,7 @@ class Graou extends AbstractInteraction
     private final Location treasureLocations;
     private final Location openingLocations;
     private BukkitTask animationTask;
-    private Pair<UUID, Pearl> playerUsing;
+    private UUID playerUsing;
 
     Graou(Hub hub, Location catLocation, Location door, Location treasureLocations, Location openingLocations)
     {
@@ -95,7 +95,7 @@ class Graou extends AbstractInteraction
 
     public void onLogout(Player player)
     {
-        if (this.playerUsing != null && this.playerUsing.getLeft() == player.getUniqueId())
+        if (this.playerUsing != null && this.playerUsing == player.getUniqueId())
         {
             this.playerUsing = null;
 
@@ -158,13 +158,13 @@ class Graou extends AbstractInteraction
             return;
         }
 
-        this.playerUsing = Pair.of(player.getUniqueId(), pearl);
+        this.playerUsing = player.getUniqueId();
 
         this.graouEntity.getBukkitEntity().getWorld().playSound(this.graouEntity.getBukkitEntity().getLocation(), Sound.ENTITY_CAT_AMBIENT, 1.0F, 1.5F);
-        this.animationTask = this.hub.getServer().getScheduler().runTask(this.hub, new OpeningAnimationRunnable(this.hub, this, player, this.door, this.treasureLocations, this.openingLocations));
+        this.animationTask = this.hub.getServer().getScheduler().runTask(this.hub, new OpeningAnimationRunnable(this.hub, this, player, pearl, this.door, this.treasureLocations, this.openingLocations));
     }
 
-    public void animationFinished(Player player)
+    public void animationFinished(Player player, Pearl pearl)
     {
         this.animationTask.cancel();
         this.animationTask = null;

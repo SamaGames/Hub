@@ -214,7 +214,7 @@ class OpeningAnimationRunnable implements Runnable
         holder.setGravity(false);
         holder.setCustomNameVisible(true);
 
-        AbstractCosmetic unlockedCosmetic = this.hub.getInteractionManager().getGraouManager().getPearlLogic().unlockRandomizedCosmetic(this.pearl);
+        AbstractCosmetic unlockedCosmetic = this.hub.getInteractionManager().getGraouManager().getPearlLogic().unlockRandomizedCosmetic(this.player, this.pearl);
         Item unlockedCosmeticItem = this.openingLocations.getWorld().dropItem(this.openingLocations, unlockedCosmetic.getIcon());
 
         holder.setCustomName(unlockedCosmetic.getIcon().getItemMeta().getDisplayName());
@@ -225,7 +225,7 @@ class OpeningAnimationRunnable implements Runnable
             unlockedCosmeticItem.remove();
             holder.remove();
 
-            this.graou.animationFinished(OpeningAnimationRunnable.this.player);
+            this.graou.animationFinished(OpeningAnimationRunnable.this.player, OpeningAnimationRunnable.this.pearl);
         }, 20L * 3);
     }
 
