@@ -34,7 +34,7 @@ public class ScoreboardManager extends AbstractManager
 
             for (PersonalScoreboard scoreboard : this.scoreboards.values())
                 this.hub.getExecutorMonoThread().execute(() -> scoreboard.setLines(ip));
-        }, 100, 100, TimeUnit.MILLISECONDS);
+        }, 80, 80, TimeUnit.MILLISECONDS);
 
         this.reloadingTask = this.hub.getScheduledExecutorService().scheduleAtFixedRate(() ->
         {
@@ -119,7 +119,7 @@ public class ScoreboardManager extends AbstractManager
         else
         {
             this.ipCharIndex = 0;
-            this.cooldown = 20;
+            this.cooldown = 50;
         }
 
         return formattedIp.toString();
