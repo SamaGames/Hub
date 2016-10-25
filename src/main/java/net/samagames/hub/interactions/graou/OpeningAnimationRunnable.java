@@ -1,7 +1,9 @@
 package net.samagames.hub.interactions.graou;
 
 import net.minecraft.server.v1_10_R1.WorldServer;
+import net.samagames.api.games.pearls.Pearl;
 import net.samagames.hub.Hub;
+import net.samagames.hub.cosmetics.common.AbstractCosmetic;
 import net.samagames.hub.interactions.graou.entity.EntityGraouLaser;
 import net.samagames.hub.interactions.graou.entity.EntityGraouLaserTarget;
 import net.samagames.hub.utils.ProximityUtils;
@@ -40,16 +42,18 @@ class OpeningAnimationRunnable implements Runnable
     private final Hub hub;
     private final Graou graou;
     private final Player player;
+    private final Pearl pearl;
     private final Location door;
     private final Location treasureLocations;
     private final Location openingLocations;
     private Item present;
 
-    OpeningAnimationRunnable(Hub hub, Graou graou, Player player, Location door, Location treasureLocations, Location openingLocations)
+    OpeningAnimationRunnable(Hub hub, Graou graou, Player player, Pearl pearl, Location door, Location treasureLocations, Location openingLocations)
     {
         this.hub = hub;
         this.graou = graou;
         this.player = player;
+        this.pearl = pearl;
         this.door = door;
         this.treasureLocations = treasureLocations;
         this.openingLocations = openingLocations;
@@ -153,15 +157,15 @@ class OpeningAnimationRunnable implements Runnable
                             }
                         });
                     }
-                    else if (i == 52)
+                    else if (i == 48)
                     {
                         OpeningAnimationRunnable.this.hub.getServer().getScheduler().runTask(OpeningAnimationRunnable.this.hub, () ->
                         {
                             OpeningAnimationRunnable.this.openingLocations.getWorld().createExplosion(OpeningAnimationRunnable.this.openingLocations.getBlockX(), OpeningAnimationRunnable.this.openingLocations.getBlockY(), OpeningAnimationRunnable.this.openingLocations.getBlockZ(), 2.0F, false, false);
                             OpeningAnimationRunnable.this.openingLocations.getBlock().setType(Material.AIR);
-                        });
 
-                        OpeningAnimationRunnable.this.graou.animationFinished(OpeningAnimationRunnable.this.player);
+                            OpeningAnimationRunnable.this.finishAnimation();
+                        });
                     }
                     else if (i == 46)
                     {
@@ -200,6 +204,29 @@ class OpeningAnimationRunnable implements Runnable
                 }
             }
         }.start();
+    }
+
+    private void finishAnimation()
+    {
+        ArmorStand holder = this.openingLocations.getWorld().spawn(this.openingLocations.clone().add(0.0D, 0.5D, 0.0D), ArmorStand.class);
+        holder.setVisible(false);
+        holder.setInvulnerable(true);
+        holder.setGravity(false);
+        holder.setCustomNameVisible(true);
+
+        AbstractCosmetic unlockedCosmetic = this.hub.getInteractionManager().getGraouManager().getPearlLogic().unlockRandomizedCosmetic(this.pearl);
+        Item unlockedCosmeticItem = this.openingLocations.getWorld().dropItem(this.openingLocations, unlockedCosmetic.getIcon());
+
+        holder.setCustomName(unlockedCosmetic.getIcon().getItemMeta().getDisplayName());
+        holder.setPassenger(unlockedCosmeticItem);
+
+        this.hub.getServer().getScheduler().runTaskLater(this.hub, () ->
+        {
+            unlockedCosmeticItem.remove();
+            holder.remove();
+
+            this.graou.animationFinished(OpeningAnimationRunnable.this.player);
+        }, 20L * 3);
     }
 
     private void walk(Location location, Runnable callback)

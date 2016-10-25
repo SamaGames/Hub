@@ -60,7 +60,7 @@ class PersonalScoreboard
         this.objectiveSign.setLine(3, ChatColor.GREEN + "");
 
         this.objectiveSign.setLine(4, ChatColor.GRAY + "Pièces : " + ChatColor.GOLD + NumberUtils.format(this.coins) + " \u26C1");
-        this.objectiveSign.setLine(5, ChatColor.GRAY + "Étoiles : " + ChatColor.AQUA + NumberUtils.format(this.stars) + " \u2606");
+        this.objectiveSign.setLine(5, ChatColor.GRAY + "Étoiles : " + ChatColor.AQUA + NumberUtils.format(this.stars) + " \u272F");
         this.objectiveSign.setLine(6, ChatColor.GRAY + "Perles : " + ChatColor.GREEN + NumberUtils.format(this.pearls) + " \u25C9");
 
         this.objectiveSign.setLine(7, ChatColor.RED + "");

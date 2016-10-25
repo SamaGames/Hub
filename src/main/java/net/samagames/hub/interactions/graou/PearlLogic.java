@@ -5,7 +5,10 @@ import net.samagames.hub.Hub;
 import net.samagames.hub.cosmetics.common.AbstractCosmetic;
 import net.samagames.hub.cosmetics.common.CosmeticRarity;
 import net.samagames.tools.ItemUtils;
+import net.samagames.tools.chat.fanciful.FancyMessage;
 import org.bukkit.ChatColor;
+import org.bukkit.Sound;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -98,10 +101,13 @@ class PearlLogic
 
     private static final ItemStack PEARL_HEAD = ItemUtils.getCustomHead("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvN2QxNmFlOTUxMTIwMzk0ZjM2OGYyMjUwYjdjM2FkM2ZiMTJjZWE1NWVjMWIyZGI1YTk0ZDFmYjdmZDRiNmZhIn19fQ==");
 
+    private final Hub hub;
     private final CosmeticList cosmetics;
 
     PearlLogic(Hub hub)
     {
+        this.hub = hub;
+
         this.cosmetics = new CosmeticList();
         this.cosmetics.addAll(hub.getCosmeticManager().getDisguiseManager().getRegistry().getElements().values());
         this.cosmetics.addAll(hub.getCosmeticManager().getParticleManager().getRegistry().getElements().values());
@@ -113,14 +119,44 @@ class PearlLogic
         Collections.shuffle(this.cosmetics);
     }
 
-    public AbstractCosmetic getRandomizedCosmetic(Pearl pearl)
+    public AbstractCosmetic unlockRandomizedCosmetic(Player player, Pearl pearl)
     {
         Collections.shuffle(this.cosmetics);
 
         CosmeticRarity rarity = Star.getByCount(pearl.getStars()).getRandomizedRarity();
         List<AbstractCosmetic> cosmeticsSelected = this.cosmetics.getByRarity(rarity);
 
-        return cosmeticsSelected.get(new Random().nextInt(cosmeticsSelected.size()));
+        AbstractCosmetic cosmeticSelected = cosmeticsSelected.get(new Random().nextInt(cosmeticsSelected.size()));
+
+        new FancyMessage("\u272F ").color(ChatColor.GOLD)
+                .then("Vous avez trouvé ").color(ChatColor.YELLOW)
+                .then(cosmeticSelected.getIcon().getItemMeta().getDisplayName()).tooltip(cosmeticSelected.getIcon().getItemMeta().getLore())
+                .then(" dans le cadeau !").color(ChatColor.YELLOW)
+                .then(" \u272F").color(ChatColor.GOLD)
+                .send(player);
+
+        if (cosmeticSelected.isOwned(player))
+        {
+            player.sendMessage(ChatColor.GOLD + "\u272F " + ChatColor.YELLOW + "Malheureusement, vous possédiez déjà ce cosmétique..." + ChatColor.GOLD + " \u272F");
+        }
+        else
+        {
+            if (cosmeticSelected.getRarity() == CosmeticRarity.EPIC || cosmeticSelected.getRarity() == CosmeticRarity.LEGENDARY)
+            {
+                FancyMessage globalMessage = new FancyMessage("\u272F " + player.getName()).color(ChatColor.GOLD)
+                        .then(" a trouvé ").color(ChatColor.YELLOW)
+                        .then(cosmeticSelected.getIcon().getItemMeta().getDisplayName()).tooltip(cosmeticSelected.getIcon().getItemMeta().getLore())
+                        .then(" dans un cadeau !").color(ChatColor.YELLOW)
+                        .then(" \u272F").color(ChatColor.GOLD);
+
+                this.hub.getServer().getOnlinePlayers().stream().filter(p -> p.getUniqueId() != player.getUniqueId()).forEach(globalMessage::send);
+                this.hub.getServer().getOnlinePlayers().forEach(p -> p.playSound(p.getLocation(), cosmeticSelected.getRarity() == CosmeticRarity.EPIC ? Sound.ENTITY_GHAST_SCREAM : Sound.ENTITY_ENDERDRAGON_GROWL, 1.0F, 1.0F));
+            }
+
+            cosmeticSelected.buy(player, true);
+        }
+
+        return cosmeticSelected;
     }
 
     public ItemStack getIcon(Pearl pearl)

@@ -50,9 +50,9 @@ public abstract class AbstractCosmetic implements Comparable<AbstractCosmetic>
         this.icon.setItemMeta(meta);
     }
 
-    public void buy(Player player, boolean magicChest)
+    public void buy(Player player, boolean byGraou)
     {
-        if (magicChest)
+        if (byGraou)
         {
             SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).addItem(this.storageId, 0, 0, false);
         }
