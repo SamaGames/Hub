@@ -1,12 +1,14 @@
 package net.samagames.hub.events.protection;
 
 import net.samagames.hub.Hub;
+import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.*;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.weather.WeatherChangeEvent;
 import org.bukkit.event.world.ChunkUnloadEvent;
 
@@ -99,6 +101,13 @@ public class WorldEditionListener implements Listener
     public void onEntityBlockForm(EntityBlockFormEvent event)
     {
         if (event.getEntity().getType() != EntityType.PLAYER || !this.canDoAction((Player) event.getEntity()))
+            event.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onPlayerInteract(PlayerInteractEvent event)
+    {
+        if (event.getClickedBlock() != null && event.getClickedBlock().getType() == Material.TRAP_DOOR && !this.canDoAction(event.getPlayer()))
             event.setCancelled(true);
     }
 

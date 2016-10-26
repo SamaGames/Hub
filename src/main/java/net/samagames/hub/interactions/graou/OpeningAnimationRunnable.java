@@ -209,7 +209,7 @@ class OpeningAnimationRunnable implements Runnable
 
     private void finishAnimation()
     {
-        ArmorStand holder = this.openingLocations.getWorld().spawn(this.openingLocations.clone().subtract(0.0D, 2.5D, 0.0D), ArmorStand.class);
+        ArmorStand holder = this.openingLocations.getWorld().spawn(this.openingLocations.clone().subtract(0.0D, 1.0D, 0.0D), ArmorStand.class);
         holder.setVisible(false);
         holder.setInvulnerable(true);
         holder.setGravity(false);
