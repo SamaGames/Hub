@@ -7,6 +7,7 @@ import net.samagames.hub.cosmetics.common.CosmeticRarity;
 import net.samagames.tools.ItemUtils;
 import net.samagames.tools.chat.fanciful.FancyMessage;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -119,7 +120,7 @@ class PearlLogic
         Collections.shuffle(this.cosmetics);
     }
 
-    public AbstractCosmetic unlockRandomizedCosmetic(Player player, Pearl pearl)
+    public AbstractCosmetic unlockRandomizedCosmetic(Player player, Pearl pearl, Location openingLocation)
     {
         Collections.shuffle(this.cosmetics);
 
@@ -152,7 +153,10 @@ class PearlLogic
                 this.hub.getServer().getOnlinePlayers().stream().filter(p -> p.getUniqueId() != player.getUniqueId()).forEach(globalMessage::send);
 
                 if (cosmeticSelected.getRarity() == CosmeticRarity.LEGENDARY)
+                {
+                    openingLocation.getWorld().strikeLightningEffect(openingLocation);
                     this.hub.getServer().getOnlinePlayers().forEach(p -> p.playSound(p.getLocation(), Sound.ENTITY_ENDERDRAGON_GROWL, 1.0F, 1.0F));
+                }
             }
 
             cosmeticSelected.buy(player, true);

@@ -209,20 +209,17 @@ class OpeningAnimationRunnable implements Runnable
 
     private void finishAnimation()
     {
-        ArmorStand holder = this.openingLocations.getWorld().spawn(this.openingLocations.clone().subtract(0.0D, 1.0D, 0.0D), ArmorStand.class);
+        ArmorStand holder = this.openingLocations.getWorld().spawn(this.openingLocations.clone().subtract(0.0D, 1.35D, 0.0D), ArmorStand.class);
         holder.setVisible(false);
         holder.setInvulnerable(true);
         holder.setGravity(false);
         holder.setCustomNameVisible(true);
 
-        AbstractCosmetic unlockedCosmetic = this.hub.getInteractionManager().getGraouManager().getPearlLogic().unlockRandomizedCosmetic(this.player, this.pearl);
+        AbstractCosmetic unlockedCosmetic = this.hub.getInteractionManager().getGraouManager().getPearlLogic().unlockRandomizedCosmetic(this.player, this.pearl, this.openingLocations);
         Item unlockedCosmeticItem = this.openingLocations.getWorld().dropItem(this.openingLocations, unlockedCosmetic.getIcon());
 
         holder.setCustomName(unlockedCosmetic.getIcon().getItemMeta().getDisplayName());
         holder.setPassenger(unlockedCosmeticItem);
-
-        if (unlockedCosmetic.getRarity() == CosmeticRarity.LEGENDARY)
-            this.openingLocations.getWorld().strikeLightningEffect(this.openingLocations);
 
         this.hub.getServer().getScheduler().runTaskLater(this.hub, () ->
         {
