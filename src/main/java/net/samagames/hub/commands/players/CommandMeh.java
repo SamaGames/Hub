@@ -30,7 +30,9 @@ public class CommandMeh extends AbstractCommand
         }
         else
         {
-            if (!current.meh(player))
+            if (current.getPlayedBy().equals(player.getName()))
+                player.sendMessage(tag + ChatColor.RED + "Vous ne pouvez pas voter sur votre musique.");
+            else if (!current.meh(player))
                 player.sendMessage(tag + ChatColor.RED + "Vous avez déjà voté Meh pour cette musique.");
             else
                 player.sendMessage(tag + ChatColor.GREEN + "Vous avez bien indiqué que cette musique ne vous plait pas.");

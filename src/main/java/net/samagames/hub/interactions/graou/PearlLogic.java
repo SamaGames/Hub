@@ -150,7 +150,9 @@ class PearlLogic
                         .then(" \u272F").color(ChatColor.GOLD);
 
                 this.hub.getServer().getOnlinePlayers().stream().filter(p -> p.getUniqueId() != player.getUniqueId()).forEach(globalMessage::send);
-                this.hub.getServer().getOnlinePlayers().forEach(p -> p.playSound(p.getLocation(), cosmeticSelected.getRarity() == CosmeticRarity.EPIC ? Sound.ENTITY_GHAST_SCREAM : Sound.ENTITY_ENDERDRAGON_GROWL, 1.0F, 1.0F));
+
+                if (cosmeticSelected.getRarity() == CosmeticRarity.LEGENDARY)
+                    this.hub.getServer().getOnlinePlayers().forEach(p -> p.playSound(p.getLocation(), Sound.ENTITY_ENDERDRAGON_GROWL, 1.0F, 1.0F));
             }
 
             cosmeticSelected.buy(player, true);

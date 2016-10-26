@@ -4,6 +4,7 @@ import net.minecraft.server.v1_10_R1.WorldServer;
 import net.samagames.api.games.pearls.Pearl;
 import net.samagames.hub.Hub;
 import net.samagames.hub.cosmetics.common.AbstractCosmetic;
+import net.samagames.hub.cosmetics.common.CosmeticRarity;
 import net.samagames.hub.interactions.graou.entity.EntityGraouLaser;
 import net.samagames.hub.interactions.graou.entity.EntityGraouLaserTarget;
 import net.samagames.hub.utils.ProximityUtils;
@@ -208,7 +209,7 @@ class OpeningAnimationRunnable implements Runnable
 
     private void finishAnimation()
     {
-        ArmorStand holder = this.openingLocations.getWorld().spawn(this.openingLocations.clone().add(0.0D, 0.5D, 0.0D), ArmorStand.class);
+        ArmorStand holder = this.openingLocations.getWorld().spawn(this.openingLocations.clone().subtract(0.0D, 2.5D, 0.0D), ArmorStand.class);
         holder.setVisible(false);
         holder.setInvulnerable(true);
         holder.setGravity(false);
@@ -220,13 +221,16 @@ class OpeningAnimationRunnable implements Runnable
         holder.setCustomName(unlockedCosmetic.getIcon().getItemMeta().getDisplayName());
         holder.setPassenger(unlockedCosmeticItem);
 
+        if (unlockedCosmetic.getRarity() == CosmeticRarity.LEGENDARY)
+            this.openingLocations.getWorld().strikeLightningEffect(this.openingLocations);
+
         this.hub.getServer().getScheduler().runTaskLater(this.hub, () ->
         {
             unlockedCosmeticItem.remove();
             holder.remove();
 
             this.graou.animationFinished(OpeningAnimationRunnable.this.player, OpeningAnimationRunnable.this.pearl);
-        }, 20L * 3);
+        }, 20L * 5);
     }
 
     private void walk(Location location, Runnable callback)

@@ -30,7 +30,9 @@ public class CommandWoot extends AbstractCommand
         }
         else
         {
-            if (!current.woot(player))
+            if (current.getPlayedBy().equals(player.getName()))
+                player.sendMessage(tag + ChatColor.RED + "Vous ne pouvez pas voter sur votre musique.");
+            else if (!current.woot(player))
                 player.sendMessage(tag + ChatColor.RED + "Vous avez déjà voté Woot pour cette musique.");
             else
                 player.sendMessage(tag + ChatColor.GREEN + "Vous avez marqué votre appréciation pour la musique jouée.");
