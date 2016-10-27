@@ -25,7 +25,7 @@ class Well extends AbstractInteraction
 
         this.cauldronLocation = cauldronLocation;
 
-        this.hologram = new Hologram(ChatColor.DARK_PURPLE + "Puit magique", ChatColor.LIGHT_PURPLE + "Créez vos perles avec votre poussière d'étoile");
+        this.hologram = new Hologram(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "Puit magique", ChatColor.LIGHT_PURPLE + "Créez des perles avec vos poussières d'étoile");
         this.hologram.generateLines(standsLocation);
     }
 
