@@ -48,7 +48,7 @@ public class GraouManager extends AbstractInteractionManager<Graou> implements L
     {
         super.onLogin(player);
 
-        this.interactions.forEach(meow -> meow.onLogin(player));
+        this.interactions.forEach(graou -> graou.onLogin(player));
     }
 
     @Override
@@ -56,7 +56,7 @@ public class GraouManager extends AbstractInteractionManager<Graou> implements L
     {
         super.onLogout(player);
 
-        this.interactions.forEach(meow -> meow.onLogout(player));
+        this.interactions.forEach(graou -> graou.onLogout(player));
 
         if (this.lock.contains(player.getUniqueId()))
             this.lock.remove(player.getUniqueId());
@@ -96,17 +96,20 @@ public class GraouManager extends AbstractInteractionManager<Graou> implements L
         if (rootJson.size() == 0)
             return;
 
-        JsonObject graouJson = rootJson.get(0).getAsJsonObject();
+        for (int i = 0; i < rootJson.size(); i++)
+        {
+            JsonObject graouJson = rootJson.get(i).getAsJsonObject();
 
-        Location catLocation = LocationUtils.str2loc(graouJson.get("cat").getAsString());
-        Location doorLocation = LocationUtils.str2loc(graouJson.get("door").getAsString());
-        Location treasureLocation = LocationUtils.str2loc(graouJson.get("treasure").getAsString());
-        Location openingLocation = LocationUtils.str2loc(graouJson.get("opening").getAsString());
+            Location catLocation = LocationUtils.str2loc(graouJson.get("cat").getAsString());
+            Location doorLocation = LocationUtils.str2loc(graouJson.get("door").getAsString());
+            Location treasureLocation = LocationUtils.str2loc(graouJson.get("treasure").getAsString());
+            Location openingLocation = LocationUtils.str2loc(graouJson.get("opening").getAsString());
 
-        Graou graou = new Graou(this.hub, catLocation, doorLocation, treasureLocation, openingLocation);
+            Graou graou = new Graou(this.hub, catLocation, doorLocation, treasureLocation, openingLocation);
 
-        this.interactions.add(graou);
-        this.log(Level.INFO, "Registered Graou at '" + graouJson.get("cat").getAsString());
+            this.interactions.add(graou);
+            this.log(Level.INFO, "Registered Graou at '" + graouJson.get("cat").getAsString());
+        }
     }
 
     public void deletePlayerPearl(UUID player, UUID pearl)

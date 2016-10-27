@@ -71,9 +71,6 @@ class Graou extends AbstractInteraction
             this.onLogout(player);
 
         int perls = this.hub.getInteractionManager().getGraouManager().getPlayerPearls(player.getUniqueId()).size();
-
-        // Count boxes
-
         Hologram hologram;
 
         if (perls > 0)
@@ -137,9 +134,6 @@ class Graou extends AbstractInteraction
     public void update(Player player)
     {
         int perls = this.hub.getInteractionManager().getGraouManager().getPlayerPearls(player.getUniqueId()).size();
-
-        // Count boxes
-
         Hologram hologram = this.holograms.get(player.getUniqueId());
 
         if (perls > 0)

@@ -4,7 +4,6 @@ import net.minecraft.server.v1_10_R1.WorldServer;
 import net.samagames.api.games.pearls.Pearl;
 import net.samagames.hub.Hub;
 import net.samagames.hub.cosmetics.common.AbstractCosmetic;
-import net.samagames.hub.cosmetics.common.CosmeticRarity;
 import net.samagames.hub.interactions.graou.entity.EntityGraouLaser;
 import net.samagames.hub.interactions.graou.entity.EntityGraouLaserTarget;
 import net.samagames.hub.utils.ProximityUtils;
@@ -13,7 +12,6 @@ import net.samagames.tools.ItemUtils;
 import net.samagames.tools.ParticleEffect;
 import org.bukkit.*;
 import org.bukkit.craftbukkit.v1_10_R1.CraftWorld;
-import org.bukkit.craftbukkit.v1_10_R1.entity.CraftSquid;
 import org.bukkit.entity.*;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityTargetEvent;
@@ -36,7 +34,7 @@ class OpeningAnimationRunnable implements Runnable
     };
 
     private static final int[] PIANO_MAIN = { 1, 3, 5, 7, 1, 3, 5, 7, 2, 4, 6, 8, 2, 4, 6, 8, 3, 5, 7, 9, 3, 5, 7, 9, 4, 6, 8, 10, 4, 6, 8, 10, 5, 7, 9, 11, 6, 8, 10, 12, 7, 9, 11, 13, 8, 10, 12, 14, -1, -1, -1, -1, 15, -1, 16, -1, 17, -1, 18, 18, 18, 18, 18, 18 };
-    private static final int[] PIANO_SECONDARY = {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 21, -1, 22, -1, 23, -1, 24, 24, 24, 24, 24, 24 };
+    private static final int[] PIANO_SECONDARY = { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 21, -1, 22, -1, 23, -1, 24, 24, 24, 24, 24, 24 };
     private static final int[] SNARE_DRUM = { 1, -1, -1, -1, 24, -1, -1, -1, 3, -1, -1, -1, 24, -1, -1, -1, 5, -1, -1, -1, 24, -1, -1, -1, 7, -1, -1, -1, 24, -1, -1, -1, 9, -1, -1, -1, 17, -1, -1, -1, 17, -1, -1, -1, 17, -1, -1, -1, -1, -1, -1, -1, 24, -1, 24, -1, 24, -1, 24, 24, 24, 24, 24, 24 };
     private static final int[] BASS_GUITAR = { 0, -1, -1, -1, -1, -1, -1, -1, 2, -1, -1, -1, -1, -1, -1, -1, 4, -1, -1, -1, -1, -1, -1, -1, 6, -1, -1, -1, -1, -1, -1, -1, 8, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 20, -1, 21, -1, 22, -1, 23, -1, -1, -1, -1, -1 };
 

@@ -4,9 +4,9 @@ import net.samagames.hub.Hub;
 import net.samagames.hub.common.managers.AbstractManager;
 import net.samagames.hub.interactions.bumper.BumperManager;
 import net.samagames.hub.interactions.graou.GraouManager;
-import net.samagames.hub.interactions.magicchests.MagicChestManager;
 import net.samagames.hub.interactions.meow.MeowManager;
 import net.samagames.hub.interactions.sonicsquid.SonicSquidManager;
+import net.samagames.hub.interactions.well.WellManager;
 import net.samagames.hub.interactions.yodels.YodelsManager;
 import org.bukkit.entity.Player;
 
@@ -17,9 +17,9 @@ public class InteractionManager extends AbstractManager
     private final YodelsManager yodelManager;
     private final SonicSquidManager sonicSquidManager;
     private final BumperManager bumperManager;
-    private final MagicChestManager magicChestManager;
     private final MeowManager meowManager;
     private final GraouManager graouManager;
+    private final WellManager wellManager;
 
     public InteractionManager(Hub hub)
     {
@@ -33,9 +33,9 @@ public class InteractionManager extends AbstractManager
         this.yodelManager = new YodelsManager(hub);
         this.sonicSquidManager = new SonicSquidManager(hub);
         this.bumperManager = new BumperManager(hub);
-        this.magicChestManager = new MagicChestManager(hub);
         this.meowManager = new MeowManager(hub);
         this.graouManager = new GraouManager(hub);
+        this.wellManager = new WellManager(hub);
     }
 
     @Override
@@ -44,9 +44,9 @@ public class InteractionManager extends AbstractManager
         this.yodelManager.onDisable();
         this.sonicSquidManager.onDisable();
         this.bumperManager.onDisable();
-        this.magicChestManager.onDisable();
         this.meowManager.onDisable();
         this.graouManager.onDisable();
+        this.wellManager.onDisable();
     }
 
     @Override
@@ -55,9 +55,9 @@ public class InteractionManager extends AbstractManager
         this.yodelManager.onLogin(player);
         this.sonicSquidManager.onLogin(player);
         this.bumperManager.onLogin(player);
-        this.magicChestManager.onLogin(player);
         this.meowManager.onLogin(player);
         this.graouManager.onLogin(player);
+        this.wellManager.onLogin(player);
     }
 
     @Override
@@ -66,9 +66,9 @@ public class InteractionManager extends AbstractManager
         this.yodelManager.onLogout(player);
         this.sonicSquidManager.onLogout(player);
         this.bumperManager.onLogout(player);
-        this.magicChestManager.onLogout(player);
         this.meowManager.onLogout(player);
         this.graouManager.onLogout(player);
+        this.wellManager.onLogout(player);
     }
 
     public boolean isInteracting(Player player)
@@ -79,11 +79,11 @@ public class InteractionManager extends AbstractManager
             return true;
         else if (this.bumperManager.hasPlayer(player))
             return true;
-        else if (this.magicChestManager.hasPlayer(player))
-            return true;
         else if (this.meowManager.hasPlayer(player))
             return true;
         else if (this.graouManager.hasPlayer(player))
+            return true;
+        else if (this.wellManager.hasPlayer(player))
             return true;
 
         return false;
