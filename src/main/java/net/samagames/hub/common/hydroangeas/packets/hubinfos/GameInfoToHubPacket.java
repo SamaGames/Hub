@@ -12,11 +12,6 @@ public class GameInfoToHubPacket extends Packet
 
     public GameInfoToHubPacket() {}
 
-    public GameInfoToHubPacket(String templateID)
-    {
-        this.templateID = templateID;
-    }
-
     public int getPlayerMaxForMap()
     {
         return this.playerMaxForMap;

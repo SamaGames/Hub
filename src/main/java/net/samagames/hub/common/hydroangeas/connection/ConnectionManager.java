@@ -5,6 +5,7 @@ import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import net.samagames.hub.common.hydroangeas.HydroangeasManager;
 import net.samagames.hub.common.hydroangeas.packets.hubinfos.GameInfoToHubPacket;
+import net.samagames.hub.common.hydroangeas.packets.hubinfos.HostGameInfoToHubPacket;
 import net.samagames.hub.common.hydroangeas.packets.queues.*;
 import net.samagames.hub.common.managers.AbstractManager;
 import org.bukkit.entity.Player;
@@ -35,6 +36,7 @@ public class ConnectionManager extends AbstractManager
 
         // HubInfos
         this.packets[110] = new GameInfoToHubPacket();
+        this.packets[111] = new HostGameInfoToHubPacket();
     }
 
     @Override
