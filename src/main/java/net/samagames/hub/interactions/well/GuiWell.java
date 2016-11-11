@@ -21,6 +21,6 @@ class GuiWell extends AbstractGui
     @Override
     public void display(Player player)
     {
-
+        player.openInventory(this.inventory);
     }
 }
