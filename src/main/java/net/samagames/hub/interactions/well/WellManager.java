@@ -113,10 +113,12 @@ public class WellManager extends AbstractInteractionManager<Well> implements Lis
     {
         int[] expectedNumbers = generateRandomNumbers();
         int pearlStars = 1;
+        int craftingTime = 60;
 
         if (Arrays.equals(numbers, new int[] {24, 6, 20, 14})) // 24 June 2014
         {
             pearlStars = 5;
+            craftingTime = 1;
         }
         else
         {
@@ -133,15 +135,14 @@ public class WellManager extends AbstractInteractionManager<Well> implements Lis
                 pearlStars = 3;
             else if (differenceSum < 18)
                 pearlStars = 2;
+
+            long groupId = SamaGamesAPI.get().getPermissionsManager().getPlayer(player.getUniqueId()).getGroupId();
+
+            if (groupId > 3)
+                groupId = 4;
+
+            craftingTime -= 15 * (groupId - 1);
         }
-
-        int craftingTime = 60; // 60 minutes
-        long groupId = SamaGamesAPI.get().getPermissionsManager().getPlayer(player.getUniqueId()).getGroupId();
-
-        if (groupId > 3)
-            groupId = 4;
-
-        craftingTime -= 15 * (groupId - 1);
 
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.MINUTE, craftingTime);
