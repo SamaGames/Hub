@@ -19,6 +19,7 @@ class PersonalScoreboard
 
     private String formattedRank;
     private long coins;
+    private long powders;
     private int pearls;
 
     PersonalScoreboard(Hub hub, Player player)
@@ -43,6 +44,7 @@ class PersonalScoreboard
 
         this.formattedRank = RankUtils.getFormattedRank(this.player, true);
         this.coins = playerData.getCoins();
+        this.powders = playerData.getPowders();
         this.pearls = this.hub.getInteractionManager().getGraouManager().getPlayerPearls(this.player).size();
     }
 
@@ -59,10 +61,11 @@ class PersonalScoreboard
 
         this.objectiveSign.setLine(4, ChatColor.GRAY + "Pièces : " + ChatColor.GOLD + NumberUtils.format(this.coins) + " \u26C1");
         this.objectiveSign.setLine(5, ChatColor.GRAY + "Perles : " + ChatColor.GREEN + NumberUtils.format(this.pearls) + " \u25C9");
+        this.objectiveSign.setLine(6, ChatColor.GRAY + "Poussières d'\u272F : " + ChatColor.AQUA + NumberUtils.format(this.powders) + " \u2055");
 
-        this.objectiveSign.setLine(6, ChatColor.RED + "");
+        this.objectiveSign.setLine(7, ChatColor.RED + "");
 
-        this.objectiveSign.setLine(7, ChatColor.YELLOW + ip);
+        this.objectiveSign.setLine(8, ChatColor.YELLOW + ip);
 
         this.objectiveSign.updateLines();
     }

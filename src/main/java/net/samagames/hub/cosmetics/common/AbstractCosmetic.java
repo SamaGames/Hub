@@ -89,8 +89,8 @@ public abstract class AbstractCosmetic implements Comparable<AbstractCosmetic>
             if (this.accessibility != CosmeticAccessibility.ALL)
             {
                 lore.add(ChatColor.GRAY + "Vous devez posséder le grade");
-                lore.add(this.accessibility.getDisplay() + ChatColor.GRAY + " pour pouvoir utiliser");
-                lore.add(ChatColor.GRAY + "ce cosmétique.");
+                lore.add(this.accessibility.getDisplay() + ChatColor.GRAY + " pour pouvoir utiliser ce");
+                lore.add(ChatColor.GRAY + "cosmétique.");
                 lore.add("");
             }
 

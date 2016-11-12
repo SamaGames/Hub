@@ -1,5 +1,6 @@
 package net.samagames.hub.interactions.graou;
 
+import net.samagames.api.SamaGamesAPI;
 import net.samagames.api.games.pearls.Pearl;
 import net.samagames.hub.Hub;
 import net.samagames.hub.cosmetics.common.AbstractCosmetic;
@@ -139,6 +140,9 @@ class PearlLogic
         if (cosmeticSelected.isOwned(player))
         {
             player.sendMessage(ChatColor.GOLD + "\u272F " + ChatColor.YELLOW + "Malheureusement, vous possédiez déjà ce cosmétique..." + ChatColor.GOLD + " \u272F");
+            player.sendMessage(ChatColor.GOLD + "\u272F " + ChatColor.YELLOW + "Graou vous offre alors " + ChatColor.AQUA + cosmeticSelected.getRefundPrice() + " poussières d'\u272F" + ChatColor.GOLD + " \u272F");
+
+            SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).increasePowders(cosmeticSelected.getRefundPrice());
         }
         else
         {
