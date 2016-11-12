@@ -193,7 +193,7 @@ public class WellManager extends AbstractInteractionManager<Well> implements Lis
         this.hub.getInteractionManager().getGraouManager().update(player);
     }
 
-    public void checkCrafts(Player player, boolean silent)
+    private void checkCrafts(Player player, boolean silent)
     {
         this.getPlayerCraftingPearls(player.getUniqueId()).stream().filter(craftingPearl -> craftingPearl.getCreation() < System.currentTimeMillis()).forEach(craftingPearl ->
         {

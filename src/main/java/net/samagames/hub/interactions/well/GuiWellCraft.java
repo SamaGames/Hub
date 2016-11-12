@@ -188,7 +188,7 @@ public class GuiWellCraft extends AbstractGui
         helpLore.add("");
         helpLore.add(ChatColor.GRAY + "A la manière d'une lotterie, plus vous");
         helpLore.add(ChatColor.GRAY + "vous rapprochez des nombres aléatoires,");
-        helpLore.add(ChatColor.GRAY + "plus le niveau de votre perle sera élevé.");
+        helpLore.add(ChatColor.GRAY + "plus le " + ChatColor.GREEN + "niveau" + ChatColor.GRAY + " de votre perle sera " + ChatColor.GREEN + "élevé" + ChatColor.GRAY + ".");
         helpLore.add("");
         helpLore.add(ChatColor.YELLOW + "" + ChatColor.ITALIC + "Note : " + ChatColor.GRAY + ChatColor.ITALIC + "Les numéros sont aléatoires et");
         helpLore.add(ChatColor.GRAY + "" + ChatColor.ITALIC +  "ne sont pas éloignés les uns des autres.");
