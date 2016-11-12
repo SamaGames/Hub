@@ -112,7 +112,7 @@ public class WellManager extends AbstractInteractionManager<Well> implements Lis
         }
     }
 
-    public void startPearlCrafting(UUID player, int[] numbers)
+    public void startPearlCrafting(Player player, int[] numbers)
     {
         int[] expectedNumbers = generateRandomNumbers();
         int pearlStars = 1;
@@ -139,7 +139,7 @@ public class WellManager extends AbstractInteractionManager<Well> implements Lis
         }
 
         int craftingTime = 60; // 60 minutes
-        long groupId = SamaGamesAPI.get().getPermissionsManager().getPlayer(player).getGroupId();
+        long groupId = SamaGamesAPI.get().getPermissionsManager().getPlayer(player.getUniqueId()).getGroupId();
 
         if (groupId > 2)
             groupId = 3;
@@ -156,13 +156,14 @@ public class WellManager extends AbstractInteractionManager<Well> implements Lis
         if (jedis == null)
             return;
 
-        jedis.set("crafting-pearls:" + player.toString() + ":" + craftingPearl.getUUID().toString(), new Gson().toJson(craftingPearl));
+        jedis.set("crafting-pearls:" + player.getUniqueId().toString() + ":" + craftingPearl.getUUID().toString(), new Gson().toJson(craftingPearl));
         jedis.close();
 
-        SamaGamesAPI.get().getPlayerManager().getPlayerData(player).decreasePowders(64);
+        SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).decreasePowders(64);
+        this.hub.getScoreboardManager().update(player);
     }
 
-    public void finalizePearlCrafting(UUID player, UUID craftingPearlUUID)
+    public void finalizePearlCrafting(Player player, UUID craftingPearlUUID)
     {
         Jedis jedis = SamaGamesAPI.get().getBungeeResource();
 
@@ -171,8 +172,8 @@ public class WellManager extends AbstractInteractionManager<Well> implements Lis
 
         CraftingPearl craftingPearl = null;
 
-        if (jedis.exists("crafting-pearls:" + player.toString() + ":" + craftingPearlUUID.toString()))
-            craftingPearl = new Gson().fromJson(jedis.get("crafting-pearls:" + player.toString() + ":" + craftingPearlUUID.toString()), CraftingPearl.class);
+        if (jedis.exists("crafting-pearls:" + player.getUniqueId().toString() + ":" + craftingPearlUUID.toString()))
+            craftingPearl = new Gson().fromJson(jedis.get("crafting-pearls:" + player.getUniqueId().toString() + ":" + craftingPearlUUID.toString()), CraftingPearl.class);
 
         if (craftingPearl == null)
         {
@@ -185,9 +186,9 @@ public class WellManager extends AbstractInteractionManager<Well> implements Lis
 
         Pearl craftedPearl = new Pearl(craftingPearl.getUUID(), craftingPearl.getStars(), calendar.getTime().getTime());
 
-        jedis.set("pearls:" + player.toString() + ":" + craftedPearl.getUUID().toString(), new Gson().toJson(craftedPearl));
-        jedis.expire("pearls:" + player.toString() + ":" + craftedPearl.getUUID().toString(), (int) TimeUnit.MILLISECONDS.toSeconds(craftedPearl.getExpiration()));
-        jedis.del("crafting-pearls:" + player.toString() + ":" + craftingPearlUUID.toString());
+        jedis.set("pearls:" + player.getUniqueId().toString() + ":" + craftedPearl.getUUID().toString(), new Gson().toJson(craftedPearl));
+        jedis.expire("pearls:" + player.getUniqueId().toString() + ":" + craftedPearl.getUUID().toString(), (int) TimeUnit.MILLISECONDS.toSeconds(craftedPearl.getExpiration()));
+        jedis.del("crafting-pearls:" + player.getUniqueId().toString() + ":" + craftingPearlUUID.toString());
 
         jedis.close();
     }
@@ -196,7 +197,7 @@ public class WellManager extends AbstractInteractionManager<Well> implements Lis
     {
         this.getPlayerCraftingPearls(player.getUniqueId()).stream().filter(craftingPearl -> craftingPearl.getCreation() < System.currentTimeMillis()).forEach(craftingPearl ->
         {
-            this.finalizePearlCrafting(player.getUniqueId(), craftingPearl.getUUID());
+            this.finalizePearlCrafting(player, craftingPearl.getUUID());
 
             if (!silent)
                 player.sendMessage(ChatColor.GREEN + "\u25C9 Une perle de " + ChatColor.AQUA + "niveau " + craftingPearl.getStars() + ChatColor.GREEN + " a terminée de se créer ! Echangez la auprès de " + ChatColor.GOLD + "Graou" + ChatColor.GREEN + " ! \u25C9");
