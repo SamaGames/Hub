@@ -38,6 +38,8 @@ public class WellManager extends AbstractInteractionManager<Well> implements Lis
     {
         super(hub, "well");
 
+        this.hub.getServer().getPluginManager().registerEvents(this, this.hub);
+
         this.craftingCheckTask = this.hub.getScheduledExecutorService().scheduleAtFixedRate(() ->
         {
             for (Player player : this.hub.getServer().getOnlinePlayers())
