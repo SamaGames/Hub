@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import net.samagames.hub.common.managers.AbstractManager;
+import net.samagames.tools.JsonConfiguration;
 import net.samagames.tools.LocationUtils;
 import net.samagames.tools.npc.nms.CustomNPC;
 import org.bukkit.ChatColor;
@@ -11,6 +12,9 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -24,7 +28,7 @@ public class NPCManager extends AbstractManager
 
     public NPCManager(Hub hub)
     {
-        super(hub, "npcs.json");
+        super(hub);
 
         this.npcs = new ArrayList<>();
 
@@ -55,4 +59,26 @@ public class NPCManager extends AbstractManager
 
     @Override
     public void onLogout(Player player) { /** Not needed **/ }
+
+    private JsonObject reloadConfiguration()
+    {
+        File configuration = new File(this.hub.getDataFolder(), "npcs.json");
+
+        if (!configuration.exists())
+        {
+            try(PrintWriter writer = new PrintWriter(configuration))
+            {
+                configuration.createNewFile();
+                writer.println("{}");
+                writer.close();
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+        }
+
+        JsonConfiguration npcsConfig = new JsonConfiguration(configuration);
+        return npcsConfig.load();
+    }
 }

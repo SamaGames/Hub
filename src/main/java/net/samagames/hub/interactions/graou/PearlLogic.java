@@ -159,7 +159,7 @@ class PearlLogic
                 }
             }
 
-            cosmeticSelected.buy(player, true);
+            cosmeticSelected.unlock(player);
         }
 
         return cosmeticSelected;

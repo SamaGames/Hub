@@ -28,26 +28,21 @@ class BalloonCosmetic extends AbstractCosmetic
     private Random random;
     private String name;
 
-    BalloonCosmetic(Hub hub, int storageId, EntityType entityType, int count) throws Exception
-    {
-        super(hub, storageId);
-        this.entityType = entityType;
-        this.count = count;
-        this.balloons = new HashMap<>();
-        this.random = new Random();
-        this.destroyTasks = new HashMap<>();
-        this.name = null;
-    }
-
     BalloonCosmetic(Hub hub, int storageId, EntityType entityType, String name, int count) throws Exception
     {
-        super(hub, storageId);
+        super(hub, "Ballon", storageId);
+
         this.entityType = entityType;
         this.count = count;
         this.balloons = new HashMap<>();
         this.random = new Random();
         this.destroyTasks = new HashMap<>();
         this.name = name;
+    }
+
+    BalloonCosmetic(Hub hub, int storageId, EntityType entityType, int count) throws Exception
+    {
+        this(hub, storageId, entityType, null, count);
     }
 
     public void spawn(Player player)

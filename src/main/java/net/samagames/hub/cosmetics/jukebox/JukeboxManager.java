@@ -108,7 +108,7 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
         }
         else
         {
-            cosmetic.buy(player, false);
+            player.sendMessage(PlayerManager.COSMETICS_TAG + ChatColor.RED + "Vous ne possédez pas ce cosmétique. Tentez de le débloquer auprès de Graou !");
         }
     }
 
