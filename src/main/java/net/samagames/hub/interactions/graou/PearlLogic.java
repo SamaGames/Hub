@@ -168,6 +168,8 @@ class PearlLogic
             cosmeticSelected.unlock(player);
         }
 
+        this.hub.getInteractionManager().getGraouManager().deletePlayerPearl(player.getUniqueId(), pearl.getUUID());
+
         return cosmeticSelected;
     }
 
