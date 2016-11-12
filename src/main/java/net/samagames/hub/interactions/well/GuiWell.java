@@ -163,6 +163,8 @@ class GuiWell extends AbstractGui
         craftMeta.setDisplayName(ChatColor.GREEN + "Emplacement disponible");
 
         List<String> craftLore = new ArrayList<>();
+        craftLore.add(ChatColor.DARK_GRAY + "Créer une perle");
+        craftLore.add("");
         craftLore.add(ChatColor.GRAY + "Cliquez pour utiliser cet emplacement");
         craftLore.add(ChatColor.GRAY + "afin de créer une perle en utilisant");
         craftLore.add(ChatColor.GRAY + "vos " + ChatColor.AQUA + "poussières d'\u272F" + ChatColor.GRAY + ".");
