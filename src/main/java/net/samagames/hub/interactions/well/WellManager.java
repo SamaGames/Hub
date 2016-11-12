@@ -155,6 +155,8 @@ public class WellManager extends AbstractInteractionManager<Well> implements Lis
 
         jedis.set("crafting-pearls:" + player.toString() + ":" + craftingPearl.getUUID().toString(), new Gson().toJson(craftingPearl));
         jedis.close();
+
+        SamaGamesAPI.get().getPlayerManager().getPlayerData(player).decreasePowders(64);
     }
 
     public void finalizePearlCrafting(UUID player, UUID craftingPearlUUID)
