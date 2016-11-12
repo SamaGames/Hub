@@ -32,7 +32,8 @@ class Well extends AbstractInteraction
         this.hologram = new Hologram(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "Puit magique", ChatColor.LIGHT_PURPLE + "Créez des perles avec vos poussières d'étoile");
         this.hologram.generateLines(standsLocation);
 
-        this.particleTask = hub.getServer().getScheduler().runTaskTimer(hub, () -> ParticleEffect.CRIT_MAGIC.display(0.25F, 0.25F, 0.25F, 0.25F, 5, this.cauldronLocation, 100.0D), 5L, 5L);
+        final Location particleCenter = cauldronLocation.clone().add(0.5D, 0.5D, 0.5D);
+        this.particleTask = hub.getServer().getScheduler().runTaskTimer(hub, () -> ParticleEffect.CRIT_MAGIC.display(0.5F, 0.5F, 0.5F, 0.35F, 10, particleCenter, 100.0D), 5L, 5L);
     }
 
     @Override
