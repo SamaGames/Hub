@@ -65,9 +65,6 @@ public class WellManager extends AbstractInteractionManager<Well> implements Lis
     {
         super.onLogin(player);
 
-        if (player.getName().equals("IamBlueSlime"))
-            SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).increasePowders(640);
-
         this.checkCrafts(player, true);
         this.interactions.forEach(well -> well.onLogin(player));
     }
