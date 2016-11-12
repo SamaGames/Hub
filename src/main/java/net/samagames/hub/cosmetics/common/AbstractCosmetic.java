@@ -26,10 +26,10 @@ public abstract class AbstractCosmetic implements Comparable<AbstractCosmetic>
     private final ItemStack icon;
     private final CosmeticRarity rarity;
     private final CosmeticAccessibility accessibility;
-    private final int stars;
+    private final int initialPrice;
     private String permissionNeededToView;
 
-    public AbstractCosmetic(Hub hub, int storageId) throws Exception
+    public AbstractCosmetic(Hub hub, String categoryName, int storageId) throws Exception
     {
         this.hub = hub;
         this.storageId = storageId;
@@ -42,62 +42,26 @@ public abstract class AbstractCosmetic implements Comparable<AbstractCosmetic>
         this.icon = PersistanceUtils.makeStack(hub, itemDescription);
         this.rarity = CosmeticRarity.valueOf(itemDescription.getItemRarity().toUpperCase());
         this.accessibility = CosmeticAccessibility.valueOf(itemDescription.getRankAccessibility().toUpperCase());
-        this.stars = itemDescription.getPriceStars();
+        this.initialPrice = itemDescription.getPriceStars();
 
         ItemMeta meta = this.icon.getItemMeta();
         meta.setDisplayName(ChatColor.RESET + "" + this.rarity.getColor() + itemDescription.getItemName());
 
+        List<String> lore = new ArrayList<>();
+        lore.add(ChatColor.DARK_GRAY + categoryName);
+        lore.add("");
+
+        if (meta.getLore() != null)
+            lore.addAll(meta.getLore());
+
+        meta.setLore(lore);
+
         this.icon.setItemMeta(meta);
     }
 
-    public void buy(Player player, boolean byGraou)
+    public void unlock(Player player)
     {
-        if (byGraou)
-        {
-            SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).addItem(this.storageId, 0, 0, false);
-        }
-        else
-        {
-            if (this.accessibility == CosmeticAccessibility.STAFF && !SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "network.staff"))
-            {
-                player.sendMessage(PlayerManager.COSMETICS_TAG + ChatColor.RED + "Vous n'êtes pas un membre de l'équipe.");
-                return;
-            }
-            else if (this.accessibility == CosmeticAccessibility.ADMIN && !SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "network.admin"))
-            {
-                player.sendMessage(PlayerManager.COSMETICS_TAG + ChatColor.RED + "Vous n'êtes pas un membre de l'administration.");
-                return;
-            }
-
-            if (!SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).hasEnoughStars(this.stars))
-            {
-                player.sendMessage(PlayerManager.COSMETICS_TAG + ChatColor.RED + "Vous n'avez pas assez d'étoiles pour acheter cela.");
-                return;
-            }
-
-            GuiConfirm confirm = new GuiConfirm(this.hub, (AbstractGui) this.hub.getGuiManager().getPlayerGui(player), (parent) ->
-            {
-                SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).withdrawStars(this.stars, (newAmount, difference, error) ->
-                {
-                    SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).addItem(this.storageId, 0, this.stars, false, (success, throwable) ->
-                    {
-                        if (success)
-                        {
-                            this.hub.getScoreboardManager().update(player);
-                            this.hub.getGuiManager().openGui(player, parent);
-
-                            player.sendMessage(PlayerManager.COSMETICS_TAG + ChatColor.GREEN + "Votre achat a bien été effectué, vous pouvez maintenant utiliser votre cosmétique.");
-                        }
-                        else
-                        {
-                            throwable.printStackTrace();
-                        }
-                    });
-                });
-            });
-
-            this.hub.getGuiManager().openGui(player, confirm);
-        }
+        SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).addItem(this.storageId, 0, 0, false);
     }
 
     public ItemStack getIcon()
@@ -124,20 +88,20 @@ public abstract class AbstractCosmetic implements Comparable<AbstractCosmetic>
 
             if (this.accessibility != CosmeticAccessibility.ALL)
             {
-                lore.add(ChatColor.WHITE + "Nécessite le grade " + this.accessibility.getDisplay() + ChatColor.WHITE + " !");
+                lore.add(ChatColor.GRAY + "Vous devez posséder le grade");
+                lore.add(this.accessibility.getDisplay() + ChatColor.GRAY + " pour pouvoir utiliser");
+                lore.add(ChatColor.GRAY + "ce cosmétique.");
                 lore.add("");
             }
 
             if (this.accessibility != CosmeticAccessibility.STAFF && this.accessibility != CosmeticAccessibility.ADMIN)
             {
-                lore.add(ChatColor.WHITE + "Débloquez cet objet auprès de " + "Graou");
-                lore.add(ChatColor.WHITE + " ou achetez le pour " + ChatColor.AQUA + NumberUtils.format(this.stars));
-                lore.add(ChatColor.AQUA + "étoiles" + ChatColor.WHITE + " !");
+                lore.add(ChatColor.YELLOW + "Echangez une perle à " + ChatColor.GOLD + "Graou" + ChatColor.YELLOW + " pour");
+                lore.add(ChatColor.YELLOW + "tenter de débloquer ce cosmétique.");
             }
             else
             {
-                lore.add(ChatColor.WHITE + "Débloquez cet objet pour " + ChatColor.AQUA + "1");
-                lore.add(ChatColor.AQUA + "étoile" + ChatColor.WHITE + " symbolique !");
+                lore.add(ChatColor.YELLOW + "Cliquez pour débloquer ce cosmétique.");
             }
 
             cloned.removeEnchantment(GlowEffect.getGlow());
@@ -159,6 +123,11 @@ public abstract class AbstractCosmetic implements Comparable<AbstractCosmetic>
     public int getStorageId()
     {
         return this.storageId;
+    }
+
+    public int getRefundPrice()
+    {
+        return 10 * this.initialPrice / 100;
     }
 
     public CosmeticRarity getRarity()

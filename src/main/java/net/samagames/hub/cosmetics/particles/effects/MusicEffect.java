@@ -1,10 +1,9 @@
-package net.samagames.hub.cosmetics.particles.types;
+package net.samagames.hub.cosmetics.particles.effects;
 
 import de.slikey.effectlib.Effect;
 import de.slikey.effectlib.EffectManager;
 import de.slikey.effectlib.EffectType;
 import de.slikey.effectlib.util.ParticleEffect;
-import org.bukkit.Color;
 
 import java.util.Random;
 

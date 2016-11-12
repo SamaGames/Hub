@@ -23,44 +23,40 @@ import java.util.UUID;
  * ＿＿╱▕▔▔▏╲＿＿
  * ＿＿▔▔＿＿▔▔＿＿
  */
-public class NPCHostGame {
-
-    private UUID event;
-
-    private UUID creator;
-    private String name;
-
-    private CustomNPC npc;
+public class NPCHostGame
+{
+    private final UUID event;
+    private final UUID creator;
+    private final String name;
+    private final CustomNPC npc;
 
     public NPCHostGame(Location location, HostGameInfoToHubPacket packet)
     {
-
         this.event = packet.getEvent();
         this.creator = packet.getCreator();
         this.name = SamaGamesAPI.get().getUUIDTranslator().getName(packet.getCreator());
 
-        npc = SamaGamesAPI.get().getNPCManager().createNPC(location, packet.getCreator(),
-                new String[]{
-                        ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "Nouvel Evenement !"
+        this.npc = SamaGamesAPI.get().getNPCManager().createNPC(location, packet.getCreator(), new String[] {
+                ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "Nouvel Evenement !"
         });
-        update(packet);
+
+        this.update(packet);
     }
 
     public void update(HostGameInfoToHubPacket packet)
     {
-        if(!packet.getEvent().equals(event))
+        if(!packet.getEvent().equals(this.event))
             return;
 
-        Hologram hologram = npc.getHologram();
-        hologram.change(
-                new String[]{
-                        ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "Evenement " + name,
-                        ChatColor.GOLD + "" + packet.getTotalPlayerOnServers() + ChatColor.AQUA +  "/" + ChatColor.RED + packet.getPlayerMaxForMap()
-                });
+        Hologram hologram = this.npc.getHologram();
+        hologram.change(new String[] {
+                ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "Evènement " + this.name,
+                ChatColor.GOLD + "" + packet.getTotalPlayerOnServers() + ChatColor.AQUA +  "/" + ChatColor.RED + packet.getPlayerMaxForMap()
+        });
     }
 
     public void remove()
     {
-        SamaGamesAPI.get().getNPCManager().removeNPC(npc);
+        SamaGamesAPI.get().getNPCManager().removeNPC(this.npc);
     }
 }

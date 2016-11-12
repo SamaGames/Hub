@@ -13,7 +13,7 @@ class DisguiseCosmetic extends AbstractCosmetic
 
     DisguiseCosmetic(Hub hub, int storageId, DisguiseType disguiseType) throws Exception
     {
-        super(hub, storageId);
+        super(hub, "Déguisement", storageId);
 
         this.disguiseType = disguiseType;
     }

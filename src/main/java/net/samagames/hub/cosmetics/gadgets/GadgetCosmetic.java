@@ -17,7 +17,7 @@ class GadgetCosmetic extends AbstractCosmetic
 
     GadgetCosmetic(Hub hub, int storageId, Class<? extends AbstractDisplayer> clazz, int cooldown) throws Exception
     {
-        super(hub, storageId);
+        super(hub, "Gadget", storageId);
 
         this.clazz = clazz;
         this.cooldown = cooldown;

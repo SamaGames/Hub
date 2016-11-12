@@ -1,4 +1,4 @@
-package net.samagames.hub.cosmetics.particles.types;
+package net.samagames.hub.cosmetics.particles.effects;
 
 import java.util.Random;
 

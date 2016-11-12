@@ -40,13 +40,13 @@ public abstract class AbstractGui extends net.samagames.api.gui.AbstractGui
         return stack;
     }
 
-    protected static ItemStack getStarsIcon(Player player)
+    protected static ItemStack getPowdersIcon(Player player)
     {
-        long stars = SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).getStars();
+        long powders = SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).getPowders();
 
-        ItemStack stack = new ItemStack(Material.NETHER_STAR, 1);
+        ItemStack stack = new ItemStack(Material.SUGAR, 1);
         ItemMeta meta = stack.getItemMeta();
-        meta.setDisplayName(ChatColor.AQUA + "Vous avez " + NumberUtils.format(stars) + " étoiles");
+        meta.setDisplayName(ChatColor.AQUA + "Vous avez " + NumberUtils.format(powders) + " poussières d'étoile");
         stack.setItemMeta(meta);
 
         return stack;

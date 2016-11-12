@@ -14,7 +14,7 @@ class PetCosmetic extends AbstractCosmetic
 
     PetCosmetic(Hub hub, int storageId, PetType petType, PetData... petDatas) throws Exception
     {
-        super(hub, storageId);
+        super(hub, "Animal de compagnie", storageId);
 
         this.petType = petType;
         this.petDatas = petDatas;

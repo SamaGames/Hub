@@ -37,7 +37,6 @@ public class PlayerManager extends AbstractManager
     public static final float FLY_SPEED = 0.15F;
 
     private final Map<UUID, Location> selections;
-    private final Map<UUID, BukkitTask> rulesBookTasks;
     private final List<UUID> hiders;
     private final StaticInventory staticInventory;
     private final Location spawn;
@@ -49,7 +48,6 @@ public class PlayerManager extends AbstractManager
         super(hub);
 
         this.selections = new HashMap<>();
-        this.rulesBookTasks = new HashMap<>();
         this.hiders = new ArrayList<>();
         this.staticInventory = new StaticInventory(hub);
         this.spawn = LocationUtils.str2loc(hub.getConfig().getString("spawn"));
@@ -63,9 +61,6 @@ public class PlayerManager extends AbstractManager
     {
         this.selections.clear();
         this.hiders.clear();
-
-        this.rulesBookTasks.values().forEach(BukkitTask::cancel);
-        this.rulesBookTasks.clear();
     }
 
     @Override
@@ -216,26 +211,6 @@ public class PlayerManager extends AbstractManager
     public void setSelection(Player player, Location selection)
     {
         this.selections.put(player.getUniqueId(), selection);
-    }
-
-    public void setRulesBookTask(Player player, BukkitTask bukkitTask)
-    {
-        if (this.rulesBookTasks.containsKey(player.getUniqueId()))
-        {
-            this.rulesBookTasks.get(player.getUniqueId()).cancel();
-            this.rulesBookTasks.remove(player.getUniqueId());
-        }
-
-        this.rulesBookTasks.put(player.getUniqueId(), bukkitTask);
-    }
-
-    public void removeRulesBookTask(Player player)
-    {
-        if (this.rulesBookTasks.containsKey(player.getUniqueId()))
-        {
-            this.rulesBookTasks.get(player.getUniqueId()).cancel();
-            this.rulesBookTasks.remove(player.getUniqueId());
-        }
     }
 
     public void setBuild(boolean canBuild)

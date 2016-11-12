@@ -1,4 +1,4 @@
-package net.samagames.hub.cosmetics.particles.types;
+package net.samagames.hub.cosmetics.particles.effects;
 
 import de.slikey.effectlib.Effect;
 import de.slikey.effectlib.EffectManager;
@@ -7,12 +7,11 @@ import de.slikey.effectlib.util.ParticleEffect;
 
 import java.util.Random;
 
-public class LoverEffect extends Effect
+public class NervousEffect extends Effect
 {
-
     private Random random;
 
-    public LoverEffect(EffectManager effectManager)
+    public NervousEffect(EffectManager effectManager)
     {
         super(effectManager);
         this.type = EffectType.REPEATING;
@@ -27,6 +26,6 @@ public class LoverEffect extends Effect
     {
         double dx = this.random.nextDouble() % 0.2F;
         double dz = this.random.nextDouble() % 0.2F;
-        display(ParticleEffect.HEART, this.getEntity().getLocation().add(dx, 2D, dz));
+        display(ParticleEffect.VILLAGER_ANGRY, this.getEntity().getLocation().add(dx, 2D, dz));
     }
 }

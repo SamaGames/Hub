@@ -2,7 +2,7 @@ package net.samagames.hub.cosmetics.particles;
 
 import net.samagames.hub.Hub;
 import net.samagames.hub.cosmetics.common.AbstractCosmeticRegistry;
-import net.samagames.hub.cosmetics.particles.types.*;
+import net.samagames.hub.cosmetics.particles.effects.*;
 
 class ParticleRegistry extends AbstractCosmeticRegistry<ParticleCosmetic>
 {

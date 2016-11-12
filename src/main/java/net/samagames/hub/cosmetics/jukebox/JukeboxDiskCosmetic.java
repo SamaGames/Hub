@@ -17,7 +17,7 @@ public class JukeboxDiskCosmetic extends AbstractCosmetic
 
     public JukeboxDiskCosmetic(Hub hub, int storageId, Song song, int seconds) throws Exception
     {
-        super(hub, storageId);
+        super(hub, "Disque", storageId);
 
         this.song = song;
         this.seconds = seconds;

@@ -13,7 +13,7 @@ class ParticleCosmetic extends AbstractCosmetic
 
     ParticleCosmetic(Hub hub, int storageId, Class<? extends Effect> particleEffect) throws Exception
     {
-        super(hub, storageId);
+        super(hub, "Particule", storageId);
 
         this.particleEffect = particleEffect;
     }
