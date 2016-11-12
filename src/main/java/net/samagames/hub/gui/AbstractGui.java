@@ -46,7 +46,7 @@ public abstract class AbstractGui extends net.samagames.api.gui.AbstractGui
 
         ItemStack stack = new ItemStack(Material.SUGAR, 1);
         ItemMeta meta = stack.getItemMeta();
-        meta.setDisplayName(ChatColor.AQUA + "Vous avez " + NumberUtils.format(powders) + " poussières d'étoile");
+        meta.setDisplayName(ChatColor.AQUA + "Vous avez " + NumberUtils.format(powders) + " poussières d'\u272F");
         stack.setItemMeta(meta);
 
         return stack;

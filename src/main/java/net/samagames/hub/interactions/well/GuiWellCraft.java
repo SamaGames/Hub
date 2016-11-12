@@ -87,7 +87,7 @@ public class GuiWellCraft extends AbstractGui
         {
             if (this.getRemainingPowders() == 0)
             {
-                this.hub.getInteractionManager().getWellManager().startPearlCrafting(player.getUniqueId(), this.numbers);
+                this.hub.getInteractionManager().getWellManager().startPearlCrafting(player, this.numbers);
                 this.hub.getGuiManager().openGui(player, new GuiWell(this.hub, this.parent));
             }
             else
