@@ -189,6 +189,8 @@ public class WellManager extends AbstractInteractionManager<Well> implements Lis
         jedis.del("crafting-pearls:" + player.getUniqueId().toString() + ":" + craftingPearlUUID.toString());
 
         jedis.close();
+
+        this.hub.getInteractionManager().getGraouManager().update(player);
     }
 
     public void checkCrafts(Player player, boolean silent)
