@@ -2,6 +2,7 @@ package net.samagames.hub.interactions.well;
 
 import net.samagames.hub.Hub;
 import net.samagames.hub.gui.AbstractGui;
+import net.samagames.tools.GlowEffect;
 import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
@@ -173,7 +174,7 @@ public class GuiWellCraft extends AbstractGui
 
         // ---
 
-        HELP = new ItemStack(Material.WRITTEN_BOOK, 1);
+        HELP = new ItemStack(Material.BOOK, 1);
 
         ItemMeta helpMeta = CONFIRM.getItemMeta();
         helpMeta.setDisplayName(ChatColor.YELLOW + "Aide");
@@ -196,5 +197,7 @@ public class GuiWellCraft extends AbstractGui
         helpMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 
         HELP.setItemMeta(helpMeta);
+
+        GlowEffect.addGlow(HELP);
     }
 }
