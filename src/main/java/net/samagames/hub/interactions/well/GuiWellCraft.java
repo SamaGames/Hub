@@ -25,6 +25,7 @@ import java.util.stream.IntStream;
 public class GuiWellCraft extends AbstractGui
 {
     private static final ItemStack CONFIRM;
+    private static final ItemStack HELP;
 
     private final Well parent;
     private final int[] numbers;
@@ -62,8 +63,8 @@ public class GuiWellCraft extends AbstractGui
             this.setSlotData(makeNumberSlot(i), slots[i], "slot_" + i);
 
         this.setSlotData(CONFIRM, 31, "confirm");
-
-        this.setSlotData(getBackIcon(), this.inventory.getSize() - 5, "back");
+        this.setSlotData(HELP, this.inventory.getSize() - 6, "back");
+        this.setSlotData(getBackIcon(), this.inventory.getSize() - 4, "back");
     }
 
     @Override
@@ -113,11 +114,7 @@ public class GuiWellCraft extends AbstractGui
         lore.add("");
         lore.add(ChatColor.GRAY + "Vous devez encore placer " + ChatColor.AQUA + remaining);
         lore.add(ChatColor.AQUA + "poussières d'\u272F" + ChatColor.GRAY + " avant de");
-        lore.add(ChatColor.GRAY + "valider votre placement.");
-        lore.add("");
-        lore.add(ChatColor.GRAY + "Vous êtes entièrement libre de");
-        lore.add(ChatColor.GRAY + "placer vos" + ChatColor.AQUA + "64 poussières d'\u272F" + ChatColor.GRAY + " comme");
-        lore.add(ChatColor.GRAY + "vous le souhaitez.");
+        lore.add(ChatColor.GRAY + "pouvoir valider.");
 
         meta.setLore(lore);
 
@@ -130,17 +127,16 @@ public class GuiWellCraft extends AbstractGui
     {
         ItemStack stack = new ItemStack(Material.SUGAR, this.numbers[slot]);
         ItemMeta meta = stack.getItemMeta();
-        meta.setDisplayName(ChatColor.AQUA + "" + this.numbers[slot] + " poussières d'\u272F");
+        meta.setDisplayName(ChatColor.AQUA + "" + this.numbers[slot] + " poussière" + (this.numbers[slot] > 1 ? "s" : "") + " d'\u272F");
 
         List<String> lore = new ArrayList<>();
         lore.add(ChatColor.DARK_GRAY + "Emplacement n°" + (slot + 1));
         lore.add("");
-        lore.add(ChatColor.GRAY + "Vous avez placé " + ChatColor.AQUA + "" + this.numbers[slot]);
-        lore.add(ChatColor.AQUA + "poussières d'\u272F" + ChatColor.GRAY + " dans");
-        lore.add(ChatColor.GRAY + "cet emplacement.");
+        lore.add(ChatColor.GRAY + "Vous avez placé " + ChatColor.AQUA + "" + this.numbers[slot] + "poussière" + (this.numbers[slot] > 1 ? "s" : ""));
+        lore.add(ChatColor.AQUA + "d'\u272F" + ChatColor.GRAY + " dans cet emplacement.");
         lore.add("");
-        lore.add(ChatColor.DARK_GRAY + "Clic gauche : " + ChatColor.WHITE + "Ajouter");
-        lore.add(ChatColor.DARK_GRAY + "Clic droit : " + ChatColor.WHITE + "Retirer");
+        lore.add(ChatColor.DARK_GRAY + "\u25B6 Clic gauche pour ajouter");
+        lore.add(ChatColor.DARK_GRAY + "\u25B6 Clic droit pour retirer");
 
         meta.setLore(lore);
 
@@ -186,7 +182,7 @@ public class GuiWellCraft extends AbstractGui
 
     static
     {
-        CONFIRM = new ItemStack(Material.STAINED_GLASS, 1, DyeColor.GREEN.getDyeData());
+        CONFIRM = new ItemStack(Material.STAINED_GLASS, 1, DyeColor.GREEN.getWoolData());
 
         ItemMeta confirmMeta = CONFIRM.getItemMeta();
         confirmMeta.setDisplayName(ChatColor.GREEN + "Valider le placement");
@@ -197,5 +193,30 @@ public class GuiWellCraft extends AbstractGui
         confirmMeta.setLore(confirmLore);
 
         CONFIRM.setItemMeta(confirmMeta);
+
+        // ---
+
+        HELP = new ItemStack(Material.WRITTEN_BOOK, 1);
+
+        ItemMeta helpMeta = CONFIRM.getItemMeta();
+        helpMeta.setDisplayName(ChatColor.YELLOW + "Aide");
+
+        List<String> helpLore = new ArrayList<>();
+        helpLore.add(ChatColor.DARK_GRAY + "Commence ça marche ?");
+        helpLore.add("");
+        helpLore.add(ChatColor.GRAY + "Vous devez placer un total de " + ChatColor.AQUA + "64");
+        helpLore.add(ChatColor.AQUA + "poussières d'\u272F " + ChatColor.GRAY + "dans " + ChatColor.YELLOW + "4" + ChatColor.GRAY + " emplacements");
+        helpLore.add(ChatColor.GRAY + "différents.");
+        helpLore.add("");
+        helpLore.add(ChatColor.GRAY + "A la manière d'une lotterie, plus vous");
+        helpLore.add(ChatColor.GRAY + "vous rapprochez des nombres aléatoires,");
+        helpLore.add(ChatColor.GRAY + "plus le niveau de votre perle sera élevé.");
+        helpLore.add("");
+        helpLore.add(ChatColor.YELLOW + "Note : " + ChatColor.GRAY + "Les numéros sont aléatoires et");
+        helpLore.add(ChatColor.GRAY + "ne sont pas éloignés les uns des autres.");
+
+        helpMeta.setLore(helpLore);
+
+        HELP.setItemMeta(helpMeta);
     }
 }
