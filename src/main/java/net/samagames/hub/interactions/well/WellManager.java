@@ -1,7 +1,12 @@
 package net.samagames.hub.interactions.well;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import net.md_5.bungee.api.ChatColor;
+import net.samagames.api.SamaGamesAPI;
+import net.samagames.api.games.pearls.CraftingPearl;
+import net.samagames.api.games.pearls.Pearl;
 import net.samagames.hub.Hub;
 import net.samagames.hub.interactions.AbstractInteractionManager;
 import net.samagames.tools.LocationUtils;
@@ -11,8 +16,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
+import redis.clients.jedis.Jedis;
 
-import java.util.Optional;
+import java.util.*;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
 /**
@@ -24,9 +32,25 @@ import java.util.logging.Level;
  */
 public class WellManager extends AbstractInteractionManager<Well> implements Listener
 {
+    private final ScheduledFuture craftingCheckTask;
+
     public WellManager(Hub hub)
     {
         super(hub, "well");
+
+        this.craftingCheckTask = this.hub.getScheduledExecutorService().scheduleAtFixedRate(() ->
+        {
+            for (Player player : this.hub.getServer().getOnlinePlayers())
+                this.checkCrafts(player, false);
+        }, 1, 1, TimeUnit.MINUTES);
+    }
+
+    @Override
+    public void onDisable()
+    {
+        super.onDisable();
+
+        this.craftingCheckTask.cancel(true);
     }
 
     @Override
@@ -34,6 +58,7 @@ public class WellManager extends AbstractInteractionManager<Well> implements Lis
     {
         super.onLogin(player);
 
+        this.checkCrafts(player, true);
         this.interactions.forEach(well -> well.onLogin(player));
     }
 
@@ -75,6 +100,103 @@ public class WellManager extends AbstractInteractionManager<Well> implements Lis
             this.interactions.add(well);
             this.log(Level.INFO, "Registered Well at '" + wellJson.get("cauldron").getAsString());
         }
+    }
+
+    public void startPearlCrafting(UUID player, int[] digits, int[] expectedDigits)
+    {
+        int differenceSum = 0;
+
+        for (int i = 0; i < digits.length; i++)
+            differenceSum += Math.abs(digits[i] - expectedDigits[i]);
+
+        int pearlStars = 1;
+
+        if (differenceSum < 8)
+            pearlStars = 5;
+        else if (differenceSum < 12)
+            pearlStars = 4;
+        else if (differenceSum < 20)
+            pearlStars = 3;
+        else if (differenceSum < 32)
+            pearlStars = 2;
+
+        int craftingTime = 60; // 60 minutes
+        long groupId = SamaGamesAPI.get().getPermissionsManager().getPlayer(player).getGroupId();
+
+        if (groupId > 2)
+            groupId = 3;
+
+        craftingTime -= 15 * (groupId - 1);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.MINUTE, craftingTime);
+
+        CraftingPearl craftingPearl = new CraftingPearl(UUID.randomUUID(), pearlStars, calendar.getTime().getTime());
+
+        Jedis jedis = SamaGamesAPI.get().getBungeeResource();
+
+        if (jedis == null)
+            return;
+
+        jedis.set("crafting-pearls:" + player.toString() + ":" + craftingPearl.getUUID().toString(), new Gson().toJson(craftingPearl));
+        jedis.close();
+    }
+
+    public void finalizePearlCrafting(UUID player, UUID craftingPearlUUID)
+    {
+        Jedis jedis = SamaGamesAPI.get().getBungeeResource();
+
+        if (jedis == null)
+            return;
+
+        CraftingPearl craftingPearl = null;
+
+        if (jedis.exists("crafting-pearls:" + player.toString() + ":" + craftingPearlUUID.toString()))
+            craftingPearl = new Gson().fromJson(jedis.get("crafting-pearls:" + player.toString() + ":" + craftingPearlUUID.toString()), CraftingPearl.class);
+
+        if (craftingPearl == null)
+        {
+            jedis.close();
+            return;
+        }
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.MONTH, 1);
+
+        Pearl craftedPearl = new Pearl(craftingPearl.getUUID(), craftingPearl.getStars(), calendar.getTime().getTime());
+
+        jedis.set("pearls:" + player.toString() + ":" + craftedPearl.getUUID().toString(), new Gson().toJson(craftedPearl));
+        jedis.expire("pearls:" + player.toString() + ":" + craftedPearl.getUUID().toString(), (int) TimeUnit.MILLISECONDS.toSeconds(craftedPearl.getExpiration()));
+        jedis.del("crafting-pearls:" + player.toString() + ":" + craftingPearlUUID.toString());
+
+        jedis.close();
+    }
+
+    public void checkCrafts(Player player, boolean silent)
+    {
+        this.getPlayerCraftingPearls(player.getUniqueId()).stream().filter(craftingPearl -> craftingPearl.getCreationInMinutes() < System.currentTimeMillis()).forEach(craftingPearl ->
+        {
+            this.finalizePearlCrafting(player.getUniqueId(), craftingPearl.getUUID());
+
+            if (!silent)
+                player.sendMessage(ChatColor.GREEN + "\u25C9 Une perle de " + ChatColor.AQUA + "niveau " + craftingPearl.getStars() + ChatColor.GREEN + " a terminée de se créer ! Echangez la auprès de " + ChatColor.GOLD + "Graou" + ChatColor.GREEN + " ! \u25C9");
+        });
+    }
+
+    public List<CraftingPearl> getPlayerCraftingPearls(UUID player)
+    {
+        List<CraftingPearl> craftingPearls = new ArrayList<>();
+        Jedis jedis = SamaGamesAPI.get().getBungeeResource();
+
+        if (jedis == null)
+            return craftingPearls;
+
+        for (String key : jedis.keys("crafting-pearls:" + player.toString() + ":*"))
+            craftingPearls.add(new Gson().fromJson(jedis.get(key), CraftingPearl.class));
+
+        jedis.close();
+
+        return craftingPearls;
     }
 
     private static Location normalize(Location location)

@@ -179,7 +179,7 @@ class PearlLogic
         meta.setDisplayName(ChatColor.GREEN + "Perle");
 
         List<String> lore = new ArrayList<>();
-        lore.add(ChatColor.DARK_GRAY + "Niveau " + pearl.getStars());
+        lore.add(ChatColor.DARK_GRAY + "Niveau " + ChatColor.GREEN + pearl.getStars());
         lore.add("");
         lore.add(ChatColor.GRAY + "Cette perle si brillante et si");
         lore.add(ChatColor.GRAY + "mystérieuse en fait envier plus");

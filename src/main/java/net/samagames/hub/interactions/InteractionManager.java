@@ -93,4 +93,9 @@ public class InteractionManager extends AbstractManager
     {
         return this.graouManager;
     }
+
+    public WellManager getWellManager()
+    {
+        return this.wellManager;
+    }
 }

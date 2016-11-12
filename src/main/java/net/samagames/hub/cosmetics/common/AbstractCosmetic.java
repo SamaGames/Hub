@@ -127,7 +127,7 @@ public abstract class AbstractCosmetic implements Comparable<AbstractCosmetic>
 
     public int getRefundPrice()
     {
-        return 10 * this.initialPrice / 100;
+        return this.initialPrice / 100;
     }
 
     public CosmeticRarity getRarity()

@@ -47,6 +47,9 @@ class GuiGraou extends AbstractGui
 
         for (Pearl pearl : this.hub.getInteractionManager().getGraouManager().getPlayerPearls(player.getUniqueId()))
         {
+            if (this.pearls.size() == 24)
+                break;
+
             this.setSlotData(this.hub.getInteractionManager().getGraouManager().getPearlLogic().getIcon(pearl), baseSlots[slot] + (lines * 9), "pearl_" + pearl.getUUID());
 
             slot++;
