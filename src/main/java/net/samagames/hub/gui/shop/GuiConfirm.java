@@ -73,7 +73,7 @@ public class GuiConfirm extends AbstractGui
                 this.callback.run(this.parent);
             });
         }
-        else if (action.equals("cancer") && !this.isInProgress)
+        else if (action.equals("cancel") && !this.isInProgress)
         {
             this.hub.getGuiManager().openGui(player, this.parent);
         }
@@ -91,7 +91,6 @@ public class GuiConfirm extends AbstractGui
 
     static
     {
-        //noinspection deprecation
         WAITING_STACK = new ItemStack(Material.STAINED_GLASS, 1, DyeColor.YELLOW.getWoolData());
 
         ItemMeta meta = WAITING_STACK.getItemMeta();

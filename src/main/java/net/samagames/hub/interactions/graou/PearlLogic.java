@@ -143,6 +143,8 @@ class PearlLogic
             player.sendMessage(ChatColor.GOLD + "\u272F " + ChatColor.YELLOW + "Graou vous offre alors " + ChatColor.AQUA + cosmeticSelected.getRefundPrice() + " poussières d'\u272F" + ChatColor.GOLD + " \u272F");
 
             SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).increasePowders(cosmeticSelected.getRefundPrice());
+
+            this.hub.getScoreboardManager().update(player);
         }
         else
         {
