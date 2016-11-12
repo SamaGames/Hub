@@ -65,6 +65,9 @@ public class WellManager extends AbstractInteractionManager<Well> implements Lis
     {
         super.onLogin(player);
 
+        if (player.getName().equals("IamBlueSlime"))
+            SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).increasePowders(640);
+
         this.checkCrafts(player, true);
         this.interactions.forEach(well -> well.onLogin(player));
     }
@@ -191,7 +194,7 @@ public class WellManager extends AbstractInteractionManager<Well> implements Lis
 
     public void checkCrafts(Player player, boolean silent)
     {
-        this.getPlayerCraftingPearls(player.getUniqueId()).stream().filter(craftingPearl -> craftingPearl.getCreationInMinutes() < System.currentTimeMillis()).forEach(craftingPearl ->
+        this.getPlayerCraftingPearls(player.getUniqueId()).stream().filter(craftingPearl -> craftingPearl.getCreation() < System.currentTimeMillis()).forEach(craftingPearl ->
         {
             this.finalizePearlCrafting(player.getUniqueId(), craftingPearl.getUUID());
 
