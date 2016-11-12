@@ -72,7 +72,7 @@ class Meow extends AbstractInteraction
 
         int fishes = 0;
 
-        for (Bonus bonus : MeowManager.getBonus())
+        for (Bonus bonus : this.hub.getInteractionManager().getMeowManager().getBonus())
             if (bonus.isAbleFor(player))
                 fishes++;
 
@@ -124,7 +124,7 @@ class Meow extends AbstractInteraction
     {
         int fishes = 0;
 
-        for (Bonus bonus : MeowManager.getBonus())
+        for (Bonus bonus : this.hub.getInteractionManager().getMeowManager().getBonus())
             if (bonus.isAbleFor(player))
                 fishes++;
 

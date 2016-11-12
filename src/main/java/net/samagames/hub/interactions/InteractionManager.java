@@ -89,6 +89,11 @@ public class InteractionManager extends AbstractManager
         return false;
     }
 
+    public MeowManager getMeowManager()
+    {
+        return this.meowManager;
+    }
+
     public GraouManager getGraouManager()
     {
         return this.graouManager;
