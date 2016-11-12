@@ -115,12 +115,6 @@ class Graou extends AbstractInteraction
     @Override
     public void play(Player player)
     {
-        if (this.animationTask != null)
-        {
-            player.sendMessage(TAG + ChatColor.RED + "Je suis actuellement occupé avec un autre joueur.");
-            return;
-        }
-
         this.hub.getGuiManager().openGui(player, new GuiGraou(this.hub, this));
         player.playSound(player.getLocation(), Sound.ENTITY_CAT_AMBIENT, 1.0F, 1.0F);
 
