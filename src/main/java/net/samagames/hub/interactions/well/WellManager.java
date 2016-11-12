@@ -109,8 +109,9 @@ public class WellManager extends AbstractInteractionManager<Well> implements Lis
         }
     }
 
-    public void startPearlCrafting(UUID player, int[] numbers, int[] expectedNumbers)
+    public void startPearlCrafting(UUID player, int[] numbers)
     {
+        int[] expectedNumbers = generateRandomNumbers();
         int pearlStars = 1;
 
         if (Arrays.equals(numbers, new int[] {24, 6, 20, 14})) // 24 June 2014
@@ -211,6 +212,36 @@ public class WellManager extends AbstractInteractionManager<Well> implements Lis
         jedis.close();
 
         return craftingPearls;
+    }
+
+    private static int[] generateRandomNumbers()
+    {
+        int[] parts = new int[4];
+        int n = 10;
+        int sum = 0;
+
+        Random random = new Random();
+
+        for (int i = 0; i < 4; i++)
+            parts[i] = random.nextInt(100);
+
+        for (int i = 0; i < 4; i++)
+        {
+            parts[i] = (int) Math.floor(parts[i] * n / 100 + 10);
+            sum += parts[i];
+        }
+
+        int diff = 64 - sum;
+        int i = 0;
+
+        while (diff != 0)
+        {
+            parts[i] += diff > 0 ? 1 : -1;
+            diff += diff > 0 ? -1 : 1;
+            i = (i + 1) % 4;
+        }
+
+        return parts;
     }
 
     private static Location normalize(Location location)

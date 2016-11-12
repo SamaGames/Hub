@@ -29,7 +29,6 @@ public class GuiWellCraft extends AbstractGui
 
     private final Well parent;
     private final int[] numbers;
-    private final int[] expectedNumbers;
 
     GuiWellCraft(Hub hub, Well parent)
     {
@@ -37,7 +36,6 @@ public class GuiWellCraft extends AbstractGui
 
         this.parent = parent;
         this.numbers = new int[4];
-        this.expectedNumbers = generateRandomNumbers();
     }
 
     @Override
@@ -87,7 +85,15 @@ public class GuiWellCraft extends AbstractGui
         }
         else if (action.equals("confirm"))
         {
-
+            if (this.getRemainingPowders() == 0)
+            {
+                this.hub.getInteractionManager().getWellManager().startPearlCrafting(player.getUniqueId(), this.numbers);
+                this.hub.getGuiManager().openGui(player, new GuiWell(this.hub, this.parent));
+            }
+            else
+            {
+                player.sendMessage(Well.TAG + ChatColor.RED + "Vous devez placer l'intégralité des poussières d'\u272F !");
+            }
         }
         else if (action.equals("back"))
         {
@@ -148,36 +154,6 @@ public class GuiWellCraft extends AbstractGui
     private int getRemainingPowders()
     {
         return 64 - IntStream.of(this.numbers).sum();
-    }
-
-    private static int[] generateRandomNumbers()
-    {
-        int[] parts = new int[4];
-        int n = 10;
-        int sum = 0;
-
-        Random random = new Random();
-
-        for (int i = 0; i < 4; i++)
-            parts[i] = random.nextInt(100);
-
-        for (int i = 0; i < 4; i++)
-        {
-            parts[i] = (int) Math.floor(parts[i] * n / 100 + 10);
-            sum += parts[i];
-        }
-
-        int diff = 64 - sum;
-        int i = 0;
-
-        while (diff != 0)
-        {
-            parts[i] += diff > 0 ? 1 : -1;
-            diff += diff > 0 ? -1 : 1;
-            i = (i + 1) % 4;
-        }
-
-        return parts;
     }
 
     static
