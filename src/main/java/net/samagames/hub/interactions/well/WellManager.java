@@ -43,7 +43,12 @@ public class WellManager extends AbstractInteractionManager<Well> implements Lis
         this.craftingCheckTask = this.hub.getScheduledExecutorService().scheduleAtFixedRate(() ->
         {
             for (Player player : this.hub.getServer().getOnlinePlayers())
+            {
                 this.checkCrafts(player, false);
+
+                if (this.hub.getGuiManager().getPlayerGui(player) != null && this.hub.getGuiManager().getPlayerGui(player) instanceof GuiWell)
+                    this.hub.getGuiManager().getPlayerGui(player).update(player);
+            }
         }, 1, 1, TimeUnit.MINUTES);
     }
 
@@ -104,23 +109,30 @@ public class WellManager extends AbstractInteractionManager<Well> implements Lis
         }
     }
 
-    public void startPearlCrafting(UUID player, int[] digits, int[] expectedDigits)
+    public void startPearlCrafting(UUID player, int[] numbers, int[] expectedNumbers)
     {
-        int differenceSum = 0;
-
-        for (int i = 0; i < digits.length; i++)
-            differenceSum += Math.abs(digits[i] - expectedDigits[i]);
-
         int pearlStars = 1;
 
-        if (differenceSum < 8)
+        if (Arrays.equals(numbers, new int[] {24, 6, 20, 14})) // 24 June 2014
+        {
             pearlStars = 5;
-        else if (differenceSum < 12)
-            pearlStars = 4;
-        else if (differenceSum < 20)
-            pearlStars = 3;
-        else if (differenceSum < 32)
-            pearlStars = 2;
+        }
+        else
+        {
+            int differenceSum = 0;
+
+            for (int i = 0; i < numbers.length; i++)
+                differenceSum += Math.abs(numbers[i] - expectedNumbers[i]);
+
+            if (differenceSum < 8)
+                pearlStars = 5;
+            else if (differenceSum < 12)
+                pearlStars = 4;
+            else if (differenceSum < 20)
+                pearlStars = 3;
+            else if (differenceSum < 32)
+                pearlStars = 2;
+        }
 
         int craftingTime = 60; // 60 minutes
         long groupId = SamaGamesAPI.get().getPermissionsManager().getPlayer(player).getGroupId();

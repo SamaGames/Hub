@@ -78,7 +78,8 @@ class GuiWell extends AbstractGui
         else
             this.setSlotData(VIPPLUS_RESTRICTED, 14, "restricted");
 
-        this.setSlotData(getBackIcon(), this.inventory.getSize() - 5, "back");
+        this.setSlotData(getPowdersIcon(player), this.inventory.getSize() - 6, "none");
+        this.setSlotData(getBackIcon(), this.inventory.getSize() - 4, "back");
     }
 
     @Override
@@ -86,13 +87,26 @@ class GuiWell extends AbstractGui
     {
         if (action.startsWith("craft"))
         {
-
+            if (SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).getPowders() >= 64)
+            {
+                this.hub.getGuiManager().openGui(player, new GuiWellCraft(this.hub, this.parent));
+            }
+            else
+            {
+                player.sendMessage(Well.TAG + ChatColor.RED + "Vous n'avez pas assez de poussières d'\u272F !");
+            }
         }
         else if (action.equals("back"))
         {
             this.hub.getGuiManager().closeGui(player);
             this.parent.stop(player);
         }
+    }
+
+    @Override
+    public void onClose(Player player)
+    {
+        this.parent.stop(player);
     }
 
     private ItemStack makeCraftingStack(CraftingPearl craftingPearl)
@@ -168,6 +182,8 @@ class GuiWell extends AbstractGui
         craftLore.add(ChatColor.GRAY + "Cliquez pour utiliser cet emplacement");
         craftLore.add(ChatColor.GRAY + "afin de créer une perle en utilisant");
         craftLore.add(ChatColor.GRAY + "vos " + ChatColor.AQUA + "poussières d'\u272F" + ChatColor.GRAY + ".");
+        craftLore.add("");
+        craftLore.add(ChatColor.DARK_GRAY + "Nécéssite : " + ChatColor.AQUA + "64 poussières d'\u272F");
 
         craftMeta.setLore(craftLore);
 

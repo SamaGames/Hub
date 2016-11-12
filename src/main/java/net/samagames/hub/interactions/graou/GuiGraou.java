@@ -67,6 +67,12 @@ class GuiGraou extends AbstractGui
     }
 
     @Override
+    public void onClose(Player player)
+    {
+        this.parent.stop(player);
+    }
+
+    @Override
     public void onClick(Player player, ItemStack stack, String action, ClickType clickType)
     {
         if (action.startsWith("pearl_"))

@@ -19,6 +19,8 @@ import org.bukkit.scheduler.BukkitTask;
  */
 class Well extends AbstractInteraction
 {
+    public static final String TAG = ChatColor.DARK_PURPLE + "[" + ChatColor.LIGHT_PURPLE + "Puit magique" + ChatColor.DARK_PURPLE + "] " + ChatColor.RESET;
+
     private final Location cauldronLocation;
     private final Hologram hologram;
     private final BukkitTask particleTask;
