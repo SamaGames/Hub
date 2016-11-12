@@ -141,8 +141,8 @@ public class WellManager extends AbstractInteractionManager<Well> implements Lis
         int craftingTime = 60; // 60 minutes
         long groupId = SamaGamesAPI.get().getPermissionsManager().getPlayer(player.getUniqueId()).getGroupId();
 
-        if (groupId > 2)
-            groupId = 3;
+        if (groupId > 3)
+            groupId = 4;
 
         craftingTime -= 15 * (groupId - 1);
 

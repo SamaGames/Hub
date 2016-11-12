@@ -125,8 +125,8 @@ class GuiWell extends AbstractGui
         lore.add("");
         lore.add(ChatColor.GRAY + "Cependant, vous pouvez réduire ce");
         lore.add(ChatColor.GRAY + "temps de création de " + ChatColor.GREEN + "15 minutes");
-        lore.add(ChatColor.GRAY + "en étant " + ChatColor.GREEN + "VIP" + ChatColor.GRAY + " ou de");
-        lore.add(ChatColor.AQUA + "30 minutes" + ChatColor.GRAY + " en étant " + ChatColor.AQUA + "VIP" + ChatColor.LIGHT_PURPLE + "+" + ChatColor.GRAY + ".");
+        lore.add(ChatColor.GRAY + "en étant " + ChatColor.GREEN + "VIP" + ChatColor.GRAY + " ou de " + ChatColor.AQUA + "30 minutes" + ChatColor.GRAY + " en");
+        lore.add(ChatColor.GRAY + "étant " + ChatColor.AQUA + "VIP" + ChatColor.LIGHT_PURPLE + "+" + ChatColor.GRAY + ".");
         lore.add("");
         lore.add(ChatColor.DARK_GRAY + "Temps restant : " + ChatColor.WHITE + craftingPearl.getCreationInMinutes() + " minutes");
 
