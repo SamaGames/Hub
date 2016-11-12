@@ -85,7 +85,7 @@ class GuiWell extends AbstractGui
     @Override
     public void onClick(Player player, ItemStack stack, String action, ClickType clickType)
     {
-        if (action.startsWith("craft"))
+        if (action.equals("craft"))
         {
             if (SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).getPowders() >= 64)
             {

@@ -182,7 +182,7 @@ public class GuiWellCraft extends AbstractGui
         List<String> helpLore = new ArrayList<>();
         helpLore.add(ChatColor.DARK_GRAY + "Commence ça marche ?");
         helpLore.add("");
-        helpLore.add(ChatColor.GRAY + "Vous devez placer un total de " + ChatColor.AQUA + "64");
+        helpLore.add(ChatColor.GRAY + "Vous devez répartir un total de " + ChatColor.AQUA + "64");
         helpLore.add(ChatColor.AQUA + "poussières d'\u272F " + ChatColor.GRAY + "dans " + ChatColor.YELLOW + "4" + ChatColor.GRAY + " emplacements");
         helpLore.add(ChatColor.GRAY + "différents.");
         helpLore.add("");

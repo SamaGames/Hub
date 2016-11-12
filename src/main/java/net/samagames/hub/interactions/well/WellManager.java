@@ -125,13 +125,13 @@ public class WellManager extends AbstractInteractionManager<Well> implements Lis
             for (int i = 0; i < numbers.length; i++)
                 differenceSum += Math.abs(numbers[i] - expectedNumbers[i]);
 
-            if (differenceSum < 8)
+            if (differenceSum < 2)
                 pearlStars = 5;
-            else if (differenceSum < 12)
+            else if (differenceSum < 6)
                 pearlStars = 4;
-            else if (differenceSum < 20)
+            else if (differenceSum < 12)
                 pearlStars = 3;
-            else if (differenceSum < 32)
+            else if (differenceSum < 18)
                 pearlStars = 2;
         }
 
