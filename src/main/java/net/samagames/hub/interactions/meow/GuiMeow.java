@@ -34,7 +34,7 @@ class GuiMeow extends AbstractGui
     public void update(Player player)
     {
         for (Bonus bonus : MeowManager.getBonus())
-            this.setSlotData(bonus.getIcon(player.getUniqueId()), bonus.getSlot(), bonus.isAbleFor(player.getUniqueId()) ? "bonus_" + bonus.getId() : "taken");
+            this.setSlotData(bonus.getIcon(player), bonus.getSlot(), bonus.isAbleFor(player) ? "bonus_" + bonus.getId() : "taken");
 
         this.setSlotData(getBackIcon(), this.inventory.getSize() - 5, "back");
     }
@@ -51,7 +51,7 @@ class GuiMeow extends AbstractGui
             if (bonus == null)
                 return;
 
-            bonus.take(player.getUniqueId());
+            bonus.take(player);
 
             this.parent.playThankYou();
             this.parent.update(player);

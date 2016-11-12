@@ -3,12 +3,14 @@ package net.samagames.hub.interactions.meow;
 import net.samagames.api.SamaGamesAPI;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import redis.clients.jedis.Jedis;
 
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Consumer;
 
 class Bonus
 {
@@ -16,29 +18,29 @@ class Bonus
     private final int slot;
     private final String name;
     private final String[] description;
-    private final int stars;
     private final int reloadNumber;
     private final int reloadUnit;
     private final String permissionNeeded;
+    private final Consumer<Player> callback;
 
-    Bonus(int id, int slot, String name, String[] description, int stars, int reloadNumber, int reloadUnit, String permissionNeeded)
+    Bonus(int id, int slot, String name, String[] description, int reloadNumber, int reloadUnit, String permissionNeeded, Consumer<Player> callback)
     {
         this.id = id;
         this.slot = slot;
         this.name = name;
         this.description = description;
-        this.stars = stars;
         this.reloadNumber = reloadNumber;
         this.reloadUnit = reloadUnit;
         this.permissionNeeded = permissionNeeded;
+        this.callback = callback;
     }
 
-    public void take(UUID uuid)
+    public void take(Player player)
     {
-        if (!this.isAbleFor(uuid))
+        if (!this.isAbleFor(player))
             return;
 
-        SamaGamesAPI.get().getPlayerManager().getPlayerData(uuid).creditStars(this.stars, "Récupération de la récompense : " + this.name, false);
+        this.callback.accept(player);
 
         Jedis jedis = SamaGamesAPI.get().getBungeeResource();
 
@@ -52,7 +54,7 @@ class Bonus
         long millis = calendar.getTime().getTime() - new Date().getTime();
         long seconds = TimeUnit.MILLISECONDS.toSeconds(millis);
 
-        String key = "bonus:" + uuid.toString() + ":" + this.id;
+        String key = "bonus:" + player.getUniqueId().toString() + ":" + this.id;
 
         jedis.set(key, String.valueOf(calendar.getTime().getTime()));
         jedis.expire(key, (int) seconds);
@@ -60,9 +62,9 @@ class Bonus
         jedis.close();
     }
 
-    public ItemStack getIcon(UUID uuid)
+    public ItemStack getIcon(Player player)
     {
-        boolean able = this.isAbleFor(uuid);
+        boolean able = this.isAbleFor(player);
 
         ItemStack stack = new ItemStack(able ? Material.COOKED_FISH : Material.RAW_FISH, 1);
         ItemMeta meta = stack.getItemMeta();
@@ -74,7 +76,7 @@ class Bonus
 
         if (!able)
         {
-            long millis = new Date(this.getUnlockTime(uuid)).getTime() - new Date().getTime();
+            long millis = new Date(this.getUnlockTime(player)).getTime() - new Date().getTime();
             long days = millis / (1000 * 60 * 60 * 24);
             long hours = (millis / (1000 * 60 * 60)) % 24;
             long minutes = (millis / (1000 * 60)) % 60;
@@ -106,9 +108,9 @@ class Bonus
         return this.slot;
     }
 
-    public long getUnlockTime(UUID uuid)
+    public long getUnlockTime(Player player)
     {
-        if (this.isAbleFor(uuid))
+        if (this.isAbleFor(player))
             return 0;
 
         Jedis jedis = SamaGamesAPI.get().getBungeeResource();
@@ -116,16 +118,16 @@ class Bonus
         if (jedis == null)
             return 0;
 
-        String value = jedis.get("bonus:" + uuid.toString() + ":" + this.id);
+        String value = jedis.get("bonus:" + player.getUniqueId().toString() + ":" + this.id);
 
         jedis.close();
 
         return Long.parseLong(value);
     }
 
-    public boolean isAbleFor(UUID uuid)
+    public boolean isAbleFor(Player player)
     {
-        if (this.permissionNeeded != null && !SamaGamesAPI.get().getPermissionsManager().hasPermission(uuid, this.permissionNeeded))
+        if (this.permissionNeeded != null && !SamaGamesAPI.get().getPermissionsManager().hasPermission(player.getUniqueId(), this.permissionNeeded))
             return false;
 
         Jedis jedis = SamaGamesAPI.get().getBungeeResource();
@@ -133,7 +135,7 @@ class Bonus
         if (jedis == null)
             return true;
 
-        boolean value = !jedis.exists("bonus:" + uuid.toString() + ":" + this.id);
+        boolean value = !jedis.exists("bonus:" + player.getUniqueId().toString() + ":" + this.id);
 
         jedis.close();
 

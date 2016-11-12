@@ -183,14 +183,26 @@ public class WellManager extends AbstractInteractionManager<Well> implements Lis
         calendar.add(Calendar.MONTH, 1);
 
         Pearl craftedPearl = new Pearl(craftingPearl.getUUID(), craftingPearl.getStars(), calendar.getTime().getTime());
+        this.addPearlToPlayer(player, craftedPearl);
 
-        jedis.set("pearls:" + player.getUniqueId().toString() + ":" + craftedPearl.getUUID().toString(), new Gson().toJson(craftedPearl));
-        jedis.expire("pearls:" + player.getUniqueId().toString() + ":" + craftedPearl.getUUID().toString(), (int) TimeUnit.MILLISECONDS.toSeconds(craftedPearl.getExpiration()));
         jedis.del("crafting-pearls:" + player.getUniqueId().toString() + ":" + craftingPearlUUID.toString());
 
         jedis.close();
 
         this.hub.getInteractionManager().getGraouManager().update(player);
+    }
+
+    public void addPearlToPlayer(Player player, Pearl pearl)
+    {
+        Jedis jedis = SamaGamesAPI.get().getBungeeResource();
+
+        if (jedis == null)
+            return;
+
+        jedis.set("pearls:" + player.getUniqueId().toString() + ":" + pearl.getUUID().toString(), new Gson().toJson(pearl));
+        jedis.expire("pearls:" + player.getUniqueId().toString() + ":" + pearl.getUUID().toString(), (int) TimeUnit.MILLISECONDS.toSeconds(pearl.getExpiration()));
+
+        jedis.close();
     }
 
     private void checkCrafts(Player player, boolean silent)

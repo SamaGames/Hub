@@ -73,7 +73,7 @@ class Meow extends AbstractInteraction
         int fishes = 0;
 
         for (Bonus bonus : MeowManager.getBonus())
-            if (bonus.isAbleFor(player.getUniqueId()))
+            if (bonus.isAbleFor(player))
                 fishes++;
 
         Hologram hologram;
@@ -125,7 +125,7 @@ class Meow extends AbstractInteraction
         int fishes = 0;
 
         for (Bonus bonus : MeowManager.getBonus())
-            if (bonus.isAbleFor(player.getUniqueId()))
+            if (bonus.isAbleFor(player))
                 fishes++;
 
         Hologram hologram = this.holograms.get(player.getUniqueId());
