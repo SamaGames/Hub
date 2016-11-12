@@ -31,7 +31,7 @@ class Well extends AbstractInteraction
 
         this.cauldronLocation = cauldronLocation;
 
-        this.hologram = new Hologram(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "Puit magique", ChatColor.LIGHT_PURPLE + "Créez des perles avec vos poussières d'étoile");
+        this.hologram = new Hologram(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "Puit magique", ChatColor.LIGHT_PURPLE + "Créez des perles avec vos poussières d'\u272F");
         this.hologram.generateLines(standsLocation);
 
         final Location particleCenter = cauldronLocation.clone().add(0.5D, 0.5D, 0.5D);
