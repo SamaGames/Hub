@@ -130,6 +130,8 @@ class GuiWell extends AbstractGui
         lore.add("");
         lore.add(ChatColor.DARK_GRAY + "Temps restant : " + ChatColor.WHITE + craftingPearl.getCreationInMinutes() + " minutes");
 
+        meta.setLore(lore);
+
         stack.setItemMeta(meta);
 
         return stack;

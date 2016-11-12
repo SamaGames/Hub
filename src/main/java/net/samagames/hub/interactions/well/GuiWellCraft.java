@@ -138,7 +138,7 @@ public class GuiWellCraft extends AbstractGui
         List<String> lore = new ArrayList<>();
         lore.add(ChatColor.DARK_GRAY + "Emplacement n°" + (slot + 1));
         lore.add("");
-        lore.add(ChatColor.GRAY + "Vous avez placé " + ChatColor.AQUA + "" + this.numbers[slot] + "poussière" + (this.numbers[slot] > 1 ? "s" : ""));
+        lore.add(ChatColor.GRAY + "Vous avez placé " + ChatColor.AQUA + "" + this.numbers[slot] + " poussière" + (this.numbers[slot] > 1 ? "s" : ""));
         lore.add(ChatColor.AQUA + "d'\u272F" + ChatColor.GRAY + " dans cet emplacement.");
         lore.add("");
         lore.add(ChatColor.DARK_GRAY + "\u25B6 Clic gauche pour ajouter");
@@ -188,8 +188,8 @@ public class GuiWellCraft extends AbstractGui
         helpLore.add(ChatColor.GRAY + "vous rapprochez des nombres aléatoires,");
         helpLore.add(ChatColor.GRAY + "plus le niveau de votre perle sera élevé.");
         helpLore.add("");
-        helpLore.add(ChatColor.YELLOW + "Note : " + ChatColor.GRAY + "Les numéros sont aléatoires et");
-        helpLore.add(ChatColor.GRAY + "ne sont pas éloignés les uns des autres.");
+        helpLore.add(ChatColor.YELLOW + "" + ChatColor.ITALIC + "Note : " + ChatColor.GRAY + ChatColor.ITALIC + "Les numéros sont aléatoires et");
+        helpLore.add(ChatColor.GRAY + "" + ChatColor.ITALIC +  "ne sont pas éloignés les uns des autres.");
 
         helpMeta.setLore(helpLore);
 
