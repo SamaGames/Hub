@@ -21,7 +21,7 @@ class GuiMeow extends AbstractGui
     @Override
     public void display(Player player)
     {
-        this.inventory = this.hub.getServer().createInventory(null, 45, "Meow");
+        this.inventory = this.hub.getServer().createInventory(null, 36, "Meow");
 
         this.hub.getServer().getScheduler().runTaskAsynchronously(this.hub, () ->
         {
