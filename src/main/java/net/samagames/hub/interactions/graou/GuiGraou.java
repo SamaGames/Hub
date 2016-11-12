@@ -3,16 +3,19 @@ package net.samagames.hub.interactions.graou;
 import net.samagames.api.games.pearls.Pearl;
 import net.samagames.hub.Hub;
 import net.samagames.hub.gui.AbstractGui;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 class GuiGraou extends AbstractGui
 {
+    private static final ItemStack NONE;
+
     private final Graou parent;
     private final Map<UUID, Pearl> pearls;
 
@@ -41,26 +44,33 @@ class GuiGraou extends AbstractGui
     {
         this.pearls.clear();
 
-        int[] baseSlots = {10, 11, 12, 13, 14, 15, 16};
-        int lines = 0;
-        int slot = 0;
-
-        for (Pearl pearl : this.hub.getInteractionManager().getGraouManager().getPlayerPearls(player.getUniqueId()))
+        if (!this.hub.getInteractionManager().getGraouManager().getPlayerPearls(player.getUniqueId()).isEmpty())
         {
-            if (this.pearls.size() == 24)
-                break;
+            int[] baseSlots = {10, 11, 12, 13, 14, 15, 16};
+            int lines = 0;
+            int slot = 0;
 
-            this.setSlotData(this.hub.getInteractionManager().getGraouManager().getPearlLogic().getIcon(pearl), baseSlots[slot] + (lines * 9), "pearl_" + pearl.getUUID());
-
-            slot++;
-
-            if (slot == 7)
+            for (Pearl pearl : this.hub.getInteractionManager().getGraouManager().getPlayerPearls(player.getUniqueId()))
             {
-                slot = 0;
-                lines++;
-            }
+                if (this.pearls.size() == 24)
+                    break;
 
-            this.pearls.put(pearl.getUUID(), pearl);
+                this.setSlotData(this.hub.getInteractionManager().getGraouManager().getPearlLogic().getIcon(pearl), baseSlots[slot] + (lines * 9), "pearl_" + pearl.getUUID());
+
+                slot++;
+
+                if (slot == 7)
+                {
+                    slot = 0;
+                    lines++;
+                }
+
+                this.pearls.put(pearl.getUUID(), pearl);
+            }
+        }
+        else
+        {
+            this.setSlotData(NONE, 22, "none");
         }
 
         this.setSlotData(getBackIcon(), this.inventory.getSize() - 5, "back");
@@ -85,5 +95,18 @@ class GuiGraou extends AbstractGui
             this.hub.getGuiManager().closeGui(player);
             this.parent.stop(player);
         }
+    }
+
+    static
+    {
+        NONE = new ItemStack(Material.IRON_BARDING, 1);
+        ItemMeta meta = NONE.getItemMeta();
+        meta.setDisplayName(ChatColor.RED + "Vous n'avez aucune perle :(");
+
+        List<String> lore = new ArrayList<>();
+        lore.add(ChatColor.GRAY + "Jouez à nos différents jeux pour");
+        lore.add(ChatColor.GRAY + "obtenir des perles.");
+
+        NONE.setItemMeta(meta);
     }
 }
