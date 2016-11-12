@@ -107,7 +107,7 @@ public class GuiWellCraft extends AbstractGui
 
         ItemStack stack = new ItemStack(Material.SUGAR, remaining);
         ItemMeta meta = stack.getItemMeta();
-        meta.setDisplayName(ChatColor.YELLOW + "Vous devez encore placer " + ChatColor.AQUA + remaining + " poussières d'\u272F");
+        meta.setDisplayName(ChatColor.YELLOW + "" + remaining + " poussières d'\u272F");
 
         List<String> lore = new ArrayList<>();
         lore.add(ChatColor.DARK_GRAY + "Poussières restantes");
