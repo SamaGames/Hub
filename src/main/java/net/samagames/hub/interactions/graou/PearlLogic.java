@@ -169,6 +169,7 @@ class PearlLogic
         }
 
         this.hub.getInteractionManager().getGraouManager().deletePlayerPearl(player.getUniqueId(), pearl.getUUID());
+        this.hub.getScoreboardManager().update(player);
 
         return cosmeticSelected;
     }
