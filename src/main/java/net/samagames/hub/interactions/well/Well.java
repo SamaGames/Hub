@@ -5,6 +5,7 @@ import net.samagames.hub.interactions.AbstractInteraction;
 import net.samagames.tools.holograms.Hologram;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 /**
@@ -48,14 +49,12 @@ class Well extends AbstractInteraction
     @Override
     public void play(Player player)
     {
-
+        this.hub.getGuiManager().openGui(player, new GuiWell(this.hub, this));
+        player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_SPLASH, 1.0F, 1.0F);
     }
 
     @Override
-    public void stop(Player player)
-    {
-
-    }
+    public void stop(Player player) { /** Not needed **/ }
 
     public Location getCauldronLocation()
     {
