@@ -62,7 +62,6 @@ public class NukeDisplayer extends AbstractDisplayer
         this.addBlockToUse(this.baseLocation.clone().subtract(2.0D, 0.0D, 2.0D).add(0.0D, 1.0D, 0.0D), new SimpleBlock(Material.REDSTONE_TORCH_ON, 5));
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public void display()
     {

@@ -182,6 +182,15 @@ public class GadgetManager extends AbstractCosmeticManager<GadgetCosmetic>
         return this.playersGadgets.containsKey(player);
     }
 
+    public boolean isBlockUsed(Location location)
+    {
+        for (AbstractDisplayer displayer : this.playersGadgets.values())
+            if (displayer.isBlockUsed(location))
+                return true;
+
+        return false;
+    }
+
     public boolean isInteracting(Player player)
     {
         for (AbstractDisplayer displayer : this.playersGadgets.values())

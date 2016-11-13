@@ -99,6 +99,11 @@ public abstract class AbstractDisplayer
         return !this.hub.getPlayerManager().isBusy(player);
     }
 
+    public boolean isBlockGloballyUsed(Location location)
+    {
+        return this.hub.getCosmeticManager().getGadgetManager().isBlockUsed(location);
+    }
+
     public boolean isBlockUsed(Location location)
     {
         return this.blocksUsed.containsKey(new Location(location.getWorld(), location.getBlockX(), location.getBlockY(), location.getBlockZ()));
