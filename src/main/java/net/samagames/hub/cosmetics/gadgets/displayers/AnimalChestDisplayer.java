@@ -102,7 +102,7 @@ public class AnimalChestDisplayer extends AbstractDisplayer
     }
 
     @Override
-    public void handleInteraction(Entity who, Entity with){}
+    public void handleInteraction(Entity who, Entity with) {}
 
     @Override
     public boolean isInteractionsEnabled()
