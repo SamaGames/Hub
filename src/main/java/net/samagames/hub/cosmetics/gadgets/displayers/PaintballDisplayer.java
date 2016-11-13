@@ -53,7 +53,7 @@ public class PaintballDisplayer extends AbstractDisplayer implements Listener
             public void run()
             {
                 Snowball snowball = PaintballDisplayer.this.player.launchProjectile(Snowball.class);
-                snowball.setVelocity(snowball.getVelocity().multiply(1.75));
+                snowball.setVelocity(snowball.getVelocity().multiply(1.5));
                 snowball.setMetadata("paintball-ball", new FixedMetadataValue(PaintballDisplayer.this.hub, PaintballDisplayer.this.uuid.toString()));
 
                 this.times++;
