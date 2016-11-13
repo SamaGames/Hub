@@ -41,7 +41,7 @@ public class AnimalChestDisplayer extends AbstractDisplayer
         this.baseLocation = player.getLocation().add(1, 0, 1);
         this.addBlockToUse(this.baseLocation, new SimpleBlock(Material.CHEST, (byte)4));
 
-        this.centerLoc = this.baseLocation.clone().add(0.5D, 0.75D, 0.5D);
+        this.centerLoc = this.baseLocation.clone().add(-0.5D, 0.75D, -0.5D);
         this.type = TYPES[GadgetManager.RANDOM.nextInt(TYPES.length)];
     }
 
