@@ -82,10 +82,10 @@ class GuiClickMeSettings extends GuiSettings
             }
         });
 
-        this.drawSetting(player, "Vue des étoiles", new ItemStack(Material.NETHER_STAR, 1), 13, new String[] {
+        this.drawSetting(player, "Vue de la poussière d'\u272F", new ItemStack(Material.SUGAR, 1), 13, new String[] {
                 ChatColor.GRAY + "Quand cette option est activée, les joueurs",
-                ChatColor.GRAY + "pourront voir votre nombre d'étoiles dans",
-                ChatColor.GRAY + "votre ClickMe."
+                ChatColor.GRAY + "pourront voir votre nombre de poussière d'\u272F",
+                ChatColor.GRAY + "dans votre ClickMe."
         }, new GuiSettingsCallback()
         {
             @Override

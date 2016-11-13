@@ -5,6 +5,7 @@ import net.samagames.api.player.AbstractPlayerData;
 import net.samagames.hub.Hub;
 import net.samagames.hub.gui.AbstractGui;
 import net.samagames.hub.gui.achievements.GuiAchievements;
+import net.samagames.hub.utils.NumberUtils;
 import net.samagames.tools.PlayerUtils;
 import net.samagames.tools.chat.fanciful.FancyMessage;
 import org.bukkit.ChatColor;
@@ -73,8 +74,9 @@ public class GuiProfile extends AbstractGui
         meta.setDisplayName(PlayerUtils.getFullyFormattedPlayerName(player));
 
         List<String> lore = new ArrayList<>();
-        lore.add(ChatColor.GRAY + "Pièces : " + ChatColor.GOLD + playerData.getCoins());
-        lore.add(ChatColor.GRAY + "Etoiles : " + ChatColor.AQUA + playerData.getStars());
+        lore.add(ChatColor.GRAY + "Pièces : " + ChatColor.GOLD + NumberUtils.format(playerData.getCoins()));
+        lore.add(ChatColor.GRAY + "Perles : " + ChatColor.GREEN + NumberUtils.format(this.hub.getInteractionManager().getGraouManager().getPlayerPearls(player.getUniqueId()).size()));
+        lore.add(ChatColor.GRAY + "Poussière d'" + ChatColor.AQUA + "\u272F" + ChatColor.GRAY + " : " + ChatColor.AQUA + NumberUtils.format(playerData.getPowders()));
 
         meta.setLore(lore);
         stack.setItemMeta(meta);

@@ -104,10 +104,10 @@ public class GuiClickMe extends AbstractGui
             return ChatColor.RED + "Cette information est privée !";
     }
 
-    private String getStarsItemTitle()
+    private String getPowderItemTitle()
     {
         if (SamaGamesAPI.get().getSettingsManager().getSettings(this.uuid).isAllowStarsOnclick())
-            return ChatColor.AQUA + String.valueOf(SamaGamesAPI.get().getPlayerManager().getPlayerData(this.uuid).getStars()) + " étoiles";
+            return ChatColor.AQUA + String.valueOf(SamaGamesAPI.get().getPlayerManager().getPlayerData(this.uuid).getPowders()) + " poussières d'\u272F";
         else
             return ChatColor.RED + "Cette information est privée !";
     }
