@@ -58,7 +58,7 @@ public class PaintballDisplayer extends AbstractDisplayer implements Listener
 
                 this.times++;
 
-                if (this.times == 10)
+                if (this.times == 30)
                 {
                     PaintballDisplayer.this.restore();
                     PaintballDisplayer.this.end();
@@ -68,7 +68,7 @@ public class PaintballDisplayer extends AbstractDisplayer implements Listener
                     this.cancel();
                 }
             }
-        }.runTaskTimer(this.hub, 20L, 20L);
+        }.runTaskTimer(this.hub, 5L, 5L);
     }
 
     @EventHandler
@@ -77,8 +77,11 @@ public class PaintballDisplayer extends AbstractDisplayer implements Listener
         if (event.getEntity().getType() != EntityType.SNOWBALL || !event.getEntity().hasMetadata("paintball-ball") || !event.getEntity().getMetadata("paintball-ball").get(0).asString().equals(this.uuid.toString()))
             return;
 
-        for (Block block : getNearbyBlocks(event.getEntity().getLocation(), 3))
+        for (Block block : getNearbyBlocks(event.getEntity().getLocation(), 2))
         {
+            if (block.getType() == Material.AIR)
+                continue;
+
             SimpleBlock simpleBlock = new SimpleBlock(Material.STAINED_CLAY, DyeColor.values()[new Random().nextInt(DyeColor.values().length)].getWoolData());
             this.addBlockToUse(block.getLocation(), simpleBlock);
 
