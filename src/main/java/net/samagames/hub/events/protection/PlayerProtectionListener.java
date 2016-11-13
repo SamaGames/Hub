@@ -1,6 +1,5 @@
 package net.samagames.hub.events.protection;
 
-import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -10,7 +9,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
 import org.bukkit.event.player.*;
 
 public class PlayerProtectionListener implements Listener
@@ -56,25 +54,8 @@ public class PlayerProtectionListener implements Listener
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerInteract(PlayerInteractEvent event)
     {
-        if (event.getItem() != null && event.getItem().getType() == Material.WRITTEN_BOOK)
-            return;
-
-        this.hub.getServer().getScheduler().runTaskAsynchronously(this.hub, () ->
-        {
-            if (SamaGamesAPI.get().getPermissionsManager().hasPermission(event.getPlayer(), "hub.sign.selection"))
-            {
-                if (event.getItem() != null && event.getItem().getType() == Material.WOOD_AXE)
-                {
-                    Action act = event.getAction();
-
-                    if (act == Action.LEFT_CLICK_BLOCK)
-                    {
-                        this.hub.getPlayerManager().setSelection(event.getPlayer(), event.getClickedBlock().getLocation());
-                        event.getPlayer().sendMessage(ChatColor.GOLD + "Point sélectionné !");
-                    }
-                }
-            }
-        });
+        if (event.getItem() != null && event.getItem().getType() == Material.ENDER_PEARL)
+            event.setCancelled(true);
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
@@ -84,10 +65,14 @@ public class PlayerProtectionListener implements Listener
         {
             event.getPlayer().sendMessage(ChatColor.RED + "Mais où allez-vous comme ça ?");
             event.setCancelled(true);
-            this.hub.getServer().getScheduler().runTaskLater(this.hub, () -> {
+
+            this.hub.getServer().getScheduler().runTaskLater(this.hub, () ->
+            {
                 event.getPlayer().teleport(this.hub.getPlayerManager().getSpawn());
+
                 if (event.getPlayer().isFlying())
                     event.getPlayer().setFlying(false);
+
                 if (event.getPlayer().isGliding())
                     ((CraftPlayer)event.getPlayer()).getHandle().setFlag(7, false);
             }, 1);

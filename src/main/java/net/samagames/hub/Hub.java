@@ -30,7 +30,6 @@ import net.samagames.hub.npcs.NPCManager;
 import net.samagames.hub.parkours.ParkourManager;
 import net.samagames.hub.scoreboards.ScoreboardManager;
 import net.samagames.hub.utils.ServerStatus;
-import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -117,6 +116,7 @@ public class Hub extends JavaPlugin
         this.getServer().getPluginManager().registerEvents(new ParkourListener(this), this);
         this.getServer().getPluginManager().registerEvents(new GuiListener(this), this);
         this.getServer().getPluginManager().registerEvents(new DoubleJumpListener(this), this);
+        this.getServer().getPluginManager().registerEvents(new DevelopperListener(this), this);
         this.getServer().getPluginManager().registerEvents(new PetListener(), this);
 
         this.getServer().getPluginManager().registerEvents(new EntityEditionListener(this), this);
@@ -124,7 +124,7 @@ public class Hub extends JavaPlugin
         this.getServer().getPluginManager().registerEvents(new PlayerProtectionListener(this), this);
         this.getServer().getPluginManager().registerEvents(new WorldEditionListener(this), this);
 
-        this.hydroangeasSynchronization = this.getScheduledExecutorService().scheduleAtFixedRate(() -> new ServerStatus(SamaGamesAPI.get().getServerName(), "Hub", "Map", Status.IN_GAME, Bukkit.getOnlinePlayers().size(), Bukkit.getMaxPlayers()).sendToHydro(), 0, 1, TimeUnit.MINUTES);
+        this.hydroangeasSynchronization = this.getScheduledExecutorService().scheduleAtFixedRate(() -> new ServerStatus(SamaGamesAPI.get().getServerName(), "Hub", "Map", Status.IN_GAME, this.getServer().getOnlinePlayers().size(), this.getServer().getMaxPlayers()).sendToHydro(), 0, 1, TimeUnit.MINUTES);
         this.samaritanListener = new SamaritanListener(this);
 
         SamaGamesAPI.get().getPubSub().subscribe("cheat", this.samaritanListener);
@@ -204,7 +204,7 @@ public class Hub extends JavaPlugin
 
     public EffectLib getEffectLib()
     {
-        Plugin effectLib = Bukkit.getPluginManager().getPlugin("EffectLib");
+        Plugin effectLib = this.getServer().getPluginManager().getPlugin("EffectLib");
 
         if (effectLib == null || !(effectLib instanceof EffectLib))
             return null;

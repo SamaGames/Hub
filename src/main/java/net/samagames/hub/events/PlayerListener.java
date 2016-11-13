@@ -116,6 +116,7 @@ public class PlayerListener implements Listener
                     }
 
                     gameSign.click(event.getPlayer());
+                    return;
                 }
             }
         }
