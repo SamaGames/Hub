@@ -25,7 +25,8 @@ class GadgetRegistry extends AbstractCosmeticRegistry<GadgetCosmetic>
         GadgetCosmetic animalChestGadget = new GadgetCosmetic(this.hub, 16, AnimalChestDisplayer.class, 60);
         GadgetCosmetic perchedCatGadget = new GadgetCosmetic(this.hub, 17, PerchedCatDisplayer.class, 240);
         GadgetCosmetic nukeGadget = new GadgetCosmetic(this.hub, 18, NukeDisplayer.class, 60);
-        GadgetCosmetic infiniteChickenFamily = new GadgetCosmetic(this.hub, 180, InfiniteChickenFamilyDisplayer.class, 60);
+        GadgetCosmetic infiniteChickenFamilyGadget = new GadgetCosmetic(this.hub, 180, InfiniteChickenFamilyDisplayer.class, 60);
+        GadgetCosmetic paintballGadget = new GadgetCosmetic(this.hub, 181, PaintballDisplayer.class, 60);
 
         this.registerElement(expressBotaniaGadget);
         this.registerElement(holyCreeperGadget);
@@ -37,7 +38,8 @@ class GadgetRegistry extends AbstractCosmeticRegistry<GadgetCosmetic>
         this.registerElement(animalChestGadget);
         this.registerElement(perchedCatGadget);
         this.registerElement(nukeGadget);
-        this.registerElement(infiniteChickenFamily);
+        this.registerElement(infiniteChickenFamilyGadget);
+        this.registerElement(paintballGadget);
 
         this.hub.getEntityManager().registerEntity("MoutMout2000", 91, EntitySheep.class, MoutMout2000Displayer.MoutMout2000Sheep.class);
     }
