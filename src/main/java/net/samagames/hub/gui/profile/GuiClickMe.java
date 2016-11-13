@@ -47,7 +47,7 @@ public class GuiClickMe extends AbstractGui
         this.setSlotData(ChatColor.GREEN + "Envoyer une demande d'ami", new ItemStack(Material.RAW_FISH, 1, (short) 3), 21, null, "friend");
         this.setSlotData(ChatColor.GREEN + "Envoyer un message privé", Material.PAPER, 22, null, "mp");
         this.setSlotData(ChatColor.GREEN + "Envoyer une demande de groupe", Material.LEASH, 23, null, "party");
-        this.setSlotData(this.getStarsItemTitle(), Material.NETHER_STAR, 24, null, "none");
+        this.setSlotData(this.getPowderItemTitle(), Material.NETHER_STAR, 24, null, "none");
         this.setSlotData(ChatColor.GREEN + "Statistiques", Material.ENCHANTED_BOOK, 31, null, "stats");
 
         this.setSlotData(getBackIcon(), 49, "back");
