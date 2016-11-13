@@ -48,10 +48,10 @@ public class RainbowWalkDisplayer extends AbstractDisplayer
                         block.setType(simpleBlock.getType());
                         block.setData(simpleBlock.getData());
 
-                        RainbowWalkDisplayer.this.hub.getServer().getScheduler().runTaskLater(RainbowWalkDisplayer.this.hub, () -> RainbowWalkDisplayer.this.restore(block.getLocation()), 15L);
+                        RainbowWalkDisplayer.this.hub.getServer().getScheduler().runTaskLater(RainbowWalkDisplayer.this.hub, () -> RainbowWalkDisplayer.this.restore(block.getLocation()), 20L * 5);
                     }
                 }
-                else if (this.times == 65)
+                else if (this.times == 150)
                 {
                     RainbowWalkDisplayer.this.restore();
                     RainbowWalkDisplayer.this.end();

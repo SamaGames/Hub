@@ -10,6 +10,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.*;
+import org.bukkit.inventory.ItemStack;
 
 public class PlayerProtectionListener implements Listener
 {
@@ -57,7 +58,7 @@ public class PlayerProtectionListener implements Listener
         if (this.canDoAction(event.getPlayer()))
             return;
 
-        if (event.getItem() != null && (event.getItem().getType() == Material.ENDER_PEARL || event.getItem().getType() == Material.SNOW_BALL || event.getItem().getType() == Material.EGG))
+        if (event.getItem() != null && (event.getItem().getType() == Material.ENDER_PEARL || event.getItem().getType() == Material.SNOW_BALL || event.getItem().getType() == Material.EGG || isPieceOfArmor(event.getItem())))
         {
             event.setCancelled(true);
             event.getPlayer().updateInventory();
@@ -93,5 +94,21 @@ public class PlayerProtectionListener implements Listener
     private boolean canDoAction(Player player)
     {
         return this.hub.getPlayerManager().canBuild() && player != null && player.isOp() && player.getGameMode() == GameMode.CREATIVE;
+    }
+
+    private static boolean isPieceOfArmor(ItemStack stack)
+    {
+        if (stack.getType() == Material.LEATHER_HELMET || stack.getType() == Material.LEATHER_CHESTPLATE || stack.getType() == Material.LEATHER_LEGGINGS || stack.getType() == Material.LEATHER_BOOTS)
+            return true;
+        else if (stack.getType() == Material.IRON_HELMET || stack.getType() == Material.IRON_CHESTPLATE || stack.getType() == Material.IRON_LEGGINGS || stack.getType() == Material.IRON_BOOTS)
+            return true;
+        else if (stack.getType() == Material.CHAINMAIL_HELMET || stack.getType() == Material.CHAINMAIL_CHESTPLATE || stack.getType() == Material.CHAINMAIL_LEGGINGS || stack.getType() == Material.CHAINMAIL_BOOTS)
+            return true;
+        else if (stack.getType() == Material.GOLD_HELMET || stack.getType() == Material.GOLD_CHESTPLATE || stack.getType() == Material.GOLD_LEGGINGS || stack.getType() == Material.GOLD_BOOTS)
+            return true;
+        else if (stack.getType() == Material.DIAMOND_HELMET || stack.getType() == Material.DIAMOND_CHESTPLATE || stack.getType() == Material.DIAMOND_LEGGINGS || stack.getType() == Material.DIAMOND_BOOTS)
+            return true;
+
+        return false;
     }
 }
