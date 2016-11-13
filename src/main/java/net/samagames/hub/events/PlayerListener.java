@@ -116,7 +116,6 @@ public class PlayerListener implements Listener
                     }
 
                     gameSign.click(event.getPlayer());
-                    return;
                 }
             }
         }
@@ -234,9 +233,9 @@ public class PlayerListener implements Listener
     {
         IPermissionsEntity permissionsEntity = SamaGamesAPI.get().getPermissionsManager().getPlayer(player.getUniqueId());
 
-        if (permissionsEntity.getGroupId() < 3 || !SamaGamesAPI.get().getSettingsManager().getSettings(player.getUniqueId()).isElytraActivated())
+        if (!permissionsEntity.hasPermission("network.vipplus") || !SamaGamesAPI.get().getSettingsManager().getSettings(player.getUniqueId()).isElytraActivated())
         {
-            player.getInventory().setChestplate(new ItemStack(Material.AIR));
+            player.getInventory().setChestplate(null);
             this.hub.getPlayerManager().getStaticInventory().setInventoryToPlayer(player);
             return false;
         }

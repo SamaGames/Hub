@@ -81,7 +81,7 @@ public class StaticInventory
             }
             else
             {
-                player.getInventory().setChestplate(new ItemStack(Material.AIR));
+                player.getInventory().setChestplate(null);
                 this.setInventoryToPlayer(player);
             }
 

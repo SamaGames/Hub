@@ -2,6 +2,8 @@ package net.samagames.hub.cosmetics.gadgets;
 
 import net.minecraft.server.v1_10_R1.EntityItem;
 import net.minecraft.server.v1_10_R1.NBTTagCompound;
+import net.samagames.api.SamaGamesAPI;
+import net.samagames.api.permissions.IPermissionsEntity;
 import net.samagames.hub.Hub;
 import net.samagames.hub.common.players.PlayerManager;
 import net.samagames.hub.cosmetics.common.AbstractCosmeticManager;
@@ -95,6 +97,7 @@ public class GadgetManager extends AbstractCosmeticManager<GadgetCosmetic>
                 return;
             }
 
+            player.getInventory().setChestplate(null);
             displayer.display();
 
             this.playersGadgets.put(player.getUniqueId(), displayer);
@@ -131,8 +134,15 @@ public class GadgetManager extends AbstractCosmeticManager<GadgetCosmetic>
     public void callbackGadget(AbstractDisplayer displayer)
     {
         displayer.getBlocksUsed().keySet().forEach(this.blocksUsed::remove);
-
         this.playersGadgets.remove(displayer.getPlayer().getUniqueId());
+
+        IPermissionsEntity permissionsEntity = SamaGamesAPI.get().getPermissionsManager().getPlayer(displayer.getPlayer().getUniqueId());
+
+        if (permissionsEntity.hasPermission("network.vipplus") && SamaGamesAPI.get().getSettingsManager().getSettings(displayer.getPlayer().getUniqueId()).isElytraActivated())
+        {
+            displayer.getPlayer().getInventory().setChestplate(new ItemStack(Material.ELYTRA));
+            this.hub.getPlayerManager().getStaticInventory().setInventoryToPlayer(displayer.getPlayer());
+        }
     }
 
     public AbstractDisplayer getPlayerGadget(Player player)
