@@ -54,8 +54,19 @@ public class PlayerProtectionListener implements Listener
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerInteract(PlayerInteractEvent event)
     {
+        if (this.canDoAction(event.getPlayer()))
+            return;
+
         if (event.getItem() != null && event.getItem().getType() == Material.ENDER_PEARL)
+        {
             event.setCancelled(true);
+            event.getPlayer().updateInventory();
+        }
+
+        if (event.getClickedBlock() != null && (event.getClickedBlock().getType() == Material.CHEST || event.getClickedBlock().getType() == Material.ENDER_CHEST))
+        {
+            event.setCancelled(true);
+        }
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
