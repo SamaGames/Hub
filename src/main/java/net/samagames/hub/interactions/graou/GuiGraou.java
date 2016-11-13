@@ -14,7 +14,7 @@ import java.util.*;
 
 class GuiGraou extends AbstractGui
 {
-    private static final ItemStack NONE;
+    private static final ItemStack NONE_STACK;
 
     private final Graou parent;
     private final Map<UUID, Pearl> pearls;
@@ -70,7 +70,7 @@ class GuiGraou extends AbstractGui
         }
         else
         {
-            this.setSlotData(NONE, 22, "none");
+            this.setSlotData(NONE_STACK, 22, "none");
         }
 
         this.setSlotData(getBackIcon(), this.inventory.getSize() - 5, "back");
@@ -99,14 +99,14 @@ class GuiGraou extends AbstractGui
 
     static
     {
-        NONE = new ItemStack(Material.IRON_FENCE, 1);
-        ItemMeta meta = NONE.getItemMeta();
+        NONE_STACK = new ItemStack(Material.IRON_FENCE, 1);
+        ItemMeta meta = NONE_STACK.getItemMeta();
         meta.setDisplayName(ChatColor.RED + "Vous n'avez aucune perle :(");
 
         List<String> lore = new ArrayList<>();
         lore.add(ChatColor.GRAY + "Jouez à nos différents jeux pour");
         lore.add(ChatColor.GRAY + "obtenir des perles.");
 
-        NONE.setItemMeta(meta);
+        NONE_STACK.setItemMeta(meta);
     }
 }

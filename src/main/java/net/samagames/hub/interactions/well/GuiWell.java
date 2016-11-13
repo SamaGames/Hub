@@ -26,9 +26,9 @@ import java.util.concurrent.TimeUnit;
  */
 class GuiWell extends AbstractGui
 {
-    private static final ItemStack VIP_RESTRICTED;
-    private static final ItemStack VIPPLUS_RESTRICTED;
-    private static final ItemStack CRAFT;
+    private static final ItemStack VIP_RESTRICTED_STACK;
+    private static final ItemStack VIPPLUS_RESTRICTED_STACK;
+    private static final ItemStack CRAFT_STACK;
 
     private final Well parent;
 
@@ -60,23 +60,23 @@ class GuiWell extends AbstractGui
         if (!craftingPearls.isEmpty())
             this.setSlotData(this.makeCraftingStack(craftingPearls.get(0)), 13, "crafting");
         else
-            this.setSlotData(CRAFT, 13, "craft");
+            this.setSlotData(CRAFT_STACK, 13, "craft");
 
         // Second slot
         if (craftingPearls.size() > 1)
             this.setSlotData(this.makeCraftingStack(craftingPearls.get(1)), 12, "crafting");
         else if (SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "network.vip"))
-            this.setSlotData(CRAFT, 12, "craft");
+            this.setSlotData(CRAFT_STACK, 12, "craft");
         else
-            this.setSlotData(VIP_RESTRICTED, 12, "restricted");
+            this.setSlotData(VIP_RESTRICTED_STACK, 12, "restricted");
 
         // Third slot
         if (craftingPearls.size() > 2)
             this.setSlotData(this.makeCraftingStack(craftingPearls.get(2)), 14, "crafting");
         else if (SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "network.vipplus"))
-            this.setSlotData(CRAFT, 14, "craft");
+            this.setSlotData(CRAFT_STACK, 14, "craft");
         else
-            this.setSlotData(VIPPLUS_RESTRICTED, 14, "restricted");
+            this.setSlotData(VIPPLUS_RESTRICTED_STACK, 14, "restricted");
 
         this.setSlotData(getPowdersIcon(player), this.inventory.getSize() - 6, "none");
         this.setSlotData(getBackIcon(), this.inventory.getSize() - 4, "back");
@@ -139,9 +139,9 @@ class GuiWell extends AbstractGui
 
     static
     {
-        VIP_RESTRICTED = new ItemStack(Material.IRON_BARDING, 1);
+        VIP_RESTRICTED_STACK = new ItemStack(Material.IRON_BARDING, 1);
 
-        ItemMeta vipRestrictedMeta = VIP_RESTRICTED.getItemMeta();
+        ItemMeta vipRestrictedMeta = VIP_RESTRICTED_STACK.getItemMeta();
         vipRestrictedMeta.setDisplayName(ChatColor.RED + "Emplacement indisponible");
 
         List<String> vipRestrictedLore = new ArrayList<>();
@@ -152,13 +152,13 @@ class GuiWell extends AbstractGui
 
         vipRestrictedMeta.setLore(vipRestrictedLore);
 
-        VIP_RESTRICTED.setItemMeta(vipRestrictedMeta);
+        VIP_RESTRICTED_STACK.setItemMeta(vipRestrictedMeta);
 
         // ---
 
-        VIPPLUS_RESTRICTED = new ItemStack(Material.IRON_BARDING, 1);
+        VIPPLUS_RESTRICTED_STACK = new ItemStack(Material.IRON_BARDING, 1);
 
-        ItemMeta vipPlusRestrictedMeta = VIPPLUS_RESTRICTED.getItemMeta();
+        ItemMeta vipPlusRestrictedMeta = VIPPLUS_RESTRICTED_STACK.getItemMeta();
         vipPlusRestrictedMeta.setDisplayName(ChatColor.RED + "Emplacement indisponible");
 
         List<String> vipPlusRestrictedLore = new ArrayList<>();
@@ -169,13 +169,13 @@ class GuiWell extends AbstractGui
 
         vipPlusRestrictedMeta.setLore(vipPlusRestrictedLore);
 
-        VIPPLUS_RESTRICTED.setItemMeta(vipPlusRestrictedMeta);
+        VIPPLUS_RESTRICTED_STACK.setItemMeta(vipPlusRestrictedMeta);
 
         // ---
 
-        CRAFT = new ItemStack(Material.HOPPER, 1);
+        CRAFT_STACK = new ItemStack(Material.HOPPER, 1);
 
-        ItemMeta craftMeta = CRAFT.getItemMeta();
+        ItemMeta craftMeta = CRAFT_STACK.getItemMeta();
         craftMeta.setDisplayName(ChatColor.GREEN + "Emplacement disponible");
 
         List<String> craftLore = new ArrayList<>();
@@ -189,6 +189,6 @@ class GuiWell extends AbstractGui
 
         craftMeta.setLore(craftLore);
 
-        CRAFT.setItemMeta(craftMeta);
+        CRAFT_STACK.setItemMeta(craftMeta);
     }
 }

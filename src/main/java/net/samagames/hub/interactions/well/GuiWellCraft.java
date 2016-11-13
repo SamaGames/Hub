@@ -26,8 +26,8 @@ import java.util.stream.IntStream;
  */
 public class GuiWellCraft extends AbstractGui
 {
-    private static final ItemStack CONFIRM;
-    private static final ItemStack HELP;
+    private static final ItemStack CONFIRM_STACK;
+    private static final ItemStack HELP_STACK;
 
     private final Well parent;
     private final int[] numbers;
@@ -62,8 +62,8 @@ public class GuiWellCraft extends AbstractGui
         for (int i = 0; i < 4; i++)
             this.setSlotData(makeNumberSlot(i), slots[i], "slot_" + i);
 
-        this.setSlotData(CONFIRM, 31, "confirm");
-        this.setSlotData(HELP, this.inventory.getSize() - 6, "back");
+        this.setSlotData(CONFIRM_STACK, 31, "confirm");
+        this.setSlotData(HELP_STACK, this.inventory.getSize() - 6, "back");
         this.setSlotData(getBackIcon(), this.inventory.getSize() - 4, "back");
     }
 
@@ -160,9 +160,9 @@ public class GuiWellCraft extends AbstractGui
 
     static
     {
-        CONFIRM = new ItemStack(Material.STAINED_GLASS, 1, DyeColor.GREEN.getWoolData());
+        CONFIRM_STACK = new ItemStack(Material.STAINED_GLASS, 1, DyeColor.GREEN.getWoolData());
 
-        ItemMeta confirmMeta = CONFIRM.getItemMeta();
+        ItemMeta confirmMeta = CONFIRM_STACK.getItemMeta();
         confirmMeta.setDisplayName(ChatColor.GREEN + "Valider le placement");
 
         List<String> confirmLore = new ArrayList<>();
@@ -170,13 +170,13 @@ public class GuiWellCraft extends AbstractGui
 
         confirmMeta.setLore(confirmLore);
 
-        CONFIRM.setItemMeta(confirmMeta);
+        CONFIRM_STACK.setItemMeta(confirmMeta);
 
         // ---
 
-        HELP = new ItemStack(Material.BOOK, 1);
+        HELP_STACK = new ItemStack(Material.BOOK, 1);
 
-        ItemMeta helpMeta = CONFIRM.getItemMeta();
+        ItemMeta helpMeta = CONFIRM_STACK.getItemMeta();
         helpMeta.setDisplayName(ChatColor.YELLOW + "Aide");
 
         List<String> helpLore = new ArrayList<>();
@@ -196,8 +196,8 @@ public class GuiWellCraft extends AbstractGui
         helpMeta.setLore(helpLore);
         helpMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 
-        HELP.setItemMeta(helpMeta);
+        HELP_STACK.setItemMeta(helpMeta);
 
-        GlowEffect.addGlow(HELP);
+        GlowEffect.addGlow(HELP_STACK);
     }
 }
