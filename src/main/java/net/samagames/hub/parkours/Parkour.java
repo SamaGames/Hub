@@ -1,5 +1,7 @@
 package net.samagames.hub.parkours;
 
+import net.samagames.api.SamaGamesAPI;
+import net.samagames.api.permissions.IPermissionsEntity;
 import net.samagames.hub.Hub;
 import net.samagames.hub.common.players.PlayerManager;
 import net.samagames.tools.ColorUtils;
@@ -281,6 +283,11 @@ public class Parkour
 
         player.getInventory().clear();
         this.hub.getPlayerManager().getStaticInventory().setInventoryToPlayer(player);
+
+        IPermissionsEntity permissionsEntity = SamaGamesAPI.get().getPermissionsManager().getPlayer(player.getUniqueId());
+
+        if (permissionsEntity.getGroupId() > 2 && SamaGamesAPI.get().getSettingsManager().getSettings(player.getUniqueId()).isElytraActivated())
+            player.getInventory().setChestplate(new ItemStack(Material.ELYTRA));
 
         for (UUID playerIn : this.playersIn.keySet())
         {
