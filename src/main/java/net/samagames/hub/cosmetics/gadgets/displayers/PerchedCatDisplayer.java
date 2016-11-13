@@ -81,8 +81,8 @@ public class PerchedCatDisplayer extends AbstractDisplayer
 
                 this.waitingInteractionTask = this.hub.getServer().getScheduler().runTaskLater(this.hub, () ->
                 {
-                    this.player.sendMessage(TAG + ChatColor.GOLD + this.player.getName() + ChatColor.YELLOW + " a provoqué " + ChatColor.GOLD + with.getName() + ChatColor.YELLOW + " en duel !");
-                    with.sendMessage(TAG + ChatColor.GOLD + this.player.getName() + ChatColor.YELLOW + " a provoqué " + ChatColor.GOLD + with.getName() + ChatColor.YELLOW + " en duel !");
+                    this.player.sendMessage(TAG + ChatColor.GOLD + this.player.getName() + ChatColor.YELLOW + " remporte le duel contre " + ChatColor.GOLD + with.getName() + ChatColor.YELLOW + " !");
+                    with.sendMessage(TAG + ChatColor.GOLD + this.player.getName() + ChatColor.YELLOW + " remporte le duel contre " + ChatColor.GOLD + with.getName() + ChatColor.YELLOW + " !");
 
                     if (this.hub.getServer().getPlayer(this.player.getUniqueId()) != null)
                     {
