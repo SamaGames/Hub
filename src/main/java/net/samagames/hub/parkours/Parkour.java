@@ -287,7 +287,10 @@ public class Parkour
         IPermissionsEntity permissionsEntity = SamaGamesAPI.get().getPermissionsManager().getPlayer(player.getUniqueId());
 
         if (permissionsEntity.getGroupId() > 2 && SamaGamesAPI.get().getSettingsManager().getSettings(player.getUniqueId()).isElytraActivated())
+        {
             player.getInventory().setChestplate(new ItemStack(Material.ELYTRA));
+            this.hub.getPlayerManager().getStaticInventory().setInventoryToPlayer(player);
+        }
 
         for (UUID playerIn : this.playersIn.keySet())
         {

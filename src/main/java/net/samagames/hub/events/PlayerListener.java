@@ -237,6 +237,7 @@ public class PlayerListener implements Listener
         if (permissionsEntity.getGroupId() < 3 || !SamaGamesAPI.get().getSettingsManager().getSettings(player.getUniqueId()).isElytraActivated())
         {
             player.getInventory().setChestplate(new ItemStack(Material.AIR));
+            this.hub.getPlayerManager().getStaticInventory().setInventoryToPlayer(player);
             return false;
         }
 
