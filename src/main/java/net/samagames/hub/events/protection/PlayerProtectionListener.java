@@ -57,7 +57,7 @@ public class PlayerProtectionListener implements Listener
         if (this.canDoAction(event.getPlayer()))
             return;
 
-        if (event.getItem() != null && event.getItem().getType() == Material.ENDER_PEARL)
+        if (event.getItem() != null && (event.getItem().getType() == Material.ENDER_PEARL || event.getItem().getType() == Material.SNOW_BALL || event.getItem().getType() == Material.EGG))
         {
             event.setCancelled(true);
             event.getPlayer().updateInventory();

@@ -47,7 +47,7 @@ public class InfiniteChickenFamilyDisplayer extends AbstractDisplayer
                 {
                     for (Chicken chicken : InfiniteChickenFamilyDisplayer.this.chickens)
                     {
-                        chicken.getLocation().getWorld().createExplosion(chicken.getLocation().getX(), chicken.getLocation().getY(), chicken.getLocation().getZ(), 1.0F, false, false);
+                        chicken.getLocation().getWorld().createExplosion(chicken.getLocation().getX(), chicken.getLocation().getY(), chicken.getLocation().getZ(), 1.5F, false, false);
                         chicken.remove();
                     }
 
@@ -62,6 +62,8 @@ public class InfiniteChickenFamilyDisplayer extends AbstractDisplayer
                     {
                         InfiniteChickenFamilyDisplayer.this.lastEgg = InfiniteChickenFamilyDisplayer.this.baseLocation.getWorld().dropItemNaturally(
                                 InfiniteChickenFamilyDisplayer.this.chickens.get(InfiniteChickenFamilyDisplayer.this.chickens.size() - 1).getLocation(), new ItemStack(Material.EGG, 1));
+
+                        InfiniteChickenFamilyDisplayer.this.lastEgg.setVelocity(InfiniteChickenFamilyDisplayer.this.lastEgg.getVelocity().multiply(2));
                     }
                     else
                     {
