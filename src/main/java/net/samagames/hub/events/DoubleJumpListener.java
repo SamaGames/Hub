@@ -1,6 +1,7 @@
 package net.samagames.hub.events;
 
 import net.samagames.hub.Hub;
+import net.samagames.tools.ParticleEffect;
 import org.bukkit.GameMode;
 import org.bukkit.Sound;
 import org.bukkit.entity.LivingEntity;
@@ -55,8 +56,13 @@ public class DoubleJumpListener implements Listener
             return;
 
         event.setCancelled(true);
+
         event.getPlayer().setVelocity(event.getPlayer().getLocation().getDirection().multiply(1.6D).setY(1.0D));
         event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.ENTITY_ENDERDRAGON_FLAP, 1.0F, 1.0F);
+
+        for (int i = 0; i < 20; i++)
+            ParticleEffect.CLOUD.display(0.5F, 0.15F, 0.5F, 0.25F, 20, event.getPlayer().getLocation().subtract(0.0F, 0.20F, 0.0F));
+
         event.getPlayer().setAllowFlight(false);
     }
 }
