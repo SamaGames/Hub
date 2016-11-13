@@ -79,7 +79,7 @@ public class PaintballDisplayer extends AbstractDisplayer implements Listener
 
         for (Block block : getNearbyBlocks(event.getEntity().getLocation(), 2))
         {
-            if (block.getType() == Material.AIR || block.getType() == Material.SIGN || block.getType() == Material.SIGN_POST)
+            if (block.getType() == Material.AIR || block.getType() == Material.SIGN || block.getType() == Material.SIGN_POST || block.getType() == Material.WALL_SIGN)
                 continue;
 
             if (this.isBlockGloballyUsed(block.getLocation()))
