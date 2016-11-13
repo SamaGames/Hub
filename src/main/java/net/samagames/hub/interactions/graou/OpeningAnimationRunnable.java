@@ -43,19 +43,20 @@ class OpeningAnimationRunnable implements Runnable
     private final Player player;
     private final Pearl pearl;
     private final Location door;
-    private final Location treasureLocations;
-    private final Location openingLocations;
+    private final Location treasureLocation;
+    private final Location openingLocation;
     private Item present;
+    private ArmorStand presentHolder;
 
-    OpeningAnimationRunnable(Hub hub, Graou graou, Player player, Pearl pearl, Location door, Location treasureLocations, Location openingLocations)
+    OpeningAnimationRunnable(Hub hub, Graou graou, Player player, Pearl pearl, Location door, Location treasureLocation, Location openingLocation)
     {
         this.hub = hub;
         this.graou = graou;
         this.player = player;
         this.pearl = pearl;
         this.door = door;
-        this.treasureLocations = treasureLocations;
-        this.openingLocations = openingLocations;
+        this.treasureLocation = treasureLocation;
+        this.openingLocation = openingLocation;
     }
 
     @Override
@@ -67,28 +68,32 @@ class OpeningAnimationRunnable implements Runnable
         this.door.getBlock().setData((byte) 11);
         this.door.getBlock().getState().update(true);
 
-        this.walk(this.treasureLocations, this::arrivedAtTreasure);
+        this.walk(this.treasureLocation, this::arrivedAtTreasure);
     }
 
     private void arrivedAtTreasure()
     {
-        this.treasureLocations.getWorld().playSound(this.treasureLocations, Sound.BLOCK_CHEST_OPEN, 1.0F, 1.0F);
+        this.treasureLocation.getWorld().playSound(this.treasureLocation, Sound.BLOCK_CHEST_OPEN, 1.0F, 1.0F);
 
         this.hub.getServer().getScheduler().runTaskLater(this.hub, () ->
         {
-            this.treasureLocations.getWorld().playSound(this.treasureLocations, Sound.BLOCK_CHEST_CLOSE, 1.0F, 1.0F);
+            this.treasureLocation.getWorld().playSound(this.treasureLocation, Sound.BLOCK_CHEST_CLOSE, 1.0F, 1.0F);
 
             final String selectedPresentTexture = PRESENT_TEXTURES[new Random().nextInt(PRESENT_TEXTURES.length)];
 
-            this.present = this.treasureLocations.getWorld().dropItem(this.treasureLocations, ItemUtils.getCustomHead(selectedPresentTexture));
+            this.present = this.treasureLocation.getWorld().dropItem(this.treasureLocation, ItemUtils.getCustomHead(selectedPresentTexture));
             this.graou.getGraouEntity().getBukkitEntity().setPassenger(this.present);
 
-            this.walk(this.openingLocations, () ->
+            this.walk(this.openingLocation, () ->
             {
                 this.door.getBlock().setData((byte) 7);
                 this.door.getBlock().getState().update(true);
 
-                BlockUtils.setCustomSkull(this.openingLocations.getBlock(), selectedPresentTexture);
+                this.presentHolder = this.openingLocation.getWorld().spawn(this.openingLocation.clone().subtract(0.0D, 1.25D, 0.0D), ArmorStand.class);
+                this.presentHolder.setVisible(false);
+                this.presentHolder.setGravity(false);
+                this.presentHolder.setInvulnerable(true);
+                this.presentHolder.setHelmet(ItemUtils.getCustomHead(selectedPresentTexture));
 
                 this.graou.getGraouEntity().getBukkitEntity().eject();
                 this.present.remove();
@@ -116,10 +121,10 @@ class OpeningAnimationRunnable implements Runnable
                 {
                     for (Player p : OpeningAnimationRunnable.this.hub.getServer().getOnlinePlayers())
                     {
-                        OpeningAnimationRunnable.this.playNote(p, OpeningAnimationRunnable.this.openingLocations, Instrument.PIANO, PIANO_MAIN[i]);
-                        OpeningAnimationRunnable.this.playNote(p, OpeningAnimationRunnable.this.openingLocations, Instrument.PIANO, PIANO_SECONDARY[i]);
-                        OpeningAnimationRunnable.this.playNote(p, OpeningAnimationRunnable.this.openingLocations, Instrument.SNARE_DRUM, SNARE_DRUM[i]);
-                        OpeningAnimationRunnable.this.playNote(p, OpeningAnimationRunnable.this.openingLocations, Instrument.BASS_GUITAR, BASS_GUITAR[i]);
+                        OpeningAnimationRunnable.this.playNote(p, OpeningAnimationRunnable.this.openingLocation, Instrument.PIANO, PIANO_MAIN[i]);
+                        OpeningAnimationRunnable.this.playNote(p, OpeningAnimationRunnable.this.openingLocation, Instrument.PIANO, PIANO_SECONDARY[i]);
+                        OpeningAnimationRunnable.this.playNote(p, OpeningAnimationRunnable.this.openingLocation, Instrument.SNARE_DRUM, SNARE_DRUM[i]);
+                        OpeningAnimationRunnable.this.playNote(p, OpeningAnimationRunnable.this.openingLocation, Instrument.BASS_GUITAR, BASS_GUITAR[i]);
                     }
 
                     int wait = i;
@@ -129,14 +134,14 @@ class OpeningAnimationRunnable implements Runnable
 
                     if (i == 0)
                     {
-                        OpeningAnimationRunnable.this.openingLocations.getWorld().playSound(OpeningAnimationRunnable.this.openingLocations, Sound.ENTITY_CREEPER_PRIMED, 1.0F, 0.85F);
+                        OpeningAnimationRunnable.this.openingLocation.getWorld().playSound(OpeningAnimationRunnable.this.openingLocation, Sound.ENTITY_CREEPER_PRIMED, 1.0F, 0.85F);
 
                         OpeningAnimationRunnable.this.hub.getServer().getScheduler().runTask(OpeningAnimationRunnable.this.hub, () ->
                         {
-                            WorldServer world = ((CraftWorld) OpeningAnimationRunnable.this.openingLocations.getWorld()).getHandle();
+                            WorldServer world = ((CraftWorld) OpeningAnimationRunnable.this.openingLocation.getWorld()).getHandle();
 
                             this.fakeTarget = new EntityGraouLaserTarget(world);
-                            this.fakeTarget.setPosition(OpeningAnimationRunnable.this.openingLocations.getX(), OpeningAnimationRunnable.this.openingLocations.getY(), OpeningAnimationRunnable.this.openingLocations.getZ());
+                            this.fakeTarget.setPosition(OpeningAnimationRunnable.this.openingLocation.getX(), OpeningAnimationRunnable.this.openingLocation.getY(), OpeningAnimationRunnable.this.openingLocation.getZ());
                             ((Squid) this.fakeTarget.getBukkitEntity()).addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 1, false, false));
 
                             world.addEntity(this.fakeTarget, CreatureSpawnEvent.SpawnReason.CUSTOM);
@@ -147,7 +152,7 @@ class OpeningAnimationRunnable implements Runnable
                             {
                                 EntityGraouLaser laser = new EntityGraouLaser(world);
 
-                                laser.setPosition(OpeningAnimationRunnable.this.openingLocations.getX(), OpeningAnimationRunnable.this.openingLocations.getY(), OpeningAnimationRunnable.this.openingLocations.getZ());
+                                laser.setPosition(OpeningAnimationRunnable.this.openingLocation.getX(), OpeningAnimationRunnable.this.openingLocation.getY(), OpeningAnimationRunnable.this.openingLocation.getZ());
                                 world.addEntity(laser, CreatureSpawnEvent.SpawnReason.CUSTOM);
                                 laser.setGoalTarget(this.fakeTarget, EntityTargetEvent.TargetReason.CUSTOM, false);
                                 ((Guardian) laser.getBukkitEntity()).addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 1, false, false));
@@ -160,8 +165,8 @@ class OpeningAnimationRunnable implements Runnable
                     {
                         OpeningAnimationRunnable.this.hub.getServer().getScheduler().runTask(OpeningAnimationRunnable.this.hub, () ->
                         {
-                            OpeningAnimationRunnable.this.openingLocations.getWorld().createExplosion(OpeningAnimationRunnable.this.openingLocations.getBlockX(), OpeningAnimationRunnable.this.openingLocations.getBlockY(), OpeningAnimationRunnable.this.openingLocations.getBlockZ(), 2.0F, false, false);
-                            OpeningAnimationRunnable.this.openingLocations.getBlock().setType(Material.AIR);
+                            OpeningAnimationRunnable.this.openingLocation.getWorld().createExplosion(OpeningAnimationRunnable.this.openingLocation.getBlockX(), OpeningAnimationRunnable.this.openingLocation.getBlockY(), OpeningAnimationRunnable.this.openingLocation.getBlockZ(), 2.0F, false, false);
+                            OpeningAnimationRunnable.this.presentHolder.remove();
 
                             OpeningAnimationRunnable.this.finishAnimation();
                         });
@@ -180,7 +185,7 @@ class OpeningAnimationRunnable implements Runnable
                         OpeningAnimationRunnable.this.hub.getServer().getScheduler().runTask(OpeningAnimationRunnable.this.hub, () ->
                         {
                             for (int j = 0; j < 4; j++)
-                                this.lasers[j].getBukkitEntity().teleport(OpeningAnimationRunnable.this.openingLocations.clone().add(Math.cos(this.angle + Math.PI * j / 2) * (finalI / 4), 6, Math.sin(this.angle + Math.PI * j / 2) * (finalI / 4)));
+                                this.lasers[j].getBukkitEntity().teleport(OpeningAnimationRunnable.this.openingLocation.clone().add(Math.cos(this.angle + Math.PI * j / 2) * (finalI / 4), 6, Math.sin(this.angle + Math.PI * j / 2) * (finalI / 4)));
                         });
 
                         this.angle += 0.25D;
@@ -189,7 +194,7 @@ class OpeningAnimationRunnable implements Runnable
                             this.angle = 0.0D;
 
                         for (int j = 0; j < (i / 4); j++)
-                            ParticleEffect.FIREWORKS_SPARK.display(0.1F, 0.1F, 0.1F, 0.5F, 5, OpeningAnimationRunnable.this.openingLocations.clone().add(0.0D, 0.25D, 0.0D), 150.0D);
+                            ParticleEffect.FIREWORKS_SPARK.display(0.1F, 0.1F, 0.1F, 0.5F, 5, OpeningAnimationRunnable.this.openingLocation.clone().add(0.0D, 0.25D, 0.0D), 150.0D);
                     }
 
                     try
@@ -207,14 +212,14 @@ class OpeningAnimationRunnable implements Runnable
 
     private void finishAnimation()
     {
-        ArmorStand holder = this.openingLocations.getWorld().spawn(this.openingLocations.clone().subtract(0.0D, 1.35D, 0.0D), ArmorStand.class);
+        ArmorStand holder = this.openingLocation.getWorld().spawn(this.openingLocation.clone().subtract(0.0D, 1.35D, 0.0D), ArmorStand.class);
         holder.setVisible(false);
         holder.setInvulnerable(true);
         holder.setGravity(false);
         holder.setCustomNameVisible(true);
 
-        AbstractCosmetic unlockedCosmetic = this.hub.getInteractionManager().getGraouManager().getPearlLogic().unlockRandomizedCosmetic(this.player, this.pearl, this.openingLocations);
-        Item unlockedCosmeticItem = this.openingLocations.getWorld().dropItem(this.openingLocations, unlockedCosmetic.getIcon());
+        AbstractCosmetic unlockedCosmetic = this.hub.getInteractionManager().getGraouManager().getPearlLogic().unlockRandomizedCosmetic(this.player, this.pearl, this.openingLocation);
+        Item unlockedCosmeticItem = this.openingLocation.getWorld().dropItem(this.openingLocation, unlockedCosmetic.getIcon());
 
         holder.setCustomName(unlockedCosmetic.getIcon().getItemMeta().getDisplayName());
         holder.setPassenger(unlockedCosmeticItem);
