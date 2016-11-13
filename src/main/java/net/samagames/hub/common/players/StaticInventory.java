@@ -59,6 +59,10 @@ public class StaticInventory
         {
             this.hub.getParkourManager().getPlayerParkour(player.getUniqueId()).quitPlayer(player);
         }
+        else if (stack.getType() == Material.ENDER_PEARL && this.hub.getParkourManager().getPlayerParkour(player.getUniqueId()) != null)
+        {
+            this.hub.getParkourManager().getPlayerParkour(player.getUniqueId()).failPlayer(player);
+        }
         else if (player.getInventory().getHeldItemSlot() == 6)
         {
             this.hub.getServer().getScheduler().runTask(this.hub, () -> this.hub.getCosmeticManager().getGadgetManager().useSelectedCosmetic(player, stack));

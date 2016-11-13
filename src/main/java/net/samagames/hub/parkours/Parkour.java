@@ -17,6 +17,7 @@ public class Parkour
 {
     public static final String TAG = ChatColor.DARK_AQUA + "[" + ChatColor.AQUA + "Parcours" + ChatColor.DARK_AQUA + "] " + ChatColor.RESET;
     private static final ItemStack QUIT_STACK;
+    private static final ItemStack CHECKPOINT_STACK;
 
     protected final Hub hub;
 
@@ -154,8 +155,17 @@ public class Parkour
             player.setWalkSpeed(0.2F);
 
             player.getInventory().clear();
-            player.getInventory().setItem(4, QUIT_STACK);
             player.getInventory().setHeldItemSlot(4);
+
+            if (this.checkpointsTooltips.isEmpty())
+            {
+                player.getInventory().setItem(4, QUIT_STACK);
+            }
+            else
+            {
+                player.getInventory().setItem(3, QUIT_STACK);
+                player.getInventory().setItem(5, CHECKPOINT_STACK);
+            }
 
             for (UUID playerIn : this.playersIn.keySet())
                 player.hidePlayer(this.hub.getServer().getPlayer(playerIn));
@@ -358,9 +368,18 @@ public class Parkour
     {
         QUIT_STACK = new ItemStack(Material.BARRIER, 1);
 
-        ItemMeta meta = QUIT_STACK.getItemMeta();
-        meta.setDisplayName(ChatColor.RED + "" + ChatColor.BOLD + "Quitter le parcours");
+        ItemMeta quitStackMeta = QUIT_STACK.getItemMeta();
+        quitStackMeta.setDisplayName(ChatColor.RED + "" + ChatColor.BOLD + "Quitter le parcours");
 
-        QUIT_STACK.setItemMeta(meta);
+        QUIT_STACK.setItemMeta(quitStackMeta);
+
+        // ---
+
+        CHECKPOINT_STACK = new ItemStack(Material.ENDER_PEARL, 1);
+
+        ItemMeta checkpointStackMeta = CHECKPOINT_STACK.getItemMeta();
+        checkpointStackMeta.setDisplayName(ChatColor.GREEN + "" + ChatColor.BOLD + "Aller au dernier Checkpoint");
+
+        CHECKPOINT_STACK.setItemMeta(checkpointStackMeta);
     }
 }
