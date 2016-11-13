@@ -4,6 +4,7 @@ import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -24,6 +25,7 @@ public class DevelopperListener implements Listener
         this.hub = hub;
     }
 
+    @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event)
     {
         this.hub.getServer().getScheduler().runTaskAsynchronously(this.hub, () ->
