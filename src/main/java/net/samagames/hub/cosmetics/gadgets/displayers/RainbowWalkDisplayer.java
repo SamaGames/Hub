@@ -40,7 +40,7 @@ public class RainbowWalkDisplayer extends AbstractDisplayer
                 {
                     Block block = RainbowWalkDisplayer.this.player.getLocation().getBlock().getRelative(BlockFace.DOWN);
 
-                    if (block.getType() != Material.AIR)
+                    if (block.getType() != Material.AIR && !RainbowWalkDisplayer.this.isBlockGloballyUsed(block.getLocation()))
                     {
                         SimpleBlock simpleBlock = new SimpleBlock(Material.STAINED_CLAY, DyeColor.values()[new Random().nextInt(DyeColor.values().length)].getWoolData());
                         RainbowWalkDisplayer.this.addBlockToUse(block.getLocation(), simpleBlock);
