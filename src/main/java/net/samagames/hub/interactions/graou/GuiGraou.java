@@ -99,7 +99,7 @@ class GuiGraou extends AbstractGui
 
     static
     {
-        NONE = new ItemStack(Material.IRON_BARDING, 1);
+        NONE = new ItemStack(Material.IRON_FENCE, 1);
         ItemMeta meta = NONE.getItemMeta();
         meta.setDisplayName(ChatColor.RED + "Vous n'avez aucune perle :(");
 

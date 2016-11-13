@@ -89,7 +89,7 @@ class OpeningAnimationRunnable implements Runnable
                 this.door.getBlock().setData((byte) 7);
                 this.door.getBlock().getState().update(true);
 
-                this.presentHolder = this.openingLocation.getWorld().spawn(this.openingLocation.clone().subtract(0.0D, 1.35D, 0.0D), ArmorStand.class);
+                this.presentHolder = this.openingLocation.getWorld().spawn(this.openingLocation.clone().subtract(0.0D, 1.5D, 0.0D), ArmorStand.class);
                 this.presentHolder.setVisible(false);
                 this.presentHolder.setGravity(false);
                 this.presentHolder.setInvulnerable(true);
