@@ -1,6 +1,5 @@
 package net.samagames.hub.events;
 
-import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import org.bukkit.GameMode;
 import org.bukkit.Sound;
@@ -31,7 +30,7 @@ public class DoubleJumpListener implements Listener
         if (event.getPlayer().getGameMode() != GameMode.ADVENTURE)
             return;
 
-        if (SamaGamesAPI.get().getPermissionsManager().hasPermission(event.getPlayer(), "hub.fly"))
+        if (event.getPlayer().getAllowFlight())
             return;
 
         if (this.hub.getPlayerManager().isBusy(event.getPlayer()))

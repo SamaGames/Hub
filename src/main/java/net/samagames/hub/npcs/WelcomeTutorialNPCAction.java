@@ -100,7 +100,7 @@ class WelcomeTutorialNPCAction implements NPCInteractCallback, Listener
         this.tutorial.addChapter(new CoveredTutorialChapter(new Location(hub.getWorld(), -9.0D, 110.5D, -1.5D, -59.0F, 38.4F), ChatColor.GOLD + "Qui est Meow ?", Arrays.asList(
                 Pair.of("Voici Meow, notre chat.", 60L),
                 Pair.of("C'est à lui que vous pourrez récupérer", 36L),
-                Pair.of("Certains bonus dont ceux offert avec", 31L),
+                Pair.of("certains bonus dont ceux offert avec", 31L),
                 Pair.of("l'achat d'un grade.", 35L)
         ), Material.RECORD_8.getId()));
 

@@ -25,9 +25,9 @@ commands:
   join:
     description: Commande relative au join des file d'attente
     usage: /join
-  internal:
-    description: Commmande executée en interne pour un joueur
-    usage: /internal
+  fly:
+    description: Commande relative au Fly
+    usage: /fly
 
   # Moderating commands ------------------------
   pllock:

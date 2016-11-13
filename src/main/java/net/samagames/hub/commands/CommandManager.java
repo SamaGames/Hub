@@ -35,6 +35,7 @@ public class CommandManager extends AbstractManager
         this.registerCommand("woot", null, CommandWoot.class);
         this.registerCommand("jukebox", null, CommandJukebox.class);
         this.registerCommand("join", null, CommandJoin.class);
+        this.registerCommand("fly", null, CommandFly.class);
 
         // Moderating commands ------------------------------------------
         this.registerCommand("pllock", "hub.jukebox.lock", CommandPlaylistLock.class);
