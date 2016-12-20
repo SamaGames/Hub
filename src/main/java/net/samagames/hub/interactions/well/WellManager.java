@@ -246,7 +246,7 @@ public class WellManager extends AbstractInteractionManager<Well> implements Lis
         return parts;
     }
 
-    private List<CraftingPearl> getPlayerCraftingPearls(UUID player)
+    public List<CraftingPearl> getPlayerCraftingPearls(UUID player)
     {
         List<CraftingPearl> craftingPearls = new ArrayList<>();
         Jedis jedis = SamaGamesAPI.get().getBungeeResource();
