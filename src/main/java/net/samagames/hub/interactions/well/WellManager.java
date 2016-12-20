@@ -111,7 +111,7 @@ public class WellManager extends AbstractInteractionManager<Well> implements Lis
 
     public void startPearlCrafting(Player player, int[] numbers)
     {
-        int[] expectedNumbers = generateRandomNumbers();
+        int[] expectedNumbers = this.generateRandomNumbers();
         int pearlStars = 1;
         int craftingTime = 60;
 
@@ -216,23 +216,7 @@ public class WellManager extends AbstractInteractionManager<Well> implements Lis
         });
     }
 
-    public List<CraftingPearl> getPlayerCraftingPearls(UUID player)
-    {
-        List<CraftingPearl> craftingPearls = new ArrayList<>();
-        Jedis jedis = SamaGamesAPI.get().getBungeeResource();
-
-        if (jedis == null)
-            return craftingPearls;
-
-        for (String key : jedis.keys("crafting-pearls:" + player.toString() + ":*"))
-            craftingPearls.add(new Gson().fromJson(jedis.get(key), CraftingPearl.class));
-
-        jedis.close();
-
-        return craftingPearls;
-    }
-
-    private static int[] generateRandomNumbers()
+    public int[] generateRandomNumbers()
     {
         int[] parts = new int[4];
         int n = 10;
@@ -260,6 +244,22 @@ public class WellManager extends AbstractInteractionManager<Well> implements Lis
         }
 
         return parts;
+    }
+
+    private List<CraftingPearl> getPlayerCraftingPearls(UUID player)
+    {
+        List<CraftingPearl> craftingPearls = new ArrayList<>();
+        Jedis jedis = SamaGamesAPI.get().getBungeeResource();
+
+        if (jedis == null)
+            return craftingPearls;
+
+        for (String key : jedis.keys("crafting-pearls:" + player.toString() + ":*"))
+            craftingPearls.add(new Gson().fromJson(jedis.get(key), CraftingPearl.class));
+
+        jedis.close();
+
+        return craftingPearls;
     }
 
     private static Location normalize(Location location)

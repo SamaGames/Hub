@@ -28,6 +28,7 @@ public class GuiWellCraft extends AbstractGui
 {
     private static final ItemStack CONFIRM_STACK;
     private static final ItemStack HELP_STACK;
+    private static final ItemStack RANDOM_STACK;
 
     private final Well parent;
     private final int[] numbers;
@@ -63,8 +64,9 @@ public class GuiWellCraft extends AbstractGui
             this.setSlotData(makeNumberSlot(i), slots[i], "slot_" + i);
 
         this.setSlotData(CONFIRM_STACK, 31, "confirm");
-        this.setSlotData(HELP_STACK, this.inventory.getSize() - 6, "back");
-        this.setSlotData(getBackIcon(), this.inventory.getSize() - 4, "back");
+        this.setSlotData(HELP_STACK, this.inventory.getSize() - 6, "none");
+        this.setSlotData(getBackIcon(), this.inventory.getSize() - 5, "back");
+        this.setSlotData(RANDOM_STACK, this.inventory.getSize() - 6, "random");
     }
 
     @Override
@@ -96,6 +98,15 @@ public class GuiWellCraft extends AbstractGui
             {
                 player.sendMessage(Well.TAG + ChatColor.RED + "Vous devez placer l'intégralité des poussières d'\u272F !");
             }
+        }
+        else if (action.equals("random"))
+        {
+            int[] randomizedNumbers = this.hub.getInteractionManager().getWellManager().generateRandomNumbers();
+
+            for (int i = 0; i < randomizedNumbers.length; i++)
+                this.numbers[i] = randomizedNumbers[i];
+
+            this.update(player);
         }
         else if (action.equals("back"))
         {
@@ -199,5 +210,14 @@ public class GuiWellCraft extends AbstractGui
         HELP_STACK.setItemMeta(helpMeta);
 
         GlowEffect.addGlow(HELP_STACK);
+
+        // ---
+
+        RANDOM_STACK = new ItemStack(Material.NAME_TAG, 1);
+
+        ItemMeta randomMeta = RANDOM_STACK.getItemMeta();
+        randomMeta.setDisplayName(ChatColor.YELLOW + "Remplir aléatoirement");
+
+        RANDOM_STACK.setItemMeta(randomMeta);
     }
 }
