@@ -66,7 +66,7 @@ public class GuiWellCraft extends AbstractGui
         this.setSlotData(CONFIRM_STACK, 31, "confirm");
         this.setSlotData(HELP_STACK, this.inventory.getSize() - 6, "none");
         this.setSlotData(getBackIcon(), this.inventory.getSize() - 5, "back");
-        this.setSlotData(RANDOM_STACK, this.inventory.getSize() - 6, "random");
+        this.setSlotData(RANDOM_STACK, this.inventory.getSize() - 4, "random");
     }
 
     @Override
@@ -102,9 +102,7 @@ public class GuiWellCraft extends AbstractGui
         else if (action.equals("random"))
         {
             int[] randomizedNumbers = this.hub.getInteractionManager().getWellManager().generateRandomNumbers();
-
-            for (int i = 0; i < randomizedNumbers.length; i++)
-                this.numbers[i] = randomizedNumbers[i];
+            System.arraycopy(randomizedNumbers, 0, this.numbers, 0, randomizedNumbers.length);
 
             this.update(player);
         }
