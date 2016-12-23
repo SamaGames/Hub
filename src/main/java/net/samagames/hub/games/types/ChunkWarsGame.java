@@ -6,6 +6,7 @@ import net.samagames.hub.games.leaderboards.HubLeaderboard;
 import net.samagames.hub.games.shops.ShopCategory;
 import net.samagames.tools.RulesBook;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
@@ -38,7 +39,7 @@ public class ChunkWarsGame extends AbstractGame
     @Override
     public ItemStack getIcon()
     {
-        return null;
+        return new ItemStack(Material.ENDER_PORTAL_FRAME, 1);
     }
 
     @Override
@@ -77,7 +78,7 @@ public class ChunkWarsGame extends AbstractGame
     @Override
     public Location getLobbySpawn()
     {
-        return this.hub.getPlayerManager().getSpawn();
+        return this.hub.getGameManager().getGameByIdentifier("beta_vip").getLobbySpawn();
     }
 
     @Override
@@ -101,7 +102,7 @@ public class ChunkWarsGame extends AbstractGame
     @Override
     public boolean isLocked()
     {
-        return true;
+        return false;
     }
 
     @Override
