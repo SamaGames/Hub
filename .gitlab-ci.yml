@@ -1,8 +1,6 @@
 stages:
-  - pre-notify
   - build
   - deploy
-  - post-notify
 
 variables:
   HAS_TO_BE_PUT_IN_THE_DATA: "true"
@@ -11,11 +9,6 @@ variables:
   ARTIFACTORY_ARTIFACT_GROUP: ""
   ARTIFACTORY_ARTIFACT_NAME: ""
   ARTIFACTORY_ARTIFACT_VERSION: ""
-
-pre-notify:
-  stage: pre-notify
-  script:
-    - 'curl -k --data "status=pre&project=${CI_PROJECT_NAME}&url=${CI_PROJECT_URL}&branch=${CI_BUILD_REF_NAME}" https://blackmesa.samagames.net:3978/api/gitlab-ci'
 
 build:
   stage: build
@@ -42,15 +35,3 @@ deploy-production:
     - master
   script:
     - 'if [ "$HAS_TO_BE_PUT_IN_THE_DATA" == "true" ]; then if [ -f "build.gradle" ]; then scp -prq build/libs/*.jar root@94.23.20.180:/var/www/static/templates/dependencies/; else scp -prq target/*.jar root@94.23.20.180:/var/www/static/templates/dependencies/; fi; fi'
-
-post-notify-success:
-  stage: post-notify
-  script:
-    - 'curl -k --data "status=post&result=success&project=${CI_PROJECT_NAME}&url=${CI_PROJECT_URL}&branch=${CI_BUILD_REF_NAME}" https://blackmesa.samagames.net:3978/api/gitlab-ci'
-  when: on_success
-  
-post-notify-fail:
-  stage: post-notify
-  script:
-    - 'curl -k --data "status=post&result=fail&project=${CI_PROJECT_NAME}&url=${CI_PROJECT_URL}&branch=${CI_BUILD_REF_NAME}" https://blackmesa.samagames.net:3978/api/gitlab-ci'
-  when: on_failure
