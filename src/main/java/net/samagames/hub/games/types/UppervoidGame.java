@@ -75,7 +75,7 @@ public class UppervoidGame extends AbstractGame
     @Override
     public int getSlotInMainMenu()
     {
-        return 21;
+        return 20;
     }
 
     @Override

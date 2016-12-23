@@ -67,7 +67,7 @@ public class OneTwoThreeSunGame extends AbstractGame
     @Override
     public int getSlotInMainMenu()
     {
-        return 23;
+        return 24;
     }
 
     @Override

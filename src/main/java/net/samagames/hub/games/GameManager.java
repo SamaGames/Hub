@@ -32,8 +32,8 @@ public class GameManager extends AbstractManager
         this.registerGame(new BackEndGame(hub, "beta_vip", "VIP", LocationUtils.str2loc(hub.getConfig().getString("vip-zone")), false));
 
         this.registerGame(new UppervoidGame(hub));
-        this.registerGame(new QuakeGame(hub));
-        this.registerGame(new DimensionsGame(hub));
+        //this.registerGame(new QuakeGame(hub));
+        //this.registerGame(new DimensionsGame(hub));
         this.registerGame(new ChunkWarsGame(hub));
 
         // -----
