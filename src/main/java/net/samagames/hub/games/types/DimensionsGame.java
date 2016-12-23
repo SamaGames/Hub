@@ -141,6 +141,12 @@ public class DimensionsGame extends AbstractGame
     }
 
     @Override
+    public State getState()
+    {
+        return State.LOCKED;
+    }
+
+    @Override
     public boolean hasResourcesPack()
     {
         return false;
@@ -148,18 +154,6 @@ public class DimensionsGame extends AbstractGame
 
     @Override
     public boolean isGroup()
-    {
-        return false;
-    }
-
-    @Override
-    public boolean isLocked()
-    {
-        return false;
-    }
-
-    @Override
-    public boolean isNew()
     {
         return false;
     }

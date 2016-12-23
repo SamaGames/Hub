@@ -89,6 +89,12 @@ public class OneTwoThreeSunGame extends AbstractGame
     }
 
     @Override
+    public State getState()
+    {
+        return State.NEW;
+    }
+
+    @Override
     public boolean hasResourcesPack()
     {
         return false;
@@ -98,17 +104,5 @@ public class OneTwoThreeSunGame extends AbstractGame
     public boolean isGroup()
     {
         return false;
-    }
-
-    @Override
-    public boolean isLocked()
-    {
-        return false;
-    }
-
-    @Override
-    public boolean isNew()
-    {
-        return true;
     }
 }

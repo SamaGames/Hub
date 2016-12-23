@@ -150,6 +150,12 @@ public class QuakeGame extends AbstractGame
     }
 
     @Override
+    public State getState()
+    {
+        return State.LOCKED;
+    }
+
+    @Override
     public boolean hasResourcesPack()
     {
         return false;
@@ -157,18 +163,6 @@ public class QuakeGame extends AbstractGame
 
     @Override
     public boolean isGroup()
-    {
-        return false;
-    }
-
-    @Override
-    public boolean isLocked()
-    {
-        return false;
-    }
-
-    @Override
-    public boolean isNew()
     {
         return false;
     }

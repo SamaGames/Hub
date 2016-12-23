@@ -149,6 +149,12 @@ public class UHCZoneGame extends AbstractGame
     }
 
     @Override
+    public State getState()
+    {
+        return State.POPULAR;
+    }
+
+    @Override
     public boolean hasResourcesPack()
     {
         return false;
@@ -156,18 +162,6 @@ public class UHCZoneGame extends AbstractGame
 
     @Override
     public boolean isGroup()
-    {
-        return true;
-    }
-
-    @Override
-    public boolean isLocked()
-    {
-        return false;
-    }
-
-    @Override
-    public boolean isNew()
     {
         return true;
     }

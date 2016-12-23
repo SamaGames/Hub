@@ -66,7 +66,7 @@ public class ChunkWarsGame extends AbstractGame
     @Override
     public int getSlotInMainMenu()
     {
-        return 22;
+        return 31;
     }
 
     @Override
@@ -88,6 +88,12 @@ public class ChunkWarsGame extends AbstractGame
     }
 
     @Override
+    public State getState()
+    {
+        return State.NEW;
+    }
+
+    @Override
     public boolean hasResourcesPack()
     {
         return false;
@@ -97,17 +103,5 @@ public class ChunkWarsGame extends AbstractGame
     public boolean isGroup()
     {
         return false;
-    }
-
-    @Override
-    public boolean isLocked()
-    {
-        return false;
-    }
-
-    @Override
-    public boolean isNew()
-    {
-        return true;
     }
 }

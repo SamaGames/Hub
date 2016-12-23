@@ -94,6 +94,12 @@ public class BackEndGame extends AbstractGame
     }
 
     @Override
+    public State getState()
+    {
+        return State.OPENED;
+    }
+
+    @Override
     public boolean hasResourcesPack()
     {
         return this.hasResourcesPack;
@@ -101,18 +107,6 @@ public class BackEndGame extends AbstractGame
 
     @Override
     public boolean isGroup()
-    {
-        return false;
-    }
-
-    @Override
-    public boolean isLocked()
-    {
-        return false;
-    }
-
-    @Override
-    public boolean isNew()
     {
         return false;
     }

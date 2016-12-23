@@ -20,6 +20,8 @@ import java.util.Map;
 
 public abstract class AbstractGame
 {
+    public enum State { OPENED, NEW, POPULAR, SOON, LOCKED }
+
     protected final Hub hub;
     private final Map<String, List<GameSign>> signs;
 
@@ -49,10 +51,9 @@ public abstract class AbstractGame
     public abstract ShopCategory getShopConfiguration();
     public abstract Location getLobbySpawn();
     public abstract List<HubLeaderboard> getLeaderBoards();
+    public abstract State getState();
     public abstract boolean hasResourcesPack();
     public abstract boolean isGroup();
-    public abstract boolean isLocked();
-    public abstract boolean isNew();
 
     public void addSignForMap(String map, ChatColor color, String template, RestrictedVersion restrictedVersion, Sign sign)
     {

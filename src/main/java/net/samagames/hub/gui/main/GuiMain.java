@@ -39,7 +39,39 @@ public class GuiMain extends AbstractGui
             AbstractGame game = this.hub.getGameManager().getGameByIdentifier(gameIdentifier);
 
             if (game.getSlotInMainMenu() >= 0)
-                this.setSlotData(game.isLocked() ? ChatColor.GOLD + "" + ChatColor.MAGIC + "aaaaaaaa" : (game.isNew() ? ChatColor.GREEN + "" + ChatColor.BOLD + "NOUVEAU ! " + ChatColor.RESET : "") + ChatColor.GOLD + game.getName(), ItemUtils.hideAllAttributes(game.isLocked() ? new ItemStack(Material.IRON_FENCE, 1) : (game.isNew() ? GlowEffect.addGlow(game.getIcon()) : game.getIcon())), game.getSlotInMainMenu(), makeGameLore(game), "game_" + gameIdentifier);
+            {
+                String prefix;
+
+                switch (game.getState())
+                {
+                    case NEW:
+                        prefix = ChatColor.GREEN + "" + ChatColor.BOLD + "NOUVEAU !";
+                        break;
+
+                    case POPULAR:
+                        prefix = ChatColor.YELLOW + "" + ChatColor.BOLD + "POPULAIRE !";
+                        break;
+
+                    case SOON:
+                        prefix = ChatColor.RED + "" + ChatColor.BOLD + "BIENTOT !";
+                        break;
+
+                    case LOCKED:
+                        prefix = ChatColor.GOLD + "" + ChatColor.MAGIC + "aaaaaaaa";
+                        break;
+
+                    default:
+                        prefix = "";
+                        break;
+                }
+
+                if (!prefix.equals(""))
+                    prefix += " ";
+
+                boolean glow = game.getState() == AbstractGame.State.NEW || game.getState() == AbstractGame.State.POPULAR;
+
+                this.setSlotData(prefix + ChatColor.GOLD + game.getName(), ItemUtils.hideAllAttributes(game.getState() == AbstractGame.State.LOCKED ? new ItemStack(Material.IRON_FENCE, 1) : (glow ? GlowEffect.addGlow(game.getIcon()) : game.getIcon())), game.getSlotInMainMenu(), makeGameLore(game), "game_" + gameIdentifier);
+            }
         }
 
         this.hub.getServer().getScheduler().runTask(this.hub, () -> player.openInventory(this.inventory));
@@ -69,7 +101,7 @@ public class GuiMain extends AbstractGui
             String[] actions = action.split("_");
             AbstractGame game = this.hub.getGameManager().getGameByIdentifier(actions[1]);
 
-            if (game.isLocked())
+            if (game.getState() == AbstractGame.State.LOCKED || game.getState() == AbstractGame.State.SOON)
             {
                 player.sendMessage(ChatColor.RED + "Ce jeu n'est pas disponible.");
                 return;
@@ -110,7 +142,7 @@ public class GuiMain extends AbstractGui
         List<String> lore = new ArrayList<>();
         String[] loreArray = new String[] {};
 
-        if (!game.isLocked())
+        if (game.getState() != AbstractGame.State.LOCKED && game.getState() != AbstractGame.State.SOON)
         {
             lore.add(ChatColor.DARK_GRAY + game.getCategory());
             lore.add("");

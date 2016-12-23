@@ -75,7 +75,7 @@ public class UppervoidGame extends AbstractGame
     @Override
     public int getSlotInMainMenu()
     {
-        return 20;
+        return 21;
     }
 
     @Override
@@ -131,6 +131,12 @@ public class UppervoidGame extends AbstractGame
     }
 
     @Override
+    public State getState()
+    {
+        return State.OPENED;
+    }
+
+    @Override
     public boolean hasResourcesPack()
     {
         return false;
@@ -138,18 +144,6 @@ public class UppervoidGame extends AbstractGame
 
     @Override
     public boolean isGroup()
-    {
-        return false;
-    }
-
-    @Override
-    public boolean isLocked()
-    {
-        return false;
-    }
-
-    @Override
-    public boolean isNew()
     {
         return false;
     }
