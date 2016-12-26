@@ -33,7 +33,7 @@ public class GameManager extends AbstractManager
 
         this.registerGame(new UppervoidGame(hub));
         //this.registerGame(new QuakeGame(hub));
-        //this.registerGame(new DimensionsGame(hub));
+        this.registerGame(new DimensionsGame(hub));
         this.registerGame(new ChunkWarsGame(hub));
 
         // -----
