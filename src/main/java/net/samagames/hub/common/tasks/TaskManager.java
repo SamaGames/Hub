@@ -3,7 +3,7 @@ package net.samagames.hub.common.tasks;
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import net.samagames.hub.common.managers.AbstractManager;
-import net.samagames.hub.utils.ProximityUtils;
+import net.samagames.tools.ProximityUtils;
 import org.bukkit.Location;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;

@@ -2,8 +2,8 @@ package net.samagames.hub.cosmetics.gadgets.displayers;
 
 import net.samagames.hub.Hub;
 import net.samagames.hub.utils.FireworkUtils;
-import net.samagames.hub.utils.ProximityUtils;
 import net.samagames.tools.ParticleEffect;
+import net.samagames.tools.ProximityUtils;
 import net.samagames.tools.SimpleBlock;
 import org.bukkit.*;
 import org.bukkit.craftbukkit.v1_10_R1.entity.CraftPlayer;

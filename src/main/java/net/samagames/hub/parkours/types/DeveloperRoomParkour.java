@@ -2,7 +2,7 @@ package net.samagames.hub.parkours.types;
 
 import net.samagames.hub.Hub;
 import net.samagames.hub.parkours.Parkour;
-import net.samagames.hub.utils.ProximityUtils;
+import net.samagames.tools.ProximityUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.bukkit.Effect;
 import org.bukkit.Location;

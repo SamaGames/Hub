@@ -48,7 +48,6 @@ public class GuiProfile extends AbstractGui
         {
             case "stats":
                 this.hub.getGuiManager().openGui(player, new GuiStatistics(this.hub));
-                new FancyMessage(ChatColor.YELLOW + "Cliquez sur ").then("[Accéder]").color(ChatColor.GOLD).style(ChatColor.BOLD).link("https://www.samagames.net/stats/" + player.getName() + ".html").then(" pour accéder à vos statistiques.").color(ChatColor.YELLOW).send(player);
                 break;
 
             case "achievements":

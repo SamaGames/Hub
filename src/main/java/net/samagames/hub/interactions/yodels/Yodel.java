@@ -3,7 +3,7 @@ package net.samagames.hub.interactions.yodels;
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import net.samagames.hub.interactions.AbstractInteraction;
-import net.samagames.hub.utils.ProximityUtils;
+import net.samagames.tools.ProximityUtils;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.ArmorStand;

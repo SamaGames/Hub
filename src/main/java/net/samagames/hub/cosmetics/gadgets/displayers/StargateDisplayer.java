@@ -4,7 +4,7 @@ import de.slikey.effectlib.effect.HelixEffect;
 import de.slikey.effectlib.util.ParticleEffect;
 import net.samagames.hub.Hub;
 import net.samagames.hub.cosmetics.gadgets.GadgetManager;
-import net.samagames.hub.utils.ProximityUtils;
+import net.samagames.tools.ProximityUtils;
 import net.samagames.tools.SimpleBlock;
 import org.bukkit.Location;
 import org.bukkit.Material;
