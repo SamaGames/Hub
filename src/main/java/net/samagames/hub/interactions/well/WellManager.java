@@ -180,7 +180,7 @@ public class WellManager extends AbstractInteractionManager<Well> implements Lis
         }
 
         Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.MONTH, 1);
+        calendar.add(Calendar.DAY_OF_MONTH, 7);
 
         Pearl craftedPearl = new Pearl(craftingPearl.getUUID(), craftingPearl.getStars(), calendar.getTime().getTime());
         this.addPearlToPlayer(player, craftedPearl);

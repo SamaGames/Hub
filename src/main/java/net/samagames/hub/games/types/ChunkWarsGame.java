@@ -66,7 +66,7 @@ public class ChunkWarsGame extends AbstractGame
     @Override
     public int getSlotInMainMenu()
     {
-        return 21;
+        return 22;
     }
 
     @Override
@@ -78,7 +78,7 @@ public class ChunkWarsGame extends AbstractGame
     @Override
     public Location getLobbySpawn()
     {
-        return this.hub.getGameManager().getGameByIdentifier("beta_vip").getLobbySpawn();
+        return new Location(this.hub.getWorld(), -53.5D, 113D, 36.5D, 33.5F, 0.0F);
     }
 
     @Override

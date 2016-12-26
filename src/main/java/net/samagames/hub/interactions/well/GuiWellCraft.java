@@ -28,7 +28,7 @@ public class GuiWellCraft extends AbstractGui
 {
     private static final ItemStack CONFIRM_STACK;
     private static final ItemStack HELP_STACK;
-    private static final ItemStack RANDOM_STACK;
+    private static final ItemStack RESET_STACK;
 
     private final Well parent;
     private final int[] numbers;
@@ -38,7 +38,7 @@ public class GuiWellCraft extends AbstractGui
         super(hub);
 
         this.parent = parent;
-        this.numbers = new int[4];
+        this.numbers = hub.getInteractionManager().getWellManager().generateRandomNumbers();
     }
 
     @Override
@@ -66,7 +66,7 @@ public class GuiWellCraft extends AbstractGui
         this.setSlotData(CONFIRM_STACK, 31, "confirm");
         this.setSlotData(HELP_STACK, this.inventory.getSize() - 6, "none");
         this.setSlotData(getBackIcon(), this.inventory.getSize() - 5, "back");
-        this.setSlotData(RANDOM_STACK, this.inventory.getSize() - 4, "random");
+        this.setSlotData(RESET_STACK, this.inventory.getSize() - 4, "reset");
     }
 
     @Override
@@ -99,11 +99,9 @@ public class GuiWellCraft extends AbstractGui
                 player.sendMessage(Well.TAG + ChatColor.RED + "Vous devez placer l'intégralité des poussières d'\u272F !");
             }
         }
-        else if (action.equals("random"))
+        else if (action.equals("reset"))
         {
-            int[] randomizedNumbers = this.hub.getInteractionManager().getWellManager().generateRandomNumbers();
-            System.arraycopy(randomizedNumbers, 0, this.numbers, 0, randomizedNumbers.length);
-
+            System.arraycopy(new int[] {0, 0, 0, 0}, 0, this.numbers, 0, 4);
             this.update(player);
         }
         else if (action.equals("back"))
@@ -211,11 +209,11 @@ public class GuiWellCraft extends AbstractGui
 
         // ---
 
-        RANDOM_STACK = new ItemStack(Material.NAME_TAG, 1);
+        RESET_STACK = new ItemStack(Material.NAME_TAG, 1);
 
-        ItemMeta randomMeta = RANDOM_STACK.getItemMeta();
-        randomMeta.setDisplayName(ChatColor.YELLOW + "Remplir aléatoirement");
+        ItemMeta randomMeta = RESET_STACK.getItemMeta();
+        randomMeta.setDisplayName(ChatColor.YELLOW + "Vider les emplacements");
 
-        RANDOM_STACK.setItemMeta(randomMeta);
+        RESET_STACK.setItemMeta(randomMeta);
     }
 }
