@@ -157,7 +157,6 @@ class Graou extends AbstractInteraction
         this.animationTask.cancel();
         this.animationTask = null;
 
-        //this.hub.getInteractionManager().getGraouManager().deletePlayerPearl(player.getUniqueId(), this.playerUsing.getRight().getUUID());
         this.hub.getInteractionManager().getGraouManager().update(player);
 
         this.playerUsing = null;

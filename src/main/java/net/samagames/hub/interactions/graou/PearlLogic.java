@@ -168,6 +168,8 @@ class PearlLogic
             cosmeticSelected.unlock(player);
         }
 
+        SamaGamesAPI.get().getAchievementManager().getAchievementByID(50).unlock(player.getUniqueId());
+
         this.hub.getInteractionManager().getGraouManager().deletePlayerPearl(player.getUniqueId(), pearl.getUUID());
         this.hub.getScoreboardManager().update(player);
 
