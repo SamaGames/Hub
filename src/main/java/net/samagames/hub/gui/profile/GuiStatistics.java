@@ -53,7 +53,7 @@ class GuiStatistics extends AbstractGui
     {
         IPlayerStats playerStats = SamaGamesAPI.get().getStatsManager().getPlayerStats(player.getUniqueId());
 
-        this.setGameStatisticsSlotData("Hub", this.hub.getGameManager().getGameByIdentifier("hub").getIcon(), Arrays.asList(
+        this.setGameStatisticsSlotData("Hub", new ItemStack(Material.COMPASS, 1), Arrays.asList(
                 Pair.of("Woots reçus", playerStats.getJukeBoxStatistics()::getWoots),
                 Pair.of("Woots donnés", playerStats.getJukeBoxStatistics()::getWootsGiven),
                 Pair.of("Mehs reçus", playerStats.getJukeBoxStatistics()::getMehs)
