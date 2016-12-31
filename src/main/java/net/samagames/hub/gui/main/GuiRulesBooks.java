@@ -34,7 +34,7 @@ class GuiRulesBooks extends AbstractGui
         int slot = 0;
         int lines = 1;
 
-        for (ItemStack book : this.books)
+        for (int i = 0; i < this.books.size(); i++)
         {
             slot++;
 
