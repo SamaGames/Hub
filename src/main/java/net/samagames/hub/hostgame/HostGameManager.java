@@ -54,7 +54,11 @@ public class HostGameManager extends AbstractManager
         JsonArray locations = config.get("locations").getAsJsonArray();
 
         for (JsonElement location : locations)
-            this.positions.add(LocationUtils.str2loc(location.getAsString()));
+        {
+            Location loc = LocationUtils.str2loc(location.getAsString());
+            hub.getLogger().info("Add new location for host game: " + loc);
+            this.positions.add(loc);
+        }
 
         this.available = new boolean[this.positions.size()];
 
@@ -82,8 +86,10 @@ public class HostGameManager extends AbstractManager
         });
     }
 
-    private void addHost(HostGameInfoToHubPacket packet)
+    private NPCHostGame addHost(HostGameInfoToHubPacket packet)
     {
+        this.hub.getLogger().info("Adding new host game !");
+
         int i = 0;
 
         while (!this.available[i] && i < this.available.length-1) // If no available we use the last position in the array
@@ -92,15 +98,17 @@ public class HostGameManager extends AbstractManager
         }
 
         this.available[i] = false;
-        this.hosts.put(packet.getEvent(), new NPCHostGame(this.positions.get(i), packet));
+        return this.hosts.put(packet.getEvent(), new NPCHostGame(this.hub, i, this.positions.get(i), packet));
     }
 
     private void updateHost(HostGameInfoToHubPacket packet)
     {
         NPCHostGame npcHostGame = this.hosts.get(packet.getEvent());
 
-        if (npcHostGame != null)
-            npcHostGame.update(packet);
+        if (npcHostGame == null)
+            npcHostGame = addHost(packet);
+
+        npcHostGame.update(packet);
     }
 
     private void removeHost(UUID event)
@@ -108,7 +116,10 @@ public class HostGameManager extends AbstractManager
         NPCHostGame npcHostGame = this.hosts.get(event);
 
         if (npcHostGame != null)
+        {
             npcHostGame.remove();
+            this.available[npcHostGame.getIndex()] = true;
+        }
     }
 
     @Override

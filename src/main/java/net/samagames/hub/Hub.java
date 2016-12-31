@@ -25,6 +25,7 @@ import net.samagames.hub.games.leaderboards.RotatingLeaderboard;
 import net.samagames.hub.games.signs.SignManager;
 import net.samagames.hub.gui.GuiManager;
 import net.samagames.hub.gui.achievements.GuiAchievements;
+import net.samagames.hub.hostgame.HostGameManager;
 import net.samagames.hub.interactions.InteractionManager;
 import net.samagames.hub.npcs.NPCManager;
 import net.samagames.hub.parkours.ParkourManager;
@@ -65,6 +66,7 @@ public class Hub extends JavaPlugin
     private CommandManager commandManager;
     private CosmeticManager cosmeticManager;
     private InteractionManager interactionManager;
+    private HostGameManager hostGameManager;
 
     private ScheduledFuture hydroangeasSynchronization;
     private SamaritanListener samaritanListener;
@@ -109,6 +111,7 @@ public class Hub extends JavaPlugin
         this.cosmeticManager.init();
 
         this.interactionManager = new InteractionManager(this);
+        this.hostGameManager = new HostGameManager(this);
 
         GuiAchievements.createCache();
 
@@ -196,6 +199,7 @@ public class Hub extends JavaPlugin
     public CommandManager getCommandManager() { return this.commandManager; }
     public CosmeticManager getCosmeticManager() { return this.cosmeticManager; }
     public InteractionManager getInteractionManager() { return this.interactionManager; }
+    public HostGameManager getHostGameManager() { return this.hostGameManager; }
 
     public SamaritanListener getSamaritanListener()
     {
