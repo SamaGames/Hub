@@ -181,7 +181,7 @@ public class GameSign
             {
                 player.sendMessage(ChatColor.RED + "Veuillez utiliser une version supérieure ou égale à la version " + this.restrictedVersion.getLiteralVersion() + " pour pouvoir jouer.");
             }
-            else if (this.restrictedVersion.getOperator() == RestrictedVersion.Operator.GREATER_OR_EQUALS)
+            else if (this.restrictedVersion.getOperator() == RestrictedVersion.Operator.LESS_OR_EQUALS)
             {
                 player.sendMessage(ChatColor.RED + "Veuillez utiliser une version inférieure ou égale à la version " + this.restrictedVersion.getLiteralVersion() + " pour pouvoir jouer.");
             }
