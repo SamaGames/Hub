@@ -143,7 +143,7 @@ public class UHCZoneGame extends AbstractGame
         frames2.add(new RotatingLeaderboard.RotatingLeaderboardFrame(GamesNames.UHCRANDOM, "UHCRandom", "Victoires", "wins"));
         frames2.add(new RotatingLeaderboard.RotatingLeaderboardFrame(GamesNames.ULTRAFLAGKEEPER, "Run4Flag", "Victoires", "wins"));
 
-        leaderBoards.add(new RotatingLeaderboard(this.hub, new Location(this.hub.getWorld(), -84, 112, -1), leaderBoardStands2, frames2));
+        leaderBoards.add(new RotatingLeaderboard(this.hub, new Location(this.hub.getWorld(), -84, 111, -1), leaderBoardStands2, frames2));
 
         return leaderBoards;
     }
