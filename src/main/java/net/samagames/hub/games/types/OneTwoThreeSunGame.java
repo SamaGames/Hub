@@ -46,7 +46,10 @@ public class OneTwoThreeSunGame extends AbstractGame
     public String[] getDescription()
     {
         return new String[] {
-                "TODO"
+                "Atteignez la ligne d'arrivée le",
+                "premier, mais faites attention",
+                "à l'oeil qui vous observe tel",
+                "le jeu classique 1 2 3 Soleil"
         };
     }
 
