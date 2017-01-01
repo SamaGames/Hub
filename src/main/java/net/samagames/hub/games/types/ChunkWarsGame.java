@@ -52,6 +52,7 @@ public class ChunkWarsGame extends AbstractGame
     {
         return new String[] {
                 "IamBlueSlime",
+                "LordFinn",
                 "6infinity8"
         };
     }

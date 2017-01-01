@@ -66,7 +66,50 @@ public class BackEndGame extends AbstractGame
     @Override
     public RulesBook[] getRulesBooks()
     {
-        return null;
+        return new RulesBook[]
+                {
+                        new RulesBook("WitherParty").addOwner("IamBlueSlime")
+                                .addPage("Comment jouer ?",
+                                        " Ecoutez la mélodie\n jouée par" +
+                                        " le wither\n et reproduisez la\n" +
+                                        " avec les têtes\n devant vous !"),
+
+                        new RulesBook("AgarMC").addOwner("Rigner").addOwner("6infinity8")
+                                .addPage("Comment jouer ?",
+                                        " Vous incarnez une\n petite" +
+                                                " cellule qui doit\n grandir" +
+                                                " avec le temps\n\n Mangez d'autres\n" +
+                                                " cellules plus petites\n pour" +
+                                                " augmenter votre\n taille !")
+                                .addPage("Comment jouer ?",
+                                        " Mais attention à vos\n adversaires" +
+                                                " qui\n peuvent vous manger\n\n Soyez" +
+                                                " intelligents et\n restez gros !", false)
+                                .addPage("Objectifs",
+                                        " &lMode &6&lFFA &0 :\n" +
+                                                " Chacun pour soi,\n devenez le" +
+                                                " meilleur\n de tous !")
+                                .addPage("Objectifs",
+                                        " &lMode &6&lTeams &0 :\n" +
+                                                " Gagnez le plus de\n points" +
+                                                " pour votre\n équipe (&c&lRouge&0," +
+                                                " &2&lVert&0\n ou &1&lBleu&0) !", false)
+                                .addPage("Objectifs",
+                                        " &lMode &6&lHardcore &0 :\n" +
+                                                " Vous voulez un peu\n de challenge ? Alors\n retrouvez" +
+                                                " le FFA\n avec le mode\n   &lHardcore&0 !", false),
+
+                        new RulesBook("HangoverGames").addOwner("IamBlueSlime")
+                                .addPage("Comment jouer ?",
+                                        " Votre objectif est\n d'arriver à une\n" +
+                                                " consommation d'alcool\n de 25 g/L de" +
+                                                " sang.\n\n Ramassez des\n verres dans les\n" +
+                                                " chaudrons, et volez\n ceux de vos\n" +
+                                                " adversaires en les\n frappant !\n")
+                                .addPage("",
+                                "&4&l /!\\ Attention /!\\&0\n\n" +
+                                        " Boire est dangereux\n    pour la santé !", false)
+                };
     }
 
     @Override
