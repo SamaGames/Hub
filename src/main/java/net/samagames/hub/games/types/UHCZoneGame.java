@@ -74,7 +74,16 @@ public class UHCZoneGame extends AbstractGame
     @Override
     public RulesBook[] getRulesBooks()
     {
-        return null;
+        return new RulesBook[]
+                {
+                        new RulesBook("UHCRun")
+                        .addPage("UHCRun", " L'UHCRun est un mini\n jeu ayant pour même\n but que l'UHC classique,\n mais qui n'excède pas\n les 30 minutes de jeu.\n" +
+                                "Pour cela, il existe\n deux phases principales,\n la préparation (20min)\n et le meetup (10min).")
+                        .addPage("Préparation", "20 minutes vous sont\n dédiées afin de vous\n créer un bon équipement.\n" +
+                                "Plusieurs avantages\n apparaissent pour vous\n faire gagner du temps,\n comme pouvoir casser\n un arbre en un coup\n de main ou ne plus\n avoir à se servir\n des fours.")
+                        .addPage("Meetup", "A la fin de la phase\n précédente, vous êtes\n téléportés à la surface\n et avez 10 minutes\n pour éliminer tout\n vos opposants." +
+                                " La grandeur de la\n carte ne cesse de\n réduire durant\n cette période.")
+                };
     }
 
     @Override
