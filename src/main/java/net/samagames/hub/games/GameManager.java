@@ -62,9 +62,10 @@ public class GameManager extends AbstractManager
         this.registerGame(new BackEndGame(hub, "partygames", "PartyGames", this.hub.getPlayerManager().getSpawn(), false));
         this.registerGame(new BackEndGame(hub, "casino", "Casino", this.hub.getPlayerManager().getSpawn(), false));
         this.registerGame(new BackEndGame(hub, "samabox", "SamaBox", this.hub.getPlayerManager().getSpawn(), false));
-        this.registerGame(new BackEndGame(hub, "agarmc", "AgarMC", this.hub.getPlayerManager().getSpawn(), false));
+        this.registerGame(new BackEndGame(hub, "agarmc", "AgarMC", this.hub.getPlayerManager().getSpawn(), true));
         this.registerGame(new BackEndGame(hub, "timberman", "TimberMan", this.hub.getPlayerManager().getSpawn(), false));
-        this.registerGame(new BackEndGame(hub, "bomberman", "BomberMan", this.hub.getPlayerManager().getSpawn(), false));
+        this.registerGame(new BackEndGame(hub, "bomberman", "BomberMan", this.hub.getPlayerManager().getSpawn(), true));
+        this.registerGame(new BackEndGame(hub, "bowling", "Bowling", this.hub.getPlayerManager().getSpawn(), true));
         this.registerGame(new BackEndGame(hub, "burnthatchicken", "BurnThatChicken", this.hub.getPlayerManager().getSpawn(), false));
 
         // -----

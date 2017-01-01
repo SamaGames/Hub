@@ -79,7 +79,7 @@ public class OneTwoThreeSunGame extends AbstractGame
     @Override
     public Location getLobbySpawn()
     {
-        return new Location(this.hub.getWorld(), -12.5D, 86.0D, -51.5D, -118.0F, 0.0F);
+        return new Location(this.hub.getWorld(), -71.5, 103.2D, -47.5D, 130.0F, 0.0F);
     }
 
     @Override
