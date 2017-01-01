@@ -128,7 +128,7 @@ public class UHCZoneGame extends AbstractGame
         frames1.add(new RotatingLeaderboard.RotatingLeaderboardFrame(GamesNames.UHCRANDOM, "UHCRandom", "Meurtres", "kills"));
         frames1.add(new RotatingLeaderboard.RotatingLeaderboardFrame(GamesNames.ULTRAFLAGKEEPER, "Run4Flag", "Meurtres", "kills"));
 
-        leaderBoards.add(new RotatingLeaderboard(this.hub, new Location(this.hub.getWorld(), -86, 112, 1), leaderBoardStands1, frames1));
+        leaderBoards.add(new RotatingLeaderboard(this.hub, new Location(this.hub.getWorld(), -78, 111, 0), leaderBoardStands1, frames1));
 
         List<HubLeaderboard.HubLeaderBoardStand> leaderBoardStands2 = new ArrayList<>();
         leaderBoardStands2.add(new HubLeaderboard.HubLeaderBoardStand(new Location(this.hub.getWorld(), -84, 112, -1), new Location(this.hub.getWorld(), -83.5, 114, 0.5)));
@@ -143,7 +143,7 @@ public class UHCZoneGame extends AbstractGame
         frames2.add(new RotatingLeaderboard.RotatingLeaderboardFrame(GamesNames.UHCRANDOM, "UHCRandom", "Victoires", "wins"));
         frames2.add(new RotatingLeaderboard.RotatingLeaderboardFrame(GamesNames.ULTRAFLAGKEEPER, "Run4Flag", "Victoires", "wins"));
 
-        leaderBoards.add(new RotatingLeaderboard(this.hub, new Location(this.hub.getWorld(), -88, 112, -1), leaderBoardStands2, frames2));
+        leaderBoards.add(new RotatingLeaderboard(this.hub, new Location(this.hub.getWorld(), -84, 112, -1), leaderBoardStands2, frames2));
 
         return leaderBoards;
     }
