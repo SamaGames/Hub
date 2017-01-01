@@ -67,17 +67,18 @@ public class QuakeGame extends AbstractGame
     @Override
     public RulesBook[] getRulesBooks()
     {
-        return new RulesBook[] {
-                new RulesBook("Quake").addOwner("Silvanosky")
-                    .addPage("Objectifs",
-                        " Tirez avec votre\n houe sur vos ennemis\n" +
-                        " pour les tuer. Soyez\n le premier à 25\n" +
-                        " kills pour gagner !")
-                    .addPage("Houes",
-                        " Achetez des houes\n plus puissantes\n" +
-                        " dans la boutique afin\n de réduire le délai\n" +
-                        " de rechargement\n entre deux tirs !\n")
-        };
+        return new RulesBook[]
+                {
+                        new RulesBook("Quake").addOwner("Silvanosky")
+                                .addPage("Objectifs",
+                                        " Tirez avec votre\n houe sur vos ennemis\n" +
+                                                " pour les tuer. Soyez\n le premier à 25\n" +
+                                                " kills pour gagner !")
+                                .addPage("Houes",
+                                " Achetez des houes\n plus puissantes\n" +
+                                        " dans la boutique afin\n de réduire le délai\n" +
+                                        " de rechargement\n entre deux tirs !\n")
+                };
     }
 
     @Override

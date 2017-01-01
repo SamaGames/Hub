@@ -68,20 +68,20 @@ public class DimensionsGame extends AbstractGame
     @Override
     public RulesBook[] getRulesBooks()
     {
-        return new RulesBook[] {
-                new RulesBook("Dimensions").addOwner("Silvanosky").addOwner("zyuiop")
-                    .addPage("Objectifs",
-                        " Explorez la map et\n récupérez votre\n" +
-                        " équipement dans des\n coffres. Après\n" +
-                        " quelques minutes tuez\n vos adversaires\n" +
-                        " et survivez !\n Des bonus sont dans\n" +
-                        " la boutique pour vous\n aider si besoin.")
-                    .addPage("Dimensions",
-                        " Deux dimensions sont\n" +
-                        " disponibles pour\n jouer, utilisez les\n" +
-                        " à bon escient !\n\n Attention aux dégats\n" +
-                        " que cette 2e\n dimension peut vous\n engendrer ;)")
-        };
+        return new RulesBook[]
+                {
+                        new RulesBook("Dimensions").addOwner("Silvanosky").addOwner("zyuiop")
+                                .addPage("Objectifs",
+                                        " Explorez la map et\n récupérez votre\n" +
+                                        " équipement dans des\n coffres. Après\n" +
+                                        " quelques minutes tuez\n vos adversaires\n" +
+                                        " et survivez !\n Des bonus sont dans\n" +
+                                        " la boutique pour vous\n aider si besoin.")
+                                .addPage("Dimensions", " Deux dimensions sont\n" +
+                                        " disponibles pour\n jouer, utilisez les\n" +
+                                        " à bon escient !\n\n Attention aux dégats\n" +
+                                        " que cette 2e\n dimension peut vous\n engendrer ;)")
+                };
     }
 
     @Override
