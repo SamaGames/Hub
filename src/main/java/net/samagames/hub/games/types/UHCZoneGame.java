@@ -77,12 +77,13 @@ public class UHCZoneGame extends AbstractGame
         return new RulesBook[]
                 {
                         new RulesBook("UHCRun")
-                        .addPage("UHCRun", " L'UHCRun est un mini\n jeu ayant pour même\n but que l'UHC classique,\n mais qui n'excède pas\n les 30 minutes de jeu.\n" +
-                                "Pour cela, il existe\n deux phases principales,\n la préparation (20min)\n et le meetup (10min).")
-                        .addPage("Préparation", "20 minutes vous sont\n dédiées afin de vous\n créer un bon équipement.\n" +
-                                "Plusieurs avantages\n apparaissent pour vous\n faire gagner du temps,\n comme pouvoir casser\n un arbre en un coup\n de main ou ne plus\n avoir à se servir\n des fours.")
-                        .addPage("Meetup", "A la fin de la phase\n précédente, vous êtes\n téléportés à la surface\n et avez 10 minutes\n pour éliminer tout\n vos opposants." +
-                                " La grandeur de la\n carte ne cesse de\n réduire durant\n cette période.")
+                        .addPage("UHCRun", " L'UHCRun est un mini\n jeu ayant pour même\n but que l'UHC classique\n mais qui n'excède pas\n les 30 minutes de jeu.\n" +
+                                "\n Pour cela, il existe 2\n phases principales, la\n préparation (20min)\n et le meetup (10min).")
+                        .addPage("Préparation", " 20 minutes vous sont\n dédiées afin de vous\n créer un bon équipement.\n" +
+                                "\n Plusieurs avantages\n apparaissent pour\n vous faire gagner\n du temps, comme\n pouvoir casser un\n arbre en un coup de\n")
+                        .addPage("Préparation", " main ou ne plus\n avoir à se servir\n des fours.", false)
+                        .addPage("Meetup", " A la fin de la phase\n précédente, vous\n êtes téléportés à la\n surface et avez\n 10 minutes pour\n éliminer tout vos\n opposants.\n" +
+                                "\n La grandeur de la\n carte ne cesse de\n réduire durant\n cette période.", false)
                 };
     }
 
