@@ -6,10 +6,12 @@ import net.samagames.hub.common.hydroangeas.packets.hubinfos.HostGameInfoToHubPa
 import net.samagames.hub.games.signs.GameSign;
 import net.samagames.tools.holograms.Hologram;
 import net.samagames.tools.npc.nms.CustomNPC;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
+import java.util.HashMap;
 import java.util.UUID;
 import java.util.logging.Level;
 
@@ -39,6 +41,8 @@ public class NPCHostGame
 
     private final String templateId;
 
+    private HashMap<UUID, Boolean> clicked = new HashMap<>();
+
     private CustomNPC npc;
 
     public NPCHostGame(Hub hub, int index, Location location, HostGameInfoToHubPacket packet)
@@ -64,7 +68,15 @@ public class NPCHostGame
 
     public void connect(Player player)
     {
+        if(clicked.containsKey(player.getUniqueId()))
+            return;
+
+        clicked.put(player.getUniqueId(), null);
         GameSign.addToQueue(player, templateId);
+
+        //Prevent double click
+        Bukkit.getScheduler().runTaskLaterAsynchronously(hub, () -> clicked.remove(player.getUniqueId()), 1L);
+
         //SamaGamesAPI.get().getPubSub().send("join." + this.serverName, player.getUniqueId().toString());
     }
 
