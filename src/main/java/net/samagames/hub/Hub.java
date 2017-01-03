@@ -43,6 +43,8 @@ import java.util.concurrent.TimeUnit;
 
 public class Hub extends JavaPlugin
 {
+    private static Hub instance;
+
     private World world;
 
     private ScheduledExecutorService executorMonoThread;
@@ -74,6 +76,8 @@ public class Hub extends JavaPlugin
     @Override
     public void onEnable()
     {
+        instance = this;
+
         this.saveDefaultConfig();
 
         this.world = this.getServer().getWorlds().get(0);
@@ -214,5 +218,9 @@ public class Hub extends JavaPlugin
             return null;
 
         return (EffectLib) effectLib;
+    }
+
+    public static Hub getInstance() {
+        return instance;
     }
 }

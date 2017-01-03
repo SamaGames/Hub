@@ -3,6 +3,7 @@ package net.samagames.hub.hostgame;
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import net.samagames.hub.common.hydroangeas.packets.hubinfos.HostGameInfoToHubPacket;
+import net.samagames.hub.games.signs.GameSign;
 import net.samagames.tools.holograms.Hologram;
 import net.samagames.tools.npc.nms.CustomNPC;
 import org.bukkit.ChatColor;
@@ -35,6 +36,9 @@ public class NPCHostGame
     private final String name;
     private final String serverName;
     private final int index;
+
+    private final String templateId;
+
     private CustomNPC npc;
 
     public NPCHostGame(Hub hub, int index, Location location, HostGameInfoToHubPacket packet)
@@ -45,6 +49,7 @@ public class NPCHostGame
         this.creator = packet.getCreator();
         this.name = SamaGamesAPI.get().getUUIDTranslator().getName(packet.getCreator());
         this.serverName = packet.getServerName();
+        this.templateId = packet.getTemplateId();
         this.index = index;
 
         hub.getHostGameManager().log(Level.INFO, "Creation NPC HOST uuid:" + this.creator);
@@ -59,7 +64,8 @@ public class NPCHostGame
 
     public void connect(Player player)
     {
-        SamaGamesAPI.get().getPubSub().send("join." + this.serverName, player.getUniqueId().toString());
+        GameSign.addToQueue(player, templateId);
+        //SamaGamesAPI.get().getPubSub().send("join." + this.serverName, player.getUniqueId().toString());
     }
 
     public void update(HostGameInfoToHubPacket packet)

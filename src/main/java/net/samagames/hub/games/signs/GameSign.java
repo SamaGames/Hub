@@ -1,14 +1,13 @@
 package net.samagames.hub.games.signs;
 
-import net.minecraft.server.v1_10_R1.*;
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.api.parties.IParty;
 import net.samagames.hub.Hub;
 import net.samagames.hub.games.AbstractGame;
 import net.samagames.hub.utils.RestrictedVersion;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.block.Sign;
-import org.bukkit.craftbukkit.v1_10_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_10_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
@@ -189,13 +188,18 @@ public class GameSign
             return;
         }
 
-        this.hub.getServer().getScheduler().runTaskAsynchronously(this.hub, () ->
+        addToQueue(player, template);
+    }
+
+    public static void addToQueue(Player player, String template)
+    {
+        Bukkit.getScheduler().runTaskAsynchronously(Hub.getInstance(), () ->
         {
             IParty party = SamaGamesAPI.get().getPartiesManager().getPartyForPlayer(player.getUniqueId());
 
             if (party == null)
             {
-                this.hub.getHydroangeasManager().addPlayerToQueue(player.getUniqueId(), template);
+                Hub.getInstance().getHydroangeasManager().addPlayerToQueue(player.getUniqueId(), template);
             }
             else
             {
@@ -205,7 +209,7 @@ public class GameSign
                     return;
                 }
 
-                this.hub.getHydroangeasManager().addPartyToQueue(player.getUniqueId(), party.getParty(), template);
+                Hub.getInstance().getHydroangeasManager().addPartyToQueue(player.getUniqueId(), party.getParty(), template);
             }
         });
     }

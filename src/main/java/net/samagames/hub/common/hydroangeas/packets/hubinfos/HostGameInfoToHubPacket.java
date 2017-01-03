@@ -18,12 +18,13 @@ import java.util.UUID;
  * ＿＿╱▕▔▔▏╲＿＿
  * ＿＿▔▔＿＿▔▔＿＿
  */
-public class HostGameInfoToHubPacket  extends Packet
+public class HostGameInfoToHubPacket extends Packet
 {
     private UUID event;
     private UUID creator;
 
     private String serverName;
+    private String templateId;
 
     private int state;// 0 = create / 1 = update / 2 = delete
 
@@ -85,5 +86,13 @@ public class HostGameInfoToHubPacket  extends Packet
 
     public void setServerName(String serverName) {
         this.serverName = serverName;
+    }
+
+    public String getTemplateId() {
+        return templateId;
+    }
+
+    public void setTemplateId(String templateId) {
+        this.templateId = templateId;
     }
 }
