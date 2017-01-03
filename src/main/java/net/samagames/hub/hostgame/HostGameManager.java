@@ -7,14 +7,11 @@ import net.samagames.hub.Hub;
 import net.samagames.hub.common.hydroangeas.packets.PacketCallBack;
 import net.samagames.hub.common.hydroangeas.packets.hubinfos.HostGameInfoToHubPacket;
 import net.samagames.hub.common.managers.AbstractManager;
-import net.samagames.tools.JsonConfiguration;
 import net.samagames.tools.LocationUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.*;
 
 /**
@@ -35,16 +32,13 @@ public class HostGameManager extends AbstractManager
 {
     private static final UUID AURELIEN_SAMA_UUID = UUID.fromString("c59220b1-662f-4aa8-b9d9-72660eb97c10");
 
-    private final Map<UUID, NPCHostGame> hosts;
-    private final List<Location> positions;
+    private final Map<UUID, NPCHostGame> hosts = new HashMap<>();
+    private final List<Location> positions = new ArrayList<>();
     private boolean[] available;
 
     public HostGameManager(Hub hub)
     {
-        super(hub);
-
-        this.hosts = new HashMap<>();
-        this.positions = new ArrayList<>();
+        super(hub, "hostgame.json");
 
         JsonObject config = this.reloadConfiguration();
 
@@ -73,13 +67,11 @@ public class HostGameManager extends AbstractManager
                 switch (packet.getState())
                 {
                     case 0:
-                        addHost(packet);
-                        break;
                     case 1:
-                        updateHost(packet);
+                        Bukkit.getScheduler().runTask(hub, () -> updateHost(packet));
                         break;
                     default:
-                        removeHost(packet.getEvent());
+                        Bukkit.getScheduler().runTask(hub, () -> removeHost(packet.getEvent()));
                         break;
                 }
             }
@@ -133,26 +125,4 @@ public class HostGameManager extends AbstractManager
 
     @Override
     public void onLogout(Player player) { /** Not needed **/ }
-
-    private JsonObject reloadConfiguration()
-    {
-        File configuration = new File(this.hub.getDataFolder(), "hostgame.json");
-
-        if (!configuration.exists())
-        {
-            try(PrintWriter writer = new PrintWriter(configuration))
-            {
-                configuration.createNewFile();
-                writer.println("{}");
-                writer.close();
-            }
-            catch (IOException e)
-            {
-                e.printStackTrace();
-            }
-        }
-
-        JsonConfiguration npcsConfig = new JsonConfiguration(configuration);
-        return npcsConfig.load();
-    }
 }
