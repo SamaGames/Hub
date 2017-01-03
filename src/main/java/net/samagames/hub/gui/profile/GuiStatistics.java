@@ -126,6 +126,13 @@ class GuiStatistics extends AbstractGui
                 Pair.of("Morts", playerStats.getDimensionStatistics()::getDeaths)
         ));
 
+        this.setGameStatisticsSlotData("ChunkWars", new ItemStack(Material.ENDER_PORTAL_FRAME, 1), Arrays.asList(
+                Pair.of("Parties jouées", playerStats.getChunkWarsStatistics()::getPlayedGames),
+                Pair.of("Parties gagnées", playerStats.getChunkWarsStatistics()::getWins),
+                Pair.of("Meurtres", playerStats.getChunkWarsStatistics()::getKills),
+                Pair.of("Morts", playerStats.getChunkWarsStatistics()::getDeaths)
+        ));
+
         this.setSlotData(ChatColor.YELLOW + "Voir votre profil en ligne", new ItemStack(Material.NETHER_STAR, 1), this.inventory.getSize() - 6, null, "website");
         this.setSlotData(getBackIcon(), this.inventory.getSize() - 4, "back");
     }
