@@ -44,4 +44,5 @@ dependencies {
     compile group: 'LibsDisguises', name: 'LibsDisguises', version: '9.0.3'
     compile group: 'protocolsupport', name: 'ProtocolSupport', version: '4.24'
     compile group: 'net.techcable', name: 'SonarPet', version: '1.2.0'
+    compile group: 'redis.clients', name: 'jedis', version: '2.8.0'
 }
