@@ -101,7 +101,11 @@ class PearlLogic
         }
     }
 
-    private static final ItemStack PEARL_HEAD = ItemUtils.getCustomHead("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvN2QxNmFlOTUxMTIwMzk0ZjM2OGYyMjUwYjdjM2FkM2ZiMTJjZWE1NWVjMWIyZGI1YTk0ZDFmYjdmZDRiNmZhIn19fQ==");
+    private static final ItemStack ONE_STAR_HEAD = ItemUtils.getCustomHead("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMjQ5NTY5MTczNTIxMzhjN2NmNDZmOTVlOGZkOTNhODUzNzJjN2ZiMjdmOWI2MWUxZTc1MDc3MTQ0NDQ5NTMyZiJ9fX0=");
+    private static final ItemStack TWO_STAR_HEAD = ItemUtils.getCustomHead("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTBkNzg4MzU3M2I0ZTQ1ZjMyOGU1NzJjYmNjYzczMmExNjcwMzBjZjkzODI2NDYzZjNhMWFhZWU4ZTkyYWQ0In19fQ==");
+    private static final ItemStack THREE_STAR_HEAD = ItemUtils.getCustomHead("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODYzM2EyNmY1MGJhODU0YmUwMjEyOTI1ZDFkNWRkNmMzMzdiODE4NGZkYTZmYjJkMjFmNTE1MTE1M2IxNTYifX19");
+    private static final ItemStack FOUR_STAR_HEAD = ItemUtils.getCustomHead("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzczN2Q3NGU3ZTZlZjJjODAyYWFmYzhjZjNmOWQ1YjhkYzM3MDdmMzgxMWRhZjFmNTAxYzc1YTBmYTNiNGMifX19");
+    private static final ItemStack FIVE_STAR_HEAD = ItemUtils.getCustomHead("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOWM2MTg4NjA0ODgxMWQzYTY4OWJjMjY2ZDFkZGRjYjI1YjAzYzkxZmNkMmMxZDVhM2ZhOWU4NzNlNTY1ODM4In19fQ==");
 
     private final Hub hub;
     private final CosmeticList cosmetics;
@@ -178,7 +182,18 @@ class PearlLogic
 
     public ItemStack getIcon(Pearl pearl)
     {
-        ItemStack stack = PEARL_HEAD.clone();
+        ItemStack stack;
+
+        if (pearl.getStars() == 1)
+            stack = ONE_STAR_HEAD.clone();
+        else if (pearl.getStars() == 2)
+            stack = TWO_STAR_HEAD.clone();
+        else if (pearl.getStars() == 3)
+            stack = THREE_STAR_HEAD.clone();
+        else if (pearl.getStars() == 4)
+            stack = FOUR_STAR_HEAD.clone();
+        else
+            stack = FIVE_STAR_HEAD.clone();
 
         ItemMeta meta = stack.getItemMeta();
         meta.setDisplayName(ChatColor.GREEN + "Perle");
