@@ -1,5 +1,6 @@
 package net.samagames.hub.games.signs;
 
+import net.minecraft.server.v1_10_R1.*;
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.api.parties.IParty;
 import net.samagames.hub.Hub;
