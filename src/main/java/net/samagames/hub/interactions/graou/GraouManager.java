@@ -138,6 +138,8 @@ public class GraouManager extends AbstractInteractionManager<Graou> implements L
 
         jedis.close();
 
+        Collections.sort(pearls, (o1, o2) -> o1.getStars() - o2.getStars());
+
         return pearls;
     }
 
