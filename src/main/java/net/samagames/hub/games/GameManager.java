@@ -16,6 +16,7 @@ import org.bukkit.entity.Player;
 
 import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
 public class GameManager extends AbstractManager
@@ -140,9 +141,9 @@ public class GameManager extends AbstractManager
                             player.playSound(player.getLocation(), Sound.ENTITY_VILLAGER_AMBIENT, 10.0F, 2.0F);
 
                             if (packet.isStarting())
-                                ActionBarAPI.sendPermanentMessage(player, ChatColor.GREEN + "Votre serveur démarre ! (Temps estimé : " + ChatColor.AQUA + packet.getTimeToStart() + ChatColor.GREEN + ")");
+                                ActionBarAPI.sendPermanentMessage(player, ChatColor.GREEN + "Votre serveur démarre ! (Temps estimé : " + ChatColor.AQUA + TimeUnit.MILLISECONDS.toSeconds(packet.getTimeToStart()) + " secondes" + ChatColor.GREEN + ")");
                             else
-                                ActionBarAPI.sendPermanentMessage(player, ChatColor.YELLOW + "Il manque " + ChatColor.RED + packet.getRemainingPlayer() + ChatColor.YELLOW + " joueurs pour démarrer votre serveur.");
+                                ActionBarAPI.sendPermanentMessage(player, ChatColor.YELLOW + "Il manque " + ChatColor.RED + packet.getRemainingPlayer() + ChatColor.YELLOW + " joueur" + (packet.getRemainingPlayer() > 1 ? "s" : "") + " pour démarrer votre serveur.");
                         }
                     }
                 }
