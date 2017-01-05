@@ -113,6 +113,8 @@ public class GameManager extends AbstractManager
                         if (packet.getType().equals(QueueInfosUpdatePacket.Type.ADD))
                         {
                             player.playSound(player.getLocation(), Sound.BLOCK_NOTE_PLING, 1.0F, 1.5F);
+
+                            ActionBarAPI.removeMessage(player);
                             ActionBarAPI.sendMessage(player, ChatColor.GREEN + "Ajouté à la file d'attente de " + ChatColor.GOLD + packet.getGame() +  ChatColor.GREEN + " sur la map " + ChatColor.GOLD + packet.getMap() + ChatColor.GREEN + " !");
 
                             if (getGameByIdentifier(packet.getGame()).hasResourcesPack())
@@ -126,6 +128,8 @@ public class GameManager extends AbstractManager
                         else if (packet.getType().equals(QueueInfosUpdatePacket.Type.REMOVE))
                         {
                             player.playSound(player.getLocation(), Sound.BLOCK_NOTE_PLING, 1.0F, 0.8F);
+
+                            ActionBarAPI.removeMessage(player);
                             ActionBarAPI.sendMessage(player, ChatColor.RED + "Retiré de la file d'attente de " + ChatColor.GOLD + packet.getGame() + ChatColor.RED + " sur la map " + ChatColor.GOLD + packet.getMap() + ChatColor.RED + " !");
                         }
                         else if (packet.getType().equals(QueueInfosUpdatePacket.Type.INFO))
@@ -136,9 +140,9 @@ public class GameManager extends AbstractManager
                             player.playSound(player.getLocation(), Sound.ENTITY_VILLAGER_AMBIENT, 10.0F, 2.0F);
 
                             if (packet.isStarting())
-                                ActionBarAPI.sendMessage(player, ChatColor.GREEN + "Votre serveur démarre ! (Temps estimé : " + ChatColor.AQUA + packet.getTimeToStart() + ChatColor.GREEN + ")");
+                                ActionBarAPI.sendPermanentMessage(player, ChatColor.GREEN + "Votre serveur démarre ! (Temps estimé : " + ChatColor.AQUA + packet.getTimeToStart() + ChatColor.GREEN + ")");
                             else
-                                ActionBarAPI.sendMessage(player, ChatColor.YELLOW + "Il manque " + ChatColor.RED + packet.getRemainingPlayer() + ChatColor.YELLOW + " joueurs pour démarrer votre serveur.");
+                                ActionBarAPI.sendPermanentMessage(player, ChatColor.YELLOW + "Il manque " + ChatColor.RED + packet.getRemainingPlayer() + ChatColor.YELLOW + " joueurs pour démarrer votre serveur.");
                         }
                     }
                 }
