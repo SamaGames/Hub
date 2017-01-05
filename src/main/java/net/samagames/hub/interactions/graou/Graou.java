@@ -21,7 +21,7 @@ import java.util.*;
 
 class Graou extends AbstractInteraction
 {
-    private static final String TAG = ChatColor.GOLD + "[" + ChatColor.YELLOW + "Graou" + ChatColor.GOLD + "] " + ChatColor.RESET;
+    public static final String TAG = ChatColor.GOLD + "[" + ChatColor.YELLOW + "Graou" + ChatColor.GOLD + "] " + ChatColor.RESET;
     private static final String GRAOU_NAME = ChatColor.GOLD + "" + ChatColor.BOLD + "Graou";
 
     private final Map<UUID, Hologram> holograms;

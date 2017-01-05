@@ -1,5 +1,6 @@
 package net.samagames.hub.interactions.graou;
 
+import net.samagames.api.SamaGamesAPI;
 import net.samagames.api.games.pearls.Pearl;
 import net.samagames.hub.Hub;
 import net.samagames.hub.gui.AbstractGui;
@@ -87,6 +88,19 @@ class GuiGraou extends AbstractGui
     {
         if (action.startsWith("pearl_"))
         {
+            Pearl pearl = this.pearls.get(UUID.fromString(action.split("_")[1]));
+
+            if (pearl.getStars() == 4 && !SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "network.vip"))
+            {
+                player.sendMessage(Graou.TAG + ChatColor.GREEN + "Vous n'avez pas le grade nécéssaire pour échanger cette perle ! (" + ChatColor.GREEN + "VIP" + ChatColor.RED + ")");
+                return;
+            }
+            else if (pearl.getStars() == 5 && !SamaGamesAPI.get().getPermissionsManager().hasPermission(player, "network.vipplus"))
+            {
+                player.sendMessage(Graou.TAG + ChatColor.GREEN + "Vous n'avez pas le grade nécéssaire pour échanger cette perle ! (" + ChatColor.AQUA + "VIP" + ChatColor.LIGHT_PURPLE + "+" + ChatColor.RED + ")");
+                return;
+            }
+
             this.parent.openBox(player, this.pearls.get(UUID.fromString(action.split("_")[1])));
             this.hub.getGuiManager().closeGui(player);
         }
