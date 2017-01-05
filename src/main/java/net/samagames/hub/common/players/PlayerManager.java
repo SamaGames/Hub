@@ -165,6 +165,8 @@ public class PlayerManager extends AbstractManager
 
         this.hub.getScheduledExecutorService().execute(() ->
         {
+            ActionBarAPI.removeMessage(player);
+
             this.hub.getTaskManager().getPlayersAwayFromKeyboardTask().removePlayer(player.getUniqueId());
             this.hub.getTaskManager().getPlayersTravellingTask().removePlayer(player.getUniqueId());
 
