@@ -95,7 +95,7 @@ public class DimensionsGame extends AbstractGame
     {
         try
         {
-            ShopCategory shopCategory = new ShopCategory(this.hub, this, 142, 10);
+            ShopCategory shopCategory = new ShopCategory(this.hub, this, 142, 0);
 
             ShopImprovableItem teleport = new ShopImprovableItem(this.hub, 143, 11, 117);
             for (int i = 118; i <= 121; i++)

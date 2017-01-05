@@ -73,6 +73,18 @@ public class ChunkWarsGame extends AbstractGame
     @Override
     public ShopCategory getShopConfiguration()
     {
+        try
+        {
+            ShopCategory shopCategory = new ShopCategory(this.hub, this, 202, 0);
+
+
+            return shopCategory;
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+        }
+
         return null;
     }
 

@@ -83,7 +83,7 @@ public class UppervoidGame extends AbstractGame
     {
         try
         {
-            ShopCategory shopCategory = new ShopCategory(this.hub, this, 96, 11);
+            ShopCategory shopCategory = new ShopCategory(this.hub, this, 96, 0);
 
             ShopImprovableItem shooters = new ShopImprovableItem(this.hub, 97, 13, 66);
             shooters.addLevel(67);
