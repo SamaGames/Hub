@@ -18,7 +18,7 @@ public class ShopCategory extends ShopIcon
 
     public ShopCategory(Hub hub, AbstractGame game, int storageId, int slot) throws Exception
     {
-        super(hub, storageId, slot, new int[0]);
+        super(hub, null, storageId, slot, new int[0]);
 
         this.game = game;
         this.contents = new ArrayList<>();

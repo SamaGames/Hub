@@ -97,19 +97,19 @@ public class DimensionsGame extends AbstractGame
         {
             ShopCategory shopCategory = new ShopCategory(this.hub, this, 142, 0);
 
-            ShopImprovableItem teleport = new ShopImprovableItem(this.hub, 143, 11, 117);
+            ShopImprovableItem teleport = new ShopImprovableItem(this.hub, "Temps de téléportation", 143, 11, 117);
             for (int i = 118; i <= 121; i++)
                 teleport.addLevel(i);
 
-            ShopImprovableItem healAtKill = new ShopImprovableItem(this.hub, 144, 30, 122);
+            ShopImprovableItem healAtKill = new ShopImprovableItem(this.hub, "Effet au meurtre", 144, 30, 122);
             for (int i = 123; i <= 126; i++)
                 healAtKill.addLevel(i);
 
-            ShopImprovableItem healAtStrike = new ShopImprovableItem(this.hub, 145, 32, 127);
+            ShopImprovableItem healAtStrike = new ShopImprovableItem(this.hub, "Effet au combat", 145, 32, 127);
             for (int i = 128; i <= 133; i++)
                 healAtStrike.addLevel(i);
 
-            ShopImprovableItem strengthAtKill = new ShopImprovableItem(this.hub, 146, 15, 134);
+            ShopImprovableItem strengthAtKill = new ShopImprovableItem(this.hub, "Effet au meurtre", 146, 15, 134);
             for (int i = 135; i <= 139; i++)
                 strengthAtKill.addLevel(i);
 

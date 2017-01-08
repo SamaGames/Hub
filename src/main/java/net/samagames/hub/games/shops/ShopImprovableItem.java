@@ -21,9 +21,9 @@ public class ShopImprovableItem extends ShopIcon
     private final List<ItemLevel> levels;
     private final String defaultDescription;
 
-    public ShopImprovableItem(Hub hub, int storageId, int slot, Integer defaultStorageId) throws Exception
+    public ShopImprovableItem(Hub hub, String categoryName, int storageId, int slot, Integer defaultStorageId) throws Exception
     {
-        super(hub, storageId, slot, new int[0]);
+        super(hub, categoryName, storageId, slot, new int[0]);
 
         this.levels = new ArrayList<>();
 

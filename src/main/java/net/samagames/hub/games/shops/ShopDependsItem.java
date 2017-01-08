@@ -18,9 +18,9 @@ public class ShopDependsItem extends ShopItem
 {
     private ShopItem dependsOn;
 
-    public ShopDependsItem(Hub hub, int storageId, int slot, int[] resetIds, ShopItem dependsOn) throws Exception
+    public ShopDependsItem(Hub hub, String categoryName, int storageId, int slot, int[] resetIds, ShopItem dependsOn) throws Exception
     {
-        super(hub, storageId, slot, resetIds);
+        super(hub, categoryName, storageId, slot, resetIds);
 
         this.dependsOn = dependsOn;
     }
@@ -98,6 +98,8 @@ public class ShopDependsItem extends ShopItem
         ItemStack stack = getIcon().clone();
         ItemMeta meta = stack.getItemMeta();
         List<String> lore = meta.getLore() != null ? meta.getLore() : new ArrayList<>();
+
+        lore.add("");
 
         if (this.isActive(player))
             lore.add(ChatColor.GREEN + "Objet actif");

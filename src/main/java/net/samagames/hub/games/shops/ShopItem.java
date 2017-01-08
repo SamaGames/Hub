@@ -21,9 +21,9 @@ public class ShopItem extends ShopIcon
 {
     protected boolean defaultItem;
 
-    public ShopItem(Hub hub, int storageId, int slot, int[] resetIds) throws Exception
+    public ShopItem(Hub hub, String categoryName, int storageId, int slot, int[] resetIds) throws Exception
     {
-        super(hub, storageId, slot, resetIds);
+        super(hub, categoryName, storageId, slot, resetIds);
 
         this.defaultItem = false;
     }

@@ -85,15 +85,15 @@ public class UppervoidGame extends AbstractGame
         {
             ShopCategory shopCategory = new ShopCategory(this.hub, this, 96, 0);
 
-            ShopImprovableItem shooters = new ShopImprovableItem(this.hub, 97, 13, 66);
+            ShopImprovableItem shooters = new ShopImprovableItem(this.hub, "Shooters", 97, 13, 66);
             shooters.addLevel(67);
             shooters.addLevel(68);
 
-            ShopImprovableItem grenades = new ShopImprovableItem(this.hub, 98, 30, 69);
+            ShopImprovableItem grenades = new ShopImprovableItem(this.hub, "Grenades", 98, 30, 69);
             for (int i = 70; i <= 74; i++)
                 grenades.addLevel(i);
 
-            ShopImprovableItem hooks = new ShopImprovableItem(this.hub, 99, 32, 75);
+            ShopImprovableItem hooks = new ShopImprovableItem(this.hub, "Grapins", 99, 32, 75);
             for (int i = 76; i <= 79; i++)
                 hooks.addLevel(i);
 

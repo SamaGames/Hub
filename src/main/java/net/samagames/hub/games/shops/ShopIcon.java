@@ -4,10 +4,13 @@ import net.samagames.api.SamaGamesAPI;
 import net.samagames.api.shops.IItemDescription;
 import net.samagames.hub.Hub;
 import net.samagames.tools.PersistanceUtils;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.List;
 import java.util.logging.Level;
 
 public abstract class ShopIcon
@@ -19,7 +22,7 @@ public abstract class ShopIcon
     protected final IItemDescription itemDescription;
     protected final ItemStack icon;
 
-    ShopIcon(Hub hub, int storageId, int slot, int[] resetIds) throws Exception
+    ShopIcon(Hub hub, String categoryName, int storageId, int slot, int[] resetIds) throws Exception
     {
         this.hub = hub;
         this.storageId = storageId;
@@ -30,6 +33,18 @@ public abstract class ShopIcon
 
         this.itemDescription = SamaGamesAPI.get().getShopsManager().getItemDescription(storageId);
         this.icon = PersistanceUtils.makeStack(hub, this.itemDescription);
+
+        if (categoryName != null)
+        {
+            ItemMeta meta = this.icon.getItemMeta();
+
+            List<String> lore = meta.getLore();
+            lore.add(0, ChatColor.DARK_GRAY + categoryName);
+            lore.add(1, "");
+
+            meta.setLore(lore);
+            this.icon.setItemMeta(meta);
+        }
     }
 
     public abstract void execute(Player player, ClickType clickType);
