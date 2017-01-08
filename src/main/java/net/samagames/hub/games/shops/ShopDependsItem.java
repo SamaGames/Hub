@@ -3,6 +3,7 @@ package net.samagames.hub.games.shops;
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import net.samagames.hub.common.players.PlayerManager;
+import net.samagames.hub.cosmetics.common.CosmeticAccessibility;
 import net.samagames.hub.gui.AbstractGui;
 import net.samagames.hub.gui.shop.GuiConfirm;
 import org.bukkit.ChatColor;
@@ -53,6 +54,10 @@ public class ShopDependsItem extends ShopItem
                 return;
             }
         }
+        else if (!CosmeticAccessibility.valueOf(this.itemDescription.getRankAccessibility()).canAccess(player))
+        {
+            player.sendMessage(PlayerManager.SHOPPING_TAG + ChatColor.RED + "Vous n'avez pas le grade nécessaire pour acheter cet objet.");
+        }
         else if (this.dependsOn != null && !hasDepend(player))
         {
             player.sendMessage(PlayerManager.SHOPPING_TAG + ChatColor.RED + "Il est nécessaire de posséder " + ChatColor.AQUA + this.dependsOn.getIcon().getItemMeta().getDisplayName() + ChatColor.RED + " pour acheter cela.");
@@ -98,6 +103,14 @@ public class ShopDependsItem extends ShopItem
         ItemStack stack = getIcon().clone();
         ItemMeta meta = stack.getItemMeta();
         List<String> lore = meta.getLore() != null ? meta.getLore() : new ArrayList<>();
+
+        if (CosmeticAccessibility.valueOf(this.itemDescription.getRankAccessibility()) != CosmeticAccessibility.ALL)
+        {
+            lore.add("");
+            lore.add(ChatColor.GRAY + "Vous devez posséder le grade");
+            lore.add(CosmeticAccessibility.valueOf(this.itemDescription.getRankAccessibility()).getDisplay() + ChatColor.GRAY + " pour pouvoir utiliser cet");
+            lore.add(ChatColor.GRAY + "objet.");
+        }
 
         lore.add("");
 

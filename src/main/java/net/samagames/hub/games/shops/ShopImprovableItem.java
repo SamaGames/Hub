@@ -5,6 +5,7 @@ import net.samagames.api.shops.IItemDescription;
 import net.samagames.api.shops.ITransaction;
 import net.samagames.hub.Hub;
 import net.samagames.hub.common.players.PlayerManager;
+import net.samagames.hub.cosmetics.common.CosmeticAccessibility;
 import net.samagames.hub.gui.AbstractGui;
 import net.samagames.hub.gui.shop.GuiConfirm;
 import org.bukkit.ChatColor;
@@ -88,6 +89,10 @@ public class ShopImprovableItem extends ShopIcon
         {
             player.sendMessage(PlayerManager.SHOPPING_TAG + ChatColor.RED + "Vous avez déjà débloqué le niveau maximum de cette amélioration.");
         }
+        else if (!CosmeticAccessibility.valueOf(this.itemDescription.getRankAccessibility()).canAccess(player))
+        {
+            player.sendMessage(PlayerManager.SHOPPING_TAG + ChatColor.RED + "Vous n'avez pas le grade nécessaire pour acheter cet objet.");
+        }
         else if (!SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).hasEnoughCoins(next.getCost()))
         {
             player.sendMessage(PlayerManager.SHOPPING_TAG + ChatColor.RED + "Vous n'avez pas assez de pièces pour acheter cette amélioration.");
@@ -167,6 +172,14 @@ public class ShopImprovableItem extends ShopIcon
                 prefix += ChatColor.RED;
 
             lore.add(prefix + "Niveau " + (i + 1) + " : " + level.getDescription());
+        }
+
+        if (CosmeticAccessibility.valueOf(this.itemDescription.getRankAccessibility()) != CosmeticAccessibility.ALL)
+        {
+            lore.add("");
+            lore.add(ChatColor.GRAY + "Vous devez posséder le grade");
+            lore.add(CosmeticAccessibility.valueOf(this.itemDescription.getRankAccessibility()).getDisplay() + ChatColor.GRAY + " pour pouvoir utiliser cet");
+            lore.add(ChatColor.GRAY + "objet.");
         }
 
         lore.add("");
