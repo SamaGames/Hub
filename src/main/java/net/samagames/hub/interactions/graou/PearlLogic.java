@@ -135,8 +135,8 @@ class PearlLogic
         AbstractCosmetic cosmeticSelected = cosmeticsSelected.get(new Random().nextInt(cosmeticsSelected.size()));
 
         List<String> lore = new ArrayList<>();
-        lore.add(ChatColor.DARK_GRAY + "Type : " + cosmeticSelected.getRarity().getColor() + cosmeticSelected.getRarity().getName());
-        lore.add(ChatColor.DARK_GRAY + "Catégorie : " + ChatColor.GRAY + cosmeticSelected.getCategoryName());
+        lore.add(ChatColor.DARK_GRAY + "Rareté : " + cosmeticSelected.getRarity().getColor() + cosmeticSelected.getRarity().getName());
+        lore.add(ChatColor.DARK_GRAY + "Type : " + ChatColor.GRAY + cosmeticSelected.getCategoryName());
 
         new FancyMessage("\u272F ").color(ChatColor.GOLD)
                 .then("Vous avez trouvé ").color(ChatColor.YELLOW)
