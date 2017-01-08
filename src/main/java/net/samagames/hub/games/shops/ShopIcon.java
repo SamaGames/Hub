@@ -34,11 +34,11 @@ public abstract class ShopIcon
         this.itemDescription = SamaGamesAPI.get().getShopsManager().getItemDescription(storageId);
         this.icon = PersistanceUtils.makeStack(hub, this.itemDescription);
 
-        if (categoryName != null)
-        {
-            ItemMeta meta = this.icon.getItemMeta();
+        ItemMeta meta = this.icon.getItemMeta();
+        List<String> lore = meta.getLore();
 
-            List<String> lore = meta.getLore();
+        if (categoryName != null && lore != null)
+        {
             lore.add(0, ChatColor.DARK_GRAY + categoryName);
             lore.add(1, "");
 
