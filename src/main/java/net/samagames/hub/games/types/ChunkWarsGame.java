@@ -114,7 +114,54 @@ public class ChunkWarsGame extends AbstractGame
 
             // ---------------
 
+            int[] woolColorIds = new int[] { 218, 219, 220, 221, 222, 223, 224, 225, 226, 227, 228, 229, 230, 231, 232, 233, 234 };
+            int[] glassColorIds = new int[] { 236, 237, 238, 239, 240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250, 251, 252 };
+
             ShopCategory colorCosmeticCategory = new ShopCategory(this.hub, this, 205, 21);
+
+            ShopCategory woolColorCosmeticCategory = new ShopCategory(this.hub, this, 217, 21);
+            woolColorCosmeticCategory.addContent(new ShopItem(this.hub, "Couleur de laine", woolColorIds[0], 10, woolColorIds).defaultItem());
+            woolColorCosmeticCategory.addContent(new ShopItem(this.hub, "Couleur de laine", woolColorIds[1], 11, woolColorIds));
+            woolColorCosmeticCategory.addContent(new ShopItem(this.hub, "Couleur de laine", woolColorIds[2], 12, woolColorIds));
+            woolColorCosmeticCategory.addContent(new ShopItem(this.hub, "Couleur de laine", woolColorIds[3], 13, woolColorIds));
+            woolColorCosmeticCategory.addContent(new ShopItem(this.hub, "Couleur de laine", woolColorIds[4], 14, woolColorIds));
+            woolColorCosmeticCategory.addContent(new ShopItem(this.hub, "Couleur de laine", woolColorIds[5], 15, woolColorIds));
+            woolColorCosmeticCategory.addContent(new ShopItem(this.hub, "Couleur de laine", woolColorIds[6], 16, woolColorIds));
+            woolColorCosmeticCategory.addContent(new ShopItem(this.hub, "Couleur de laine", woolColorIds[7], 19, woolColorIds));
+            woolColorCosmeticCategory.addContent(new ShopItem(this.hub, "Couleur de laine", woolColorIds[8], 20, woolColorIds));
+            woolColorCosmeticCategory.addContent(new ShopItem(this.hub, "Couleur de laine", woolColorIds[9], 21, woolColorIds));
+            woolColorCosmeticCategory.addContent(new ShopItem(this.hub, "Couleur de laine", woolColorIds[10], 22, woolColorIds));
+            woolColorCosmeticCategory.addContent(new ShopItem(this.hub, "Couleur de laine", woolColorIds[11], 23, woolColorIds));
+            woolColorCosmeticCategory.addContent(new ShopItem(this.hub, "Couleur de laine", woolColorIds[12], 24, woolColorIds));
+            woolColorCosmeticCategory.addContent(new ShopItem(this.hub, "Couleur de laine", woolColorIds[13], 25, woolColorIds));
+            woolColorCosmeticCategory.addContent(new ShopItem(this.hub, "Couleur de laine", woolColorIds[14], 30, woolColorIds));
+            woolColorCosmeticCategory.addContent(new ShopItem(this.hub, "Couleur de laine", woolColorIds[15], 32, woolColorIds));
+            woolColorCosmeticCategory.addContent(new ShopItem(this.hub, "Couleur... Couleur ?", woolColorIds[16], 31, woolColorIds));
+
+            ShopCategory glassColorCosmeticCategory = new ShopCategory(this.hub, this, 235, 23);
+            glassColorCosmeticCategory.addContent(new ShopItem(this.hub, "Couleur de verre", glassColorIds[0], 10, glassColorIds).defaultItem());
+            glassColorCosmeticCategory.addContent(new ShopItem(this.hub, "Couleur de verre", glassColorIds[1], 11, glassColorIds));
+            glassColorCosmeticCategory.addContent(new ShopItem(this.hub, "Couleur de verre", glassColorIds[2], 12, glassColorIds));
+            glassColorCosmeticCategory.addContent(new ShopItem(this.hub, "Couleur de verre", glassColorIds[3], 13, glassColorIds));
+            glassColorCosmeticCategory.addContent(new ShopItem(this.hub, "Couleur de verre", glassColorIds[4], 14, glassColorIds));
+            glassColorCosmeticCategory.addContent(new ShopItem(this.hub, "Couleur de verre", glassColorIds[5], 15, glassColorIds));
+            glassColorCosmeticCategory.addContent(new ShopItem(this.hub, "Couleur de verre", glassColorIds[6], 16, glassColorIds));
+            glassColorCosmeticCategory.addContent(new ShopItem(this.hub, "Couleur de verre", glassColorIds[7], 19, glassColorIds));
+            glassColorCosmeticCategory.addContent(new ShopItem(this.hub, "Couleur de verre", glassColorIds[8], 20, glassColorIds));
+            glassColorCosmeticCategory.addContent(new ShopItem(this.hub, "Couleur de verre", glassColorIds[9], 21, glassColorIds));
+            glassColorCosmeticCategory.addContent(new ShopItem(this.hub, "Couleur de verre", glassColorIds[10], 22, glassColorIds));
+            glassColorCosmeticCategory.addContent(new ShopItem(this.hub, "Couleur de verre", glassColorIds[11], 23, glassColorIds));
+            glassColorCosmeticCategory.addContent(new ShopItem(this.hub, "Couleur de verre", glassColorIds[12], 24, glassColorIds));
+            glassColorCosmeticCategory.addContent(new ShopItem(this.hub, "Couleur de verre", glassColorIds[13], 25, glassColorIds));
+            glassColorCosmeticCategory.addContent(new ShopItem(this.hub, "Couleur de verre", glassColorIds[14], 30, glassColorIds));
+            glassColorCosmeticCategory.addContent(new ShopItem(this.hub, "Couleur de verre", glassColorIds[15], 32, glassColorIds));
+            glassColorCosmeticCategory.addContent(new ShopItem(this.hub, "Couleur... Couleur ?", glassColorIds[16], 31, glassColorIds));
+
+            colorCosmeticCategory.addContent(woolColorCosmeticCategory);
+            colorCosmeticCategory.addContent(glassColorCosmeticCategory);
+
+            // ---------------
+
             ShopCategory patternCosmeticCategory = new ShopCategory(this.hub, this, 206, 23);
             ShopCategory decorationCosmeticCategory = new ShopCategory(this.hub, this, 207, 25);
 
