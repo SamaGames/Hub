@@ -106,7 +106,6 @@ public class ChunkWarsGame extends AbstractGame
             nacelleCosmeticCategory.addContent(bigNacelleCosmetic);
             nacelleCosmeticCategory.addContent(medievalNacelleCosmetic);
             nacelleCosmeticCategory.addContent(terraNacelleCosmetic);
-            nacelleCosmeticCategory.addContent(cityNacelleCosmetic);
             nacelleCosmeticCategory.addContent(nisbhajaNacelleCosmetic);
             nacelleCosmeticCategory.addContent(propellerNacelleCosmetic);
             nacelleCosmeticCategory.addContent(baroqueNacelleCosmetic);
