@@ -186,11 +186,11 @@ public class ChunkWarsGame extends AbstractGame
             decorationCosmeticCategory.addContent(new ShopItem(this.hub, "Décoration", decorationIds[4], 20, decorationIds));
             decorationCosmeticCategory.addContent(new ShopItem(this.hub, "Décoration", decorationIds[5], 21, decorationIds));
             decorationCosmeticCategory.addContent(new ShopItem(this.hub, "Décoration", decorationIds[6], 28, decorationIds));
-            decorationCosmeticCategory.addContent(new ShopItem(this.hub, "Décoration", decorationIds[7], 29, decorationIds));
-            decorationCosmeticCategory.addContent(new ShopItem(this.hub, "Décoration", decorationIds[8], 14, decorationIds));
-            decorationCosmeticCategory.addContent(new ShopItem(this.hub, "Décoration", decorationIds[9], 15, decorationIds));
-            decorationCosmeticCategory.addContent(new ShopItem(this.hub, "Décoration", decorationIds[10], 16, decorationIds));
-            decorationCosmeticCategory.addContent(new ShopItem(this.hub, "Décoration", decorationIds[11], 23, decorationIds));
+            decorationCosmeticCategory.addContent(new ShopItem(this.hub, "Décoration", decorationIds[7], 14, decorationIds));
+            decorationCosmeticCategory.addContent(new ShopItem(this.hub, "Décoration", decorationIds[8], 15, decorationIds));
+            decorationCosmeticCategory.addContent(new ShopItem(this.hub, "Décoration", decorationIds[9], 16, decorationIds));
+            decorationCosmeticCategory.addContent(new ShopItem(this.hub, "Décoration", decorationIds[10], 23, decorationIds));
+            decorationCosmeticCategory.addContent(new ShopItem(this.hub, "Décoration", decorationIds[11], 24, decorationIds));
 
             // ---------------
 
