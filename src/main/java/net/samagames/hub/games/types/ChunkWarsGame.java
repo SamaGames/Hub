@@ -92,15 +92,15 @@ public class ChunkWarsGame extends AbstractGame
             int[] nacelleIds = new int[] { 208, 209, 210, 211, 212, 213, 214, 215, 216 };
 
             ShopCategory nacelleCosmeticCategory = new ShopCategory(this.hub, this, 204, 19);
-            ShopItem littleNacelleCosmetic = new ShopItem(this.hub, "Nacelle", nacelleIds[0], 13, nacelleIds).defaultItem();
+            ShopItem littleNacelleCosmetic = new ShopItem(this.hub, "Nacelle", nacelleIds[0], 19, nacelleIds).defaultItem();
             ShopDependsItem mediumNacelleCosmetic = new ShopDependsItem(this.hub, "Nacelle", nacelleIds[1], 20, nacelleIds, littleNacelleCosmetic);
             ShopDependsItem bigNacelleCosmetic = new ShopDependsItem(this.hub, "Nacelle", nacelleIds[2], 21, nacelleIds, mediumNacelleCosmetic);
-            ShopDependsItem medievalNacelleCosmetic = new ShopDependsItem(this.hub, "Nacelle", nacelleIds[3], 22, nacelleIds, bigNacelleCosmetic);
+            ShopDependsItem medievalNacelleCosmetic = new ShopDependsItem(this.hub, "Nacelle", nacelleIds[3], 14, nacelleIds, bigNacelleCosmetic);
             ShopDependsItem terraNacelleCosmetic = new ShopDependsItem(this.hub, "Nacelle", nacelleIds[4], 23, nacelleIds, bigNacelleCosmetic);
-            ShopDependsItem nisbhajaNacelleCosmetic = new ShopDependsItem(this.hub, "Nacelle", nacelleIds[5], 24, nacelleIds, bigNacelleCosmetic);
-            ShopDependsItem propellerNacelleCosmetic = new ShopDependsItem(this.hub, "Nacelle", nacelleIds[6], 30, nacelleIds, bigNacelleCosmetic);
-            ShopDependsItem baroqueNacelleCosmetic = new ShopDependsItem(this.hub, "Nacelle", nacelleIds[7], 31, nacelleIds, bigNacelleCosmetic);
-            ShopDependsItem skyNacelleCosmetic = new ShopDependsItem(this.hub, "Nacelle", nacelleIds[8], 32, nacelleIds, bigNacelleCosmetic);
+            ShopDependsItem nisbhajaNacelleCosmetic = new ShopDependsItem(this.hub, "Nacelle", nacelleIds[5], 32, nacelleIds, bigNacelleCosmetic);
+            ShopDependsItem propellerNacelleCosmetic = new ShopDependsItem(this.hub, "Nacelle", nacelleIds[6], 16, nacelleIds, bigNacelleCosmetic);
+            ShopDependsItem baroqueNacelleCosmetic = new ShopDependsItem(this.hub, "Nacelle", nacelleIds[7], 25, nacelleIds, bigNacelleCosmetic);
+            ShopDependsItem skyNacelleCosmetic = new ShopDependsItem(this.hub, "Nacelle", nacelleIds[8], 34, nacelleIds, bigNacelleCosmetic);
 
             nacelleCosmeticCategory.addContent(littleNacelleCosmetic);
             nacelleCosmeticCategory.addContent(mediumNacelleCosmetic);
