@@ -134,9 +134,13 @@ class PearlLogic
 
         AbstractCosmetic cosmeticSelected = cosmeticsSelected.get(new Random().nextInt(cosmeticsSelected.size()));
 
+        List<String> lore = new ArrayList<>();
+        lore.add(ChatColor.DARK_GRAY + "Type : " + cosmeticSelected.getRarity().getColor() + cosmeticSelected.getRarity().getName());
+        lore.add(ChatColor.DARK_GRAY + "Catégorie : " + ChatColor.GRAY + cosmeticSelected.getCategoryName());
+
         new FancyMessage("\u272F ").color(ChatColor.GOLD)
                 .then("Vous avez trouvé ").color(ChatColor.YELLOW)
-                .then(cosmeticSelected.getIcon().getItemMeta().getDisplayName()).tooltip(cosmeticSelected.getIcon().getItemMeta().getLore())
+                .then(cosmeticSelected.getIcon().getItemMeta().getDisplayName()).tooltip(lore)
                 .then(" dans le cadeau !").color(ChatColor.YELLOW)
                 .then(" \u272F").color(ChatColor.GOLD)
                 .send(player);
@@ -156,7 +160,7 @@ class PearlLogic
             {
                 FancyMessage globalMessage = new FancyMessage("\u272F " + player.getName()).color(ChatColor.GOLD)
                         .then(" a trouvé ").color(ChatColor.YELLOW)
-                        .then(cosmeticSelected.getIcon().getItemMeta().getDisplayName()).tooltip(cosmeticSelected.getIcon().getItemMeta().getLore())
+                        .then(cosmeticSelected.getIcon().getItemMeta().getDisplayName()).tooltip(lore)
                         .then(" dans un cadeau !").color(ChatColor.YELLOW)
                         .then(" \u272F").color(ChatColor.GOLD);
 

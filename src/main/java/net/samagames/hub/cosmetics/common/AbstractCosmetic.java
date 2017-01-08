@@ -22,6 +22,7 @@ import java.util.logging.Level;
 public abstract class AbstractCosmetic implements Comparable<AbstractCosmetic>
 {
     protected final Hub hub;
+    private final String categoryName;
     private final int storageId;
     private final ItemStack icon;
     private final CosmeticRarity rarity;
@@ -32,6 +33,7 @@ public abstract class AbstractCosmetic implements Comparable<AbstractCosmetic>
     public AbstractCosmetic(Hub hub, String categoryName, int storageId) throws Exception
     {
         this.hub = hub;
+        this.categoryName = categoryName;
         this.storageId = storageId;
         this.permissionNeededToView = null;
 
@@ -118,6 +120,11 @@ public abstract class AbstractCosmetic implements Comparable<AbstractCosmetic>
             GlowEffect.addGlow(cloned);
 
         return cloned;
+    }
+
+    public String getCategoryName()
+    {
+        return this.categoryName;
     }
 
     public int getStorageId()
