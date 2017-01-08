@@ -77,6 +77,27 @@ public class ChunkWarsGame extends AbstractGame
         {
             ShopCategory shopCategory = new ShopCategory(this.hub, this, 202, 0);
 
+            // -----------------------------------------
+
+            // ShopCategory kitCategory = new ShopCategory(this.hub, this, 203, 21);
+
+            // -----------------------------------------
+
+            ShopCategory cosmeticCategory = new ShopCategory(this.hub, this, 203, 23);
+            ShopCategory nacelleCosmeticCategory = new ShopCategory(this.hub, this, 204, 19);
+            ShopCategory colorCosmeticCategory = new ShopCategory(this.hub, this, 205, 21);
+            ShopCategory patternCosmeticCategory = new ShopCategory(this.hub, this, 206, 23);
+            ShopCategory decorationCosmeticCategory = new ShopCategory(this.hub, this, 207, 25);
+
+            cosmeticCategory.addContent(nacelleCosmeticCategory);
+            cosmeticCategory.addContent(colorCosmeticCategory);
+            cosmeticCategory.addContent(patternCosmeticCategory);
+            cosmeticCategory.addContent(decorationCosmeticCategory);
+
+            // -----------------------------------------
+
+            shopCategory.addContent(cosmeticCategory);
+
 
             return shopCategory;
         }
