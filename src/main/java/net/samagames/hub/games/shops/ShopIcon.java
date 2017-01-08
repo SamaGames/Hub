@@ -42,6 +42,9 @@ public abstract class ShopIcon
 
             lore.add(0, ChatColor.DARK_GRAY + categoryName);
 
+            if (meta.getLore() != null)
+                lore.add(1, "");
+
             meta.setLore(lore);
             this.icon.setItemMeta(meta);
         }
