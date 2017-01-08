@@ -3,6 +3,7 @@ package net.samagames.hub.games.shops;
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import net.samagames.hub.common.players.PlayerManager;
+import net.samagames.hub.cosmetics.common.CosmeticAccessibility;
 import net.samagames.hub.games.AbstractGame;
 import net.samagames.hub.gui.AbstractGui;
 import net.samagames.hub.gui.shop.GuiConfirm;
@@ -20,9 +21,11 @@ public class ShopItem extends ShopIcon
 {
     protected boolean defaultItem;
 
-    ShopItem(Hub hub, int storageId, int slot, int[] resetIds) throws Exception
+    public ShopItem(Hub hub, int storageId, int slot, int[] resetIds) throws Exception
     {
         super(hub, storageId, slot, resetIds);
+
+        this.defaultItem = false;
     }
 
     @Override
@@ -48,6 +51,10 @@ public class ShopItem extends ShopIcon
 
                 return;
             }
+        }
+        else if (!CosmeticAccessibility.valueOf(this.itemDescription.getRankAccessibility()).canAccess(player))
+        {
+            player.sendMessage(PlayerManager.SHOPPING_TAG + ChatColor.RED + "Vous n'avez pas le grade nécessaire pour acheter cet objet.");
         }
         else if (!SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).hasEnoughCoins(this.itemDescription.getPriceCoins()))
         {
@@ -90,9 +97,17 @@ public class ShopItem extends ShopIcon
         ItemMeta meta = stack.getItemMeta();
         List<String> lore = meta.getLore() != null ? meta.getLore() : new ArrayList<>();
 
+        if (CosmeticAccessibility.valueOf(this.itemDescription.getRankAccessibility()) != CosmeticAccessibility.ALL)
+        {
+            lore.add(ChatColor.GRAY + "Vous devez posséder le grade");
+            lore.add(CosmeticAccessibility.valueOf(this.itemDescription.getRankAccessibility()).getDisplay() + ChatColor.GRAY + " pour pouvoir utiliser cet");
+            lore.add(ChatColor.GRAY + "objet.");
+            lore.add("");
+        }
+
         if (this.isActive(player))
             lore.add(ChatColor.GREEN + "Objet actif");
-        else if (isDefaultItem() || isOwned(player))
+        else if (this.isDefaultItem() || this.isOwned(player))
             lore.add(ChatColor.GREEN + "Objet possédé");
         else
             lore.add(ChatColor.GRAY + "Prix : " + ChatColor.GOLD + this.itemDescription.getPriceCoins() + " pièces");
@@ -103,9 +118,10 @@ public class ShopItem extends ShopIcon
         return stack;
     }
 
-    public void setDefaultItem(boolean defaultItem)
+    public ShopItem defaultItem()
     {
-        this.defaultItem = defaultItem;
+        this.defaultItem = true;
+        return this;
     }
 
     public boolean isDefaultItem()

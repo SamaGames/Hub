@@ -34,7 +34,7 @@ public abstract class AbstractGui extends net.samagames.api.gui.AbstractGui
 
         ItemStack stack = new ItemStack(Material.GOLD_INGOT, 1);
         ItemMeta meta = stack.getItemMeta();
-        meta.setDisplayName(ChatColor.YELLOW + "Vous avez " + NumberUtils.format(coins) + " pièces");
+        meta.setDisplayName(ChatColor.GOLD + "Vous avez " + NumberUtils.format(coins) + " pièces");
         stack.setItemMeta(meta);
 
         return stack;

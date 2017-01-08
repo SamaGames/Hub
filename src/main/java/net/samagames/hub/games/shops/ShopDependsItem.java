@@ -114,6 +114,12 @@ public class ShopDependsItem extends ShopItem
         return stack;
     }
 
+    public ShopDependsItem defaultItem()
+    {
+        super.defaultItem();
+        return this;
+    }
+
     private boolean hasDepend(Player player)
     {
         return this.dependsOn.isDefaultItem() || SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).getTransactionsByID(this.dependsOn.getStorageId()) != null;

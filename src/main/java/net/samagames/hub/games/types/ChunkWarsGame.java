@@ -4,6 +4,7 @@ import net.samagames.hub.Hub;
 import net.samagames.hub.games.AbstractGame;
 import net.samagames.hub.games.leaderboards.HubLeaderboard;
 import net.samagames.hub.games.shops.ShopCategory;
+import net.samagames.hub.games.shops.ShopItem;
 import net.samagames.tools.RulesBook;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -84,7 +85,35 @@ public class ChunkWarsGame extends AbstractGame
             // -----------------------------------------
 
             ShopCategory cosmeticCategory = new ShopCategory(this.hub, this, 203, 23);
+
+            // ---------------
+
+            int[] nacelleIds = new int[] { 208, 209, 210, 211, 212, 213, 214, 215, 216 };
+
             ShopCategory nacelleCosmeticCategory = new ShopCategory(this.hub, this, 204, 19);
+            ShopItem littleNacelleCosmetic = new ShopItem(this.hub, nacelleIds[0], 13, nacelleIds).defaultItem();
+            ShopItem mediumNacelleCosmetic = new ShopItem(this.hub, nacelleIds[1], 20, nacelleIds);
+            ShopItem bigNacelleCosmetic = new ShopItem(this.hub, nacelleIds[2], 21, nacelleIds);
+            ShopItem medievalNacelleCosmetic = new ShopItem(this.hub, nacelleIds[3], 22, nacelleIds);
+            ShopItem terraNacelleCosmetic = new ShopItem(this.hub, nacelleIds[4], 23, nacelleIds);
+            ShopItem nisbhajaNacelleCosmetic = new ShopItem(this.hub, nacelleIds[5], 24, nacelleIds);
+            ShopItem propellerNacelleCosmetic = new ShopItem(this.hub, nacelleIds[6], 30, nacelleIds);
+            ShopItem baroqueNacelleCosmetic = new ShopItem(this.hub, nacelleIds[7], 31, nacelleIds);
+            ShopItem skyNacelleCosmetic = new ShopItem(this.hub, nacelleIds[8], 32, nacelleIds);
+
+            nacelleCosmeticCategory.addContent(littleNacelleCosmetic);
+            nacelleCosmeticCategory.addContent(mediumNacelleCosmetic);
+            nacelleCosmeticCategory.addContent(bigNacelleCosmetic);
+            nacelleCosmeticCategory.addContent(medievalNacelleCosmetic);
+            nacelleCosmeticCategory.addContent(terraNacelleCosmetic);
+            nacelleCosmeticCategory.addContent(cityNacelleCosmetic);
+            nacelleCosmeticCategory.addContent(nisbhajaNacelleCosmetic);
+            nacelleCosmeticCategory.addContent(propellerNacelleCosmetic);
+            nacelleCosmeticCategory.addContent(baroqueNacelleCosmetic);
+            nacelleCosmeticCategory.addContent(skyNacelleCosmetic);
+
+            // ---------------
+
             ShopCategory colorCosmeticCategory = new ShopCategory(this.hub, this, 205, 21);
             ShopCategory patternCosmeticCategory = new ShopCategory(this.hub, this, 206, 23);
             ShopCategory decorationCosmeticCategory = new ShopCategory(this.hub, this, 207, 25);

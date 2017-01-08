@@ -95,8 +95,7 @@ public class QuakeGame extends AbstractGame
             ShopCategory shopCategory = new ShopCategory(this.hub, this, 80, 0);
             ShopCategory hoesCategory = new ShopCategory(this.hub, this, 88, 21);
 
-            ShopDependsItem woodenHoe = new ShopDependsItem(this.hub, 81, 31, new int[]{ 82, 83, 84, 85, 86, 87 }, null);
-            woodenHoe.setDefaultItem(true);
+            ShopDependsItem woodenHoe = new ShopDependsItem(this.hub, 81, 31, new int[]{ 82, 83, 84, 85, 86, 87 }, null).defaultItem();
             hoesCategory.addContent(woodenHoe);
 
             ShopDependsItem stoneHoe = new ShopDependsItem(this.hub, 82, 20, new int[]{ 81, 83, 84, 85, 86, 87 }, woodenHoe);
