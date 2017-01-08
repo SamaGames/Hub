@@ -120,7 +120,7 @@ public class ChunkWarsGame extends AbstractGame
             ShopCategory colorCosmeticCategory = new ShopCategory(this.hub, this, 205, 21);
 
             ShopCategory woolColorCosmeticCategory = new ShopCategory(this.hub, this, 217, 21);
-            woolColorCosmeticCategory.addContent(new ShopItem(this.hub, "Couleur de laine", woolColorIds[0], 10, woolColorIds).defaultItem());
+            woolColorCosmeticCategory.addContent(new ShopItem(this.hub, "Couleur de laine", woolColorIds[0], 10, woolColorIds));
             woolColorCosmeticCategory.addContent(new ShopItem(this.hub, "Couleur de laine", woolColorIds[1], 11, woolColorIds));
             woolColorCosmeticCategory.addContent(new ShopItem(this.hub, "Couleur de laine", woolColorIds[2], 12, woolColorIds));
             woolColorCosmeticCategory.addContent(new ShopItem(this.hub, "Couleur de laine", woolColorIds[3], 13, woolColorIds));
@@ -134,7 +134,7 @@ public class ChunkWarsGame extends AbstractGame
             woolColorCosmeticCategory.addContent(new ShopItem(this.hub, "Couleur de laine", woolColorIds[11], 23, woolColorIds));
             woolColorCosmeticCategory.addContent(new ShopItem(this.hub, "Couleur de laine", woolColorIds[12], 24, woolColorIds));
             woolColorCosmeticCategory.addContent(new ShopItem(this.hub, "Couleur de laine", woolColorIds[13], 25, woolColorIds));
-            woolColorCosmeticCategory.addContent(new ShopItem(this.hub, "Couleur de laine", woolColorIds[14], 30, woolColorIds));
+            woolColorCosmeticCategory.addContent(new ShopItem(this.hub, "Couleur de laine", woolColorIds[14], 30, woolColorIds).defaultItem());
             woolColorCosmeticCategory.addContent(new ShopItem(this.hub, "Couleur de laine", woolColorIds[15], 32, woolColorIds));
             woolColorCosmeticCategory.addContent(new ShopItem(this.hub, "Couleur... Couleur ?", woolColorIds[16], 31, woolColorIds));
 
@@ -162,7 +162,20 @@ public class ChunkWarsGame extends AbstractGame
 
             // ---------------
 
+            int[] patternIds = new int[] { 253, 254, 255, 256, 257, 258, 259, 260 };
+
             ShopCategory patternCosmeticCategory = new ShopCategory(this.hub, this, 206, 23);
+            patternCosmeticCategory.addContent(new ShopItem(this.hub, "Motif", patternIds[0], 12, patternIds).defaultItem());
+            patternCosmeticCategory.addContent(new ShopItem(this.hub, "Motif", patternIds[1], 13, patternIds));
+            patternCosmeticCategory.addContent(new ShopItem(this.hub, "Motif", patternIds[2], 14, patternIds));
+            patternCosmeticCategory.addContent(new ShopItem(this.hub, "Motif", patternIds[3], 21, patternIds));
+            patternCosmeticCategory.addContent(new ShopItem(this.hub, "Motif", patternIds[4], 13, patternIds));
+            patternCosmeticCategory.addContent(new ShopItem(this.hub, "Motif", patternIds[5], 30, patternIds));
+            patternCosmeticCategory.addContent(new ShopItem(this.hub, "Motif", patternIds[6], 31, patternIds));
+            patternCosmeticCategory.addContent(new ShopItem(this.hub, "Motif", patternIds[7], 32, patternIds));
+
+            // ---------------
+
             ShopCategory decorationCosmeticCategory = new ShopCategory(this.hub, this, 207, 25);
 
             cosmeticCategory.addContent(nacelleCosmeticCategory);
