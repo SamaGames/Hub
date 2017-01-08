@@ -95,12 +95,12 @@ public class ChunkWarsGame extends AbstractGame
             ShopItem littleNacelleCosmetic = new ShopItem(this.hub, "Nacelle", nacelleIds[0], 13, nacelleIds).defaultItem();
             ShopDependsItem mediumNacelleCosmetic = new ShopDependsItem(this.hub, "Nacelle", nacelleIds[1], 20, nacelleIds, littleNacelleCosmetic);
             ShopDependsItem bigNacelleCosmetic = new ShopDependsItem(this.hub, "Nacelle", nacelleIds[2], 21, nacelleIds, mediumNacelleCosmetic);
-            ShopItem medievalNacelleCosmetic = new ShopItem(this.hub, "Nacelle", nacelleIds[3], 22, nacelleIds);
-            ShopItem terraNacelleCosmetic = new ShopItem(this.hub, "Nacelle", nacelleIds[4], 23, nacelleIds);
-            ShopItem nisbhajaNacelleCosmetic = new ShopItem(this.hub, "Nacelle", nacelleIds[5], 24, nacelleIds);
-            ShopItem propellerNacelleCosmetic = new ShopItem(this.hub, "Nacelle", nacelleIds[6], 30, nacelleIds);
-            ShopItem baroqueNacelleCosmetic = new ShopItem(this.hub, "Nacelle", nacelleIds[7], 31, nacelleIds);
-            ShopItem skyNacelleCosmetic = new ShopItem(this.hub, "Nacelle", nacelleIds[8], 32, nacelleIds);
+            ShopDependsItem medievalNacelleCosmetic = new ShopDependsItem(this.hub, "Nacelle", nacelleIds[3], 22, nacelleIds, bigNacelleCosmetic);
+            ShopDependsItem terraNacelleCosmetic = new ShopDependsItem(this.hub, "Nacelle", nacelleIds[4], 23, nacelleIds, bigNacelleCosmetic);
+            ShopDependsItem nisbhajaNacelleCosmetic = new ShopDependsItem(this.hub, "Nacelle", nacelleIds[5], 24, nacelleIds, bigNacelleCosmetic);
+            ShopDependsItem propellerNacelleCosmetic = new ShopDependsItem(this.hub, "Nacelle", nacelleIds[6], 30, nacelleIds, bigNacelleCosmetic);
+            ShopDependsItem baroqueNacelleCosmetic = new ShopDependsItem(this.hub, "Nacelle", nacelleIds[7], 31, nacelleIds, bigNacelleCosmetic);
+            ShopDependsItem skyNacelleCosmetic = new ShopDependsItem(this.hub, "Nacelle", nacelleIds[8], 32, nacelleIds, bigNacelleCosmetic);
 
             nacelleCosmeticCategory.addContent(littleNacelleCosmetic);
             nacelleCosmeticCategory.addContent(mediumNacelleCosmetic);
