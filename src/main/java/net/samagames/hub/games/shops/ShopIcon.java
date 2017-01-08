@@ -10,6 +10,7 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 
@@ -34,13 +35,12 @@ public abstract class ShopIcon
         this.itemDescription = SamaGamesAPI.get().getShopsManager().getItemDescription(storageId);
         this.icon = PersistanceUtils.makeStack(hub, this.itemDescription);
 
-        ItemMeta meta = this.icon.getItemMeta();
-        List<String> lore = meta.getLore();
-
-        if (categoryName != null && lore != null)
+        if (categoryName != null)
         {
+            ItemMeta meta = this.icon.getItemMeta();
+            List<String> lore = (meta.getLore() != null) ? meta.getLore() : new ArrayList<>();
+
             lore.add(0, ChatColor.DARK_GRAY + categoryName);
-            lore.add(1, "");
 
             meta.setLore(lore);
             this.icon.setItemMeta(meta);

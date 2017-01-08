@@ -169,7 +169,7 @@ public class ChunkWarsGame extends AbstractGame
             patternCosmeticCategory.addContent(new ShopItem(this.hub, "Motif", patternIds[1], 13, patternIds));
             patternCosmeticCategory.addContent(new ShopItem(this.hub, "Motif", patternIds[2], 14, patternIds));
             patternCosmeticCategory.addContent(new ShopItem(this.hub, "Motif", patternIds[3], 21, patternIds));
-            patternCosmeticCategory.addContent(new ShopItem(this.hub, "Motif", patternIds[4], 13, patternIds));
+            patternCosmeticCategory.addContent(new ShopItem(this.hub, "Motif", patternIds[4], 23, patternIds));
             patternCosmeticCategory.addContent(new ShopItem(this.hub, "Motif", patternIds[5], 30, patternIds));
             patternCosmeticCategory.addContent(new ShopItem(this.hub, "Motif", patternIds[6], 31, patternIds));
             patternCosmeticCategory.addContent(new ShopItem(this.hub, "Motif", patternIds[7], 32, patternIds));
