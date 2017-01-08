@@ -99,11 +99,13 @@ public class ShopItem extends ShopIcon
 
         if (CosmeticAccessibility.valueOf(this.itemDescription.getRankAccessibility()) != CosmeticAccessibility.ALL)
         {
+            lore.add("");
             lore.add(ChatColor.GRAY + "Vous devez posséder le grade");
             lore.add(CosmeticAccessibility.valueOf(this.itemDescription.getRankAccessibility()).getDisplay() + ChatColor.GRAY + " pour pouvoir utiliser cet");
             lore.add(ChatColor.GRAY + "objet.");
-            lore.add("");
         }
+
+        lore.add("");
 
         if (this.isActive(player))
             lore.add(ChatColor.GREEN + "Objet actif");

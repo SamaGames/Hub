@@ -4,6 +4,7 @@ import net.samagames.hub.Hub;
 import net.samagames.hub.games.AbstractGame;
 import net.samagames.hub.games.leaderboards.HubLeaderboard;
 import net.samagames.hub.games.shops.ShopCategory;
+import net.samagames.hub.games.shops.ShopDependsItem;
 import net.samagames.hub.games.shops.ShopItem;
 import net.samagames.tools.RulesBook;
 import org.bukkit.Location;
@@ -92,8 +93,8 @@ public class ChunkWarsGame extends AbstractGame
 
             ShopCategory nacelleCosmeticCategory = new ShopCategory(this.hub, this, 204, 19);
             ShopItem littleNacelleCosmetic = new ShopItem(this.hub, nacelleIds[0], 13, nacelleIds).defaultItem();
-            ShopItem mediumNacelleCosmetic = new ShopItem(this.hub, nacelleIds[1], 20, nacelleIds);
-            ShopItem bigNacelleCosmetic = new ShopItem(this.hub, nacelleIds[2], 21, nacelleIds);
+            ShopDependsItem mediumNacelleCosmetic = new ShopDependsItem(this.hub, nacelleIds[1], 20, nacelleIds, littleNacelleCosmetic);
+            ShopDependsItem bigNacelleCosmetic = new ShopDependsItem(this.hub, nacelleIds[2], 21, nacelleIds, mediumNacelleCosmetic);
             ShopItem medievalNacelleCosmetic = new ShopItem(this.hub, nacelleIds[3], 22, nacelleIds);
             ShopItem terraNacelleCosmetic = new ShopItem(this.hub, nacelleIds[4], 23, nacelleIds);
             ShopItem nisbhajaNacelleCosmetic = new ShopItem(this.hub, nacelleIds[5], 24, nacelleIds);
