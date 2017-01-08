@@ -176,7 +176,23 @@ public class ChunkWarsGame extends AbstractGame
 
             // ---------------
 
+            int[] decorationIds = new int[] { 261, 262, 263, 264, 265, 266, 267, 268, 269, 270, 271, 272 };
+
             ShopCategory decorationCosmeticCategory = new ShopCategory(this.hub, this, 207, 25);
+            decorationCosmeticCategory.addContent(new ShopItem(this.hub, "Décoration", decorationIds[0], 10, decorationIds));
+            decorationCosmeticCategory.addContent(new ShopItem(this.hub, "Décoration", decorationIds[1], 11, decorationIds));
+            decorationCosmeticCategory.addContent(new ShopItem(this.hub, "Décoration", decorationIds[2], 12, decorationIds));
+            decorationCosmeticCategory.addContent(new ShopItem(this.hub, "Décoration", decorationIds[3], 19, decorationIds));
+            decorationCosmeticCategory.addContent(new ShopItem(this.hub, "Décoration", decorationIds[4], 20, decorationIds));
+            decorationCosmeticCategory.addContent(new ShopItem(this.hub, "Décoration", decorationIds[5], 21, decorationIds));
+            decorationCosmeticCategory.addContent(new ShopItem(this.hub, "Décoration", decorationIds[6], 28, decorationIds));
+            decorationCosmeticCategory.addContent(new ShopItem(this.hub, "Décoration", decorationIds[7], 29, decorationIds));
+            decorationCosmeticCategory.addContent(new ShopItem(this.hub, "Décoration", decorationIds[8], 14, decorationIds));
+            decorationCosmeticCategory.addContent(new ShopItem(this.hub, "Décoration", decorationIds[9], 15, decorationIds));
+            decorationCosmeticCategory.addContent(new ShopItem(this.hub, "Décoration", decorationIds[10], 16, decorationIds));
+            decorationCosmeticCategory.addContent(new ShopItem(this.hub, "Décoration", decorationIds[11], 23, decorationIds));
+
+            // ---------------
 
             cosmeticCategory.addContent(nacelleCosmeticCategory);
             cosmeticCategory.addContent(colorCosmeticCategory);
@@ -186,7 +202,6 @@ public class ChunkWarsGame extends AbstractGame
             // -----------------------------------------
 
             shopCategory.addContent(cosmeticCategory);
-
 
             return shopCategory;
         }
