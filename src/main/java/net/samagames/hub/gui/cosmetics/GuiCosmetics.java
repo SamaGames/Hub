@@ -11,6 +11,7 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -22,10 +23,7 @@ public class GuiCosmetics extends AbstractGui
     {
         super(hub);
 
-        this.slots = new ArrayList<>();
-
-        for (int i = 1; i <= 4; i++)
-            this.slots.add(i);
+        this.slots = Arrays.asList(1, 2, 3, 3, 4, 5);
     }
 
     @Override
@@ -117,6 +115,8 @@ public class GuiCosmetics extends AbstractGui
         Random random = new Random();
         int randomized = random.nextInt(this.slots.size());
         int slot = base + (this.slots.get(randomized) * 9);
+
+        this.slots.remove(slot);
 
         this.setSlotData(displayName, material, slot, description, action);
         this.drawLineOfGlass(slot, color, action);
