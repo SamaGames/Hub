@@ -116,7 +116,7 @@ public class GuiCosmetics extends AbstractGui
         int randomized = random.nextInt(this.slots.size());
         int slot = base + (this.slots.get(randomized) * 9);
 
-        this.slots.remove(slot);
+        this.slots.remove(randomized);
 
         this.setSlotData(displayName, material, slot, description, action);
         this.drawLineOfGlass(slot, color, action);
