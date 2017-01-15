@@ -33,39 +33,37 @@ public class GuiCosmetics extends AbstractGui
     {
         this.inventory = this.hub.getServer().createInventory(null, 54, "Caverne aux trésors");
 
-        this.setSlotData(ChatColor.DARK_GRAY + "¿" + ChatColor.GRAY + ChatColor.MAGIC + " Mystère " + ChatColor.DARK_GRAY + "?", Material.IRON_FENCE, 27, new String[]{
-                ChatColor.RED + "Prochainement !"
-        }, "none");
-        this.drawLineOfGlass(27, DyeColor.GRAY, "none");
+        this.randomIcon(0, ChatColor.DARK_RED + "❤" + ChatColor.RED + " Ensembles " + ChatColor.DARK_RED + "❤", Material.LEATHER_CHESTPLATE, new String[]{
+                ChatColor.GRAY + "Tout le monde de la mode est entre vos",
+                ChatColor.GRAY + "mains !"
+        }, DyeColor.RED, "clothes");
 
-        this.randomIcon(1, ChatColor.DARK_AQUA + "●" + ChatColor.AQUA + " Humeurs " + ChatColor.DARK_AQUA + "●", Material.BLAZE_POWDER, new String[]{
-                ChatColor.GRAY + "Montrez-nous comment vous vous sentez :)"
-        }, DyeColor.LIGHT_BLUE, "particles");
+        this.randomIcon(1, ChatColor.GOLD + "●" + ChatColor.YELLOW + " Humeurs " + ChatColor.GOLD + "●", Material.BLAZE_POWDER, new String[]{
+                ChatColor.GRAY + "Montrez-nous comment vous vous sentez !"
+        }, DyeColor.YELLOW, "particles");
 
         this.randomIcon(2, ChatColor.DARK_GREEN + "▲" + ChatColor.GREEN + " Montures " + ChatColor.DARK_GREEN + "▲", Material.SADDLE, new String[]{
                 ChatColor.GRAY + "Un fidèle compagnon qui vous suit",
-                ChatColor.GRAY + "où que vous soyez."
+                ChatColor.GRAY + "où que vous soyez !"
         }, DyeColor.GREEN, "pets");
 
-        this.randomIcon(6, ChatColor.DARK_RED + "◼" + ChatColor.RED + " Déguisements " + ChatColor.DARK_RED + "◼", Material.SKULL_ITEM, new String[]{
+        this.randomIcon(4, ChatColor.GRAY + "◢" + ChatColor.WHITE + " Jukebox " + ChatColor.GRAY + "◣", Material.JUKEBOX, new String[]{
+                ChatColor.GRAY + "Devenez un véritable SamaDJ !"
+        }, DyeColor.WHITE, "jukebox");
+
+        this.randomIcon(6, ChatColor.DARK_AQUA + "◼" + ChatColor.AQUA + " Déguisements " + ChatColor.DARK_AQUA + "◼", Material.SKULL_ITEM, new String[]{
                 ChatColor.GRAY + "Entrez dans la peau d'un autre",
                 ChatColor.GRAY + "personnage !"
-        }, DyeColor.RED, "disguises");
+        }, DyeColor.LIGHT_BLUE, "disguises");
 
-        this.randomIcon(7, ChatColor.GOLD + "★" + ChatColor.YELLOW + " Gadgets " + ChatColor.GOLD + "★", Material.FIREWORK, new String[]{
+        this.randomIcon(7, ChatColor.DARK_BLUE + "★" + ChatColor.BLUE + " Gadgets " + ChatColor.DARK_BLUE + "★", Material.FIREWORK, new String[]{
                 ChatColor.GRAY + "Animez le serveur en exposant vos",
                 ChatColor.GRAY + "nombreux gadgets venant du futur !"
-        }, DyeColor.YELLOW, "gadgets");
+        }, DyeColor.BLUE, "gadgets");
 
-        this.setSlotData(ChatColor.DARK_BLUE + "▼" + ChatColor.BLUE + " Ballons " + ChatColor.DARK_BLUE + "▼", Material.CLAY_BALL, 35, new String[]{
+        this.randomIcon(8, ChatColor.DARK_PURPLE + "▼" + ChatColor.LIGHT_PURPLE + " Ballons " + ChatColor.DARK_PURPLE + "▼", Material.CLAY_BALL, new String[]{
                 ChatColor.GRAY + "Des petits ballons au dessus de votre tête !"
-        }, "balloons");
-        this.drawLineOfGlass(35, DyeColor.BLUE, "balloons");
-
-        this.setSlotData(ChatColor.DARK_PURPLE + "◢" + ChatColor.LIGHT_PURPLE + " Jukebox " + ChatColor.DARK_PURPLE + "◣", Material.JUKEBOX, 31, new String[]{
-                ChatColor.GRAY + "Devenez un véritable SamaDJ !"
-        }, "jukebox");
-        this.drawLineOfGlass(31, DyeColor.PURPLE, "jukebox");
+        }, DyeColor.PURPLE, "balloons");
 
         this.setSlotData(getBackIcon(), this.inventory.getSize() - 5, "back");
 
