@@ -61,6 +61,8 @@ public class ClothManager extends AbstractCosmeticManager<ClothCosmetic>
     {
         ClothPreviewTask clothPreviewTask = new ClothPreviewTask(this.hub, player.getLocation());
 
+        this.hub.getGuiManager().closeGui(player);
+
         player.setGameMode(GameMode.SPECTATOR);
         player.setSpectatorTarget(clothPreviewTask.getArmorStand());
 
