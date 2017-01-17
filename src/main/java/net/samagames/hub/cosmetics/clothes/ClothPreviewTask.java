@@ -3,6 +3,7 @@ package net.samagames.hub.cosmetics.clothes;
 import net.samagames.hub.Hub;
 import org.bukkit.Location;
 import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 /**
@@ -20,12 +21,14 @@ class ClothPreviewTask extends BukkitRunnable
     private final ArmorStand armorStand;
     private double i;
 
-    public ClothPreviewTask(Hub hub, Location center)
+    public ClothPreviewTask(Hub hub, Player viewer)
     {
-        this.center = center;
+        this.center = viewer.getLocation();
 
-        this.armorStand = hub.getWorld().spawn(center, ArmorStand.class);
+        this.armorStand = hub.getWorld().spawn(this.center, ArmorStand.class);
         this.armorStand.setVisible(false);
+
+        viewer.setSpectatorTarget(this.armorStand);
 
         this.runTaskTimer(hub, 1L, 1L);
     }

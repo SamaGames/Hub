@@ -59,7 +59,7 @@ public class ClothManager extends AbstractCosmeticManager<ClothCosmetic>
     public void startPreview(Player player, ClothCosmetic cosmetic)
     {
         this.hub.getPlayerManager().addHider(player);
-        this.previewers.put(player.getUniqueId(), new ClothPreviewTask(this.hub, player.getLocation()));
+        this.previewers.put(player.getUniqueId(), new ClothPreviewTask(this.hub, player));
     }
 
     public void stopPreview(Player player)
