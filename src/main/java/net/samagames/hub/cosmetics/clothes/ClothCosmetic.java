@@ -64,6 +64,7 @@ class ClothCosmetic extends AbstractCosmetic
             lore.add(ChatColor.YELLOW + "Clic droit pour prévisualiser");
 
             meta.setLore(lore);
+            stack.setItemMeta(meta);
         }
 
         return stack;
