@@ -64,8 +64,9 @@ public class ClothManager extends AbstractCosmeticManager<ClothCosmetic>
 
     public void startPreview(Player player, ClothCosmetic cosmetic)
     {
+        // TODO
         ItemStack[] armorContent = new ItemStack[4];
-        armorContent[3] = cosmetic.getPiece();
+        armorContent[2] = cosmetic.getPiece();
 
         ClothPreviewTask clothPreviewTask = new ClothPreviewTask(this.hub, player, armorContent);
 

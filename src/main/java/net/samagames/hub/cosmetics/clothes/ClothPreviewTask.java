@@ -31,12 +31,17 @@ class ClothPreviewTask extends BukkitRunnable
     private final EntityClothCamera camera;
     private double i;
 
-    public ClothPreviewTask(Hub hub, Player player, ItemStack[] armorContent)
+    ClothPreviewTask(Hub hub, Player player, ItemStack[] armorContent)
     {
         this.center = player.getLocation();
 
         this.fakePlayer = SamaGamesAPI.get().getNPCManager().createNPC(this.center, player.getUniqueId(), null, false);
-        this.fakePlayer.getBukkitEntity().getInventory().setArmorContents(armorContent);
+
+        this.fakePlayer.getBukkitEntity().getInventory().setHelmet(armorContent[0]);
+        this.fakePlayer.getBukkitEntity().getInventory().setChestplate(armorContent[1]);
+        this.fakePlayer.getBukkitEntity().getInventory().setLeggings(armorContent[2]);
+        this.fakePlayer.getBukkitEntity().getInventory().setBoots(armorContent[3]);
+
         SamaGamesAPI.get().getNPCManager().sendNPC(player, this.fakePlayer);
 
         World world = ((CraftWorld) hub.getWorld()).getHandle();
@@ -52,7 +57,7 @@ class ClothPreviewTask extends BukkitRunnable
     @Override
     public void run()
     {
-        Location location = new Location(this.center.getWorld(), this.center.getX() + Math.cos(this.i) * RADIUS, this.center.getY() + 0.15D, this.center.getZ() + Math.sin(this.i) * RADIUS);
+        Location location = new Location(this.center.getWorld(), this.center.getX() + Math.cos(this.i) * RADIUS, this.center.getY() + 1D, this.center.getZ() + Math.sin(this.i) * RADIUS);
         location.setDirection(this.center.clone().subtract(location).toVector().setY(location.getY()));
 
         this.camera.getBukkitEntity().teleport(location);
