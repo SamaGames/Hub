@@ -6,6 +6,7 @@ import net.samagames.hub.common.players.PlayerManager;
 import net.samagames.hub.gui.AbstractGui;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 
 import javax.lang.model.type.NullType;
 import java.util.HashMap;
@@ -26,23 +27,24 @@ public abstract class AbstractCosmeticManager<COSMETIC extends AbstractCosmetic>
 
         try
         {
+            hub.getCosmeticManager().log(Level.INFO, "Loading registry " + this.getClass().getSimpleName() + "...");
             this.registry.register();
         }
         catch (Exception e)
         {
-            hub.getCosmeticManager().log(Level.SEVERE, "Failed to load the registry (" + this.getClass().getSimpleName() + ")!");
+            hub.getCosmeticManager().log(Level.SEVERE, "Failed to load the registry " + this.getClass().getSimpleName() + "!");
             e.printStackTrace();
         }
 
         this.equipped = new HashMap<>();
     }
 
-    public abstract void enableCosmetic(Player player, COSMETIC cosmetic, NullType useless);
+    public abstract void enableCosmetic(Player player, COSMETIC cosmetic, ClickType clickType, NullType useless);
     public abstract void disableCosmetic(Player player, boolean logout, NullType useless);
 
     public abstract void update();
 
-    public void enableCosmetic(Player player, COSMETIC cosmetic)
+    public void enableCosmetic(Player player, COSMETIC cosmetic, ClickType clickType)
     {
         if (cosmetic.isOwned(player))
         {
@@ -54,7 +56,7 @@ public abstract class AbstractCosmeticManager<COSMETIC extends AbstractCosmetic>
                 }
                 else
                 {
-                    this.enableCosmetic(player, cosmetic, null);
+                    this.enableCosmetic(player, cosmetic, clickType, null);
                     this.equipped.put(player.getUniqueId(), cosmetic);
 
                     this.resetCurrents(player);
@@ -123,7 +125,7 @@ public abstract class AbstractCosmeticManager<COSMETIC extends AbstractCosmetic>
                 {
                     if (SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).isSelectedItem(storageId))
                     {
-                        this.enableCosmetic(player, this.getRegistry().getElementByStorageId(storageId));
+                        this.enableCosmetic(player, this.getRegistry().getElementByStorageId(storageId), ClickType.LEFT);
                         break;
                     }
                 }

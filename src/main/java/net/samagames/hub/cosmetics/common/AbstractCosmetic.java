@@ -37,8 +37,6 @@ public abstract class AbstractCosmetic implements Comparable<AbstractCosmetic>
         this.storageId = storageId;
         this.permissionNeededToView = null;
 
-        hub.getCosmeticManager().log(Level.INFO, "Fetching cosmetic data for the id: " + storageId);
-
         IItemDescription itemDescription = SamaGamesAPI.get().getShopsManager().getItemDescription(storageId);
 
         this.icon = PersistanceUtils.makeStack(hub, itemDescription);

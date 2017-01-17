@@ -16,6 +16,7 @@ import org.bukkit.Location;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
@@ -88,7 +89,7 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
     }
 
     @Override
-    public void enableCosmetic(Player player, JukeboxDiskCosmetic cosmetic)
+    public void enableCosmetic(Player player, JukeboxDiskCosmetic cosmetic, ClickType clickType)
     {
         if (cosmetic.isOwned(player))
         {
@@ -113,7 +114,7 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
     }
 
     @Override
-    public void enableCosmetic(Player player, JukeboxDiskCosmetic cosmetic, NullType useless) {}
+    public void enableCosmetic(Player player, JukeboxDiskCosmetic cosmetic, ClickType clickType, NullType useless) {}
 
     @Override
     public void disableCosmetic(Player player, boolean logout, NullType useless) { /** Not needed **/ }

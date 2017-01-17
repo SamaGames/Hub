@@ -138,6 +138,9 @@ public class PlayerListener implements Listener
             this.checkElytra(event.getPlayer());
         }
 
+        if (this.hub.getCosmeticManager().getClothManager().isPreviewing(event.getPlayer()))
+            event.setCancelled(true);
+
         this.hub.getTaskManager().getPlayersAwayFromKeyboardTask().resetPlayer(event.getPlayer().getUniqueId());
     }
 

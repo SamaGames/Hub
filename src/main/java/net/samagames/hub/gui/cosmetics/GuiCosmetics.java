@@ -75,6 +75,10 @@ public class GuiCosmetics extends AbstractGui
     {
         switch (action)
         {
+            case "clothes":
+                this.hub.getGuiManager().openGui(player, new GuiCosmeticsCategory<>(this.hub, "Ensembles", this.hub.getCosmeticManager().getClothManager(), true));
+                break;
+
             case "particles":
                 this.hub.getGuiManager().openGui(player, new GuiCosmeticsCategory<>(this.hub, "Particules", this.hub.getCosmeticManager().getParticleManager(), true));
                 break;
@@ -83,16 +87,16 @@ public class GuiCosmetics extends AbstractGui
                 this.hub.getGuiManager().openGui(player, new GuiCosmeticsCategory<>(this.hub, "Montures", this.hub.getCosmeticManager().getPetManager(), true));
                 break;
 
+            case "jukebox":
+                this.hub.getGuiManager().openGui(player, new GuiCosmeticsCategory<>(this.hub, "Jukebox", this.hub.getCosmeticManager().getJukeboxManager(), false));
+                break;
+
             case "disguises":
                 this.hub.getGuiManager().openGui(player, new GuiCosmeticsCategory<>(this.hub, "Déguisements", this.hub.getCosmeticManager().getDisguiseManager(), true));
                 break;
 
             case "gadgets":
                 this.hub.getGuiManager().openGui(player, new GuiCosmeticsCategory<>(this.hub, "Gadgets", this.hub.getCosmeticManager().getGadgetManager(), true));
-                break;
-
-            case "jukebox":
-                this.hub.getGuiManager().openGui(player, new GuiCosmeticsCategory<>(this.hub, "Jukebox", this.hub.getCosmeticManager().getJukeboxManager(), false));
                 break;
 
             case "balloons":

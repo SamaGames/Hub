@@ -7,6 +7,7 @@ import net.samagames.hub.common.players.PlayerManager;
 import net.samagames.hub.cosmetics.common.AbstractCosmeticManager;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 
 import javax.lang.model.type.NullType;
 import java.util.HashMap;
@@ -28,7 +29,7 @@ public class ParticleManager extends AbstractCosmeticManager<ParticleCosmetic>
     }
 
     @Override
-    public void enableCosmetic(Player player, ParticleCosmetic cosmetic, NullType useless)
+    public void enableCosmetic(Player player, ParticleCosmetic cosmetic, ClickType clickType, NullType useless)
     {
         clearEffect(player.getUniqueId());
 

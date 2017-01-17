@@ -14,6 +14,7 @@ import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 import org.bukkit.craftbukkit.v1_10_R1.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -41,7 +42,7 @@ public class GadgetManager extends AbstractCosmeticManager<GadgetCosmetic>
     }
 
     @Override
-    public void enableCosmetic(Player player, GadgetCosmetic cosmetic, NullType useless)
+    public void enableCosmetic(Player player, GadgetCosmetic cosmetic, ClickType clickType, NullType useless)
     {
         player.getInventory().setItem(6, cosmetic.getIcon(player));
         player.sendMessage(PlayerManager.COSMETICS_TAG + ChatColor.GREEN + "Votre gadget a été équipé dans votre barre d'action.");

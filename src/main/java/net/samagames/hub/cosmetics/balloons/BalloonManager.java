@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.ItemSpawnEvent;
+import org.bukkit.event.inventory.ClickType;
 
 import javax.lang.model.type.NullType;
 
@@ -24,7 +25,7 @@ public class BalloonManager extends AbstractCosmeticManager<BalloonCosmetic> imp
     }
 
     @Override
-    public void enableCosmetic(Player player, BalloonCosmetic cosmetic, NullType useless)
+    public void enableCosmetic(Player player, BalloonCosmetic cosmetic, ClickType clickType, NullType useless)
     {
         BalloonCosmetic balloonCosmetic = this.getEquippedCosmetic(player);
         if (balloonCosmetic != null)
