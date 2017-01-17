@@ -1,11 +1,16 @@
 package net.samagames.hub.cosmetics.clothes;
 
 import net.minecraft.server.v1_10_R1.World;
+import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
+import net.samagames.tools.npc.NPCManager;
+import net.samagames.tools.npc.nms.CustomNPC;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_10_R1.CraftWorld;
 import org.bukkit.entity.Guardian;
+import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -19,20 +24,25 @@ import org.bukkit.scheduler.BukkitRunnable;
  */
 class ClothPreviewTask extends BukkitRunnable
 {
-    private static final double RADIUS = 5D;
+    private static final double RADIUS = 5.0D;
 
     private final Location center;
+    private final CustomNPC fakePlayer;
     private final EntityClothCamera camera;
     private double i;
 
-    public ClothPreviewTask(Hub hub, Location center)
+    public ClothPreviewTask(Hub hub, Player player, ItemStack[] armorContent)
     {
-        this.center = center;
+        this.center = player.getLocation();
+
+        this.fakePlayer = SamaGamesAPI.get().getNPCManager().createNPC(this.center, player.getUniqueId(), null, false);
+        this.fakePlayer.getBukkitEntity().getInventory().setArmorContents(armorContent);
+        SamaGamesAPI.get().getNPCManager().sendNPC(player, this.fakePlayer);
 
         World world = ((CraftWorld) hub.getWorld()).getHandle();
         this.camera = new EntityClothCamera(world);
 
-        this.camera.setPosition(center.getX(), center.getY(), center.getZ());
+        this.camera.setPosition(this.center.getX(), this.center.getY(), this.center.getZ());
         world.addEntity(this.camera, CreatureSpawnEvent.SpawnReason.CUSTOM);
         ((Guardian) this.camera.getBukkitEntity()).addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 1, false, false));
 
@@ -47,7 +57,7 @@ class ClothPreviewTask extends BukkitRunnable
 
         this.camera.getBukkitEntity().teleport(location);
 
-        this.i += 0.1D;
+        this.i += 0.025D;
 
         if (this.i > Math.PI * 2.0D)
             this.i = 0.0D;
@@ -55,6 +65,8 @@ class ClothPreviewTask extends BukkitRunnable
 
     public void stop()
     {
+        SamaGamesAPI.get().getNPCManager().removeNPC(this.fakePlayer);
+
         this.camera.die();
         this.cancel();
     }

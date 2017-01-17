@@ -9,6 +9,7 @@ import org.bukkit.GameMode;
 import org.bukkit.craftbukkit.v1_10_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
+import org.bukkit.inventory.ItemStack;
 
 import javax.lang.model.type.NullType;
 import java.util.HashMap;
@@ -63,7 +64,10 @@ public class ClothManager extends AbstractCosmeticManager<ClothCosmetic>
 
     public void startPreview(Player player, ClothCosmetic cosmetic)
     {
-        ClothPreviewTask clothPreviewTask = new ClothPreviewTask(this.hub, player.getLocation());
+        ItemStack[] armorContent = new ItemStack[4];
+        armorContent[3] = cosmetic.getPiece();
+
+        ClothPreviewTask clothPreviewTask = new ClothPreviewTask(this.hub, player, armorContent);
 
         this.hub.getGuiManager().closeGui(player);
 
