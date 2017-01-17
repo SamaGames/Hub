@@ -45,7 +45,7 @@ class ClothPreviewTask extends BukkitRunnable
     public void run()
     {
         Location location = new Location(this.center.getWorld(), this.center.getX() + Math.cos(this.i) * RADIUS, this.center.getY() + 0.15D, this.center.getZ() + Math.sin(this.i) * RADIUS);
-        location.setDirection(location.subtract(this.center).toVector());
+        location.setDirection(location.subtract(this.center).toVector().setY(location.getY()));
 
         this.camera.getBukkitEntity().teleport(location);
 
