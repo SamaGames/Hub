@@ -26,6 +26,7 @@ class ClothPreviewTask extends BukkitRunnable
         this.center = center;
 
         this.armorStand = hub.getWorld().spawn(this.center, ArmorStand.class);
+        this.armorStand.setGravity(false);
         this.armorStand.setVisible(false);
 
         this.runTaskTimer(hub, 1L, 1L);
@@ -37,7 +38,7 @@ class ClothPreviewTask extends BukkitRunnable
         Location location = new Location(this.center.getWorld(), this.center.getX() + Math.cos(this.i) * RADIUS, this.center.getY() + 0.15D, this.center.getZ() + Math.sin(this.i) * RADIUS);
         location.setDirection(location.subtract(this.center).toVector());
 
-        this.armorStand.setVelocity(location.toVector());
+        this.armorStand.teleport(location);
 
         this.i += 0.25D;
 
