@@ -4,9 +4,7 @@ import net.minecraft.server.v1_10_R1.World;
 import net.samagames.hub.Hub;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_10_R1.CraftWorld;
-import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Guardian;
-import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -21,7 +19,7 @@ import org.bukkit.scheduler.BukkitRunnable;
  */
 class ClothPreviewTask extends BukkitRunnable
 {
-    private static final double RADIUS = 4.5D;
+    private static final double RADIUS = 5D;
 
     private final Location center;
     private final EntityClothCamera camera;
@@ -38,18 +36,18 @@ class ClothPreviewTask extends BukkitRunnable
         world.addEntity(this.camera, CreatureSpawnEvent.SpawnReason.CUSTOM);
         ((Guardian) this.camera.getBukkitEntity()).addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 1, false, false));
 
-        this.runTaskTimer(hub, 2L, 2L);
+        this.runTaskTimer(hub, 1L, 1L);
     }
 
     @Override
     public void run()
     {
         Location location = new Location(this.center.getWorld(), this.center.getX() + Math.cos(this.i) * RADIUS, this.center.getY() + 0.15D, this.center.getZ() + Math.sin(this.i) * RADIUS);
-        location.setDirection(location.clone().subtract(this.center).toVector().setY(location.getY()));
+        location.setDirection(this.center.clone().subtract(location).toVector().setY(location.getY()));
 
         this.camera.getBukkitEntity().teleport(location);
 
-        this.i += 0.25D;
+        this.i += 0.1D;
 
         if (this.i > Math.PI * 2.0D)
             this.i = 0.0D;
