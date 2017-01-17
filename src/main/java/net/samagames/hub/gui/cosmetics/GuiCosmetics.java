@@ -21,7 +21,7 @@ public class GuiCosmetics extends AbstractGui
     {
         super(hub);
 
-        this.slots = Arrays.asList(1, 2, 2, 3, 4, 4, 5);
+        this.slots = Arrays.asList(2, 2, 3, 3, 4, 4);
         this.slot = 0;
 
         Collections.shuffle(this.slots);

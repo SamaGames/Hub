@@ -2,6 +2,8 @@ package net.samagames.hub.commands.moderating;
 
 import net.samagames.hub.Hub;
 import net.samagames.hub.commands.AbstractCommand;
+import net.samagames.hub.common.players.PlayerManager;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.entity.Player;
 
@@ -19,6 +21,8 @@ public class CommandPlaylistClear extends AbstractCommand
     public boolean doAction(Player player, Command command, String s, String[] args)
     {
         this.hub.getCosmeticManager().getJukeboxManager().clear();
+        this.hub.getServer().broadcastMessage(PlayerManager.MODERATING_TAG + ChatColor.RED + "La playlist du jukebox a été vidée par un modérateur.");
+
         return true;
     }
 }
