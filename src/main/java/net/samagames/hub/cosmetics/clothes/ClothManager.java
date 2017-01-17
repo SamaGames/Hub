@@ -4,6 +4,7 @@ import net.samagames.hub.Hub;
 import net.samagames.hub.common.players.PlayerManager;
 import net.samagames.hub.cosmetics.common.AbstractCosmeticManager;
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 
@@ -58,8 +59,13 @@ public class ClothManager extends AbstractCosmeticManager<ClothCosmetic>
 
     public void startPreview(Player player, ClothCosmetic cosmetic)
     {
+        ClothPreviewTask clothPreviewTask = new ClothPreviewTask(this.hub, player.getLocation());
+
+        player.setGameMode(GameMode.SPECTATOR);
+        player.setSpectatorTarget(clothPreviewTask.getArmorStand());
+
         this.hub.getPlayerManager().addHider(player);
-        this.previewers.put(player.getUniqueId(), new ClothPreviewTask(this.hub, player));
+        this.previewers.put(player.getUniqueId(), clothPreviewTask);
     }
 
     public void stopPreview(Player player)
@@ -67,6 +73,7 @@ public class ClothManager extends AbstractCosmeticManager<ClothCosmetic>
         if (this.previewers.containsKey(player.getUniqueId()))
         {
             player.setSpectatorTarget(null);
+            player.setGameMode(GameMode.ADVENTURE);
 
             this.previewers.get(player.getUniqueId()).stop();
             this.previewers.remove(player.getUniqueId());

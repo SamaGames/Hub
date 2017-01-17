@@ -21,14 +21,12 @@ class ClothPreviewTask extends BukkitRunnable
     private final ArmorStand armorStand;
     private double i;
 
-    public ClothPreviewTask(Hub hub, Player viewer)
+    public ClothPreviewTask(Hub hub, Location center)
     {
-        this.center = viewer.getLocation();
+        this.center = center;
 
         this.armorStand = hub.getWorld().spawn(this.center, ArmorStand.class);
         this.armorStand.setVisible(false);
-
-        viewer.setSpectatorTarget(this.armorStand);
 
         this.runTaskTimer(hub, 1L, 1L);
     }
@@ -51,5 +49,10 @@ class ClothPreviewTask extends BukkitRunnable
     {
         this.armorStand.remove();
         this.cancel();
+    }
+
+    public ArmorStand getArmorStand()
+    {
+        return this.armorStand;
     }
 }
