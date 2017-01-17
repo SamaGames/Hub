@@ -33,7 +33,7 @@ class ClothPreviewTask extends BukkitRunnable
 
     ClothPreviewTask(Hub hub, Player player, ItemStack[] armorContent)
     {
-        this.center = player.getLocation();
+        this.center = player.getLocation().clone();
 
         this.fakePlayer = SamaGamesAPI.get().getNPCManager().createNPC(this.center, player.getUniqueId(), null, false);
 
@@ -79,5 +79,10 @@ class ClothPreviewTask extends BukkitRunnable
     public EntityClothCamera getCamera()
     {
         return this.camera;
+    }
+
+    public Location getCenter()
+    {
+        return this.center;
     }
 }

@@ -1,12 +1,12 @@
 package net.samagames.hub.cosmetics.clothes;
 
 import net.minecraft.server.v1_10_R1.EntityGuardian;
+import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import net.samagames.hub.common.players.PlayerManager;
 import net.samagames.hub.cosmetics.common.AbstractCosmeticManager;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
-import org.bukkit.craftbukkit.v1_10_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
@@ -74,6 +74,7 @@ public class ClothManager extends AbstractCosmeticManager<ClothCosmetic>
 
         player.setGameMode(GameMode.SPECTATOR);
         player.setSpectatorTarget(clothPreviewTask.getCamera().getBukkitEntity());
+        player.sendMessage(PlayerManager.COSMETICS_TAG + ChatColor.YELLOW + "Appuyez sur votre touche " + ChatColor.ITALIC + "sneak" + ChatColor.YELLOW + " pour quitter la prévisualisation.");
 
         this.hub.getPlayerManager().addHider(player);
         this.previewers.put(player.getUniqueId(), clothPreviewTask);
@@ -86,7 +87,10 @@ public class ClothManager extends AbstractCosmeticManager<ClothCosmetic>
             player.setSpectatorTarget(null);
             player.setGameMode(GameMode.ADVENTURE);
 
-            this.previewers.get(player.getUniqueId()).stop();
+            ClothPreviewTask clothPreviewTask = this.previewers.get(player.getUniqueId());
+            player.teleport(clothPreviewTask.getCenter());
+            clothPreviewTask.stop();
+
             this.previewers.remove(player.getUniqueId());
 
             this.hub.getPlayerManager().removeHider(player);
