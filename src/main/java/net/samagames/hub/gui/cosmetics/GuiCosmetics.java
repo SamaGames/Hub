@@ -10,20 +10,21 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class GuiCosmetics extends AbstractGui
 {
     private final List<Integer> slots;
+    private int slot;
 
     public GuiCosmetics(Hub hub)
     {
         super(hub);
 
         this.slots = Arrays.asList(1, 2, 3, 3, 4, 5);
+        this.slot = 0;
+
+        Collections.shuffle(this.slots);
     }
 
     @Override
@@ -112,14 +113,12 @@ public class GuiCosmetics extends AbstractGui
 
     private void randomIcon(int base, String displayName, Material material, String[] description, DyeColor color, String action)
     {
-        Random random = new Random();
-        int randomized = random.nextInt(this.slots.size());
-        int slot = base + (this.slots.get(randomized) * 9);
+        int selected = base + this.slots.get(this.slot) * 9;
 
-        this.slots.remove(randomized);
+        this.setSlotData(displayName, material, selected, description, action);
+        this.drawLineOfGlass(selected, color, action);
 
-        this.setSlotData(displayName, material, slot, description, action);
-        this.drawLineOfGlass(slot, color, action);
+        this.slot++;
     }
 
     private void drawLineOfGlass(int baseSlot, DyeColor color, String action)
