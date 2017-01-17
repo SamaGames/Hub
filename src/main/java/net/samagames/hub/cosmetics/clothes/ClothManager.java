@@ -1,10 +1,12 @@
 package net.samagames.hub.cosmetics.clothes;
 
+import net.minecraft.server.v1_10_R1.EntityGuardian;
 import net.samagames.hub.Hub;
 import net.samagames.hub.common.players.PlayerManager;
 import net.samagames.hub.cosmetics.common.AbstractCosmeticManager;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
+import org.bukkit.craftbukkit.v1_10_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 
@@ -29,6 +31,8 @@ public class ClothManager extends AbstractCosmeticManager<ClothCosmetic>
         super(hub, new ClothRegistry(hub));
 
         this.previewers = new HashMap<>();
+
+        this.hub.getEntityManager().registerEntity("ClothCamera", 68, EntityGuardian.class, EntityClothCamera.class);
     }
 
     @Override
@@ -64,7 +68,7 @@ public class ClothManager extends AbstractCosmeticManager<ClothCosmetic>
         this.hub.getGuiManager().closeGui(player);
 
         player.setGameMode(GameMode.SPECTATOR);
-        player.setSpectatorTarget(clothPreviewTask.getArmorStand());
+        player.setSpectatorTarget(clothPreviewTask.getCamera().getBukkitEntity());
 
         this.hub.getPlayerManager().addHider(player);
         this.previewers.put(player.getUniqueId(), clothPreviewTask);

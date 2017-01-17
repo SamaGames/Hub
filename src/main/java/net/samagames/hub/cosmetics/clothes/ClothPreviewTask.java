@@ -1,9 +1,15 @@
 package net.samagames.hub.cosmetics.clothes;
 
+import net.minecraft.server.v1_10_R1.World;
 import net.samagames.hub.Hub;
 import org.bukkit.Location;
+import org.bukkit.craftbukkit.v1_10_R1.CraftWorld;
 import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.Guardian;
 import org.bukkit.entity.Player;
+import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 /**
@@ -15,21 +21,24 @@ import org.bukkit.scheduler.BukkitRunnable;
  */
 class ClothPreviewTask extends BukkitRunnable
 {
-    private static final double RADIUS = 3.0D;
+    private static final double RADIUS = 4.5D;
 
     private final Location center;
-    private final ArmorStand armorStand;
+    private final EntityClothCamera camera;
     private double i;
 
     public ClothPreviewTask(Hub hub, Location center)
     {
         this.center = center;
 
-        this.armorStand = hub.getWorld().spawn(this.center, ArmorStand.class);
-        this.armorStand.setGravity(false);
-        this.armorStand.setVisible(false);
+        World world = ((CraftWorld) hub.getWorld()).getHandle();
+        this.camera = new EntityClothCamera(world);
 
-        this.runTaskTimer(hub, 1L, 1L);
+        this.camera.setPosition(center.getX(), center.getY(), center.getZ());
+        world.addEntity(this.camera, CreatureSpawnEvent.SpawnReason.CUSTOM);
+        ((Guardian) this.camera.getBukkitEntity()).addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 1, false, false));
+
+        this.runTaskTimer(hub, 2L, 2L);
     }
 
     @Override
@@ -38,7 +47,7 @@ class ClothPreviewTask extends BukkitRunnable
         Location location = new Location(this.center.getWorld(), this.center.getX() + Math.cos(this.i) * RADIUS, this.center.getY() + 0.15D, this.center.getZ() + Math.sin(this.i) * RADIUS);
         location.setDirection(location.subtract(this.center).toVector());
 
-        this.armorStand.teleport(location);
+        this.camera.getBukkitEntity().teleport(location);
 
         this.i += 0.25D;
 
@@ -48,12 +57,12 @@ class ClothPreviewTask extends BukkitRunnable
 
     public void stop()
     {
-        this.armorStand.remove();
+        this.camera.die();
         this.cancel();
     }
 
-    public ArmorStand getArmorStand()
+    public EntityClothCamera getCamera()
     {
-        return this.armorStand;
+        return this.camera;
     }
 }

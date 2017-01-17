@@ -46,6 +46,13 @@ public class PlayerProtectionListener implements Listener
     }
 
     @EventHandler
+    public void onPlayerToggleSneak(PlayerToggleSneakEvent event)
+    {
+        if (this.hub.getCosmeticManager().getClothManager().isPreviewing(event.getPlayer()))
+            this.hub.getCosmeticManager().getClothManager().stopPreview(event.getPlayer());
+    }
+
+    @EventHandler
     public void onPlayerInteractEntity(PlayerInteractEntityEvent event)
     {
         if (!this.canDoAction(event.getPlayer()))
