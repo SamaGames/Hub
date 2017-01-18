@@ -48,6 +48,7 @@ class BalloonCosmetic extends AbstractCosmetic
     public void spawn(Player player)
     {
         LivingEntity[] livingEntities = new LivingEntity[this.count];
+
         for (int i = 0; i < this.count; i++)
         {
             livingEntities[i] = (LivingEntity)player.getWorld().spawnEntity(player.getLocation().add(random.nextDouble() % 2 - 1, 2.5D, random.nextDouble() % 2 - 1), this.entityType);
@@ -55,9 +56,11 @@ class BalloonCosmetic extends AbstractCosmetic
             ((CraftLivingEntity)livingEntities[i]).getHandle().setInvisible(true);
             EntityUtils.freezeEntity(livingEntities[i]);
             livingEntities[i].setLeashHolder(player);
+
             if (this.name != null)
                 livingEntities[i].setCustomName(this.name);
         }
+
         this.destroyTasks.put(player.getUniqueId(), this.hub.getServer().getScheduler().runTaskTimer(this.hub, () -> this.autoCheck(player), 2L, 2L));
         this.balloons.put(player.getUniqueId(), livingEntities);
     }
@@ -65,13 +68,17 @@ class BalloonCosmetic extends AbstractCosmetic
     public void remove(Player player)
     {
         BukkitTask bukkitTask = this.destroyTasks.get(player.getUniqueId());
+
         if (bukkitTask != null)
             bukkitTask.cancel();
 
         LivingEntity[] livingEntities = this.balloons.get(player.getUniqueId());
+
         if (livingEntities == null)
-            return ;
+            return;
+
         this.balloons.remove(player.getUniqueId());
+
         for (LivingEntity livingEntity : livingEntities)
             livingEntity.remove();
     }
@@ -79,13 +86,17 @@ class BalloonCosmetic extends AbstractCosmetic
     private void autoCheck(Player player)
     {
         LivingEntity[] livingEntities = this.balloons.get(player.getUniqueId());
+
         if (livingEntities == null)
-            return ;
+            return;
+
         for (LivingEntity livingEntity : livingEntities)
+        {
             if (livingEntity.isDead() || !livingEntity.isLeashed())
             {
-                this.hub.getCosmeticManager().getBalloonManager().disableCosmetic(player, false);
+                this.hub.getCosmeticManager().getBalloonManager().disableCosmetic(player, this, false);
                 break ;
             }
+        }
     }
 }

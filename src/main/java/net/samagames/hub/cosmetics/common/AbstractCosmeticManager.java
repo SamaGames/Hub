@@ -160,9 +160,16 @@ public abstract class AbstractCosmeticManager<COSMETIC extends AbstractCosmetic>
     public List<COSMETIC> getEquippedCosmetics(Player player)
     {
         if (this.equipped.containsKey(player.getUniqueId()))
-            return this.equipped.get(player.getUniqueId());
+        {
+            if (!this.equipped.get(player.getUniqueId()).isEmpty())
+                return this.equipped.get(player.getUniqueId());
+            else
+                return null;
+        }
         else
+        {
             return null;
+        }
     }
 
     public AbstractCosmeticRegistry<COSMETIC> getRegistry()

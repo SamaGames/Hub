@@ -173,8 +173,8 @@ public class Parkour
                 player.hidePlayer(this.hub.getServer().getPlayer(playerIn));
         });
 
-        if (this.hub.getCosmeticManager().getPetManager().getEquippedCosmetic(player) != null)
-            this.hub.getCosmeticManager().getPetManager().disableCosmetic(player, false);
+        if (this.hub.getCosmeticManager().getPetManager().getEquippedCosmetics(player) != null)
+            this.hub.getCosmeticManager().getPetManager().disableCosmetics(player, false);
     }
 
     public void winPlayer(Player player)
