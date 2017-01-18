@@ -5,6 +5,7 @@ import de.slikey.effectlib.EffectManager;
 import net.samagames.hub.Hub;
 import net.samagames.hub.common.players.PlayerManager;
 import net.samagames.hub.cosmetics.common.AbstractCosmeticManager;
+import net.samagames.hub.cosmetics.common.ISimpleCosmeticCategory;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
@@ -15,7 +16,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.logging.Level;
 
-public class ParticleManager extends AbstractCosmeticManager<ParticleCosmetic>
+public class ParticleManager extends AbstractCosmeticManager<ParticleCosmetic> implements ISimpleCosmeticCategory
 {
     private final Map<UUID, Effect> playersParticleEffect;
     private final EffectManager effectManager;
@@ -29,10 +30,8 @@ public class ParticleManager extends AbstractCosmeticManager<ParticleCosmetic>
     }
 
     @Override
-    public void enableCosmetic(Player player, ParticleCosmetic cosmetic, ClickType clickType, NullType useless)
+    public boolean enableCosmetic(Player player, ParticleCosmetic cosmetic, ClickType clickType, NullType useless)
     {
-        clearEffect(player.getUniqueId());
-
         try
         {
             Effect particleEffectObject = cosmetic.getParticleEffect().getConstructor(EffectManager.class).newInstance(this.effectManager);
@@ -47,12 +46,18 @@ public class ParticleManager extends AbstractCosmeticManager<ParticleCosmetic>
         {
             this.hub.getCosmeticManager().log(Level.SEVERE, "Can't create EntityEffect object to " + player.getName() + "'s particle effect!");
         }
+
+        return true;
     }
 
     @Override
-    public void disableCosmetic(Player player, boolean logout, NullType useless)
+    public void disableCosmetic(Player player, ParticleCosmetic cosmetic, boolean logout, NullType useless)
     {
-        this.clearEffect(player.getUniqueId());
+        if (this.playersParticleEffect.containsKey(player))
+        {
+            this.playersParticleEffect.get(player).cancel();
+            this.playersParticleEffect.remove(player);
+        }
 
         if (!logout)
             player.sendMessage(PlayerManager.COSMETICS_TAG + ChatColor.GREEN + "Votre effet disparait dans l'ombre...");
@@ -60,15 +65,6 @@ public class ParticleManager extends AbstractCosmeticManager<ParticleCosmetic>
 
     @Override
     public void update() {}
-
-    private void clearEffect(UUID player)
-    {
-        if (this.playersParticleEffect.containsKey(player))
-        {
-            this.playersParticleEffect.get(player).cancel();
-            this.playersParticleEffect.remove(player);
-        }
-    }
 
     public EffectManager getEffectManager()
     {

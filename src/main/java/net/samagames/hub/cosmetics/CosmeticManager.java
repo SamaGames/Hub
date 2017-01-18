@@ -51,13 +51,13 @@ public class CosmeticManager extends AbstractManager
     {
         this.jukeboxManager.onLogout(player);
 
-        this.disguiseManager.disableCosmetic(player, true);
-        this.jukeboxManager.disableCosmetic(player, true);
-        this.petManager.disableCosmetic(player, true);
-        this.gadgetManager.disableCosmetic(player, true);
-        this.particleManager.disableCosmetic(player, true);
-        this.balloonManager.disableCosmetic(player, true);
-        this.clothManager.disableCosmetic(player, true);
+        this.disguiseManager.disableCosmetics(player, true);
+        this.jukeboxManager.disableCosmetics(player, true);
+        this.petManager.disableCosmetics(player, true);
+        this.gadgetManager.disableCosmetics(player, true);
+        this.particleManager.disableCosmetics(player, true);
+        this.balloonManager.disableCosmetics(player, true);
+        this.clothManager.disableCosmetics(player, true);
     }
 
     public DisguiseManager getDisguiseManager()
@@ -97,17 +97,17 @@ public class CosmeticManager extends AbstractManager
 
     public boolean isEquipped(Player player, AbstractCosmetic cosmetic)
     {
-        if (this.disguiseManager.getEquippedCosmetic(player) != null && cosmetic.compareTo(this.disguiseManager.getEquippedCosmetic(player)) > 0)
+        if (this.disguiseManager.getEquippedCosmetics(player) != null && this.disguiseManager.isCosmeticEquipped(player, cosmetic))
             return true;
-        else if (this.petManager.getEquippedCosmetic(player) != null && cosmetic.compareTo(this.petManager.getEquippedCosmetic(player)) > 0)
+        else if (this.petManager.getEquippedCosmetics(player) != null && this.petManager.isCosmeticEquipped(player, cosmetic))
             return true;
-        else if (this.gadgetManager.getEquippedCosmetic(player) != null && cosmetic.compareTo(this.gadgetManager.getEquippedCosmetic(player)) > 0)
+        else if (this.gadgetManager.getEquippedCosmetics(player) != null && this.gadgetManager.isCosmeticEquipped(player, cosmetic))
             return true;
-        else if (this.particleManager.getEquippedCosmetic(player) != null && cosmetic.compareTo(this.particleManager.getEquippedCosmetic(player)) > 0)
+        else if (this.particleManager.getEquippedCosmetics(player) != null && this.particleManager.isCosmeticEquipped(player, cosmetic))
             return true;
-        else if (this.balloonManager.getEquippedCosmetic(player) != null && cosmetic.compareTo(this.balloonManager.getEquippedCosmetic(player)) > 0)
+        else if (this.balloonManager.getEquippedCosmetics(player) != null && this.balloonManager.isCosmeticEquipped(player, cosmetic))
             return true;
-        else if (this.clothManager.getEquippedCosmetic(player) != null && cosmetic.compareTo(this.clothManager.getEquippedCosmetic(player)) > 0)
+        else if (this.clothManager.getEquippedCosmetics(player) != null && this.clothManager.isCosmeticEquipped(player, cosmetic))
             return true;
 
         return false;

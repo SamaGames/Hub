@@ -3,6 +3,7 @@ package net.samagames.hub.cosmetics.balloons;
 import net.samagames.hub.Hub;
 import net.samagames.hub.common.players.PlayerManager;
 import net.samagames.hub.cosmetics.common.AbstractCosmeticManager;
+import net.samagames.hub.cosmetics.common.ISimpleCosmeticCategory;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -16,7 +17,7 @@ import javax.lang.model.type.NullType;
 /**
  * Created by Rigner for project Hub.
  */
-public class BalloonManager extends AbstractCosmeticManager<BalloonCosmetic> implements Listener
+public class BalloonManager extends AbstractCosmeticManager<BalloonCosmetic> implements ISimpleCosmeticCategory, Listener
 {
     public BalloonManager(Hub hub)
     {
@@ -25,24 +26,18 @@ public class BalloonManager extends AbstractCosmeticManager<BalloonCosmetic> imp
     }
 
     @Override
-    public void enableCosmetic(Player player, BalloonCosmetic cosmetic, ClickType clickType, NullType useless)
+    public boolean enableCosmetic(Player player, BalloonCosmetic cosmetic, ClickType clickType, NullType useless)
     {
-        BalloonCosmetic balloonCosmetic = this.getEquippedCosmetic(player);
-        if (balloonCosmetic != null)
-            balloonCosmetic.remove(player);
-
         cosmetic.spawn(player);
-
         player.sendMessage(PlayerManager.COSMETICS_TAG + ChatColor.GREEN + "Des ballons flottent autour de vous !");
+
+        return true;
     }
 
     @Override
-    public void disableCosmetic(Player player, boolean logout, NullType useless)
+    public void disableCosmetic(Player player, BalloonCosmetic cosmetic, boolean logout, NullType useless)
     {
-        BalloonCosmetic balloonCosmetic = this.getEquippedCosmetic(player);
-        if (balloonCosmetic != null)
-            balloonCosmetic.remove(player);
-
+        cosmetic.remove(player);
         player.sendMessage(PlayerManager.COSMETICS_TAG + ChatColor.GREEN + "Vos ballons ont éclaté.");
     }
 

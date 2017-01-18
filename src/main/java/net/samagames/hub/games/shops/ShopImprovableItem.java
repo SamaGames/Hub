@@ -151,7 +151,9 @@ public class ShopImprovableItem extends ShopIcon
 
         ItemStack icon = this.getIcon().clone();
         ItemMeta meta = icon.getItemMeta();
+
         List<String> lore = meta.getLore() != null ? meta.getLore() : new ArrayList<>();
+        lore.add("");
 
         if (this.defaultDescription != null)
         {

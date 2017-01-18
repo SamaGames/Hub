@@ -3,6 +3,7 @@ package net.samagames.hub.gui.cosmetics;
 import net.samagames.hub.Hub;
 import net.samagames.hub.cosmetics.common.AbstractCosmetic;
 import net.samagames.hub.cosmetics.common.AbstractCosmeticManager;
+import net.samagames.hub.cosmetics.common.ISimpleCosmeticCategory;
 import net.samagames.hub.gui.AbstractGui;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -78,7 +79,10 @@ public class GuiCosmeticsCategory<COSMETIC extends AbstractCosmetic> extends Abs
         if (this.canBeRemoved)
         {
             this.setSlotData(getBackIcon(), this.inventory.getSize() - 4, "back");
-            this.setSlotData(ChatColor.RED + "Désactiver votre cosmétique actuel", Material.FLINT_AND_STEEL, this.inventory.getSize() - 6, null, "delete");
+
+            boolean plural = !(this.manager instanceof ISimpleCosmeticCategory);
+
+            this.setSlotData(ChatColor.RED + "Désactiver " + (plural ? "vos" : "votre") + " cosmétique" + (plural ? "s" : "") + " actuel" + (plural ? "s" : ""), Material.FLINT_AND_STEEL, this.inventory.getSize() - 6, null, "delete");
         }
         else
         {
@@ -96,7 +100,7 @@ public class GuiCosmeticsCategory<COSMETIC extends AbstractCosmetic> extends Abs
         }
         else if (action.equals("delete"))
         {
-            this.manager.disableCosmetic(player, false);
+            this.manager.disableCosmetics(player, false);
         }
         else if (action.equals("back"))
         {

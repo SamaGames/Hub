@@ -9,16 +9,14 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 
 import javax.lang.model.type.NullType;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.logging.Level;
 
 public abstract class AbstractCosmeticManager<COSMETIC extends AbstractCosmetic>
 {
     protected final Hub hub;
+    protected Map<UUID, List<COSMETIC>> equipped;
     private AbstractCosmeticRegistry<COSMETIC> registry;
-    private Map<UUID, COSMETIC> equipped;
 
     public AbstractCosmeticManager(Hub hub, AbstractCosmeticRegistry<COSMETIC> registry)
     {
@@ -39,8 +37,8 @@ public abstract class AbstractCosmeticManager<COSMETIC extends AbstractCosmetic>
         this.equipped = new HashMap<>();
     }
 
-    public abstract void enableCosmetic(Player player, COSMETIC cosmetic, ClickType clickType, NullType useless);
-    public abstract void disableCosmetic(Player player, boolean logout, NullType useless);
+    public abstract boolean enableCosmetic(Player player, COSMETIC cosmetic, ClickType clickType, NullType useless);
+    public abstract void disableCosmetic(Player player, COSMETIC cosmetic, boolean logout, NullType useless);
 
     public abstract void update();
 
@@ -50,16 +48,25 @@ public abstract class AbstractCosmeticManager<COSMETIC extends AbstractCosmetic>
         {
             if (cosmetic.getAccessibility().canAccess(player))
             {
-                if (this.equipped.containsKey(player.getUniqueId()) && this.equipped.get(player.getUniqueId()).compareTo(cosmetic) > 0)
+                if (this.equipped.containsKey(player.getUniqueId()) && this.equipped.get(player.getUniqueId()).stream().filter(c -> c.compareTo(cosmetic) > 0).findAny().isPresent())
                 {
                     player.sendMessage(PlayerManager.COSMETICS_TAG + ChatColor.RED + "Vous utilisez déjà ce cosmétique.");
                 }
                 else
                 {
-                    this.enableCosmetic(player, cosmetic, clickType, null);
-                    this.equipped.put(player.getUniqueId(), cosmetic);
+                    if (this instanceof ISimpleCosmeticCategory)
+                        this.disableCosmetics(player, false);
 
-                    this.resetCurrents(player);
+                    if (!this.enableCosmetic(player, cosmetic, clickType, null))
+                        return;
+
+                    if (!this.equipped.containsKey(player.getUniqueId()))
+                        this.equipped.put(player.getUniqueId(), new ArrayList<>());
+
+                    this.equipped.get(player.getUniqueId()).add(cosmetic);
+
+                    if (this instanceof ISimpleCosmeticCategory)
+                        this.resetCurrents(player);
 
                     try
                     {
@@ -87,14 +94,12 @@ public abstract class AbstractCosmeticManager<COSMETIC extends AbstractCosmetic>
         }
     }
 
-    public void disableCosmetic(Player player, boolean logout)
+    public void disableCosmetic(Player player, COSMETIC cosmetic, boolean logout)
     {
-        if (this.equipped.containsKey(player.getUniqueId()))
+        if (this.equipped.containsKey(player.getUniqueId()) && this.equipped.get(player.getUniqueId()).contains(cosmetic))
         {
-            AbstractCosmetic cosmetic = this.getEquippedCosmetic(player);
-
-            this.disableCosmetic(player, logout, null);
-            this.equipped.remove(player.getUniqueId());
+            this.disableCosmetic(player, cosmetic, logout, null);
+            this.equipped.get(player.getUniqueId()).remove(cosmetic);
 
             if (!logout)
             {
@@ -115,26 +120,26 @@ public abstract class AbstractCosmeticManager<COSMETIC extends AbstractCosmetic>
         }
     }
 
+    public void disableCosmetics(Player player, boolean logout)
+    {
+        for (COSMETIC cosmetic : this.getEquippedCosmetics(player))
+            this.disableCosmetic(player, cosmetic, logout);
+    }
+
     public void restoreCosmetic(Player player)
     {
-        for (int storageId : this.registry.getElements().keySet())
+        this.registry.getElements().keySet().stream().filter(storageId -> SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).getTransactionsByID(storageId) != null).forEach(storageId ->
         {
-            if (SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).getTransactionsByID(storageId) != null)
+            try
             {
-                try
-                {
-                    if (SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).isSelectedItem(storageId))
-                    {
-                        this.enableCosmetic(player, this.getRegistry().getElementByStorageId(storageId), ClickType.LEFT);
-                        break;
-                    }
-                }
-                catch (Exception e)
-                {
-                    e.printStackTrace();
-                }
+                if (SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).isSelectedItem(storageId))
+                    this.enableCosmetic(player, this.getRegistry().getElementByStorageId(storageId), ClickType.LEFT);
             }
-        }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        });
     }
 
     public void resetCurrents(Player player)
@@ -152,7 +157,7 @@ public abstract class AbstractCosmeticManager<COSMETIC extends AbstractCosmetic>
         });
     }
 
-    public COSMETIC getEquippedCosmetic(Player player)
+    public List<COSMETIC> getEquippedCosmetics(Player player)
     {
         if (this.equipped.containsKey(player.getUniqueId()))
             return this.equipped.get(player.getUniqueId());
@@ -163,5 +168,10 @@ public abstract class AbstractCosmeticManager<COSMETIC extends AbstractCosmetic>
     public AbstractCosmeticRegistry<COSMETIC> getRegistry()
     {
         return this.registry;
+    }
+
+    public boolean isCosmeticEquipped(Player player, AbstractCosmetic cosmetic)
+    {
+        return this.equipped.get(player.getUniqueId()).stream().filter(c -> c.compareTo(cosmetic) > 0).findAny().isPresent();
     }
 }

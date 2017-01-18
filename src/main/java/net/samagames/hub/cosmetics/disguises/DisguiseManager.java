@@ -5,13 +5,14 @@ import me.libraryaddict.disguise.disguisetypes.MobDisguise;
 import net.samagames.hub.Hub;
 import net.samagames.hub.common.players.PlayerManager;
 import net.samagames.hub.cosmetics.common.AbstractCosmeticManager;
+import net.samagames.hub.cosmetics.common.ISimpleCosmeticCategory;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 
 import javax.lang.model.type.NullType;
 
-public class DisguiseManager extends AbstractCosmeticManager<DisguiseCosmetic>
+public class DisguiseManager extends AbstractCosmeticManager<DisguiseCosmetic> implements ISimpleCosmeticCategory
 {
     public DisguiseManager(Hub hub)
     {
@@ -19,7 +20,7 @@ public class DisguiseManager extends AbstractCosmeticManager<DisguiseCosmetic>
     }
 
     @Override
-    public void enableCosmetic(Player player, DisguiseCosmetic cosmetic, ClickType clickType, NullType useless)
+    public boolean enableCosmetic(Player player, DisguiseCosmetic cosmetic, ClickType clickType, NullType useless)
     {
         MobDisguise disguise = new MobDisguise(cosmetic.getDisguiseType());
         disguise.setShowName(true);
@@ -28,10 +29,11 @@ public class DisguiseManager extends AbstractCosmeticManager<DisguiseCosmetic>
         DisguiseAPI.disguiseToAll(player, disguise);
 
         player.sendMessage(PlayerManager.COSMETICS_TAG + ChatColor.GREEN + "Vous êtes maintenant déguisé !");
+        return true;
     }
 
     @Override
-    public void disableCosmetic(Player player, boolean logout, NullType useless)
+    public void disableCosmetic(Player player, DisguiseCosmetic cosmetic, boolean logout, NullType useless)
     {
         if (DisguiseAPI.isDisguised(player))
             DisguiseAPI.undisguiseToAll(player);

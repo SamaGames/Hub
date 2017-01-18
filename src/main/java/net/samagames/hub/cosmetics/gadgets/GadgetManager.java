@@ -7,6 +7,7 @@ import net.samagames.api.permissions.IPermissionsEntity;
 import net.samagames.hub.Hub;
 import net.samagames.hub.common.players.PlayerManager;
 import net.samagames.hub.cosmetics.common.AbstractCosmeticManager;
+import net.samagames.hub.cosmetics.common.ISimpleCosmeticCategory;
 import net.samagames.hub.cosmetics.gadgets.displayers.AbstractDisplayer;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -23,7 +24,7 @@ import java.lang.reflect.Field;
 import java.util.*;
 import java.util.logging.Level;
 
-public class GadgetManager extends AbstractCosmeticManager<GadgetCosmetic>
+public class GadgetManager extends AbstractCosmeticManager<GadgetCosmetic> implements ISimpleCosmeticCategory
 {
     public static final Random RANDOM = new Random();
     public static final Field AGE_FIELD;
@@ -42,14 +43,16 @@ public class GadgetManager extends AbstractCosmeticManager<GadgetCosmetic>
     }
 
     @Override
-    public void enableCosmetic(Player player, GadgetCosmetic cosmetic, ClickType clickType, NullType useless)
+    public boolean enableCosmetic(Player player, GadgetCosmetic cosmetic, ClickType clickType, NullType useless)
     {
         player.getInventory().setItem(6, cosmetic.getIcon(player));
         player.sendMessage(PlayerManager.COSMETICS_TAG + ChatColor.GREEN + "Votre gadget a été équipé dans votre barre d'action.");
+
+        return true;
     }
 
     @Override
-    public void disableCosmetic(Player player, boolean logout, NullType useless)
+    public void disableCosmetic(Player player, GadgetCosmetic cosmetic, boolean logout, NullType useless)
     {
         if (!logout)
         {

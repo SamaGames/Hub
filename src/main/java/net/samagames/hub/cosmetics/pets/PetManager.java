@@ -5,13 +5,14 @@ import com.dsh105.echopet.compat.api.entity.IPet;
 import net.samagames.hub.Hub;
 import net.samagames.hub.common.players.PlayerManager;
 import net.samagames.hub.cosmetics.common.AbstractCosmeticManager;
+import net.samagames.hub.cosmetics.common.ISimpleCosmeticCategory;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 
 import javax.lang.model.type.NullType;
 
-public class PetManager extends AbstractCosmeticManager<PetCosmetic>
+public class PetManager extends AbstractCosmeticManager<PetCosmetic> implements ISimpleCosmeticCategory
 {
     public PetManager(Hub hub)
     {
@@ -19,7 +20,7 @@ public class PetManager extends AbstractCosmeticManager<PetCosmetic>
     }
 
     @Override
-    public void enableCosmetic(Player player, PetCosmetic cosmetic, ClickType clickType, NullType useless)
+    public boolean enableCosmetic(Player player, PetCosmetic cosmetic, ClickType clickType, NullType useless)
     {
         IPet pet = EchoPetAPI.getAPI().givePet(player, cosmetic.getPetType(), false);
         pet.setPetName(player.getName(), false);
@@ -27,10 +28,12 @@ public class PetManager extends AbstractCosmeticManager<PetCosmetic>
         cosmetic.applyCustomization(pet);
 
         player.sendMessage(PlayerManager.COSMETICS_TAG + ChatColor.GREEN + "Votre animal vient de sortir de l'écurie !");
+
+        return true;
     }
 
     @Override
-    public void disableCosmetic(Player player, boolean logout, NullType useless)
+    public void disableCosmetic(Player player, PetCosmetic cosmetic, boolean logout, NullType useless)
     {
         if (EchoPetAPI.getAPI().hasPet(player))
         {

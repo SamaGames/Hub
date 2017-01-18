@@ -7,6 +7,7 @@ import net.samagames.api.settings.IPlayerSettings;
 import net.samagames.hub.Hub;
 import net.samagames.hub.common.players.PlayerManager;
 import net.samagames.hub.cosmetics.common.AbstractCosmeticManager;
+import net.samagames.hub.cosmetics.common.ISimpleCosmeticCategory;
 import net.samagames.hub.gui.AbstractGui;
 import net.samagames.tools.Misc;
 import net.samagames.tools.ParticleEffect;
@@ -24,7 +25,7 @@ import javax.lang.model.type.NullType;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
-public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
+public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic> implements ISimpleCosmeticCategory
 {
     public static final String JUKEBOX_TAG = ChatColor.DARK_AQUA + "[" + ChatColor.AQUA + "Jukebox" + ChatColor.DARK_AQUA + "] " + ChatColor.RESET;
     private static final ParticleEffect WOOT_EFFECT = ParticleEffect.NOTE;
@@ -114,10 +115,13 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
     }
 
     @Override
-    public void enableCosmetic(Player player, JukeboxDiskCosmetic cosmetic, ClickType clickType, NullType useless) {}
+    public boolean enableCosmetic(Player player, JukeboxDiskCosmetic cosmetic, ClickType clickType, NullType useless)
+    {
+        return true;
+    }
 
     @Override
-    public void disableCosmetic(Player player, boolean logout, NullType useless) { /** Not needed **/ }
+    public void disableCosmetic(Player player, JukeboxDiskCosmetic cosmetic, boolean logout, NullType useless) { /** Not needed **/ }
 
     @Override
     public void restoreCosmetic(Player player) { /** Not needed **/ }
@@ -278,7 +282,7 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
                 }
 
                 if (this.hub.getServer().getPlayer(playerUUID) != null)
-                    this.hub.getCosmeticManager().getJukeboxManager().disableCosmetic(this.hub.getServer().getPlayer(playerUUID), false);
+                    this.hub.getCosmeticManager().getJukeboxManager().disableCosmetics(this.hub.getServer().getPlayer(playerUUID), false);
             }
 
             if (this.playlists.isEmpty())
