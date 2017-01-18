@@ -122,6 +122,9 @@ public abstract class AbstractCosmeticManager<COSMETIC extends AbstractCosmetic>
 
     public void disableCosmetics(Player player, boolean logout)
     {
+        if (this.getEquippedCosmetics(player) == null)
+            return;
+
         for (COSMETIC cosmetic : this.getEquippedCosmetics(player))
             this.disableCosmetic(player, cosmetic, logout);
     }
