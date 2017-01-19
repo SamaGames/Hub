@@ -121,6 +121,7 @@ class PearlLogic
         this.cosmetics.addAll(hub.getCosmeticManager().getJukeboxManager().getRegistry().getElements().values());
         this.cosmetics.addAll(hub.getCosmeticManager().getBalloonManager().getRegistry().getElements().values());
         this.cosmetics.addAll(hub.getCosmeticManager().getGadgetManager().getRegistry().getElements().values());
+        this.cosmetics.addAll(hub.getCosmeticManager().getClothManager().getRegistry().getElements().values());
 
         Collections.shuffle(this.cosmetics);
     }
