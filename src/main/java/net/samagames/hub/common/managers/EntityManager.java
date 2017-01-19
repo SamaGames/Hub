@@ -38,7 +38,7 @@ public class EntityManager extends AbstractManager
     @Override
     public void onLogout(Player player) { /** Not needed **/ }
 
-    public void registerEntity(String name, int id, Class<? extends Entity> nmsClass, Class<? extends Entity> customClass)
+    public <E extends Entity> void registerEntity(String name, int id, Class<? extends E> nmsClass, Class<? extends E> customClass)
     {
         try
         {

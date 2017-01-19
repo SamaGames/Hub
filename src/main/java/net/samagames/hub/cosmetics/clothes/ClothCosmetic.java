@@ -54,18 +54,14 @@ public class ClothCosmetic extends AbstractCosmetic
     public ItemStack getIcon(Player player)
     {
         ItemStack stack = super.getIcon(player);
+        ItemMeta meta = stack.getItemMeta();
 
-        if (!this.isOwned(player))
-        {
-            ItemMeta meta = stack.getItemMeta();
+        List<String> lore = meta.getLore();
+        lore.add("");
+        lore.add(ChatColor.YELLOW + "Clic droit pour prévisualiser");
 
-            List<String> lore = meta.getLore();
-            lore.add("");
-            lore.add(ChatColor.YELLOW + "Clic droit pour prévisualiser");
-
-            meta.setLore(lore);
-            stack.setItemMeta(meta);
-        }
+        meta.setLore(lore);
+        stack.setItemMeta(meta);
 
         return stack;
     }
