@@ -59,6 +59,12 @@ public class ClothManager extends AbstractCosmeticManager<ClothCosmetic>
     @Override
     public void update() { /** Not needed **/ }
 
+    @Override
+    public boolean restrictToOne()
+    {
+        return false;
+    }
+
     public void startPreview(Player player, ClothCosmetic cosmetic)
     {
         // TODO

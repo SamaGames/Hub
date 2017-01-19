@@ -7,7 +7,6 @@ import net.samagames.api.permissions.IPermissionsEntity;
 import net.samagames.hub.Hub;
 import net.samagames.hub.common.players.PlayerManager;
 import net.samagames.hub.cosmetics.common.AbstractCosmeticManager;
-import net.samagames.hub.cosmetics.common.ISimpleCosmeticCategory;
 import net.samagames.hub.cosmetics.gadgets.displayers.AbstractDisplayer;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -24,7 +23,7 @@ import java.lang.reflect.Field;
 import java.util.*;
 import java.util.logging.Level;
 
-public class GadgetManager extends AbstractCosmeticManager<GadgetCosmetic> implements ISimpleCosmeticCategory
+public class GadgetManager extends AbstractCosmeticManager<GadgetCosmetic>
 {
     public static final Random RANDOM = new Random();
     public static final Field AGE_FIELD;
@@ -63,6 +62,12 @@ public class GadgetManager extends AbstractCosmeticManager<GadgetCosmetic> imple
 
     @Override
     public void update() {}
+
+    @Override
+    public boolean restrictToOne()
+    {
+        return true;
+    }
 
     public void useSelectedCosmetic(Player player, ItemStack cosmeticIcon)
     {

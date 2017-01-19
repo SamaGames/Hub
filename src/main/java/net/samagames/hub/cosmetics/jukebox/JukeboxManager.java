@@ -7,7 +7,6 @@ import net.samagames.api.settings.IPlayerSettings;
 import net.samagames.hub.Hub;
 import net.samagames.hub.common.players.PlayerManager;
 import net.samagames.hub.cosmetics.common.AbstractCosmeticManager;
-import net.samagames.hub.cosmetics.common.ISimpleCosmeticCategory;
 import net.samagames.hub.gui.AbstractGui;
 import net.samagames.tools.Misc;
 import net.samagames.tools.ParticleEffect;
@@ -25,7 +24,7 @@ import javax.lang.model.type.NullType;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
-public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic> implements ISimpleCosmeticCategory
+public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
 {
     public static final String JUKEBOX_TAG = ChatColor.DARK_AQUA + "[" + ChatColor.AQUA + "Jukebox" + ChatColor.DARK_AQUA + "] " + ChatColor.RESET;
     private static final ParticleEffect WOOT_EFFECT = ParticleEffect.NOTE;
@@ -418,6 +417,12 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
     public LinkedList<JukeboxSong> getPlaylists()
     {
         return this.playlists;
+    }
+
+    @Override
+    public boolean restrictToOne()
+    {
+        return true;
     }
 
     public boolean containsSongFrom(String playedBy)

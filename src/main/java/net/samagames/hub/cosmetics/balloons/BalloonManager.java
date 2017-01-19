@@ -3,7 +3,6 @@ package net.samagames.hub.cosmetics.balloons;
 import net.samagames.hub.Hub;
 import net.samagames.hub.common.players.PlayerManager;
 import net.samagames.hub.cosmetics.common.AbstractCosmeticManager;
-import net.samagames.hub.cosmetics.common.ISimpleCosmeticCategory;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -17,7 +16,7 @@ import javax.lang.model.type.NullType;
 /**
  * Created by Rigner for project Hub.
  */
-public class BalloonManager extends AbstractCosmeticManager<BalloonCosmetic> implements ISimpleCosmeticCategory, Listener
+public class BalloonManager extends AbstractCosmeticManager<BalloonCosmetic> implements Listener
 {
     public BalloonManager(Hub hub)
     {
@@ -49,5 +48,11 @@ public class BalloonManager extends AbstractCosmeticManager<BalloonCosmetic> imp
     {
         if (event.getEntity().getItemStack() != null && event.getEntity().getItemStack().getType() == Material.LEASH)
             event.setCancelled(true);
+    }
+
+    @Override
+    public boolean restrictToOne()
+    {
+        return true;
     }
 }

@@ -42,6 +42,8 @@ public abstract class AbstractCosmeticManager<COSMETIC extends AbstractCosmetic>
 
     public abstract void update();
 
+    public abstract boolean restrictToOne();
+
     public void enableCosmetic(Player player, COSMETIC cosmetic, ClickType clickType)
     {
         if (cosmetic.isOwned(player))
@@ -54,7 +56,7 @@ public abstract class AbstractCosmeticManager<COSMETIC extends AbstractCosmetic>
                 }
                 else
                 {
-                    if (this instanceof ISimpleCosmeticCategory)
+                    if (this.restrictToOne())
                         this.disableCosmetics(player, false);
 
                     if (!this.enableCosmetic(player, cosmetic, clickType, null))
@@ -65,7 +67,7 @@ public abstract class AbstractCosmeticManager<COSMETIC extends AbstractCosmetic>
 
                     this.equipped.get(player.getUniqueId()).add(cosmetic);
 
-                    if (this instanceof ISimpleCosmeticCategory)
+                    if (this.restrictToOne())
                         this.resetCurrents(player);
 
                     try

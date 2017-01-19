@@ -5,7 +5,6 @@ import de.slikey.effectlib.EffectManager;
 import net.samagames.hub.Hub;
 import net.samagames.hub.common.players.PlayerManager;
 import net.samagames.hub.cosmetics.common.AbstractCosmeticManager;
-import net.samagames.hub.cosmetics.common.ISimpleCosmeticCategory;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
@@ -16,7 +15,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.logging.Level;
 
-public class ParticleManager extends AbstractCosmeticManager<ParticleCosmetic> implements ISimpleCosmeticCategory
+public class ParticleManager extends AbstractCosmeticManager<ParticleCosmetic>
 {
     private final Map<UUID, Effect> playersParticleEffect;
     private final EffectManager effectManager;
@@ -65,6 +64,12 @@ public class ParticleManager extends AbstractCosmeticManager<ParticleCosmetic> i
 
     @Override
     public void update() {}
+
+    @Override
+    public boolean restrictToOne()
+    {
+        return true;
+    }
 
     public EffectManager getEffectManager()
     {

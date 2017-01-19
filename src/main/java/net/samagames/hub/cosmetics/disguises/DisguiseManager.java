@@ -5,14 +5,13 @@ import me.libraryaddict.disguise.disguisetypes.MobDisguise;
 import net.samagames.hub.Hub;
 import net.samagames.hub.common.players.PlayerManager;
 import net.samagames.hub.cosmetics.common.AbstractCosmeticManager;
-import net.samagames.hub.cosmetics.common.ISimpleCosmeticCategory;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 
 import javax.lang.model.type.NullType;
 
-public class DisguiseManager extends AbstractCosmeticManager<DisguiseCosmetic> implements ISimpleCosmeticCategory
+public class DisguiseManager extends AbstractCosmeticManager<DisguiseCosmetic>
 {
     public DisguiseManager(Hub hub)
     {
@@ -44,4 +43,10 @@ public class DisguiseManager extends AbstractCosmeticManager<DisguiseCosmetic> i
 
     @Override
     public void update() { /** Not needed **/ }
+
+    @Override
+    public boolean restrictToOne()
+    {
+        return true;
+    }
 }
