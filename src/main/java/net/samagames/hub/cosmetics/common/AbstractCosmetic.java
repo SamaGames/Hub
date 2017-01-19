@@ -11,6 +11,7 @@ import net.samagames.tools.GlowEffect;
 import net.samagames.tools.PersistanceUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.craftbukkit.v1_10_R1.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -113,17 +114,15 @@ public abstract class AbstractCosmetic implements Comparable<AbstractCosmetic>
 
         this.hub.getServer().broadcastMessage("---");
 
-        for (String s : lore)
+        meta.setLore(lore);
+
+        for (String s : meta.getLore())
             this.hub.getServer().broadcastMessage(s);
 
-        meta.setLore(lore);
         cloned.setItemMeta(meta);
 
         if (this.hub.getCosmeticManager().isEquipped(player, this))
             GlowEffect.addGlow(cloned);
-
-        for (String s : cloned.getItemMeta().getLore())
-            this.hub.getServer().broadcastMessage(s);
 
         return cloned;
     }
