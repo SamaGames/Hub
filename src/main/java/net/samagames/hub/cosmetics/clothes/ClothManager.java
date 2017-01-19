@@ -69,8 +69,9 @@ public class ClothManager extends AbstractCosmeticManager<ClothCosmetic>
     {
         ItemStack[] armorContent = new ItemStack[4];
 
-        for (ClothCosmetic equipped : this.getEquippedCosmetics(player))
-            armorContent[equipped.getSlot().ordinal()] = equipped.getPiece();
+        if (this.getEquippedCosmetics(player) != null)
+            for (ClothCosmetic equipped : this.getEquippedCosmetics(player))
+                armorContent[equipped.getSlot().ordinal()] = equipped.getPiece();
 
         armorContent[cosmetic.getSlot().ordinal()] = cosmetic.getPiece();
 
