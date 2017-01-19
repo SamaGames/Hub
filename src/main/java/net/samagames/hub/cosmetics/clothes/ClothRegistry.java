@@ -58,6 +58,38 @@ public class ClothRegistry extends AbstractCosmeticRegistry<ClothCosmetic>
                 new ClothCosmetic(this.hub, 291, ClothCosmetic.ArmorSlot.LEGGINGS),
                 new ClothCosmetic(this.hub, 292, ClothCosmetic.ArmorSlot.BOOTS)
         });
+
+        // Zombie
+        this.registerSet(293, new ClothCosmetic[] {
+                new ClothCosmetic(this.hub, 294, ClothCosmetic.ArmorSlot.HELMET),
+                new ClothCosmetic(this.hub, 295, ClothCosmetic.ArmorSlot.CHESTPLATE),
+                new ClothCosmetic(this.hub, 296, ClothCosmetic.ArmorSlot.LEGGINGS),
+                new ClothCosmetic(this.hub, 297, ClothCosmetic.ArmorSlot.BOOTS)
+        });
+
+        // Cow
+        this.registerSet(298, new ClothCosmetic[] {
+                new ClothCosmetic(this.hub, 299, ClothCosmetic.ArmorSlot.HELMET),
+                new ClothCosmetic(this.hub, 300, ClothCosmetic.ArmorSlot.CHESTPLATE),
+                new ClothCosmetic(this.hub, 301, ClothCosmetic.ArmorSlot.LEGGINGS),
+                new ClothCosmetic(this.hub, 302, ClothCosmetic.ArmorSlot.BOOTS)
+        });
+
+        // Mushroom Cow
+        this.registerSet(303, new ClothCosmetic[] {
+                new ClothCosmetic(this.hub, 304, ClothCosmetic.ArmorSlot.HELMET),
+                new ClothCosmetic(this.hub, 305, ClothCosmetic.ArmorSlot.CHESTPLATE),
+                new ClothCosmetic(this.hub, 306, ClothCosmetic.ArmorSlot.LEGGINGS),
+                new ClothCosmetic(this.hub, 307, ClothCosmetic.ArmorSlot.BOOTS)
+        });
+
+        // Wolf
+        this.registerSet(308, new ClothCosmetic[] {
+                new ClothCosmetic(this.hub, 309, ClothCosmetic.ArmorSlot.HELMET),
+                new ClothCosmetic(this.hub, 310, ClothCosmetic.ArmorSlot.CHESTPLATE),
+                new ClothCosmetic(this.hub, 311, ClothCosmetic.ArmorSlot.LEGGINGS),
+                new ClothCosmetic(this.hub, 312, ClothCosmetic.ArmorSlot.BOOTS)
+        });
     }
 
     private void registerSet(int storageId, ClothCosmetic[] set) throws Exception
