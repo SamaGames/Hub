@@ -36,13 +36,14 @@ public class ClothingSet
         ItemStack personalIcon = this.icon.clone();
         ItemMeta meta = personalIcon.getItemMeta();
 
-        List<String> lore = meta.getLore();
+        List<String> lore = new ArrayList<>();
+        lore.add(ChatColor.DARK_GRAY + "Ensemble");
+        lore.add("");
 
-        if (lore == null)
-            lore = new ArrayList<>();
-        else
-            lore.add("");
+        if (meta.getLore() != null)
+            lore.addAll(meta.getLore());
 
+        lore.add("");
         lore.add(ChatColor.DARK_GRAY + "Parties débloquées : " + this.getFormattedUnlockedPieces(player));
 
         meta.setLore(lore);
