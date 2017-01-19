@@ -56,9 +56,6 @@ public class ClothCosmetic extends AbstractCosmetic
         ItemStack stack = super.getIcon(player);
         ItemMeta meta = stack.getItemMeta();
 
-        for (String s : stack.getItemMeta().getLore())
-            this.hub.getServer().broadcastMessage(s);
-
         List<String> lore = meta.getLore();
         lore.add("");
         lore.add(ChatColor.YELLOW + "Clic droit pour prévisualiser");

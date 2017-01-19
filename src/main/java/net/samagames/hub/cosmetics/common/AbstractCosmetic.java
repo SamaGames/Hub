@@ -94,12 +94,8 @@ public abstract class AbstractCosmetic implements Comparable<AbstractCosmetic>
                 lore.add("");
             }
 
-            this.hub.getServer().broadcastMessage(this.accessibility.name());
-
             if (this.accessibility != CosmeticAccessibility.STAFF && this.accessibility != CosmeticAccessibility.ADMIN)
             {
-                this.hub.getServer().broadcastMessage("Graou disclaimer");
-
                 lore.add(ChatColor.YELLOW + "Echangez une perle à " + ChatColor.GOLD + "Graou" + ChatColor.YELLOW + " pour");
                 lore.add(ChatColor.YELLOW + "tenter de débloquer ce cosmétique.");
             }
@@ -115,11 +111,19 @@ public abstract class AbstractCosmetic implements Comparable<AbstractCosmetic>
             lore.add(ChatColor.GREEN + "Cliquez pour utiliser");
         }
 
+        this.hub.getServer().broadcastMessage("---");
+
+        for (String s : lore)
+            this.hub.getServer().broadcastMessage(s);
+
         meta.setLore(lore);
         cloned.setItemMeta(meta);
 
         if (this.hub.getCosmeticManager().isEquipped(player, this))
             GlowEffect.addGlow(cloned);
+
+        for (String s : cloned.getItemMeta().getLore())
+            this.hub.getServer().broadcastMessage(s);
 
         return cloned;
     }
