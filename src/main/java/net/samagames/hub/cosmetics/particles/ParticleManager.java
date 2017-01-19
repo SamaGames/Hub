@@ -29,7 +29,7 @@ public class ParticleManager extends AbstractCosmeticManager<ParticleCosmetic>
     }
 
     @Override
-    public boolean enableCosmetic(Player player, ParticleCosmetic cosmetic, ClickType clickType, NullType useless)
+    public void enableCosmetic(Player player, ParticleCosmetic cosmetic, ClickType clickType, NullType useless)
     {
         try
         {
@@ -45,8 +45,6 @@ public class ParticleManager extends AbstractCosmeticManager<ParticleCosmetic>
         {
             this.hub.getCosmeticManager().log(Level.SEVERE, "Can't create EntityEffect object to " + player.getName() + "'s particle effect!");
         }
-
-        return true;
     }
 
     @Override

@@ -114,10 +114,7 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
     }
 
     @Override
-    public boolean enableCosmetic(Player player, JukeboxDiskCosmetic cosmetic, ClickType clickType, NullType useless)
-    {
-        return true;
-    }
+    public void enableCosmetic(Player player, JukeboxDiskCosmetic cosmetic, ClickType clickType, NullType useless) { /** Not needed **/ }
 
     @Override
     public void disableCosmetic(Player player, JukeboxDiskCosmetic cosmetic, boolean logout, NullType useless) { /** Not needed **/ }
