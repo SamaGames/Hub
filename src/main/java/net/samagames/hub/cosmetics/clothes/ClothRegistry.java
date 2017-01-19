@@ -27,11 +27,36 @@ public class ClothRegistry extends AbstractCosmeticRegistry<ClothCosmetic>
     @Override
     public void register() throws Exception
     {
+        // Cochonou
         this.registerSet(273, new ClothCosmetic[] {
                 new ClothCosmetic(this.hub, 274, ClothCosmetic.ArmorSlot.HELMET),
                 new ClothCosmetic(this.hub, 275, ClothCosmetic.ArmorSlot.CHESTPLATE),
                 new ClothCosmetic(this.hub, 276, ClothCosmetic.ArmorSlot.LEGGINGS),
                 new ClothCosmetic(this.hub, 277, ClothCosmetic.ArmorSlot.BOOTS)
+        });
+
+        // Vampire
+        this.registerSet(278, new ClothCosmetic[] {
+                new ClothCosmetic(this.hub, 279, ClothCosmetic.ArmorSlot.HELMET),
+                new ClothCosmetic(this.hub, 280, ClothCosmetic.ArmorSlot.CHESTPLATE),
+                new ClothCosmetic(this.hub, 281, ClothCosmetic.ArmorSlot.LEGGINGS),
+                new ClothCosmetic(this.hub, 282, ClothCosmetic.ArmorSlot.BOOTS)
+        });
+
+        // Link
+        this.registerSet(283, new ClothCosmetic[] {
+                new ClothCosmetic(this.hub, 284, ClothCosmetic.ArmorSlot.HELMET),
+                new ClothCosmetic(this.hub, 285, ClothCosmetic.ArmorSlot.CHESTPLATE),
+                new ClothCosmetic(this.hub, 286, ClothCosmetic.ArmorSlot.LEGGINGS),
+                new ClothCosmetic(this.hub, 287, ClothCosmetic.ArmorSlot.BOOTS)
+        });
+
+        // TNT
+        this.registerSet(288, new ClothCosmetic[] {
+                new ClothCosmetic(this.hub, 289, ClothCosmetic.ArmorSlot.HELMET),
+                new ClothCosmetic(this.hub, 290, ClothCosmetic.ArmorSlot.CHESTPLATE),
+                new ClothCosmetic(this.hub, 291, ClothCosmetic.ArmorSlot.LEGGINGS),
+                new ClothCosmetic(this.hub, 292, ClothCosmetic.ArmorSlot.BOOTS)
         });
     }
 
