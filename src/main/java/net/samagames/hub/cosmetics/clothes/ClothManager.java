@@ -41,12 +41,12 @@ public class ClothManager extends AbstractCosmeticManager<ClothCosmetic>
     }
 
     @Override
-    public boolean enableCosmetic(Player player, ClothCosmetic cosmetic, ClickType clickType, NullType useless)
+    public void enableCosmetic(Player player, ClothCosmetic cosmetic, ClickType clickType, NullType useless)
     {
+        this.getEquippedCosmetics(player).stream().filter(c -> cosmetic.getSlot() == c.getSlot()).forEach(c -> this.disableCosmetic(player, c, false));
+
         cosmetic.getSlot().equip(player, cosmetic.getPiece());
         player.sendMessage(PlayerManager.COSMETICS_TAG + ChatColor.GREEN + "Vous brillez de mille feux avec votre nouvel habit !");
-
-        return true; // TODO
     }
 
     @Override
@@ -67,9 +67,12 @@ public class ClothManager extends AbstractCosmeticManager<ClothCosmetic>
 
     public void startPreview(Player player, ClothCosmetic cosmetic)
     {
-        // TODO
         ItemStack[] armorContent = new ItemStack[4];
-        armorContent[2] = cosmetic.getPiece();
+
+        for (ClothCosmetic equipped : this.getEquippedCosmetics(player))
+            armorContent[equipped.getSlot().ordinal()] = equipped.getPiece();
+
+        armorContent[cosmetic.getSlot().ordinal()] = cosmetic.getPiece();
 
         ClothPreviewTask clothPreviewTask = new ClothPreviewTask(this.hub, player, armorContent);
 

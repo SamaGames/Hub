@@ -37,7 +37,7 @@ public abstract class AbstractCosmeticManager<COSMETIC extends AbstractCosmetic>
         this.equipped = new HashMap<>();
     }
 
-    public abstract boolean enableCosmetic(Player player, COSMETIC cosmetic, ClickType clickType, NullType useless);
+    public abstract void enableCosmetic(Player player, COSMETIC cosmetic, ClickType clickType, NullType useless);
     public abstract void disableCosmetic(Player player, COSMETIC cosmetic, boolean logout, NullType useless);
 
     public abstract void update();
@@ -59,8 +59,7 @@ public abstract class AbstractCosmeticManager<COSMETIC extends AbstractCosmetic>
                     if (this.restrictToOne())
                         this.disableCosmetics(player, false);
 
-                    if (!this.enableCosmetic(player, cosmetic, clickType, null))
-                        return;
+                    this.enableCosmetic(player, cosmetic, clickType, null);
 
                     if (!this.equipped.containsKey(player.getUniqueId()))
                         this.equipped.put(player.getUniqueId(), new ArrayList<>());
