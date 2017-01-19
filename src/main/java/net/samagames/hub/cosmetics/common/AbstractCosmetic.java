@@ -94,8 +94,12 @@ public abstract class AbstractCosmetic implements Comparable<AbstractCosmetic>
                 lore.add("");
             }
 
+            this.hub.getServer().broadcastMessage(this.accessibility.name());
+
             if (this.accessibility != CosmeticAccessibility.STAFF && this.accessibility != CosmeticAccessibility.ADMIN)
             {
+                this.hub.getServer().broadcastMessage("Graou disclaimer");
+
                 lore.add(ChatColor.YELLOW + "Echangez une perle à " + ChatColor.GOLD + "Graou" + ChatColor.YELLOW + " pour");
                 lore.add(ChatColor.YELLOW + "tenter de débloquer ce cosmétique.");
             }
