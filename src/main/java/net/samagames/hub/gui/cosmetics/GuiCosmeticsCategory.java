@@ -79,7 +79,7 @@ public class GuiCosmeticsCategory<COSMETIC extends AbstractCosmetic> extends Abs
         {
             this.setSlotData(getBackIcon(), this.inventory.getSize() - 4, "back");
 
-            boolean plural = !(this.manager instanceof ISimpleCosmeticCategory);
+            boolean plural = !this.manager.restrictToOne();
 
             this.setSlotData(ChatColor.RED + "Désactiver " + (plural ? "vos" : "votre") + " cosmétique" + (plural ? "s" : "") + " actuel" + (plural ? "s" : ""), Material.FLINT_AND_STEEL, this.inventory.getSize() - 6, null, "delete");
         }
