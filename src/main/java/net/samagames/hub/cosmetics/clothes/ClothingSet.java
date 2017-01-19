@@ -18,14 +18,16 @@ import java.util.List;
  *
  * Created by Jérémy L. (BlueSlime) on 18/01/2017
  */
-class ClothingSet
+public class ClothingSet
 {
+    private final int storageId;
     private final ItemStack icon;
     private final ClothCosmetic[] set;
 
-    ClothingSet(Hub hub, int itemDescriptionId, ClothCosmetic[] set) throws Exception
+    ClothingSet(Hub hub, int storageId, ClothCosmetic[] set) throws Exception
     {
-        this.icon = PersistanceUtils.makeStack(hub, SamaGamesAPI.get().getShopsManager().getItemDescription(itemDescriptionId));
+        this.storageId = storageId;
+        this.icon = PersistanceUtils.makeStack(hub, SamaGamesAPI.get().getShopsManager().getItemDescription(storageId));
         this.set = set;
     }
 
@@ -47,6 +49,16 @@ class ClothingSet
         personalIcon.setItemMeta(meta);
 
         return personalIcon;
+    }
+
+    public int getStorageId()
+    {
+        return this.storageId;
+    }
+
+    public String getName()
+    {
+        return ChatColor.stripColor(this.icon.getItemMeta().getDisplayName());
     }
 
     public ClothCosmetic[] getSet()

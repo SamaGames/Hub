@@ -17,7 +17,7 @@ import java.util.function.BiConsumer;
  *
  * Created by Jérémy L. (BlueSlime) on 15/01/2017
  */
-class ClothCosmetic extends AbstractCosmetic
+public class ClothCosmetic extends AbstractCosmetic
 {
     enum ArmorSlot
     {

@@ -13,7 +13,7 @@ import java.util.Map;
  *
  * Created by Jérémy L. (BlueSlime) on 15/01/2017
  */
-class ClothRegistry extends AbstractCosmeticRegistry<ClothCosmetic>
+public class ClothRegistry extends AbstractCosmeticRegistry<ClothCosmetic>
 {
     private final Map<Integer, ClothingSet> sets;
 
@@ -35,18 +35,18 @@ class ClothRegistry extends AbstractCosmeticRegistry<ClothCosmetic>
         });
     }
 
-    private void registerSet(int descriptionItemId, ClothCosmetic[] set) throws Exception
+    private void registerSet(int storageId, ClothCosmetic[] set) throws Exception
     {
         for (ClothCosmetic cosmetic : set)
             this.registerElement(cosmetic);
 
-        this.sets.put(descriptionItemId, new ClothingSet(this.hub, descriptionItemId, set));
+        this.sets.put(storageId, new ClothingSet(this.hub, storageId, set));
     }
 
-    public ClothingSet getClothingSetByDatabaseId(int databaseId)
+    public ClothingSet getClothingSetByStorageId(int storageId)
     {
-        if (this.sets.containsKey(databaseId))
-            return this.sets.get(databaseId);
+        if (this.sets.containsKey(storageId))
+            return this.sets.get(storageId);
         else
             return null;
     }

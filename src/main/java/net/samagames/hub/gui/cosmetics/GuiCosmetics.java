@@ -2,6 +2,7 @@ package net.samagames.hub.gui.cosmetics;
 
 import net.samagames.hub.Hub;
 import net.samagames.hub.gui.AbstractGui;
+import net.samagames.hub.gui.cosmetics.clothes.GuiClothingSets;
 import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
@@ -76,7 +77,7 @@ public class GuiCosmetics extends AbstractGui
         switch (action)
         {
             case "clothes":
-                this.hub.getGuiManager().openGui(player, new GuiCosmeticsCategory<>(this.hub, "Ensembles", this.hub.getCosmeticManager().getClothManager(), true));
+                this.hub.getGuiManager().openGui(player, new GuiClothingSets(this.hub));
                 break;
 
             case "particles":
