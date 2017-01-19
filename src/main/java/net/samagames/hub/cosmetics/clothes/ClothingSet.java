@@ -18,12 +18,12 @@ import java.util.List;
  *
  * Created by Jérémy L. (BlueSlime) on 18/01/2017
  */
-public class ClothingSet
+class ClothingSet
 {
     private final ItemStack icon;
     private final ClothCosmetic[] set;
 
-    public ClothingSet(Hub hub, int itemDescriptionId, ClothCosmetic[] set) throws Exception
+    ClothingSet(Hub hub, int itemDescriptionId, ClothCosmetic[] set) throws Exception
     {
         this.icon = PersistanceUtils.makeStack(hub, SamaGamesAPI.get().getShopsManager().getItemDescription(itemDescriptionId));
         this.set = set;

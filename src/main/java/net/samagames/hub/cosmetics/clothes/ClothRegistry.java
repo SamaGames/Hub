@@ -2,8 +2,9 @@ package net.samagames.hub.cosmetics.clothes;
 
 import net.samagames.hub.Hub;
 import net.samagames.hub.cosmetics.common.AbstractCosmeticRegistry;
-import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *                )\._.,--....,'``.
@@ -14,16 +15,44 @@ import org.bukkit.inventory.ItemStack;
  */
 class ClothRegistry extends AbstractCosmeticRegistry<ClothCosmetic>
 {
+    private final Map<Integer, ClothingSet> sets;
+
     ClothRegistry(Hub hub)
     {
         super(hub);
+
+        this.sets = new HashMap<>();
     }
 
     @Override
     public void register() throws Exception
     {
-        ClothCosmetic test = new ClothCosmetic(this.hub, 19, ClothCosmetic.ArmorSlot.LEGGINGS, new ItemStack(Material.DIAMOND_LEGGINGS, 1));
+        this.registerSet(273, new ClothCosmetic[] {
+                new ClothCosmetic(this.hub, 274, ClothCosmetic.ArmorSlot.HELMET),
+                new ClothCosmetic(this.hub, 275, ClothCosmetic.ArmorSlot.CHESTPLATE),
+                new ClothCosmetic(this.hub, 276, ClothCosmetic.ArmorSlot.LEGGINGS),
+                new ClothCosmetic(this.hub, 277, ClothCosmetic.ArmorSlot.BOOTS)
+        });
+    }
 
-        this.registerElement(test);
+    private void registerSet(int descriptionItemId, ClothCosmetic[] set) throws Exception
+    {
+        for (ClothCosmetic cosmetic : set)
+            this.registerElement(cosmetic);
+
+        this.sets.put(descriptionItemId, new ClothingSet(this.hub, descriptionItemId, set));
+    }
+
+    public ClothingSet getClothingSetByDatabaseId(int databaseId)
+    {
+        if (this.sets.containsKey(databaseId))
+            return this.sets.get(databaseId);
+        else
+            return null;
+    }
+
+    public Map<Integer, ClothingSet> getClothingSets()
+    {
+        return this.sets;
     }
 }

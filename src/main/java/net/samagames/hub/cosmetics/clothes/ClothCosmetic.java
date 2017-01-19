@@ -19,7 +19,7 @@ import java.util.function.BiConsumer;
  */
 class ClothCosmetic extends AbstractCosmetic
 {
-    public enum ArmorSlot
+    enum ArmorSlot
     {
         HELMET((player, stack) -> player.getInventory().setHelmet(stack)),
         CHESTPLATE((player, stack) -> player.getInventory().setChestplate(stack)),
@@ -42,12 +42,12 @@ class ClothCosmetic extends AbstractCosmetic
     private final ArmorSlot slot;
     private final ItemStack piece;
 
-    public ClothCosmetic(Hub hub, int storageId, ArmorSlot slot, ItemStack piece) throws Exception
+    ClothCosmetic(Hub hub, int storageId, ArmorSlot slot) throws Exception
     {
         super(hub, "Habit", storageId);
 
         this.slot = slot;
-        this.piece = piece;
+        this.piece = this.getIcon().clone();
     }
 
     @Override
