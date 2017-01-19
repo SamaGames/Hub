@@ -90,6 +90,38 @@ public class ClothRegistry extends AbstractCosmeticRegistry<ClothCosmetic>
                 new ClothCosmetic(this.hub, 311, ClothCosmetic.ArmorSlot.LEGGINGS),
                 new ClothCosmetic(this.hub, 312, ClothCosmetic.ArmorSlot.BOOTS)
         });
+
+        // Sheep
+        this.registerSet(313, new ClothCosmetic[] {
+                new ClothCosmetic(this.hub, 314, ClothCosmetic.ArmorSlot.HELMET),
+                new ClothCosmetic(this.hub, 315, ClothCosmetic.ArmorSlot.CHESTPLATE),
+                new ClothCosmetic(this.hub, 316, ClothCosmetic.ArmorSlot.LEGGINGS),
+                new ClothCosmetic(this.hub, 317, ClothCosmetic.ArmorSlot.BOOTS)
+        });
+
+        // Meow
+        this.registerSet(318, new ClothCosmetic[] {
+                new ClothCosmetic(this.hub, 319, ClothCosmetic.ArmorSlot.HELMET),
+                new ClothCosmetic(this.hub, 320, ClothCosmetic.ArmorSlot.CHESTPLATE),
+                new ClothCosmetic(this.hub, 321, ClothCosmetic.ArmorSlot.LEGGINGS),
+                new ClothCosmetic(this.hub, 322, ClothCosmetic.ArmorSlot.BOOTS)
+        });
+
+        // Carrot
+        this.registerSet(323, new ClothCosmetic[] {
+                new ClothCosmetic(this.hub, 324, ClothCosmetic.ArmorSlot.HELMET),
+                new ClothCosmetic(this.hub, 325, ClothCosmetic.ArmorSlot.CHESTPLATE),
+                new ClothCosmetic(this.hub, 326, ClothCosmetic.ArmorSlot.LEGGINGS),
+                new ClothCosmetic(this.hub, 327, ClothCosmetic.ArmorSlot.BOOTS)
+        });
+
+        // Chicken
+        this.registerSet(328, new ClothCosmetic[] {
+                new ClothCosmetic(this.hub, 329, ClothCosmetic.ArmorSlot.HELMET),
+                new ClothCosmetic(this.hub, 330, ClothCosmetic.ArmorSlot.CHESTPLATE),
+                new ClothCosmetic(this.hub, 331, ClothCosmetic.ArmorSlot.LEGGINGS),
+                new ClothCosmetic(this.hub, 332, ClothCosmetic.ArmorSlot.BOOTS)
+        });
     }
 
     private void registerSet(int storageId, ClothCosmetic[] set) throws Exception

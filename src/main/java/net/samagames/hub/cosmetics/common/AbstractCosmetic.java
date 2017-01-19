@@ -50,7 +50,9 @@ public abstract class AbstractCosmetic implements Comparable<AbstractCosmetic>
 
         List<String> lore = new ArrayList<>();
         lore.add(ChatColor.DARK_GRAY + categoryName);
-        lore.add("");
+
+        if (itemDescription.getItemDesc() != null)
+            lore.add("");
 
         if (meta.getLore() != null)
             lore.addAll(meta.getLore());
