@@ -116,10 +116,7 @@ public abstract class AbstractCosmetic implements Comparable<AbstractCosmetic>
 
         meta.setLore(lore);
 
-        for (String s : meta.getLore())
-            this.hub.getServer().broadcastMessage(s);
-
-        cloned.setItemMeta(meta);
+        this.hub.getServer().broadcastMessage(String.valueOf(cloned.setItemMeta(meta)));
 
         if (this.hub.getCosmeticManager().isEquipped(player, this))
             GlowEffect.addGlow(cloned);
