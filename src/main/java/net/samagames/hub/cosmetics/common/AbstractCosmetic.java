@@ -84,8 +84,9 @@ public abstract class AbstractCosmetic implements Comparable<AbstractCosmetic>
 
         if (!this.isOwned(player))
         {
-            cloned.setType(Material.INK_SACK);
-            cloned.setDurability((short) 8);
+            cloned = new ItemStack(Material.INK_SACK, 1, (short) 8);
+            meta = cloned.getItemMeta();
+            meta.setDisplayName(this.icon.getItemMeta().getDisplayName());
 
             if (this.accessibility != CosmeticAccessibility.ALL)
             {
@@ -112,11 +113,8 @@ public abstract class AbstractCosmetic implements Comparable<AbstractCosmetic>
             lore.add(ChatColor.GREEN + "Cliquez pour utiliser");
         }
 
-        this.hub.getServer().broadcastMessage("---");
-
         meta.setLore(lore);
-
-        this.hub.getServer().broadcastMessage(String.valueOf(cloned.setItemMeta(meta)));
+        cloned.setItemMeta(meta);
 
         if (this.hub.getCosmeticManager().isEquipped(player, this))
             GlowEffect.addGlow(cloned);
