@@ -10,12 +10,14 @@ import org.bukkit.event.inventory.ClickType;
 
 import javax.lang.model.type.NullType;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 import java.util.logging.Level;
 
 public abstract class AbstractCosmeticManager<COSMETIC extends AbstractCosmetic>
 {
     protected final Hub hub;
-    protected Map<UUID, List<COSMETIC>> equipped;
+    protected ConcurrentMap<UUID, List<COSMETIC>> equipped;
     private AbstractCosmeticRegistry<COSMETIC> registry;
 
     public AbstractCosmeticManager(Hub hub, AbstractCosmeticRegistry<COSMETIC> registry)
@@ -34,7 +36,7 @@ public abstract class AbstractCosmeticManager<COSMETIC extends AbstractCosmetic>
             e.printStackTrace();
         }
 
-        this.equipped = new HashMap<>();
+        this.equipped = new ConcurrentHashMap<>();
     }
 
     public abstract void enableCosmetic(Player player, COSMETIC cosmetic, ClickType clickType, NullType useless);
