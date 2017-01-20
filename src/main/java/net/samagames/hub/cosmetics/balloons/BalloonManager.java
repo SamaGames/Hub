@@ -32,10 +32,12 @@ public class BalloonManager extends AbstractCosmeticManager<BalloonCosmetic> imp
     }
 
     @Override
-    public void disableCosmetic(Player player, BalloonCosmetic cosmetic, boolean logout, NullType useless)
+    public void disableCosmetic(Player player, BalloonCosmetic cosmetic, boolean logout, boolean replace, NullType useless)
     {
         cosmetic.remove(player);
-        player.sendMessage(PlayerManager.COSMETICS_TAG + ChatColor.GREEN + "Vos ballons ont éclatés.");
+
+        if (!logout && !replace)
+            player.sendMessage(PlayerManager.COSMETICS_TAG + ChatColor.GREEN + "Vos ballons ont éclatés.");
     }
 
     @Override

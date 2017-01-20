@@ -54,7 +54,7 @@ class GuiClothingSet extends AbstractGui
         }
         else if (action.equals("delete"))
         {
-            this.hub.getCosmeticManager().getClothManager().disableCosmetics(player, false);
+            this.hub.getCosmeticManager().getClothManager().disableCosmetics(player, false, false);
         }
         else if (action.equals("back"))
         {

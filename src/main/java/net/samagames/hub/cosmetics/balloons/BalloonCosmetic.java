@@ -94,7 +94,7 @@ class BalloonCosmetic extends AbstractCosmetic
         {
             if (livingEntity.isDead() || !livingEntity.isLeashed())
             {
-                this.hub.getCosmeticManager().getBalloonManager().disableCosmetic(player, this, false);
+                this.hub.getCosmeticManager().getBalloonManager().disableCosmetic(player, this, false, false);
                 break ;
             }
         }

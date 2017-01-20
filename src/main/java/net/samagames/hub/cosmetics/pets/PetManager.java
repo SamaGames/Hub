@@ -30,13 +30,13 @@ public class PetManager extends AbstractCosmeticManager<PetCosmetic>
     }
 
     @Override
-    public void disableCosmetic(Player player, PetCosmetic cosmetic, boolean logout, NullType useless)
+    public void disableCosmetic(Player player, PetCosmetic cosmetic, boolean logout, boolean replace, NullType useless)
     {
         if (EchoPetAPI.getAPI().hasPet(player))
         {
             EchoPetAPI.getAPI().removePet(player, false, false);
 
-            if (!logout)
+            if (!logout && !replace)
                 player.sendMessage(PlayerManager.COSMETICS_TAG + ChatColor.GREEN + "Votre animal disparait dans l'ombre...");
         }
     }

@@ -117,7 +117,7 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
     public void enableCosmetic(Player player, JukeboxDiskCosmetic cosmetic, ClickType clickType, NullType useless) { /** Not needed **/ }
 
     @Override
-    public void disableCosmetic(Player player, JukeboxDiskCosmetic cosmetic, boolean logout, NullType useless) { /** Not needed **/ }
+    public void disableCosmetic(Player player, JukeboxDiskCosmetic cosmetic, boolean logout, boolean replace, NullType useless) { /** Not needed **/ }
 
     @Override
     public void restoreCosmetic(Player player) { /** Not needed **/ }
@@ -278,7 +278,7 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
                 }
 
                 if (this.hub.getServer().getPlayer(playerUUID) != null)
-                    this.hub.getCosmeticManager().getJukeboxManager().disableCosmetics(this.hub.getServer().getPlayer(playerUUID), false);
+                    this.hub.getCosmeticManager().getJukeboxManager().disableCosmetics(this.hub.getServer().getPlayer(playerUUID), false, false);
             }
 
             if (this.playlists.isEmpty())

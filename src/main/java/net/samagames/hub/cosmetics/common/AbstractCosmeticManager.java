@@ -40,7 +40,7 @@ public abstract class AbstractCosmeticManager<COSMETIC extends AbstractCosmetic>
     }
 
     public abstract void enableCosmetic(Player player, COSMETIC cosmetic, ClickType clickType, NullType useless);
-    public abstract void disableCosmetic(Player player, COSMETIC cosmetic, boolean logout, NullType useless);
+    public abstract void disableCosmetic(Player player, COSMETIC cosmetic, boolean logout, boolean replace, NullType useless);
 
     public abstract void update();
 
@@ -59,7 +59,7 @@ public abstract class AbstractCosmeticManager<COSMETIC extends AbstractCosmetic>
                 else
                 {
                     if (this.restrictToOne())
-                        this.disableCosmetics(player, false);
+                        this.disableCosmetics(player, false, true);
 
                     this.enableCosmetic(player, cosmetic, clickType, null);
 
@@ -97,11 +97,11 @@ public abstract class AbstractCosmeticManager<COSMETIC extends AbstractCosmetic>
         }
     }
 
-    public void disableCosmetic(Player player, COSMETIC cosmetic, boolean logout)
+    public void disableCosmetic(Player player, COSMETIC cosmetic, boolean logout, boolean replace)
     {
         if (this.equipped.containsKey(player.getUniqueId()) && this.equipped.get(player.getUniqueId()).contains(cosmetic))
         {
-            this.disableCosmetic(player, cosmetic, logout, null);
+            this.disableCosmetic(player, cosmetic, logout, replace, null);
             this.equipped.get(player.getUniqueId()).remove(cosmetic);
 
             if (!logout)
@@ -123,13 +123,13 @@ public abstract class AbstractCosmeticManager<COSMETIC extends AbstractCosmetic>
         }
     }
 
-    public void disableCosmetics(Player player, boolean logout)
+    public void disableCosmetics(Player player, boolean logout, boolean replace)
     {
         if (this.getEquippedCosmetics(player) == null)
             return;
 
         for (COSMETIC cosmetic : new ArrayList<>(this.getEquippedCosmetics(player)))
-            this.disableCosmetic(player, cosmetic, logout);
+            this.disableCosmetic(player, cosmetic, logout, replace);
     }
 
     public void restoreCosmetic(Player player)

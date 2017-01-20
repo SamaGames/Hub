@@ -49,12 +49,14 @@ public class GadgetManager extends AbstractCosmeticManager<GadgetCosmetic>
     }
 
     @Override
-    public void disableCosmetic(Player player, GadgetCosmetic cosmetic, boolean logout, NullType useless)
+    public void disableCosmetic(Player player, GadgetCosmetic cosmetic, boolean logout, boolean replace, NullType useless)
     {
         if (!logout)
         {
             player.getInventory().setItem(6, null);
-            player.sendMessage(PlayerManager.COSMETICS_TAG + ChatColor.GREEN + "Votre gadget a été déséquipé.");
+
+            if (!replace)
+                player.sendMessage(PlayerManager.COSMETICS_TAG + ChatColor.GREEN + "Votre gadget a été déséquipé.");
         }
     }
 

@@ -99,7 +99,7 @@ public class GuiCosmeticsCategory<COSMETIC extends AbstractCosmetic> extends Abs
         }
         else if (action.equals("delete"))
         {
-            this.manager.disableCosmetics(player, false);
+            this.manager.disableCosmetics(player, false, false);
         }
         else if (action.equals("back"))
         {

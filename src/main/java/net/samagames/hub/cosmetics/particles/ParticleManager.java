@@ -48,7 +48,7 @@ public class ParticleManager extends AbstractCosmeticManager<ParticleCosmetic>
     }
 
     @Override
-    public void disableCosmetic(Player player, ParticleCosmetic cosmetic, boolean logout, NullType useless)
+    public void disableCosmetic(Player player, ParticleCosmetic cosmetic, boolean logout, boolean replace, NullType useless)
     {
         if (this.playersParticleEffect.containsKey(player.getUniqueId()))
         {
@@ -56,7 +56,7 @@ public class ParticleManager extends AbstractCosmeticManager<ParticleCosmetic>
             this.playersParticleEffect.remove(player.getUniqueId());
         }
 
-        if (!logout)
+        if (!logout && !replace)
             player.sendMessage(PlayerManager.COSMETICS_TAG + ChatColor.GREEN + "Votre effet disparait dans l'ombre...");
     }
 

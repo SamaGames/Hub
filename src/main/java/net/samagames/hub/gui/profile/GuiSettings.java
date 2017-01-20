@@ -256,7 +256,10 @@ class GuiSettings extends AbstractGui
                     ChatColor.GRAY + "Quand cette option est activée, vous",
                     ChatColor.GRAY + "serez équipé par défaut d'une paire",
                     ChatColor.GRAY + "d'ailes quand vous entrerez dans un",
-                    ChatColor.GRAY + "Hub."
+                    ChatColor.GRAY + "Hub.",
+                    "",
+                    ChatColor.RED + "Cette option est disponible uniquement",
+                    ChatColor.RED + "pour les versions supérieures à la 1.9."
             }, new GuiSettingsCallback()
             {
                 @Override

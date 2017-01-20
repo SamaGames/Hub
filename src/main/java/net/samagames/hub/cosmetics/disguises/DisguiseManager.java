@@ -31,12 +31,12 @@ public class DisguiseManager extends AbstractCosmeticManager<DisguiseCosmetic>
     }
 
     @Override
-    public void disableCosmetic(Player player, DisguiseCosmetic cosmetic, boolean logout, NullType useless)
+    public void disableCosmetic(Player player, DisguiseCosmetic cosmetic, boolean logout, boolean replace, NullType useless)
     {
         if (DisguiseAPI.isDisguised(player))
             DisguiseAPI.undisguiseToAll(player);
 
-        if (!logout)
+        if (!logout && !replace)
             player.sendMessage(PlayerManager.COSMETICS_TAG + ChatColor.GREEN + "Votre déguisement disparait dans l'ombre...");
     }
 

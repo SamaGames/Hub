@@ -51,13 +51,13 @@ public class CosmeticManager extends AbstractManager
     {
         this.jukeboxManager.onLogout(player);
 
-        this.disguiseManager.disableCosmetics(player, true);
-        this.jukeboxManager.disableCosmetics(player, true);
-        this.petManager.disableCosmetics(player, true);
-        this.gadgetManager.disableCosmetics(player, true);
-        this.particleManager.disableCosmetics(player, true);
-        this.balloonManager.disableCosmetics(player, true);
-        this.clothManager.disableCosmetics(player, true);
+        this.disguiseManager.disableCosmetics(player, true, false);
+        this.jukeboxManager.disableCosmetics(player, true, false);
+        this.petManager.disableCosmetics(player, true, false);
+        this.gadgetManager.disableCosmetics(player, true, false);
+        this.particleManager.disableCosmetics(player, true, false);
+        this.balloonManager.disableCosmetics(player, true, false);
+        this.clothManager.disableCosmetics(player, true, false);
     }
 
     public DisguiseManager getDisguiseManager()

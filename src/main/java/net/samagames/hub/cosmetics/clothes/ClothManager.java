@@ -43,17 +43,20 @@ public class ClothManager extends AbstractCosmeticManager<ClothCosmetic>
     @Override
     public void enableCosmetic(Player player, ClothCosmetic cosmetic, ClickType clickType, NullType useless)
     {
-        this.getEquippedCosmetics(player).stream().filter(c -> cosmetic.getSlot() == c.getSlot()).forEach(c -> this.disableCosmetic(player, c, false));
+        this.getEquippedCosmetics(player).stream().filter(c -> cosmetic.getSlot() == c.getSlot()).forEach(c -> this.disableCosmetic(player, c, false, true));
 
         cosmetic.getSlot().equip(player, cosmetic.getPiece());
         player.sendMessage(PlayerManager.COSMETICS_TAG + ChatColor.GREEN + "Vous brillez de mille feux avec votre nouvel habit !");
     }
 
     @Override
-    public void disableCosmetic(Player player, ClothCosmetic cosmetic, boolean logout, NullType useless)
+    public void disableCosmetic(Player player, ClothCosmetic cosmetic, boolean logout, boolean replace, NullType useless)
     {
         if (this.previewers.containsKey(player.getUniqueId()))
             this.stopPreview(player);
+
+        if (!logout && !replace)
+            player.sendMessage(PlayerManager.COSMETICS_TAG + ChatColor.GREEN + "Vous retirez votre vêtement...");
     }
 
     @Override
