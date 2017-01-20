@@ -56,6 +56,8 @@ public class ClothManager extends AbstractCosmeticManager<ClothCosmetic>
         if (this.previewers.containsKey(player.getUniqueId()))
             this.stopPreview(player);
 
+        cosmetic.getSlot().equip(player, null);
+
         if (!logout && !replace)
             player.sendMessage(PlayerManager.COSMETICS_TAG + ChatColor.GREEN + "Vous retirez votre vêtement...");
     }
