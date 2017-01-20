@@ -50,10 +50,10 @@ public class ParticleManager extends AbstractCosmeticManager<ParticleCosmetic>
     @Override
     public void disableCosmetic(Player player, ParticleCosmetic cosmetic, boolean logout, NullType useless)
     {
-        if (this.playersParticleEffect.containsKey(player))
+        if (this.playersParticleEffect.containsKey(player.getUniqueId()))
         {
-            this.playersParticleEffect.get(player).cancel();
-            this.playersParticleEffect.remove(player);
+            this.playersParticleEffect.get(player.getUniqueId()).cancel();
+            this.playersParticleEffect.remove(player.getUniqueId());
         }
 
         if (!logout)
@@ -61,7 +61,7 @@ public class ParticleManager extends AbstractCosmeticManager<ParticleCosmetic>
     }
 
     @Override
-    public void update() {}
+    public void update() { /** Not needed **/ }
 
     @Override
     public boolean restrictToOne()
