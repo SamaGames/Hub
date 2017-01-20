@@ -54,13 +54,16 @@ commands:
     description: Commandes relatives aux panneaux
     usage: /sign
   anguille:
-    description: Commande relative aux Anguilles de Maite
+    description: Commande relative aux anguilles de Maite
     usage: /anguille
   nbs:
-    description: Commande relative au Jukebox
+    description: Commande relative au jukebox
     usage: /nbs
   evacuate:
     description: Commande d'évacuation
     usage: /evacuate
+  pearl:
+    description: Commande relative aux perles
+    usage: /pearl
 
   # Easter Eggs --------------------------------

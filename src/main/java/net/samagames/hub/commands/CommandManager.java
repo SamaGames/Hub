@@ -49,6 +49,7 @@ public class CommandManager extends AbstractManager
         this.registerCommand("anguille", "hub.anguille", CommandAnguille.class);
         this.registerCommand("nbs", "hub.jukebox.nbs", CommandNBS.class);
         this.registerCommand("evacuate", "hub.admin.evacuate", CommandEvacuate.class);
+        this.registerCommand("pearl", "hub.admin.pearl", CommandPearl.class);
 
         // Easter Eggs commands -----------------------------------------
     }
