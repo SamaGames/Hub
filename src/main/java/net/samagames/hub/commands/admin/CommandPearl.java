@@ -40,7 +40,9 @@ public class CommandPearl extends AbstractCommand
                     return true;
                 }
 
-                if (this.hub.getServer().getPlayer(playerName) == null)
+                Player p = this.hub.getServer().getPlayer(playerName);
+
+                if (p == null)
                 {
                     player.sendMessage(ChatColor.RED + "Le joueur indiqué est introuvable.");
                     return true;
@@ -49,8 +51,11 @@ public class CommandPearl extends AbstractCommand
                 Calendar calendar = Calendar.getInstance();
                 calendar.add(Calendar.MINUTE, 60);
 
-                this.hub.getInteractionManager().getWellManager().addPearlToPlayer(this.hub.getServer().getPlayer(playerName), new Pearl(UUID.randomUUID(), pearlLevel, calendar.getTime().getTime()));
+                this.hub.getInteractionManager().getWellManager().addPearlToPlayer(p, new Pearl(UUID.randomUUID(), pearlLevel, calendar.getTime().getTime()));
                 player.sendMessage(ChatColor.GREEN + "Une perle de niveau " + ChatColor.GOLD + pearlLevel + ChatColor.GREEN + " à été donnée au joueur " + ChatColor.GOLD + playerName + ChatColor.GREEN + ". Elle sera valide durant les 60 prochaines minutes.");
+
+                this.hub.getScoreboardManager().update(p);
+                this.hub.getInteractionManager().getGraouManager().update(p);
             }
             catch (NumberFormatException e)
             {
