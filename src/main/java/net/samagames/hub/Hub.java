@@ -5,6 +5,7 @@ import net.samagames.api.SamaGamesAPI;
 import net.samagames.api.games.GamesNames;
 import net.samagames.api.games.Status;
 import net.samagames.hub.commands.CommandManager;
+import net.samagames.hub.common.casino.CasinoIntegration;
 import net.samagames.hub.common.refresh.HubRefresher;
 import net.samagames.hub.common.hydroangeas.HydroangeasManager;
 import net.samagames.hub.common.managers.EntityManager;
@@ -36,6 +37,7 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
@@ -70,8 +72,9 @@ public class Hub extends JavaPlugin
     private InteractionManager interactionManager;
     private HostGameManager hostGameManager;
 
+    private CasinoIntegration casinoIntegration;
+
     private ScheduledFuture hydroangeasSynchronization;
-    private SamaritanListener samaritanListener;
 
     @Override
     public void onEnable()
@@ -131,10 +134,32 @@ public class Hub extends JavaPlugin
         this.getServer().getPluginManager().registerEvents(new PlayerProtectionListener(this), this);
         this.getServer().getPluginManager().registerEvents(new WorldEditionListener(this), this);
 
-        this.hydroangeasSynchronization = this.getScheduledExecutorService().scheduleAtFixedRate(() -> new ServerStatus(SamaGamesAPI.get().getServerName(), "Hub", "Map", Status.IN_GAME, this.getServer().getOnlinePlayers().size(), this.getServer().getMaxPlayers()).sendToHydro(), 0, 1, TimeUnit.MINUTES);
-        this.samaritanListener = new SamaritanListener(this);
+        try
+        {
+            Class<?> casinoIntegrationClass = Class.forName("net.samagames.casino.Casino");
 
-        SamaGamesAPI.get().getPubSub().subscribe("cheat", this.samaritanListener);
+            if (CasinoIntegration.class.isAssignableFrom(casinoIntegrationClass))
+            {
+                this.casinoIntegration = (CasinoIntegration) casinoIntegrationClass.getDeclaredConstructor(Hub.class).newInstance(this);
+            }
+            else
+            {
+                this.getLogger().severe("Failed to load the Casino casino integration. It's not assignable to CasinoIntegration!");
+                this.casinoIntegration = null;
+            }
+        }
+        catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e)
+        {
+            this.getLogger().severe("Failed to load the Casino casino integration.");
+
+            e.printStackTrace();
+
+            this.casinoIntegration = null;
+        }
+
+        this.hydroangeasSynchronization = this.getScheduledExecutorService().scheduleAtFixedRate(() -> new ServerStatus(SamaGamesAPI.get().getServerName(), "Hub", "Map", Status.IN_GAME, this.getServer().getOnlinePlayers().size(), this.getServer().getMaxPlayers()).sendToHydro(), 0, 1, TimeUnit.MINUTES);
+
+        SamaGamesAPI.get().getPubSub().subscribe("cheat", new SamaritanListener(this));
         //SamaGamesAPI.get().getPubSub().subscribe("", new InteractionListener(this));
         SamaGamesAPI.get().getPubSub().subscribe("maintenanceSignChannel", new MaintenanceListener(this));
         SamaGamesAPI.get().getPubSub().subscribe("soonSignChannel", new SoonListener(this));
@@ -143,9 +168,8 @@ public class Hub extends JavaPlugin
                 {
                     this.getGameManager().getGames().values().stream()
                             .filter(abstractGame -> abstractGame.getLeaderBoards() != null)
-                            .forEach(abstractGame -> abstractGame.getLeaderBoards()
-                                    .forEach(HubLeaderboard::refresh)
-                            );
+                            .forEach(abstractGame -> abstractGame.getLeaderBoards().forEach(HubLeaderboard::refresh));
+
                     RotatingLeaderboard.increment();
                 }
                 , 0L, 1200L
@@ -205,9 +229,14 @@ public class Hub extends JavaPlugin
     public InteractionManager getInteractionManager() { return this.interactionManager; }
     public HostGameManager getHostGameManager() { return this.hostGameManager; }
 
-    public SamaritanListener getSamaritanListener()
+    public CasinoIntegration getCasinoIntegration()
     {
-        return this.samaritanListener;
+        return this.casinoIntegration;
+    }
+
+    public boolean isCasinoAvailable()
+    {
+        return this.casinoIntegration != null && this.casinoIntegration.isAvailable();
     }
 
     public EffectLib getEffectLib()

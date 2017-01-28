@@ -37,7 +37,7 @@ public abstract class AbstractManager implements EntryPoints
 
     protected JsonObject reloadConfiguration()
     {
-        File configuration = new File(this.hub.getDataFolder(), filename);
+        File configuration = new File(this.hub.getDataFolder(), this.filename);
 
         if (!configuration.exists())
         {
@@ -53,7 +53,6 @@ public abstract class AbstractManager implements EntryPoints
             }
         }
 
-        JsonConfiguration npcsConfig = new JsonConfiguration(configuration);
-        return npcsConfig.load();
+        return new JsonConfiguration(configuration).load();
     }
 }
