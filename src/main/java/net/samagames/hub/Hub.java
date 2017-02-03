@@ -5,7 +5,6 @@ import net.samagames.api.SamaGamesAPI;
 import net.samagames.api.games.GamesNames;
 import net.samagames.api.games.Status;
 import net.samagames.hub.commands.CommandManager;
-import net.samagames.hub.common.casino.CasinoIntegration;
 import net.samagames.hub.common.refresh.HubRefresher;
 import net.samagames.hub.common.hydroangeas.HydroangeasManager;
 import net.samagames.hub.common.managers.EntityManager;
@@ -72,8 +71,6 @@ public class Hub extends JavaPlugin
     private InteractionManager interactionManager;
     private HostGameManager hostGameManager;
 
-    private CasinoIntegration casinoIntegration;
-
     private ScheduledFuture hydroangeasSynchronization;
 
     @Override
@@ -133,29 +130,6 @@ public class Hub extends JavaPlugin
         this.getServer().getPluginManager().registerEvents(new InventoryEditionListener(this), this);
         this.getServer().getPluginManager().registerEvents(new PlayerProtectionListener(this), this);
         this.getServer().getPluginManager().registerEvents(new WorldEditionListener(this), this);
-
-        try
-        {
-            Class<?> casinoIntegrationClass = Class.forName("net.samagames.casino.Casino");
-
-            if (CasinoIntegration.class.isAssignableFrom(casinoIntegrationClass))
-            {
-                this.casinoIntegration = (CasinoIntegration) casinoIntegrationClass.getDeclaredConstructor(Hub.class).newInstance(this);
-            }
-            else
-            {
-                this.getLogger().severe("Failed to load the Casino casino integration. It's not assignable to CasinoIntegration!");
-                this.casinoIntegration = null;
-            }
-        }
-        catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e)
-        {
-            this.getLogger().severe("Failed to load the Casino casino integration.");
-
-            e.printStackTrace();
-
-            this.casinoIntegration = null;
-        }
 
         this.hydroangeasSynchronization = this.getScheduledExecutorService().scheduleAtFixedRate(() -> new ServerStatus(SamaGamesAPI.get().getServerName(), "Hub", "Map", Status.IN_GAME, this.getServer().getOnlinePlayers().size(), this.getServer().getMaxPlayers()).sendToHydro(), 0, 1, TimeUnit.MINUTES);
 
@@ -228,16 +202,6 @@ public class Hub extends JavaPlugin
     public CosmeticManager getCosmeticManager() { return this.cosmeticManager; }
     public InteractionManager getInteractionManager() { return this.interactionManager; }
     public HostGameManager getHostGameManager() { return this.hostGameManager; }
-
-    public CasinoIntegration getCasinoIntegration()
-    {
-        return this.casinoIntegration;
-    }
-
-    public boolean isCasinoAvailable()
-    {
-        return this.casinoIntegration != null && this.casinoIntegration.isAvailable();
-    }
 
     public EffectLib getEffectLib()
     {

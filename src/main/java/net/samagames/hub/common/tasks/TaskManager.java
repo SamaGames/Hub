@@ -16,6 +16,7 @@ public class TaskManager extends AbstractManager
     private final BirthdayTask birthdayTask;
     private final PlayersAwayFromKeyboardTask playersAwayFromKeyboardTask;
     private final PlayersTravellingTask playersTravellingTask;
+    private final AdvertisingTask advertisingTask;
 
     private final BukkitTask secretChamberProximityTask;
     private final BukkitTask pantheonProximityTask;
@@ -30,6 +31,7 @@ public class TaskManager extends AbstractManager
         this.birthdayTask = new BirthdayTask(hub);
         this.playersAwayFromKeyboardTask = new PlayersAwayFromKeyboardTask(hub);
         this.playersTravellingTask = new PlayersTravellingTask(hub);
+        this.advertisingTask = new AdvertisingTask(hub);
 
         ArmorStand secretChamberDetectionEntity = hub.getWorld().spawn(new Location(hub.getWorld(), 88.5, 20.0D, 44.5D), ArmorStand.class);
         this.prepareProximityDetection(secretChamberDetectionEntity, "secret_chamber_proximity");
@@ -59,6 +61,7 @@ public class TaskManager extends AbstractManager
         this.birthdayTask.cancel();
         this.playersAwayFromKeyboardTask.cancel();
         this.playersTravellingTask.cancel();
+        this.advertisingTask.cancel();
 
         this.secretChamberProximityTask.cancel();
         this.pantheonProximityTask.cancel();
@@ -67,10 +70,16 @@ public class TaskManager extends AbstractManager
     }
 
     @Override
-    public void onLogin(Player player) { /** Not needed **/ }
+    public void onLogin(Player player)
+    {
+        this.advertisingTask.addPlayer(player);
+    }
 
     @Override
-    public void onLogout(Player player) { /** Not needed **/ }
+    public void onLogout(Player player)
+    {
+        this.advertisingTask.removePlayer(player);
+    }
 
     public CirclesTask getCirclesTask()
     {
