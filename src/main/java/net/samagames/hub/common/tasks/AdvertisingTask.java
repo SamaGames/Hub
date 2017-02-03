@@ -40,10 +40,10 @@ class AdvertisingTask extends AbstractTask
     {
         this.bossBar.setTitle(LINES.get(this.i));
 
-        if (this.i >= LINES.size())
+        this.i++;
+
+        if (this.i == LINES.size())
             this.i = 0;
-        else
-            this.i++;
     }
 
     public void addPlayer(Player player)
