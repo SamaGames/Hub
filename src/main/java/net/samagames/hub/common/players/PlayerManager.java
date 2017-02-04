@@ -149,9 +149,10 @@ public class PlayerManager extends AbstractManager
                 player.playSound(player.getLocation(), Sound.BLOCK_NOTE_HARP, 1.0F, 1.0F);
                 player.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
 
-                FancyMessage toolBox = new FancyMessage("En cliquant ici, vous rejoignez automatiquement la fil d'attente pour gagner du temps.").color(ChatColor.GOLD).style(ChatColor.ITALIC);
-                new FancyMessage("Hey ! Venez tester notre nouveau jeu ChunkWars !").color(ChatColor.GOLD).send(player);
-                new FancyMessage("[Cliquez ici] ").color(ChatColor.GREEN).style(ChatColor.BOLD).command("/join chunkwars chunkwars_solo").formattedTooltip(toolBox).send(player);
+                new FancyMessage("Hey ! Venez tester notre nouveau jeu ChunkWars !").color(ChatColor.YELLOW)
+                        .then("[Cliquez ici]").color(ChatColor.GREEN).style(ChatColor.BOLD).command("/join chunkwars chunkwars_solo")
+                        .formattedTooltip(new FancyMessage("Clic pour rejoindre la file d'attente.").color(ChatColor.YELLOW))
+                        .send(player);
 
                 player.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
             }, 10, TimeUnit.SECONDS);
