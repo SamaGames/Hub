@@ -149,7 +149,7 @@ public class PlayerManager extends AbstractManager
                 player.playSound(player.getLocation(), Sound.BLOCK_NOTE_HARP, 1.0F, 1.0F);
                 player.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
 
-                new FancyMessage("Hey ! Venez tester notre nouveau jeu ChunkWars !").color(ChatColor.YELLOW)
+                new FancyMessage("Hey ! Venez tester notre nouveau jeu ChunkWars ! ").color(ChatColor.YELLOW)
                         .then("[Cliquez ici]").color(ChatColor.GREEN).style(ChatColor.BOLD).command("/join chunkwars chunkwars_solo")
                         .formattedTooltip(new FancyMessage("Clic pour rejoindre la file d'attente.").color(ChatColor.YELLOW))
                         .send(player);
