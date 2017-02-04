@@ -4,12 +4,12 @@ import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import net.samagames.hub.interactions.AbstractInteraction;
 import net.samagames.hub.utils.RestrictedVersion;
+import net.samagames.tools.LocationUtils;
 import net.samagames.tools.ProximityUtils;
 import net.samagames.tools.Titles;
 import org.bukkit.*;
 import org.bukkit.craftbukkit.v1_10_R1.entity.CraftPlayer;
-import org.bukkit.entity.ArmorStand;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityToggleGlideEvent;
 import org.bukkit.inventory.ItemStack;
@@ -32,13 +32,13 @@ class Bumper extends AbstractInteraction implements Listener
 
     private static final double g = 18; //Minecraft constant for gravity (9.8 for earth)
 
-    Bumper(Hub hub, String location)
+    Bumper(Hub hub, String location) throws Exception
     {
         super(hub);
 
         String[] args = location.split(", ");
 
-        this.bumperLocation = new Location(Bukkit.getWorld(args[0]), Double.parseDouble(args[1]), Double.parseDouble(args[2]), Double.parseDouble(args[3]), Float.parseFloat(args[4]), Float.parseFloat(args[5]));
+        this.bumperLocation = LocationUtils.str2loc(location);
         this.power = Double.parseDouble(args[6]);
         this.flyTasks = new HashMap<>();
         this.disclaimerCooldowns = new HashMap<>();
@@ -52,6 +52,13 @@ class Bumper extends AbstractInteraction implements Listener
 
         this.startBeacon.setVisible(false);
         this.startBeacon.setGravity(false);
+
+        Optional<Entity> endCrystal = this.bumperLocation.getWorld().getNearbyEntities(this.bumperLocation, 5.0D, 5.0D, 5.0D).stream().filter(entity -> entity.getType() == EntityType.ENDER_CRYSTAL).findFirst();
+
+        if (!endCrystal.isPresent())
+            throw new Exception("Failed to find the end crystal of this bumper.");
+
+        ((EnderCrystal) endCrystal.get()).setBeamTarget(this.startBeacon.getLocation().clone().add(0.0D, 2.0D, 0.0D));
 
         this.startTask = ProximityUtils.onNearbyOf(hub, this.startBeacon, 1D, 1D, 1D, Player.class, this::play);
     }

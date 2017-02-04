@@ -28,8 +28,9 @@ public class BumperManager extends AbstractInteractionManager<Bumper>
 
             try
             {
-                bumper = new Bumper(hub, jsonBumber.getAsString());
-            } catch (NullPointerException ignored) {}
+                bumper = new Bumper(this.hub, jsonBumber.getAsString());
+            }
+            catch (Exception ignored) {}
 
             if (bumper != null)
             {
