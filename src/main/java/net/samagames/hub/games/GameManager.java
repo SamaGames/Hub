@@ -17,6 +17,7 @@ import org.bukkit.entity.Player;
 import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Function;
 import java.util.logging.Level;
 
 public class GameManager extends AbstractManager
@@ -31,7 +32,7 @@ public class GameManager extends AbstractManager
         this.games = new HashMap<>();
         this.playerHided = new CopyOnWriteArrayList<>();
 
-        this.registerGame(new BackEndGame(hub, "beta_vip", "VIP", LocationUtils.str2loc(hub.getConfig().getString("vip-zone")), false));
+        this.registerGame(new BackEndGame(hub, "beta_vip", "VIP", LocationUtils.str2loc(hub.getConfig().getString("vip-zone")), null, false));
 
         this.registerGame(new UppervoidGame(hub));
         //this.registerGame(new QuakeGame(hub));
@@ -43,35 +44,32 @@ public class GameManager extends AbstractManager
         UHCZoneGame uhcZoneGame = new UHCZoneGame(hub);
 
         this.registerGame(uhcZoneGame);
-        this.registerGame(new BackEndGame(hub, "uhc", "UHC", uhcZoneGame.getLobbySpawn(), false));
-        this.registerGame(new BackEndGame(hub, "uhcrun", "UHCRun", uhcZoneGame.getLobbySpawn(), false));
-        this.registerGame(new BackEndGame(hub, "switchrun", "SwitchRun", uhcZoneGame.getLobbySpawn(), false));
-        this.registerGame(new BackEndGame(hub, "doublerunner", "DoubleRunner", uhcZoneGame.getLobbySpawn(), false));
-        this.registerGame(new BackEndGame(hub, "uhcrandom", "UHCRandom", uhcZoneGame.getLobbySpawn(), false));
-        this.registerGame(new BackEndGame(hub, "randomrun", "RandomRun", uhcZoneGame.getLobbySpawn(), false));
-        this.registerGame(new BackEndGame(hub, "ultraflagkeeper", "Run4Flag", uhcZoneGame.getLobbySpawn(), false));
+        this.registerGame(new BackEndGame(hub, "uhc", "UHC", uhcZoneGame.getLobbySpawn(), null, false, playerStats -> playerStats.getUHCOriginalStatistics().getPlayedGames() == 0));
+        this.registerGame(new BackEndGame(hub, "uhcrun", "UHCRun", uhcZoneGame.getLobbySpawn(), null, false, playerStats -> playerStats.getUHCRunStatistics().getPlayedGames() == 0));
+        this.registerGame(new BackEndGame(hub, "doublerunner", "DoubleRunner", uhcZoneGame.getLobbySpawn(), null, false, playerStats -> playerStats.getDoubleRunnerStatistics().getPlayedGames() == 0));
+        this.registerGame(new BackEndGame(hub, "uhcrandom", "UHCRandom", uhcZoneGame.getLobbySpawn(), null, false, playerStats -> playerStats.getUHCRandomStatistics().getPlayedGames() == 0));
+        this.registerGame(new BackEndGame(hub, "randomrun", "RandomRun", uhcZoneGame.getLobbySpawn(), null, false, playerStats -> playerStats.getRandomRunStatistics().getPlayedGames() == 0));
+        this.registerGame(new BackEndGame(hub, "ultraflagkeeper", "Run4Flag", uhcZoneGame.getLobbySpawn(), null, false, playerStats -> playerStats.getUltraFlagKeeperStatistics().getPlayedGames() == 0));
 
         // -----
 
         this.registerGame(new OneTwoThreeSunGame(hub));
 
-        this.registerGame(new BackEndGame(hub, "craftmything", "CraftMyThing", this.hub.getPlayerManager().getSpawn(), false));
-        this.registerGame(new BackEndGame(hub, "witherparty", "WitherParty", this.hub.getPlayerManager().getSpawn(), false));
-        this.registerGame(new BackEndGame(hub, "hangovergames", "HangoverGames", this.hub.getPlayerManager().getSpawn(), false));
-        this.registerGame(new BackEndGame(hub, "pacman", "PacMan", this.hub.getPlayerManager().getSpawn(), false));
-        this.registerGame(new BackEndGame(hub, "flyring", "FlyRing", this.hub.getPlayerManager().getSpawn(), false));
-        this.registerGame(new BackEndGame(hub, "partygames", "PartyGames", this.hub.getPlayerManager().getSpawn(), false));
-        this.registerGame(new BackEndGame(hub, "casino", "Casino", this.hub.getPlayerManager().getSpawn(), false));
-        this.registerGame(new BackEndGame(hub, "samabox", "SamaBox", this.hub.getPlayerManager().getSpawn(), false));
-        this.registerGame(new BackEndGame(hub, "agarmc", "AgarMC", this.hub.getPlayerManager().getSpawn(), true));
-        this.registerGame(new BackEndGame(hub, "timberman", "TimberMan", this.hub.getPlayerManager().getSpawn(), false));
-        this.registerGame(new BackEndGame(hub, "bomberman", "BomberMan", this.hub.getPlayerManager().getSpawn(), true));
-        this.registerGame(new BackEndGame(hub, "bowling", "Bowling", this.hub.getPlayerManager().getSpawn(), true));
-        this.registerGame(new BackEndGame(hub, "burnthatchicken", "BurnThatChicken", this.hub.getPlayerManager().getSpawn(), false));
+        this.registerGame(new BackEndGame(hub, "witherparty", "WitherParty", this.hub.getPlayerManager().getSpawn(), null, false));
+        this.registerGame(new BackEndGame(hub, "hangovergames", "HangoverGames", this.hub.getPlayerManager().getSpawn(), null, false));
+        this.registerGame(new BackEndGame(hub, "pacman", "PacMan", this.hub.getPlayerManager().getSpawn(), null, false));
+        this.registerGame(new BackEndGame(hub, "flyring", "FlyRing", this.hub.getPlayerManager().getSpawn(), null, false));
+        this.registerGame(new BackEndGame(hub, "partygames", "PartyGames", this.hub.getPlayerManager().getSpawn(), null, false));
+        this.registerGame(new BackEndGame(hub, "casino", "Casino", this.hub.getPlayerManager().getSpawn(), null, false));
+        this.registerGame(new BackEndGame(hub, "agarmc", "AgarMC", this.hub.getPlayerManager().getSpawn(), null, true));
+        this.registerGame(new BackEndGame(hub, "timberman", "TimberMan", this.hub.getPlayerManager().getSpawn(), null, false));
+        this.registerGame(new BackEndGame(hub, "bomberman", "BomberMan", this.hub.getPlayerManager().getSpawn(), null, true));
+        this.registerGame(new BackEndGame(hub, "bowling", "Bowling", this.hub.getPlayerManager().getSpawn(), null, true));
+        this.registerGame(new BackEndGame(hub, "burnthatchicken", "BurnThatChicken", this.hub.getPlayerManager().getSpawn(), null, false));
 
         // -----
 
-        this.registerGame(new BackEndGame(hub, "event", "Événement", this.hub.getPlayerManager().getSpawn(), false));
+        this.registerGame(new BackEndGame(hub, "event", "Événement", this.hub.getPlayerManager().getSpawn(), null, false));
 
         hub.getHydroangeasManager().getPacketReceiver().registerCallBack(new PacketCallBack<GameInfoToHubPacket>(GameInfoToHubPacket.class)
         {

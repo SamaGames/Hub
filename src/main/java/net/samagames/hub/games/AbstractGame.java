@@ -1,6 +1,7 @@
 package net.samagames.hub.games;
 
 import net.samagames.api.SamaGamesAPI;
+import net.samagames.api.stats.IPlayerStats;
 import net.samagames.hub.Hub;
 import net.samagames.hub.games.leaderboards.HubLeaderboard;
 import net.samagames.hub.games.shops.ShopCategory;
@@ -10,6 +11,7 @@ import net.samagames.tools.RulesBook;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.block.Sign;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import redis.clients.jedis.Jedis;
 
@@ -46,13 +48,14 @@ public abstract class AbstractGame
     public abstract ItemStack getIcon();
     public abstract String[] getDescription();
     public abstract String[] getDevelopers();
-    public abstract RulesBook[] getRulesBooks();
+    public abstract String getWebsiteDescriptionURL();
     public abstract int getSlotInMainMenu();
     public abstract ShopCategory getShopConfiguration();
     public abstract Location getLobbySpawn();
     public abstract List<HubLeaderboard> getLeaderBoards();
     public abstract State getState();
     public abstract boolean hasResourcesPack();
+    public abstract boolean isPlayerFirstGame(IPlayerStats playerStats);
     public abstract boolean isGroup();
 
     public void addSignForMap(String map, ChatColor color, String template, RestrictedVersion restrictedVersion, Sign sign)

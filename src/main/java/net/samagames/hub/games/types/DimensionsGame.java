@@ -1,12 +1,12 @@
 package net.samagames.hub.games.types;
 
 import net.samagames.api.games.GamesNames;
+import net.samagames.api.stats.IPlayerStats;
 import net.samagames.hub.Hub;
 import net.samagames.hub.games.AbstractGame;
 import net.samagames.hub.games.leaderboards.HubLeaderboard;
 import net.samagames.hub.games.shops.ShopCategory;
 import net.samagames.hub.games.shops.ShopImprovableItem;
-import net.samagames.tools.RulesBook;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -66,22 +66,9 @@ public class DimensionsGame extends AbstractGame
     }
 
     @Override
-    public RulesBook[] getRulesBooks()
+    public String getWebsiteDescriptionURL()
     {
-        return new RulesBook[]
-                {
-                        new RulesBook("Dimensions").addOwner("Silvanosky").addOwner("zyuiop")
-                                .addPage("Objectifs",
-                                        " Explorez la map et\n récupérez votre\n" +
-                                        " équipement dans des\n coffres. Après\n" +
-                                        " quelques minutes tuez\n vos adversaires\n" +
-                                        " et survivez !\n Des bonus sont dans\n" +
-                                        " la boutique pour vous\n aider si besoin.")
-                                .addPage("Dimensions", " Deux dimensions sont\n" +
-                                        " disponibles pour\n jouer, utilisez les\n" +
-                                        " à bon escient !\n\n Attention aux dégats\n" +
-                                        " que cette 2e\n dimension peut vous\n engendrer ;)")
-                };
+        return null;
     }
 
     @Override
@@ -163,6 +150,12 @@ public class DimensionsGame extends AbstractGame
     public boolean hasResourcesPack()
     {
         return false;
+    }
+
+    @Override
+    public boolean isPlayerFirstGame(IPlayerStats playerStats)
+    {
+        return playerStats.getDimensionStatistics().getPlayedGames() == 0;
     }
 
     @Override

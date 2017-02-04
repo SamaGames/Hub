@@ -1,12 +1,12 @@
 package net.samagames.hub.games.types;
 
+import net.samagames.api.stats.IPlayerStats;
 import net.samagames.hub.Hub;
 import net.samagames.hub.games.AbstractGame;
 import net.samagames.hub.games.leaderboards.HubLeaderboard;
 import net.samagames.hub.games.shops.ShopCategory;
 import net.samagames.hub.games.shops.ShopDependsItem;
 import net.samagames.hub.games.shops.ShopItem;
-import net.samagames.tools.RulesBook;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -61,7 +61,7 @@ public class ChunkWarsGame extends AbstractGame
     }
 
     @Override
-    public RulesBook[] getRulesBooks()
+    public String getWebsiteDescriptionURL()
     {
         return null;
     }
@@ -235,6 +235,12 @@ public class ChunkWarsGame extends AbstractGame
     public boolean hasResourcesPack()
     {
         return false;
+    }
+
+    @Override
+    public boolean isPlayerFirstGame(IPlayerStats playerStats)
+    {
+        return playerStats.getChunkWarsStatistics().getPlayedGames() == 0;
     }
 
     @Override

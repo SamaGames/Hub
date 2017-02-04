@@ -1,30 +1,40 @@
 package net.samagames.hub.games.types;
 
+import net.samagames.api.stats.IPlayerStats;
 import net.samagames.hub.Hub;
 import net.samagames.hub.games.AbstractGame;
 import net.samagames.hub.games.leaderboards.HubLeaderboard;
 import net.samagames.hub.games.shops.ShopCategory;
-import net.samagames.tools.RulesBook;
 import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
+import java.util.function.Function;
 
 public class BackEndGame extends AbstractGame
 {
     private final String codeName;
     private final String publicName;
     private final Location spawn;
+    private final String websiteDescriptionURL;
     private final boolean hasResourcesPack;
+    private final Function<IPlayerStats, Boolean> isPlayerFirstGameFunction;
 
-    public BackEndGame(Hub hub, String codeName, String publicName, Location spawn, boolean hasResourcesPack)
+    public BackEndGame(Hub hub, String codeName, String publicName, Location spawn, String websiteDescriptionURL, boolean hasResourcesPack, Function<IPlayerStats, Boolean> isPlayerFirstGameFunction)
     {
         super(hub);
 
         this.codeName = codeName;
         this.publicName = publicName;
         this.spawn = spawn;
+        this.websiteDescriptionURL = websiteDescriptionURL;
         this.hasResourcesPack = hasResourcesPack;
+        this.isPlayerFirstGameFunction = isPlayerFirstGameFunction;
+    }
+
+    public BackEndGame(Hub hub, String codeName, String publicName, Location spawn, String websiteDescriptionURL, boolean hasResourcesPack)
+    {
+        this(hub, codeName, publicName, spawn, websiteDescriptionURL, hasResourcesPack, null);
     }
 
     @Override
@@ -64,52 +74,9 @@ public class BackEndGame extends AbstractGame
     }
 
     @Override
-    public RulesBook[] getRulesBooks()
+    public String getWebsiteDescriptionURL()
     {
-        return new RulesBook[]
-                {
-                        new RulesBook("WitherParty").addOwner("IamBlueSlime")
-                                .addPage("Comment jouer ?",
-                                        " Ecoutez la mélodie\n jouée par" +
-                                        " le wither\n et reproduisez la\n" +
-                                        " avec les têtes\n devant vous !"),
-
-                        new RulesBook("AgarMC").addOwner("Rigner").addOwner("6infinity8")
-                                .addPage("Comment jouer ?",
-                                        " Vous incarnez une\n petite" +
-                                                " cellule qui doit\n grandir" +
-                                                " avec le temps\n\n Mangez d'autres\n" +
-                                                " cellules plus petites\n pour" +
-                                                " augmenter votre\n taille !")
-                                .addPage("Comment jouer ?",
-                                        " Mais attention à vos\n adversaires" +
-                                                " qui\n peuvent vous manger\n\n Soyez" +
-                                                " intelligents et\n restez gros !", false)
-                                .addPage("Objectifs",
-                                        " &lMode &6&lFFA &0 :\n" +
-                                                " Chacun pour soi,\n devenez le" +
-                                                " meilleur\n de tous !")
-                                .addPage("Objectifs",
-                                        " &lMode &6&lTeams &0 :\n" +
-                                                " Gagnez le plus de\n points" +
-                                                " pour votre\n équipe (&c&lRouge&0," +
-                                                " &2&lVert&0\n ou &1&lBleu&0) !", false)
-                                .addPage("Objectifs",
-                                        " &lMode &6&lHardcore &0 :\n" +
-                                                " Vous voulez un peu\n de challenge ? Alors\n retrouvez" +
-                                                " le FFA\n avec le mode\n   &lHardcore&0 !", false),
-
-                        new RulesBook("HangoverGames").addOwner("IamBlueSlime")
-                                .addPage("Comment jouer ?",
-                                        " Votre objectif est\n d'arriver à une\n" +
-                                                " consommation d'alcool\n de 25 g/L de" +
-                                                " sang.\n\n Ramassez des\n verres dans les\n" +
-                                                " chaudrons, et volez\n ceux de vos\n" +
-                                                " adversaires en les\n frappant !\n")
-                                .addPage("",
-                                "&4&l /!\\ Attention /!\\&0\n\n" +
-                                        " Boire est dangereux\n    pour la santé !", false)
-                };
+        return this.websiteDescriptionURL;
     }
 
     @Override
@@ -146,6 +113,15 @@ public class BackEndGame extends AbstractGame
     public boolean hasResourcesPack()
     {
         return this.hasResourcesPack;
+    }
+
+    @Override
+    public boolean isPlayerFirstGame(IPlayerStats playerStats)
+    {
+        if (this.isPlayerFirstGameFunction == null)
+            return false;
+        else
+            return this.isPlayerFirstGameFunction.apply(playerStats);
     }
 
     @Override

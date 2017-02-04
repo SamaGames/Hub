@@ -1,6 +1,7 @@
 package net.samagames.hub.games.types;
 
 import net.samagames.api.games.GamesNames;
+import net.samagames.api.stats.IPlayerStats;
 import net.samagames.hub.Hub;
 import net.samagames.hub.games.AbstractGame;
 import net.samagames.hub.games.leaderboards.HubLeaderboard;
@@ -65,20 +66,9 @@ public class QuakeGame extends AbstractGame
     }
 
     @Override
-    public RulesBook[] getRulesBooks()
+    public String getWebsiteDescriptionURL()
     {
-        return new RulesBook[]
-                {
-                        new RulesBook("Quake").addOwner("Silvanosky")
-                                .addPage("Objectifs",
-                                        " Tirez avec votre\n houe sur vos ennemis\n" +
-                                                " pour les tuer. Soyez\n le premier à 25\n" +
-                                                " kills pour gagner !")
-                                .addPage("Houes",
-                                " Achetez des houes\n plus puissantes\n" +
-                                        " dans la boutique afin\n de réduire le délai\n" +
-                                        " de rechargement\n entre deux tirs !\n")
-                };
+        return null;
     }
 
     @Override
@@ -171,6 +161,12 @@ public class QuakeGame extends AbstractGame
     public boolean hasResourcesPack()
     {
         return false;
+    }
+
+    @Override
+    public boolean isPlayerFirstGame(IPlayerStats playerStats)
+    {
+        return playerStats.getQuakeStatistics().getPlayedGames() == 0;
     }
 
     @Override

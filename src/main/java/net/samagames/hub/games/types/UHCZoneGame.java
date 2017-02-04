@@ -1,6 +1,7 @@
 package net.samagames.hub.games.types;
 
 import net.samagames.api.games.GamesNames;
+import net.samagames.api.stats.IPlayerStats;
 import net.samagames.hub.Hub;
 import net.samagames.hub.games.AbstractGame;
 import net.samagames.hub.games.leaderboards.HubLeaderboard;
@@ -72,20 +73,9 @@ public class UHCZoneGame extends AbstractGame
     }
 
     @Override
-    public RulesBook[] getRulesBooks()
+    public String getWebsiteDescriptionURL()
     {
-        return new RulesBook[]
-                {
-                        new RulesBook("UHCRun")
-                        .addPage("UHCRun", " L'UHCRun est un mini\n jeu ayant pour même\n but que l'UHC normal\n mais qui n'excède pas\n les 30 minutes de jeu.\n" +
-                                "\n Pour cela, il existe 2\n phases principales, la\n préparation (20min)\n et le meetup (10min).")
-                        .addPage("Préparation", " 20 minutes vous sont\n dédiées afin de vous\n créer un bon\n équipement.\n" +
-                                "\n Plusieurs avantages\n apparaissent pour\n vous faire gagner\n du temps, comme\n pouvoir casser un\n")
-                        .addPage("Préparation", " arbre en un coup de\n main ou ne plus\n avoir à se servir\n des fours.", false)
-                        .addPage("Meetup", " A la fin de la phase\n précédente, vous\n êtes téléportés à la\n surface et avez\n 10 minutes pour\n éliminer tout vos\n opposants.\n" +
-                                "\n La grandeur de la\n carte ne cesse de\n réduire durant\n cette période.", false)
-                        .addOwner("IamBlueSlime")
-                };
+        return null;
     }
 
     @Override
@@ -167,6 +157,12 @@ public class UHCZoneGame extends AbstractGame
 
     @Override
     public boolean hasResourcesPack()
+    {
+        return false;
+    }
+
+    @Override
+    public boolean isPlayerFirstGame(IPlayerStats playerStats)
     {
         return false;
     }

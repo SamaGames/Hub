@@ -6,6 +6,7 @@ import net.samagames.hub.games.AbstractGame;
 import net.samagames.hub.gui.AbstractGui;
 import net.samagames.tools.GlowEffect;
 import net.samagames.tools.ItemUtils;
+import net.samagames.tools.chat.fanciful.FancyMessage;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -108,9 +109,14 @@ public class GuiMain extends AbstractGui
             }
 
             if (clickType == ClickType.LEFT)
+            {
                 player.teleport(game.getLobbySpawn());
-            else if (clickType == ClickType.RIGHT)
-                this.hub.getGuiManager().openGui(player, new GuiRulesBooks(this.hub, game));
+            }
+            else if (clickType == ClickType.RIGHT && game.getWebsiteDescriptionURL() != null)
+            {
+                this.hub.getGuiManager().closeGui(player);
+                new FancyMessage(ChatColor.YELLOW + "Cliquez sur ").then("[Accéder]").color(ChatColor.GOLD).style(ChatColor.BOLD).link(game.getWebsiteDescriptionURL()).then(" pour accéder aux règles du jeu.").color(ChatColor.YELLOW).send(player);
+            }
         }
     }
 
@@ -166,7 +172,7 @@ public class GuiMain extends AbstractGui
 
             lore.add(ChatColor.DARK_GRAY + "\u25B6 Cliquez gauche pour être téléporté");
 
-            if (game.getRulesBooks() != null)
+            if (game.getWebsiteDescriptionURL() != null)
                 lore.add(ChatColor.DARK_GRAY + "\u25B6 Cliquez droit pour lire les règles");
 
             lore.add("");
