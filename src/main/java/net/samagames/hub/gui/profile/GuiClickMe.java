@@ -76,8 +76,7 @@ public class GuiClickMe extends AbstractGui
                 break;
 
             case "stats":
-                new FancyMessage(ChatColor.YELLOW + "Cliquez sur ").then("[Accéder]").color(ChatColor.GOLD).style(ChatColor.BOLD).link("https://www.samagames.net/stats/" + this.name + ".html").then(" pour accéder aux statistiques de " + this.name + ".").color(ChatColor.YELLOW).send(player);
-                this.hub.getGuiManager().closeGui(player);
+                this.hub.getGuiManager().openGui(player, new GuiStatistics(this.hub, this.hub.getServer().getPlayer(this.uuid)));
                 break;
 
             case "back":

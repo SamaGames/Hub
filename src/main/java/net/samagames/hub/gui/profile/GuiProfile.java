@@ -47,7 +47,7 @@ public class GuiProfile extends AbstractGui
         switch (action)
         {
             case "stats":
-                this.hub.getGuiManager().openGui(player, new GuiStatistics(this.hub));
+                this.hub.getGuiManager().openGui(player, new GuiStatistics(this.hub, player));
                 break;
 
             case "achievements":

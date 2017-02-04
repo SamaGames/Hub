@@ -28,12 +28,17 @@ import java.util.concurrent.Callable;
 class GuiStatistics extends AbstractGui
 {
     private static final int[] BASE_SLTOS = {10, 11, 12, 13, 14, 15, 16};
+
+    private final Player playerToView;
+
     private int lines = 0;
     private int slot = 0;
 
-    GuiStatistics(Hub hub)
+    GuiStatistics(Hub hub, Player playerToView)
     {
         super(hub);
+
+        this.playerToView = playerToView;
     }
 
     @Override
@@ -51,7 +56,7 @@ class GuiStatistics extends AbstractGui
     @Override
     public void update(Player player)
     {
-        IPlayerStats playerStats = SamaGamesAPI.get().getStatsManager().getPlayerStats(player.getUniqueId());
+        IPlayerStats playerStats = SamaGamesAPI.get().getStatsManager().getPlayerStats(this.playerToView.getUniqueId());
 
         this.setGameStatisticsSlotData("Hub", new ItemStack(Material.COMPASS, 1), Arrays.asList(
                 Pair.of("Woots reçus", playerStats.getJukeBoxStatistics()::getWoots),
