@@ -146,7 +146,7 @@ public class PlayerManager extends AbstractManager
                 if (!player.isOnline())
                     return;
 
-                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_HAT, 1.0F, 0.8F);
+                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_HARP, 1.0F, 1.0F);
                 player.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
 
                 FancyMessage toolBox = new FancyMessage("En cliquant ici, vous rejoignez automatiquement la fil d'attente pour gagner du temps.").color(ChatColor.GOLD).style(ChatColor.ITALIC);
