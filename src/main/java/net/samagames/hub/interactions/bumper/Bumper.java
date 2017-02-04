@@ -53,13 +53,6 @@ class Bumper extends AbstractInteraction implements Listener
         this.startBeacon.setVisible(false);
         this.startBeacon.setGravity(false);
 
-        Optional<Entity> enderCrystal = this.bumperLocation.getWorld().getNearbyEntities(this.bumperLocation, 5.0D, 5.0D, 5.0D).stream().filter(entity -> entity.getType() == EntityType.ENDER_CRYSTAL).findFirst();
-
-        if (!enderCrystal.isPresent())
-            throw new Exception("Failed to find the end crystal of this bumper.");
-
-        ((EnderCrystal) enderCrystal.get()).setBeamTarget(this.startBeacon.getLocation());
-
         this.startTask = ProximityUtils.onNearbyOf(hub, this.startBeacon, 1D, 1D, 1D, Player.class, this::play);
     }
 
