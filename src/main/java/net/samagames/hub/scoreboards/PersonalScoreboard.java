@@ -50,7 +50,7 @@ class PersonalScoreboard
 
     public void setLines(String ip)
     {
-        this.objectiveSign.setDisplayName(ChatColor.GOLD + "\u2726" + ChatColor.BOLD + " SamaGames " + ChatColor.RESET + ChatColor.GOLD + "\u2726");
+        this.objectiveSign.setDisplayName(ChatColor.GOLD + "\u2726" + ChatColor.BOLD + ChatColor.RED + " SamaGames " + ChatColor.RESET + ChatColor.GOLD + "\u2726");
 
         this.objectiveSign.setLine(0, ChatColor.BLUE + "");
 
