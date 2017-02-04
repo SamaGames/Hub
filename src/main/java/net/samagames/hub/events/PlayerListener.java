@@ -207,18 +207,21 @@ public class PlayerListener implements Listener
                 return;
             }
 
-            this.hub.getServer().getScheduler().runTaskAsynchronously(this.hub, () ->
+            if (player.isSneaking())
             {
-                Player target = (Player) event.getEntity();
-
-                if (SamaGamesAPI.get().getSettingsManager().getSettings(player.getUniqueId()).isAllowClickOnOther())
+                this.hub.getServer().getScheduler().runTaskAsynchronously(this.hub, () ->
                 {
-                    if (!SamaGamesAPI.get().getSettingsManager().getSettings(target.getUniqueId()).isClickOnMeActivation())
-                        return;
+                    Player target = (Player) event.getEntity();
 
-                    this.hub.getGuiManager().openGui(player, new GuiClickMe(this.hub, target));
-                }
-            });
+                    if (SamaGamesAPI.get().getSettingsManager().getSettings(player.getUniqueId()).isAllowClickOnOther())
+                    {
+                        if (!SamaGamesAPI.get().getSettingsManager().getSettings(target.getUniqueId()).isClickOnMeActivation())
+                            return;
+
+                        this.hub.getGuiManager().openGui(player, new GuiClickMe(this.hub, target));
+                    }
+                });
+            }
         }
         else if (event.getDamager() instanceof Player && !(event.getEntity() instanceof Player))
         {

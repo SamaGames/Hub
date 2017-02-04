@@ -104,7 +104,7 @@ class GuiClickMeSettings extends GuiSettings
         this.drawSetting(player, "Clic gauche", new ItemStack(Material.IRON_SWORD, 1), 16, new String[] {
                 ChatColor.GRAY + "Quand cette option est activée, vous",
                 ChatColor.GRAY + "accéderez au ClickMe des joueurs en faisant",
-                ChatColor.GRAY + "un clic gauche dessus."
+                ChatColor.GRAY + "un clic gauche dessus tout en sneakant."
         }, new GuiSettingsCallback()
         {
             @Override
