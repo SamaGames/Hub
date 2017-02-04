@@ -95,7 +95,7 @@ public class GuiCosmeticsCategory<COSMETIC extends AbstractCosmetic> extends Abs
         if (action.startsWith("cosmetic_"))
         {
             int cosmetic = Integer.parseInt(action.split("_")[1]);
-            this.manager.enableCosmetic(player, this.manager.getRegistry().getElementByStorageId(cosmetic), clickType);
+            this.manager.enableCosmetic(player, this.manager.getRegistry().getElementByStorageId(cosmetic), clickType, false);
         }
         else if (action.equals("delete"))
         {

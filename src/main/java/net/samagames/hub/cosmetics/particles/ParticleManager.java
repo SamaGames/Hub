@@ -29,7 +29,7 @@ public class ParticleManager extends AbstractCosmeticManager<ParticleCosmetic>
     }
 
     @Override
-    public void enableCosmetic(Player player, ParticleCosmetic cosmetic, ClickType clickType, NullType useless)
+    public void enableCosmetic(Player player, ParticleCosmetic cosmetic, ClickType clickType, boolean login, NullType useless)
     {
         try
         {
@@ -39,7 +39,9 @@ public class ParticleManager extends AbstractCosmeticManager<ParticleCosmetic>
             particleEffectObject.start();
 
             this.playersParticleEffect.put(player.getUniqueId(), particleEffectObject);
-            player.sendMessage(PlayerManager.COSMETICS_TAG + ChatColor.GREEN + "Vous voilà noyé sous les particules...");
+
+            if (!login)
+                player.sendMessage(PlayerManager.COSMETICS_TAG + ChatColor.GREEN + "Vous voilà noyé sous les particules...");
         }
         catch (ReflectiveOperationException e)
         {

@@ -19,14 +19,15 @@ public class PetManager extends AbstractCosmeticManager<PetCosmetic>
     }
 
     @Override
-    public void enableCosmetic(Player player, PetCosmetic cosmetic, ClickType clickType, NullType useless)
+    public void enableCosmetic(Player player, PetCosmetic cosmetic, ClickType clickType, boolean login, NullType useless)
     {
         IPet pet = EchoPetAPI.getAPI().givePet(player, cosmetic.getPetType(), false);
         pet.setPetName(player.getName(), false);
 
         cosmetic.applyCustomization(pet);
 
-        player.sendMessage(PlayerManager.COSMETICS_TAG + ChatColor.GREEN + "Votre animal vient de sortir de l'écurie !");
+        if (!login)
+            player.sendMessage(PlayerManager.COSMETICS_TAG + ChatColor.GREEN + "Votre animal vient de sortir de l'écurie !");
     }
 
     @Override

@@ -39,14 +39,14 @@ public abstract class AbstractCosmeticManager<COSMETIC extends AbstractCosmetic>
         this.equipped = new ConcurrentHashMap<>();
     }
 
-    public abstract void enableCosmetic(Player player, COSMETIC cosmetic, ClickType clickType, NullType useless);
+    public abstract void enableCosmetic(Player player, COSMETIC cosmetic, ClickType clickType, boolean login, NullType useless);
     public abstract void disableCosmetic(Player player, COSMETIC cosmetic, boolean logout, boolean replace, NullType useless);
 
     public abstract void update();
 
     public abstract boolean restrictToOne();
 
-    public void enableCosmetic(Player player, COSMETIC cosmetic, ClickType clickType)
+    public void enableCosmetic(Player player, COSMETIC cosmetic, ClickType clickType, boolean login)
     {
         if (cosmetic.isOwned(player))
         {
@@ -61,7 +61,7 @@ public abstract class AbstractCosmeticManager<COSMETIC extends AbstractCosmetic>
                     if (this.restrictToOne())
                         this.disableCosmetics(player, false, true);
 
-                    this.enableCosmetic(player, cosmetic, clickType, null);
+                    this.enableCosmetic(player, cosmetic, clickType, login, null);
 
                     if (!this.equipped.containsKey(player.getUniqueId()))
                         this.equipped.put(player.getUniqueId(), new ArrayList<>());
@@ -139,7 +139,7 @@ public abstract class AbstractCosmeticManager<COSMETIC extends AbstractCosmetic>
             try
             {
                 if (SamaGamesAPI.get().getShopsManager().getPlayer(player.getUniqueId()).isSelectedItem(storageId))
-                    this.enableCosmetic(player, this.getRegistry().getElementByStorageId(storageId), ClickType.LEFT);
+                    this.enableCosmetic(player, this.getRegistry().getElementByStorageId(storageId), ClickType.LEFT, true);
             }
             catch (Exception e)
             {

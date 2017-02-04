@@ -89,7 +89,7 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
     }
 
     @Override
-    public void enableCosmetic(Player player, JukeboxDiskCosmetic cosmetic, ClickType clickType)
+    public void enableCosmetic(Player player, JukeboxDiskCosmetic cosmetic, ClickType clickType, boolean login)
     {
         if (cosmetic.isOwned(player))
         {
@@ -114,7 +114,7 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
     }
 
     @Override
-    public void enableCosmetic(Player player, JukeboxDiskCosmetic cosmetic, ClickType clickType, NullType useless) { /** Not needed **/ }
+    public void enableCosmetic(Player player, JukeboxDiskCosmetic cosmetic, ClickType clickType, boolean login, NullType useless) { /** Not needed **/ }
 
     @Override
     public void disableCosmetic(Player player, JukeboxDiskCosmetic cosmetic, boolean logout, boolean replace, NullType useless) { /** Not needed **/ }

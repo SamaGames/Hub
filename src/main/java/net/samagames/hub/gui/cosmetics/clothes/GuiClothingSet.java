@@ -50,7 +50,7 @@ class GuiClothingSet extends AbstractGui
         if (action.startsWith("cosmetic_"))
         {
             int cosmetic = Integer.parseInt(action.split("_")[1]);
-            this.hub.getCosmeticManager().getClothManager().enableCosmetic(player, this.hub.getCosmeticManager().getClothManager().getRegistry().getElementByStorageId(cosmetic), clickType);
+            this.hub.getCosmeticManager().getClothManager().enableCosmetic(player, this.hub.getCosmeticManager().getClothManager().getRegistry().getElementByStorageId(cosmetic), clickType, false);
         }
         else if (action.equals("delete"))
         {

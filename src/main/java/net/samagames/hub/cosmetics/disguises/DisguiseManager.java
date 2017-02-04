@@ -19,7 +19,7 @@ public class DisguiseManager extends AbstractCosmeticManager<DisguiseCosmetic>
     }
 
     @Override
-    public void enableCosmetic(Player player, DisguiseCosmetic cosmetic, ClickType clickType, NullType useless)
+    public void enableCosmetic(Player player, DisguiseCosmetic cosmetic, ClickType clickType, boolean login, NullType useless)
     {
         MobDisguise disguise = new MobDisguise(cosmetic.getDisguiseType());
         disguise.setShowName(true);
@@ -27,7 +27,8 @@ public class DisguiseManager extends AbstractCosmeticManager<DisguiseCosmetic>
 
         DisguiseAPI.disguiseToAll(player, disguise);
 
-        player.sendMessage(PlayerManager.COSMETICS_TAG + ChatColor.GREEN + "Vous êtes maintenant déguisé !");
+        if (!login)
+            player.sendMessage(PlayerManager.COSMETICS_TAG + ChatColor.GREEN + "Vous êtes maintenant déguisé !");
     }
 
     @Override

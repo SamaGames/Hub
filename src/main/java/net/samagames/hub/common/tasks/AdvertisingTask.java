@@ -61,7 +61,7 @@ class AdvertisingTask extends AbstractTask
         LINES = new ArrayList<>();
         LINES.add(ChatColor.YELLOW + "Toutes les informations sur " + ChatColor.RED + "www.samagames.net" + ChatColor.YELLOW + " !");
         LINES.add(ChatColor.YELLOW + "SamaGames est sur Twitter : " + ChatColor.AQUA + "@SamaGames_MC" + ChatColor.YELLOW + " !");
-        LINES.add(ChatColor.YELLOW + "SamaGames est sur YouTube : " + ChatColor.RED + "@SamaGamesNetwork" + ChatColor.YELLOW + " !");
+        LINES.add(ChatColor.YELLOW + "SamaGames est sur YouTube : " + ChatColor.RED + "@SamaGames" + ChatColor.YELLOW + " !");
         LINES.add(ChatColor.YELLOW + "Venez discuter sur TeamSpeak : " + ChatColor.GREEN + "ts.samagames.net" + ChatColor.YELLOW + " !");
     }
 }

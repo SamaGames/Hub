@@ -42,10 +42,12 @@ public class GadgetManager extends AbstractCosmeticManager<GadgetCosmetic>
     }
 
     @Override
-    public void enableCosmetic(Player player, GadgetCosmetic cosmetic, ClickType clickType, NullType useless)
+    public void enableCosmetic(Player player, GadgetCosmetic cosmetic, ClickType clickType, boolean login, NullType useless)
     {
         player.getInventory().setItem(6, cosmetic.getIcon(player));
-        player.sendMessage(PlayerManager.COSMETICS_TAG + ChatColor.GREEN + "Votre gadget a été équipé dans votre barre d'action.");
+
+        if (!login)
+            player.sendMessage(PlayerManager.COSMETICS_TAG + ChatColor.GREEN + "Votre gadget a été équipé dans votre barre d'action.");
     }
 
     @Override
