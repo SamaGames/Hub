@@ -176,7 +176,7 @@ public class ChunkWarsGame extends AbstractGame
 
             // ---------------
 
-            int[] decorationIds = new int[] { 261, 262, 263, 264, 265, 266, 267, 268, 269, 270, 271, 272 };
+            int[] decorationIds = new int[] { 261, 262, 263, 264, 265, 266, 267, 268, 269, 270, 271, 272, 333, 334, 335 };
 
             ShopCategory decorationCosmeticCategory = new ShopCategory(this.hub, this, 207, 25);
             decorationCosmeticCategory.addContent(new ShopItem(this.hub, "Décoration", decorationIds[0], 10, decorationIds));
@@ -188,9 +188,12 @@ public class ChunkWarsGame extends AbstractGame
             decorationCosmeticCategory.addContent(new ShopItem(this.hub, "Décoration", decorationIds[6], 28, decorationIds));
             decorationCosmeticCategory.addContent(new ShopItem(this.hub, "Décoration", decorationIds[7], 14, decorationIds));
             decorationCosmeticCategory.addContent(new ShopItem(this.hub, "Décoration", decorationIds[8], 15, decorationIds));
-            decorationCosmeticCategory.addContent(new ShopItem(this.hub, "Décoration", decorationIds[9], 16, decorationIds));
-            decorationCosmeticCategory.addContent(new ShopItem(this.hub, "Décoration", decorationIds[10], 23, decorationIds));
-            decorationCosmeticCategory.addContent(new ShopItem(this.hub, "Décoration", decorationIds[11], 24, decorationIds));
+            decorationCosmeticCategory.addContent(new ShopItem(this.hub, "Décoration", decorationIds[9], 23, decorationIds));
+            decorationCosmeticCategory.addContent(new ShopItem(this.hub, "Décoration", decorationIds[10], 24, decorationIds));
+            decorationCosmeticCategory.addContent(new ShopItem(this.hub, "Décoration", decorationIds[11], 25, decorationIds));
+            decorationCosmeticCategory.addContent(new ShopItem(this.hub, "Décoration", decorationIds[12], 29, decorationIds));
+            decorationCosmeticCategory.addContent(new ShopItem(this.hub, "Décoration", decorationIds[13], 30, decorationIds));
+            decorationCosmeticCategory.addContent(new ShopItem(this.hub, "Décoration", decorationIds[14], 16, decorationIds));
 
             // ---------------
 
