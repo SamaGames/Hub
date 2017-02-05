@@ -190,7 +190,7 @@ public class GameSign
             return;
         }
 
-        if (this.game.isPlayerFirstGame(SamaGamesAPI.get().getStatsManager().getPlayerStats(player.getUniqueId())))
+        if (this.game.isPlayerFirstGame(SamaGamesAPI.get().getStatsManager().getPlayerStats(player.getUniqueId())) && this.game.getWebsiteDescriptionURL() != null)
         {
             player.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
 
