@@ -45,6 +45,9 @@ commands:
   shutup:
     description: Commande relative au chat
     usage: /shutup
+  event:
+    description: Commande relative aux événements
+    usage: /event
 
   # Admin commands -----------------------------
   npc:

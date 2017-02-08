@@ -43,6 +43,7 @@ public class CommandManager extends AbstractManager
         this.registerCommand("plclear", "hub.jukebox.clear", CommandPlaylistClear.class);
         this.registerCommand("slow", "hub.mod.slow", CommandSlow.class);
         this.registerCommand("shutup", "hub.mod.shutup", CommandShutup.class);
+        this.registerCommand("event", "hub.animating.event", CommandEvent.class);
 
         // Admin commands -----------------------------------------------
         this.registerCommand("sign", "hub.admin.sign", CommandSign.class);
