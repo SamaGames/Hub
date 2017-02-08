@@ -1,4 +1,4 @@
-package net.samagames.hub.commands.moderating;
+package net.samagames.hub.commands.animating;
 
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.api.games.pearls.Pearl;
@@ -16,6 +16,7 @@ import redis.clients.jedis.Jedis;
 
 import java.lang.reflect.Field;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 /**
  *                )\._.,--....,'``.
@@ -53,7 +54,7 @@ public class CommandEvent extends AbstractCommand
             if (args.length == 5)
             {
                 String gameCodeName = args[1];
-                String template = args[2];
+                String map = args[2];
                 int pricesId = Integer.parseInt(args[3]);
 
                 Jedis jedis = SamaGamesAPI.get().getBungeeResource();
@@ -66,8 +67,11 @@ public class CommandEvent extends AbstractCommand
                     return true;
                 }
 
+                Calendar calendar = Calendar.getInstance();
+                calendar.add(Calendar.SECOND, PRICES[pricesId][2]);
+
                 jedis.set("hub:event:selected:" + player.getUniqueId().toString(), String.valueOf(pricesId));
-                jedis.set("hub:event:cooldown:" + player.getUniqueId().toString() + ":" + pricesId, String.valueOf(pricesId));
+                jedis.set("hub:event:cooldown:" + player.getUniqueId().toString() + ":" + pricesId, String.valueOf(calendar.getTime().getTime()));
                 jedis.expire("hub:event:cooldown:" + player.getUniqueId().toString() + ":" + pricesId, PRICES[pricesId][2]);
 
                 jedis.close();
@@ -79,27 +83,30 @@ public class CommandEvent extends AbstractCommand
                     gameServiceManagerField.setAccessible(true);
                     GameServiceManager gameServiceManager = (GameServiceManager) gameServiceManagerField.get(this.hub.getServer().getPluginManager().getPlugin("SamaGamesAPI"));
 
-                    gameServiceManager.applySanction(SanctionBean.TEXT, new SanctionBean(player.getUniqueId(), SanctionBean.TEXT, "Evénement créé : " + gameCodeName + ", " + template + ", " + PRICES[pricesId][0] + " pièces et " + PRICES[pricesId][1] + " perles.", null, false));
+                    gameServiceManager.applySanction(SanctionBean.TEXT, new SanctionBean(player.getUniqueId(), SanctionBean.TEXT, "Evénement créé : " + gameCodeName + ", " + map + ", " + PRICES[pricesId][0] + " pièces et " + PRICES[pricesId][1] + " perles.", null, false));
                 }
                 catch (Exception ignored) {}
 
-                player.sendMessage(ChatColor.GREEN + "Serveur commandé. Vous serez téléporté et une annonce sera faite quand celui-ci sera prêt.");
-                player.sendMessage(ChatColor.GREEN + "Votre gain est vérouillé. La commande " + ChatColor.GOLD + "/event win <pseudo>" + ChatColor.GREEN + " donnera au joueur les gains sélectionnés.");
+                player.sendMessage(ChatColor.GREEN + "Votre serveur à été commandé. Veut sera téléporté dessus en tant que modérateur. Vous ne pourrez donc pas participer au jeu.");
+                player.sendMessage(ChatColor.GREEN + "Votre gain est verouillé. La commande " + ChatColor.GOLD + "/event win <pseudo>" + ChatColor.GREEN + " donnera au joueur les gains sélectionnés.");
 
-                // TODO: Hydro order [gameCodeName] [template]
-                // Utiliser le nom de jeu "event" pour différencier les queues" !
+                String template = this.hub.getGameManager().getGameByIdentifier(gameCodeName).getGameSignsByMap(map).get(0).getTemplate();
+
+                this.hub.getHydroangeasManager().orderServer(player.getName(), template);
+
+                SamaGamesAPI.get().getPubSub().send("eventChannel", gameCodeName + ":" + template + ":" + PRICES[pricesId][0] + ":" + PRICES[pricesId][1]);
             }
             else if (args.length == 4)
             {
                 String gameCodeName = args[1];
-                String template = args[2];
+                String map = args[2];
                 int pricesId = Integer.parseInt(args[3]);
 
-                player.sendMessage(ChatUtils.getCenteredText(ChatColor.WHITE + "• Etape 4 : Confirmation •"));
+                player.sendMessage(ChatUtils.getCenteredText(ChatColor.WHITE + "• Étape 4 : Confirmation •"));
                 player.sendMessage("");
 
-                player.sendMessage(ChatColor.WHITE + "- Jeux : " + ChatColor.GRAY + this.hub.getGameManager().getGameByIdentifier(gameCodeName).getName());
-                player.sendMessage(ChatColor.WHITE + "- Map : " + template);
+                player.sendMessage(ChatColor.WHITE + "- Jeu : " + ChatColor.GRAY + this.hub.getGameManager().getGameByIdentifier(gameCodeName).getName());
+                player.sendMessage(ChatColor.WHITE + "- Carte : " + ChatColor.GRAY + map);
 
                 int[] prices = PRICES[pricesId];
                 String pricesLine = "";
@@ -116,14 +123,14 @@ public class CommandEvent extends AbstractCommand
                 player.sendMessage(ChatColor.WHITE + "- Gains : " + pricesLine);
                 player.sendMessage("");
 
-                new FancyMessage("[Lancer l'événement]").color(ChatColor.GREEN).command("/event create " + gameCodeName + " " + template + " " + pricesId + " confirm").send(player);
+                new FancyMessage("[Lancer l'événement]").color(ChatColor.GREEN).command("/event create " + gameCodeName + " " + map + " " + pricesId + " confirm").send(player);
             }
             else if (args.length == 3)
             {
                 String gameCodeName = args[1];
                 String template = args[2];
 
-                player.sendMessage(ChatUtils.getCenteredText(ChatColor.WHITE + "• Etape 3 : Choix des gains •"));
+                player.sendMessage(ChatUtils.getCenteredText(ChatColor.WHITE + "• Étape 3 : Choix des gains •"));
                 player.sendMessage("");
 
                 Jedis jedis = SamaGamesAPI.get().getBungeeResource();
@@ -137,26 +144,26 @@ public class CommandEvent extends AbstractCommand
             {
                 String gameCodeName = args[1];
 
-                player.sendMessage(ChatUtils.getCenteredText(ChatColor.WHITE + "• Etape 2 : Choix de la map •"));
+                player.sendMessage(ChatUtils.getCenteredText(ChatColor.WHITE + "• Étape 2 : Choix de la carte •"));
                 player.sendMessage("");
 
-                for (String template : this.hub.getGameManager().getGameByIdentifier(gameCodeName).getSigns().keySet())
+                for (String map : this.hub.getGameManager().getGameByIdentifier(gameCodeName).getSigns().keySet())
                 {
                     new FancyMessage("[\u25B6]").color(ChatColor.GREEN)
-                            .command("/event create " + gameCodeName + " " + template)
+                            .command("/event create " + gameCodeName + " " + map)
                             .tooltip(ChatColor.GOLD + "» Clic pour sélectionner")
-                            .then(" " + template).color(ChatColor.GRAY)
+                            .then(" " + map).color(ChatColor.GRAY)
                             .send(player);
                 }
             }
             else
             {
-                player.sendMessage(ChatUtils.getCenteredText(ChatColor.WHITE + "• Etape 1 : Choix du jeu •"));
+                player.sendMessage(ChatUtils.getCenteredText(ChatColor.WHITE + "• Étape 1 : Choix du jeu •"));
                 player.sendMessage("");
 
                 for (AbstractGame game : this.hub.getGameManager().getGames().values())
                 {
-                    if (game.getCodeName().equals("beta_vip") || game.getCodeName().equals("event"))
+                    if (game.getCodeName().equals("beta_vip") || game.getCodeName().equals("uhczone") || game.getCodeName().equals("event"))
                         continue;
 
                     new FancyMessage("[\u25B6]").color(ChatColor.GREEN)
@@ -216,7 +223,12 @@ public class CommandEvent extends AbstractCommand
         }
         else
         {
-            this.showHelp(player);
+            Jedis jedis = SamaGamesAPI.get().getBungeeResource();
+
+            for (int i = 0; i < PRICES.length; i++)
+                this.showPrices(jedis, player, null, null, i, PRICES[i][0], PRICES[i][1]);
+
+            jedis.close();
         }
 
         return true;
@@ -226,16 +238,16 @@ public class CommandEvent extends AbstractCommand
     {
         boolean currentlyCooldown = jedis.exists("hub:event:cooldown:" + player.getUniqueId().toString() + ":" + id);
 
-        FancyMessage message = new FancyMessage("[" + (currentlyCooldown ? "\u2715" : "\u25B6") + "]").color(currentlyCooldown ? ChatColor.RED : ChatColor.GREEN);
+        FancyMessage message = new FancyMessage("[\u25B6]").color(currentlyCooldown ? ChatColor.RED : ChatColor.GREEN);
 
-        if (!currentlyCooldown)
+        if (!currentlyCooldown && gameCodeName != null)
         {
             message.command("/event create " + gameCodeName + " " + template + " " + id);
             message.tooltip(ChatColor.GOLD + "» Clic pour sélectionner");
         }
         else
         {
-            message.tooltip(ChatColor.RED + "» Indisponible pour le moment.");
+            message.tooltip(ChatColor.RED + "» Disponible dans " + this.formatCooldownDate(Long.parseLong(jedis.get("hub:event:cooldown:" + player.getUniqueId().toString() + ":" + id))));
         }
 
         message.then(" ");
@@ -271,5 +283,36 @@ public class CommandEvent extends AbstractCommand
                 .tooltip(ChatColor.GOLD + "» Clic pour pré-remplir la commande")
                 .then(" : " + description).color(ChatColor.GRAY)
                 .send(player);
+    }
+
+    private String formatCooldownDate(long endTime)
+    {
+        long delta = endTime - System.currentTimeMillis();
+
+        long days = TimeUnit.MILLISECONDS.toDays(delta);
+        delta -= TimeUnit.DAYS.toMillis(days);
+        long hours = TimeUnit.MILLISECONDS.toHours(delta);
+        delta -= TimeUnit.HOURS.toMillis(hours);
+        long minutes = TimeUnit.MILLISECONDS.toMinutes(delta);
+        delta -= TimeUnit.MINUTES.toMillis(minutes);
+        long seconds = TimeUnit.MILLISECONDS.toSeconds(delta);
+
+        String ret = "";
+        if (days > 0)
+            ret += days + " jours ";
+
+        if (hours > 0)
+            ret += hours + " heures ";
+
+        if (minutes > 0)
+            ret += minutes + " minutes ";
+
+        if (seconds > 0)
+            ret += seconds + " secondes";
+
+        if (ret.isEmpty() && minutes == 0)
+            ret += "moins d'une minute";
+
+        return ret;
     }
 }

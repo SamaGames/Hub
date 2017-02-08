@@ -29,6 +29,11 @@ commands:
     description: Commande relative au Fly
     usage: /fly
 
+  # Animating commands -------------------------
+  event:
+      description: Commande relative aux événements
+      usage: /event
+
   # Moderating commands ------------------------
   pllock:
     description: Commande relative au Jukebox
@@ -45,9 +50,6 @@ commands:
   shutup:
     description: Commande relative au chat
     usage: /shutup
-  event:
-    description: Commande relative aux événements
-    usage: /event
 
   # Admin commands -----------------------------
   npc:

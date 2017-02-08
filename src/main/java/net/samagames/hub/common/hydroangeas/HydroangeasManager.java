@@ -3,6 +3,7 @@ package net.samagames.hub.common.hydroangeas;
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import net.samagames.hub.common.hydroangeas.connection.ConnectionManager;
+import net.samagames.hub.common.hydroangeas.packets.other.CommandPacket;
 import net.samagames.hub.common.hydroangeas.packets.queues.QueueAddPlayerPacket;
 import net.samagames.hub.common.hydroangeas.packets.queues.QueueAttachPlayerPacket;
 import net.samagames.hub.common.hydroangeas.packets.queues.QueuePacket;
@@ -96,6 +97,11 @@ public class HydroangeasManager extends AbstractManager
         addPlayerToQueue(leader, templateID);
 
         this.connectionManager.sendPacket(new QueueAttachPlayerPacket(qPlayer, players));
+    }
+
+    public void orderServer(String player, String template)
+    {
+        this.connectionManager.sendPacket(new CommandPacket(player, "order " + template));
     }
 
     public int getPriority(UUID uuid)

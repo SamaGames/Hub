@@ -2,6 +2,7 @@ package net.samagames.hub.commands;
 
 import net.samagames.hub.Hub;
 import net.samagames.hub.commands.admin.*;
+import net.samagames.hub.commands.animating.CommandEvent;
 import net.samagames.hub.commands.moderating.*;
 import net.samagames.hub.commands.players.*;
 import net.samagames.hub.common.managers.AbstractManager;
@@ -37,13 +38,15 @@ public class CommandManager extends AbstractManager
         this.registerCommand("join", null, CommandJoin.class);
         this.registerCommand("fly", null, CommandFly.class);
 
+        // Animating commands
+        this.registerCommand("event", "hub.animating.event", CommandEvent.class);
+
         // Moderating commands ------------------------------------------
         this.registerCommand("pllock", "hub.jukebox.lock", CommandPlaylistLock.class);
         this.registerCommand("plnext", "hub.jukebox.next", CommandPlaylistNext.class);
         this.registerCommand("plclear", "hub.jukebox.clear", CommandPlaylistClear.class);
         this.registerCommand("slow", "hub.mod.slow", CommandSlow.class);
         this.registerCommand("shutup", "hub.mod.shutup", CommandShutup.class);
-        this.registerCommand("event", "hub.animating.event", CommandEvent.class);
 
         // Admin commands -----------------------------------------------
         this.registerCommand("sign", "hub.admin.sign", CommandSign.class);

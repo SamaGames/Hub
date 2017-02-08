@@ -137,6 +137,7 @@ public class Hub extends JavaPlugin
         //SamaGamesAPI.get().getPubSub().subscribe("", new InteractionListener(this));
         SamaGamesAPI.get().getPubSub().subscribe("maintenanceSignChannel", new MaintenanceListener(this));
         SamaGamesAPI.get().getPubSub().subscribe("soonSignChannel", new SoonListener(this));
+        SamaGamesAPI.get().getPubSub().subscribe("eventChannel", new EventListener(this));
 
         this.getServer().getScheduler().runTaskTimerAsynchronously(this, () ->
                 {
