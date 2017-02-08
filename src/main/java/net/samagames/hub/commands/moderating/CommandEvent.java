@@ -230,7 +230,7 @@ public class CommandEvent extends AbstractCommand
 
         if (!currentlyCooldown)
         {
-            message.command("/event create " + gameCodeName + " " + template + " " + coins + " " + pearls);
+            message.command("/event create " + gameCodeName + " " + template + " " + id);
             message.tooltip(ChatColor.GOLD + "» Clic pour sélectionner");
         }
         else
