@@ -39,7 +39,13 @@ public class CommandEvent extends AbstractCommand
     {
         if (args.length < 1)
         {
-            this.showHelp(player);
+            Jedis jedis = SamaGamesAPI.get().getBungeeResource();
+
+            for (int i = 0; i < PRICES.length; i++)
+                this.showPrices(jedis, player, null, null, i, PRICES[i][0], PRICES[i][1]);
+
+            jedis.close();
+
             return true;
         }
 
@@ -223,12 +229,7 @@ public class CommandEvent extends AbstractCommand
         }
         else
         {
-            Jedis jedis = SamaGamesAPI.get().getBungeeResource();
-
-            for (int i = 0; i < PRICES.length; i++)
-                this.showPrices(jedis, player, null, null, i, PRICES[i][0], PRICES[i][1]);
-
-            jedis.close();
+            this.showHelp(player);
         }
 
         return true;
