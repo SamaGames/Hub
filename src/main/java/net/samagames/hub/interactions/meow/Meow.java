@@ -87,12 +87,6 @@ class Meow extends AbstractInteraction
         hologram.addReceiver(player);
 
         this.holograms.put(player.getUniqueId(), hologram);
-
-        if (fishes > 0)
-        {
-            player.sendMessage(TAG + ChatColor.YELLOW + "Vous avez " + ChatColor.GOLD + fishes + ChatColor.YELLOW + " poisson" + (fishes > 1 ? "s" : "") + " à récupérer ! Venez me voir :)");
-            player.playSound(this.meowEntity.getBukkitEntity().getLocation(), Sound.ENTITY_CAT_AMBIENT, 1.0F, 1.5F);
-        }
     }
 
     public void onLogout(Player player)

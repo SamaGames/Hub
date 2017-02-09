@@ -123,16 +123,14 @@ public class GuiAchievements extends AbstractGui
                     lore.add(ChatColor.DARK_GRAY + "Vous avez débloqué cet objectif");
                     lore.add(ChatColor.DARK_GRAY + "le : " + ChatColor.GRAY + WordUtils.capitalize(DATE_FORMATTER.format(unlockDate)) + ChatColor.DARK_GRAY + ".");
                 }
-                else if (achievement instanceof IncrementationAchievement)
-                {
-                    int target = progress == null ? ((IncrementationAchievement) achievement).getObjective() : (((IncrementationAchievement) achievement).getObjective() - progress.getProgress());
-
-                    lore.add(ChatColor.DARK_GRAY + "Vous devez effectuer cette action");
-                    lore.add(ChatColor.DARK_GRAY + "encore " + ChatColor.GRAY + String.valueOf(target) + ChatColor.DARK_GRAY + " fois pour débloquer");
-                    lore.add(ChatColor.DARK_GRAY + "cet objectif.");
-                }
                 else
                 {
+                    if (achievement instanceof IncrementationAchievement)
+                    {
+                        lore.add(ChatColor.DARK_GRAY + "Progression : " + ChatColor.GRAY + progress.getProgress() + "/" + ((IncrementationAchievement) achievement).getObjective());
+                        lore.add("");
+                    }
+
                     lore.add(ChatColor.DARK_GRAY + "Cet objectif n'est pas encore");
                     lore.add(ChatColor.DARK_GRAY + "débloqué.");
                 }

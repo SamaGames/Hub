@@ -70,11 +70,11 @@ class Graou extends AbstractInteraction
         if (this.holograms.containsKey(player.getUniqueId()))
             this.onLogout(player);
 
-        int perls = this.hub.getInteractionManager().getGraouManager().getPlayerPearls(player.getUniqueId()).size();
+        int pearls = this.hub.getInteractionManager().getGraouManager().getPlayerPearls(player.getUniqueId()).size();
         Hologram hologram;
 
-        if (perls > 0)
-            hologram = new Hologram(GRAOU_NAME, ChatColor.GOLD + "" + perls + ChatColor.YELLOW + " perle" + (perls > 1 ? "s" : "") + " à échanger");
+        if (pearls > 0)
+            hologram = new Hologram(GRAOU_NAME, ChatColor.GOLD + "" + pearls + ChatColor.YELLOW + " perle" + (pearls > 1 ? "s" : "") + " à échanger");
         else
             hologram = new Hologram(GRAOU_NAME);
 
@@ -82,12 +82,6 @@ class Graou extends AbstractInteraction
         hologram.addReceiver(player);
 
         this.holograms.put(player.getUniqueId(), hologram);
-
-        if (perls > 0)
-        {
-            player.sendMessage(TAG + ChatColor.RED + "Vous avez " + ChatColor.GOLD + perls + ChatColor.RED + " perle" + (perls > 1 ? "s" : "") + " à échanger ! Venez me voir :)");
-            player.playSound(this.graouEntity.getBukkitEntity().getLocation(), Sound.ENTITY_CAT_AMBIENT, 1.0F, 1.5F);
-        }
     }
 
     public void onLogout(Player player)
