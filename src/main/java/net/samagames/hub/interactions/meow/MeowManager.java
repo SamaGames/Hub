@@ -40,12 +40,12 @@ public class MeowManager extends AbstractInteractionManager<Meow> implements Lis
                 ChatColor.GRAY + "acceptez ce modeste présent.",
                 "",
                 ChatColor.GRAY + "Contient :",
-                ChatColor.WHITE + "- " + ChatColor.GREEN + "3 perle de niveau 4"
+                ChatColor.WHITE + "- " + ChatColor.GREEN + "3 perles de niveau 4"
         }, calendar.getActualMaximum(Calendar.DAY_OF_MONTH), Calendar.DAY_OF_YEAR, "network.vip", player ->
         {
             Calendar c = Calendar.getInstance();
             c.setTime(new Date());
-            c.add(Calendar.MONTH, 1);
+            c.add(Calendar.DAY_OF_MONTH, 7);
 
             for (int i = 0; i < 3; i++)
                 this.hub.getInteractionManager().getWellManager().addPearlToPlayer(player, new Pearl(UUID.randomUUID(), 4, c.getTime().getTime()));
@@ -57,12 +57,12 @@ public class MeowManager extends AbstractInteractionManager<Meow> implements Lis
                 ChatColor.GRAY + "acceptez ce modeste présent.",
                 "",
                 ChatColor.GRAY + "Contient :",
-                ChatColor.WHITE + "- " + ChatColor.GREEN + "3 perle de niveau 5"
+                ChatColor.WHITE + "- " + ChatColor.GREEN + "3 perles de niveau 5"
         }, calendar.getActualMaximum(Calendar.DAY_OF_MONTH), Calendar.DAY_OF_YEAR, "network.vipplus", player ->
         {
             Calendar c = Calendar.getInstance();
             c.setTime(new Date());
-            c.add(Calendar.MONTH, 1);
+            c.add(Calendar.DAY_OF_MONTH, 7);
 
             for (int i = 0; i < 3; i++)
                 this.hub.getInteractionManager().getWellManager().addPearlToPlayer(player, new Pearl(UUID.randomUUID(), 5, c.getTime().getTime()));

@@ -113,7 +113,7 @@ public class WellManager extends AbstractInteractionManager<Well> implements Lis
     {
         int[] expectedNumbers = this.generateRandomNumbers();
         int pearlStars = 1;
-        int craftingTime = 60;
+        int craftingTime;
 
         if (Arrays.equals(numbers, new int[] {24, 6, 20, 14})) // 24 June 2014
         {
@@ -141,7 +141,14 @@ public class WellManager extends AbstractInteractionManager<Well> implements Lis
             if (groupId > 3)
                 groupId = 4;
 
-            craftingTime -= 15 * (groupId - 1);
+            if (groupId == 1)
+                craftingTime = 60 * 6;
+            else if (groupId == 2)
+                craftingTime = 60 * 3;
+            else if (groupId == 3)
+                craftingTime = 60;
+            else
+                craftingTime = 10;
         }
 
         Calendar calendar = Calendar.getInstance();
@@ -159,6 +166,8 @@ public class WellManager extends AbstractInteractionManager<Well> implements Lis
 
         SamaGamesAPI.get().getPlayerManager().getPlayerData(player.getUniqueId()).decreasePowders(64);
         this.hub.getScoreboardManager().update(player);
+
+        player.sendMessage(Well.TAG + ChatColor.GREEN + "Votre perle est en cours de création. Elle sera prête dans " + ChatColor.GOLD + (craftingTime / 60 >= 1 ? (craftingTime / 60) + " heure" + (craftingTime / 60 > 1 ? "s" : "") : craftingTime + " minute" + (craftingTime > 1 ? "s" : "")) + ChatColor.GREEN + ". Vous pouvez continuer de jouer pendant ce temps, vous serez informé quand elle sera prête.");
     }
 
     public void finalizePearlCrafting(Player player, UUID craftingPearlUUID)
