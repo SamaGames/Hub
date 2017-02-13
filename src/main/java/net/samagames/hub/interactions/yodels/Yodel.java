@@ -21,7 +21,6 @@ class Yodel extends AbstractInteraction
     private Location start;
     private Location end;
     private Location landing;
-    private boolean reverse;
 
     private double length;
 
@@ -29,22 +28,21 @@ class Yodel extends AbstractInteraction
     private final ArmorStand startBeacon;
     private static final Map<UUID, YodelRunner> runnerList = new HashMap<>();
 
-    Yodel(Hub hub, Location boarding, Location start, Location end, Location landing, boolean reverse)
+    Yodel(Hub hub, Location boarding, Location start, Location end, Location landing)
     {
         super(hub);
         this.boarding = boarding.clone();
         this.start    = start.clone();
         this.end      = end.clone();
         this.landing  = landing.clone();
-        this.reverse = reverse;
 
         this.length = start.distanceSquared(end);
 
-        this.startBeacon = boarding.getWorld().spawn(reverse ? landing : boarding, ArmorStand.class);
+        this.startBeacon = boarding.getWorld().spawn(boarding, ArmorStand.class);
         this.startBeacon.setVisible(false);
         this.startBeacon.setGravity(false);
 
-        this.hub.getTaskManager().getCirclesTask().addCircleAt(reverse ? landing : boarding);
+        this.hub.getTaskManager().getCirclesTask().addCircleAt(boarding);
         this.startTask = ProximityUtils.onNearbyOf(this.hub, this.startBeacon, 0.5D, 0.5D, 0.5D, Player.class, this::play);
     }
 
@@ -84,7 +82,7 @@ class Yodel extends AbstractInteraction
         if (runnerList.containsKey(player.getUniqueId()) || player.getGameMode() == GameMode.SPECTATOR)
             return;
 
-        YodelRunner runner = new YodelRunner(this.hub, this, player, this.reverse);
+        YodelRunner runner = new YodelRunner(this.hub, this, player);
         runnerList.put(player.getUniqueId(), runner);
         runner.start();
 

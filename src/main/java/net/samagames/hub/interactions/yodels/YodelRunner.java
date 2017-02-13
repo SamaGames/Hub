@@ -17,7 +17,6 @@ class YodelRunner extends BukkitRunnable
     private final Hub hub;
     private final Yodel yodel;
     private final Player player;
-    private final boolean reverse;
 
     private boolean wasAllowedToFly = false;
     private boolean wasFlying = false;
@@ -25,11 +24,10 @@ class YodelRunner extends BukkitRunnable
     private Vector velocityStep;
 
 
-    YodelRunner(Hub hub, Yodel yodel, Player player, boolean reverse)
+    YodelRunner(Hub hub, Yodel yodel, Player player)
     {
         this.yodel = yodel;
         this.player = player;
-        this.reverse = reverse;
         this.hub = hub;
     }
 
@@ -38,13 +36,13 @@ class YodelRunner extends BukkitRunnable
         wasAllowedToFly = player.getAllowFlight();
         wasFlying = player.isFlying();
 
-        player.teleport(getStart().setDirection(yodel.getAngleVector().multiply(reverse ? -1 : 1)));
+        player.teleport(getStart().setDirection(yodel.getAngleVector().multiply(1)));
         player.teleport(player.getLocation().add(0, 0.3, 0));
 
         player.setAllowFlight(true);
         player.setFlying(true);
 
-        velocityStep = yodel.getAngleVector().normalize().multiply(SPEED).multiply(reverse ? -1 : 1);
+        velocityStep = yodel.getAngleVector().normalize().multiply(SPEED).multiply(1);
         runTaskTimer(this.hub, 2L, 2L);
     }
 
@@ -119,17 +117,17 @@ class YodelRunner extends BukkitRunnable
 
     private Location getStart()
     {
-        return reverse ? yodel.getEnd() : yodel.getStart();
+        return yodel.getStart();
     }
 
     private Location getEnd()
     {
-        return reverse ? yodel.getStart() : yodel.getEnd();
+        return yodel.getEnd();
     }
 
     private Location getLanding()
     {
-        return reverse ? yodel.getBoarding() : yodel.getLanding();
+        return yodel.getLanding();
     }
 
     private boolean isZero(Vector vector)

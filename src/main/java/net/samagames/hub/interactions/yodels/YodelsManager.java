@@ -37,8 +37,6 @@ public class YodelsManager extends AbstractInteractionManager<Yodel>
                 ArmorStand startArmorStand = (ArmorStand) startPlatform.getWorld().getNearbyEntities(startPlatform, 4.0D, 4.0D, 4.0D).stream().filter(entity -> entity instanceof ArmorStand).filter(entity -> entity.getCustomName().equals(startRails)).findFirst().orElse(null);
                 ArmorStand endArmorStand = (ArmorStand) endPlatform.getWorld().getNearbyEntities(endPlatform, 4.0D, 4.0D, 4.0D).stream().filter(entity -> entity instanceof ArmorStand).filter(entity -> entity.getCustomName().equals(endRails)).findFirst().orElse(null);
 
-                JsonElement reverse = jsonYodel.get("reverse");
-
                 if (startArmorStand == null || endArmorStand == null)
                 {
                     this.log(Level.WARNING, "Can't find one of the two ends of yodel");
@@ -49,16 +47,17 @@ public class YodelsManager extends AbstractInteractionManager<Yodel>
                     this.log(Level.WARNING, "end-platform = " + jsonYodel.get("end-platform").getAsString());
                     this.log(Level.WARNING, "start-armorstand = " + (startArmorStand == null ? "NULL" : "NOTNULL" ));
                     this.log(Level.WARNING, "end-armorstand = " + (endArmorStand == null ? "NULL" : "NOTNULL"));
-                    this.log(Level.WARNING, "reverse = " + (reverse == null ? "false" : reverse.getAsBoolean()));
                     this.log(Level.WARNING, "--------------------------------------------");
+
                     continue;
                 }
 
                 Location startRailsLoc = startArmorStand.getLocation().clone().subtract(0.0D, 1.8D, 0.0D);
                 Location endRailsLoc = endArmorStand.getLocation().clone().subtract(0.0D, 1.8D, 0.0D);
 
-                Yodel yodel = new Yodel(this.hub, startPlatform, startRailsLoc, endRailsLoc, endPlatform, reverse != null && reverse.getAsBoolean());
-                this.interactions.add(yodel);
+                this.interactions.add(new Yodel(this.hub, startPlatform, startRailsLoc, endRailsLoc, endPlatform));
+                this.interactions.add(new Yodel(this.hub, endPlatform, endRailsLoc, startRailsLoc, startPlatform));
+
                 this.log(Level.INFO, "Registered yodel at '" + jsonYodel.get("start-platform").getAsString());
 
             }
