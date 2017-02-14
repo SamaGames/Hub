@@ -247,7 +247,7 @@ public class CommandEvent extends AbstractCommand
                 return true;
             }
 
-            int pricesId = Integer.parseInt(jedis.get("hub:event:selected:" + player.getUniqueId().toString()).split(":")[2]);
+            int pricesId = Integer.parseInt(jedis.get("hub:event:current:" + player.getUniqueId().toString()).split(":")[2]);
 
             if (PRICES[pricesId][0] > 0)
                 SamaGamesAPI.get().getPlayerManager().getPlayerData(this.hub.getServer().getPlayer(playerName).getUniqueId()).creditCoins(PRICES[pricesId][0], "Evénement", false);
@@ -264,7 +264,7 @@ public class CommandEvent extends AbstractCommand
                 this.hub.getInteractionManager().getGraouManager().update(this.hub.getServer().getPlayer(playerName));
             }
 
-            jedis.del("hub:event:selected:" + player.getUniqueId().toString());
+            jedis.del("hub:event:current:" + player.getUniqueId().toString());
 
             player.sendMessage(ChatColor.GREEN + "Le joueur a bien été crédité de ses gains. L'événement est marqué comme terminé.");
         }
