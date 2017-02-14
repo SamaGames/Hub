@@ -32,8 +32,8 @@ public class EventListener implements IPacketsReceiver
         int pearls = Integer.parseInt(data[3]);
 
         FancyMessage message = new FancyMessage("[Événement] ").color(ChatColor.DARK_PURPLE)
-                .then("Une animation a débutée en ").color(ChatColor.LIGHT_PURPLE)
-                .then(this.hub.getGameManager().getGameByIdentifier(gameCodeName).getName()).color(ChatColor.DARK_PURPLE)
+                .then("Une animation a débutée " + (gameCodeName.equals("hub") ? "sur le " : "en ")).color(ChatColor.LIGHT_PURPLE)
+                .then(gameCodeName.equals("hub") ? "Hub " + template : this.hub.getGameManager().getGameByIdentifier(gameCodeName).getName()).color(ChatColor.DARK_PURPLE)
                 .then(". Récompenses : ");
 
         if (coins > 0)
@@ -46,7 +46,7 @@ public class EventListener implements IPacketsReceiver
             message.then(pearls + " perle" + (pearls > 1 ? "s" : "")).color(ChatColor.LIGHT_PURPLE);
 
         message.then(".").color(ChatColor.LIGHT_PURPLE);
-        message.then("[Cliquez ici]").color(ChatColor.DARK_PURPLE).command("/join " + gameCodeName + " " + template).tooltip(ChatColor.GOLD + "» Clic pour rejoindre");
+        message.then("[Cliquez ici]").color(ChatColor.DARK_PURPLE).command(gameCodeName.equals("hub") ? "/hub " + template : "/join " + gameCodeName + " " + template).tooltip(ChatColor.GOLD + "» Clic pour rejoindre");
 
         this.hub.getServer().getOnlinePlayers().forEach(message::send);
     }
