@@ -105,6 +105,8 @@ public class CommandEvent extends AbstractCommand
 
                 if (!gameCodeName.equals("hub"))
                 {
+                    this.hub.getEventListener().setWaiting(player.getUniqueId(), this.hub.getGameManager().getGameByIdentifier(gameCodeName).getName());
+
                     this.hub.getHydroangeasManager().orderServer(player.getName(), template);
                     player.sendMessage(ChatColor.GREEN + "Votre serveur à été commandé. Veut sera téléporté dessus en tant que modérateur. Vous ne pourrez donc pas participer au jeu.");
                 }

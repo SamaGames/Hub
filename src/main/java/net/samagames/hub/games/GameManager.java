@@ -1,6 +1,7 @@
 package net.samagames.hub.games;
 
 import net.samagames.api.SamaGamesAPI;
+import net.samagames.api.pubsub.IPacketsReceiver;
 import net.samagames.hub.Hub;
 import net.samagames.hub.common.hydroangeas.packets.PacketCallBack;
 import net.samagames.hub.common.hydroangeas.packets.hubinfos.GameInfoToHubPacket;
@@ -59,7 +60,6 @@ public class GameManager extends AbstractManager
         this.registerGame(new BackEndGame(hub, "hangovergames", "HangoverGames", this.hub.getPlayerManager().getSpawn(), null, false));
         this.registerGame(new BackEndGame(hub, "pacman", "PacMan", this.hub.getPlayerManager().getSpawn(), null, false));
         this.registerGame(new BackEndGame(hub, "flyring", "FlyRing", this.hub.getPlayerManager().getSpawn(), null, false));
-        this.registerGame(new BackEndGame(hub, "partygames", "PartyGames", this.hub.getPlayerManager().getSpawn(), null, false));
         this.registerGame(new BackEndGame(hub, "casino", "Casino", this.hub.getPlayerManager().getSpawn(), null, false));
         this.registerGame(new BackEndGame(hub, "agarmc", "AgarMC", this.hub.getPlayerManager().getSpawn(), null, true));
         this.registerGame(new BackEndGame(hub, "timberman", "TimberMan", this.hub.getPlayerManager().getSpawn(), null, false));

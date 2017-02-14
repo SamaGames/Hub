@@ -71,6 +71,7 @@ public class Hub extends JavaPlugin
     private InteractionManager interactionManager;
     private HostGameManager hostGameManager;
 
+    private EventListener eventListener;
     private ScheduledFuture hydroangeasSynchronization;
 
     @Override
@@ -137,7 +138,10 @@ public class Hub extends JavaPlugin
         //SamaGamesAPI.get().getPubSub().subscribe("", new InteractionListener(this));
         SamaGamesAPI.get().getPubSub().subscribe("maintenanceSignChannel", new MaintenanceListener(this));
         SamaGamesAPI.get().getPubSub().subscribe("soonSignChannel", new SoonListener(this));
-        SamaGamesAPI.get().getPubSub().subscribe("eventChannel", new EventListener(this));
+
+        this.eventListener = new EventListener(this);
+        SamaGamesAPI.get().getPubSub().subscribe("eventChannel", this.eventListener);
+        SamaGamesAPI.get().getPubSub().subscribe("servers", this.eventListener);
 
         this.getServer().getScheduler().runTaskTimerAsynchronously(this, () ->
                 {
@@ -203,6 +207,11 @@ public class Hub extends JavaPlugin
     public CosmeticManager getCosmeticManager() { return this.cosmeticManager; }
     public InteractionManager getInteractionManager() { return this.interactionManager; }
     public HostGameManager getHostGameManager() { return this.hostGameManager; }
+
+    public EventListener getEventListener()
+    {
+        return this.eventListener;
+    }
 
     public EffectLib getEffectLib()
     {
