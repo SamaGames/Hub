@@ -89,10 +89,12 @@ public class CommandEvent extends AbstractCommand
                     return true;
                 }
 
+                String template = gameCodeName.equals("hub") ? SamaGamesAPI.get().getServerName().split("_")[1] : this.hub.getGameManager().getGameByIdentifier(gameCodeName).getGameSignsByMap(map).get(0).getTemplate();
+
                 Calendar calendar = Calendar.getInstance();
                 calendar.add(Calendar.SECOND, PRICES[pricesId][2]);
 
-                jedis.set("hub:event:current:" + player.getUniqueId().toString(), gameCodeName + ":" + map + ":" + String.valueOf(pricesId));
+                jedis.set("hub:event:current:" + player.getUniqueId().toString(), gameCodeName + ":" + template + ":" + String.valueOf(pricesId));
                 jedis.set("hub:event:cooldown:" + player.getUniqueId().toString() + ":" + pricesId, String.valueOf(calendar.getTime().getTime()));
                 jedis.expire("hub:event:cooldown:" + player.getUniqueId().toString() + ":" + pricesId, PRICES[pricesId][2]);
 
@@ -110,8 +112,6 @@ public class CommandEvent extends AbstractCommand
                 catch (Exception ignored) {}
 
                 player.sendMessage(ChatColor.GREEN + "Votre gain est verouillé. La commande " + ChatColor.GOLD + "/event win <pseudo>" + ChatColor.GREEN + " donnera au joueur les gains sélectionnés.");
-
-                String template = gameCodeName.equals("hub") ? SamaGamesAPI.get().getServerName().split("_")[1] : this.hub.getGameManager().getGameByIdentifier(gameCodeName).getGameSignsByMap(map).get(0).getTemplate();
 
                 if (!gameCodeName.equals("hub"))
                 {
