@@ -127,7 +127,7 @@ public class GuiAchievements extends AbstractGui
                 {
                     if (achievement instanceof IncrementationAchievement)
                     {
-                        lore.add(ChatColor.DARK_GRAY + "Progression : " + ChatColor.GRAY + progress.getProgress() + "/" + ((IncrementationAchievement) achievement).getObjective());
+                        lore.add(ChatColor.DARK_GRAY + "Progression : " + ChatColor.GRAY + (progress == null ? 0 : progress.getProgress()) + "/" + ((IncrementationAchievement) achievement).getObjective());
                         lore.add("");
                     }
 
