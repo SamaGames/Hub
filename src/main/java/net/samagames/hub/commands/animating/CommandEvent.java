@@ -63,13 +63,23 @@ public class CommandEvent extends AbstractCommand
             player.sendMessage(ChatUtils.getCenteredText(ChatColor.WHITE + "♦ " + ChatColor.BOLD + "Assistant de création d'événement" + ChatColor.WHITE + " ♦"));
             player.sendMessage("");
 
+            Jedis jedis = SamaGamesAPI.get().getBungeeResource();
+            boolean ongoing = jedis.exists("hub:event:selected:" + player.getUniqueId().toString());
+            jedis.close();
+
+            if (ongoing)
+            {
+                player.sendMessage(ChatColor.RED + "Un événement est déjà en cours. Terminez le en faisant gagner la/les récompense(s) à un joueur.");
+                return true;
+            }
+
             if (args.length == 5)
             {
                 String gameCodeName = args[1];
                 String map = args[2];
                 int pricesId = Integer.parseInt(args[3]);
 
-                Jedis jedis = SamaGamesAPI.get().getBungeeResource();
+                jedis = SamaGamesAPI.get().getBungeeResource();
 
                 if (jedis.exists("hub:event:cooldown:" + player.getUniqueId().toString() + ":" + pricesId))
                 {
@@ -151,7 +161,7 @@ public class CommandEvent extends AbstractCommand
                 player.sendMessage(ChatUtils.getCenteredText(ChatColor.WHITE + "• Étape 3 : Choix des gains •"));
                 player.sendMessage("");
 
-                Jedis jedis = SamaGamesAPI.get().getBungeeResource();
+                jedis = SamaGamesAPI.get().getBungeeResource();
 
                 for (int i = 0; i < PRICES.length; i++)
                     this.showPrices(jedis, player, gameCodeName, template, i, PRICES[i][0], PRICES[i][1]);
