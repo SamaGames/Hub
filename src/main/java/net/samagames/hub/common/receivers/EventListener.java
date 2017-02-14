@@ -75,12 +75,14 @@ public class EventListener implements IPacketsReceiver
                     this.waiting.remove(animator);
                     continue;
                 }
-                
+
                 String gameName = this.waiting.get(animator);
 
                 if (data[1].startsWith(gameName))
                 {
                     SamaGamesAPI.get().getPubSub().send(data[1], "moderator " + animator);
+                    SamaGamesAPI.get().getPubSub().send(data[1], "teleport " + animator);
+
                     this.waiting.remove(animator);
                 }
             }
