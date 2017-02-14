@@ -109,7 +109,7 @@ public class CommandEvent extends AbstractCommand
                     player.sendMessage(ChatColor.GREEN + "Votre serveur à été commandé. Veut sera téléporté dessus en tant que modérateur. Vous ne pourrez donc pas participer au jeu.");
                 }
 
-                SamaGamesAPI.get().getPubSub().send("eventChannel", gameCodeName + ":" + template + ":" + PRICES[pricesId][0] + ":" + PRICES[pricesId][1]);
+                this.hub.getServer().getScheduler().runTaskLaterAsynchronously(this.hub, () -> SamaGamesAPI.get().getPubSub().send("eventChannel", gameCodeName + ":" + template + ":" + PRICES[pricesId][0] + ":" + PRICES[pricesId][1]), 20L);
             }
             else if (args.length == 4)
             {

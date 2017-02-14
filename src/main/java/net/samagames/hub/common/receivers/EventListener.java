@@ -46,7 +46,7 @@ public class EventListener implements IPacketsReceiver
             message.then(pearls + " perle" + (pearls > 1 ? "s" : "")).color(ChatColor.DARK_PURPLE).style(ChatColor.BOLD);
 
         message.then(". ").color(ChatColor.LIGHT_PURPLE);
-        message.then("[Cliquez ici]").color(ChatColor.DARK_AQUA).style(ChatColor.BOLD).command(gameCodeName.equals("hub") ? "/hub " + template : "/join " + gameCodeName + " " + template).tooltip(ChatColor.GOLD + "» Clic pour rejoindre");
+        message.then("[Cliquez ici]").color(ChatColor.AQUA).style(ChatColor.BOLD).command(gameCodeName.equals("hub") ? "/hub " + template : "/join " + gameCodeName + " " + template).tooltip(ChatColor.GOLD + "» Clic pour rejoindre");
 
         this.hub.getServer().getOnlinePlayers().forEach(player ->
         {
