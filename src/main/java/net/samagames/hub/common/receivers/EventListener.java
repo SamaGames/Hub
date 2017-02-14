@@ -31,23 +31,28 @@ public class EventListener implements IPacketsReceiver
         int coins = Integer.parseInt(data[2]);
         int pearls = Integer.parseInt(data[3]);
 
-        FancyMessage message = new FancyMessage("[Événement] ").color(ChatColor.DARK_PURPLE)
-                .then("Une animation a débutée " + (gameCodeName.equals("hub") ? "sur le " : "en ")).color(ChatColor.LIGHT_PURPLE)
-                .then(gameCodeName.equals("hub") ? "Hub " + template : this.hub.getGameManager().getGameByIdentifier(gameCodeName).getName()).color(ChatColor.DARK_PURPLE)
-                .then(". Récompenses : ");
+        FancyMessage message = new FancyMessage("[Événement] ").color(ChatColor.DARK_PURPLE).style(ChatColor.BOLD)
+                .then("Une animation a débuté " + (gameCodeName.equals("hub") ? "sur le " : "en ")).color(ChatColor.LIGHT_PURPLE)
+                .then(gameCodeName.equals("hub") ? "Hub " + template : this.hub.getGameManager().getGameByIdentifier(gameCodeName).getName()).color(ChatColor.DARK_PURPLE).style(ChatColor.BOLD)
+                .then(". Récompenses : ").color(ChatColor.LIGHT_PURPLE);
 
         if (coins > 0)
-            message.then(coins + " pièce" + (coins > 1 ? "s" : "")).color(ChatColor.LIGHT_PURPLE);
+            message.then(coins + " pièce" + (coins > 1 ? "s" : "")).color(ChatColor.DARK_PURPLE).style(ChatColor.BOLD);
 
         if (coins > 0 && pearls > 0)
-            message.then(" et ").color(ChatColor.LIGHT_PURPLE);
+            message.then(" et ").color(ChatColor.DARK_PURPLE).style(ChatColor.BOLD);
 
         if (pearls > 0)
-            message.then(pearls + " perle" + (pearls > 1 ? "s" : "")).color(ChatColor.LIGHT_PURPLE);
+            message.then(pearls + " perle" + (pearls > 1 ? "s" : "")).color(ChatColor.DARK_PURPLE).style(ChatColor.BOLD);
 
-        message.then(".").color(ChatColor.LIGHT_PURPLE);
-        message.then("[Cliquez ici]").color(ChatColor.DARK_PURPLE).command(gameCodeName.equals("hub") ? "/hub " + template : "/join " + gameCodeName + " " + template).tooltip(ChatColor.GOLD + "» Clic pour rejoindre");
+        message.then(". ").color(ChatColor.LIGHT_PURPLE);
+        message.then("[Cliquez ici]").color(ChatColor.DARK_AQUA).style(ChatColor.BOLD).command(gameCodeName.equals("hub") ? "/hub " + template : "/join " + gameCodeName + " " + template).tooltip(ChatColor.GOLD + "» Clic pour rejoindre");
 
-        this.hub.getServer().getOnlinePlayers().forEach(message::send);
+        this.hub.getServer().getOnlinePlayers().forEach(player ->
+        {
+            player.sendMessage("");
+            message.send(player);
+            player.sendMessage("");
+        });
     }
 }
