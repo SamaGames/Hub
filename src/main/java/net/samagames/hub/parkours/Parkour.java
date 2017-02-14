@@ -234,8 +234,8 @@ public class Parkour
 
         this.removePlayer(player);
 
-        /*if (this.achievementName != null && !SamaGamesAPI.get().getAchievementManager().isUnlocked(player, this.achievementName))
-            SamaGamesAPI.get().getAchievementManager().getAchievementByID(this.achievementName).unlock(player);*/
+        if (this.achievementId != -1)
+            SamaGamesAPI.get().getAchievementManager().getAchievementByID(this.achievementId).unlock(player.getUniqueId());
 
         this.restoreFly(player);
     }
