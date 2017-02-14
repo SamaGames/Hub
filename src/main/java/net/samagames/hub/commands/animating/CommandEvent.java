@@ -39,12 +39,18 @@ public class CommandEvent extends AbstractCommand
     {
         if (args.length < 1)
         {
+            player.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
+            player.sendMessage(ChatUtils.getCenteredText(ChatColor.WHITE + "♦ " + ChatColor.BOLD + "Récompenses disponibles" + ChatColor.WHITE + " ♦"));
+            player.sendMessage("");
+
             Jedis jedis = SamaGamesAPI.get().getBungeeResource();
 
             for (int i = 0; i < PRICES.length; i++)
                 this.showPrices(jedis, player, null, null, i, PRICES[i][0], PRICES[i][1]);
 
             jedis.close();
+
+            player.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
 
             return true;
         }
@@ -93,12 +99,15 @@ public class CommandEvent extends AbstractCommand
                 }
                 catch (Exception ignored) {}
 
-                player.sendMessage(ChatColor.GREEN + "Votre serveur à été commandé. Veut sera téléporté dessus en tant que modérateur. Vous ne pourrez donc pas participer au jeu.");
                 player.sendMessage(ChatColor.GREEN + "Votre gain est verouillé. La commande " + ChatColor.GOLD + "/event win <pseudo>" + ChatColor.GREEN + " donnera au joueur les gains sélectionnés.");
 
-                String template = this.hub.getGameManager().getGameByIdentifier(gameCodeName).getGameSignsByMap(map).get(0).getTemplate();
+                String template = gameCodeName.equals("hub") ? SamaGamesAPI.get().getServerName().split("_")[1] : this.hub.getGameManager().getGameByIdentifier(gameCodeName).getGameSignsByMap(map).get(0).getTemplate();
 
-                this.hub.getHydroangeasManager().orderServer(player.getName(), template);
+                if (!gameCodeName.equals("hub"))
+                {
+                    this.hub.getHydroangeasManager().orderServer(player.getName(), template);
+                    player.sendMessage(ChatColor.GREEN + "Votre serveur à été commandé. Veut sera téléporté dessus en tant que modérateur. Vous ne pourrez donc pas participer au jeu.");
+                }
 
                 SamaGamesAPI.get().getPubSub().send("eventChannel", gameCodeName + ":" + template + ":" + PRICES[pricesId][0] + ":" + PRICES[pricesId][1]);
             }
@@ -111,7 +120,7 @@ public class CommandEvent extends AbstractCommand
                 player.sendMessage(ChatUtils.getCenteredText(ChatColor.WHITE + "• Étape 4 : Confirmation •"));
                 player.sendMessage("");
 
-                player.sendMessage(ChatColor.WHITE + "- Jeu : " + ChatColor.GRAY + this.hub.getGameManager().getGameByIdentifier(gameCodeName).getName());
+                player.sendMessage(ChatColor.WHITE + "- Jeu : " + ChatColor.GRAY + (gameCodeName.equals("hub") ? "Hub" : this.hub.getGameManager().getGameByIdentifier(gameCodeName).getName()));
                 player.sendMessage(ChatColor.WHITE + "- Carte : " + ChatColor.GRAY + map);
 
                 int[] prices = PRICES[pricesId];
@@ -153,18 +162,37 @@ public class CommandEvent extends AbstractCommand
                 player.sendMessage(ChatUtils.getCenteredText(ChatColor.WHITE + "• Étape 2 : Choix de la carte •"));
                 player.sendMessage("");
 
-                for (String map : this.hub.getGameManager().getGameByIdentifier(gameCodeName).getSigns().keySet())
+                if (gameCodeName.equals("hub"))
                 {
                     new FancyMessage("[\u25B6]").color(ChatColor.GREEN)
-                            .command("/event create " + gameCodeName + " " + map)
+                            .command("/event create " + gameCodeName + " Hub")
                             .tooltip(ChatColor.GOLD + "» Clic pour sélectionner")
-                            .then(" " + map).color(ChatColor.GRAY)
+                            .then(" Hub").color(ChatColor.GRAY)
                             .send(player);
+                }
+                else
+                {
+                    for (String map : this.hub.getGameManager().getGameByIdentifier(gameCodeName).getSigns().keySet())
+                    {
+                        new FancyMessage("[\u25B6]").color(ChatColor.GREEN)
+                                .command("/event create " + gameCodeName + " " + map)
+                                .tooltip(ChatColor.GOLD + "» Clic pour sélectionner")
+                                .then(" " + map).color(ChatColor.GRAY)
+                                .send(player);
+                    }
                 }
             }
             else
             {
                 player.sendMessage(ChatUtils.getCenteredText(ChatColor.WHITE + "• Étape 1 : Choix du jeu •"));
+                player.sendMessage("");
+
+                new FancyMessage("[\u25B6]").color(ChatColor.GREEN)
+                        .command("/event create hub")
+                        .tooltip(ChatColor.GOLD + "» Clic pour sélectionner")
+                        .then(" Hub (Votre serveur actuel)").color(ChatColor.GRAY)
+                        .send(player);
+
                 player.sendMessage("");
 
                 for (AbstractGame game : this.hub.getGameManager().getGames().values())
