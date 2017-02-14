@@ -64,7 +64,7 @@ public class CommandEvent extends AbstractCommand
             player.sendMessage("");
 
             Jedis jedis = SamaGamesAPI.get().getBungeeResource();
-            boolean ongoing = jedis.exists("hub:event:selected:" + player.getUniqueId().toString());
+            boolean ongoing = jedis.exists("hub:event:current:" + player.getUniqueId().toString());
             jedis.close();
 
             if (ongoing)
@@ -92,7 +92,7 @@ public class CommandEvent extends AbstractCommand
                 Calendar calendar = Calendar.getInstance();
                 calendar.add(Calendar.SECOND, PRICES[pricesId][2]);
 
-                jedis.set("hub:event:selected:" + player.getUniqueId().toString(), String.valueOf(pricesId));
+                jedis.set("hub:event:current:" + player.getUniqueId().toString(), gameCodeName + ":" + map + ":" + String.valueOf(pricesId));
                 jedis.set("hub:event:cooldown:" + player.getUniqueId().toString() + ":" + pricesId, String.valueOf(calendar.getTime().getTime()));
                 jedis.expire("hub:event:cooldown:" + player.getUniqueId().toString() + ":" + pricesId, PRICES[pricesId][2]);
 
@@ -241,13 +241,13 @@ public class CommandEvent extends AbstractCommand
 
             Jedis jedis = SamaGamesAPI.get().getBungeeResource();
 
-            if(!jedis.exists("hub:event:selected:" + player.getUniqueId().toString()))
+            if(!jedis.exists("hub:event:current:" + player.getUniqueId().toString()))
             {
                 player.sendMessage(ChatColor.RED + "Vous n'avez aucun événement en cours.");
                 return true;
             }
 
-            int pricesId = Integer.parseInt(jedis.get("hub:event:selected:" + player.getUniqueId().toString()));
+            int pricesId = Integer.parseInt(jedis.get("hub:event:selected:" + player.getUniqueId().toString()).split(":")[2]);
 
             if (PRICES[pricesId][0] > 0)
                 SamaGamesAPI.get().getPlayerManager().getPlayerData(this.hub.getServer().getPlayer(playerName).getUniqueId()).creditCoins(PRICES[pricesId][0], "Evénement", false);
@@ -267,6 +267,32 @@ public class CommandEvent extends AbstractCommand
             jedis.del("hub:event:selected:" + player.getUniqueId().toString());
 
             player.sendMessage(ChatColor.GREEN + "Le joueur a bien été crédité de ses gains. L'événement est marqué comme terminé.");
+        }
+        else if (subCommand.equals("remind"))
+        {
+            Jedis jedis = SamaGamesAPI.get().getBungeeResource();
+
+            if (!jedis.exists("hub:event:current:" + player.getUniqueId().toString()))
+            {
+                player.sendMessage(ChatColor.RED + "Il n'y a aucun événement en cours.");
+                return true;
+            }
+
+            String[] eventData = jedis.get("hub:event:current:" + player.getUniqueId().toString()).split(":");
+
+            jedis.close();
+
+            String gameCodeName = eventData[0];
+            String map = eventData[1];
+            int pricesId = Integer.parseInt(eventData[2]);
+
+            if (!gameCodeName.equals("hub"))
+            {
+                player.sendMessage(ChatColor.RED + "Vous ne pouvez utiliser cette commande uniquement avec les événements relatifs aux Hubs.");
+                return true;
+            }
+
+            SamaGamesAPI.get().getPubSub().send("eventChannel", gameCodeName + ":" + map + ":" + PRICES[pricesId][0] + ":" + PRICES[pricesId][1]);
         }
         else
         {
@@ -317,7 +343,8 @@ public class CommandEvent extends AbstractCommand
         player.sendMessage("");
 
         this.showHelpSubCommand(player, "create", "Créer un événement pas à pas");
-        this.showHelpSubCommand(player, "win", "Déclarer gagnant un joueur et lui donner sa récompense");
+        this.showHelpSubCommand(player, "win <pseudo>", "Déclarer gagnant un joueur et lui donner sa récompense");
+        this.showHelpSubCommand(player, "remind", "Refaire l'annonce d'un événement en cours");
 
         player.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
     }
