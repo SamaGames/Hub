@@ -246,9 +246,13 @@ public class CommandEvent extends AbstractCommand
             message.command("/event create " + gameCodeName + " " + template + " " + id);
             message.tooltip(ChatColor.GOLD + "» Clic pour sélectionner");
         }
-        else
+        else if (currentlyCooldown)
         {
             message.tooltip(ChatColor.RED + "» Disponible dans " + this.formatCooldownDate(Long.parseLong(jedis.get("hub:event:cooldown:" + player.getUniqueId().toString() + ":" + id))));
+        }
+        else
+        {
+            message.tooltip(ChatColor.GREEN + "» Disponible");
         }
 
         message.then(" ");
