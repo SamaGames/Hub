@@ -134,7 +134,7 @@ class WelcomeTutorialNPCAction implements NPCInteractCallback, Listener
             {
                 player.setResourcePack("http://resources.samagames.net/samareset.zip");
                 player.playEffect(player.getLocation(), Effect.RECORD_PLAY, 0);
-            }, 20 * 3);
+            }, 20L * 3);
         });
 
         hub.getServer().getPluginManager().registerEvents(this, hub);
@@ -156,10 +156,15 @@ class WelcomeTutorialNPCAction implements NPCInteractCallback, Listener
     {
         if (right)
         {
-            player.getInventory().clear();
-            player.setResourcePack("http://resources.samagames.net/WelcomeTutorial.zip");
+            player.sendMessage(ChatColor.YELLOW + "Nous allons vous envoyer un resource pack. Merci de l'accepter pour pouvoir voir le tutoriel.");
 
-            this.expected.add(player.getUniqueId());
+            this.hub.getServer().getScheduler().runTaskLater(this.hub, () ->
+            {
+                player.getInventory().clear();
+                player.setResourcePack("http://resources.samagames.net/WelcomeTutorial.zip");
+
+                this.expected.add(player.getUniqueId());
+            }, 10L);
         }
     }
 }

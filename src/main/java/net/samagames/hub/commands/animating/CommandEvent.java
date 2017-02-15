@@ -244,6 +244,8 @@ public class CommandEvent extends AbstractCommand
             if(!jedis.exists("hub:event:current:" + player.getUniqueId().toString()))
             {
                 player.sendMessage(ChatColor.RED + "Vous n'avez aucun événement en cours.");
+                jedis.close();
+
                 return true;
             }
 
@@ -262,11 +264,14 @@ public class CommandEvent extends AbstractCommand
 
                 this.hub.getScoreboardManager().update(this.hub.getServer().getPlayer(playerName));
                 this.hub.getInteractionManager().getGraouManager().update(this.hub.getServer().getPlayer(playerName));
+
+                this.hub.getServer().getPlayer(playerName).sendMessage(ChatColor.GREEN + "+" + PRICES[pricesId][1] + " perle" + (PRICES[pricesId][1] > 1 ? "s" : "") + " (Evénement)");
             }
 
-            jedis.del("hub:event:current:" + player.getUniqueId().toString());
+            new FancyMessage("Le joueur a bien été crédité de ses gains. Cliquez ").color(ChatColor.GREEN)
+                    .then("[ICI]").color(ChatColor.GREEN).style(ChatColor.BOLD).command("/event end")
+                    .then(" pour marquer l'événement comme terminé. Sinon, vous pouvez continuer à distribuer cette même récompense, en tenant compte du temps de rechargement de celle-ci.").color(ChatColor.GREEN).send(player);
 
-            player.sendMessage(ChatColor.GREEN + "Le joueur a bien été crédité de ses gains. L'événement est marqué comme terminé.");
         }
         else if (subCommand.equals("remind"))
         {
@@ -275,6 +280,8 @@ public class CommandEvent extends AbstractCommand
             if (!jedis.exists("hub:event:current:" + player.getUniqueId().toString()))
             {
                 player.sendMessage(ChatColor.RED + "Il n'y a aucun événement en cours.");
+                jedis.close();
+
                 return true;
             }
 
@@ -293,6 +300,23 @@ public class CommandEvent extends AbstractCommand
             }
 
             SamaGamesAPI.get().getPubSub().send("eventChannel", gameCodeName + ":" + map + ":" + PRICES[pricesId][0] + ":" + PRICES[pricesId][1]);
+        }
+        else if (subCommand.equals("end"))
+        {
+            Jedis jedis = SamaGamesAPI.get().getBungeeResource();
+
+            if (!jedis.exists("hub:event:current:" + player.getUniqueId().toString()))
+            {
+                player.sendMessage(ChatColor.RED + "Il n'y a aucun événement en cours.");
+                jedis.close();
+
+                return true;
+            }
+
+            jedis.del("hub:event:current:" + player.getUniqueId().toString());
+            jedis.close();
+
+            player.sendMessage(ChatColor.GREEN + "L'événement est maintenant marqué comme terminé.");
         }
         else
         {
