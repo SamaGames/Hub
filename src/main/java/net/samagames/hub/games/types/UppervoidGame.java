@@ -115,7 +115,7 @@ public class UppervoidGame extends AbstractGame
     @Override
     public Location getLobbySpawn()
     {
-        return new Location(this.hub.getWorld(), -7D, 83.0D, 67D, 0.0F, 0.0F);
+        return new Location(this.hub.getWorld(), -6.5D, 82.0D, 67.5D, -31.0F, 0.0F);
     }
 
     @Override

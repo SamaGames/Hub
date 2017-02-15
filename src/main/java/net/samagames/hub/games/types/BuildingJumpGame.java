@@ -5,16 +5,15 @@ import net.samagames.hub.Hub;
 import net.samagames.hub.games.AbstractGame;
 import net.samagames.hub.games.leaderboards.HubLeaderboard;
 import net.samagames.hub.games.shops.ShopCategory;
-import net.samagames.tools.RulesBook;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
 
-public class OneTwoThreeSunGame extends AbstractGame
+public class BuildingJumpGame extends AbstractGame
 {
-    public OneTwoThreeSunGame(Hub hub)
+    public BuildingJumpGame(Hub hub)
     {
         super(hub);
     }
@@ -22,35 +21,32 @@ public class OneTwoThreeSunGame extends AbstractGame
     @Override
     public String getCodeName()
     {
-        return "onetwothreesun";
+        return "buildingjump";
     }
 
     @Override
     public String getName()
     {
-        return "1, 2, 3 Soleil";
+        return "Building Jump";
     }
 
     @Override
     public String getCategory()
     {
-        return "Arcade";
+        return "x";
     }
 
     @Override
     public ItemStack getIcon()
     {
-        return new ItemStack(Material.DOUBLE_PLANT, 1);
+        return new ItemStack(Material.PRISMARINE_SHARD, 1);
     }
 
     @Override
     public String[] getDescription()
     {
         return new String[] {
-                "Atteignez la ligne d'arrivée le",
-                "premier, mais faites attention à",
-                "l'oeil qui vous observe tel le",
-                "jeu classique : 1, 2, 3 Soleil !"
+
         };
     }
 
@@ -58,7 +54,9 @@ public class OneTwoThreeSunGame extends AbstractGame
     public String[] getDevelopers()
     {
         return new String[] {
-                "Rigner"
+                "AmauryPi",
+                "Reelwens",
+                "Aurelien_Sama"
         };
     }
 
@@ -71,7 +69,7 @@ public class OneTwoThreeSunGame extends AbstractGame
     @Override
     public int getSlotInMainMenu()
     {
-        return 24;
+        return 31;
     }
 
     @Override
@@ -83,7 +81,7 @@ public class OneTwoThreeSunGame extends AbstractGame
     @Override
     public Location getLobbySpawn()
     {
-        return new Location(this.hub.getWorld(), 30.5, 104.0D, 39.5D, -138.0F, -5.5F);
+        return new Location(this.hub.getWorld(), -42.5, 105.0D, -31.5D, 130.0F, 0.0F);
     }
 
     @Override
