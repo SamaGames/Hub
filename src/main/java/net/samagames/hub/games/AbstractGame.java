@@ -8,6 +8,7 @@ import net.samagames.hub.games.shops.ShopCategory;
 import net.samagames.hub.games.signs.GameSign;
 import net.samagames.hub.utils.RestrictedVersion;
 import net.samagames.tools.RulesBook;
+import net.samagames.tools.chat.fanciful.FancyMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.block.Sign;
@@ -52,6 +53,7 @@ public abstract class AbstractGame
     public abstract int getSlotInMainMenu();
     public abstract ShopCategory getShopConfiguration();
     public abstract Location getLobbySpawn();
+    public abstract Location getWebsiteDescriptionSkull();
     public abstract List<HubLeaderboard> getLeaderBoards();
     public abstract State getState();
     public abstract boolean hasResourcesPack();
@@ -88,6 +90,18 @@ public abstract class AbstractGame
     public void clearSigns()
     {
         this.signs.clear();
+    }
+
+    public void showRulesWarning(Player player)
+    {
+        player.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
+
+        new FancyMessage("Il s'agit de votre première partie sur ce jeu ! Nous vous conseillons d'aller d'abord lire les règles en").color(ChatColor.GREEN)
+                .then("cliquant ici").color(ChatColor.GREEN).style(ChatColor.BOLD).link(this.getWebsiteDescriptionURL())
+                .then(" pour accéder aux règles du jeu.").style(ChatColor.GREEN)
+                .send(player);
+
+        player.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
     }
 
     public List<GameSign> getGameSignsByMap(String map)

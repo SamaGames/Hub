@@ -98,6 +98,12 @@ public class BackEndGame extends AbstractGame
     }
 
     @Override
+    public Location getWebsiteDescriptionSkull()
+    {
+        return null;
+    }
+
+    @Override
     public List<HubLeaderboard> getLeaderBoards()
     {
         return null;

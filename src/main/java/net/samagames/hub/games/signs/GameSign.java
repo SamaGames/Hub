@@ -191,16 +191,7 @@ public class GameSign
         }
 
         if (this.game.isPlayerFirstGame(SamaGamesAPI.get().getStatsManager().getPlayerStats(player.getUniqueId())) && this.game.getWebsiteDescriptionURL() != null)
-        {
-            player.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
-
-            new FancyMessage("Il s'agit de votre première partie sur ce jeu ! Nous vous conseillons d'aller d'abord lire les règles en").color(ChatColor.GREEN)
-                    .then("cliquant ici").color(ChatColor.GREEN).style(ChatColor.BOLD).link(this.game.getWebsiteDescriptionURL())
-                    .then(" pour accéder aux règles du jeu.").style(ChatColor.GREEN)
-                    .send(player);
-
-            player.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
-        }
+            this.game.showRulesWarning(player);
 
         addToQueue(player, template);
     }

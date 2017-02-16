@@ -26,6 +26,7 @@ import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.Optional;
 import java.util.UUID;
 
 public class PlayerListener implements Listener
@@ -117,6 +118,13 @@ public class PlayerListener implements Listener
 
                     gameSign.click(event.getPlayer());
                 }
+            }
+            else if (material == Material.SKULL)
+            {
+                Optional<AbstractGame> optional = this.hub.getGameManager().getGames().values().stream().filter(game -> game.getWebsiteDescriptionSkull().getBlock().getLocation().equals(event.getClickedBlock().getLocation())).findAny();
+
+                if (optional.isPresent())
+                    optional.get().showRulesWarning(event.getPlayer());
             }
         }
     }

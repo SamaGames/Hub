@@ -97,6 +97,12 @@ public class UHCZoneGame extends AbstractGame
     }
 
     @Override
+    public Location getWebsiteDescriptionSkull()
+    {
+        return null;
+    }
+
+    @Override
     public int getOnlinePlayers()
     {
         int players = 0;

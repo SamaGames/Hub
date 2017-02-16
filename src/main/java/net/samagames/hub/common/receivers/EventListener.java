@@ -5,6 +5,7 @@ import net.samagames.api.pubsub.IPacketsReceiver;
 import net.samagames.hub.Hub;
 import net.samagames.tools.chat.fanciful.FancyMessage;
 import org.bukkit.ChatColor;
+import org.bukkit.Sound;
 
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -59,6 +60,8 @@ public class EventListener implements IPacketsReceiver
 
             this.hub.getServer().getOnlinePlayers().forEach(player ->
             {
+                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_HARP, 1.0F, 1.0F);
+
                 player.sendMessage("");
                 message.send(player);
                 player.sendMessage("");

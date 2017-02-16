@@ -119,6 +119,12 @@ public class UppervoidGame extends AbstractGame
     }
 
     @Override
+    public Location getWebsiteDescriptionSkull()
+    {
+        return new Location(this.hub.getWorld(), -1.0, 83.0D, 73.0D, 0.0F, 0.0F);
+    }
+
+    @Override
     public List<HubLeaderboard> getLeaderBoards()
     {
         List<HubLeaderboard> leaderBoards = new ArrayList<>();

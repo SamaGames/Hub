@@ -223,6 +223,12 @@ public class ChunkWarsGame extends AbstractGame
     }
 
     @Override
+    public Location getWebsiteDescriptionSkull()
+    {
+        return new Location(this.hub.getWorld(), -63.0, 97.0D, 52.0D, 0.0F, 0.0F);
+    }
+
+    @Override
     public List<HubLeaderboard> getLeaderBoards()
     {
         return null;

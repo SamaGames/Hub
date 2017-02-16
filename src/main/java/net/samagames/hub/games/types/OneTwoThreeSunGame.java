@@ -87,6 +87,12 @@ public class OneTwoThreeSunGame extends AbstractGame
     }
 
     @Override
+    public Location getWebsiteDescriptionSkull()
+    {
+        return new Location(this.hub.getWorld(), 37.0, 106.0D, 30.0D, 0.0F, 0.0F);
+    }
+
+    @Override
     public List<HubLeaderboard> getLeaderBoards()
     {
         return null;

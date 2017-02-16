@@ -85,6 +85,12 @@ public class BuildingJumpGame extends AbstractGame
     }
 
     @Override
+    public Location getWebsiteDescriptionSkull()
+    {
+        return new Location(this.hub.getWorld(), -44.0, 106.0D, -43.0D, 0.0F, 0.0F);
+    }
+
+    @Override
     public List<HubLeaderboard> getLeaderBoards()
     {
         return null;

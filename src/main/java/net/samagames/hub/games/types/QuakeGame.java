@@ -132,6 +132,12 @@ public class QuakeGame extends AbstractGame
     }
 
     @Override
+    public Location getWebsiteDescriptionSkull()
+    {
+        return null;
+    }
+
+    @Override
     public List<HubLeaderboard> getLeaderBoards()
     {
         List<HubLeaderboard> leaderBoards = new ArrayList<>();
