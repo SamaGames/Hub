@@ -269,7 +269,7 @@ public class CommandEvent extends AbstractCommand
             this.hub.getScoreboardManager().update(this.hub.getServer().getPlayer(playerName));
 
             new FancyMessage("Le joueur a bien été crédité de ses gains. Cliquez ").color(ChatColor.GREEN)
-                    .then("[ICI]").color(ChatColor.GREEN).style(ChatColor.BOLD).command("/event end")
+                    .then("[ICI]").color(ChatColor.AQUA).style(ChatColor.BOLD).command("/event end")
                     .then(" pour marquer l'événement comme terminé. Sinon, vous pouvez continuer à distribuer cette même récompense, en tenant compte du temps de rechargement de celle-ci.").color(ChatColor.GREEN).send(player);
 
         }
