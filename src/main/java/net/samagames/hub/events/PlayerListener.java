@@ -123,7 +123,7 @@ public class PlayerListener implements Listener
             {
                 Optional<AbstractGame> optional = this.hub.getGameManager().getGames().values().stream().filter(game -> game.getWebsiteDescriptionSkull().getBlock().getLocation().equals(event.getClickedBlock().getLocation())).findAny();
 
-                if (optional.isPresent())
+                if (optional.isPresent() && optional.get().getWebsiteDescriptionURL() != null)
                     optional.get().showRulesWarning(event.getPlayer());
             }
         }
