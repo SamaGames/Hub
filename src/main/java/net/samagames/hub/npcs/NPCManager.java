@@ -37,6 +37,7 @@ public class NPCManager extends AbstractManager
             ChatColor.YELLOW + "" + ChatColor.BOLD + "CLIC DROIT"
         }).setCallback(new WelcomeTutorialNPCAction(hub));
 
+        welcomeTutorialNPC.getBukkitEntity().teleport(LocationUtils.str2loc(jsonRoot.get("welcome-tutorial").getAsString()));
         welcomeTutorialNPC.getBukkitEntity().getInventory().setItemInMainHand(new ItemStack(Material.MAP, 1));
 
         this.npcs.add(welcomeTutorialNPC);
