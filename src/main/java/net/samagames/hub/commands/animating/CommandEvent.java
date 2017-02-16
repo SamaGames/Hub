@@ -262,11 +262,11 @@ public class CommandEvent extends AbstractCommand
                 for (int i = 0; i < PRICES[pricesId][1]; i++)
                     this.hub.getInteractionManager().getWellManager().addPearlToPlayer(this.hub.getServer().getPlayer(playerName), new Pearl(UUID.randomUUID(), new Random().nextInt(4) + 1, calendar.getTime().getTime()));
 
-                this.hub.getScoreboardManager().update(this.hub.getServer().getPlayer(playerName));
                 this.hub.getInteractionManager().getGraouManager().update(this.hub.getServer().getPlayer(playerName));
-
                 this.hub.getServer().getPlayer(playerName).sendMessage(ChatColor.GREEN + "+" + PRICES[pricesId][1] + " perle" + (PRICES[pricesId][1] > 1 ? "s" : "") + " (Evénement)");
             }
+
+            this.hub.getScoreboardManager().update(this.hub.getServer().getPlayer(playerName));
 
             new FancyMessage("Le joueur a bien été crédité de ses gains. Cliquez ").color(ChatColor.GREEN)
                     .then("[ICI]").color(ChatColor.GREEN).style(ChatColor.BOLD).command("/event end")
