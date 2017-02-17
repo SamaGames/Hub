@@ -161,7 +161,7 @@ public class DimensionsGame extends AbstractGame
     @Override
     public boolean isPlayerFirstGame(IPlayerStats playerStats)
     {
-        return playerStats.getDimensionStatistics().getPlayedGames() == 0;
+        return playerStats.getDimensionsStatistics().getPlayedGames() == 0;
     }
 
     @Override
