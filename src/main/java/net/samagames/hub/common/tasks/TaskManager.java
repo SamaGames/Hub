@@ -22,6 +22,7 @@ public class TaskManager extends AbstractManager
     private final BukkitTask pantheonProximityTask;
     private final BukkitTask confessionalProximityTask;
     private final BukkitTask bathProximityTask;
+    private final BukkitTask serverRoomProximityTask;
 
     public TaskManager(Hub hub)
     {
@@ -52,6 +53,11 @@ public class TaskManager extends AbstractManager
         this.prepareProximityDetection(bathDetectionEntity, "bath_proximity");
         this.bathProximityTask = ProximityUtils.onNearbyOf(hub, bathDetectionEntity, 5.0D, 3.0D, 5.0D, Player.class, player ->
                 this.hub.getServer().getScheduler().runTask(hub, () -> SamaGamesAPI.get().getAchievementManager().getAchievementByID(12).unlock(player.getUniqueId())));
+
+        ArmorStand serverRoomDetectionEntity = hub.getWorld().spawn(new Location(hub.getWorld(), -142.5, 40.0D, 78.5D), ArmorStand.class);
+        this.prepareProximityDetection(serverRoomDetectionEntity, "server_room_proximity");
+        this.serverRoomProximityTask = ProximityUtils.onNearbyOf(hub, serverRoomDetectionEntity, 1.5D, 1.5D, 1.5D, Player.class, player ->
+                this.hub.getServer().getScheduler().runTask(hub, () -> SamaGamesAPI.get().getAchievementManager().getAchievementByID(51).unlock(player.getUniqueId())));
     }
 
     @Override
@@ -67,6 +73,7 @@ public class TaskManager extends AbstractManager
         this.pantheonProximityTask.cancel();
         this.confessionalProximityTask.cancel();
         this.bathProximityTask.cancel();
+        this.serverRoomProximityTask.cancel();
     }
 
     @Override
