@@ -1,7 +1,11 @@
 package net.samagames.hub.npcs;
 
 import net.samagames.tools.tutorials.Tutorial;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.function.BiConsumer;
 

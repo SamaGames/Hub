@@ -29,6 +29,7 @@ public class NPCManager extends AbstractManager
         this.npcs = new ArrayList<>();
 
         JsonObject jsonRoot = this.reloadConfiguration();
+
         if (jsonRoot == null)
             return;
 
