@@ -49,9 +49,6 @@ public class SamaritanListener implements IPacketsReceiver
             this.hub.getServer().getScheduler().runTask(this.hub, () ->
             {
                 FireworkUtils.launchfw(this.hub, player.getLocation(), FIREWORK);
-
-                if (!simulation)
-                    SamaGamesAPI.get().getAchievementManager().getAchievementByID(51).unlock(player.getUniqueId());
             });
         }
 
