@@ -169,7 +169,6 @@ public class PlayerManager extends AbstractManager
             ActionBarAPI.removeMessage(player);
 
             this.hub.getTaskManager().getPlayersAwayFromKeyboardTask().removePlayer(player.getUniqueId());
-            this.hub.getTaskManager().getPlayersTravellingTask().removePlayer(player.getUniqueId());
 
             if (this.selections.containsKey(player.getUniqueId()))
                 this.selections.remove(player.getUniqueId());
@@ -274,9 +273,6 @@ public class PlayerManager extends AbstractManager
 
             if (!SamaGamesAPI.get().getAchievementManager().isUnlocked(player.getUniqueId(), 53))
                 this.hub.getTaskManager().getPlayersAwayFromKeyboardTask().registerPlayer(player.getUniqueId());
-
-            if (!SamaGamesAPI.get().getAchievementManager().isUnlocked(player.getUniqueId(), 54))
-                this.hub.getTaskManager().getPlayersTravellingTask().registerPlayer(player.getUniqueId());
 
             // --
 
