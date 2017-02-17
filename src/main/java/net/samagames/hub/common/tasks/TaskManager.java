@@ -60,9 +60,9 @@ public class TaskManager extends AbstractManager
         this.serverRoomProximityTask = ProximityUtils.onNearbyOf(hub, serverRoomDetectionEntity, 1.5D, 1.5D, 1.5D, Player.class, player ->
                 this.hub.getServer().getScheduler().runTask(hub, () -> SamaGamesAPI.get().getAchievementManager().getAchievementByID(51).unlock(player.getUniqueId())));
 
-        ArmorStand webDeveloperArtDetectionEntity = hub.getWorld().spawn(new Location(hub.getWorld(), -181.5, 28.0D, 40.5D), ArmorStand.class);
+        ArmorStand webDeveloperArtDetectionEntity = hub.getWorld().spawn(new Location(hub.getWorld(), -178.5, 28.0D, 40.5D), ArmorStand.class);
         this.prepareProximityDetection(webDeveloperArtDetectionEntity, "web_dev_art_proximity");
-        this.webDeveloperArtProximityTask = ProximityUtils.onNearbyOf(hub, webDeveloperArtDetectionEntity, 5.0D, 3.0D, 5.0D, Player.class, player ->
+        this.webDeveloperArtProximityTask = ProximityUtils.onNearbyOf(hub, webDeveloperArtDetectionEntity, 3.0D, 3.0D, 3.0D, Player.class, player ->
                 this.hub.getServer().getScheduler().runTask(hub, () -> SamaGamesAPI.get().getAchievementManager().getAchievementByID(54).unlock(player.getUniqueId())));
     }
 
