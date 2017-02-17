@@ -91,13 +91,13 @@ class GuiClickMeSettings extends GuiSettings
             @Override
             public boolean get(IPlayerSettings setting)
             {
-                return setting.isAllowStarsOnclick();
+                return setting.isAllowPowdersOnClick();
             }
 
             @Override
             public void invert(IPlayerSettings setting)
             {
-                setting.setAllowStarsOnclick(!this.get(setting));
+                setting.setAllowPowdersOnClick(!this.get(setting));
             }
         });
 

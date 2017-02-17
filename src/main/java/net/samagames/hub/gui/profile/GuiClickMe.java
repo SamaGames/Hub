@@ -105,7 +105,7 @@ public class GuiClickMe extends AbstractGui
 
     private String getPowderItemTitle()
     {
-        if (SamaGamesAPI.get().getSettingsManager().getSettings(this.uuid).isAllowStarsOnclick())
+        if (SamaGamesAPI.get().getSettingsManager().getSettings(this.uuid).isAllowPowdersOnClick())
             return ChatColor.AQUA + String.valueOf(SamaGamesAPI.get().getPlayerManager().getPlayerData(this.uuid).getPowders()) + " poussières d'\u272F";
         else
             return ChatColor.RED + "Cette information est privée !";

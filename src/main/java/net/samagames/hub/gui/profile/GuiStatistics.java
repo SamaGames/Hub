@@ -125,10 +125,10 @@ class GuiStatistics extends AbstractGui
         ));
 
         this.setGameStatisticsSlotData("Dimensions", new ItemStack(Material.EYE_OF_ENDER, 1), Arrays.asList(
-                Pair.of("Parties jouées", playerStats.getDimensionStatistics()::getPlayedGames),
-                Pair.of("Parties gagnées", playerStats.getDimensionStatistics()::getWins),
-                Pair.of("Meurtres", playerStats.getDimensionStatistics()::getKills),
-                Pair.of("Morts", playerStats.getDimensionStatistics()::getDeaths)
+                Pair.of("Parties jouées", playerStats.getDimensionsStatistics()::getPlayedGames),
+                Pair.of("Parties gagnées", playerStats.getDimensionsStatistics()::getWins),
+                Pair.of("Meurtres", playerStats.getDimensionsStatistics()::getKills),
+                Pair.of("Morts", playerStats.getDimensionsStatistics()::getDeaths)
         ));
 
         this.setGameStatisticsSlotData("ChunkWars", new ItemStack(Material.ENDER_PORTAL_FRAME, 1), Arrays.asList(
