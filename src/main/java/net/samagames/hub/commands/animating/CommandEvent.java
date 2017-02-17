@@ -97,7 +97,7 @@ public class CommandEvent extends AbstractCommand
                 Calendar calendar = Calendar.getInstance();
                 calendar.add(Calendar.SECOND, REWARDS[rewardsId][2]);
 
-                int eventId = -1;
+                long eventId = -1;
 
                 try
                 {
