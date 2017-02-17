@@ -158,7 +158,7 @@ class WelcomeTutorialNPCAction implements NPCInteractCallback, Listener
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event)
     {
-        if (!this.expected.contains(event.getPlayer().getUniqueId()) || event.getItem() == null || !event.getItem().equals(QUIT_STACK))
+        if (event.getItem() == null || !event.getItem().equals(QUIT_STACK))
             return;
 
         this.tutorial.onPlayerQuits(event.getPlayer());
