@@ -93,8 +93,6 @@ public class GuiWellCraft extends AbstractGui
             {
                 this.hub.getInteractionManager().getWellManager().startPearlCrafting(player, this.numbers);
                 this.hub.getGuiManager().openGui(player, new GuiWell(this.hub, this.parent));
-
-                player.sendMessage(Well.TAG + ChatColor.GREEN);
             }
             else
             {
