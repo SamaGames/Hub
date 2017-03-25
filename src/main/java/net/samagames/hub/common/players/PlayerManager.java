@@ -136,9 +136,6 @@ public class PlayerManager extends AbstractManager
                     this.hub.getServer().broadcastMessage(PlayerUtils.getFullyFormattedPlayerName(player) + ChatColor.YELLOW + " a rejoint le hub !");
 
                 this.checkAchievements(player);
-
-                if (player.getUniqueId().equals(UUID.fromString("568046c8-6045-4c59-a255-28027aac8c33")))
-                    ActionBarAPI.sendMessage(player, ChatColor.RED + "\u2764");
             });
 
             this.hub.getScheduledExecutorService().schedule(() ->

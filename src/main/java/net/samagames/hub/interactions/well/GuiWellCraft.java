@@ -194,11 +194,12 @@ public class GuiWellCraft extends AbstractGui
         helpLore.add(ChatColor.GRAY + "différents.");
         helpLore.add("");
         helpLore.add(ChatColor.GRAY + "A la manière d'une lotterie, plus vous");
-        helpLore.add(ChatColor.GRAY + "vous rapprochez des nombres aléatoires,");
+        helpLore.add(ChatColor.GRAY + "vous rapprochez de la combinaison secrete,");
         helpLore.add(ChatColor.GRAY + "plus le " + ChatColor.GREEN + "niveau" + ChatColor.GRAY + " de votre perle sera " + ChatColor.GREEN + "élevé" + ChatColor.GRAY + ".");
         helpLore.add("");
-        helpLore.add(ChatColor.YELLOW + "" + ChatColor.ITALIC + "Note : " + ChatColor.GRAY + ChatColor.ITALIC + "Les numéros sont aléatoires et");
-        helpLore.add(ChatColor.GRAY + "" + ChatColor.ITALIC +  "ne sont pas éloignés les uns des autres.");
+        helpLore.add(ChatColor.YELLOW + "" + ChatColor.ITALIC + "Note : " + ChatColor.GRAY + ChatColor.ITALIC + "La combinaison est aléatoire et ses");
+        helpLore.add(ChatColor.GRAY + "" + ChatColor.ITALIC +  "nombres ne sont pas éloignés les uns");
+        helpLore.add(ChatColor.GRAY + "" + ChatColor.ITALIC + "des autres.");
 
         helpMeta.setLore(helpLore);
         helpMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
