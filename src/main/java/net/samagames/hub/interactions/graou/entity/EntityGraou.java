@@ -37,7 +37,7 @@ public class EntityGraou extends EntityOcelot
     }
 
     @Override
-    protected void i() {}
+    protected void db() {}
 
     @Override
     public void b(NBTTagCompound nbttagcompound) {}
