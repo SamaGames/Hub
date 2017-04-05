@@ -1,12 +1,12 @@
 package net.samagames.hub.cosmetics.gadgets;
 
-import net.minecraft.server.v1_10_R1.NBTTagCompound;
+import net.minecraft.server.v1_9_R2.NBTTagCompound;
 import net.samagames.hub.Hub;
 import net.samagames.hub.cosmetics.common.AbstractCosmetic;
 import net.samagames.hub.cosmetics.common.CosmeticAccessibility;
 import net.samagames.hub.cosmetics.common.CosmeticRarity;
 import net.samagames.hub.cosmetics.gadgets.displayers.AbstractDisplayer;
-import org.bukkit.craftbukkit.v1_10_R1.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_9_R2.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -27,7 +27,7 @@ class GadgetCosmetic extends AbstractCosmetic
     public ItemStack getIcon(Player player)
     {
         ItemStack stack = super.getIcon(player);
-        net.minecraft.server.v1_10_R1.ItemStack craftStack = CraftItemStack.asNMSCopy(stack);
+        net.minecraft.server.v1_9_R2.ItemStack craftStack = CraftItemStack.asNMSCopy(stack);
 
         NBTTagCompound tagCompound = craftStack.getTag();
 

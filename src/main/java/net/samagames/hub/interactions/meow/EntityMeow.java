@@ -1,6 +1,6 @@
 package net.samagames.hub.interactions.meow;
 
-import net.minecraft.server.v1_10_R1.*;
+import net.minecraft.server.v1_9_R2.*;
 
 import java.util.UUID;
 
@@ -26,7 +26,7 @@ class EntityMeow extends EntityOcelot
     }
 
     @Override
-    protected void df() {}
+    protected void i() {}
 
     @Override
     public void b(NBTTagCompound nbttagcompound) {}

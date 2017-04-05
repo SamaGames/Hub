@@ -1,6 +1,6 @@
 package net.samagames.hub.interactions.graou.entity;
 
-import net.minecraft.server.v1_10_R1.*;
+import net.minecraft.server.v1_9_R2.*;
 
 import java.lang.reflect.Field;
 
@@ -14,7 +14,7 @@ public class EntityGraouLaser extends EntityGuardian
 
         this.setInvisible(true);
         this.setInvulnerable(true);
-        this.setNoGravity(true);
+        //this.setNoGravity(true);
     }
 
     @Override

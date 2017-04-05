@@ -1,6 +1,6 @@
 package net.samagames.hub.interactions.graou;
 
-import net.minecraft.server.v1_10_R1.WorldServer;
+import net.minecraft.server.v1_9_R2.WorldServer;
 import net.samagames.api.games.pearls.Pearl;
 import net.samagames.hub.Hub;
 import net.samagames.hub.cosmetics.common.AbstractCosmetic;
@@ -10,7 +10,7 @@ import net.samagames.tools.ItemUtils;
 import net.samagames.tools.ParticleEffect;
 import net.samagames.tools.ProximityUtils;
 import org.bukkit.*;
-import org.bukkit.craftbukkit.v1_10_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_9_R2.CraftWorld;
 import org.bukkit.entity.*;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityTargetEvent;

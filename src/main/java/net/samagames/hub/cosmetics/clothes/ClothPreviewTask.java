@@ -3,7 +3,7 @@ package net.samagames.hub.cosmetics.clothes;
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.hub.Hub;
 import net.samagames.tools.cameras.Camera;
-import net.samagames.tools.npc.nms.CustomNPC;
+import net.samagames.tools.npc.nms.ICustomNPC;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -22,7 +22,7 @@ class ClothPreviewTask extends BukkitRunnable
 
     private final Location center;
     private final Camera camera;
-    private final CustomNPC fakePlayer;
+    private final ICustomNPC fakePlayer;
     private double i;
 
     ClothPreviewTask(Hub hub, Player player, ItemStack[] armorContent)
