@@ -28,6 +28,8 @@ class AdvertisingTask extends AbstractTask
         super(hub);
 
         this.bossBar = new CraftBossBar(ChatColor.YELLOW + "SamaGames", BarColor.RED, BarStyle.SOLID);
+        this.bossBar.setProgress(0.0D);
+
         this.hub.getServer().getOnlinePlayers().forEach(this.bossBar::addPlayer);
 
         this.i = 0;
