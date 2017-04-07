@@ -10,11 +10,11 @@ import net.samagames.hub.cosmetics.common.AbstractCosmeticManager;
 import net.samagames.hub.gui.AbstractGui;
 import net.samagames.tools.Misc;
 import net.samagames.tools.ParticleEffect;
-import net.samagames.tools.bossbar.BossBarAPI;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
+import org.bukkit.craftbukkit.v1_9_R2.boss.CraftBossBar;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -34,6 +34,7 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
     private final LinkedList<JukeboxSong> recentsPlaylists;
     private final Map<UUID, Integer> recentDJs;
     private final List<UUID> mutedPlayers;
+    private final CraftBossBar bossBar;
     private JukeboxSong currentPlaylist;
     private BukkitTask barTask;
     private boolean lockFlag;
@@ -47,6 +48,7 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
         this.recentsPlaylists = new LinkedList<>();
         this.recentDJs = new HashMap<>();
         this.mutedPlayers = new ArrayList<>();
+        this.bossBar = new CraftBossBar("", BarColor.YELLOW, BarStyle.SOLID);
         this.lockFlag = false;
 
         hub.getScheduledExecutorService().scheduleAtFixedRate(() ->
@@ -274,7 +276,7 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
                     this.barTask.cancel();
                     this.barTask = null;
 
-                    BossBarAPI.flushBars();
+                    this.bossBar.removeAll();
                 }
 
                 if (this.hub.getServer().getPlayer(playerUUID) != null)
@@ -311,15 +313,10 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
                         {
                             ChatColor randomizedColor = this.colors[new Random().nextInt(this.colors.length)];
 
-                            hub.getServer().getOnlinePlayers().stream().filter(barPlayer -> !mutedPlayers.contains(barPlayer.getUniqueId())).forEach(barPlayer ->
-                            {
-                                BossBarAPI.removeBar(barPlayer);
-
-                                if (this.i <= 4)
-                                    BossBarAPI.getBar(randomizedColor + "♫" + ChatColor.YELLOW + " " + ChatColor.GOLD + currentPlaylist.getSong().getTitle() + ChatColor.YELLOW + " jouée par " + ChatColor.GOLD + currentPlaylist.getPlayedBy() + " " + randomizedColor + "♪", BarColor.YELLOW, BarStyle.SOLID, currentPlaylist.getFormattedSecondsRemaining()).getValue().addPlayer(barPlayer);
-                                else
-                                    BossBarAPI.getBar(randomizedColor + "♫" + ChatColor.GREEN + " " + currentPlaylist.getWoots() + " Woot" + (currentPlaylist.getWoots() > 1 ? "s" : "") + ChatColor.YELLOW + " et " + ChatColor.RED + currentPlaylist.getMehs() + " Meh" + (currentPlaylist.getMehs() > 1 ? "s" : "") + " " + randomizedColor + "♪", BarColor.YELLOW, BarStyle.SOLID, currentPlaylist.getFormattedSecondsRemaining()).getValue().addPlayer(barPlayer);
-                            });
+                            if (this.i <= 4)
+                                bossBar.setTitle(randomizedColor + "♫" + ChatColor.YELLOW + " " + ChatColor.GOLD + currentPlaylist.getSong().getTitle() + ChatColor.YELLOW + " jouée par " + ChatColor.GOLD + currentPlaylist.getPlayedBy() + " " + randomizedColor + "♪");
+                            else
+                                bossBar.setTitle(randomizedColor + "♫" + ChatColor.GREEN + " " + currentPlaylist.getWoots() + " Woot" + (currentPlaylist.getWoots() > 1 ? "s" : "") + ChatColor.YELLOW + " et " + ChatColor.RED + currentPlaylist.getMehs() + " Meh" + (currentPlaylist.getMehs() > 1 ? "s" : "") + " " + randomizedColor + "♪");
 
                             this.i++;
 
@@ -378,13 +375,19 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
     public void addPlayer(Player player)
     {
         if (this.currentPlaylist != null)
+        {
             this.currentPlaylist.getPlayer().addPlayer(player);
+            this.bossBar.addPlayer(player);
+        }
     }
 
     public void removePlayer(Player player)
     {
         if (this.currentPlaylist != null)
+        {
             this.currentPlaylist.getPlayer().removePlayer(player);
+            this.bossBar.addPlayer(player);
+        }
     }
 
     public void mute(Player player, boolean flag)
