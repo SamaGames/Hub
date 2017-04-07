@@ -132,7 +132,7 @@ class GuiWell extends AbstractGui
         if (craftingPearl.getCreationInMinutes() > 1)
             lore.add(ChatColor.DARK_GRAY + "Temps restant : " + ChatColor.WHITE + craftingPearl.getCreationInMinutes() + " minute" + (craftingPearl.getCreationInMinutes() > 1 ? "s" : ""));
         else
-            lore.add(ChatColor.DARK_GRAY + "Temps restant : " + ChatColor.WHITE + TimeUnit.MILLISECONDS.toSeconds(craftingPearl.getCreation() - System.currentTimeMillis()) + " seconde" + (TimeUnit.MILLISECONDS.toSeconds(craftingPearl.getCreation() - System.currentTimeMillis()) > 1 ? "s" : ""));
+            lore.add(ChatColor.DARK_GRAY + "Temps restant : " + ChatColor.WHITE + "Moins d'une minute");
 
         meta.setLore(lore);
 
