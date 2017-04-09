@@ -122,18 +122,18 @@ class WelcomeTutorialNPCAction implements NPCInteractCallback, Listener
 
         this.tutorial.onTutorialEnds((player, interrupted) ->
         {
-            if (!interrupted)
+            hub.getServer().getScheduler().runTask(hub, () ->
             {
-                hub.getServer().getScheduler().runTask(hub, () ->
-                {
+                if (!interrupted)
                     SamaGamesAPI.get().getAchievementManager().getAchievementByID(2).unlock(player.getUniqueId());
+                else
+                    player.teleport(hub.getPlayerManager().getSpawn());
 
-                    if (player.hasPermission("hub.fly"))
-                        player.setAllowFlight(true);
+                if (player.hasPermission("hub.fly"))
+                    player.setAllowFlight(true);
 
-                    hub.getPlayerManager().getStaticInventory().setInventoryToPlayer(player);
-                });
-            }
+                hub.getPlayerManager().getStaticInventory().setInventoryToPlayer(player);
+            });
 
             hub.getServer().getScheduler().runTaskLater(hub, () ->
             {
