@@ -33,7 +33,7 @@ public class BuildingJumpGame extends AbstractGame
     @Override
     public String getCategory()
     {
-        return "x";
+        return "Arcade";
     }
 
     @Override

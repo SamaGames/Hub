@@ -53,11 +53,7 @@ public class UHCZoneGame extends AbstractGame
                 "La Zone où tous nos jeux Ultra Hard",
                 "Core sont réunis !",
                 "",
-                "\u2B29 UHC",
-                "\u2B29 UHCRun",
                 "\u2B29 DoubleRunner",
-                "\u2B29 UHCRandom",
-                "\u2B29 RandomRun",
                 "\u2B29 Run4Flag"
         };
     }
