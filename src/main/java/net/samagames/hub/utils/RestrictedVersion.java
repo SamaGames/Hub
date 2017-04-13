@@ -1,7 +1,7 @@
 package net.samagames.hub.utils;
 
 import org.bukkit.entity.Player;
-import protocolsupport.api.ProtocolSupportAPI;
+import us.myles.ViaVersion.api.Via;
 
 public class RestrictedVersion
 {
@@ -73,7 +73,7 @@ public class RestrictedVersion
 
     public boolean canAccess(Player player)
     {
-        return this.canAccess(ProtocolSupportAPI.getProtocolVersion(player).getId());
+        return this.canAccess(Via.getAPI().getPlayerVersion(player));
     }
 
     public static RestrictedVersion parse(String versionLine) throws Exception
@@ -114,6 +114,6 @@ public class RestrictedVersion
 
     public static boolean isLoggedInPost19(Player player)
     {
-        return ProtocolSupportAPI.getProtocolVersion(player).getId() >= 107;
+        return Via.getAPI().getPlayerVersion(player) >= 107;
     }
 }
