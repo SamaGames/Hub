@@ -141,7 +141,7 @@ class OpeningAnimationRunnable implements Runnable
 
                             this.fakeTarget = new EntityGraouLaserTarget(world);
                             this.fakeTarget.setPosition(OpeningAnimationRunnable.this.openingLocation.getX(), OpeningAnimationRunnable.this.openingLocation.getY(), OpeningAnimationRunnable.this.openingLocation.getZ());
-                            ((Squid) this.fakeTarget.getBukkitEntity()).addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 1, false, false));
+                            //((Squid) this.fakeTarget.getBukkitEntity()).addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 1, false, false));
 
                             world.addEntity(this.fakeTarget, CreatureSpawnEvent.SpawnReason.CUSTOM);
 
@@ -154,7 +154,7 @@ class OpeningAnimationRunnable implements Runnable
                                 laser.setPosition(OpeningAnimationRunnable.this.openingLocation.getX(), OpeningAnimationRunnable.this.openingLocation.getY(), OpeningAnimationRunnable.this.openingLocation.getZ());
                                 world.addEntity(laser, CreatureSpawnEvent.SpawnReason.CUSTOM);
                                 laser.setGoalTarget(this.fakeTarget, EntityTargetEvent.TargetReason.CUSTOM, false);
-                                ((Guardian) laser.getBukkitEntity()).addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 1, false, false));
+                                //((Guardian) laser.getBukkitEntity()).addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 1, false, false));
 
                                 this.lasers[j] = laser;
                             }

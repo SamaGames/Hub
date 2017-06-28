@@ -12,7 +12,7 @@ public class EntityGraouLaser extends EntityGuardian
     {
         super(world);
 
-        this.setInvisible(true);
+        //this.setInvisible(true);
         this.setInvulnerable(true);
         this.setNoGravity(true);
     }
@@ -67,44 +67,51 @@ public class EntityGraouLaser extends EntityGuardian
 
     static class PathfinderGoalGuardianAttack extends PathfinderGoal
     {
-        private final EntityGraouLaser a;
+        private final EntityGraouLaser entity;
+        private int b;
 
-        public PathfinderGoalGuardianAttack(EntityGraouLaser var1)
+        public PathfinderGoalGuardianAttack(EntityGraouLaser entity)
         {
-            this.a = var1;
+            this.entity = entity;
             this.a(3);
         }
 
         public boolean a()
         {
-            EntityLiving var1 = this.a.getGoalTarget();
+            EntityLiving var1 = this.entity.getGoalTarget();
             return var1 != null && var1.isAlive();
         }
 
         public boolean b()
         {
-            return super.b() && this.a.h(this.a.getGoalTarget()) > 9.0D;
+            return super.b() && this.entity.h(this.entity.getGoalTarget()) > 9.0D;
         }
 
         public void c()
         {
-            this.a.getNavigation().o();
-            this.a.getControllerLook().a(this.a.getGoalTarget(), 90.0F, 90.0F);
-            this.a.impulse = true;
+            this.entity.getNavigation().p();
+            this.entity.getControllerLook().a(this.entity.getGoalTarget(), 90.0F, 90.0F);
+            this.entity.impulse = true;
         }
 
         public void d()
         {
-            this.a.goalRandomStroll.i();
+            this.entity.goalRandomStroll.i();
         }
 
         public void e()
         {
-            EntityLiving var1 = this.a.getGoalTarget();
-            this.a.getNavigation().o();
-            this.a.getControllerLook().a(var1, 90.0F, 90.0F);
+            EntityLiving var1 = this.entity.getGoalTarget();
+            this.entity.getNavigation().p();
+            this.entity.getControllerLook().a(var1, 90.0F, 90.0F);
 
-            this.a.b(this.a.getGoalTarget().getId());
+            ++this.b;
+
+            if (this.b == 0)
+            {
+                this.entity.a(this.entity.getGoalTarget().getId());
+                this.entity.world.broadcastEntityEffect(this.entity, (byte) 21);
+            }
 
             super.e();
         }
