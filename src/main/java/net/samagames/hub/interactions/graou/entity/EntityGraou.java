@@ -13,7 +13,6 @@ public class EntityGraou extends EntityOcelot
         super(world);
 
         this.setCatType(3);
-        this.setNoAI(true);
     }
 
     public void postInit(float yaw, float pitch)
