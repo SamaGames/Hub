@@ -59,7 +59,7 @@ public class EntityManager extends AbstractManager
                 if (biomeBase == null)
                     break;
 
-                for (String field : new String[]{"u", "v", "w", "x"})
+                for (String field : new String[]{"t", "u", "v", "w"})
                 {
                     try
                     {
@@ -81,20 +81,12 @@ public class EntityManager extends AbstractManager
         this.log(Level.INFO, "Registered custom entity '" + customClass.getName() + "'");
     }
 
-    private void registerEntityInEntityEnum(Class<? extends Entity> paramClass, String paramString, int paramInt) throws Exception
+    private void registerEntityInEntityEnum(Class<? extends Entity> customClass, String name, int id) throws Exception
     {
-        ((Map<String, Class<? extends Entity>>) this.getPrivateStatic(EntityTypes.class, "c")).put(paramString, paramClass);
-        ((Map<Class<? extends Entity>, String>) this.getPrivateStatic(EntityTypes.class, "d")).put(paramClass, paramString);
-        ((Map<Integer, Class<? extends Entity>>) this.getPrivateStatic(EntityTypes.class, "e")).put(paramInt, paramClass);
-        ((Map<Class<? extends Entity>, Integer>) this.getPrivateStatic(EntityTypes.class, "f")).put(paramClass, paramInt);
-        ((Map<String, Integer>) this.getPrivateStatic(EntityTypes.class, "g")).put(paramString, paramInt);
-    }
+        MinecraftKey key = new MinecraftKey(name);
+        EntityTypes.b.a(id, key, customClass);
 
-    private Object getPrivateStatic(Class clazz, String f) throws Exception
-    {
-        Field field = clazz.getDeclaredField(f);
-        field.setAccessible(true);
-
-        return field.get(null);
+        if (!EntityTypes.d.contains(key))
+            EntityTypes.d.add(key);
     }
 }
