@@ -1,9 +1,11 @@
 package net.samagames.hub.common.tasks;
 
 import net.samagames.hub.Hub;
+import net.samagames.tools.bossbar.BossBarAPI;
 import org.bukkit.ChatColor;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
+import org.bukkit.boss.BossBar;
 import org.bukkit.craftbukkit.v1_12_R1.boss.CraftBossBar;
 import org.bukkit.entity.Player;
 
@@ -20,14 +22,14 @@ import java.util.List;
 class AdvertisingTask extends AbstractTask
 {
     private static final List<String> LINES;
-    private final CraftBossBar bossBar;
+    private final BossBar bossBar;
     private int i;
 
     AdvertisingTask(Hub hub)
     {
         super(hub);
 
-        this.bossBar = new CraftBossBar(ChatColor.YELLOW + "SamaGames", BarColor.RED, BarStyle.SOLID);
+        this.bossBar = BossBarAPI.getBar(ChatColor.YELLOW + "SamaGames", BarColor.RED, BarStyle.SOLID, 0.0D).getValue();
         this.bossBar.setProgress(0.0D);
 
         this.hub.getServer().getOnlinePlayers().forEach(this.bossBar::addPlayer);

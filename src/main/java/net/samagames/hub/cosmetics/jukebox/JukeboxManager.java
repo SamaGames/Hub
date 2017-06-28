@@ -10,10 +10,12 @@ import net.samagames.hub.cosmetics.common.AbstractCosmeticManager;
 import net.samagames.hub.gui.AbstractGui;
 import net.samagames.tools.Misc;
 import net.samagames.tools.ParticleEffect;
+import net.samagames.tools.bossbar.BossBarAPI;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
+import org.bukkit.boss.BossBar;
 import org.bukkit.craftbukkit.v1_12_R1.boss.CraftBossBar;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
@@ -34,7 +36,7 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
     private final LinkedList<JukeboxSong> recentsPlaylists;
     private final Map<UUID, Integer> recentDJs;
     private final List<UUID> mutedPlayers;
-    private final CraftBossBar bossBar;
+    private final BossBar bossBar;
     private JukeboxSong currentPlaylist;
     private BukkitTask barTask;
     private boolean lockFlag;
@@ -48,7 +50,7 @@ public class JukeboxManager extends AbstractCosmeticManager<JukeboxDiskCosmetic>
         this.recentsPlaylists = new LinkedList<>();
         this.recentDJs = new HashMap<>();
         this.mutedPlayers = new ArrayList<>();
-        this.bossBar = new CraftBossBar("", BarColor.YELLOW, BarStyle.SOLID);
+        this.bossBar = BossBarAPI.getBar("").getValue();
         this.lockFlag = false;
 
         hub.getScheduledExecutorService().scheduleAtFixedRate(() ->
