@@ -1,6 +1,7 @@
 package net.samagames.hub.interactions.graou.entity;
 
 import net.minecraft.server.v1_12_R1.*;
+import org.bukkit.event.entity.EntityTargetEvent;
 
 import java.lang.reflect.Field;
 
@@ -12,7 +13,7 @@ public class EntityGraouLaser extends EntityGuardian
     {
         super(world);
 
-        //this.setInvisible(true);
+        this.setInvisible(true);
         this.setInvulnerable(true);
         this.setNoGravity(true);
     }
@@ -84,7 +85,7 @@ public class EntityGraouLaser extends EntityGuardian
 
         public boolean b()
         {
-            return super.b() && this.entity.h(this.entity.getGoalTarget()) > 9.0D;
+            return super.b();
         }
 
         public void c()
@@ -101,15 +102,15 @@ public class EntityGraouLaser extends EntityGuardian
 
         public void e()
         {
-            EntityLiving var1 = this.entity.getGoalTarget();
+            EntityLiving target = this.entity.getGoalTarget();
             this.entity.getNavigation().p();
-            this.entity.getControllerLook().a(var1, 90.0F, 90.0F);
+            this.entity.getControllerLook().a(target, 90.0F, 90.0F);
 
             ++this.b;
 
             if (this.b == 0)
             {
-                this.entity.a(this.entity.getGoalTarget().getId());
+                this.entity.a(target.getId());
                 this.entity.world.broadcastEntityEffect(this.entity, (byte) 21);
             }
 
@@ -121,7 +122,7 @@ public class EntityGraouLaser extends EntityGuardian
     {
         try
         {
-            datawatcherField = EntityGuardian.class.getDeclaredField("b");
+            datawatcherField = EntityGuardian.class.getDeclaredField("bB");
             datawatcherField.setAccessible(true);
         }
         catch (NoSuchFieldException e)
