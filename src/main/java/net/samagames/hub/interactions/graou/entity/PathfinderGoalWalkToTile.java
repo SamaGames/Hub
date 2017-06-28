@@ -1,7 +1,7 @@
 package net.samagames.hub.interactions.graou.entity;
 
-import net.minecraft.server.v1_9_R2.EntityCreature;
-import net.minecraft.server.v1_9_R2.PathfinderGoal;
+import net.minecraft.server.v1_12_R1.EntityCreature;
+import net.minecraft.server.v1_12_R1.PathfinderGoal;
 
 public class PathfinderGoalWalkToTile extends PathfinderGoal
 {

@@ -1,7 +1,7 @@
 package net.samagames.hub.interactions.sonicsquid;
 
 import com.google.common.collect.Sets;
-import net.minecraft.server.v1_9_R2.*;
+import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -48,7 +48,7 @@ class EntitySonicSquid extends EntitySquid
     @Override
     public void n()
     {
-        EntityLiving entityliving = (EntityLiving) this.bw();
+        EntityLiving entityliving = (EntityLiving) this.bG();
 
         if (entityliving == null)
         {
@@ -67,6 +67,7 @@ class EntitySonicSquid extends EntitySquid
                 return;
             }
         }
+
         /**Location location = new Location(entityliving.getBukkitEntity().getWorld(), 0, 0, 0, entityliving.yaw, 0);
         this.getBukkitEntity().setVelocity(location.getDirection().multiply(1.025F).normalize());
         this.getBukkitEntity().setVelocity(((Player) entityliving.getBukkitEntity()).getEyeLocation().getDirection().multiply(1.025F));**/
@@ -79,13 +80,13 @@ class EntitySonicSquid extends EntitySquid
         this.velocityChanged = true;
         this.yaw = entityliving.yaw;
         this.positionChanged = true;
-        this.move(this.motX, this.motY, this.motZ);
+        this.move(EnumMoveType.SELF, this.motX, this.motY, this.motZ);
     }
 
     @Override
-    public void move(double d0, double d1, double d2)
+    public void move(EnumMoveType type, double d0, double d1, double d2)
     {
-        super.move(d0, d1, d2);
+        super.move(type, d0, d1, d2);
 
         if (this.checkWater()
                 || (Math.abs(this.locX) % 1 > 0.5D && this.checkBlock(this.locX > 0 ? this.locX + 0.5D : this.locX - 0.5D, this.locY, this.locZ))
@@ -119,9 +120,9 @@ class EntitySonicSquid extends EntitySquid
 
     private boolean checkBlock(double x, double y, double z)
     {
-        net.minecraft.server.v1_9_R2.Material material = this.getWorld().getType(new BlockPosition(x, y, z)).getMaterial();
+        net.minecraft.server.v1_12_R1.Material material = this.getWorld().getType(new BlockPosition(x, y, z)).getMaterial();
 
-        if (material != net.minecraft.server.v1_9_R2.Material.AIR && material != net.minecraft.server.v1_9_R2.Material.WATER)
+        if (material != net.minecraft.server.v1_12_R1.Material.AIR && material != net.minecraft.server.v1_12_R1.Material.WATER)
         {
             Location blockLocation = new Location(this.getWorld().getWorld(), x, y, z);
             this.destroySquid(blockLocation.getBlockX() + 0.5, y, blockLocation.getBlockZ() + 0.5D);
@@ -139,7 +140,7 @@ class EntitySonicSquid extends EntitySquid
         for (int x = -1; x <= 1; x++)
             for (int y = -1; y <= 1; y++)
                 for (int z = -1; z <= 1; z++)
-                    noWater = noWater && (this.getWorld().getType(new BlockPosition(x + this.locX, y + this.locY, z + this.locZ)).getMaterial() != net.minecraft.server.v1_9_R2.Material.WATER);
+                    noWater = noWater && (this.getWorld().getType(new BlockPosition(x + this.locX, y + this.locY, z + this.locZ)).getMaterial() != net.minecraft.server.v1_12_R1.Material.WATER);
         if (noWater)
             this.destroySquid(this.locX, this.locY, this.locZ);
         return noWater;
@@ -161,7 +162,7 @@ class EntitySonicSquid extends EntitySquid
     {
         while (y < 256)
         {
-            if (this.getWorld().getType(new BlockPosition(x, y, z)).getMaterial() == net.minecraft.server.v1_9_R2.Material.AIR)
+            if (this.getWorld().getType(new BlockPosition(x, y, z)).getMaterial() == net.minecraft.server.v1_12_R1.Material.AIR)
             {
                 passenger.setLocation(x, y, z, yaw, pitch);
                 return ;

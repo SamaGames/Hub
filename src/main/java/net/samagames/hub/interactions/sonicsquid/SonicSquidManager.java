@@ -1,7 +1,7 @@
 package net.samagames.hub.interactions.sonicsquid;
 
 import com.google.gson.JsonArray;
-import net.minecraft.server.v1_9_R2.EntitySquid;
+import net.minecraft.server.v1_12_R1.EntitySquid;
 import net.samagames.hub.Hub;
 import net.samagames.hub.interactions.AbstractInteractionManager;
 

@@ -131,27 +131,27 @@ public class GuiSwitchHub extends AbstractGui
 
         if (hub.getHubNumber() == Integer.parseInt(SamaGamesAPI.get().getServerName().split("_")[1]))
         {
-            glass.setDurability(DyeColor.LIGHT_BLUE.getData());
+            glass.setDurability(DyeColor.LIGHT_BLUE.getWoolData());
             meta.setDisplayName(ChatColor.AQUA + baseName);
         }
         else if (hub.getConnectedPlayers() <= 40)
         {
-            glass.setDurability(DyeColor.GREEN.getData());
+            glass.setDurability(DyeColor.GREEN.getWoolData());
             meta.setDisplayName(ChatColor.GREEN + baseName);
         }
         else if (hub.getConnectedPlayers() <= 80)
         {
-            glass.setDurability(DyeColor.YELLOW.getData());
+            glass.setDurability(DyeColor.YELLOW.getWoolData());
             meta.setDisplayName(ChatColor.YELLOW + baseName);
         }
         else if (hub.getConnectedPlayers() < 100)
         {
-            glass.setDurability(DyeColor.RED.getData());
+            glass.setDurability(DyeColor.RED.getWoolData());
             meta.setDisplayName(ChatColor.RED + baseName);
         }
         else
         {
-            glass.setDurability(DyeColor.RED.getData());
+            glass.setDurability(DyeColor.RED.getWoolData());
             meta.setDisplayName(ChatColor.RED + baseName);
         }
 

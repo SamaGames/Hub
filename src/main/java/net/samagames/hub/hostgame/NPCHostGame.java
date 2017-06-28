@@ -5,7 +5,7 @@ import net.samagames.hub.Hub;
 import net.samagames.hub.common.hydroangeas.packets.hubinfos.HostGameInfoToHubPacket;
 import net.samagames.hub.games.signs.GameSign;
 import net.samagames.tools.holograms.Hologram;
-import net.samagames.tools.npc.nms.ICustomNPC;
+import net.samagames.tools.npc.nms.CustomNPC;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -43,7 +43,7 @@ public class NPCHostGame
 
     private HashMap<UUID, Boolean> clicked = new HashMap<>();
 
-    private ICustomNPC npc;
+    private CustomNPC npc;
 
     public NPCHostGame(Hub hub, int index, Location location, HostGameInfoToHubPacket packet)
     {

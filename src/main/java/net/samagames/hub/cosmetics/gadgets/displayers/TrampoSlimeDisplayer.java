@@ -6,7 +6,7 @@ import net.samagames.tools.ParticleEffect;
 import net.samagames.tools.ProximityUtils;
 import net.samagames.tools.SimpleBlock;
 import org.bukkit.*;
-import org.bukkit.craftbukkit.v1_9_R2.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -29,10 +29,10 @@ public class TrampoSlimeDisplayer extends AbstractDisplayer
         super(hub, player);
 
         this.corners = new HashMap<>();
-        this.corners.put(this.baseLocation.clone().add(2.0D, 0.0D, 0.0D).subtract(0.0D, 0.0D, 2.0D), new SimpleBlock(Material.STAINED_CLAY, DyeColor.GREEN.getData()));
-        this.corners.put(this.baseLocation.clone().add(2.0D, 0.0D, 2.0D), new SimpleBlock(Material.STAINED_CLAY, DyeColor.GREEN.getData()));
-        this.corners.put(this.baseLocation.clone().subtract(2.0D, 0.0D, 0.0D).subtract(0.0D, 0.0D, 2.0D), new SimpleBlock(Material.STAINED_CLAY, DyeColor.GREEN.getData()));
-        this.corners.put(this.baseLocation.clone().subtract(2.0D, 0.0D, 0.0D).add(0.0D, 0.0D, 2.0D), new SimpleBlock(Material.STAINED_CLAY, DyeColor.GREEN.getData()));
+        this.corners.put(this.baseLocation.clone().add(2.0D, 0.0D, 0.0D).subtract(0.0D, 0.0D, 2.0D), new SimpleBlock(Material.STAINED_CLAY, DyeColor.GREEN.getWoolData()));
+        this.corners.put(this.baseLocation.clone().add(2.0D, 0.0D, 2.0D), new SimpleBlock(Material.STAINED_CLAY, DyeColor.GREEN.getWoolData()));
+        this.corners.put(this.baseLocation.clone().subtract(2.0D, 0.0D, 0.0D).subtract(0.0D, 0.0D, 2.0D), new SimpleBlock(Material.STAINED_CLAY, DyeColor.GREEN.getWoolData()));
+        this.corners.put(this.baseLocation.clone().subtract(2.0D, 0.0D, 0.0D).add(0.0D, 0.0D, 2.0D), new SimpleBlock(Material.STAINED_CLAY, DyeColor.GREEN.getWoolData()));
 
         this.addBlockToUse(this.baseLocation.clone().add(2.0D, 0.0D, 0.0D).subtract(0.0D, 0.0D, 1.0D), new SimpleBlock(Material.STEP, 7));
         this.addBlockToUse(this.baseLocation.clone().add(2.0D, 0.0D, 0.0D), new SimpleBlock(Material.STEP, 7));
@@ -108,7 +108,7 @@ public class TrampoSlimeDisplayer extends AbstractDisplayer
 
                     for (Location block : corners.keySet())
                     {
-                        block.getBlock().setData(DyeColor.YELLOW.getData());
+                        block.getBlock().setData(DyeColor.YELLOW.getWoolData());
                         FireworkUtils.launchfw(hub, block.clone().add(0.0D, 1.0D, 0.0D), effect);
                     }
                 }
@@ -118,7 +118,7 @@ public class TrampoSlimeDisplayer extends AbstractDisplayer
 
                     for (Location block : corners.keySet())
                     {
-                        block.getBlock().setData(DyeColor.RED.getData());
+                        block.getBlock().setData(DyeColor.RED.getWoolData());
                         FireworkUtils.launchfw(hub, block.clone().add(0.0D, 1.0D, 0.0D), effect);
                     }
                 }

@@ -1,7 +1,7 @@
 package net.samagames.hub.interactions.meow;
 
 import com.google.gson.JsonArray;
-import net.minecraft.server.v1_9_R2.EntityOcelot;
+import net.minecraft.server.v1_12_R1.EntityOcelot;
 import net.samagames.api.games.pearls.Pearl;
 import net.samagames.hub.Hub;
 import net.samagames.hub.interactions.AbstractInteractionManager;

@@ -14,7 +14,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
-import org.bukkit.craftbukkit.v1_9_R2.boss.CraftBossBar;
+import org.bukkit.craftbukkit.v1_12_R1.boss.CraftBossBar;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.scheduler.BukkitRunnable;

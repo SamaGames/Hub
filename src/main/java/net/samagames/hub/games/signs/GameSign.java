@@ -1,6 +1,6 @@
 package net.samagames.hub.games.signs;
 
-import net.minecraft.server.v1_9_R2.*;
+import net.minecraft.server.v1_12_R1.*;
 import net.samagames.api.SamaGamesAPI;
 import net.samagames.api.parties.IParty;
 import net.samagames.hub.Hub;
@@ -10,7 +10,7 @@ import net.samagames.tools.chat.fanciful.FancyMessage;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.block.Sign;
-import org.bukkit.craftbukkit.v1_9_R2.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitTask;

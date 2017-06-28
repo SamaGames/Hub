@@ -133,7 +133,7 @@ public class GuiCosmetics extends AbstractGui
         while (slot >= 0)
         {
             if (this.inventory.getItem(slot) == null)
-                this.setSlotData(ChatColor.GRAY + "", new ItemStack(Material.STAINED_GLASS_PANE, 1, color.getData()), slot, null, action);
+                this.setSlotData(ChatColor.GRAY + "", new ItemStack(Material.STAINED_GLASS_PANE, 1, color.getWoolData()), slot, null, action);
 
             slot -= 9;
         }

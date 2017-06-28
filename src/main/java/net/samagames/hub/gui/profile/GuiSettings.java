@@ -350,7 +350,7 @@ class GuiSettings extends AbstractGui
         IPlayerSettings settings = SamaGamesAPI.get().getSettingsManager().getSettings(player.getUniqueId());
         boolean enabled = callback.get(settings);
         ChatColor titleColor = enabled ? ChatColor.GREEN : ChatColor.RED;
-        ItemStack glassBlock = new ItemStack(Material.STAINED_GLASS, 1, enabled ? DyeColor.GREEN.getData() : DyeColor.RED.getData());
+        ItemStack glassBlock = new ItemStack(Material.STAINED_GLASS, 1, enabled ? DyeColor.GREEN.getWoolData() : DyeColor.RED.getWoolData());
 
         this.setSlotData(titleColor + displayName, icon, slot, description, "setting_" + this.index);
         this.setSlotData(titleColor + (enabled ? "Activé" : "Désactivé"), glassBlock, slot + 9, null, "setting_" + this.index);

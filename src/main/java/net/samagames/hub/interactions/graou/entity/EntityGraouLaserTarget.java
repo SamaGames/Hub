@@ -1,9 +1,9 @@
 package net.samagames.hub.interactions.graou.entity;
 
-import net.minecraft.server.v1_9_R2.EntitySquid;
-import net.minecraft.server.v1_9_R2.NBTTagCompound;
-import net.minecraft.server.v1_9_R2.SoundEffect;
-import net.minecraft.server.v1_9_R2.World;
+import net.minecraft.server.v1_12_R1.EntitySquid;
+import net.minecraft.server.v1_12_R1.NBTTagCompound;
+import net.minecraft.server.v1_12_R1.SoundEffect;
+import net.minecraft.server.v1_12_R1.World;
 
 /**
  *                )\._.,--....,'``.
@@ -20,7 +20,7 @@ public class EntityGraouLaserTarget extends EntitySquid
 
         this.setInvisible(true);
         this.setInvulnerable(true);
-        //this.setNoGravity(true);
+        this.setNoGravity(true);
     }
 
     @Override
@@ -45,7 +45,7 @@ public class EntityGraouLaserTarget extends EntitySquid
     public void f(NBTTagCompound nbttagcompound) {}
 
     @Override
-    protected SoundEffect G()
+    protected SoundEffect F()
     {
         return null;
     }

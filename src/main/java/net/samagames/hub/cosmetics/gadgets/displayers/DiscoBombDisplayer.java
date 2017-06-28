@@ -44,7 +44,7 @@ public class DiscoBombDisplayer extends AbstractDisplayer
             if (this.blocksUsed.get(block).getType() == Material.STAINED_GLASS)
             {
                 DyeColor random = DyeColor.values()[GadgetManager.RANDOM.nextInt(DyeColor.values().length)];
-                block.getBlock().setData(random.getData());
+                block.getBlock().setData(random.getWoolData());
             }
         }
 
@@ -73,7 +73,7 @@ public class DiscoBombDisplayer extends AbstractDisplayer
                     {
                         DyeColor random = DyeColor.values()[GadgetManager.RANDOM.nextInt(DyeColor.values().length)];
                         block.getBlock().setType(Material.STAINED_GLASS);
-                        block.getBlock().setData(random.getData());
+                        block.getBlock().setData(random.getWoolData());
                     });
                 }
 

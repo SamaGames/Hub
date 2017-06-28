@@ -8,7 +8,7 @@ import net.samagames.tools.LocationUtils;
 import net.samagames.tools.ProximityUtils;
 import net.samagames.tools.Titles;
 import org.bukkit.*;
-import org.bukkit.craftbukkit.v1_9_R2.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.*;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityToggleGlideEvent;

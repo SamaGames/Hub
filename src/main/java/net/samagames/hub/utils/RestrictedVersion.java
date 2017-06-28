@@ -1,7 +1,8 @@
 package net.samagames.hub.utils;
 
 import org.bukkit.entity.Player;
-import us.myles.ViaVersion.api.Via;
+import protocolsupport.api.ProtocolSupportAPI;
+import protocolsupport.api.ProtocolVersion;
 
 public class RestrictedVersion
 {
@@ -73,7 +74,7 @@ public class RestrictedVersion
 
     public boolean canAccess(Player player)
     {
-        return this.canAccess(Via.getAPI().getPlayerVersion(player));
+        return this.canAccess(ProtocolSupportAPI.getProtocolVersion(player).getId());
     }
 
     public static RestrictedVersion parse(String versionLine) throws Exception
@@ -114,6 +115,6 @@ public class RestrictedVersion
 
     public static boolean isLoggedInPost19(Player player)
     {
-        return Via.getAPI().getPlayerVersion(player) >= 107;
+        return ProtocolSupportAPI.getProtocolVersion(player).getId() >= ProtocolVersion.MINECRAFT_1_9.getId();
     }
 }
