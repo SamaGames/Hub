@@ -13,7 +13,7 @@ public class EntityGraouLaser extends EntityGuardian
     {
         super(world);
 
-        this.setInvisible(true);
+        //this.setInvisible(true);
         this.setInvulnerable(true);
         this.setNoGravity(true);
     }
@@ -22,8 +22,8 @@ public class EntityGraouLaser extends EntityGuardian
     protected void r()
     {
         this.goalRandomStroll = new PathfinderGoalRandomStroll(this, 1.0D, 80);
-        this.goalSelector.a(1, new PathfinderGoalGuardianAttack(this));
-        this.goalSelector.a(2, this.goalRandomStroll);
+        this.goalSelector.a(4, new PathfinderGoalGuardianAttack(this));
+        this.goalSelector.a(7, this.goalRandomStroll);
         this.goalRandomStroll.a(3);
     }
 
@@ -90,6 +90,7 @@ public class EntityGraouLaser extends EntityGuardian
 
         public void c()
         {
+            this.b = -10;
             this.entity.getNavigation().p();
             this.entity.getControllerLook().a(this.entity.getGoalTarget(), 90.0F, 90.0F);
             this.entity.impulse = true;
@@ -106,13 +107,7 @@ public class EntityGraouLaser extends EntityGuardian
             this.entity.getNavigation().p();
             this.entity.getControllerLook().a(target, 90.0F, 90.0F);
 
-            ++this.b;
-
-            if (this.b == 0)
-            {
-                this.entity.a(target.getId());
-                this.entity.world.broadcastEntityEffect(this.entity, (byte) 21);
-            }
+            this.entity.a(target.getId());
 
             super.e();
         }
