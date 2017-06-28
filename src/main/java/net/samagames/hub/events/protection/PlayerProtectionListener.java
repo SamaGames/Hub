@@ -22,12 +22,6 @@ public class PlayerProtectionListener implements Listener
     }
 
     @EventHandler
-    public void onPlayerAchievementAwarded(PlayerAchievementAwardedEvent event)
-    {
-        event.setCancelled(true);
-    }
-
-    @EventHandler
     public void onPlayerBucketFill(PlayerBucketFillEvent event)
     {
         event.setCancelled(true);
